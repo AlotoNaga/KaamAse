@@ -1,11 +1,11 @@
 # Fixed files
 
-Three production blockers, plus the same sort fix carried into the app API.
-Each file below is complete — open it, select all, and paste over the matching
-file on your site. Nothing else was touched.
+Three production blockers, the same sort fix carried into the app API, and the
+first two security items. Each file below is complete — open it, select all, and
+paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of four files taken from inside them.
+the patched versions of six files taken from inside them.
 
 ## What to copy where
 
@@ -15,6 +15,8 @@ the patched versions of four files taken from inside them.
 | `fixed/kaamase-core/includes/queries.php` | `wp-content/plugins/kaamase-core/includes/queries.php` |
 | `fixed/kaamase/functions.php` | `wp-content/themes/kaamase/functions.php` |
 | `fixed/kaamase-core/includes/rest-api.php` | `wp-content/plugins/kaamase-core/includes/rest-api.php` |
+| `fixed/kaamase/inc/security.php` | `wp-content/themes/kaamase/inc/security.php` |
+| `fixed/kaamase-pay/includes/settings.php` | `wp-content/plugins/kaamase-pay/includes/settings.php` |
 
 Do them one at a time and check the site after each.
 
@@ -101,6 +103,66 @@ call. No EAS Update, no EAS Build, no store submission, no version bump.
 
 **Test:** `GET /wp-json/kaamase/v1/workers?sort=rated` — a worker who has filled
 in nothing must appear in the list, at the bottom.
+
+## 5. `kaamase/inc/security.php` — GPS on WebP/PNG, and user enumeration
+
+Two security items in one file.
+
+**GPS metadata.** The strip list was JPEG and TIFF only, because the code
+assumed phones do not write EXIF to PNG or WebP. They do — WebP carries a
+standard EXIF chunk including GPS, and PNG has supported `eXIf` since 1.5. WebP
+is on this same file's allowed-upload list, so a GPS-tagged WebP reached the
+public uploads folder untouched while the readme promised otherwise.
+
+⚠️ **Behaviour change to know about before deploying.** If the server has no
+image editor for a format, the upload is now **refused and the file deleted**,
+rather than stored with coordinates intact. Your server has GD with JPEG, PNG
+and WebP support, so this should never trigger — but if you ever see "This photo
+could not be processed", that is why. To fall back to the old permissive
+behaviour: `add_filter( 'kaamase_require_metadata_strip', '__return_false' );`
+
+The master copy is now saved at quality 90 instead of 74. Thumbnails are still
+generated at 74, so nothing a visitor downloads got heavier — the master was
+just being compressed twice. Uploads use somewhat more disk.
+
+**User enumeration.** `?author=1`, `/author/x/` and `/wp-json/wp/v2/users` were
+all gated on `is_user_logged_in()`. Registration is free and open, so that
+stopped a stranger and nobody else. Now gated on capability: administrators,
+editors and field agents can still enumerate; workers and employers cannot.
+
+**Test:** upload a photo as a worker (JPEG, and a PNG or WebP if you can). Then,
+signed in as a worker, open `/wp-json/wp/v2/users` — it must return 403. As an
+admin it must still return the user list.
+
+## 6. `kaamase-pay/includes/settings.php` — Razorpay secrets out of autoload
+
+The settings option is stored through the Options API, which autoloads by
+default, so the live key secret and both webhook secrets were read into memory
+on every request including every front-end page view. They now migrate to
+`autoload=no` once, automatically.
+
+You can also now put the credentials in `wp-config.php`, which keeps them out of
+the database, its backups, and any option dump:
+
+```php
+define( 'KAAMASE_PAY_KEY_ID',         'rzp_live_xxxxxxxx' );
+define( 'KAAMASE_PAY_KEY_SECRET',     '...' );
+define( 'KAAMASE_PAY_WEBHOOK_SECRET', '...' );
+define( 'KAAMASE_PAY_STORE_SECRET',   '...' );
+```
+
+A constant wins over the stored value, the settings screen disables that field
+and says where it is set, and the sanitiser will not persist a value a constant
+overrides. **Optional** — with no constants defined, everything behaves exactly
+as before.
+
+Signature verification is untouched: `razorpay.php`, `webhook.php`,
+`checkout.php`, `access.php`, `account.php`, `store-webhook.php`,
+`subscribers.php` and `plans.php` are all byte-identical.
+
+**Test:** open Kaam Ase → Payments. Without constants, the secrets still work and
+the screen looks the same. Make a test payment to confirm. If you add the
+constants, the fields grey out and say "Set in wp-config.php".
 
 ---
 
