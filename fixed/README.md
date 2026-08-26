@@ -13,6 +13,7 @@ the patched versions of three files taken from inside them.
 | `fixed/kaamase/inc/enqueue.php` | `wp-content/themes/kaamase/inc/enqueue.php` |
 | `fixed/kaamase-core/includes/queries.php` | `wp-content/plugins/kaamase-core/includes/queries.php` |
 | `fixed/kaamase/functions.php` | `wp-content/themes/kaamase/functions.php` |
+| `fixed/kaamase-core/includes/rest-api.php` | `wp-content/plugins/kaamase-core/includes/rest-api.php` |
 
 Do them one at a time and check the site after each.
 
@@ -60,6 +61,29 @@ The job sorts (Highest pay, Urgent) had the same fault and are fixed too.
 
 **Test:** register a worker, fill in nothing, then open Best rated. They should
 appear at the bottom instead of vanishing.
+
+> **Copy `queries.php` again if you already took an earlier copy.** It changed
+> once more in fix 4, to share the ordering rule with the app API.
+
+## 4. `kaamase-core/includes/rest-api.php` — the phone app gets the same fix
+
+`rest-api.php` carried its own copy of the sort logic and never called
+`kaamase_apply_sort()`, so fixing the website left the app with the original
+fault. In the app, Best rated / Most experienced / Lowest day rate still hid
+every newly registered worker, and on a site where nobody had been rated yet
+the app's Best rated list came back empty.
+
+The ordering now comes from `kaamase_number_sort_args()` in `queries.php`, which
+`kaamase_sort_by_number()` also uses. The website sets it on a query in
+`pre_get_posts`; the API merges it into the args it hands `WP_Query`. Both
+produce byte-identical SQL.
+
+**No app release is involved.** No route, parameter, response shape or auth
+changed, so the installed iOS and Android builds pick this up on their next API
+call. No EAS Update, no EAS Build, no store submission, no version bump.
+
+**Test:** `GET /wp-json/kaamase/v1/workers?sort=rated` — a worker who has filled
+in nothing must appear in the list, at the bottom.
 
 ## 3. `kaamase/functions.php` — returning visitors get the current stylesheet
 
