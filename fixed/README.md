@@ -1,10 +1,11 @@
 # Fixed files
 
-Three production blockers. Each file below is complete — open it, select all,
-and paste over the matching file on your site. Nothing else was touched.
+Three production blockers, plus the same sort fix carried into the app API.
+Each file below is complete — open it, select all, and paste over the matching
+file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of three files taken from inside them.
+the patched versions of four files taken from inside them.
 
 ## What to copy where
 
@@ -65,6 +66,22 @@ appear at the bottom instead of vanishing.
 > **Copy `queries.php` again if you already took an earlier copy.** It changed
 > once more in fix 4, to share the ordering rule with the app API.
 
+## 3. `kaamase/functions.php` — returning visitors get the current stylesheet
+
+`KAAMASE_VERSION` was a hand-written constant that had drifted to `1.2.0` while
+`style.css` said `1.5.0`. It is what `KAAMASE_ASSET_VERSION` falls back to in
+production, so every release after 1.2.0 went out behind an unchanged `?ver=`
+string and returning visitors kept the CSS and JS they already had.
+
+The version is now read from the `Version:` header in `style.css`, which is what
+WordPress already treats as the version of record.
+
+**From now on, bumping `style.css` is the only step.** Do not add the number
+anywhere else.
+
+**Test:** view source on the front end. The stylesheet should be
+`style.css?ver=1.5.0`.
+
 ## 4. `kaamase-core/includes/rest-api.php` — the phone app gets the same fix
 
 `rest-api.php` carried its own copy of the sort logic and never called
@@ -84,22 +101,6 @@ call. No EAS Update, no EAS Build, no store submission, no version bump.
 
 **Test:** `GET /wp-json/kaamase/v1/workers?sort=rated` — a worker who has filled
 in nothing must appear in the list, at the bottom.
-
-## 3. `kaamase/functions.php` — returning visitors get the current stylesheet
-
-`KAAMASE_VERSION` was a hand-written constant that had drifted to `1.2.0` while
-`style.css` said `1.5.0`. It is what `KAAMASE_ASSET_VERSION` falls back to in
-production, so every release after 1.2.0 went out behind an unchanged `?ver=`
-string and returning visitors kept the CSS and JS they already had.
-
-The version is now read from the `Version:` header in `style.css`, which is what
-WordPress already treats as the version of record.
-
-**From now on, bumping `style.css` is the only step.** Do not add the number
-anywhere else.
-
-**Test:** view source on the front end. The stylesheet should be
-`style.css?ver=1.5.0`.
 
 ---
 
