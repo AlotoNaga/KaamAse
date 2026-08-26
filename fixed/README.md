@@ -1,11 +1,11 @@
 # Fixed files
 
 Three production blockers, the same sort fix carried into the app API, and the
-first two security items. Each file below is complete — open it, select all, and
+Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of six files taken from inside them.
+the patched versions of twelve files taken from inside them.
 
 ## What to copy where
 
@@ -17,6 +17,14 @@ the patched versions of six files taken from inside them.
 | `fixed/kaamase-core/includes/rest-api.php` | `wp-content/plugins/kaamase-core/includes/rest-api.php` |
 | `fixed/kaamase/inc/security.php` | `wp-content/themes/kaamase/inc/security.php` |
 | `fixed/kaamase-pay/includes/settings.php` | `wp-content/plugins/kaamase-pay/includes/settings.php` |
+| `fixed/kaamase-core/includes/throttle.php` | `wp-content/plugins/kaamase-core/includes/throttle.php` |
+| `fixed/kaamase-core/includes/contact.php` | `wp-content/plugins/kaamase-core/includes/contact.php` |
+| `fixed/kaamase-core/includes/rest-auth.php` | `wp-content/plugins/kaamase-core/includes/rest-auth.php` |
+| `fixed/kaamase-core/includes/registration.php` | `wp-content/plugins/kaamase-core/includes/registration.php` |
+| `fixed/kaamase-core/includes/reports.php` | `wp-content/plugins/kaamase-core/includes/reports.php` |
+| `fixed/kaamase-core/includes/post-job.php` | `wp-content/plugins/kaamase-core/includes/post-job.php` |
+
+For fix 7, copy **`throttle.php` first** — the other five call into it.
 
 Do them one at a time and check the site after each.
 
@@ -163,6 +171,44 @@ Signature verification is untouched: `razorpay.php`, `webhook.php`,
 **Test:** open Kaam Ase → Payments. Without constants, the secrets still work and
 the screen looks the same. Make a test payment to confirm. If you add the
 constants, the fields grey out and say "Set in wp-config.php".
+
+## 7. Durable rate limits — six files
+
+Every abuse control was kept in a transient. With no persistent object cache
+that is fine, because a transient with an expiry is written to the options
+table. With Redis or Memcached in front — most managed Indian hosting — a
+transient lives *only* in that cache. Flush it, let it evict under memory
+pressure, or press the "Clear Transients" button nearly every caching plugin
+offers, and every counter on the site resets to zero.
+
+**Seven controls were affected:** the daily contact-reveal cap (your
+anti-scraping defence), the daily job posting cap, the registration limit, the
+verification-email resend cooldown, the report limit, the sign-in lockout, and
+the shared throttle behind app registration and forgot-password.
+
+They now use a durable windowed store in `throttle.php`, backed by options with
+autoload off, garbage-collected on the `kaamase_daily` task that already exists.
+`get_option()` falls back to the database on a cache miss, so a count survives a
+flush. **No new database table**, so there is nothing to install.
+
+Two behaviour improvements came with it:
+
+- The window is measured from the **first** attempt in it rather than the last,
+  so somebody who keeps hammering cannot hold the window open and then get a
+  fresh allowance the moment it lapses.
+- **Daily limits now roll over at local midnight**, not 05:30 IST. They used to
+  key on `gmdate`. Expect quotas to reset once on the day you deploy.
+
+Limits allow exactly the same number of attempts as before.
+
+Form values and error messages stay in transients deliberately — losing one
+costs a retyped form, not a security control. The caches in `indexes.php`,
+`admin.php`, `how-seen.php`, the REST reference data and the three payment
+notices are unchanged.
+
+**Test:** exhaust a limit (e.g. submit six reports in an hour), then clear your
+object cache or press Clear Transients, and confirm you are *still* blocked.
+Before this change you would have been let straight back in.
 
 ---
 
