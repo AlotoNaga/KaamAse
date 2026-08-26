@@ -418,14 +418,50 @@ if ( ! function_exists( 'kaamase_sort_by_number' ) ) {
 	 */
 	function kaamase_sort_by_number( $query, $key, $direction = 'DESC', $zero_is_blank = false ) {
 
+		foreach ( kaamase_number_sort_args( $key, $direction, $zero_is_blank ) as $var => $value ) {
+			$query->set( $var, $value );
+		}
+	}
+}
+
+if ( ! function_exists( 'kaamase_number_sort_args' ) ) {
+	/**
+	 * The same ordering, as query arguments rather than as setters.
+	 *
+	 * The website builds its listings by changing a query in
+	 * pre_get_posts. The app API builds an argument array and hands it
+	 * to WP_Query. Both need identical ordering, and the readme already
+	 * promises that the website and the app enforce one set of rules
+	 * rather than two copies that drift.
+	 *
+	 * The sorting used to be written out twice, once here and once in
+	 * rest-api.php, and the two drifted exactly as predicted: the
+	 * website was fixed and the app was left hiding every worker who
+	 * had not filled in a profile. So the rule lives here, once, and
+	 * both callers read it.
+	 *
+	 * Unknown arguments passed to WP_Query survive into query_vars, so
+	 * the two filters below read these the same way whichever caller
+	 * set them.
+	 *
+	 * @since 1.3.2
+	 * @param string $key           Field key without the meta prefix.
+	 * @param string $direction     ASC or DESC.
+	 * @param bool   $zero_is_blank Whether a stored zero counts as no answer.
+	 * @return array Query arguments.
+	 */
+	function kaamase_number_sort_args( $key, $direction = 'DESC', $zero_is_blank = false ) {
+
 		/*
-		 * meta_key is deliberately NOT set. Setting it is what creates
-		 * the INNER JOIN this function exists to avoid.
+		 * meta_key is deliberately NOT included. Setting it is what
+		 * creates the INNER JOIN this whole approach exists to avoid.
 		 */
-		$query->set( 'orderby', 'kaamase_number' );
-		$query->set( 'kaamase_sort_key', KAAMASE_META_PREFIX . $key );
-		$query->set( 'kaamase_sort_dir', 'ASC' === strtoupper( (string) $direction ) ? 'ASC' : 'DESC' );
-		$query->set( 'kaamase_sort_zero_blank', (bool) $zero_is_blank );
+		return array(
+			'orderby'                 => 'kaamase_number',
+			'kaamase_sort_key'        => KAAMASE_META_PREFIX . $key,
+			'kaamase_sort_dir'        => 'ASC' === strtoupper( (string) $direction ) ? 'ASC' : 'DESC',
+			'kaamase_sort_zero_blank' => (bool) $zero_is_blank,
+		);
 	}
 }
 
