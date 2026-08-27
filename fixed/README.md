@@ -440,6 +440,37 @@ note is there to stop the next person quietly correcting it into something wrong
 `kaamase-core-nag.po` (or your chosen locale code) in the same folder, and Poedit
 writes the `.mo` WordPress actually loads.
 
+## 15. `kaamase-core/includes/rest-auth.php` — sign a lost phone out
+
+⚠️ *2nd revision — copy again.*
+
+An account can hold ten app tokens and **nothing ever showed them**. The device
+label, creation time and last-used time have all been stored since tokens were
+added; none of it was ever shown to the person it belongs to.
+
+So somebody whose phone was stolen had two options: change their password —
+which signs out every device *including the one in their hand* — or do nothing.
+
+The dashboard now lists the phones the app is signed in on, most recently used
+first, with a button to sign each one out and a second to sign out everywhere.
+Expired tokens are left out rather than shown as dead rows.
+
+**The credential never reaches the browser.** The handle printed into the page
+and posted back is a hash *of* the stored hash, so the value in the form cannot
+be turned back into a working token. Compared with `hash_equals`.
+
+The panel only appears for an account that has actually opened the app — a worker
+who never has gets no heading about phones.
+
+Token issuing, hashing, revocation, lookup and bearer authentication are all
+byte-identical. **No app release** — this is a website screen that revokes
+tokens the app already uses; a signed-out phone simply gets a 401 on its next
+call and asks the person to sign in again.
+
+**Test:** sign in on the app, then open your dashboard on the website. The phone
+should be listed. Sign it out, and the app should ask you to sign in again on its
+next action.
+
 ---
 
 ## Not changed, and why
