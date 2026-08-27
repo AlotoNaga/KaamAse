@@ -99,12 +99,23 @@ if ( ! function_exists( 'kaamase_protected_trades' ) ) {
 		 * unverified stranger can contact somebody who works alone in a
 		 * house, so do not.
 		 *
+		 * Home nurse was added with the trade itself. It sits in Home
+		 * services beside Maid, Cook, Babysitter and Caregiver, all of
+		 * which are already here, and it is the same situation: one
+		 * person, alone, at an address a stranger gave them. A new
+		 * trade of that kind that is not on this list is a hole in the
+		 * gate rather than a decision.
+		 *
+		 * Housekeeping is deliberately not here. It sits under Hotel
+		 * and food and means hotel housekeeping — a workplace with
+		 * colleagues and a manager, which is not what this gate is for.
+		 *
 		 * @since 1.0.0
 		 * @param string[] $trades Trade slugs.
 		 */
 		return (array) apply_filters(
 			'kaamase_protected_trades',
-			array( 'maid', 'house-cleaner', 'cook', 'babysitter', 'caregiver' )
+			array( 'maid', 'house-cleaner', 'cook', 'babysitter', 'caregiver', 'home-nurse' )
 		);
 	}
 }

@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty-five files taken from inside them, plus three
+the patched versions of twenty-six files taken from inside them, plus three
 new translation templates.
 
 ## What to copy where
@@ -34,6 +34,7 @@ new translation templates.
 | `fixed/kaamase/inc/performance.php` | `wp-content/themes/kaamase/inc/performance.php` |
 | `fixed/kaamase-core/includes/districts.php` | `wp-content/plugins/kaamase-core/includes/districts.php` |
 | `fixed/kaamase-pay/kaamase-pay.php` | `wp-content/plugins/kaamase-pay/kaamase-pay.php` |
+| `fixed/kaamase-core/kaamase-core.php` | `wp-content/plugins/kaamase-core/kaamase-core.php` |
 
 **New folders to create** (they do not exist on your site yet):
 
@@ -44,6 +45,9 @@ new translation templates.
 | `fixed/kaamase-pay/languages/kaamase-pay.pot` | `wp-content/plugins/kaamase-pay/languages/` |
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
+
+For fix 16, copy **`taxonomies.php` and `contact.php` first, then
+`kaamase-core.php`** — the last one is what triggers the new trades to be created.
 
 Do them one at a time and check the site after each.
 
@@ -471,6 +475,102 @@ call and asks the person to sign in again.
 should be listed. Sign it out, and the app should ask you to sign in again on its
 next action.
 
+## 16. Many more trades — three files
+
+⚠️ *`taxonomies.php` is a 3rd revision and `contact.php` a 2nd — copy both
+again. `kaamase-core.php` is new to the list.*
+
+**From 5 categories and 41 trades to 13 categories and 98 trades.** The site was
+built around construction, home services, repair and farm work. A teacher, a
+receptionist, a nurse, a shop assistant, a delivery rider or a graphic designer
+had nothing to pick.
+
+New headings: **Teaching and childcare**, **Office work**, **Shop and sales**,
+**Health**, **Hotel and food**, **Driving and transport**, **Computer and
+design**, **Craft and making**, and **Other work**.
+
+### Why not simply add every trade on the list
+
+Three kinds of entry would have split one trade's results across two terms, which
+is the exact failure this file's own header warns about:
+
+- **Gendered pairs** — Waiter and Waitress are one job. Two terms means an
+  employer browsing Waiter never sees half the people who can do it.
+- **Seniority as a trade** — Store Manager, Office Manager, Hotel Manager. That
+  is a level, not a trade, and it belongs in the job description.
+- **Near-synonyms** — Sales Executive and Salesperson, Delivery Rider and
+  Delivery Agent, Teacher and Assistant Teacher.
+
+Each of those is now **one trade carrying the other spellings as aliases**, so
+searching either word still lands on the right term. 94 trades carry 284 alias
+spellings between them.
+
+Local vocabulary went in the same way, so the word actually used here finds the
+trade: *motor mechanic*, *ANM* and *GNM*, *ASHA* and *anganwadi*, *ward boy*,
+*DEO*, *peon*, *telecaller*, *KG teacher*, *PT teacher*, *saloon*, *JCB
+operator*, *sumo driver*, *handloom*, *flex printing*, *AutoCAD*, *tally
+operator*, *piggery*.
+
+### A matching bug found while testing
+
+Trade matching ran its alias list **before** it compared against real trade
+names. So once **Taxi driver** and **Furniture maker** existed as trades of their
+own — and were *also* listed as words for Driver and Carpenter — a spelling that
+missed the exact-name check landed on the wrong one. Typing `taxi  driver` with
+two spaces gave you Driver.
+
+Real trade names are now compared first, aliases second, loose matching last. The
+two colliding aliases are gone, but the ordering is what stops this recurring the
+next time a trade is added whose name is already somebody's alias elsewhere.
+
+`Salon` was also listed under both Beautician and Barber, so which one you got
+depended on map order. It now goes to Barber, which is what the word means on a
+signboard here; the parlour side keeps `Parlour`, `Beauty parlour` and `Beauty
+salon`.
+
+### Nothing existing is renamed or deleted
+
+Trades already on your site are left exactly as they are. The only change to an
+existing term is **which heading it appears under**, where the new categories
+give it a better home — Tutor moving from Other work to Teaching, for example.
+Nothing attached to a term moves with it, so no worker's profile changes.
+
+### Why `kaamase-core.php` has to be copied too
+
+`KAAMASE_CORE_SCHEMA` goes **2 → 3**. That constant is what tells the plugin to
+re-run its seeding on the next load. Without it the new trades sit in the code
+and **never appear on your site**. `KAAMASE_CORE_VERSION` and the plugin header
+are aligned to `1.4.0` in the same file — they disagreed before (`1.3.0` against
+`1.3.1`).
+
+### The safety gate — one addition, and one thing for you to decide
+
+`kaamase_protected_trades()` in `contact.php` gates **maid, house cleaner, cook,
+babysitter and caregiver** behind the extra safety check, because that is work
+done alone in a stranger's home. Adding new trades of that kind without putting
+them on the list would be a hole in the gate rather than a decision, so:
+
+- **Home nurse or attendant — added to the gate.** It sits in Home services
+  beside all five of the above and is the same situation: one person, alone, at
+  an address a stranger gave them.
+- **Housekeeping staff — deliberately not added.** It sits under Hotel and food
+  and means hotel housekeeping: a workplace with colleagues and a manager. That
+  is not what this gate is for, and gating it would slow those jobs down for no
+  safety gain.
+
+**Your call, not mine:** **Nurse**, **Physiotherapist**, **Medical assistant**
+and **Tutor** are *not* gated. Each is usually clinic-, hospital- or
+school-based, but each is sometimes a home visit. Adding them makes those jobs
+slower to post; leaving them off means the protection does not apply on the
+occasions the work *is* at somebody's house. Say the word and it is one slug each
+on that same line.
+
+**Test:** after copying both files, load any page once. Open **Workers → Trades**
+in the admin — you should see 13 headings and 98 trades. Then post a job and
+check the trade dropdown groups them under the new headings. Search the worker
+list for `saloon`, `ward boy` and `telecaller`; each should return the right
+trade rather than nothing.
+
 ---
 
 ## Not changed, and why
@@ -483,6 +583,4 @@ next action.
   touched.
 - **The privacy layer** — untouched. No change to `kaamase_field`,
   `kaamase_can_see_private`, or private-field handling.
-- **`KAAMASE_CORE_VERSION`** (says `1.3.0`, header says `1.3.1`) — defined but
-  never used anywhere, so it affects nothing. Worth tidying later.
 - **`kaamase/readme.txt`** — changelog still stops at 1.1.0. Cosmetic.

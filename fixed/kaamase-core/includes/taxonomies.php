@@ -289,6 +289,8 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'steel-fixer'  => __( 'Steel fixer', 'kaamase-core' ),
 					'helper'       => __( 'Helper', 'kaamase-core' ),
 					'labour'       => __( 'Labour', 'kaamase-core' ),
+					'surveyor'     => __( 'Surveyor', 'kaamase-core' ),
+					'draughtsman'  => __( 'Draughtsman', 'kaamase-core' ),
 				),
 			),
 
@@ -302,6 +304,7 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'caregiver'     => __( 'Caregiver', 'kaamase-core' ),
 					'driver'        => __( 'Driver', 'kaamase-core' ),
 					'gardener'      => __( 'Gardener', 'kaamase-core' ),
+					'home-nurse'    => __( 'Home nurse or attendant', 'kaamase-core' ),
 				),
 			),
 
@@ -313,6 +316,14 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'tv-repair'           => __( 'TV repair', 'kaamase-core' ),
 					'mobile-repair'       => __( 'Mobile repair', 'kaamase-core' ),
 					'computer-technician' => __( 'Computer technician', 'kaamase-core' ),
+					'car-mechanic'        => __( 'Car mechanic', 'kaamase-core' ),
+					'bike-mechanic'       => __( 'Bike mechanic', 'kaamase-core' ),
+					'diesel-mechanic'     => __( 'Diesel mechanic', 'kaamase-core' ),
+					'auto-electrician'    => __( 'Automobile electrician', 'kaamase-core' ),
+					'electronics-mechanic' => __( 'Electronics technician', 'kaamase-core' ),
+					'solar-technician'    => __( 'Solar technician', 'kaamase-core' ),
+					'cctv-technician'     => __( 'CCTV technician', 'kaamase-core' ),
+					'fitter'              => __( 'Fitter', 'kaamase-core' ),
 				),
 			),
 
@@ -322,6 +333,106 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'farm-labour'    => __( 'Farm labour', 'kaamase-core' ),
 					'tractor-driver' => __( 'Tractor driver', 'kaamase-core' ),
 					'harvest-worker' => __( 'Harvest worker', 'kaamase-core' ),
+					'poultry-worker' => __( 'Poultry worker', 'kaamase-core' ),
+					'livestock-worker' => __( 'Livestock worker', 'kaamase-core' ),
+					'fishery-worker' => __( 'Fish farm worker', 'kaamase-core' ),
+					'horticulture-worker' => __( 'Horticulture worker', 'kaamase-core' ),
+					'nursery-worker' => __( 'Nursery worker', 'kaamase-core' ),
+				),
+			),
+
+			'education' => array(
+				'name'   => __( 'Teaching and childcare', 'kaamase-core' ),
+				'trades' => array(
+					'teacher'            => __( 'Teacher', 'kaamase-core' ),
+					'assistant-teacher'  => __( 'Assistant teacher', 'kaamase-core' ),
+					'preschool-teacher'  => __( 'Pre-school teacher', 'kaamase-core' ),
+					'computer-teacher'   => __( 'Computer teacher', 'kaamase-core' ),
+					'music-teacher'      => __( 'Music teacher', 'kaamase-core' ),
+					'sports-coach'       => __( 'Sports coach', 'kaamase-core' ),
+				),
+			),
+
+			'office' => array(
+				'name'   => __( 'Office work', 'kaamase-core' ),
+				'trades' => array(
+					'receptionist'      => __( 'Receptionist', 'kaamase-core' ),
+					'office-assistant'  => __( 'Office assistant', 'kaamase-core' ),
+					'data-entry'        => __( 'Data entry operator', 'kaamase-core' ),
+					'computer-operator' => __( 'Computer operator', 'kaamase-core' ),
+					'accountant'        => __( 'Accountant', 'kaamase-core' ),
+					'customer-service'  => __( 'Customer service', 'kaamase-core' ),
+				),
+			),
+
+			'retail' => array(
+				'name'   => __( 'Shop and sales', 'kaamase-core' ),
+				'trades' => array(
+					'sales-executive' => __( 'Sales executive', 'kaamase-core' ),
+					'shop-assistant'  => __( 'Shop assistant', 'kaamase-core' ),
+					'cashier'         => __( 'Cashier', 'kaamase-core' ),
+					'store-keeper'    => __( 'Store keeper', 'kaamase-core' ),
+				),
+			),
+
+			'healthcare' => array(
+				'name'   => __( 'Health', 'kaamase-core' ),
+				'trades' => array(
+					'nurse'             => __( 'Nurse', 'kaamase-core' ),
+					'pharmacist'        => __( 'Pharmacist', 'kaamase-core' ),
+					'lab-technician'    => __( 'Lab technician', 'kaamase-core' ),
+					'health-worker'     => __( 'Health worker', 'kaamase-core' ),
+					'medical-assistant' => __( 'Medical assistant', 'kaamase-core' ),
+					'physiotherapist'   => __( 'Physiotherapist', 'kaamase-core' ),
+				),
+			),
+
+			'hospitality' => array(
+				'name'   => __( 'Hotel and food', 'kaamase-core' ),
+				'trades' => array(
+					'waiter'         => __( 'Waiter', 'kaamase-core' ),
+					'chef'           => __( 'Chef', 'kaamase-core' ),
+					'baker'          => __( 'Baker', 'kaamase-core' ),
+					'kitchen-helper' => __( 'Kitchen helper', 'kaamase-core' ),
+					'housekeeping'   => __( 'Housekeeping staff', 'kaamase-core' ),
+					'hotel-staff'    => __( 'Hotel staff', 'kaamase-core' ),
+				),
+			),
+
+			'transport' => array(
+				'name'   => __( 'Driving and transport', 'kaamase-core' ),
+				'trades' => array(
+					'taxi-driver'      => __( 'Taxi driver', 'kaamase-core' ),
+					'truck-driver'     => __( 'Truck driver', 'kaamase-core' ),
+					'bus-driver'       => __( 'Bus driver', 'kaamase-core' ),
+					'heavy-driver'     => __( 'Heavy vehicle driver', 'kaamase-core' ),
+					'warehouse-worker' => __( 'Warehouse worker', 'kaamase-core' ),
+					'loader'           => __( 'Loader', 'kaamase-core' ),
+				),
+			),
+
+			'digital' => array(
+				'name'   => __( 'Computer and design', 'kaamase-core' ),
+				'trades' => array(
+					'graphic-designer'    => __( 'Graphic designer', 'kaamase-core' ),
+					'video-editor'        => __( 'Video editor', 'kaamase-core' ),
+					'videographer'        => __( 'Videographer', 'kaamase-core' ),
+					'social-media'        => __( 'Social media manager', 'kaamase-core' ),
+					'digital-marketer'    => __( 'Digital marketer', 'kaamase-core' ),
+					'web-developer'       => __( 'Web developer', 'kaamase-core' ),
+					'software-developer'  => __( 'Software developer', 'kaamase-core' ),
+					'content-creator'     => __( 'Content creator', 'kaamase-core' ),
+				),
+			),
+
+			'crafts' => array(
+				'name'   => __( 'Craft and making', 'kaamase-core' ),
+				'trades' => array(
+					'bamboo-craftsman' => __( 'Bamboo craftsman', 'kaamase-core' ),
+					'furniture-maker'  => __( 'Furniture maker', 'kaamase-core' ),
+					'signboard-maker'  => __( 'Signboard maker', 'kaamase-core' ),
+					'sewing-operator'  => __( 'Sewing machine operator', 'kaamase-core' ),
+					'weaver'           => __( 'Weaver', 'kaamase-core' ),
 				),
 			),
 
@@ -334,6 +445,10 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'photographer'   => __( 'Photographer', 'kaamase-core' ),
 					'tailor'         => __( 'Tailor', 'kaamase-core' ),
 					'beautician'     => __( 'Beautician', 'kaamase-core' ),
+					'barber'         => __( 'Barber or hairdresser', 'kaamase-core' ),
+					'makeup-artist'  => __( 'Make-up artist', 'kaamase-core' ),
+					'fashion-designer' => __( 'Fashion designer', 'kaamase-core' ),
+					'event-staff'    => __( 'Event staff', 'kaamase-core' ),
 				),
 			),
 		);
@@ -381,7 +496,30 @@ if ( ! function_exists( 'kaamase_seed_trades' ) ) {
 
 			foreach ( (array) $category['trades'] as $slug => $name ) {
 
-				if ( term_exists( $slug, 'kaamase_trade' ) ) {
+				$existing = term_exists( $slug, 'kaamase_trade' );
+
+				if ( $existing ) {
+
+					/*
+					 * Already there, but possibly filed under the wrong
+					 * heading now that there are more headings.
+					 *
+					 * Photographer and Videographer sitting in different
+					 * categories, or Tutor under Other work while every
+					 * other teaching trade is under Teaching, is the sort
+					 * of thing that makes a dropdown feel arbitrary. The
+					 * term itself is untouched, so nothing attached to it
+					 * moves: only which heading it appears under.
+					 *
+					 * Nothing is ever renamed or deleted here. A term
+					 * somebody's profile points at is not ours to remove.
+					 */
+					$term = get_term_by( 'slug', $slug, 'kaamase_trade' );
+
+					if ( $term instanceof WP_Term && (int) $term->parent !== $parent_id ) {
+						wp_update_term( $term->term_id, 'kaamase_trade', array( 'parent' => $parent_id ) );
+					}
+
 					continue;
 				}
 
@@ -636,15 +774,6 @@ if ( ! function_exists( 'kaamase_match_trade' ) ) {
 			return '';
 		}
 
-		// The words people actually use for a trade, before any guessing.
-		foreach ( kaamase_trade_aliases() as $slug => $aliases ) {
-			foreach ( (array) $aliases as $alias ) {
-				if ( kaamase_flatten_place( $alias ) === $needle ) {
-					return $slug;
-				}
-			}
-		}
-
 		/*
 		 * Fetched and flattened once per request.
 		 *
@@ -677,18 +806,17 @@ if ( ! function_exists( 'kaamase_match_trade' ) ) {
 			}
 		}
 
-		if ( empty( $flat ) ) {
-			return '';
-		}
-
 		/*
-		 * Every exact match is tried before any partial one.
+		 * A real trade name is tried before any alias.
 		 *
-		 * This used to do both in a single pass and return the first
-		 * hit, so which trade you got depended on the order get_terms
-		 * happened to return them in. Somebody typing driver landed on
-		 * Driver rather than Tractor driver by alphabetical luck, not
-		 * by design, and a renamed trade could silently flip it.
+		 * The alias pass used to run first, which meant an alias could
+		 * beat the trade it collided with. Furniture maker is a trade
+		 * of its own and was also listed as a word for Carpenter, so a
+		 * spelling that missed the exact-name check above landed on
+		 * Carpenter. Same for Taxi driver against Driver. The colliding
+		 * aliases are gone, but the order is what stops it recurring
+		 * the next time a trade is added whose name somebody has
+		 * already listed as an alias elsewhere.
 		 */
 		foreach ( $flat as $slug => $name ) {
 			if ( $name === $needle ) {
@@ -696,6 +824,21 @@ if ( ! function_exists( 'kaamase_match_trade' ) ) {
 			}
 		}
 
+		// The words people actually use for a trade, before any guessing.
+		foreach ( kaamase_trade_aliases() as $slug => $aliases ) {
+			foreach ( (array) $aliases as $alias ) {
+				if ( kaamase_flatten_place( $alias ) === $needle ) {
+					return $slug;
+				}
+			}
+		}
+
+		/*
+		 * Partial last, and only on something long enough to mean
+		 * anything. This used to share a pass with the exact match
+		 * above and return the first hit, so which trade you got
+		 * depended on the order get_terms happened to return them in.
+		 */
 		foreach ( $flat as $slug => $name ) {
 			if ( strlen( $needle ) > 3 && false !== strpos( $name, $needle ) ) {
 				return $slug;
@@ -729,7 +872,7 @@ if ( ! function_exists( 'kaamase_trade_aliases' ) ) {
 			'mason'               => array( 'Mistri', 'Mistry', 'Rajmistri', 'Raj mistri', 'Bricklayer' ),
 			'helper'              => array( 'Beldar', 'Coolie', 'Labour helper' ),
 			'labour'              => array( 'Labourer', 'Laborer', 'Daily wage', 'Daily labour' ),
-			'carpenter'           => array( 'Mistri carpenter', 'Wood work', 'Furniture maker' ),
+			'carpenter'           => array( 'Mistri carpenter', 'Wood work', 'Wood worker' ),
 			'electrician'         => array( 'Electric', 'Wireman', 'Lineman' ),
 			'plumber'             => array( 'Plumbing', 'Pipe fitter' ),
 			'painter'             => array( 'Painting', 'Wall painter' ),
@@ -741,7 +884,7 @@ if ( ! function_exists( 'kaamase_trade_aliases' ) ) {
 			'cook'                => array( 'Cooking', 'Kitchen help', 'Bawarchi' ),
 			'babysitter'          => array( 'Baby sitter', 'Nanny', 'Ayah', 'Child care' ),
 			'caregiver'           => array( 'Care taker', 'Caretaker', 'Nurse aide', 'Attendant' ),
-			'driver'              => array( 'Driving', 'Car driver', 'Taxi driver' ),
+			'driver'              => array( 'Driving', 'Car driver', 'Personal driver' ),
 			'gardener'            => array( 'Mali', 'Garden' ),
 			'ac-repair'           => array( 'AC mechanic', 'Air conditioner repair', 'AC technician' ),
 			'fridge-repair'       => array( 'Fridge mechanic', 'Refrigerator mechanic' ),
@@ -750,8 +893,108 @@ if ( ! function_exists( 'kaamase_trade_aliases' ) ) {
 			'security-guard'      => array( 'Guard', 'Chowkidar', 'Watchman' ),
 			'delivery-rider'      => array( 'Delivery boy', 'Delivery', 'Courier' ),
 			'tailor'              => array( 'Darzi', 'Stitching', 'Sewing' ),
-			'beautician'          => array( 'Parlour', 'Beauty parlour', 'Salon' ),
+			'beautician'          => array( 'Parlour', 'Beauty parlour', 'Beauty salon' ),
 			'farm-labour'         => array( 'Farm worker', 'Field labour', 'Agriculture labour' ),
+
+			/*
+			 * The consolidations.
+			 *
+			 * Waitress, Salesperson, Dishwasher and the rest are not
+			 * separate trades, they are other words for one. Kept as
+			 * aliases rather than as terms, because two terms for one job
+			 * halve the results for both and neither ever finds the
+			 * other. Somebody typing waitress still lands on Waiter.
+			 */
+			'waiter'              => array( 'Waitress', 'Server', 'Room service', 'Restaurant staff' ),
+			'sales-executive'     => array( 'Salesperson', 'Salesman', 'Sales', 'Marketing executive', 'Area sales manager' ),
+			'kitchen-helper'      => array( 'Dishwasher', 'Kitchen boy', 'Utensil cleaner', 'Kitchen staff' ),
+			'shop-assistant'      => array( 'Counter staff', 'Shop boy', 'Shop worker', 'Store assistant' ),
+			'store-keeper'        => array( 'Storekeeper', 'Godown keeper', 'Stock keeper', 'Inventory' ),
+			'assistant-teacher'   => array( 'Teaching assistant', 'Junior teacher' ),
+
+			/* Teaching and childcare. */
+			'teacher'             => array( 'School teacher', 'Master', 'Madam', 'Faculty' ),
+			'preschool-teacher'   => array( 'Nursery teacher', 'KG teacher', 'Kindergarten teacher', 'Play school' ),
+			'computer-teacher'    => array( 'Computer instructor', 'IT teacher' ),
+			'music-teacher'       => array( 'Guitar teacher', 'Keyboard teacher', 'Singing teacher' ),
+			'sports-coach'        => array( 'PT teacher', 'Physical education', 'Games teacher', 'Trainer' ),
+			'tutor'               => array( 'Private tutor', 'Home tutor', 'Tuition', 'Coaching' ),
+
+			/* Office. */
+			'receptionist'        => array( 'Front desk', 'Front office', 'Medical receptionist' ),
+			'office-assistant'    => array( 'Office boy', 'Peon', 'Clerk', 'Office staff' ),
+			'data-entry'          => array( 'DEO', 'Data entry', 'Typist' ),
+			'computer-operator'   => array( 'DTP operator', 'System operator' ),
+			'accountant'          => array( 'Accounts', 'Book keeper', 'Bookkeeper', 'Tally operator' ),
+			'customer-service'    => array( 'Call centre', 'Call center', 'Telecaller', 'BPO', 'Customer care' ),
+
+			/* Health. */
+			'nurse'               => array( 'Staff nurse', 'ANM', 'GNM', 'Sister' ),
+			'pharmacist'          => array( 'Chemist', 'Medical shop', 'Dispenser' ),
+			'lab-technician'      => array( 'Lab tech', 'DMLT', 'Pathology', 'Laboratory technician' ),
+			'health-worker'       => array( 'ASHA', 'Anganwadi', 'Community health worker' ),
+			'medical-assistant'   => array( 'Ward boy', 'OT assistant', 'Nursing assistant', 'Hospital attendant' ),
+			'physiotherapist'     => array( 'Physio', 'Physiotherapy' ),
+			'home-nurse'          => array( 'Patient attendant', 'Bedside attendant', 'Home care', 'Ayah nurse' ),
+
+			/* Hotel and food. */
+			'chef'                => array( 'Head cook', 'Cook master' ),
+			'baker'               => array( 'Bakery', 'Bakery worker', 'Pastry' ),
+			'housekeeping'        => array( 'Room attendant', 'Hotel cleaner', 'Housekeeper' ),
+			'hotel-staff'         => array( 'Hotel worker', 'Resort staff', 'Lodge staff' ),
+
+			/* Driving and transport. */
+			'taxi-driver'         => array( 'Cab driver', 'Sumo driver', 'Auto driver' ),
+			'truck-driver'        => array( 'Lorry driver', 'Tipper driver' ),
+			'bus-driver'          => array( 'Winger driver', 'Coach driver' ),
+			'heavy-driver'        => array( 'HMV driver', 'Heavy driver', 'Excavator operator', 'JCB operator' ),
+			'warehouse-worker'    => array( 'Godown worker', 'Warehouse staff' ),
+			'loader'              => array( 'Unloading', 'Hamal', 'Loading worker' ),
+
+			/* Repair and technical. */
+			'car-mechanic'        => array( 'Motor mechanic', 'Auto mechanic', 'Garage mechanic', 'Four wheeler mechanic' ),
+			'bike-mechanic'       => array( 'Two wheeler mechanic', 'Scooter mechanic', 'Motorcycle mechanic' ),
+			'diesel-mechanic'     => array( 'Diesel engine mechanic' ),
+			'auto-electrician'    => array( 'Auto electric', 'Vehicle electrician' ),
+			'electronics-mechanic' => array( 'Electronics mechanic', 'Electronic repair' ),
+			'solar-technician'    => array( 'Solar panel', 'Solar installer' ),
+			'cctv-technician'     => array( 'CCTV installation', 'Camera installation', 'Security camera' ),
+			'fitter'              => array( 'ITI fitter', 'Machine fitter' ),
+
+			/* Construction, added. */
+			'surveyor'            => array( 'Land surveyor', 'Site surveyor' ),
+			'draughtsman'         => array( 'Draftsman', 'Draughtsman civil', 'AutoCAD', 'CAD operator' ),
+
+			/* Computer and design. */
+			'graphic-designer'    => array( 'Designer', 'DTP designer', 'Logo designer' ),
+			'video-editor'        => array( 'Video editing', 'Editor' ),
+			'videographer'        => array( 'Video shooting', 'Cameraman', 'Camera man', 'Wedding video' ),
+			'social-media'        => array( 'Social media', 'Instagram manager', 'Page handler' ),
+			'digital-marketer'    => array( 'SEO', 'Online marketing', 'Digital marketing' ),
+			'web-developer'       => array( 'Website developer', 'WordPress developer', 'Web designer' ),
+			'software-developer'  => array( 'Programmer', 'Coder', 'App developer', 'Software engineer' ),
+			'content-creator'     => array( 'Content writer', 'Blogger', 'Copywriter' ),
+
+			/* Craft and making. */
+			'bamboo-craftsman'    => array( 'Bamboo work', 'Cane work', 'Bamboo craft' ),
+			'furniture-maker'     => array( 'Furniture', 'Sofa maker' ),
+			'signboard-maker'     => array( 'Flex printing', 'Signage', 'Hoarding', 'Board painter' ),
+			'sewing-operator'     => array( 'Sewing machine', 'Stitching operator', 'Garment worker' ),
+			'weaver'              => array( 'Loom', 'Handloom', 'Weaving' ),
+
+			/* Agriculture, added. */
+			'poultry-worker'      => array( 'Poultry farm', 'Chicken farm' ),
+			'livestock-worker'    => array( 'Dairy worker', 'Cattle', 'Piggery', 'Animal husbandry' ),
+			'fishery-worker'      => array( 'Fisherman', 'Fish farming', 'Fishery' ),
+			'horticulture-worker' => array( 'Orchard', 'Horticulture' ),
+			'nursery-worker'      => array( 'Plant nursery', 'Sapling' ),
+			'tractor-driver'      => array( 'Farm machinery operator', 'Power tiller' ),
+
+			/* Other. */
+			'barber'              => array( 'Hairdresser', 'Hair cutting', 'Saloon', 'Salon', 'Hair stylist' ),
+			'makeup-artist'       => array( 'Bridal makeup', 'Make up artist' ),
+			'fashion-designer'    => array( 'Boutique', 'Dress designer' ),
+			'event-staff'         => array( 'Event management', 'Decoration', 'Event helper' ),
 		);
 
 		/**
