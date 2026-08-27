@@ -42,16 +42,20 @@ if ( ! function_exists( 'kaamase_enqueue_frontend' ) ) {
 		 * get_stylesheet_uri resolves to the child theme when one is
 		 * active, so a child theme can override the design system without
 		 * this file changing.
+		 *
+		 * When there is a child theme the parent goes first, and the
+		 * dependency is decided here, before anything is enqueued, which
+		 * is the only point at which it can be. This used to enqueue
+		 * 'kaamase' with no dependencies and then try to re-enqueue it
+		 * with one, but wp_enqueue_style does not re-register a handle
+		 * that already exists, so the second call was discarded and the
+		 * ordering it was reaching for never happened. A child theme's
+		 * overrides could load before the design system they override.
 		 */
-		wp_enqueue_style(
-			'kaamase',
-			get_stylesheet_uri(),
-			array(),
-			KAAMASE_ASSET_VERSION
-		);
+		$deps = array();
 
-		// Parent styles first when a child theme is in use.
 		if ( is_child_theme() ) {
+
 			wp_enqueue_style(
 				'kaamase-parent',
 				KAAMASE_URI . 'style.css',
@@ -59,15 +63,15 @@ if ( ! function_exists( 'kaamase_enqueue_frontend' ) ) {
 				KAAMASE_ASSET_VERSION
 			);
 
-			wp_style_add_data( 'kaamase', 'after', '' );
-			wp_dequeue_style( 'kaamase' );
-			wp_enqueue_style(
-				'kaamase',
-				get_stylesheet_uri(),
-				array( 'kaamase-parent' ),
-				KAAMASE_ASSET_VERSION
-			);
+			$deps[] = 'kaamase-parent';
 		}
+
+		wp_enqueue_style(
+			'kaamase',
+			get_stylesheet_uri(),
+			$deps,
+			KAAMASE_ASSET_VERSION
+		);
 
 		/*
 		 * Theme script.

@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of fourteen files taken from inside them.
+the patched versions of twenty-one files taken from inside them.
 
 ## What to copy where
 
@@ -25,6 +25,11 @@ the patched versions of fourteen files taken from inside them.
 | `fixed/kaamase-core/includes/post-job.php` | `wp-content/plugins/kaamase-core/includes/post-job.php` |
 | `fixed/kaamase-core/includes/fields.php` | `wp-content/plugins/kaamase-core/includes/fields.php` |
 | `fixed/kaamase-core/includes/post-types.php` | `wp-content/plugins/kaamase-core/includes/post-types.php` |
+| `fixed/kaamase-core/includes/taxonomies.php` | `wp-content/plugins/kaamase-core/includes/taxonomies.php` |
+| `fixed/kaamase-core/includes/roles.php` | `wp-content/plugins/kaamase-core/includes/roles.php` |
+| `fixed/kaamase-pay/includes/webhook.php` | `wp-content/plugins/kaamase-pay/includes/webhook.php` |
+| `fixed/kaamase/assets/js/app.js` | `wp-content/themes/kaamase/assets/js/app.js` |
+| `fixed/kaamase-core/includes/install.php` | `wp-content/plugins/kaamase-core/includes/install.php` |
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
 
@@ -272,6 +277,85 @@ fallback without it.
 
 **Test:** open `/workers/` on the default sort on two consecutive days. Workers
 who were shown a lot yesterday should sit lower today.
+
+## 11. The rest of the correctness list — six files
+
+Six small independent faults.
+
+**`contact.php`** — `kaamase_may_contact_home_worker()` takes a user id, but the
+verifier bypass asked `current_user_can()`, i.e. whoever was making the request.
+Correct today because the only caller passes the current user; wrong the moment
+cron or the API asks on someone else's behalf. ⚠️ *Third revision — copy again.*
+
+**`roles.php`** — the media-library restriction ran on **every** query on the
+site, front end included, forcing `author = you` onto anything asking for
+attachments. A signed-in worker opening someone else's job photos was quietly
+shown only their own uploads. Now limited to the media library and the REST media
+endpoint, and it steps aside for a query that names its parent.
+
+**`taxonomies.php`** — trade matching returned the first term matching either
+exactly *or* partially, in whatever order `get_terms()` gave them, so "driver"
+landing on Driver rather than Tractor driver was alphabetical luck. Exact matches
+are now tried across every term before any partial one.
+
+The seed list has always claimed Mistri was carried as an alias for Mason. No
+description was ever written and nothing ever read one — so **typing "mistri"
+found nothing**. That alias list now exists, with the words people actually use:
+mistri, beldar, chowkidar, kamwali, darzi, mali, bar bender, ayah and so on.
+
+**`app.js`** — all ten enhancements sat inside one `try` block, which defeats the
+point of having one: a throw in the first skipped the other nine. The first is
+`setUpMenus`, which collapses the menus *before* attaching the buttons that
+reopen them — so a throw there produced exactly the state its own comment said
+must never happen. Each now fails alone.
+
+**`enqueue.php`** — enqueued the stylesheet with no dependencies, then tried to
+re-enqueue it with one. `wp_enqueue_style()` does not re-register an existing
+handle, so the second call was discarded and a child theme's overrides could load
+*before* the design system. ⚠️ *Second revision — copy again.*
+
+**`webhook.php`** — decided whether an insert failed on a duplicate key by
+searching the MySQL error text for the word "duplicate". That is the server's
+language, not an interface: another locale or a differently-worded MariaDB
+release turns every duplicate into an unrecognised failure, which falls through
+to the permissive branch and lets Razorpay's retries be processed as new. It now
+asks whether the row is there. **Signature verification untouched.**
+
+**Test:** search for "mistri" — it should find masons. Open another worker's job
+photos while signed in as a worker; all photos should show.
+
+## 12. Performance, and the field agent fix — three files
+
+**`install.php`** — `kaamase_page_url()` rebuilt every page definition on every
+call, and four of those definitions run the starter-content builders, which
+assemble ~4.8KB of block markup through dozens of translation calls. It is called
+from **72 places, 20 on the dashboard alone** — so one dashboard load built that
+content twenty times over, to read twenty slugs.
+
+Definitions are now built once per request, resolved URLs are memoised (and
+cleared when pages are rebuilt), and `kaamase_pages` is autoloaded rather than
+fetched separately each time. **~95% less work on a dashboard load.**
+
+**`functions.php`** ⚠️ *2nd revision* — `kaamase_svg()` did a disk read, a regex
+and a full `wp_kses()` pass on every call. A worker card carries a pin and a
+phone, so twenty cards paid for forty of them. Read and sanitising are now cached
+per icon per request; only the attributes are injected per call. **Output is
+byte-identical for all ten icons.** ~95% less work, and more in practice since
+real `wp_kses()` is dearer than the stand-in used to measure it.
+
+**`fields.php`** ⚠️ *2nd revision* — **field agents can now see phone numbers.**
+`kaamase_can_see_private()` was owner-or-administrator, and an agent is neither.
+Your launch plan has agents registering workers in person at a labour point — they
+could create and edit a profile but could not see the number on it, **not even
+the one they had just typed in**, so they could not check their own work.
+
+Scoped to workers and teams only, using the capability they already hold, so it
+grants nothing they could not already change. Employers and jobs unaffected. The
+rest of the privacy layer is byte-identical.
+
+**Test:** sign in as a field agent, open a worker profile, and confirm the phone
+number is visible. Then confirm an *employer* profile still hides its number from
+that same agent.
 
 ---
 

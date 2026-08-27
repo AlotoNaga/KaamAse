@@ -169,8 +169,18 @@ if ( ! function_exists( 'kaamase_may_contact_home_worker' ) ) {
 
 		$user_id = (int) $user_id;
 
-		// Staff, and anybody who does the verifying, are never held up.
-		if ( current_user_can( 'kaamase_verify_workers' ) ) {
+		/*
+		 * Staff, and anybody who does the verifying, are never held up.
+		 *
+		 * user_can against the account passed in, not current_user_can.
+		 * This function takes a user id and every other line in it
+		 * honours that; this one line asked about whoever happened to be
+		 * making the request. Correct today because the only caller
+		 * passes the current user, wrong the moment anything asks on
+		 * somebody else's behalf: cron, the API, or a field agent acting
+		 * for a worker.
+		 */
+		if ( user_can( $user_id, 'kaamase_verify_workers' ) ) {
 			return true;
 		}
 
