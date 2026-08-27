@@ -645,22 +645,41 @@ if ( ! function_exists( 'kaamase_match_trade' ) ) {
 			}
 		}
 
-		$terms = get_terms(
-			array(
-				'taxonomy'   => 'kaamase_trade',
-				'hide_empty' => false,
-			)
-		);
+		/*
+		 * Fetched and flattened once per request.
+		 *
+		 * Every call used to run a fresh get_terms and then flatten each
+		 * name again. Fine for one form submission, expensive in an
+		 * import or anywhere a trade is resolved per row.
+		 */
+		static $flat = null;
 
-		if ( is_wp_error( $terms ) ) {
-			return '';
+		if ( null === $flat ) {
+
+			$terms = get_terms(
+				array(
+					'taxonomy'   => 'kaamase_trade',
+					'hide_empty' => false,
+				)
+			);
+
+			$flat = array();
+
+			if ( ! is_wp_error( $terms ) ) {
+				foreach ( $terms as $candidate ) {
+
+					$name = function_exists( 'kaamase_flatten_place' )
+						? kaamase_flatten_place( $candidate->name )
+						: strtolower( preg_replace( '/[^a-z0-9]+/i', '', $candidate->name ) );
+
+					$flat[ $candidate->slug ] = $name;
+				}
+			}
 		}
 
-		$flatten = static function ( $value ) {
-			return function_exists( 'kaamase_flatten_place' )
-				? kaamase_flatten_place( $value )
-				: strtolower( preg_replace( '/[^a-z0-9]+/i', '', $value ) );
-		};
+		if ( empty( $flat ) ) {
+			return '';
+		}
 
 		/*
 		 * Every exact match is tried before any partial one.
@@ -671,18 +690,15 @@ if ( ! function_exists( 'kaamase_match_trade' ) ) {
 		 * Driver rather than Tractor driver by alphabetical luck, not
 		 * by design, and a renamed trade could silently flip it.
 		 */
-		foreach ( $terms as $candidate ) {
-			if ( $flatten( $candidate->name ) === $needle ) {
-				return $candidate->slug;
+		foreach ( $flat as $slug => $name ) {
+			if ( $name === $needle ) {
+				return $slug;
 			}
 		}
 
-		foreach ( $terms as $candidate ) {
-
-			$name = $flatten( $candidate->name );
-
+		foreach ( $flat as $slug => $name ) {
 			if ( strlen( $needle ) > 3 && false !== strpos( $name, $needle ) ) {
-				return $candidate->slug;
+				return $slug;
 			}
 		}
 
