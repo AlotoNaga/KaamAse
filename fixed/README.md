@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty-six files taken from inside them, plus three
+the patched versions of twenty-seven files taken from inside them, plus three
 new translation templates.
 
 ## What to copy where
@@ -35,6 +35,7 @@ new translation templates.
 | `fixed/kaamase-core/includes/districts.php` | `wp-content/plugins/kaamase-core/includes/districts.php` |
 | `fixed/kaamase-pay/kaamase-pay.php` | `wp-content/plugins/kaamase-pay/kaamase-pay.php` |
 | `fixed/kaamase-core/kaamase-core.php` | `wp-content/plugins/kaamase-core/kaamase-core.php` |
+| `fixed/kaamase/front-page.php` | `wp-content/themes/kaamase/front-page.php` |
 
 **New folders to create** (they do not exist on your site yet):
 
@@ -570,6 +571,38 @@ in the admin — you should see 13 headings and 98 trades. Then post a job and
 check the trade dropdown groups them under the new headings. Search the worker
 list for `saloon`, `ward boy` and `telecaller`; each should return the right
 trade rather than nothing.
+
+## 17. `kaamase/front-page.php` — "See all" moved under the cards
+
+⚠️ *`kaamase.pot` is a 2nd revision — copy it again with this one.*
+
+Both front page sections put their **See all** link level with the heading, at
+the top. On a phone the card grid is one column, so six cards is a long scroll
+and that link has been off the screen since the second card. Somebody who read
+the whole list and wanted more had to scroll back up to find it.
+
+It now sits **under the last card**, which is where that person already is. Both
+sections: *Work posted recently* and *Available now*.
+
+Two smaller changes came with it:
+
+- **The links are named.** `See all` became **See all jobs** and **See all
+  workers**. Beside a heading the word *all* borrowed its meaning from the
+  heading; under the cards it no longer does. It also reads correctly to
+  somebody using a screen reader, who hears links out of order.
+- **Outline instead of ghost.** The ghost style is deliberately low-contrast,
+  which suits a small link tucked beside a heading and does not suit the one
+  thing you want tapped at the end of a list.
+
+No new CSS. `ka-btn--outline`, `ka-center` and `ka-mt-6` were already in
+`style.css`, so `style.css` is **not** in this change and does not need copying.
+
+**This is the website only.** If the app's home screen has the same pattern it is
+a separate change on that side — the app does not read this template.
+
+**Test:** open the front page on a phone. Scroll to the bottom of *Available
+now*; the button should be there, and it should go to the workers listing. Same
+for *Work posted recently*.
 
 ---
 
