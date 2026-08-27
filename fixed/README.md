@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twelve files taken from inside them.
+the patched versions of fourteen files taken from inside them.
 
 ## What to copy where
 
@@ -23,6 +23,8 @@ the patched versions of twelve files taken from inside them.
 | `fixed/kaamase-core/includes/registration.php` | `wp-content/plugins/kaamase-core/includes/registration.php` |
 | `fixed/kaamase-core/includes/reports.php` | `wp-content/plugins/kaamase-core/includes/reports.php` |
 | `fixed/kaamase-core/includes/post-job.php` | `wp-content/plugins/kaamase-core/includes/post-job.php` |
+| `fixed/kaamase-core/includes/fields.php` | `wp-content/plugins/kaamase-core/includes/fields.php` |
+| `fixed/kaamase-core/includes/post-types.php` | `wp-content/plugins/kaamase-core/includes/post-types.php` |
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
 
@@ -209,6 +211,67 @@ notices are unchanged.
 **Test:** exhaust a limit (e.g. submit six reports in an hour), then clear your
 object cache or press Clear Transients, and confirm you are *still* blocked.
 Before this change you would have been let straight back in.
+
+## 8. `kaamase-core/includes/fields.php` — phone numbers written as 0091
+
+The `0091` branch in `kaamase_sanitize_phone()` tested for a length of **13**.
+`0091` is four digits and an Indian mobile is ten, so the string it was meant to
+catch is **fourteen** long — the branch never matched once.
+
+Anyone who wrote their number the way it is printed on a visiting card
+(`0091 98560 12345`) fell through every branch, failed the ten-digit check, and
+was told at registration *"That phone number does not look right."* They were
+turned away, not stored wrong.
+
+Prefixes are now peeled in order instead of matched against fixed lengths, so
+`0091`, `+91`, `91` and a plain trunk zero all reduce to the same ten digits. A
+real ten-digit number that happens to start `91` is still left alone.
+
+Also fixed `kaamase_save_field()`, which compared with `===` against a value
+WordPress stores as a string — so it reported failure for every int, float and
+bool field. Nothing checks the return today; it was a trap for whoever checked
+it first.
+
+**Test:** register with `0091 98560 12345`. It should be accepted and stored as
+`9856012345`.
+
+## 9. `kaamase-core/includes/post-types.php` — jobs that never closed
+
+Three faults in the daily task:
+
+- It said "Batched" but took 100 jobs and returned. The task runs once a day, so
+  the first day more than 100 expired began a backlog that **could never clear**
+  — and every job in it stayed in front of workers as though it were open. It
+  now runs until done, with a 20-second guard for cheap hosting.
+- **A job with no `expires` row was immortal.** The closing query only matched
+  rows that exist and are in the past. Those now get an expiry dated from when
+  the job was *published*, so an old one closes on the next pass rather than
+  being handed another three weeks.
+- `kaamase_clear_profile_cache()` called `get_post()` on `deleted_post`, which
+  fires *after* the row is gone — so it returned null and cleared nothing.
+
+**Test:** if you have jobs sitting open past their date, they should clear within
+a day of deploying. Check Jobs in wp-admin for anything old still marked
+Published.
+
+## 10. `kaamase-core/includes/queries.php` — the fair exposure rule was dead code
+
+`exposure.php` and `queries.php` both answer the `kaamase_rotate` sentinel, both
+sit on `posts_orderby` at priority 10, and both return a complete clause that
+discards whatever came in. `exposure.php` loads first alphabetically, so it built
+its clause and `kaamase_rotation_orderby()` then threw it away — every request.
+
+So the rule that stops the same few workers being shown all day while everybody
+else waits **had never once taken effect**, on the website or in the app. Your
+default worker sort was the simpler rotation the whole time.
+
+Rotation now stands down when `exposure.php` is present, and stays as the
+fallback without it.
+
+⚠️ **Copy `queries.php` again** — this is its third revision.
+
+**Test:** open `/workers/` on the default sort on two consecutive days. Workers
+who were shown a lot yesterday should sit lower today.
 
 ---
 
