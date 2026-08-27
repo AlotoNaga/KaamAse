@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty-one files taken from inside them.
+the patched versions of twenty-three files taken from inside them.
 
 ## What to copy where
 
@@ -30,6 +30,8 @@ the patched versions of twenty-one files taken from inside them.
 | `fixed/kaamase-pay/includes/webhook.php` | `wp-content/plugins/kaamase-pay/includes/webhook.php` |
 | `fixed/kaamase/assets/js/app.js` | `wp-content/themes/kaamase/assets/js/app.js` |
 | `fixed/kaamase-core/includes/install.php` | `wp-content/plugins/kaamase-core/includes/install.php` |
+| `fixed/kaamase/inc/performance.php` | `wp-content/themes/kaamase/inc/performance.php` |
+| `fixed/kaamase-core/includes/districts.php` | `wp-content/plugins/kaamase-core/includes/districts.php` |
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
 
@@ -356,6 +358,51 @@ rest of the privacy layer is byte-identical.
 **Test:** sign in as a field agent, open a worker profile, and confirm the phone
 number is visible. Then confirm an *employer* profile still hides its number from
 that same agent.
+
+## 13. The rest of performance, and failed-payment warnings — five files
+
+**`performance.php`** — Heartbeat was deregistered on `init`, and deregistering a
+script instantiates `wp_scripts()`, which fires `wp_default_scripts` and
+registers every script WordPress ships. That happened on **every request**,
+including REST, cron and admin-ajax — none of which was ever going to print a
+script tag. Moved to `wp_enqueue_scripts`.
+
+**`enqueue.php`** ⚠️ *3rd revision* — the stylesheet preload is gone. It printed a
+few tags above the stylesheet link, in the same head, so the browser discovered
+both in the same parse; the gain was nil, as its own note admitted. The risk was
+not nil: it built its own URL while the link got one from `WP_Styles`, so
+anything rewriting one and not the other made the browser **fetch the stylesheet
+twice** — the most expensive possible mistake on a 2G connection.
+
+**`districts.php`** — matching walked all seventeen districts calling
+`remove_accents()` and a regex over every name, alias and town, on every lookup.
+Now built once into a flattened map: **98% less work** over 500 lookups.
+
+Every district also now answers to "X Town". Only Mon, Phek, Wokha and Meluri
+carried that alias — yet `kaamase_sanitize_district`'s own note has always used
+*"somebody wrote Kohima Town instead of Kohima"* as its example of what must not
+cost a registration. Kohima was one of the thirteen where it didn't work.
+
+**`taxonomies.php`** ⚠️ *2nd revision* — trade terms were refetched and
+reflattened on every match. Cached per request.
+
+**`webhook.php`** ⚠️ *2nd revision* — **failed payments are now handled.** Nothing
+listened for them, so a subscriber whose card expired simply stopped being
+charged, ran to the date the last payment bought, and lapsed — the first anyone
+knew was the customer asking where their allowance had gone.
+
+`payment.failed` and `subscription.pending` are now recorded and the person is
+emailed, **once a day at most** (Razorpay retries, and four identical worrying
+emails is the fastest way to make someone cancel out of confusion). Nothing is
+taken away on a failure — the existing `halted` handler still deals with a
+subscription that gives up.
+
+The `failed` status was already in the account screen's vocabulary as "did not go
+through". Nothing had ever written it.
+
+**Test:** in Razorpay test mode, trigger a failed subscription charge. The
+customer should get one email, and the payment should show as "did not go
+through" on their account screen.
 
 ---
 
