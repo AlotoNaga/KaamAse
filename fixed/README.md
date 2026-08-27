@@ -5,7 +5,8 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty-three files taken from inside them.
+the patched versions of twenty-five files taken from inside them, plus three
+new translation templates.
 
 ## What to copy where
 
@@ -32,6 +33,15 @@ the patched versions of twenty-three files taken from inside them.
 | `fixed/kaamase-core/includes/install.php` | `wp-content/plugins/kaamase-core/includes/install.php` |
 | `fixed/kaamase/inc/performance.php` | `wp-content/themes/kaamase/inc/performance.php` |
 | `fixed/kaamase-core/includes/districts.php` | `wp-content/plugins/kaamase-core/includes/districts.php` |
+| `fixed/kaamase-pay/kaamase-pay.php` | `wp-content/plugins/kaamase-pay/kaamase-pay.php` |
+
+**New folders to create** (they do not exist on your site yet):
+
+| Copy this file | Into this new folder |
+| --- | --- |
+| `fixed/kaamase-core/languages/kaamase-core.pot` | `wp-content/plugins/kaamase-core/languages/` |
+| `fixed/kaamase/languages/kaamase.pot` | `wp-content/themes/kaamase/languages/` |
+| `fixed/kaamase-pay/languages/kaamase-pay.pot` | `wp-content/plugins/kaamase-pay/languages/` |
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
 
@@ -403,6 +413,32 @@ through". Nothing had ever written it.
 **Test:** in Razorpay test mode, trigger a failed subscription charge. The
 customer should get one email, and the payment should show as "did not go
 through" on their account screen.
+
+## 14. Translation templates, and a spelling that must not be "fixed"
+
+Every user-facing string in all three packages already goes through a translation
+function — rare discipline, and clearly done on purpose for the Nagamese build.
+But **no `.pot` file shipped anywhere**, so nobody could start translating: there
+was nothing to open.
+
+Generated now, **1,699 strings**: 1,303 core, 228 theme, 166 payments. Contexts
+and plural forms carried through. Escaping was checked — two core strings contain
+literal double quotes and would have made the file unreadable to every
+translation tool had they gone in raw.
+
+**`kaamase-pay` never loaded its text domain.** It declared `Text Domain:
+kaamase-pay` but had no `Domain Path` header and no `load_plugin_textdomain()`
+call, so its 166 strings could never have been translated whatever anyone put in
+a `.po` file. The other two packages both did this; this one was missed. Fixed.
+
+**`Aquqhnaqua` is now marked in `districts.php` as correct and not to be
+changed.** It is a circle of Dimapur district and that is the local spelling. It
+looks like a typo from outside Nagaland and has already been queried once, so the
+note is there to stop the next person quietly correcting it into something wrong.
+
+**To start translating:** open the `.pot` in Poedit, save as
+`kaamase-core-nag.po` (or your chosen locale code) in the same folder, and Poedit
+writes the `.mo` WordPress actually loads.
 
 ---
 
