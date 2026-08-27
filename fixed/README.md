@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty files taken from inside them.
+the patched versions of twenty-one files taken from inside them.
 
 ## What to copy where
 
@@ -29,6 +29,7 @@ the patched versions of twenty files taken from inside them.
 | `fixed/kaamase-core/includes/roles.php` | `wp-content/plugins/kaamase-core/includes/roles.php` |
 | `fixed/kaamase-pay/includes/webhook.php` | `wp-content/plugins/kaamase-pay/includes/webhook.php` |
 | `fixed/kaamase/assets/js/app.js` | `wp-content/themes/kaamase/assets/js/app.js` |
+| `fixed/kaamase-core/includes/install.php` | `wp-content/plugins/kaamase-core/includes/install.php` |
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
 
@@ -322,6 +323,39 @@ asks whether the row is there. **Signature verification untouched.**
 
 **Test:** search for "mistri" — it should find masons. Open another worker's job
 photos while signed in as a worker; all photos should show.
+
+## 12. Performance, and the field agent fix — three files
+
+**`install.php`** — `kaamase_page_url()` rebuilt every page definition on every
+call, and four of those definitions run the starter-content builders, which
+assemble ~4.8KB of block markup through dozens of translation calls. It is called
+from **72 places, 20 on the dashboard alone** — so one dashboard load built that
+content twenty times over, to read twenty slugs.
+
+Definitions are now built once per request, resolved URLs are memoised (and
+cleared when pages are rebuilt), and `kaamase_pages` is autoloaded rather than
+fetched separately each time. **~95% less work on a dashboard load.**
+
+**`functions.php`** ⚠️ *2nd revision* — `kaamase_svg()` did a disk read, a regex
+and a full `wp_kses()` pass on every call. A worker card carries a pin and a
+phone, so twenty cards paid for forty of them. Read and sanitising are now cached
+per icon per request; only the attributes are injected per call. **Output is
+byte-identical for all ten icons.** ~95% less work, and more in practice since
+real `wp_kses()` is dearer than the stand-in used to measure it.
+
+**`fields.php`** ⚠️ *2nd revision* — **field agents can now see phone numbers.**
+`kaamase_can_see_private()` was owner-or-administrator, and an agent is neither.
+Your launch plan has agents registering workers in person at a labour point — they
+could create and edit a profile but could not see the number on it, **not even
+the one they had just typed in**, so they could not check their own work.
+
+Scoped to workers and teams only, using the capability they already hold, so it
+grants nothing they could not already change. Employers and jobs unaffected. The
+rest of the privacy layer is byte-identical.
+
+**Test:** sign in as a field agent, open a worker profile, and confirm the phone
+number is visible. Then confirm an *employer* profile still hides its number from
+that same agent.
 
 ---
 
