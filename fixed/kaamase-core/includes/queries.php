@@ -566,6 +566,26 @@ if ( ! function_exists( 'kaamase_rotation_orderby' ) ) {
 			return $orderby;
 		}
 
+		/*
+		 * Stand down when exposure.php is present.
+		 *
+		 * Both files answer the same sentinel, both are on posts_orderby
+		 * at priority 10, and both return a complete clause that throws
+		 * away whatever came in. exposure.php loads first alphabetically,
+		 * so it built its clause and this function then discarded it on
+		 * every single request. The fair exposure rule, the one that
+		 * stops the same few workers being shown all day while everybody
+		 * else waits, had never once taken effect on the website or in
+		 * the app.
+		 *
+		 * exposure.php does everything this does and adds that rule, so
+		 * it is the one to keep. This stays as the fallback for a site
+		 * running without it.
+		 */
+		if ( function_exists( 'kaamase_exposure_orderby' ) ) {
+			return $orderby;
+		}
+
 		global $wpdb;
 
 		// Changes once a day.
