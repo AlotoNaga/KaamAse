@@ -367,9 +367,39 @@ if ( ! function_exists( 'kaamase_svg' ) ) {
 			return '';
 		}
 
-		$file = KAAMASE_DIR . 'assets/icons/' . $name . '.svg';
+		/*
+		 * Read and sanitised once per icon per request.
+		 *
+		 * Every call used to do a disk read, a regex and a full wp_kses
+		 * pass. wp_kses is one of the more expensive things in
+		 * WordPress, and a page here draws the same handful of icons
+		 * over and over: every worker card carries a pin and a phone,
+		 * so a list of twenty cards paid for forty of them.
+		 *
+		 * Only the per call attributes differ, and those are injected
+		 * after this, so the expensive half is the half worth keeping.
+		 */
+		static $clean = array();
 
-		if ( ! file_exists( $file ) ) {
+		if ( ! isset( $clean[ $name ] ) ) {
+
+			$file = KAAMASE_DIR . 'assets/icons/' . $name . '.svg';
+
+			if ( ! file_exists( $file ) ) {
+
+				$clean[ $name ] = '';
+
+				return '';
+			}
+
+			$raw = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			$clean[ $name ] = ( false === $raw )
+				? ''
+				: wp_kses( trim( $raw ), kaamase_svg_allowed_tags() );
+		}
+
+		if ( '' === $clean[ $name ] ) {
 			return '';
 		}
 
@@ -380,11 +410,7 @@ if ( ! function_exists( 'kaamase_svg' ) ) {
 		);
 
 		$args = wp_parse_args( $args, $defaults );
-		$svg  = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-
-		if ( false === $svg ) {
-			return '';
-		}
+		$svg  = $clean[ $name ];
 
 		$attributes = sprintf(
 			' width="%1$d" height="%2$d" class="ka-icon %3$s" %4$s',
@@ -396,9 +422,20 @@ if ( ! function_exists( 'kaamase_svg' ) ) {
 				: 'aria-hidden="true" focusable="false"'
 		);
 
-		$svg = preg_replace( '/^<svg/', '<svg' . $attributes, trim( $svg ), 1 );
-
-		return wp_kses( $svg, kaamase_svg_allowed_tags() );
+		/*
+		 * Not run through kses again here, and that is deliberate.
+		 *
+		 * The file content was sanitised on the way into the cache
+		 * above, which is the part that could carry anything unexpected
+		 * if somebody ever gained write access to the icons folder. The
+		 * attributes added on this line are built from absint and
+		 * esc_attr in the block above, so they are safe by
+		 * construction rather than by inspection.
+		 *
+		 * Running the expensive pass a second time over a string we
+		 * just sanitised would undo the whole point of caching it.
+		 */
+		return preg_replace( '/^<svg/', '<svg' . $attributes, $svg, 1 );
 	}
 }
 

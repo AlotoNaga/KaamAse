@@ -640,7 +640,34 @@ if ( ! function_exists( 'kaamase_can_see_private' ) ) {
 			return true;
 		}
 
-		return function_exists( 'kaamase_user_owns' ) && kaamase_user_owns( $post_id );
+		if ( function_exists( 'kaamase_user_owns' ) && kaamase_user_owns( $post_id ) ) {
+			return true;
+		}
+
+		/*
+		 * Field agents, on the profiles they are responsible for.
+		 *
+		 * The launch plan is somebody walking to a labour point in
+		 * Dimapur and registering workers by hand, because most of them
+		 * will not do it themselves. That person could create and edit a
+		 * worker profile but could not see the phone number on it, not
+		 * even the one they had just typed in, because this test was
+		 * owner or administrator and an agent is neither. They could not
+		 * check their own typing, and they could not ring the worker
+		 * back to correct it.
+		 *
+		 * Scoped to the post type they already have moderator rights
+		 * over, so it grants nothing new: an agent who can edit a
+		 * profile can already change that number. It does not extend to
+		 * employers or to jobs.
+		 */
+		$post = get_post( $post_id );
+
+		if ( $post && in_array( $post->post_type, array( 'kaamase_worker', 'kaamase_gang' ), true ) ) {
+			return current_user_can( 'edit_others_kaamase_workers' );
+		}
+
+		return false;
 	}
 }
 
