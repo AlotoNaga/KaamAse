@@ -121,6 +121,16 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 				'towns'   => array( 'Mon', 'Naginimora', 'Tizit', 'Aboi', 'Chen', 'Wakching', 'Phomching', 'Tobu', 'Longshen' ),
 			),
 
+			/*
+			 * Aquqhnaqua is spelled correctly. Leave it alone.
+			 *
+			 * It is a circle of Dimapur district and that is the local
+			 * spelling, confirmed by the people who live there. It looks
+			 * like a typo to anybody reading this list from outside
+			 * Nagaland, and it has already been queried once during a
+			 * code review. Written down here so the next person does not
+			 * quietly correct it into something wrong.
+			 */
 			'niuland' => array(
 				'name'    => 'Niuland',
 				'hq'      => 'Niuland',
