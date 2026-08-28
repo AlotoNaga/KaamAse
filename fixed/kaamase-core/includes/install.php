@@ -60,6 +60,70 @@ if ( ! function_exists( 'kaamase_maybe_install' ) ) {
 }
 add_action( 'init', 'kaamase_maybe_install', 20 );
 
+if ( ! function_exists( 'kaamase_heal_pages' ) ) {
+	/**
+	 * Create any page that is defined but missing.
+	 *
+	 * Why this exists
+	 * ---------------
+	 * Page creation used to happen only inside kaamase_upgrade(), which
+	 * runs once, when the stored schema number is lower than the one in
+	 * the plugin file. On a site whose files are replaced one at a time
+	 * by hand, that is a race with a live audience:
+	 *
+	 *   1. kaamase-core.php lands, carrying the new schema number.
+	 *   2. A visitor loads any page. The upgrade runs, using the OLD
+	 *      install.php, whose page list does not have the new page in
+	 *      it. It creates nothing, and writes the new schema number.
+	 *   3. The new install.php lands a minute later. Its page list is
+	 *      never read, because the schema now matches and the upgrade
+	 *      never runs again.
+	 *
+	 * The page is then missing permanently, re-copying the files does
+	 * not fix it, and the only visible symptom is a 404 on a URL that
+	 * the menu is already linking to. That is exactly what happened.
+	 *
+	 * So the definitions are the authority now, not a version number.
+	 * Anything defined and missing is created.
+	 *
+	 * Admin only, and not during AJAX or cron, because building the
+	 * definitions runs the starter content builders. Admin screen loads
+	 * are rare and already heavy; the front end must not pay for this.
+	 *
+	 * @since 1.4.2
+	 * @return void
+	 */
+	function kaamase_heal_pages() {
+
+		if ( wp_doing_ajax() || wp_doing_cron() ) {
+			return;
+		}
+
+		$stored = (array) get_option( 'kaamase_pages', array() );
+
+		foreach ( kaamase_page_definitions() as $name => $page ) {
+
+			if ( ! empty( $stored[ $name ] ) && 'page' === get_post_type( $stored[ $name ] ) ) {
+				continue;
+			}
+
+			/*
+			 * One is missing. kaamase_create_pages() handles the whole
+			 * list, including finding a page somebody made by hand with
+			 * the same slug, so it is called once and then we stop.
+			 */
+			kaamase_create_pages();
+
+			// A new page needs its permalink to resolve.
+			update_option( 'kaamase_core_flush_rewrite', 1, false );
+
+			return;
+		}
+	}
+}
+add_action( 'admin_init', 'kaamase_heal_pages' );
+
+
 
 /* ==========================================================================
    2. FIRST INSTALL

@@ -767,6 +767,53 @@ a wall teaches people the header is not worth reading.
 confirmed account and the list should appear. Check that a brand new employer who
 has hired nobody still shows when you sort by "Most workers hired".
 
+## 20. The page that never got created — read this if `/employers/` 404s
+
+⚠️ *`install.php`, `kaamase-core.php` and `kaamase-core.pot` are new revisions —
+copy again. **This supersedes the schema bump in fix 19.***
+
+**This was my mistake, and it bit on the live site.**
+
+Fix 19 created the Who is hiring page inside `kaamase_upgrade()`, which runs once
+— when the schema number stored in the database is lower than the one in
+`kaamase-core.php`. On a site whose files are replaced **one at a time, by hand,
+while visitors are on it**, that is a race:
+
+1. `kaamase-core.php` lands, carrying schema 4.
+2. A visitor loads any page. The upgrade runs — using the **old** `install.php`,
+   whose page list has no employers page. It creates nothing, and writes 4.
+3. The new `install.php` lands a minute later. Its page list is never read,
+   because the schema already matches and the upgrade never runs again.
+
+The page is then missing **permanently**, re-copying the files does not fix it,
+and the only symptom is a 404 on a URL the menu is already linking to.
+
+### The fix, in two parts
+
+**Schema 4 → 5**, so the upgrade runs once more on your site and creates the page.
+That alone unblocks you.
+
+**Page creation no longer depends on a version number.** A new
+`kaamase_heal_pages()` runs on admin screen loads, compares the defined pages
+against what exists, and creates anything missing. The definitions are the
+authority now, so a page can never again go missing because of the order files
+were copied in. It skips AJAX and cron, so nothing on the front end pays for it,
+and it stops as soon as everything is present.
+
+### What to do
+
+Copy these three, `kaamase-core.php` **last**:
+
+1. `fixed/kaamase-core/includes/install.php`
+2. `fixed/kaamase-core/languages/kaamase-core.pot`
+3. `fixed/kaamase-core/kaamase-core.php`
+
+Then **open wp-admin** — any screen. That is what triggers the heal. Then load
+`/employers/`.
+
+If it still 404s, the page exists but its URL rule is stale: **Settings →
+Permalinks → Save Changes**, without changing anything.
+
 ---
 
 ## Not changed, and why
