@@ -160,7 +160,7 @@ add_filter( 'kaamase_paid_allowance', 'kaamase_pay_allowance', 10, 3 );
  * @param string $subscription_id Razorpay subscription, when there is one.
  * @return bool
  */
-function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '' ) {
+function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '', $origin = 'razorpay' ) {
 
 	$user_id = (int) $user_id;
 	$plan    = kaamase_pay_plan( $plan_id );
@@ -174,6 +174,19 @@ function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '' )
 
 	update_user_meta( $user_id, KAAMASE_PAY_PLAN_KEY, $plan_id );
 	update_user_meta( $user_id, KAAMASE_PAY_EXPIRES_KEY, $from + ( $days * DAY_IN_SECONDS ) );
+
+	/*
+	 * Where the money came from, recorded at the moment it arrives.
+	 *
+	 * Defaults to razorpay so that the three callers that existed before
+	 * this parameter did need no editing: every one of them is a
+	 * Razorpay payment. The store webhook passes its own value.
+	 */
+	$origin = (string) $origin;
+
+	if ( '' !== $origin ) {
+		update_user_meta( $user_id, KAAMASE_PAY_ORIGIN_KEY, $origin );
+	}
 
 	if ( $subscription_id ) {
 		update_user_meta( $user_id, KAAMASE_PAY_SUB_KEY, $subscription_id );
@@ -493,6 +506,153 @@ function kaamase_pay_requesting_platform() {
 	return in_array( $header, array( 'ios', 'android' ), true ) ? $header : 'web';
 }
 
+/* ==========================================================================
+   WHERE A PLAN WAS BOUGHT
+
+   Money for the same plan can arrive by three routes, and only one of
+   them can be cancelled from anything we control. Somebody who
+   subscribed inside the iPhone app cancels it in their Apple account and
+   nowhere else; there is no API we can call and no button we can put on
+   a page that will do it for them. Telling them to manage it on the
+   website is sending them somewhere the control cannot exist.
+
+   So the route is written down when the money arrives, and everything
+   that has to say "where do I stop this" reads it.
+   ========================================================================== */
+
+if ( ! defined( 'KAAMASE_PAY_ORIGIN_KEY' ) ) {
+	/** Which route paid for the current plan. */
+	define( 'KAAMASE_PAY_ORIGIN_KEY', '_kaamase_pay_origin' );
+}
+
+if ( ! defined( 'KAAMASE_PAY_STORE_RENEWS_KEY' ) ) {
+	/**
+	 * Whether a store purchase was a renewing subscription.
+	 *
+	 * Deliberately NOT KAAMASE_PAY_SUB_KEY. That key holds a Razorpay
+	 * subscription id and the website's Stop renewing button feeds it
+	 * straight to Razorpay's cancel API. Putting an Apple subscription
+	 * anywhere near it would give people a button that fires a Razorpay
+	 * cancel against an Apple id and fails, which is worse than no
+	 * button at all.
+	 */
+	define( 'KAAMASE_PAY_STORE_RENEWS_KEY', '_kaamase_pay_store_renews' );
+}
+
+if ( ! function_exists( 'kaamase_pay_normalise_origin' ) ) {
+	/**
+	 * Turn RevenueCat's store name into one of ours.
+	 *
+	 * RevenueCat sends the store on every event. Only the two app stores
+	 * matter here, because they are the only ones whose subscriptions are
+	 * cancelled somewhere we cannot reach. Anything else is money we took
+	 * ourselves and can therefore stop ourselves.
+	 *
+	 * An unrecognised value returns an empty string rather than a guess.
+	 * A wrong answer here sends somebody to the wrong place to cancel,
+	 * which is worse than admitting we do not know.
+	 *
+	 * @since 1.4.1
+	 * @param string $store RevenueCat store value.
+	 * @return string app_store, play_store, other, or an empty string.
+	 */
+	function kaamase_pay_normalise_origin( $store ) {
+
+		switch ( strtoupper( trim( (string) $store ) ) ) {
+
+			case 'APP_STORE':
+			case 'MAC_APP_STORE':
+				return 'app_store';
+
+			case 'PLAY_STORE':
+				return 'play_store';
+
+			case 'AMAZON':
+			case 'STRIPE':
+			case 'PADDLE':
+			case 'RC_BILLING':
+			case 'PROMOTIONAL':
+				return 'other';
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_pay_user_origin' ) ) {
+	/**
+	 * Which route paid for this account's plan.
+	 *
+	 * Written by kaamase_pay_grant() from now on. Anybody who bought
+	 * before that existed has no such record, so it is worked out once
+	 * from their payment history and then written down, because the
+	 * question gets asked on every screen that mentions the plan and a
+	 * query per screen is not worth it.
+	 *
+	 * The history can answer it because store-webhook.php has always put
+	 * RevenueCat's store name in the note column of the row it writes.
+	 * That column is free text shared with other things, so it is read
+	 * through the same normaliser and anything unrecognised falls back to
+	 * razorpay, which is what every payment before the apps existed was.
+	 *
+	 * @since 1.4.1
+	 * @param int $user_id User ID.
+	 * @return string razorpay, app_store, play_store or other.
+	 */
+	function kaamase_pay_user_origin( $user_id ) {
+
+		$user_id = (int) $user_id;
+
+		if ( ! $user_id ) {
+			return 'razorpay';
+		}
+
+		$stored = (string) get_user_meta( $user_id, KAAMASE_PAY_ORIGIN_KEY, true );
+
+		if ( '' !== $stored ) {
+			return $stored;
+		}
+
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$note = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT note FROM ' . kaamase_pay_table() . " WHERE user_id = %d AND status = 'paid' ORDER BY id DESC LIMIT 1",
+				$user_id
+			)
+		);
+
+		$origin = kaamase_pay_normalise_origin( (string) $note );
+
+		if ( '' === $origin ) {
+			$origin = 'razorpay';
+		}
+
+		update_user_meta( $user_id, KAAMASE_PAY_ORIGIN_KEY, $origin );
+
+		return $origin;
+	}
+}
+
+if ( ! function_exists( 'kaamase_pay_cancel_where' ) ) {
+	/**
+	 * Where this account cancels, in a word.
+	 *
+	 * @since 1.4.1
+	 * @param string $origin Origin from kaamase_pay_user_origin().
+	 * @return string web, app_store or play_store.
+	 */
+	function kaamase_pay_cancel_where( $origin ) {
+
+		if ( 'app_store' === $origin || 'play_store' === $origin ) {
+			return $origin;
+		}
+
+		return 'web';
+	}
+}
+
 /**
  * What state this account's plan is in, and the sentence that says so.
  *
@@ -526,14 +686,16 @@ function kaamase_pay_plan_state( $user_id ) {
 	$user_id = (int) $user_id;
 
 	$state = array(
-		'status'     => 'none',
-		'name'       => '',
-		'expires'    => 0,
-		'endless'    => false,
-		'renews'     => false,
-		'can_cancel' => false,
-		'sentence'   => '',
-		'note'       => '',
+		'status'       => 'none',
+		'name'         => '',
+		'expires'      => 0,
+		'endless'      => false,
+		'renews'       => false,
+		'can_cancel'   => false,
+		'origin'       => 'razorpay',
+		'cancel_where' => '',
+		'sentence'     => '',
+		'note'         => '',
 	);
 
 	if ( ! $user_id ) {
@@ -555,11 +717,28 @@ function kaamase_pay_plan_state( $user_id ) {
 	$sub_id  = (string) get_user_meta( $user_id, KAAMASE_PAY_SUB_KEY, true );
 	$endless = kaamase_pay_is_endless( $expires );
 	$format  = get_option( 'date_format' );
+	$origin  = kaamase_pay_user_origin( $user_id );
+
+	/*
+	 * A subscription renews whoever is charging for it.
+	 *
+	 * Only Razorpay subscriptions leave a subscription id here, because
+	 * that id is a Razorpay one. A store subscription renews just as
+	 * really, and Apple charges for it just as really, but the server
+	 * had no record of that at all: the grant call from the store
+	 * webhook passes no subscription id, so an iPhone subscriber came
+	 * out of this function as "ending" and was told the plan stops on
+	 * its own and nothing renews, on the morning Apple charged them
+	 * again. The store webhook now writes its own flag.
+	 */
+	$store_renews = (bool) get_user_meta( $user_id, KAAMASE_PAY_STORE_RENEWS_KEY, true );
+	$renews       = ( '' !== $sub_id ) || $store_renews;
 
 	$state['name']    = (string) $plan['name'];
 	$state['expires'] = $expires;
 	$state['endless'] = $endless;
-	$state['renews']  = ( '' !== $sub_id );
+	$state['renews']  = $renews;
+	$state['origin']  = $origin;
 
 	if ( $endless ) {
 
@@ -574,16 +753,26 @@ function kaamase_pay_plan_state( $user_id ) {
 		 */
 		$state['note'] = __( 'There is nothing to cancel and nothing more will be charged.', 'kaamase-pay' );
 
-	} elseif ( '' !== $sub_id ) {
+	} elseif ( $renews ) {
 
-		$state['status']     = 'renewing';
-		$state['can_cancel'] = true;
-		$state['sentence']   = sprintf(
+		$state['status']       = 'renewing';
+		$state['can_cancel']   = true;
+		$state['cancel_where'] = kaamase_pay_cancel_where( $origin );
+		$state['sentence']     = sprintf(
 			/* translators: %s: date */
 			__( 'Renews on %s.', 'kaamase-pay' ),
 			date_i18n( $format, $expires )
 		);
 
+		/*
+		 * Named, because "manage it in your account" is useless advice
+		 * when the account that can stop it belongs to Apple.
+		 */
+		if ( 'app_store' === $state['cancel_where'] ) {
+			$state['note'] = __( 'You bought this in the App Store, so it is stopped there: open Settings, tap your name, then Subscriptions.', 'kaamase-pay' );
+		} elseif ( 'play_store' === $state['cancel_where'] ) {
+			$state['note'] = __( 'You bought this in Google Play, so it is stopped there: open the Play Store, tap your picture, then Payments and subscriptions.', 'kaamase-pay' );
+		}
 	} else {
 
 		$state['status']   = 'ending';
@@ -737,6 +926,20 @@ function kaamase_pay_shape_me( $me, $user_id ) {
 		 */
 		'sentence'       => (string) $state['sentence'],
 		'note'           => (string) $state['note'],
+
+		/*
+		 * Which route paid: razorpay, app_store, play_store or other.
+		 */
+		'origin'         => (string) $state['origin'],
+
+		/*
+		 * Where this is cancelled: web, app_store, play_store, or empty
+		 * when nothing renews. The app switches on this rather than
+		 * guessing from the platform it happens to be running on -- the
+		 * two are not the same, because somebody can subscribe on the
+		 * website and then sign in on an iPhone.
+		 */
+		'cancel_where'   => (string) $state['cancel_where'],
 
 		// Where to manage an existing plan. Not a purchase page.
 		'account_url'    => kaamase_pay_account_url( $user_id ),

@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-four files taken from inside them, one brand new
+the patched versions of thirty-five files taken from inside them, one brand new
 file, plus three translation templates.
 
 ## What to copy where
@@ -20,6 +20,7 @@ file, plus three translation templates.
 | `fixed/kaamase-pay/includes/settings.php` | `wp-content/plugins/kaamase-pay/includes/settings.php` |
 | `fixed/kaamase-pay/includes/access.php` | `wp-content/plugins/kaamase-pay/includes/access.php` |
 | `fixed/kaamase-pay/includes/account.php` | `wp-content/plugins/kaamase-pay/includes/account.php` |
+| `fixed/kaamase-pay/includes/store-webhook.php` | `wp-content/plugins/kaamase-pay/includes/store-webhook.php` |
 | `fixed/kaamase-core/includes/throttle.php` | `wp-content/plugins/kaamase-core/includes/throttle.php` |
 | `fixed/kaamase-core/includes/contact.php` | `wp-content/plugins/kaamase-core/includes/contact.php` |
 | `fixed/kaamase-core/includes/rest-auth.php` | `wp-content/plugins/kaamase-core/includes/rest-auth.php` |
@@ -927,6 +928,80 @@ and only matters once in-app purchases are switched on.
 new line under it saying there is nothing to cancel. Then check `/wp-json/kaamase/v1/me`
 — `plan.status` should be `endless`, `plan.account_url` should be your dashboard,
 and `plan.manage_url` should still be the plans page on the website.
+
+## 23. Where a plan was bought, and where it gets cancelled
+
+⚠️ *`access.php`, `account.php` and `kaamase-pay.pot` are new revisions — copy
+again. `store-webhook.php` is new to the list. **Copy `access.php` before
+`store-webhook.php`.***
+
+### The live bug this found
+
+`kaamase_pay_grant()` writes a subscription marker **only when handed a Razorpay
+subscription id**, and `store-webhook.php` called it without one. So an Apple or
+Google **auto-renewing subscription left the server believing nothing renewed**.
+
+Combined with fix 22, an iPhone subscriber was shown:
+
+> Runs until 3 September, then stops on its own. Nothing renews.
+
+…on the morning Apple charged them again — and `can_cancel` was false, telling
+them there was nothing to cancel when Apple was billing them monthly. That was
+live from the moment in-app purchases were switched on.
+
+### How store billing actually works, for the record
+
+RevenueCat is the middleman. The app buys through the store, RevenueCat verifies
+the receipt, then POSTs to `/wp-json/kaamase-pay/v1/store`. A shared secret in the
+`Authorization` header is the authentication; `event.app_user_id` is the WordPress
+user id; `event.id` is claimed once so retries cannot double-grant. All three
+payment routes end at `kaamase_pay_grant()`.
+
+**Nothing about that verification changed.** The secret check is untouched.
+
+### What is recorded now
+
+RevenueCat sends `event.store` on every event, and `store-webhook.php` was already
+writing it into the payment row's `note` — so **the origin of every store purchase
+you have taken so far is already in your database**. It just was not anywhere the
+plan screen could reach.
+
+- **`kaamase_pay_grant()` takes an optional `$origin`, defaulting to `razorpay`.**
+  The default is what makes `checkout.php` and `webhook.php` need no edit: all
+  three of their calls are Razorpay payments. The store webhook passes its own.
+- **A store subscription now records that it renews**, in a key of its own —
+  deliberately **not** the Razorpay one, because the website's Stop button feeds
+  that key straight to Razorpay's cancel API. An Apple id in there would have
+  produced a button that fails, which is worse than no button.
+- **Anyone who bought before this shipped** gets their origin worked out once from
+  their payment history and written down, so nothing needs migrating by hand.
+
+### What each person is now told
+
+| Bought via | Website | App |
+| --- | --- | --- |
+| Razorpay subscription | Stop renewing button, as before | `cancel_where: web`, open `account_url` |
+| App Store | No button, and says why | `cancel_where: app_store` |
+| Google Play | No button, and says why | `cancel_where: play_store` |
+| Lifetime, any route | Nothing to cancel | `can_cancel: false` |
+
+The website's Stop button is now gated on `cancel_where === 'web'`, so it can never
+fire a Razorpay cancel against a store subscription.
+
+An unrecognised store value returns empty rather than a guess — a wrong answer here
+sends somebody to the wrong place to cancel, which is worse than admitting we do
+not know.
+
+### Not touched
+
+`checkout.php`, `webhook.php`, `razorpay.php`, `plans.php`, `settings.php`,
+`subscribers.php`. All three Razorpay signature verifiers byte-identical, checked
+again.
+
+**Test:** on your dashboard the plan line should read as before. Then check
+`/wp-json/kaamase/v1/me` — `plan.origin` and `plan.cancel_where` should be present.
+If you have a test App Store subscription, confirm it now says *Renews on…* rather
+than *stops on its own*.
 
 ---
 

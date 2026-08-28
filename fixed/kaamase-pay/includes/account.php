@@ -129,7 +129,20 @@ function kaamase_pay_dashboard_section( $user_id ) {
 					<p class="ka-small ka-soft"><?php echo esc_html( (string) $kaamase_state['note'] ); ?></p>
 				<?php endif; ?>
 
-				<?php if ( $sub_id ) : ?>
+				<?php
+				/*
+				 * Gated on the plan state, not on $sub_id alone.
+				 *
+				 * $sub_id holds a RAZORPAY subscription id, and the form
+				 * below hands it to Razorpay's cancel API. A subscription
+				 * bought in the App Store has no such id and cannot be
+				 * stopped by anything on this server, so offering the
+				 * button for one would mean a control that fails, which
+				 * is worse than a control that is honestly absent. The
+				 * note above already tells that person where to go.
+				 */
+				?>
+				<?php if ( $sub_id && 'web' === (string) $kaamase_state['cancel_where'] ) : ?>
 					<?php
 					/*
 					 * Posts to the page it is on, not to wp-admin.
