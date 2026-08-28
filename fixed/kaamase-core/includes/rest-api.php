@@ -381,6 +381,34 @@ if ( ! function_exists( 'kaamase_register_rest_routes' ) ) {
 		);
 
 		/*
+		 * The phones this account is signed in on.
+		 *
+		 * The website has had this since the day tokens were added and
+		 * the app never has, which is backwards: the person whose phone
+		 * was stolen is holding a different phone, and the thing in
+		 * their hand is far more likely to be the app than a browser.
+		 */
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/devices',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_rest_devices',
+				'permission_callback' => $auth,
+			)
+		);
+
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/devices/revoke',
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'kaamase_rest_revoke_device',
+				'permission_callback' => $auth,
+			)
+		);
+
+		/*
 		 * The employer directory.
 		 *
 		 * The only listing on this API that is not open. Browsing
@@ -1549,6 +1577,151 @@ if ( ! function_exists( 'kaamase_rest_workers' ) ) {
 			$query->found_posts,
 			$args['paged'],
 			$args['posts_per_page']
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_device_list' ) ) {
+	/**
+	 * Every phone this account is signed in on, marking the one asking.
+	 *
+	 * is_current is the whole reason this is not just kaamase_user_devices()
+	 * handed straight out. A list of four identical rows called "Kaam Ase
+	 * app" is useless for the job it exists to do: somebody has to be able
+	 * to tell which one is in their hand before they dare sign the others
+	 * out, and only the server can say, because the phone knows its token
+	 * but not which stored entry that token became.
+	 *
+	 * The handle compared here is a hash of the stored hash, so nothing
+	 * that could be replayed as a credential is computed or returned.
+	 *
+	 * @since 1.4.2
+	 * @param int $user_id Account.
+	 * @return array[]
+	 */
+	function kaamase_rest_device_list( $user_id ) {
+
+		$devices = kaamase_user_devices( $user_id );
+		$bearer  = kaamase_bearer_token();
+
+		$current = '';
+
+		if ( $bearer ) {
+			$current = kaamase_device_id( array( 'hash' => kaamase_hash_token( $bearer ) ) );
+		}
+
+		foreach ( $devices as $at => $device ) {
+			$devices[ $at ]['is_current'] = ( '' !== $current && $device['id'] === $current );
+		}
+
+		return $devices;
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_devices' ) ) {
+	/**
+	 * List the phones this account is signed in on.
+	 *
+	 * @since 1.4.2
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_devices() {
+
+		return new WP_REST_Response(
+			array( 'items' => kaamase_rest_device_list( get_current_user_id() ) ),
+			200
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_revoke_device' ) ) {
+	/**
+	 * Sign a phone out.
+	 *
+	 * device takes a handle from the list, or one of two words:
+	 *
+	 *   others  everything except the phone asking. What somebody whose
+	 *           phone was stolen actually wants, and the only one of the
+	 *           three that leaves them still signed in.
+	 *   all     everything, this phone included. Matches the website's
+	 *           Sign out everywhere.
+	 *
+	 * Rate limited, because this is the one endpoint where a stolen
+	 * phone can act against the person it was stolen from. It cannot be
+	 * prevented outright -- whoever holds the phone holds a valid token,
+	 * and they could already read everything the account can see -- but
+	 * it can be kept to a handful of attempts an hour, which is more
+	 * than any honest person needs and not enough to grind through
+	 * anything.
+	 *
+	 * @since 1.4.2
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_revoke_device( $request ) {
+
+		$user_id = get_current_user_id();
+		$device  = sanitize_key( (string) $request->get_param( 'device' ) );
+
+		if ( '' === $device ) {
+			return kaamase_rest_error(
+				new WP_Error(
+					'kaamase_no_device',
+					__( 'Say which phone to sign out.', 'kaamase-core' ),
+					array( 'status' => 400 )
+				)
+			);
+		}
+
+		$key = 'devices_' . $user_id;
+
+		if ( kaamase_rate_value( $key, 0 ) >= 20 ) {
+			return kaamase_rest_error(
+				new WP_Error(
+					'kaamase_limit',
+					__( 'That is a lot of sign outs at once. Try again in an hour, or use the website.', 'kaamase-core' ),
+					array( 'status' => 429 )
+				)
+			);
+		}
+
+		kaamase_rate_bump( $key, HOUR_IN_SECONDS );
+
+		if ( 'all' === $device ) {
+
+			kaamase_revoke_token( $user_id );
+
+		} elseif ( 'others' === $device ) {
+
+			/*
+			 * Everything except this phone, done by revoking each other
+			 * handle rather than by revoking all and re-issuing. Re-issuing
+			 * would hand back a new token the app would have to notice and
+			 * store, and a phone that missed that response would be signed
+			 * out by the very action meant to keep it signed in.
+			 */
+			foreach ( kaamase_rest_device_list( $user_id ) as $entry ) {
+
+				if ( empty( $entry['is_current'] ) ) {
+					kaamase_revoke_device( $user_id, (string) $entry['id'] );
+				}
+			}
+		} else {
+
+			kaamase_revoke_device( $user_id, $device );
+		}
+
+		/*
+		 * The refreshed list comes back with the answer, so the screen
+		 * somebody is staring at during a theft updates from the reply
+		 * rather than from a second request that might not arrive.
+		 */
+		return new WP_REST_Response(
+			array(
+				'ok'    => true,
+				'items' => kaamase_rest_device_list( $user_id ),
+			),
+			200
 		);
 	}
 }

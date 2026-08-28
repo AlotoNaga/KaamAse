@@ -1018,6 +1018,61 @@ If you have a test App Store subscription, confirm it says *Renews on…* rather
 *stops on its own*; then cancel it in iPhone Settings and confirm it flips to
 *Runs until…* while you keep access.
 
+## 24. Phones signed in — now reachable from the app
+
+⚠️ *`rest-api.php` and `kaamase-core.pot` are new revisions — copy again. Nothing
+else changes.*
+
+Fix 15 gave the website a list of the phones an account is signed in on, with a
+button to sign each one out. I said at the time that it needed no app release,
+which was true and also the wrong way round: **the person whose phone was stolen
+is holding a different phone, and the thing in their hand is far more likely to be
+the app than a browser.** The functions existed; nothing ever exposed them.
+
+Two endpoints, in one file:
+
+- **`GET /devices`** — the same list the website shows.
+- **`POST /devices/revoke`** — takes `device`: a handle from the list, or
+  **`others`** (everything except the phone asking — what somebody whose phone was
+  stolen actually wants) or **`all`** (everything, matching the website's Sign out
+  everywhere).
+
+### The bit that makes it usable
+
+Every row is called "Kaam Ase app". Four identical rows is useless for the job
+this exists to do — nobody dares sign anything out when they cannot tell which
+one is in their hand. So each row carries **`is_current`**, worked out by the
+server, because the phone knows its own token but not which stored entry that
+token became.
+
+The handle compared is a hash *of* the stored hash, so nothing that could be
+replayed as a credential is computed or returned.
+
+### On letting the app do this at all
+
+Whoever holds a stolen phone holds a valid token, so they could already read
+everything the account can see. Letting them sign the owner out is a delay rather
+than a new power, and the owner's recovery — a password reset on the website —
+revokes every token anyway.
+
+It is rate limited to 20 sign-outs an hour per account, which is far more than any
+honest person needs and not enough to grind through anything. Refusals come back
+as `429` with a message that points at the website.
+
+`others` revokes each other handle rather than revoking everything and re-issuing.
+Re-issuing would hand back a new token the app would have to notice and store, and
+a phone that missed that reply would be signed out by the very action meant to keep
+it signed in.
+
+### Not touched
+
+`rest-auth.php` is unchanged. Token issuing, hashing, lookup and bearer
+authentication are all byte-identical, checked again.
+
+**Test:** sign in on two phones, open the list on one, and confirm exactly one row
+says it is this phone. Sign the other out and confirm it is asked to sign in again
+on its next action.
+
 ---
 
 ## Not changed, and why
