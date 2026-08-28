@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Pay\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-27 14:20+0000\n"
+"POT-Creation-Date: 2026-08-28 06:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -115,11 +115,11 @@ msgstr ""
 msgid "It runs until %s. Buying again adds to what you have rather than replacing it."
 msgstr ""
 
-#: includes/account.php:469
+#: includes/account.php:483
 msgid "It will not renew again"
 msgstr ""
 
-#: kaamase-pay.php:115
+#: kaamase-pay.php:136
 msgid "Kaam Ase Payments needs Kaam Ase Core, version 1.2 or newer, and is doing nothing until that is active."
 msgstr ""
 
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Kaam Ase stays free"
 msgstr ""
 
-#: includes/account.php:203
+#: includes/account.php:217
 msgid "Keep it"
 msgstr ""
 
@@ -351,7 +351,7 @@ msgstr ""
 msgid "Ready to take money"
 msgstr ""
 
-#: includes/account.php:254
+#: includes/account.php:268
 msgid "Receipts come from Razorpay by email. If one is missing, tell us the date and we will find it."
 msgstr ""
 
@@ -363,7 +363,7 @@ msgstr ""
 msgid "Renews"
 msgstr ""
 
-#: includes/account.php:106
+#: includes/access.php:583
 msgid "Renews on %s."
 msgstr ""
 
@@ -379,7 +379,7 @@ msgstr ""
 msgid "Running now (%d)"
 msgstr ""
 
-#: includes/account.php:111
+#: includes/access.php:592
 msgid "Runs until %s, then stops on its own. Nothing renews."
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr ""
 msgid "Saves %s a year"
 msgstr ""
 
-#: includes/account.php:223
+#: includes/account.php:237
 msgid "See what else is available"
 msgstr ""
 
@@ -439,11 +439,11 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: includes/account.php:181
+#: includes/account.php:195
 msgid "Stop it renewing?"
 msgstr ""
 
-#: includes/account.php:160
+#: includes/account.php:174
 msgid "Stop renewing"
 msgstr ""
 
@@ -459,7 +459,7 @@ msgstr ""
 msgid "Subscription, renews on its own"
 msgstr ""
 
-#: includes/account.php:484 includes/checkout.php:446
+#: includes/account.php:498 includes/checkout.php:446
 msgid "That did not work"
 msgstr ""
 
@@ -499,6 +499,10 @@ msgstr ""
 msgid "There is nothing for you to pay"
 msgstr ""
 
+#: includes/access.php:575 includes/access.php:595
+msgid "There is nothing to cancel and nothing more will be charged."
+msgstr ""
+
 #: includes/plans.php:330
 msgid "These are added on top of the free allowance, not instead of it. Somebody who buys this gets the free number plus this number."
 msgstr ""
@@ -511,7 +515,7 @@ msgstr ""
 msgid "This account cannot buy that."
 msgstr ""
 
-#: includes/account.php:102
+#: includes/access.php:567
 msgid "This does not end. You paid once and it stays on your account."
 msgstr ""
 
@@ -535,7 +539,7 @@ msgstr ""
 msgid "Webhook secret"
 msgstr ""
 
-#: includes/account.php:232
+#: includes/account.php:246
 msgid "What I have paid"
 msgstr ""
 
@@ -567,7 +571,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: includes/account.php:207
+#: includes/account.php:221
 msgid "Yes, stop renewing"
 msgstr ""
 
@@ -579,7 +583,7 @@ msgstr ""
 msgid "You are on %s"
 msgstr ""
 
-#: includes/account.php:218
+#: includes/account.php:232
 msgid "You are on the free amount, which is enough for most people."
 msgstr ""
 
@@ -591,15 +595,15 @@ msgstr ""
 msgid "You cannot do that."
 msgstr ""
 
-#: includes/account.php:189
+#: includes/account.php:203
 msgid "You keep everything until %s. After that the extra urgent posts stop and the verified mark comes off your profile. Starting again means paying again."
 msgstr ""
 
-#: includes/account.php:169
+#: includes/account.php:183
 msgid "You keep everything until %s. Nothing is taken away today and there is nothing more to pay."
 msgstr ""
 
-#: includes/account.php:473
+#: includes/account.php:487
 msgid "You keep everything you have until %s, and nothing more will be charged. You can start again any time."
 msgstr ""
 
@@ -619,7 +623,7 @@ msgstr ""
 msgid "Your plan runs until %s. If the payment is not fixed before then it will simply stop."
 msgstr ""
 
-#: includes/account.php:485
+#: includes/account.php:499
 msgid "Your subscription has not been stopped and you may be charged again. Please tell us and we will stop it by hand."
 msgstr ""
 
@@ -627,7 +631,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: includes/account.php:308
+#: includes/account.php:322
 msgid "did not go through"
 msgstr ""
 
@@ -655,7 +659,7 @@ msgstr ""
 msgid "iPhone, through Apple"
 msgstr ""
 
-#: includes/account.php:307
+#: includes/account.php:321
 msgid "not finished"
 msgstr ""
 
@@ -663,15 +667,15 @@ msgstr ""
 msgid "once, and it never ends"
 msgstr ""
 
-#: includes/account.php:306
+#: includes/account.php:320
 msgid "paid"
 msgstr ""
 
-#: includes/account.php:309
+#: includes/account.php:323
 msgid "stopped renewing"
 msgstr ""
 
-#: includes/account.php:310
+#: includes/account.php:324
 msgid "stopped, payment failed"
 msgstr ""
 

@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-two files taken from inside them, one brand new
+the patched versions of thirty-four files taken from inside them, one brand new
 file, plus three translation templates.
 
 ## What to copy where
@@ -18,6 +18,8 @@ file, plus three translation templates.
 | `fixed/kaamase-core/includes/rest-api.php` | `wp-content/plugins/kaamase-core/includes/rest-api.php` |
 | `fixed/kaamase/inc/security.php` | `wp-content/themes/kaamase/inc/security.php` |
 | `fixed/kaamase-pay/includes/settings.php` | `wp-content/plugins/kaamase-pay/includes/settings.php` |
+| `fixed/kaamase-pay/includes/access.php` | `wp-content/plugins/kaamase-pay/includes/access.php` |
+| `fixed/kaamase-pay/includes/account.php` | `wp-content/plugins/kaamase-pay/includes/account.php` |
 | `fixed/kaamase-core/includes/throttle.php` | `wp-content/plugins/kaamase-core/includes/throttle.php` |
 | `fixed/kaamase-core/includes/contact.php` | `wp-content/plugins/kaamase-core/includes/contact.php` |
 | `fixed/kaamase-core/includes/rest-auth.php` | `wp-content/plugins/kaamase-core/includes/rest-auth.php` |
@@ -850,6 +852,81 @@ revision.
 
 **What the app should read:** an employer's kind is **`kind`**, not
 `employer_type`, and the detail response includes **`gst`**.
+
+## 22. Subscriptions — saying the same thing on both screens
+
+⚠️ *`kaamase-pay.pot` is a 2nd revision — copy again. `access.php` and
+`account.php` are new to the list.*
+
+Four separate faults, all of them about a person not being able to tell what they
+had paid for or how to stop paying.
+
+### The app had nowhere to send anybody
+
+`manage_url` was built as `$offer ? kaamase_pay_plans_url() : ''`, and `$offer`
+requires the platform to be one we may sell on — which is the website only. So on
+both phones it came through **empty**, and the app's "you can manage it from your
+account page" had nothing to tap.
+
+That treated two different permissions as one. An app store forbids sending
+somebody out to a website to **buy**. It does not forbid showing somebody where to
+look at what they already bought — and a customer who cannot find that has a worse
+problem than one who cannot buy.
+
+**`manage_url` is unchanged**, including staying empty on both phones, because it
+is the *buying* link and that rule has not moved. A separate **`account_url`** now
+carries the dashboard, and only ever for an account that already has a plan, so it
+can never become a route to a purchase page.
+
+### A plan bought for life was shown as expiring in 2126
+
+A lifetime purchase stores its expiry 36,500 days out. The website called
+`kaamase_pay_is_endless()` and said *"This does not end."* The API sent only the
+raw timestamp, so the app formatted it as a date: *"Runs until 1 August 2126, then
+stops on its own."* One purchase, two front doors, opposite answers.
+
+There is now one function, `kaamase_pay_plan_state()`, that decides which of four
+states an account is in — **none**, **endless**, **renewing**, **ending** — and
+writes the sentence. The website prints it and the app receives it. They cannot
+disagree again.
+
+### No Stop button, and no explanation
+
+The Stop renewing control only renders when there is a live subscription, which is
+correct — a one-off purchase has nothing to stop. But the screen simply ended
+there, and somebody hunting for a way to stop being charged concluded the control
+was broken or hidden rather than absent. Both screens now say **"There is nothing
+to cancel and nothing more will be charged."**
+
+### "I cancelled and it still says Premium"
+
+That is correct behaviour that was never explained. Cancelling ends the
+**subscription** and deliberately leaves the plan and its expiry alone — you keep
+what you already paid for. With a lifetime expiry, cancelling therefore looks like
+it did nothing. The new sentence and note make the distinction visible.
+
+### Backwards compatible on purpose
+
+Every key the app already reads — `name`, `active`, `expires`, `renews`,
+`charging`, `can_buy_here`, `can_buy_in_app`, `manage_url` — keeps its exact
+meaning and value. The six new ones are additive, so **your current app build
+keeps working unchanged** and can adopt them whenever you ship.
+
+### Not touched
+
+`checkout.php`, `webhook.php`, `razorpay.php`, `plans.php`, `settings.php`,
+`store-webhook.php`, `subscribers.php`. **All three Razorpay signature verifiers
+are byte-identical**, checked again after this change.
+
+**Still open, deliberately:** the server does not record *where* a plan was bought,
+so web and App Store purchases are indistinguishable afterwards and the app cannot
+yet say "cancel this in your App Store settings". That needs `store-webhook.php`
+and only matters once in-app purchases are switched on.
+
+**Test:** open your dashboard. The plan line should read the same as before, with a
+new line under it saying there is nothing to cancel. Then check `/wp-json/kaamase/v1/me`
+— `plan.status` should be `endless`, `plan.account_url` should be your dashboard,
+and `plan.manage_url` should still be the plans page on the website.
 
 ---
 
