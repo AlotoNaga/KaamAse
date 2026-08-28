@@ -998,10 +998,25 @@ not know.
 `subscribers.php`. All three Razorpay signature verifiers byte-identical, checked
 again.
 
+### Cancelling in Apple's settings
+
+The same bug pointed the other way, found while checking the finished response.
+
+RevenueCat sends `CANCELLATION` when somebody turns the subscription off in their
+Apple or Google settings. This file deliberately does nothing then, because access
+is still owed until the date they paid to — that part is right and is unchanged.
+But the renewal flag was left set, so after cancelling, the app would still have
+said **"Renews on 3 September"** when the third is the day it *ends*.
+
+`CANCELLATION` and `EXPIRATION` now clear the renewal flag and nothing else.
+`BILLING_ISSUE` deliberately does not: that is a card that failed during a grace
+period, and the subscription is still meant to renew once it is paid.
+
 **Test:** on your dashboard the plan line should read as before. Then check
 `/wp-json/kaamase/v1/me` — `plan.origin` and `plan.cancel_where` should be present.
-If you have a test App Store subscription, confirm it now says *Renews on…* rather
-than *stops on its own*.
+If you have a test App Store subscription, confirm it says *Renews on…* rather than
+*stops on its own*; then cancel it in iPhone Settings and confirm it flips to
+*Runs until…* while you keep access.
 
 ---
 

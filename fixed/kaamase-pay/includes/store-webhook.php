@@ -138,7 +138,25 @@ function kaamase_pay_handle_store_webhook( $request ) {
 	 * past. Somebody who cancels on day two of a month they paid for
 	 * keeps the rest of that month, which is both fair and what stops a
 	 * cancellation turning into a refund request.
+	 *
+	 * What DOES change is whether it renews.
+	 *
+	 * Access and renewal are two different facts and only the first one
+	 * is being preserved here. Somebody who has turned the subscription
+	 * off in their Apple settings is still owed the rest of the month
+	 * they paid for, but they are not going to be charged again, and
+	 * leaving the renewal flag set told them "Renews on 3 September"
+	 * when the third is the day it ends. That is the same wrong sentence
+	 * this file was fixed to stop showing, pointing the other way.
+	 *
+	 * BILLING_ISSUE is deliberately not here. That is a card that failed
+	 * during a grace period, and the subscription is still meant to
+	 * renew once it is paid.
 	 */
+	if ( in_array( $type, array( 'CANCELLATION', 'EXPIRATION' ), true ) ) {
+		delete_user_meta( $user_id, KAAMASE_PAY_STORE_RENEWS_KEY );
+	}
+
 
 	/**
 	 * Fires for every verified store event.
