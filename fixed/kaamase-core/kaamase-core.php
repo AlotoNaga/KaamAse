@@ -3,7 +3,7 @@
  * Plugin Name:       Kaam Ase Core
  * Plugin URI:        https://kaamase.com
  * Description:       The data layer for Kaam Ase. Workers, teams, employers, jobs, trades, districts, roles and registration. This plugin owns everything that must survive a theme change.
- * Version:           1.4.0
+ * Version:           1.4.1
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            Nagaland Me
@@ -79,7 +79,7 @@ if (
    2. CONSTANTS
    ========================================================================== */
 
-define( 'KAAMASE_CORE_VERSION', '1.4.0' );
+define( 'KAAMASE_CORE_VERSION', '1.4.1' );
 
 /**
  * Schema version.
@@ -89,7 +89,7 @@ define( 'KAAMASE_CORE_VERSION', '1.4.0' );
  * update does not trigger a migration, and a migration cannot be missed
  * because somebody forgot to bump the plugin version.
  */
-define( 'KAAMASE_CORE_SCHEMA', 3 );
+define( 'KAAMASE_CORE_SCHEMA', 4 );
 
 define( 'KAAMASE_CORE_FILE', __FILE__ );
 define( 'KAAMASE_CORE_DIR', plugin_dir_path( __FILE__ ) );

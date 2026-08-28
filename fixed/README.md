@@ -5,8 +5,8 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty-eight files taken from inside them, plus three
-new translation templates.
+the patched versions of thirty-two files taken from inside them, one brand new
+file, plus three translation templates.
 
 ## What to copy where
 
@@ -37,6 +37,11 @@ new translation templates.
 | `fixed/kaamase-core/kaamase-core.php` | `wp-content/plugins/kaamase-core/kaamase-core.php` |
 | `fixed/kaamase/front-page.php` | `wp-content/themes/kaamase/front-page.php` |
 | `fixed/kaamase-core/includes/more-trades.php` | `wp-content/plugins/kaamase-core/includes/more-trades.php` |
+| `fixed/kaamase-core/includes/employer-index.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/rest-shape.php` | `wp-content/plugins/kaamase-core/includes/rest-shape.php` |
+| `fixed/kaamase/inc/template-tags.php` | `wp-content/themes/kaamase/inc/template-tags.php` |
+| `fixed/kaamase/inc/setup.php` | `wp-content/themes/kaamase/inc/setup.php` |
+| `fixed/kaamase/style.css` | `wp-content/themes/kaamase/style.css` |
 
 **New folders to create** (they do not exist on your site yet):
 
@@ -667,6 +672,85 @@ and was missing every new trade name. 1370 strings now.
 **Test:** after copying, **Workers → Trades** should show 13 headings, and the
 job form dropdown should list Receptionist, Waiter and Graphic designer — the
 three that would have gone missing.
+
+## 19. Who is hiring — the employer directory
+
+⚠️ *`install.php`, `rest-api.php`, `kaamase-core.php` and both `.pot` files are
+new revisions — copy again. `employer-index.php` is a **brand new file**.
+`rest-shape.php`, `template-tags.php`, `setup.php` and `style.css` are new to the
+list.*
+
+Workers could see jobs, and could see other workers. They could **not** see
+employers. So the only thing a worker knew about whoever posted a job was the one
+line in the advert — and the question every worker actually asks first, *has this
+person hired anybody before and did they pay*, had nowhere to be answered.
+
+Every employer profile has stored **how many workers they have hired** and **what
+those workers rated them** since the beginning. None of it was ever shown. This
+is the page that shows it.
+
+**A new page at `/employers/`, titled "Who is hiring".** Filter by district and
+by kind (individual, contractor, company); sort by newest, most workers hired,
+best rated, or verified only.
+
+### Who can see it, and why not paid-only
+
+**Signed in with a confirmed email. Not restricted to paying accounts.**
+
+You asked for this as a paid perk and I have built it so you can make it one in a
+single line (below) — but I would not start there, for a reason worth a paragraph:
+
+An employer is listed here *so that workers approach them*. That exposure is the
+thing they are paying you for. Putting the directory behind a paywall hides the
+employers from the workers they want to reach, which is backwards — you would be
+charging employers for a listing and then charging workers to look at it. The
+thing worth selling is being **prominent in** this list, not the list itself.
+
+It is kept off the open internet because a public page listing every business on
+the platform, with district and hiring history, is a scrapeable directory of
+local businesses that no employer agreed to when they registered.
+
+**If you want it paid-only anyway**, it is one filter in your theme's
+`functions.php` — no file in this list changes:
+
+```php
+add_filter( 'kaamase_may_browse_employers', function ( $may, $user_id ) {
+    return $may && kaamase_has_plan( $user_id );
+}, 10, 2 );
+```
+
+### No phone numbers on it
+
+Contact still runs through `kaamase_can_contact()` one profile at a time, counted
+against the daily reveal cap your code calls *the main protection against somebody
+harvesting phone numbers*. A directory that printed numbers would be a way around
+that cap rather than a feature of it. Verified twice: no phone field reaches the
+page or the API response.
+
+### The sort uses the LEFT JOIN helper
+
+Sorting by hires or rating goes through `kaamase_number_sort_args()` from fix 2.
+Sorting the ordinary way would have hidden **every employer who has not hired
+anybody yet** — on a directory whose whole point is showing who is here, that is
+the worst possible failure.
+
+### The app
+
+`GET /employers` and `GET /employers/{id}` are added, using the same filter and
+sort function as the page so the two cannot drift apart. **The app needs a screen
+built for it** — see the note I gave you separately. Until then the website has
+it and the app does not; nothing in the app breaks.
+
+### The menu
+
+Once the page exists, add it in **Appearance → Menus** like any other page. If you
+have no menu assigned, the built-in fallback now shows **Who is hiring** to
+signed-in visitors automatically.
+
+**Test:** load any page once so the page gets created. Sign out and visit
+`/employers/` — you should get a sign-in card, not a list. Sign in with a
+confirmed account and the list should appear. Check that a brand new employer who
+has hired nobody still shows when you sort by "Most workers hired".
 
 ---
 

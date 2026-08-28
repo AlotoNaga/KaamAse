@@ -63,6 +63,41 @@ if ( ! function_exists( 'kaamase_rest_require_login' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_rest_require_employer_browse' ) ) {
+	/**
+	 * Whether this caller may read the employer directory.
+	 *
+	 * The decision itself is kaamase_may_browse_employers(), which is
+	 * the same function the website page calls. This only turns its
+	 * answer into the shape a permission callback has to return, and
+	 * separates the two refusals so the app can tell them apart: 401
+	 * means sign in, 403 means signed in but not allowed yet.
+	 *
+	 * @since 1.4.1
+	 * @return true|WP_Error
+	 */
+	function kaamase_rest_require_employer_browse() {
+
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'kaamase_signed_out',
+				__( 'Sign in to see who is hiring.', 'kaamase-core' ),
+				array( 'status' => 401 )
+			);
+		}
+
+		if ( ! function_exists( 'kaamase_may_browse_employers' ) || ! kaamase_may_browse_employers() ) {
+			return new WP_Error(
+				'kaamase_needs_verified_email',
+				__( 'Confirm your email to see who is hiring. We sent you a link when you registered.', 'kaamase-core' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		return true;
+	}
+}
+
 if ( ! function_exists( 'kaamase_rest_error' ) ) {
 	/**
 	 * Turn a WP_Error into a response the app can act on.
@@ -342,6 +377,34 @@ if ( ! function_exists( 'kaamase_register_rest_routes' ) ) {
 				'methods'             => 'GET',
 				'callback'            => 'kaamase_rest_worker',
 				'permission_callback' => $open,
+			)
+		);
+
+		/*
+		 * The employer directory.
+		 *
+		 * The only listing on this API that is not open. Browsing
+		 * workers and jobs signed out is deliberate; a directory of
+		 * every business on the platform is not the same thing, and no
+		 * employer agreed to that when they registered.
+		 */
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/employers',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_rest_employers',
+				'permission_callback' => 'kaamase_rest_require_employer_browse',
+			)
+		);
+
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/employers/(?P<id>\d+)',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_rest_employer',
+				'permission_callback' => 'kaamase_rest_require_employer_browse',
 			)
 		);
 
@@ -1487,6 +1550,83 @@ if ( ! function_exists( 'kaamase_rest_workers' ) ) {
 			$args['paged'],
 			$args['posts_per_page']
 		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_employers' ) ) {
+	/**
+	 * The employer directory.
+	 *
+	 * Filters and sorting are built by the same function the website
+	 * page uses, so the two cannot drift apart. In particular the sort
+	 * goes through kaamase_number_sort_args(), which LEFT JOINs: an
+	 * employer who has hired nobody yet still appears.
+	 *
+	 * @since 1.4.1
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_employers( $request ) {
+
+		$args = kaamase_employer_query_args(
+			array(
+				'district' => (string) $request->get_param( 'district' ),
+				'type'     => (string) $request->get_param( 'type' ),
+				'sort'     => (string) $request->get_param( 'sort' ),
+				/*
+				 * Passed through raw. kaamase_employer_query_args() does
+				 * the clamping, and doing it twice is how the two paths
+				 * end up disagreeing: absint() here would turn page -5
+				 * into page 5 before the clamp ever saw it.
+				 */
+				'paged'    => $request->get_param( 'page' ),
+			)
+		);
+
+		$query = new WP_Query( $args );
+
+		$items = array_map(
+			static function ( $post ) {
+				return kaamase_shape_employer( $post, false );
+			},
+			(array) $query->posts
+		);
+
+		return kaamase_rest_list_response(
+			array_filter( $items ),
+			$query->found_posts,
+			$args['paged'],
+			$args['posts_per_page']
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_employer' ) ) {
+	/**
+	 * One employer.
+	 *
+	 * @since 1.4.1
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_employer( $request ) {
+
+		$id   = absint( $request['id'] );
+		$post = get_post( $id );
+
+		if ( ! $post || 'kaamase_employer' !== $post->post_type ) {
+			return kaamase_rest_error(
+				new WP_Error( 'kaamase_not_found', __( 'That employer no longer exists.', 'kaamase-core' ), array( 'status' => 404 ) )
+			);
+		}
+
+		if ( 'publish' !== $post->post_status && ! current_user_can( 'edit_post', $id ) ) {
+			return kaamase_rest_error(
+				new WP_Error( 'kaamase_not_found', __( 'That employer is not available.', 'kaamase-core' ), array( 'status' => 404 ) )
+			);
+		}
+
+		return new WP_REST_Response( kaamase_shape_employer( $post, true ), 200 );
 	}
 }
 

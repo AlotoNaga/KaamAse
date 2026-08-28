@@ -139,6 +139,16 @@ if ( ! function_exists( 'kaamase_upgrade' ) ) {
 					 */
 					break;
 
+				case 4:
+					/*
+					 * Same again for the Who is hiring page. Nothing is
+					 * migrated; the page is created by the
+					 * kaamase_create_pages() call below, and the rewrite
+					 * flush it schedules is what makes /employers/ resolve
+					 * rather than 404 on a site that was already running.
+					 */
+					break;
+
 				default:
 					break;
 			}
@@ -267,6 +277,17 @@ if ( ! function_exists( 'kaamase_page_definitions' ) ) {
 				'title'   => __( 'All districts', 'kaamase-core' ),
 				'slug'    => 'districts',
 				'content' => '[kaamase_district_index]',
+			),
+
+			/*
+			 * Not /employer/. That slug belongs to the employer post
+			 * type, and a page competing with it for the same URL is the
+			 * mistake called out at the top of this file.
+			 */
+			'employers' => array(
+				'title'   => __( 'Who is hiring', 'kaamase-core' ),
+				'slug'    => 'employers',
+				'content' => '[kaamase_employer_index]',
 			),
 
 			'report' => array(
