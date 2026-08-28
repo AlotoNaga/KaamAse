@@ -318,6 +318,9 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'computer-technician' => __( 'Computer technician', 'kaamase-core' ),
 					'car-mechanic'        => __( 'Car mechanic', 'kaamase-core' ),
 					'bike-mechanic'       => __( 'Bike mechanic', 'kaamase-core' ),
+
+					// Already on the site. See the note under Shop and sales.
+					'mechanic'            => __( 'Mechanic (general)', 'kaamase-core' ),
 					'diesel-mechanic'     => __( 'Diesel mechanic', 'kaamase-core' ),
 					'auto-electrician'    => __( 'Automobile electrician', 'kaamase-core' ),
 					'electronics-mechanic' => __( 'Electronics technician', 'kaamase-core' ),
@@ -372,6 +375,19 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'shop-assistant'  => __( 'Shop assistant', 'kaamase-core' ),
 					'cashier'         => __( 'Cashier', 'kaamase-core' ),
 					'store-keeper'    => __( 'Store keeper', 'kaamase-core' ),
+
+					/*
+					 * Already on the site, and kept for that reason.
+					 *
+					 * The three below came from more-trades.php, which
+					 * deliberately used a few wide trades instead of
+					 * many narrow ones. Profiles are attached to them,
+					 * so they are not ours to drop; they are listed
+					 * here so seeding files them under the right
+					 * heading instead of leaving them where a removed
+					 * category used to be.
+					 */
+					'shop-worker'     => __( 'Shop and sales (general)', 'kaamase-core' ),
 				),
 			),
 
@@ -422,6 +438,10 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 					'web-developer'       => __( 'Web developer', 'kaamase-core' ),
 					'software-developer'  => __( 'Software developer', 'kaamase-core' ),
 					'content-creator'     => __( 'Content creator', 'kaamase-core' ),
+
+					// Already on the site. See the note under Shop and sales.
+					'designer'            => __( 'Design and video (general)', 'kaamase-core' ),
+					'it-worker'           => __( 'Computers and websites (general)', 'kaamase-core' ),
 				),
 			),
 
@@ -452,6 +472,23 @@ if ( ! function_exists( 'kaamase_trade_seed' ) ) {
 				),
 			),
 		);
+
+		/*
+		 * The old more-trades.php filter is detached before anything
+		 * else gets a say.
+		 *
+		 * Its list is folded into the array above, but it assigned
+		 * whole categories rather than adding to them, so leaving it
+		 * attached empties Office work, Hotel and food and Computer and
+		 * design and creates a second Teaching and a second Health.
+		 *
+		 * Done here rather than by deleting that file, because these
+		 * files are copied onto the site one at a time and by hand. If
+		 * this one arrives and that one does not, the site must still be
+		 * correct. Removing a filter that was never added is a no-op, so
+		 * this costs nothing once the other file is in place too.
+		 */
+		remove_filter( 'kaamase_trade_seed', 'kaamase_more_trades' );
 
 		/**
 		 * Filter the trade seed list.

@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of twenty-seven files taken from inside them, plus three
+the patched versions of twenty-eight files taken from inside them, plus three
 new translation templates.
 
 ## What to copy where
@@ -36,6 +36,7 @@ new translation templates.
 | `fixed/kaamase-pay/kaamase-pay.php` | `wp-content/plugins/kaamase-pay/kaamase-pay.php` |
 | `fixed/kaamase-core/kaamase-core.php` | `wp-content/plugins/kaamase-core/kaamase-core.php` |
 | `fixed/kaamase/front-page.php` | `wp-content/themes/kaamase/front-page.php` |
+| `fixed/kaamase-core/includes/more-trades.php` | `wp-content/plugins/kaamase-core/includes/more-trades.php` |
 
 **New folders to create** (they do not exist on your site yet):
 
@@ -47,8 +48,9 @@ new translation templates.
 
 For fix 7, copy **`throttle.php` first** — the other five call into it.
 
-For fix 16, copy **`taxonomies.php` and `contact.php` first, then
-`kaamase-core.php`** — the last one is what triggers the new trades to be created.
+For fix 16, copy **`taxonomies.php`, `more-trades.php` and `contact.php` first,
+then `kaamase-core.php`** — the last one is what triggers the new trades to be
+created. See fix 18 before you start: `more-trades.php` matters.
 
 Do them one at a time and check the site after each.
 
@@ -603,6 +605,68 @@ a separate change on that side — the app does not read this template.
 **Test:** open the front page on a phone. Scroll to the bottom of *Available
 now*; the button should be there, and it should go to the workers listing. Same
 for *Work posted recently*.
+
+## 18. `more-trades.php` — a clash that would have swallowed 16 of the new trades
+
+⚠️ *`taxonomies.php` is a 4th revision and `kaamase-core.pot` a 2nd — copy both
+again. `more-trades.php` is new to the list. **Read this one before deploying fix
+16.***
+
+**This was my mistake, caught before you copied anything.** `more-trades.php` was
+already on your site and I did not account for it when I expanded the trade list.
+
+It adds trades through a filter that runs **after** the main list. Three of its
+lines assign a whole category instead of adding to one:
+
+```php
+$seed['office'] = array( ... );   // replaces everything under 'office'
+```
+
+Once the main list grew its own **Office work**, **Hotel and food** and
+**Computer and design** headings, that filter emptied all three and put its own
+two or three trades there instead. Deploying fix 16 as it stood would have given
+you:
+
+- **16 of the new trades never created** — 4 office, 4 hotel and food, 8 computer
+  and design, including Receptionist, Data entry, Waiter, Chef, Graphic designer
+  and Web developer.
+- **16 headings instead of 13**, with **two called Health** and a **Teaching**
+  sitting beside **Teaching and childcare**.
+- **Teacher, Nurse, Health worker and Heavy vehicle driver filed under the wrong
+  one of each pair.**
+
+### What changed
+
+**The filter is gone from `more-trades.php`.** Its whole list is now in
+`taxonomies.php` by name, so nothing it created is lost.
+
+**Four trades it had that the new list did not are now in the list**, marked
+*(general)*: **Shop and sales**, **Mechanic**, **Design and video**, **Computers
+and websites**. Profiles on your site are attached to these, so they are not mine
+to drop. That takes the count to **102 trades in 13 categories**.
+
+**The rest of `more-trades.php` stays and still matters.** It writes a "what this
+covers" description onto each trade, and — see below — sends those to the app.
+
+**A safety net in `taxonomies.php`.** It detaches that old filter itself before
+building the list. These files are copied by hand, one at a time; if
+`taxonomies.php` arrives and `more-trades.php` does not, the site must still be
+correct. Both orders are tested.
+
+### The leftover headings
+
+Your site will still have empty **Teaching**, **Health** and **Vehicles**
+categories after this, because seeding never deletes anything. They will **not
+appear anywhere** — a category with no trades under it is skipped by every
+dropdown. You can delete them by hand in **Workers → Trades** whenever you like,
+or leave them.
+
+`kaamase-core.pot` was also regenerated: it was built before the trade expansion
+and was missing every new trade name. 1370 strings now.
+
+**Test:** after copying, **Workers → Trades** should show 13 headings, and the
+job form dropdown should list Receptionist, Waiter and Graphic designer — the
+three that would have gone missing.
 
 ---
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-27 14:20+0000\n"
+"POT-Creation-Date: 2026-08-28 01:39+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "%s across Nagaland"
 msgstr ""
 
-#: includes/contact.php:878 includes/hiring-request.php:573
+#: includes/contact.php:889 includes/hiring-request.php:573
 msgid "%s ago"
 msgstr ""
 
@@ -211,6 +211,10 @@ msgstr ""
 msgid "A person reads the first job from every new employer before workers see it. It is usually done within a few hours, and you will get an email when it goes live. Nothing more is needed from you. After this one, your jobs go live straight away."
 msgstr ""
 
+#: includes/rest-auth.php:621
+msgid "A phone"
+msgstr ""
+
 #: includes/settings.php:196
 msgid "A phone number is never put in a notification."
 msgstr ""
@@ -271,7 +275,7 @@ msgstr ""
 msgid "A tick on your profile."
 msgstr ""
 
-#: includes/taxonomies.php:311
+#: includes/taxonomies.php:314
 msgid "AC repair"
 msgstr ""
 
@@ -311,12 +315,12 @@ msgstr ""
 msgid "Account created"
 msgstr ""
 
-#: includes/more-trades.php:167
-msgid "Accountant, accounts assistant, book keeping, Tally, billing, audit assistant."
+#: includes/taxonomies.php:366
+msgid "Accountant"
 msgstr ""
 
-#: includes/more-trades.php:103
-msgid "Accounts"
+#: includes/more-trades.php:110
+msgid "Accountant, accounts assistant, book keeping, Tally, billing, audit assistant."
 msgstr ""
 
 #: includes/hiring-request.php:525
@@ -435,7 +439,7 @@ msgstr ""
 msgid "Agree when you will be paid. Daily, weekly or at the end."
 msgstr ""
 
-#: includes/taxonomies.php:320
+#: includes/taxonomies.php:334
 msgid "Agriculture"
 msgstr ""
 
@@ -487,7 +491,7 @@ msgstr ""
 msgid "Already registered?"
 msgstr ""
 
-#: includes/taxonomies.php:437
+#: includes/taxonomies.php:612
 msgid "Also written: %s"
 msgstr ""
 
@@ -511,7 +515,7 @@ msgstr ""
 msgid "Amount owed: rupees %s"
 msgstr ""
 
-#: includes/contact.php:873 includes/push.php:177
+#: includes/contact.php:884 includes/push.php:177
 msgid "An employer"
 msgstr ""
 
@@ -523,7 +527,7 @@ msgstr ""
 msgid "Android"
 msgstr ""
 
-#: includes/taxonomies.php:470
+#: includes/taxonomies.php:645
 msgid "Angami"
 msgstr ""
 
@@ -571,7 +575,7 @@ msgstr ""
 msgid "Anywhere in our district"
 msgstr ""
 
-#: includes/taxonomies.php:469
+#: includes/taxonomies.php:644
 msgid "Ao"
 msgstr ""
 
@@ -587,7 +591,7 @@ msgstr ""
 msgid "Are you still looking for work on %s?"
 msgstr ""
 
-#: includes/contact.php:723
+#: includes/contact.php:734
 msgid "Ask to be verified"
 msgstr ""
 
@@ -619,12 +623,20 @@ msgstr ""
 msgid "Asks the worker for money"
 msgstr ""
 
-#: includes/taxonomies.php:484
+#: includes/taxonomies.php:659
 msgid "Assamese"
+msgstr ""
+
+#: includes/taxonomies.php:351
+msgid "Assistant teacher"
 msgstr ""
 
 #: includes/registration.php:223
 msgid "At least 8 characters."
+msgstr ""
+
+#: includes/taxonomies.php:325
+msgid "Automobile electrician"
 msgstr ""
 
 #: includes/fields.php:117
@@ -647,7 +659,7 @@ msgstr ""
 msgid "Average rating"
 msgstr ""
 
-#: includes/taxonomies.php:301
+#: includes/taxonomies.php:303
 msgid "Babysitter"
 msgstr ""
 
@@ -663,23 +675,27 @@ msgstr ""
 msgid "Back to trades"
 msgstr ""
 
-#: includes/more-trades.php:172
-msgid "Baker, bakery worker, pastry, cake making, confectioner."
+#: includes/taxonomies.php:411
+msgid "Baker"
 msgstr ""
 
-#: includes/more-trades.php:120
-msgid "Bakery"
+#: includes/more-trades.php:115
+msgid "Baker, bakery worker, pastry, cake making, confectioner."
 msgstr ""
 
 #: includes/admin.php:376
 msgid "Balanced"
 msgstr ""
 
-#: includes/more-trades.php:82
-msgid "Barber and hair"
+#: includes/taxonomies.php:451
+msgid "Bamboo craftsman"
 msgstr ""
 
-#: includes/more-trades.php:180
+#: includes/taxonomies.php:468
+msgid "Barber or hairdresser"
+msgstr ""
+
+#: includes/more-trades.php:123
 msgid "Barber, hairdresser, salon work, hair stylist."
 msgstr ""
 
@@ -691,7 +707,7 @@ msgstr ""
 msgid "Be the first"
 msgstr ""
 
-#: includes/taxonomies.php:336
+#: includes/taxonomies.php:467
 msgid "Beautician"
 msgstr ""
 
@@ -699,7 +715,7 @@ msgstr ""
 msgid "Before we can ring you:"
 msgstr ""
 
-#: includes/contact.php:316
+#: includes/contact.php:327
 msgid "Before you can see this number, finish your employer profile: confirm your email and add your phone number. It takes a minute and it means the person you are calling can see who asked."
 msgstr ""
 
@@ -715,7 +731,7 @@ msgstr ""
 msgid "Being served"
 msgstr ""
 
-#: includes/taxonomies.php:485
+#: includes/taxonomies.php:660
 msgid "Bengali"
 msgstr ""
 
@@ -723,11 +739,15 @@ msgstr ""
 msgid "Best rated"
 msgstr ""
 
-#: includes/contact.php:897
+#: includes/taxonomies.php:320
+msgid "Bike mechanic"
+msgstr ""
+
+#: includes/contact.php:908
 msgid "Block"
 msgstr ""
 
-#: includes/contact.php:907
+#: includes/contact.php:918
 msgid "Blocking stops that person seeing your number. They are not told."
 msgstr ""
 
@@ -747,6 +767,10 @@ msgstr ""
 msgid "Bundle identifier"
 msgstr ""
 
+#: includes/taxonomies.php:423
+msgid "Bus driver"
+msgstr ""
+
 #: includes/profile-edit.php:206
 msgid "Business or your name"
 msgstr ""
@@ -755,19 +779,19 @@ msgstr ""
 msgid "By default, deleting this plugin leaves every worker profile, job, rating and report in the database. Reinstalling brings it all back. That is on purpose: a plugin gets deleted for many reasons, and most of them are not a decision to destroy several hundred people's listings."
 msgstr ""
 
-#: includes/more-trades.php:79
-msgid "CCTV and internet"
+#: includes/more-trades.php:121
+msgid "CCTV camera fitting, internet and wifi, cable, dish, networking."
 msgstr ""
 
-#: includes/more-trades.php:178
-msgid "CCTV camera fitting, internet and wifi, cable, dish, networking."
+#: includes/taxonomies.php:328
+msgid "CCTV technician"
 msgstr ""
 
 #: includes/compat.php:217
 msgid "Call"
 msgstr ""
 
-#: includes/contact.php:654
+#: includes/contact.php:665
 msgid "Call now"
 msgstr ""
 
@@ -787,11 +811,15 @@ msgstr ""
 msgid "Can post jobs"
 msgstr ""
 
-#: includes/more-trades.php:173
+#: includes/taxonomies.php:319
+msgid "Car mechanic"
+msgstr ""
+
+#: includes/more-trades.php:116
 msgid "Car mechanic, bike mechanic, diesel mechanic, auto electrician, garage work, denting and painting, generator repair."
 msgstr ""
 
-#: includes/taxonomies.php:302
+#: includes/taxonomies.php:304
 msgid "Caregiver"
 msgstr ""
 
@@ -799,11 +827,15 @@ msgstr ""
 msgid "Carpenter"
 msgstr ""
 
-#: includes/taxonomies.php:474
+#: includes/taxonomies.php:376
+msgid "Cashier"
+msgstr ""
+
+#: includes/taxonomies.php:649
 msgid "Chakhesang"
 msgstr ""
 
-#: includes/taxonomies.php:478
+#: includes/taxonomies.php:653
 msgid "Chang"
 msgstr ""
 
@@ -817,6 +849,10 @@ msgstr ""
 
 #: includes/app-links.php:562
 msgid "Check that kaamase.com does not redirect to www.kaamase.com or the other way round. Neither Google nor Apple follows a redirect for these files, and a redirect is invisible in a browser because the browser follows it for you."
+msgstr ""
+
+#: includes/taxonomies.php:410
+msgid "Chef"
 msgstr ""
 
 #: includes/registration.php:218
@@ -897,15 +933,27 @@ msgstr ""
 msgid "Colony council member"
 msgstr ""
 
-#: includes/taxonomies.php:315
+#: includes/taxonomies.php:431
+msgid "Computer and design"
+msgstr ""
+
+#: includes/taxonomies.php:365
+msgid "Computer operator"
+msgstr ""
+
+#: includes/taxonomies.php:353
+msgid "Computer teacher"
+msgstr ""
+
+#: includes/taxonomies.php:318
 msgid "Computer technician"
 msgstr ""
 
-#: includes/more-trades.php:136
-msgid "Computers and websites"
+#: includes/taxonomies.php:444
+msgid "Computers and websites (general)"
 msgstr ""
 
-#: includes/contact.php:278
+#: includes/contact.php:289
 msgid "Confirm your email first. We keep unconfirmed accounts away from other people's numbers."
 msgstr ""
 
@@ -933,7 +981,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: includes/contact.php:731
+#: includes/contact.php:742
 msgid "Contact details are not shown"
 msgstr ""
 
@@ -953,7 +1001,11 @@ msgstr ""
 msgid "Contact us"
 msgstr ""
 
-#: includes/taxonomies.php:300
+#: includes/taxonomies.php:440
+msgid "Content creator"
+msgstr ""
+
+#: includes/taxonomies.php:302
 msgid "Cook"
 msgstr ""
 
@@ -965,12 +1017,24 @@ msgstr ""
 msgid "Counted among the workers who have been seen before. It should stay small. If it climbs week after week, there are more workers than the listings can cycle through and the trade and district filters are doing the real work."
 msgstr ""
 
+#: includes/taxonomies.php:449
+msgid "Craft and making"
+msgstr ""
+
 #: includes/registration.php:243
 msgid "Create my account"
 msgstr ""
 
 #: includes/privacy.php:114
 msgid "Created"
+msgstr ""
+
+#: includes/taxonomies.php:367
+msgid "Customer service"
+msgstr ""
+
+#: includes/taxonomies.php:364
+msgid "Data entry operator"
 msgstr ""
 
 #: includes/settings.php:260
@@ -1021,16 +1085,12 @@ msgstr ""
 msgid "Delivery handled by"
 msgstr ""
 
-#: includes/taxonomies.php:332
+#: includes/taxonomies.php:463
 msgid "Delivery rider"
 msgstr ""
 
-#: includes/more-trades.php:133
-msgid "Design and computers"
-msgstr ""
-
-#: includes/more-trades.php:135
-msgid "Design and video"
+#: includes/taxonomies.php:443
+msgid "Design and video (general)"
 msgstr ""
 
 #: includes/posted-for.php:364
@@ -1053,7 +1113,15 @@ msgstr ""
 msgid "Did you hire them?"
 msgstr ""
 
-#: includes/contact.php:531
+#: includes/taxonomies.php:324
+msgid "Diesel mechanic"
+msgstr ""
+
+#: includes/taxonomies.php:437
+msgid "Digital marketer"
+msgstr ""
+
+#: includes/contact.php:542
 msgid "Direct number"
 msgstr ""
 
@@ -1090,8 +1158,16 @@ msgstr ""
 msgid "Done. Their profile has the mark now."
 msgstr ""
 
-#: includes/taxonomies.php:303
+#: includes/taxonomies.php:293
+msgid "Draughtsman"
+msgstr ""
+
+#: includes/taxonomies.php:305
 msgid "Driver"
+msgstr ""
+
+#: includes/taxonomies.php:419
+msgid "Driving and transport"
 msgstr ""
 
 #: includes/entitlements.php:430
@@ -1144,6 +1220,10 @@ msgstr ""
 
 #: includes/taxonomies.php:284
 msgid "Electrician"
+msgstr ""
+
+#: includes/taxonomies.php:326
+msgid "Electronics technician"
 msgstr ""
 
 #: includes/reports.php:909
@@ -1218,16 +1298,16 @@ msgstr ""
 msgid "Empty this list"
 msgstr ""
 
-#: includes/taxonomies.php:467
+#: includes/taxonomies.php:642
 msgid "English"
 msgstr ""
 
-#: includes/more-trades.php:83
-msgid "Event and catering"
+#: includes/more-trades.php:124
+msgid "Event helper, decorator, tent work, catering staff, wedding work, sound and light."
 msgstr ""
 
-#: includes/more-trades.php:181
-msgid "Event helper, decorator, tent work, catering staff, wedding work, sound and light."
+#: includes/taxonomies.php:471
+msgid "Event staff"
 msgstr ""
 
 #: includes/hiring-request.php:190
@@ -1270,8 +1350,12 @@ msgstr ""
 msgid "Extras"
 msgstr ""
 
-#: includes/taxonomies.php:322
+#: includes/taxonomies.php:336
 msgid "Farm labour"
+msgstr ""
+
+#: includes/taxonomies.php:470
+msgid "Fashion designer"
 msgstr ""
 
 #: includes/roles.php:179
@@ -1296,6 +1380,14 @@ msgstr ""
 
 #: includes/job-screening.php:801
 msgid "First post from this employer"
+msgstr ""
+
+#: includes/taxonomies.php:341
+msgid "Fish farm worker"
+msgstr ""
+
+#: includes/taxonomies.php:329
+msgid "Fitter"
 msgstr ""
 
 #: includes/settings.php:203
@@ -1358,6 +1450,10 @@ msgstr ""
 msgid "From: %s"
 msgstr ""
 
+#: includes/taxonomies.php:452
+msgid "Furniture maker"
+msgstr ""
+
 #: includes/gstin.php:352
 msgid "GST"
 msgstr ""
@@ -1374,7 +1470,7 @@ msgstr ""
 msgid "Gaon Bura"
 msgstr ""
 
-#: includes/taxonomies.php:304
+#: includes/taxonomies.php:306
 msgid "Gardener"
 msgstr ""
 
@@ -1418,11 +1514,15 @@ msgstr ""
 msgid "Gives somebody the paid plan and the tick without taking any money. The tick means somebody at Kaam Ase knows who this person is, so give it to people that is true of."
 msgstr ""
 
-#: includes/contact.php:719 includes/registration.php:64
+#: includes/contact.php:730 includes/registration.php:64
 msgid "Go to my account"
 msgstr ""
 
-#: includes/more-trades.php:175
+#: includes/taxonomies.php:433
+msgid "Graphic designer"
+msgstr ""
+
+#: includes/more-trades.php:118
 msgid "Graphic designer, poster and banner design, logo, video editor, photo editing, social media, content creator."
 msgstr ""
 
@@ -1434,7 +1534,7 @@ msgstr ""
 msgid "Group name, link, or who told you. Only you see this."
 msgstr ""
 
-#: includes/taxonomies.php:324
+#: includes/taxonomies.php:338
 msgid "Harvest worker"
 msgstr ""
 
@@ -1444,11 +1544,15 @@ msgid_plural "Has hired %d people through Kaam Ase"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/more-trades.php:109
+#: includes/taxonomies.php:395
 msgid "Health"
 msgstr ""
 
-#: includes/more-trades.php:128
+#: includes/taxonomies.php:400
+msgid "Health worker"
+msgstr ""
+
+#: includes/taxonomies.php:424
 msgid "Heavy vehicle driver"
 msgstr ""
 
@@ -1501,7 +1605,7 @@ msgstr ""
 msgid "Highest pay"
 msgstr ""
 
-#: includes/taxonomies.php:468
+#: includes/taxonomies.php:643
 msgid "Hindi"
 msgstr ""
 
@@ -1525,20 +1629,32 @@ msgstr ""
 msgid "Hiring was removed from this account. Get in touch if that was a mistake."
 msgstr ""
 
-#: includes/taxonomies.php:296
+#: includes/taxonomies.php:307
+msgid "Home nurse or attendant"
+msgstr ""
+
+#: includes/taxonomies.php:298
 msgid "Home services"
 msgstr ""
 
-#: includes/more-trades.php:117
+#: includes/taxonomies.php:342
+msgid "Horticulture worker"
+msgstr ""
+
+#: includes/taxonomies.php:407
 msgid "Hotel and food"
 msgstr ""
 
-#: includes/more-trades.php:119
-msgid "Hotel and restaurant"
+#: includes/taxonomies.php:414
+msgid "Hotel staff"
 msgstr ""
 
-#: includes/taxonomies.php:299
+#: includes/taxonomies.php:301
 msgid "House cleaner"
+msgstr ""
+
+#: includes/taxonomies.php:413
+msgid "Housekeeping staff"
 msgstr ""
 
 #: includes/reports.php:431
@@ -1905,16 +2021,24 @@ msgstr ""
 msgid "Keep your availability up to date and you will show up in more searches."
 msgstr ""
 
-#: includes/taxonomies.php:481
+#: includes/taxonomies.php:656
 msgid "Khiamniungan"
 msgstr ""
 
-#: includes/taxonomies.php:473
+#: includes/taxonomies.php:412
+msgid "Kitchen helper"
+msgstr ""
+
+#: includes/taxonomies.php:648
 msgid "Konyak"
 msgstr ""
 
-#: includes/taxonomies.php:483
+#: includes/taxonomies.php:658
 msgid "Kuki"
+msgstr ""
+
+#: includes/taxonomies.php:399
+msgid "Lab technician"
 msgstr ""
 
 #: includes/taxonomies.php:291
@@ -1931,6 +2055,10 @@ msgstr ""
 
 #: includes/job-alerts.php:852
 msgid "Last run"
+msgstr ""
+
+#: includes/rest-auth.php:583
+msgid "Last used %s ago"
 msgstr ""
 
 #: includes/reports.php:398
@@ -1981,7 +2109,15 @@ msgstr ""
 msgid "Listing a team takes a couple of minutes once you have a worker account."
 msgstr ""
 
-#: includes/more-trades.php:179
+#: includes/taxonomies.php:340
+msgid "Livestock worker"
+msgstr ""
+
+#: includes/taxonomies.php:426
+msgid "Loader"
+msgstr ""
+
+#: includes/more-trades.php:122
 msgid "Loader, unloading, godown work, packing, stock keeping, delivery agent, logistics helper."
 msgstr ""
 
@@ -1997,7 +2133,7 @@ msgstr ""
 msgid "Longest anybody has waited"
 msgstr ""
 
-#: includes/taxonomies.php:472
+#: includes/taxonomies.php:647
 msgid "Lotha"
 msgstr ""
 
@@ -2005,7 +2141,7 @@ msgstr ""
 msgid "Lowest day rate"
 msgstr ""
 
-#: includes/taxonomies.php:298
+#: includes/taxonomies.php:300
 msgid "Maid"
 msgstr ""
 
@@ -2031,6 +2167,10 @@ msgstr ""
 
 #: includes/registration.php:131
 msgid "Make your free worker profile"
+msgstr ""
+
+#: includes/taxonomies.php:469
+msgid "Make-up artist"
 msgstr ""
 
 #: includes/app-links.php:414
@@ -2069,15 +2209,19 @@ msgstr ""
 msgid "Me"
 msgstr ""
 
-#: includes/more-trades.php:127
-msgid "Mechanic"
+#: includes/taxonomies.php:323
+msgid "Mechanic (general)"
+msgstr ""
+
+#: includes/taxonomies.php:401
+msgid "Medical assistant"
 msgstr ""
 
 #: includes/media.php:286
 msgid "Member photos"
 msgstr ""
 
-#: includes/taxonomies.php:314
+#: includes/taxonomies.php:317
 msgid "Mobile repair"
 msgstr ""
 
@@ -2105,6 +2249,10 @@ msgstr ""
 msgid "Most hosts will not let a website hand mail straight to the machine it runs on. Sign in to a real mailbox on your own domain instead and it goes out properly, which is also what stops Gmail treating it as forged."
 msgstr ""
 
+#: includes/taxonomies.php:354
+msgid "Music teacher"
+msgstr ""
+
 #: includes/install.php:238
 msgid "My account"
 msgstr ""
@@ -2129,7 +2277,7 @@ msgstr ""
 msgid "Nagaland"
 msgstr ""
 
-#: includes/taxonomies.php:466
+#: includes/taxonomies.php:641
 msgid "Nagamese"
 msgstr ""
 
@@ -2145,7 +2293,7 @@ msgstr ""
 msgid "Needs your attention"
 msgstr ""
 
-#: includes/taxonomies.php:486
+#: includes/taxonomies.php:661
 msgid "Nepali"
 msgstr ""
 
@@ -2373,7 +2521,7 @@ msgstr ""
 msgid "Nobody yet."
 msgstr ""
 
-#: includes/contact.php:851
+#: includes/contact.php:862
 msgid "Nobody yet. Finish your profile and set yourself available, and you will show up in more searches."
 msgstr ""
 
@@ -2411,6 +2559,10 @@ msgstr ""
 
 #: includes/admin.php:575 includes/past-jobs.php:277
 msgid "Not set"
+msgstr ""
+
+#: includes/rest-auth.php:572
+msgid "Not used yet"
 msgstr ""
 
 #: includes/gift.php:450 includes/gift.php:481
@@ -2489,12 +2641,16 @@ msgstr ""
 msgid "Numbers whenever you need them."
 msgstr ""
 
-#: includes/more-trades.php:111
+#: includes/taxonomies.php:397
 msgid "Nurse"
 msgstr ""
 
-#: includes/more-trades.php:169
+#: includes/more-trades.php:112
 msgid "Nurse, ANM, GNM, ward staff, nursing assistant, home nursing."
+msgstr ""
+
+#: includes/taxonomies.php:343
+msgid "Nursery worker"
 msgstr ""
 
 #: includes/admin.php:82
@@ -2513,12 +2669,12 @@ msgstr ""
 msgid "Off until you switch it on. Leave it off until there is enough work being posted that a message is worth sending, because the first one somebody gets decides whether they keep the next."
 msgstr ""
 
-#: includes/more-trades.php:102
-msgid "Office and reception"
+#: includes/taxonomies.php:363
+msgid "Office assistant"
 msgstr ""
 
-#: includes/more-trades.php:100
-msgid "Office and shop"
+#: includes/taxonomies.php:360
+msgid "Office work"
 msgstr ""
 
 #: includes/past-jobs.php:553
@@ -2633,7 +2789,7 @@ msgstr ""
 msgid "Other past jobs like this"
 msgstr ""
 
-#: includes/taxonomies.php:329 includes/taxonomies.php:587
+#: includes/taxonomies.php:460 includes/taxonomies.php:762
 msgid "Other work"
 msgstr ""
 
@@ -2710,15 +2866,15 @@ msgstr ""
 msgid "Person"
 msgstr ""
 
-#: includes/more-trades.php:170
+#: includes/taxonomies.php:398
+msgid "Pharmacist"
+msgstr ""
+
+#: includes/more-trades.php:113
 msgid "Pharmacist, medical shop, lab technician, clinic assistant, dispenser, physiotherapy, health worker."
 msgstr ""
 
-#: includes/more-trades.php:112
-msgid "Pharmacy and clinic"
-msgstr ""
-
-#: includes/taxonomies.php:477
+#: includes/taxonomies.php:652
 msgid "Phom"
 msgstr ""
 
@@ -2743,11 +2899,15 @@ msgstr ""
 msgid "Phone: %s"
 msgstr ""
 
+#: includes/rest-auth.php:611
+msgid "Phones signed in"
+msgstr ""
+
 #: includes/profile-edit.php:167
 msgid "Photo of yourself"
 msgstr ""
 
-#: includes/taxonomies.php:334
+#: includes/taxonomies.php:465
 msgid "Photographer"
 msgstr ""
 
@@ -2761,6 +2921,10 @@ msgstr ""
 
 #: includes/media.php:333
 msgid "Photos uploaded by workers and employers are hidden here so this stays a library of the site's own images. Use the dropdown above to see them."
+msgstr ""
+
+#: includes/taxonomies.php:402
+msgid "Physiotherapist"
 msgstr ""
 
 #: includes/job-photos.php:515 includes/posted-for.php:375
@@ -2828,7 +2992,7 @@ msgstr ""
 msgid "Plumber"
 msgstr ""
 
-#: includes/taxonomies.php:482
+#: includes/taxonomies.php:657
 msgid "Pochury"
 msgstr ""
 
@@ -2903,6 +3067,14 @@ msgstr ""
 
 #: includes/post-job.php:158
 msgid "Posting a job takes two minutes once you have an account."
+msgstr ""
+
+#: includes/taxonomies.php:339
+msgid "Poultry worker"
+msgstr ""
+
+#: includes/taxonomies.php:352
+msgid "Pre-school teacher"
 msgstr ""
 
 #: includes/install.php:319
@@ -3007,7 +3179,11 @@ msgstr ""
 msgid "Recent messages"
 msgstr ""
 
-#: includes/more-trades.php:166
+#: includes/taxonomies.php:362
+msgid "Receptionist"
+msgstr ""
+
+#: includes/more-trades.php:109
 msgid "Receptionist, front desk, office assistant, clerk, data entry, computer operator, office boy, admin work."
 msgstr ""
 
@@ -3023,7 +3199,7 @@ msgstr ""
 msgid "Reference"
 msgstr ""
 
-#: includes/taxonomies.php:312
+#: includes/taxonomies.php:315
 msgid "Refrigerator repair"
 msgstr ""
 
@@ -3079,11 +3255,11 @@ msgstr ""
 msgid "Removed account"
 msgstr ""
 
-#: includes/taxonomies.php:476
+#: includes/taxonomies.php:651
 msgid "Rengma"
 msgstr ""
 
-#: includes/taxonomies.php:309
+#: includes/taxonomies.php:312
 msgid "Repair and technical"
 msgstr ""
 
@@ -3155,11 +3331,15 @@ msgstr ""
 msgid "Safety"
 msgstr ""
 
-#: includes/more-trades.php:168
+#: includes/taxonomies.php:374
+msgid "Sales executive"
+msgstr ""
+
+#: includes/more-trades.php:111
 msgid "Salesman, saleswoman, sales executive, shop assistant, counter staff, cashier, store keeper, godown in charge."
 msgstr ""
 
-#: includes/taxonomies.php:479
+#: includes/taxonomies.php:654
 msgid "Sangtam"
 msgstr ""
 
@@ -3220,7 +3400,7 @@ msgstr ""
 msgid "Say you are available. Available workers are shown ahead of busy ones, and it is one tap."
 msgstr ""
 
-#: includes/more-trades.php:165
+#: includes/more-trades.php:108
 msgid "School teacher, assistant teacher, private tuition, coaching class, music teacher, computer teacher, sports coach, pre school."
 msgstr ""
 
@@ -3260,7 +3440,7 @@ msgstr ""
 msgid "Search workers"
 msgstr ""
 
-#: includes/taxonomies.php:331
+#: includes/taxonomies.php:462
 msgid "Security guard"
 msgstr ""
 
@@ -3378,12 +3558,24 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+#: includes/taxonomies.php:454
+msgid "Sewing machine operator"
+msgstr ""
+
 #: includes/posted-for.php:128
 msgid "Shared by Kaam Ase."
 msgstr ""
 
-#: includes/more-trades.php:104
+#: includes/taxonomies.php:372
 msgid "Shop and sales"
+msgstr ""
+
+#: includes/taxonomies.php:390
+msgid "Shop and sales (general)"
+msgstr ""
+
+#: includes/taxonomies.php:375
+msgid "Shop assistant"
 msgstr ""
 
 #: includes/past-jobs.php:410 includes/queries.php:973
@@ -3402,7 +3594,7 @@ msgstr ""
 msgid "Shown to people who cannot use the website. Many workers will phone rather than fill in a form, and a platform with no number to call looks like one that does not want to be reached."
 msgstr ""
 
-#: includes/contact.php:715 includes/dashboard.php:54 includes/registration.php:252
+#: includes/contact.php:726 includes/dashboard.php:54 includes/registration.php:252
 #: includes/saved.php:374
 msgid "Sign in"
 msgstr ""
@@ -3431,7 +3623,7 @@ msgstr ""
 msgid "Sign in to leave a rating."
 msgstr ""
 
-#: includes/contact.php:264
+#: includes/contact.php:275
 msgid "Sign in to see contact details. It takes a minute and it keeps numbers away from strangers."
 msgstr ""
 
@@ -3445,6 +3637,22 @@ msgstr ""
 
 #: includes/dashboard.php:1019
 msgid "Sign out"
+msgstr ""
+
+#: includes/rest-auth.php:643
+msgid "Sign out of every phone"
+msgstr ""
+
+#: includes/rest-auth.php:630
+msgid "Sign this phone out"
+msgstr ""
+
+#: includes/taxonomies.php:453
+msgid "Signboard maker"
+msgstr ""
+
+#: includes/rest-auth.php:716
+msgid "Signed out. That phone will have to sign in again to use the app."
 msgstr ""
 
 #: includes/app-links.php:487
@@ -3463,12 +3671,20 @@ msgstr ""
 msgid "So an employer knows you can understand each other on site."
 msgstr ""
 
-#: includes/more-trades.php:78
-msgid "Solar and inverter"
+#: includes/taxonomies.php:436
+msgid "Social media manager"
 msgstr ""
 
-#: includes/more-trades.php:177
+#: includes/taxonomies.php:439
+msgid "Software developer"
+msgstr ""
+
+#: includes/more-trades.php:120
 msgid "Solar panel fitting, inverter, battery, UPS."
+msgstr ""
+
+#: includes/taxonomies.php:327
+msgid "Solar technician"
 msgstr ""
 
 #: includes/reports.php:233
@@ -3559,6 +3775,10 @@ msgstr ""
 msgid "Spoken to them"
 msgstr ""
 
+#: includes/taxonomies.php:355
+msgid "Sports coach"
+msgstr ""
+
 #: includes/fields.php:308 includes/posted-for.php:397
 msgid "Start date"
 msgstr ""
@@ -3583,12 +3803,20 @@ msgstr ""
 msgid "Stop telling me about new work"
 msgstr ""
 
+#: includes/taxonomies.php:377
+msgid "Store keeper"
+msgstr ""
+
 #: includes/profile-edit.php:465 includes/rest-shape.php:320
 msgid "Student or workers union officer"
 msgstr ""
 
-#: includes/taxonomies.php:471
+#: includes/taxonomies.php:646
 msgid "Sumi"
+msgstr ""
+
+#: includes/taxonomies.php:292
+msgid "Surveyor"
 msgstr ""
 
 #: includes/settings.php:267
@@ -3603,11 +3831,11 @@ msgstr ""
 msgid "Switch this on only if you are finished with Kaam Ase and want everything gone when the plugin is deleted."
 msgstr ""
 
-#: includes/taxonomies.php:313
+#: includes/taxonomies.php:316
 msgid "TV repair"
 msgstr ""
 
-#: includes/taxonomies.php:335
+#: includes/taxonomies.php:466
 msgid "Tailor"
 msgstr ""
 
@@ -3643,12 +3871,16 @@ msgstr ""
 msgid "Tap the link in your email and it goes live straight away."
 msgstr ""
 
-#: includes/more-trades.php:95
+#: includes/taxonomies.php:421
+msgid "Taxi driver"
+msgstr ""
+
+#: includes/taxonomies.php:350
 msgid "Teacher"
 msgstr ""
 
-#: includes/more-trades.php:93
-msgid "Teaching"
+#: includes/taxonomies.php:348
+msgid "Teaching and childcare"
 msgstr ""
 
 #: includes/app-links.php:510
@@ -3807,7 +4039,7 @@ msgstr ""
 msgid "That profile is not yours."
 msgstr ""
 
-#: includes/contact.php:258 includes/ratings.php:354 includes/rest-api.php:1508
+#: includes/contact.php:269 includes/ratings.php:354 includes/rest-api.php:1508
 #: includes/services.php:283
 msgid "That profile no longer exists."
 msgstr ""
@@ -3942,6 +4174,10 @@ msgstr ""
 msgid "These are the numbers that say whether this is working. Registrations and page views are not on this page on purpose."
 msgstr ""
 
+#: includes/rest-auth.php:614
+msgid "These are the phones the Kaam Ase app is signed in on with your account. If you do not recognise one, or a phone was lost or sold, sign it out here."
+msgstr ""
+
 #: includes/saved.php:604
 msgid "These closed or were taken down. Kept here so you know what happened to them."
 msgstr ""
@@ -4050,7 +4286,7 @@ msgstr ""
 msgid "This page is not written yet. Do not launch with it as it stands."
 msgstr ""
 
-#: includes/contact.php:640
+#: includes/contact.php:651
 msgid "This person has not added a phone number yet. Nothing we can do from here."
 msgstr ""
 
@@ -4072,6 +4308,10 @@ msgstr ""
 
 #: includes/posted-for.php:252
 msgid "This shows on the job as who is hiring."
+msgstr ""
+
+#: includes/rest-auth.php:642
+msgid "This signs you out of the app on every phone, including this one. Are you sure?"
 msgstr ""
 
 #: includes/gift.php:88
@@ -4151,7 +4391,7 @@ msgstr ""
 msgid "Town or village"
 msgstr ""
 
-#: includes/taxonomies.php:323
+#: includes/taxonomies.php:337
 msgid "Tractor driver"
 msgstr ""
 
@@ -4179,7 +4419,11 @@ msgstr ""
 msgid "Transport to the site"
 msgstr ""
 
-#: includes/more-trades.php:174
+#: includes/taxonomies.php:422
+msgid "Truck driver"
+msgstr ""
+
+#: includes/more-trades.php:117
 msgid "Truck driver, bus driver, tipper, JCB, excavator, heavy vehicle licence."
 msgstr ""
 
@@ -4191,7 +4435,7 @@ msgstr ""
 msgid "Turned up"
 msgstr ""
 
-#: includes/taxonomies.php:333
+#: includes/taxonomies.php:464
 msgid "Tutor"
 msgstr ""
 
@@ -4239,7 +4483,7 @@ msgstr ""
 msgid "URGENT: "
 msgstr ""
 
-#: includes/contact.php:893
+#: includes/contact.php:904
 msgid "Unblock"
 msgstr ""
 
@@ -4295,8 +4539,8 @@ msgstr ""
 msgid "Use this when somebody has paid but never appeared on the Calls to make list, which happens if their payment did not reach the server. Only tick it after you have actually telephoned them: the mark tells workers we have, and it is worth nothing the moment that stops being true."
 msgstr ""
 
-#: includes/more-trades.php:125
-msgid "Vehicles"
+#: includes/rest-auth.php:578
+msgid "Used in the last hour"
 msgstr ""
 
 #: includes/app-links.php:564
@@ -4306,6 +4550,14 @@ msgstr ""
 #: includes/admin.php:586 includes/fields.php:159 includes/fields.php:242
 #: includes/rich-manu.php:171
 msgid "Verified"
+msgstr ""
+
+#: includes/taxonomies.php:434
+msgid "Video editor"
+msgstr ""
+
+#: includes/taxonomies.php:435
+msgid "Videographer"
 msgstr ""
 
 #: includes/post-types.php:177
@@ -4360,7 +4612,11 @@ msgstr ""
 msgid "Wages are agreed and paid between the worker and the employer. Kaam Ase does not hold or guarantee them."
 msgstr ""
 
-#: includes/more-trades.php:171
+#: includes/taxonomies.php:409
+msgid "Waiter"
+msgstr ""
+
+#: includes/more-trades.php:114
 msgid "Waiter, waitress, kitchen helper, dishwasher, room service, housekeeping, hotel front desk, steward."
 msgstr ""
 
@@ -4376,8 +4632,8 @@ msgstr ""
 msgid "Waiting for you to confirm your email"
 msgstr ""
 
-#: includes/more-trades.php:81
-msgid "Warehouse and loading"
+#: includes/taxonomies.php:425
+msgid "Warehouse worker"
 msgstr ""
 
 #: includes/ratings.php:116
@@ -4412,7 +4668,7 @@ msgstr ""
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
 msgstr ""
 
-#: includes/contact.php:667
+#: includes/contact.php:678
 msgid "We have told %s that you looked up their number. Agree the rate before work starts."
 msgstr ""
 
@@ -4452,7 +4708,15 @@ msgstr ""
 msgid "We will call you about %s"
 msgstr ""
 
-#: includes/more-trades.php:176
+#: includes/taxonomies.php:455
+msgid "Weaver"
+msgstr ""
+
+#: includes/taxonomies.php:438
+msgid "Web developer"
+msgstr ""
+
+#: includes/more-trades.php:119
 msgid "Website work, software, computer programmer, IT support, networking, data work."
 msgstr ""
 
@@ -4600,7 +4864,7 @@ msgstr ""
 msgid "What you have built, what tools you have, anything an employer should know."
 msgstr ""
 
-#: includes/contact.php:659
+#: includes/contact.php:670
 msgid "WhatsApp"
 msgstr ""
 
@@ -4693,7 +4957,7 @@ msgstr ""
 msgid "Who leads it"
 msgstr ""
 
-#: includes/contact.php:850 includes/contact.php:861
+#: includes/contact.php:861 includes/contact.php:872
 msgid "Who looked you up"
 msgstr ""
 
@@ -4870,7 +5134,7 @@ msgstr ""
 msgid "Yes, send the daily message"
 msgstr ""
 
-#: includes/taxonomies.php:480
+#: includes/taxonomies.php:655
 msgid "Yimkhiung"
 msgstr ""
 
@@ -4924,7 +5188,7 @@ msgstr ""
 msgid "You cannot change your own account type. Contact Kaam Ase if you need to."
 msgstr ""
 
-#: includes/contact.php:286
+#: includes/contact.php:297
 msgid "You cannot contact this person."
 msgstr ""
 
@@ -4949,7 +5213,7 @@ msgstr ""
 msgid "You have as many urgent jobs running as one account can have at once. Close one and you can mark another."
 msgstr ""
 
-#: includes/contact.php:335 includes/entitlements.php:231
+#: includes/contact.php:346 includes/entitlements.php:231
 msgid "You have looked up a lot of numbers today. Try again tomorrow."
 msgstr ""
 
@@ -5129,7 +5393,7 @@ msgstr ""
 msgid "Your trade."
 msgstr ""
 
-#: includes/taxonomies.php:475
+#: includes/taxonomies.php:650
 msgid "Zeliang"
 msgstr ""
 
