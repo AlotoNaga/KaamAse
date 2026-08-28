@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-28 03:34+0000\n"
+"POT-Creation-Date: 2026-08-28 03:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -909,7 +909,7 @@ msgstr ""
 msgid "Choose your trade"
 msgstr ""
 
-#: includes/profile-edit.php:464 includes/rest-shape.php:389
+#: includes/profile-edit.php:464 includes/rest-shape.php:319
 msgid "Church elder or pastor"
 msgstr ""
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Closes on"
 msgstr ""
 
-#: includes/profile-edit.php:462 includes/rest-shape.php:387
+#: includes/profile-edit.php:462 includes/rest-shape.php:317
 msgid "Colony council member"
 msgstr ""
 
@@ -1492,7 +1492,7 @@ msgstr ""
 msgid "GST on file"
 msgstr ""
 
-#: includes/profile-edit.php:461 includes/rest-shape.php:386
+#: includes/profile-edit.php:461 includes/rest-shape.php:316
 msgid "Gaon Bura"
 msgstr ""
 
@@ -3801,11 +3801,11 @@ msgstr ""
 msgid "Someone else who knows me"
 msgstr ""
 
-#: includes/rest-shape.php:391
+#: includes/rest-shape.php:321
 msgid "Someone they worked for"
 msgstr ""
 
-#: includes/rest-shape.php:392
+#: includes/rest-shape.php:322
 msgid "Someone who knows them"
 msgstr ""
 
@@ -3877,7 +3877,7 @@ msgstr ""
 msgid "Store keeper"
 msgstr ""
 
-#: includes/profile-edit.php:465 includes/rest-shape.php:390
+#: includes/profile-edit.php:465 includes/rest-shape.php:320
 msgid "Student or workers union officer"
 msgstr ""
 
@@ -4662,7 +4662,7 @@ msgstr ""
 msgid "View team"
 msgstr ""
 
-#: includes/profile-edit.php:463 includes/rest-shape.php:388
+#: includes/profile-edit.php:463 includes/rest-shape.php:318
 msgid "Village council member"
 msgstr ""
 

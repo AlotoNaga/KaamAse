@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-three files taken from inside them, one brand new
+the patched versions of thirty-two files taken from inside them, one brand new
 file, plus three translation templates.
 
 ## What to copy where
@@ -38,7 +38,6 @@ file, plus three translation templates.
 | `fixed/kaamase/front-page.php` | `wp-content/themes/kaamase/front-page.php` |
 | `fixed/kaamase-core/includes/more-trades.php` | `wp-content/plugins/kaamase-core/includes/more-trades.php` |
 | `fixed/kaamase-core/includes/employer-index.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
-| `fixed/kaamase-core/includes/rest-shape.php` | `wp-content/plugins/kaamase-core/includes/rest-shape.php` |
 | `fixed/kaamase/inc/template-tags.php` | `wp-content/themes/kaamase/inc/template-tags.php` |
 | `fixed/kaamase/inc/setup.php` | `wp-content/themes/kaamase/inc/setup.php` |
 | `fixed/kaamase/footer.php` | `wp-content/themes/kaamase/footer.php` |
@@ -678,8 +677,11 @@ three that would have gone missing.
 
 ⚠️ *`install.php`, `rest-api.php`, `kaamase-core.php` and both `.pot` files are
 new revisions — copy again. `employer-index.php` is a **brand new file**.
-`rest-shape.php`, `template-tags.php`, `setup.php` and `style.css` are new to the
-list.*
+`template-tags.php`, `setup.php` and `style.css` are new to the list.*
+
+⚠️ **If you already copied `rest-shape.php` from an earlier version of this
+section, put the original back — see fix 21.** It should not have been in the
+list at all.*
 
 Workers could see jobs, and could see other workers. They could **not** see
 employers. So the only thing a worker knew about whoever posted a job was the one
@@ -813,6 +815,41 @@ Then **open wp-admin** — any screen. That is what triggers the heal. Then load
 
 If it still 404s, the page exists but its URL rule is stale: **Settings →
 Permalinks → Save Changes**, without changing anything.
+
+## 21. `rest-shape.php` — put the original back
+
+⚠️ **`rest-shape.php` has been removed from the copy list. If you already copied
+it, restore the original from your `.zip`.** Nothing else in fix 19 changes.
+
+**My mistake, and this one would have shown up in the app rather than on the
+website.**
+
+`kaamase_shape_employer()` **already existed** in the plugin. I did not check, and
+wrote a second copy of it for the new directory. Both are wrapped in
+`if ( ! function_exists( ... ) )`, so the one defined first wins — and mine was
+first. Every existing use of that function silently got my version instead of the
+real one:
+
+- **`kind` was renamed to `employer_type`.** Anywhere the app reads an employer's
+  kind, it would have found nothing.
+- **`gst` was dropped** from the detailed response.
+- A post-type check I added could return nothing where the original returned a
+  profile.
+
+That function has **five callers in `rest-api.php`** and **two filters hooked onto
+it** (`rich-manu.php`, `verified-mark.php`), so this reached far more than the new
+page.
+
+The original does everything the employer directory needs. My copy is deleted,
+and `rest-shape.php` is now **byte-identical to your original upload** — verified
+with `cmp`. That is why it has been taken off the list rather than given a new
+revision.
+
+**If you already copied it:** take `rest-shape.php` from the original
+`kaamase-core` `.zip` and put it back. If you have not copied it yet, do nothing.
+
+**What the app should read:** an employer's kind is **`kind`**, not
+`employer_type`, and the detail response includes **`gst`**.
 
 ---
 
