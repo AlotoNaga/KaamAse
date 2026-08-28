@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-28 02:42+0000\n"
+"POT-Creation-Date: 2026-08-28 03:10+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,15 +63,15 @@ msgstr ""
 msgid "A registered company"
 msgstr ""
 
-#: footer.php:190
+#: footer.php:194
 msgid "A venture of Nagaland Me"
 msgstr ""
 
-#: footer.php:100
+#: footer.php:104
 msgid "About"
 msgstr ""
 
-#: footer.php:105
+#: footer.php:109
 msgid "About us"
 msgstr ""
 
@@ -83,11 +83,11 @@ msgstr ""
 msgid "All Nagaland"
 msgstr ""
 
-#: footer.php:86
+#: footer.php:90
 msgid "All districts"
 msgstr ""
 
-#: footer.php:85 front-page.php:195
+#: footer.php:89 front-page.php:195
 msgid "All trades"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Company"
 msgstr ""
 
-#: footer.php:108
+#: footer.php:112
 msgid "Contact"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Copied"
 msgstr ""
 
-#: footer.php:182
+#: footer.php:186
 msgid "Copyright %1$s %2$s"
 msgstr ""
 
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Dimapur, Kohima, Mokokchung"
 msgstr ""
 
-#: footer.php:194
+#: footer.php:198
 msgid "Dimapur, Nagaland, India"
 msgstr ""
 
@@ -211,7 +211,7 @@ msgstr ""
 msgid "Find other workers"
 msgstr ""
 
-#: 404.php:152 footer.php:83 inc/setup.php:340
+#: 404.php:152 footer.php:83 inc/setup.php:393
 msgid "Find work"
 msgstr ""
 
@@ -219,7 +219,7 @@ msgstr ""
 msgid "Find work and find workers across Nagaland. Free for every worker, always."
 msgstr ""
 
-#: 404.php:161 footer.php:82 inc/setup.php:339
+#: 404.php:161 footer.php:82 inc/setup.php:392
 msgid "Find workers"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgstr ""
 msgid "GST"
 msgstr ""
 
-#: footer.php:192
+#: footer.php:196
 msgid "GST: 13DIHPA5679B1ZK"
 msgstr ""
 
@@ -271,11 +271,11 @@ msgstr ""
 msgid "Heading"
 msgstr ""
 
-#: footer.php:124
+#: footer.php:128
 msgid "Help"
 msgstr ""
 
-#: footer.php:139
+#: footer.php:143
 msgid "Help centre"
 msgstr ""
 
@@ -299,7 +299,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: footer.php:106
+#: footer.php:110
 msgid "How it works"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgstr ""
 msgid "Just posted"
 msgstr ""
 
-#: footer.php:97
+#: footer.php:101
 msgid "Kaam Ase"
 msgstr ""
 
@@ -351,7 +351,7 @@ msgstr ""
 msgid "Kaam Ase card"
 msgstr ""
 
-#: footer.php:199
+#: footer.php:203
 msgid "Kaam Ase is a listing platform. We connect workers and employers. We are not the employer and we do not pay wages."
 msgstr ""
 
@@ -359,7 +359,7 @@ msgstr ""
 msgid "Kaam Ase is new and this district is still filling up. Post your job and workers nearby will see it."
 msgstr ""
 
-#: footer.php:146
+#: footer.php:150
 msgid "Kaam Ase never asks a worker for money to get a job. If anyone asks, report it."
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr ""
 msgid "Led by %s"
 msgstr ""
 
-#: footer.php:167
+#: footer.php:171
 msgid "Legal"
 msgstr ""
 
@@ -535,7 +535,7 @@ msgstr ""
 msgid "Page sections"
 msgstr ""
 
-#: footer.php:109
+#: footer.php:113
 msgid "Past Job"
 msgstr ""
 
@@ -543,12 +543,12 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
-#: inc/setup.php:377
+#: inc/setup.php:430
 msgid "Plans"
 msgstr ""
 
 #: 404.php:170 header.php:118 header.php:128
-#: header.php:162 inc/setup.php:341
+#: header.php:162 inc/setup.php:394
 msgid "Post a job"
 msgstr ""
 
@@ -568,7 +568,7 @@ msgstr ""
 msgid "Primary menu, desktop header"
 msgstr ""
 
-#: footer.php:172
+#: footer.php:176
 msgid "Privacy"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgstr ""
 msgid "Registered and run from Dimapur. Not an outside app that has never been here."
 msgstr ""
 
-#: footer.php:129 single-kaamase_job.php:246
+#: footer.php:133 single-kaamase_job.php:246
 msgid "Report a problem"
 msgstr ""
 
@@ -602,11 +602,11 @@ msgstr ""
 msgid "Results for %s"
 msgstr ""
 
-#: footer.php:107
+#: footer.php:111
 msgid "Safety"
 msgstr ""
 
-#: footer.php:174
+#: footer.php:178
 msgid "Safety policy"
 msgstr ""
 
@@ -646,7 +646,7 @@ msgstr ""
 msgid "See this employer"
 msgstr ""
 
-#: inc/setup.php:397
+#: inc/setup.php:450
 msgid "Set up menu"
 msgstr ""
 
@@ -728,7 +728,7 @@ msgstr ""
 msgid "Tell us"
 msgstr ""
 
-#: footer.php:173
+#: footer.php:177
 msgid "Terms"
 msgstr ""
 
@@ -876,7 +876,7 @@ msgstr ""
 msgid "Vouched locally"
 msgstr ""
 
-#: footer.php:134
+#: footer.php:138
 msgid "Wage or job complaint"
 msgstr ""
 
@@ -888,7 +888,7 @@ msgstr ""
 msgid "Which district"
 msgstr ""
 
-#: inc/setup.php:353
+#: footer.php:87 inc/setup.php:377 inc/setup.php:406
 msgid "Who is hiring"
 msgstr ""
 

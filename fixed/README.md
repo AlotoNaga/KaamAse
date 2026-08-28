@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-two files taken from inside them, one brand new
+the patched versions of thirty-three files taken from inside them, one brand new
 file, plus three translation templates.
 
 ## What to copy where
@@ -41,6 +41,7 @@ file, plus three translation templates.
 | `fixed/kaamase-core/includes/rest-shape.php` | `wp-content/plugins/kaamase-core/includes/rest-shape.php` |
 | `fixed/kaamase/inc/template-tags.php` | `wp-content/themes/kaamase/inc/template-tags.php` |
 | `fixed/kaamase/inc/setup.php` | `wp-content/themes/kaamase/inc/setup.php` |
+| `fixed/kaamase/footer.php` | `wp-content/themes/kaamase/footer.php` |
 | `fixed/kaamase/style.css` | `wp-content/themes/kaamase/style.css` |
 
 **New folders to create** (they do not exist on your site yet):
@@ -741,11 +742,25 @@ sort function as the page so the two cannot drift apart. **The app needs a scree
 built for it** — see the note I gave you separately. Until then the website has
 it and the app does not; nothing in the app breaks.
 
-### The menu
+### The menu — nothing for you to do
 
-Once the page exists, add it in **Appearance → Menus** like any other page. If you
-have no menu assigned, the built-in fallback now shows **Who is hiring** to
-signed-in visitors automatically.
+**You do not create the page and you do not touch the menu.** The plugin creates
+the page on the schema bump, and the link is added in all three places a menu
+appears, by two paths that cover both ways a WordPress site can be set up:
+
+- **No menu assigned in Appearance → Menus** (which is how your site runs now —
+  Find workers, Find work and Post a job come from the theme's fallback): the
+  fallback itself now carries **Who is hiring**. Desktop header and mobile
+  drawer both.
+- **A menu assigned later**: the fallback stops running the moment you assign
+  one, so a `wp_nav_menu_items` filter adds the item to the header and drawer
+  menus as well. It checks for the link first, so if you ever add it by hand it
+  is not added twice.
+- **Footer**, Browse column: added to the theme's own list, beside Hire a team.
+
+All three are shown to **signed-in visitors only**. Signed out, the link is
+hidden rather than leading to a sign-in wall — a header link that always ends in
+a wall teaches people the header is not worth reading.
 
 **Test:** load any page once so the page gets created. Sign out and visit
 `/employers/` — you should get a sign-in card, not a list. Sign in with a

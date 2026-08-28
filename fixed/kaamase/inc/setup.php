@@ -327,6 +327,59 @@ add_filter( 'excerpt_more', 'kaamase_excerpt_more' );
    which is exactly when you are showing it to someone.
    ========================================================================== */
 
+if ( ! function_exists( 'kaamase_hiring_menu_item' ) ) {
+	/**
+	 * Put Who is hiring into an assigned header or drawer menu.
+	 *
+	 * The fallback below already carries the link, but the fallback only
+	 * runs while no menu is assigned. The moment somebody assigns one in
+	 * Appearance then Menus, the fallback stops and every link has to be
+	 * added by hand -- including this one, on a site whose menus have
+	 * always looked after themselves.
+	 *
+	 * So it is appended here as well. The two cannot both fire: this
+	 * filter is only reached through wp_nav_menu, which only runs when a
+	 * menu IS assigned.
+	 *
+	 * Header and drawer only. The footer builds its own lists and never
+	 * reaches either path.
+	 *
+	 * @since 1.4.1
+	 * @param string   $items The menu HTML so far.
+	 * @param stdClass $args  wp_nav_menu arguments.
+	 * @return string
+	 */
+	function kaamase_hiring_menu_item( $items, $args ) {
+
+		if ( ! is_user_logged_in() ) {
+			return $items;
+		}
+
+		$location = isset( $args->theme_location ) ? (string) $args->theme_location : '';
+
+		if ( ! in_array( $location, array( 'primary', 'mobile' ), true ) ) {
+			return $items;
+		}
+
+		$url = home_url( '/employers/' );
+
+		// Already added by hand. Adding it twice is worse than not adding it.
+		if ( false !== strpos( $items, esc_url( $url ) ) ) {
+			return $items;
+		}
+
+		$stack = ( isset( $args->walker_style ) && 'stack' === $args->walker_style );
+
+		return $items . sprintf(
+			'<li class="ka-nav__item"><a class="%1$s" href="%2$s"><span class="ka-nav__text">%3$s</span></a></li>',
+			esc_attr( $stack ? 'ka-nav__link ka-nav__link--stack' : 'ka-nav__link' ),
+			esc_url( $url ),
+			esc_html__( 'Who is hiring', 'kaamase' )
+		);
+	}
+}
+add_filter( 'wp_nav_menu_items', 'kaamase_hiring_menu_item', 10, 2 );
+
 if ( ! function_exists( 'kaamase_menu_fallback' ) ) {
 	/**
 	 * Render a minimal menu when no menu is assigned to a location.
