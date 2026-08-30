@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-28 07:39+0000\n"
+"POT-Creation-Date: 2026-08-30 07:26+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -50,6 +50,12 @@ msgstr ""
 #: includes/rich-manu.php:501
 msgid "%s"
 msgstr ""
+
+#: includes/not-confirmed.php:225
+msgid "%s account has not confirmed."
+msgid_plural "%s accounts have not confirmed."
+msgstr[0] ""
+msgstr[1] ""
 
 #: includes/queries.php:1095
 msgid "%s across Nagaland"
@@ -1252,7 +1258,7 @@ msgstr ""
 msgid "Electronics technician"
 msgstr ""
 
-#: includes/reports.php:909
+#: includes/not-confirmed.php:239 includes/reports.php:909
 msgid "Email"
 msgstr ""
 
@@ -1280,7 +1286,7 @@ msgstr ""
 msgid "Email them about it"
 msgstr ""
 
-#: includes/roles.php:154
+#: includes/not-confirmed.php:199 includes/roles.php:154
 msgid "Employer"
 msgstr ""
 
@@ -2055,7 +2061,7 @@ msgstr ""
 msgid "Khiamniungan"
 msgstr ""
 
-#: includes/employer-index.php:354
+#: includes/employer-index.php:354 includes/not-confirmed.php:236
 msgid "Kind"
 msgstr ""
 
@@ -2319,6 +2325,10 @@ msgstr ""
 msgid "Nagamese"
 msgstr ""
 
+#: includes/not-confirmed.php:235
+msgid "Name"
+msgstr ""
+
 #: includes/email-check.php:575
 msgid "Name people see"
 msgstr ""
@@ -2471,6 +2481,10 @@ msgstr ""
 msgid "No longer available"
 msgstr ""
 
+#: includes/not-confirmed.php:271
+msgid "No number given"
+msgstr ""
+
 #: includes/rich-manu.php:490
 msgid "No number on file"
 msgstr ""
@@ -2539,6 +2553,10 @@ msgstr ""
 msgid "Nobody has been rung and nothing has been counted against your lookups for today."
 msgstr ""
 
+#: includes/not-confirmed.php:215
+msgid "Nobody is waiting. Every account with a profile has confirmed its email."
+msgstr ""
+
 #: includes/employer-index.php:218
 msgid "Nobody matches that"
 msgstr ""
@@ -2589,6 +2607,10 @@ msgstr ""
 
 #: includes/rich-manu.php:678
 msgid "Not called."
+msgstr ""
+
+#: includes/not-confirmed.php:65 includes/not-confirmed.php:66 includes/not-confirmed.php:204
+msgid "Not confirmed"
 msgstr ""
 
 #: includes/ratings.php:848 includes/rest-api.php:2316
@@ -2928,7 +2950,7 @@ msgstr ""
 msgid "Phom"
 msgstr ""
 
-#: includes/reports.php:908
+#: includes/not-confirmed.php:237 includes/reports.php:908
 msgid "Phone"
 msgstr ""
 
@@ -3275,6 +3297,10 @@ msgstr ""
 
 #: includes/post-job.php:157 includes/teams.php:71
 msgid "Register first, it is free"
+msgstr ""
+
+#: includes/not-confirmed.php:240
+msgid "Registered"
 msgstr ""
 
 #: includes/job-photos.php:536
@@ -3957,6 +3983,10 @@ msgstr ""
 msgid "Teaching and childcare"
 msgstr ""
 
+#: includes/not-confirmed.php:198
+msgid "Team"
+msgstr ""
+
 #: includes/app-links.php:510
 msgid "Team identifier"
 msgstr ""
@@ -4266,6 +4296,10 @@ msgstr ""
 
 #: kaamase-core.php:304
 msgid "These core files have not been uploaded yet. The plugin cannot work properly without them."
+msgstr ""
+
+#: includes/not-confirmed.php:208
+msgid "These people registered but never opened the link in their email, so their profile is hidden and nobody can find them. Ring them, explain what the link is for, and they can confirm while you are on the phone."
 msgstr ""
 
 #: includes/exposure.php:493
@@ -4990,7 +5024,7 @@ msgstr ""
 msgid "When you see a job worth coming back to, open it and tap Save this job."
 msgstr ""
 
-#: includes/admin.php:526 includes/admin.php:623
+#: includes/admin.php:526 includes/admin.php:623 includes/not-confirmed.php:238
 msgid "Where"
 msgstr ""
 
@@ -5111,7 +5145,7 @@ msgstr ""
 msgid "Worked together %s ago"
 msgstr ""
 
-#: includes/roles.php:132
+#: includes/not-confirmed.php:197 includes/roles.php:132
 msgid "Worker"
 msgstr ""
 
@@ -5297,6 +5331,10 @@ msgstr ""
 
 #: includes/ratings.php:358
 msgid "You cannot rate yourself."
+msgstr ""
+
+#: includes/not-confirmed.php:187
+msgid "You cannot see this page."
 msgstr ""
 
 #: includes/hires.php:489

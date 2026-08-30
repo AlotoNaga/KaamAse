@@ -5,8 +5,8 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-five files taken from inside them, one brand new
-file, plus three translation templates.
+the patched versions of thirty-five files taken from inside them, two brand new
+files, plus three translation templates.
 
 ## What to copy where
 
@@ -41,6 +41,7 @@ file, plus three translation templates.
 | `fixed/kaamase/front-page.php` | `wp-content/themes/kaamase/front-page.php` |
 | `fixed/kaamase-core/includes/more-trades.php` | `wp-content/plugins/kaamase-core/includes/more-trades.php` |
 | `fixed/kaamase-core/includes/employer-index.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/not-confirmed.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/inc/template-tags.php` | `wp-content/themes/kaamase/inc/template-tags.php` |
 | `fixed/kaamase/inc/setup.php` | `wp-content/themes/kaamase/inc/setup.php` |
 | `fixed/kaamase/footer.php` | `wp-content/themes/kaamase/footer.php` |
@@ -1072,6 +1073,57 @@ authentication are all byte-identical, checked again.
 **Test:** sign in on two phones, open the list on one, and confirm exactly one row
 says it is this phone. Sign the other out and confirm it is asked to sign in again
 on its next action.
+
+## 25. "Not confirmed" — a list you can ring
+
+⚠️ *`not-confirmed.php` is a **brand new file**. `kaamase-core.pot` is a new
+revision. **Nothing existing is edited** — not one line.*
+
+An account that never confirmed its email has a profile nobody can find. The
+person registered, so they wanted the work; they just never opened the link. Some
+do not use email at all and gave an address because a form asked for one. Sending
+them another email saying "check your email" is not a plan.
+
+There was no way to reach them. A phone number could only be read one profile at a
+time, by opening that profile on the website and pressing reveal, and **nothing
+anywhere said which accounts were unconfirmed** — so the people most in need of a
+phone call were the hardest to find.
+
+**Users → Not confirmed** now lists them: name, worker or team or employer, phone
+as a `tel:` link, district and town, email, and when they registered. Newest first,
+50 to a page. The name links to their profile.
+
+### What it deliberately is not
+
+**Not a directory of everybody's number.** Only accounts that have not confirmed,
+because that is the job it exists for, and a list of every phone number on the
+platform sitting in wp-admin is a liability nobody asked for. A confirmed worker's
+number is still read the way it always was.
+
+### How it reads a number
+
+Through **`kaamase_field()`** — the filtered reader with the privacy rule attached,
+which answers for administrators because `kaamase_can_see_private()` already says
+so. Going to post meta directly would have worked and would have been wrong: it
+would put a second, unguarded route to a phone number into the codebase, and the
+whole design of `fields.php` is that there is exactly one. If those rights are ever
+narrowed, this screen empties out on its own.
+
+**No quota is spent.** It does not go through `kaamase_can_contact()`, because that
+counts reveals to guard against harvesting by strangers, and this is the platform's
+own support work on its own accounts.
+
+`manage_options` only, checked when the menu is added **and again when the page
+renders**, because the first only hides a link and this page prints phone numbers.
+
+### Not changed
+
+Nothing. No existing file is edited, no filter is added, and the only hook is
+`admin_menu`. `kaamase_can_see_private()` is byte-identical.
+
+**Test:** open **Users → Not confirmed**. You should see the accounts you have been
+chasing, with numbers. Ring one; when they confirm, they drop off the list on the
+next page load.
 
 ---
 
