@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-30 07:26+0000\n"
+"POT-Creation-Date: 2026-09-01 11:18+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -339,7 +339,7 @@ msgstr ""
 msgid "Accounts that are a worker and an employer at the same time. Anybody can add hiring to their own account, so nothing here is waiting on you. Removing hiring takes away job posting and leaves the worker profile, the ratings and the login untouched."
 msgstr ""
 
-#: includes/privacy.php:811
+#: includes/privacy.php:833
 msgid "Accounts that go unused are warned by email at around eighteen months, hidden from searches at twenty months, and have their personal details removed at two years. Signing in at any point stops this and restores the profile."
 msgstr ""
 
@@ -603,7 +603,7 @@ msgstr ""
 msgid "Are you free for work?"
 msgstr ""
 
-#: includes/privacy.php:654
+#: includes/privacy.php:676
 msgid "Are you still looking for work on %s?"
 msgstr ""
 
@@ -819,7 +819,7 @@ msgstr ""
 msgid "Calls to make"
 msgstr ""
 
-#: includes/privacy.php:810
+#: includes/privacy.php:832
 msgid "Camera metadata, including the location where a photograph was taken, is stripped from every upload before it is stored."
 msgstr ""
 
@@ -1616,7 +1616,7 @@ msgstr ""
 msgid "Hello %s"
 msgstr ""
 
-#: includes/privacy.php:641 includes/privacy.php:663 includes/profile-edit.php:977
+#: includes/privacy.php:663 includes/privacy.php:685 includes/profile-edit.php:977
 #: includes/registration.php:673
 msgid "Hello %s,"
 msgstr ""
@@ -1857,7 +1857,7 @@ msgstr ""
 msgid "If you did not create this account, ignore this message and nothing will happen."
 msgstr ""
 
-#: includes/privacy.php:667
+#: includes/privacy.php:689
 msgid "If you do nothing, we will hide your profile in a couple of months and remove your details after two years. You can come back at any time before then."
 msgstr ""
 
@@ -1965,7 +1965,7 @@ msgstr ""
 msgid "Jobs without a rate get almost no answers. Put a real number even if it is negotiable."
 msgstr ""
 
-#: includes/privacy.php:320
+#: includes/privacy.php:342
 msgid "Jobs you posted were kept but your name and number were removed, because workers who did those jobs have ratings attached to them."
 msgstr ""
 
@@ -1977,7 +1977,7 @@ msgstr ""
 msgid "Kaam Ase"
 msgstr ""
 
-#: includes/privacy.php:813
+#: includes/privacy.php:835
 msgid "Kaam Ase Core"
 msgstr ""
 
@@ -2037,7 +2037,7 @@ msgstr ""
 msgid "Kaam Ase settings"
 msgstr ""
 
-#: includes/privacy.php:808
+#: includes/privacy.php:830
 msgid "Kaam Ase stores the following about registered users: name, email address, phone number, district, town, trade, years of experience, expected rates, availability, profile photograph, photographs of past work, who vouched for them, ratings given and received, records of who looked up their contact details, and the date they agreed to the terms."
 msgstr ""
 
@@ -2963,7 +2963,7 @@ msgstr ""
 msgid "Phone number"
 msgstr ""
 
-#: includes/privacy.php:809
+#: includes/privacy.php:831
 msgid "Phone numbers are never shown publicly. They are released one at a time to signed in, verified accounts, and every release is recorded and shown to the person it belongs to."
 msgstr ""
 
@@ -3231,7 +3231,7 @@ msgstr ""
 msgid "Ratings you gave"
 msgstr ""
 
-#: includes/privacy.php:349
+#: includes/privacy.php:371
 msgid "Ratings you gave were kept without your name, because they are part of somebody else's record."
 msgstr ""
 
@@ -3331,7 +3331,7 @@ msgstr ""
 msgid "Remove verified"
 msgstr ""
 
-#: includes/privacy.php:202 includes/privacy.php:338 includes/privacy.php:381
+#: includes/privacy.php:202 includes/privacy.php:360 includes/privacy.php:403
 msgid "Removed account"
 msgstr ""
 
@@ -3691,7 +3691,7 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: includes/privacy.php:645
+#: includes/privacy.php:667
 msgid "Sign in and it comes straight back."
 msgstr ""
 
@@ -4792,7 +4792,7 @@ msgstr ""
 msgid "We have it. Somebody reads it within two working days."
 msgstr ""
 
-#: includes/privacy.php:666
+#: includes/privacy.php:688
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
 msgstr ""
 
@@ -5357,7 +5357,7 @@ msgstr ""
 msgid "You have not posted a job yet."
 msgstr ""
 
-#: includes/privacy.php:644
+#: includes/privacy.php:666
 msgid "You have not used your account for a long time, so we have hidden your profile from searches. Nothing is deleted."
 msgstr ""
 
@@ -5417,7 +5417,7 @@ msgstr ""
 msgid "Your %s account is closed"
 msgstr ""
 
-#: includes/privacy.php:632
+#: includes/privacy.php:654
 msgid "Your %s profile is hidden for now"
 msgstr ""
 

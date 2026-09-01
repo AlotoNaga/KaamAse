@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-five files taken from inside them, two brand new
+the patched versions of thirty-six files taken from inside them, three brand new
 files, plus three translation templates.
 
 ## What to copy where
@@ -42,6 +42,8 @@ files, plus three translation templates.
 | `fixed/kaamase-core/includes/more-trades.php` | `wp-content/plugins/kaamase-core/includes/more-trades.php` |
 | `fixed/kaamase-core/includes/employer-index.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/not-confirmed.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/views.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/privacy.php` | `wp-content/plugins/kaamase-core/includes/privacy.php` |
 | `fixed/kaamase/inc/template-tags.php` | `wp-content/themes/kaamase/inc/template-tags.php` |
 | `fixed/kaamase/inc/setup.php` | `wp-content/themes/kaamase/inc/setup.php` |
 | `fixed/kaamase/footer.php` | `wp-content/themes/kaamase/footer.php` |
@@ -1185,6 +1187,77 @@ and duplicated harmlessly for you.
 **Test:** on a phone, open `kaamase.com/app`. Then open it on a laptop — you
 should see the buttons. Then go straight back to the phone: **that is the test
 that used to fail.** It should still go to the store.
+
+## 27. View counting — phase 1 of 3, and nothing shows yet
+
+⚠️ *`views.php` is a **brand new file**. `privacy.php` and `kaamase-core.pot` are
+new revisions.*
+
+The counting half of the views feature. **Nothing appears anywhere on the site or
+in the app** — that is deliberate. Let it run for a few days so the numbers have
+something in them before the first person sees one. A profile that says *0 views*
+on the day the feature arrives is worse than no number at all.
+
+Full plan, including phases 2 and 3: the build plan page.
+
+### After copying, open wp-admin once
+
+The table is created on an admin page load, not by a version number. **Nothing is
+counted until you have loaded any wp-admin screen once.** That is not an
+oversight — tying setup to a version number is exactly what lost the employers
+page in fix 20, and making a table from whatever request happens to arrive first
+is worse. An admin load is rare, unhurried, and somewhere a failure is visible to
+somebody who can act on it.
+
+### What counts as a view
+
+- **Total, not unique.** Somebody coming back that evening counts again.
+- **At most once per viewer per 30 minutes.** Refresh-spam counts once. Proved
+  against a real database, not asserted.
+- **Never your own page.** An owner checking their profile all day would
+  otherwise be most of their own audience.
+- **Never staff.** Moderating a hundred profiles would put a view on each.
+- **Never crawlers.** Same list the store redirect uses.
+- **Strangers count**, and cannot block each other.
+
+### One row per viewer per day
+
+Not a row per view. A busy profile is a handful of rows a day rather than
+hundreds, and both numbers come from one query: `SUM(hits)` is how many views,
+`COUNT(DISTINCT viewer)` is how many people. In testing, 8 views were held in 6
+rows.
+
+### People who are not signed in
+
+They count and there is nobody to name. Telling one stranger from another needs
+something per visitor, and **an IP address is not worth keeping**: `visitor_key`
+is a one-way hash of the address, the browser, and **today**, salted with the
+site's own key. It cannot be reversed to an address, it is a different value for
+the same person tomorrow, and the daily prune removes it entirely. Verified: the
+key is hex only and contains no fragment of the address.
+
+### Forgetting
+
+Three ways a row stops being wanted, all handled:
+
+- **A year passes** — pruned on the existing `kaamase_daily` cron, in batches of
+  1000 so one statement cannot hold a lock long enough for the site to notice.
+- **The profile or job is deleted** — its views go with it.
+- **Somebody erases their account** — every record of **what they looked at** is
+  deleted. This is the one that matters: views *of* their profile vanish with the
+  profile, but the record of *their browsing* sits on other people's profiles and
+  would otherwise survive them entirely. Other people's counts fall by whatever
+  that person contributed, which is correct — those views were theirs.
+
+### Not changed
+
+Only `privacy.php` is edited, and only to add the erasure call. No template, no
+query, no listing, no API. `exposure.php` is untouched.
+
+**Test:** copy both files, load any wp-admin screen once. Then open a worker
+profile from a signed-out browser. Nothing visible changes — that is correct.
+To confirm it is working, in phpMyAdmin check that `wp_kaamase_views` exists and
+has a row in it.
 
 ---
 
