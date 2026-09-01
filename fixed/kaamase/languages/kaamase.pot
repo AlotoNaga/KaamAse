@@ -95,8 +95,16 @@ msgstr ""
 msgid "An individual, building or fixing something"
 msgstr ""
 
+#: inc/app-banner.php:375
+msgid "Android"
+msgstr ""
+
 #: front-page.php:96
 msgid "Any trade"
+msgstr ""
+
+#: inc/app-banner.php:379
+msgid "App Store"
 msgstr ""
 
 #: inc/enqueue.php:150
@@ -203,6 +211,10 @@ msgstr ""
 msgid "Experience"
 msgstr ""
 
+#: inc/app-banner.php:393
+msgid "Faster on your phone, and it tells you the moment work appears."
+msgstr ""
+
 #: inc/app-banner.php:183
 msgid "Faster, and it tells you when work appears"
 msgstr ""
@@ -249,6 +261,14 @@ msgstr ""
 
 #: front-page.php:404
 msgid "Free to use"
+msgstr ""
+
+#: inc/app-banner.php:391
+msgid "Get the Kaam Ase app"
+msgstr ""
+
+#: inc/app-banner.php:380
+msgid "Google Play"
 msgstr ""
 
 #: single-kaamase_employer.php:111
@@ -317,6 +337,10 @@ msgstr ""
 
 #: inc/template-tags.php:645
 msgid "Individual"
+msgstr ""
+
+#: inc/app-banner.php:374
+msgid "iPhone"
 msgstr ""
 
 #: 404.php:73

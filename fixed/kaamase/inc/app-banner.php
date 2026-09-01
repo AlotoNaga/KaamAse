@@ -270,19 +270,28 @@ if ( ! function_exists( 'kaamase_app_store_links' ) ) {
 	 */
 	function kaamase_app_store_links() {
 
+		$id    = kaamase_app_store_id();
+		$links = array(
+			'android' => 'https://play.google.com/store/apps/details?id=com.kaamase.app',
+		);
+
+		/*
+		 * Only when there is a number. Sticking an empty one on the end
+		 * builds apps.apple.com/app/id, which is a button that looks
+		 * like it works and goes nowhere. Better to show one shop than
+		 * two when one of them is broken.
+		 */
+		if ( '' !== $id ) {
+			$links['ios'] = 'https://apps.apple.com/app/id' . $id;
+		}
+
 		/**
-		 * Filter the two store addresses.
+		 * Filter the store addresses.
 		 *
 		 * @since 1.1.0
 		 * @param array<string,string> $links Keyed ios and android.
 		 */
-		return (array) apply_filters(
-			'kaamase_app_store_links',
-			array(
-				'ios'     => 'https://apps.apple.com/app/id' . kaamase_app_store_id(),
-				'android' => 'https://play.google.com/store/apps/details?id=com.kaamase.app',
-			)
-		);
+		return (array) apply_filters( 'kaamase_app_store_links', $links );
 	}
 }
 
@@ -387,9 +396,14 @@ if ( ! function_exists( 'kaamase_app_cta' ) ) {
 
 			<div class="ka-appcta__stores">
 				<?php foreach ( $shops as $key => $phone ) : ?>
-					<?php if ( empty( $links[ $key ] ) ) { continue; } ?>
-					<a class="ka-store" href="<?php echo esc_url( $links[ $key ] ); ?>"
-						target="_blank" rel="noopener">
+					<?php
+					// Both of these can be replaced by a filter or an
+					// earlier definition, so neither is assumed.
+					if ( empty( $links[ $key ] ) || empty( $glyphs[ $key ] ) ) {
+						continue;
+					}
+					?>
+					<a class="ka-store" href="<?php echo esc_url( $links[ $key ] ); ?>">
 						<?php echo $glyphs[ $key ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Drawn above, not user input. ?>
 						<span class="ka-store__words">
 							<span class="ka-store__where"><?php echo esc_html( $phone ); ?></span>
