@@ -1803,6 +1803,12 @@ body.has-tabbar .ka-actionbar {
   padding-bottom: calc(var(--ka-3) + env(safe-area-inset-bottom, 0px));
 }
 
+/* An author rule beats the browser's own [hidden] { display: none }, so
+   the attribute has to be said again here. Without it the strip shows on
+   an iPhone, where Apple's banner is meant to be the only offer, and the
+   close button appears to do nothing. */
+.ka-getapp[hidden] { display: none; }
+
 .ka-getapp__icon {
   flex-shrink: 0;
   width: 44px;
