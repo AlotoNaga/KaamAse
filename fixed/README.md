@@ -1265,6 +1265,44 @@ has a row in it.
 ⚠️ *`app-banner.php` is a **brand new file**. `functions.php`, `style.css` and
 `kaamase.pot` are new revisions.*
 
+### 28b. And a block on the home page, above the two doors
+
+⚠️ *`app-banner.php` and `front-page.php` and `style.css` are new revisions.*
+
+The two offers above each need a particular browser. Apple's banner is drawn by
+Safari and nothing else; the strip is Android only. The owner's report from
+Nagaland is that **almost nobody there opens Safari by choice**, so on an iPhone in
+Chrome the app was invisible. A block in the page itself has no such condition: it
+is on every device, in every browser, and — not a small thing after an evening of
+hunting — the owner can look at their own home page and see it.
+
+Placement above the two doors was the owner's call. My advice was below them,
+because those two doors are the only two things on that page that grow the
+business and an app link above them sends somebody to a shop before they have
+made a profile or posted a job. The block is therefore kept to one low row rather
+than a banner, so it costs the doors as little height as possible.
+
+**Two links, one per store, not one link to `/app`.** `/app` has to work out which
+phone it is talking to from the user agent, and that guess has already been wrong
+once (fix 26). Somebody who can see both shops cannot be sent to the wrong one.
+The iOS address is built from `kaamase_app_store_id()`, so the App Store number is
+still written down in exactly one place.
+
+**The small line on each button names the phone, not the shop** — *iPhone* over
+*App Store*, *Android* over *Google Play*. Somebody choosing between the two knows
+what is in their hand and may never have heard of an App Store.
+
+The two shop marks are drawn as inline SVG rather than fetched, because rule 2 of
+the design system is no external requests and a village connection should not wait
+on two logos to read the page. These are our own buttons, not facsimiles of
+Apple's and Google's official badges. If the official artwork is ever wanted
+instead, `kaamase_app_store_links` and the markup are the only two places to touch.
+
+The icon is built from the uploads folder rather than written out as a full
+address, so moving the site to another domain does not leave a broken image, and
+it falls back to the site icon if the file is ever cleared out.
+
+
 A quiet strip along the bottom of the screen on Android, and Apple's own banner on
 iPhone. Both point at `/app`, so all the store routing from fix 26 does the work
 and no store URL is repeated anywhere.

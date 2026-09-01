@@ -244,3 +244,162 @@ if ( ! function_exists( 'kaamase_app_banner' ) ) {
 	}
 }
 add_action( 'wp_footer', 'kaamase_app_banner', 20 );
+
+
+/* ==========================================================================
+   3. THE HOME PAGE BLOCK
+
+   The two things above only reach a person on the right browser: Apple's
+   banner needs Safari, and the strip needs Android. Almost nobody in
+   Nagaland opens Safari by choice, so on an iPhone in Chrome the app is
+   currently invisible. This block is in the page itself, so it is on
+   every device and every browser, and it can be looked at.
+
+   Two links, one per store, rather than one link to /app. /app has to
+   work out which phone it is talking to from the user agent, and that
+   guess has already been wrong once. Somebody who can see both shops
+   cannot be sent to the wrong one.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_app_store_links' ) ) {
+	/**
+	 * Where each shop lives.
+	 *
+	 * @since 1.1.0
+	 * @return array<string,string> Keyed ios and android.
+	 */
+	function kaamase_app_store_links() {
+
+		/**
+		 * Filter the two store addresses.
+		 *
+		 * @since 1.1.0
+		 * @param array<string,string> $links Keyed ios and android.
+		 */
+		return (array) apply_filters(
+			'kaamase_app_store_links',
+			array(
+				'ios'     => 'https://apps.apple.com/app/id' . kaamase_app_store_id(),
+				'android' => 'https://play.google.com/store/apps/details?id=com.kaamase.app',
+			)
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_app_icon_url' ) ) {
+	/**
+	 * The app icon to show beside the offer.
+	 *
+	 * Built from the uploads folder rather than written out in full, so
+	 * moving the site to another address does not leave a broken image
+	 * here. Falls back to the site icon if the file is ever cleared out.
+	 *
+	 * @since 1.1.0
+	 * @return string URL, or an empty string if there is nothing to show.
+	 */
+	function kaamase_app_icon_url() {
+
+		$url     = '';
+		$uploads = wp_upload_dir();
+		$file    = '2026/08/logo-icon-512.png';
+
+		if ( empty( $uploads['error'] ) && file_exists( trailingslashit( $uploads['basedir'] ) . $file ) ) {
+			$url = trailingslashit( $uploads['baseurl'] ) . $file;
+		}
+
+		if ( '' === $url ) {
+			$url = (string) get_site_icon_url( 192 );
+		}
+
+		/**
+		 * Filter the app icon shown in the home page block.
+		 *
+		 * @since 1.1.0
+		 * @param string $url Image address, or empty for none.
+		 */
+		return (string) apply_filters( 'kaamase_app_icon_url', $url );
+	}
+}
+
+if ( ! function_exists( 'kaamase_app_store_glyphs' ) ) {
+	/**
+	 * The two shop marks.
+	 *
+	 * Drawn rather than fetched, because rule 2 of the design system is
+	 * no external requests, and because a village connection should not
+	 * have to wait on two logos to read the page.
+	 *
+	 * @since 1.1.0
+	 * @return array<string,string> Keyed ios and android, each an SVG.
+	 */
+	function kaamase_app_store_glyphs() {
+
+		$open  = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">';
+		$close = '</svg>';
+
+		return array(
+			'ios'     => $open . '<path d="M16.365 1.43c0 1.14-.417 2.2-1.25 3.05-.99 1.02-2.13 1.6-3.36 1.5-.02-.11-.03-.23-.03-.35 0-1.1.47-2.26 1.29-3.08.41-.42.94-.77 1.57-1.05.63-.27 1.22-.42 1.77-.45.01.13.01.25.01.38zM20.6 17.02c-.32.74-.7 1.42-1.14 2.05-.6.86-1.09 1.45-1.47 1.78-.59.54-1.22.82-1.9.84-.49 0-1.07-.14-1.76-.42-.69-.28-1.32-.42-1.9-.42-.6 0-1.25.14-1.95.42-.7.28-1.27.43-1.7.44-.65.03-1.3-.26-1.94-.86-.41-.36-.92-.97-1.53-1.83-.65-.92-1.19-1.98-1.6-3.19-.45-1.31-.68-2.57-.68-3.79 0-1.4.3-2.6.91-3.61.48-.81 1.11-1.45 1.91-1.92.79-.47 1.65-.71 2.58-.73.52 0 1.19.16 2.03.48.83.32 1.37.48 1.6.48.18 0 .78-.19 1.79-.56.96-.35 1.77-.49 2.43-.44 1.8.15 3.15.86 4.05 2.14-1.61.98-2.4 2.35-2.39 4.11.02 1.37.51 2.51 1.49 3.42.44.42.94.74 1.49.97-.12.35-.25.68-.38 1z"/>' . $close,
+			'android' => $open . '<path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54z"/>' . $close,
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_app_cta' ) ) {
+	/**
+	 * The block itself.
+	 *
+	 * The small line on each shop button says the phone, not the shop,
+	 * because somebody choosing between these knows what phone is in
+	 * their hand and may not know what an App Store is.
+	 *
+	 * @since 1.1.0
+	 * @return void
+	 */
+	function kaamase_app_cta() {
+
+		$links  = kaamase_app_store_links();
+		$glyphs = kaamase_app_store_glyphs();
+		$icon   = kaamase_app_icon_url();
+
+		$shops = array(
+			'ios'     => __( 'iPhone', 'kaamase' ),
+			'android' => __( 'Android', 'kaamase' ),
+		);
+
+		$names = array(
+			'ios'     => __( 'App Store', 'kaamase' ),
+			'android' => __( 'Google Play', 'kaamase' ),
+		);
+		?>
+		<div class="ka-appcta">
+
+			<?php if ( $icon ) : ?>
+				<img class="ka-appcta__icon" src="<?php echo esc_url( $icon ); ?>"
+					alt="" width="64" height="64" loading="lazy" decoding="async">
+			<?php endif; ?>
+
+			<div class="ka-appcta__words">
+				<h2 class="ka-appcta__title"><?php esc_html_e( 'Get the Kaam Ase app', 'kaamase' ); ?></h2>
+				<p class="ka-appcta__sub">
+					<?php esc_html_e( 'Faster on your phone, and it tells you the moment work appears.', 'kaamase' ); ?>
+				</p>
+			</div>
+
+			<div class="ka-appcta__stores">
+				<?php foreach ( $shops as $key => $phone ) : ?>
+					<?php if ( empty( $links[ $key ] ) ) { continue; } ?>
+					<a class="ka-store" href="<?php echo esc_url( $links[ $key ] ); ?>"
+						target="_blank" rel="noopener">
+						<?php echo $glyphs[ $key ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Drawn above, not user input. ?>
+						<span class="ka-store__words">
+							<span class="ka-store__where"><?php echo esc_html( $phone ); ?></span>
+							<span class="ka-store__name"><?php echo esc_html( $names[ $key ] ); ?></span>
+						</span>
+					</a>
+				<?php endforeach; ?>
+			</div>
+
+		</div>
+		<?php
+	}
+}

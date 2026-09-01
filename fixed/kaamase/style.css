@@ -1863,4 +1863,121 @@ body.has-tabbar .ka-actionbar {
   .ka-has-getapp { padding-bottom: 0; }
 }
 
+
+/* ==========================================================================
+   THE APP, ON THE HOME PAGE
+
+   Sits above the two doors. Kept low and quiet on purpose: it is one
+   row, not a banner, because the two doors under it are the only two
+   things on this page that grow the business.
+   ========================================================================== */
+
+/* Tighter than a full section. The two doors follow immediately and the
+   pair should read as one idea, not two unrelated blocks. */
+.ka-section--app { padding-bottom: 0; }
+
+.ka-appcta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ka-4);
+  padding: var(--ka-5);
+  background: var(--ka-green-50);
+  border: 1px solid var(--ka-green-100);
+  border-radius: var(--ka-radius-lg);
+}
+
+.ka-appcta__icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--ka-radius);
+  box-shadow: var(--ka-shadow-sm);
+}
+
+/* Takes the slack so the icon and the shops keep their size. */
+.ka-appcta__words {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.ka-appcta__title {
+  margin: 0;
+  font-size: var(--ka-text-xl);
+  line-height: var(--ka-leading-tight);
+}
+
+.ka-appcta__sub {
+  margin-top: var(--ka-1);
+  color: var(--ka-text-soft);
+  font-size: var(--ka-text-sm);
+}
+
+/* Two equal columns from the narrowest screen up. Left to wrap, the
+   second shop ends up a different width from the first and reads as an
+   afterthought. */
+.ka-appcta__stores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ka-3);
+  width: 100%;
+}
+
+.ka-store {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ka-2);
+  min-height: var(--ka-tap);
+  padding: var(--ka-2) var(--ka-3);
+  background: var(--ka-ink-900);
+  color: var(--ka-white);
+  border-radius: var(--ka-radius);
+  text-decoration: none;
+}
+
+.ka-store:hover,
+.ka-store:focus { background: var(--ka-ink-800); color: var(--ka-white); }
+
+.ka-store svg { flex-shrink: 0; }
+
+.ka-store__words {
+  display: flex;
+  flex-direction: column;
+  /* Ranged left against each other. Centred, the small word floats over
+     the big one and the pair stops reading as one label. */
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+/* The phone, not the shop. Somebody choosing between these knows what
+   is in their hand and may never have heard of an App Store. */
+.ka-store__where {
+  font-size: var(--ka-text-xs);
+  color: var(--ka-ink-300);
+}
+
+.ka-store__name {
+  font-size: var(--ka-text-base);
+  font-weight: var(--ka-weight-medium);
+}
+
+@media (min-width: 700px) {
+  .ka-appcta { gap: var(--ka-6); padding: var(--ka-6); }
+
+  /* Off to the right, so the row reads icon, words, then the two shops. */
+  .ka-appcta__stores {
+    width: auto;
+    grid-template-columns: auto auto;
+    margin-left: auto;
+  }
+
+  .ka-store {
+    justify-content: flex-start;
+    gap: var(--ka-3);
+    padding-inline: var(--ka-4);
+  }
+}
+
+
 /* End of Kaam Ase design system v1.0.0 */

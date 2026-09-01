@@ -337,6 +337,29 @@ endif;
 
 <?php
 /* ==========================================================================
+   THE APP
+
+   Above the two doors because that is where it was asked for.
+
+   It is here at all because the other two offers each need a particular
+   browser: Apple's banner is drawn by Safari and nothing else, and the
+   strip at the foot of the screen is Android only. Hardly anybody in
+   Nagaland opens Safari by choice, so on an iPhone in Chrome the app was
+   invisible. This is in the page, so it is on every phone and every
+   browser, and it can be looked at.
+   ========================================================================== */
+
+if ( function_exists( 'kaamase_app_cta' ) ) :
+	?>
+	<section class="ka-container ka-section ka-section--app">
+		<?php kaamase_app_cta(); ?>
+	</section>
+	<?php
+endif;
+?>
+
+<?php
+/* ==========================================================================
    THE TWO DOORS
 
    Registration lives here, below search, and it is split by who the
