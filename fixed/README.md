@@ -1125,6 +1125,67 @@ Nothing. No existing file is edited, no filter is added, and the only hook is
 chasing, with numbers. Ring one; when they confirm, they drop off the list on the
 next page load.
 
+## 26. `kaamase.com/app` — why the store link kept stopping
+
+**Not a file to copy.** `fixed/wpcode/app-redirect.php` replaces the snippet in
+**WPCode → Code Snippets**. Open the existing one, select all, delete, paste.
+Do not run both.
+
+### It was a page cache, not the code
+
+The redirect is PHP, and PHP only runs when a request actually reaches WordPress.
+A page cache saves a finished copy of the HTML and serves it from disk, so
+WordPress is never asked and `template_redirect` never fires.
+
+That is the whole pattern:
+
+1. You save the page. The cache is emptied.
+2. You open the link on your phone. Nothing is cached, PHP runs, you land in the
+   store. It works.
+3. **Somebody on a desktop opens it** — or a bot crawls it, or you check it on
+   your laptop. PHP runs, decides correctly not to redirect, and the cache saves
+   *that* page: the one with two buttons.
+4. Every visitor after that, phone or not, is handed the saved copy. No PHP, no
+   redirect.
+
+One desktop visit poisons it for everybody, which is why it took minutes or hours
+and felt random.
+
+**The JavaScript did not save it either.** WordPress strips `<script>` from page
+content for anybody without `unfiltered_html`, so visitors never received it. You
+did, because administrators keep that capability — which is exactly why it looked
+fine when you tested it yourself.
+
+### What the new snippet does differently
+
+- **Tells every cache never to store `/app`** — `DONOTCACHEPAGE` (LiteSpeed, which
+  is what Hostinger runs, plus WP Rocket, W3TC and the rest), LiteSpeed's own
+  switch, `nocache_headers()`, and `Vary: User-Agent` for anything in between.
+  This is the actual fix.
+- **Prints the JavaScript from the snippet**, not from page content, so nothing
+  can strip it. If a cached copy is ever served anyway, the script still sends
+  people to the right store.
+
+The server redirect stays the fast path — no flash of the page, works with
+JavaScript off. The script is the safety net.
+
+### After pasting it
+
+**Purge your cache once.** The poisoned copy is still sitting there, and until it
+is cleared the old page keeps being served no matter what the snippet says.
+Hostinger → hPanel → Performance → Clear cache, and LiteSpeed Cache → Toolbox →
+Purge All if that plugin is installed.
+
+### Your page content needs no change
+
+The two buttons stay exactly as they are and are now the fallback for desktop.
+The `<script>` block still in the page is harmless — it is stripped for visitors
+and duplicated harmlessly for you.
+
+**Test:** on a phone, open `kaamase.com/app`. Then open it on a laptop — you
+should see the buttons. Then go straight back to the phone: **that is the test
+that used to fail.** It should still go to the store.
+
 ---
 
 ## Not changed, and why
