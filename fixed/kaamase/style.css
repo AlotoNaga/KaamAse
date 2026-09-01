@@ -1779,4 +1779,82 @@ body.has-tabbar .ka-actionbar {
   a[href]::after { content: " (" attr(href) ")"; font-size: 10pt; color: #555; }
 }
 
+/* ==========================================================================
+   GET THE APP
+
+   A strip along the bottom on Android. Printed hidden and shown by the
+   browser, so a cached page cannot show it to the wrong person.
+   ========================================================================== */
+
+.ka-getapp {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: var(--ka-3);
+  padding: var(--ka-3) var(--ka-4);
+  background: var(--ka-surface);
+  border-top: 1px solid var(--ka-border);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  /* Clear of the home indicator on a phone with no buttons. */
+  padding-bottom: calc(var(--ka-3) + env(safe-area-inset-bottom, 0px));
+}
+
+.ka-getapp__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ka-radius);
+}
+
+/* Takes the slack, and lets a long line shorten rather than push the
+   button off the edge. */
+.ka-getapp__words {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: var(--ka-leading-snug);
+}
+
+.ka-getapp__words strong { font-size: var(--ka-text-sm); }
+
+.ka-getapp__words span {
+  color: var(--ka-text-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ka-getapp .ka-btn { flex-shrink: 0; }
+
+.ka-getapp__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ka-tap);
+  height: var(--ka-tap);
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--ka-text-soft);
+  cursor: pointer;
+}
+
+.ka-getapp__close:hover { color: var(--ka-text); }
+
+/* So the strip never covers the last thing on the page. Added by the
+   same script that shows the strip, and removed when it is dismissed. */
+.ka-has-getapp { padding-bottom: 5.5rem; }
+
+/* Nothing to install on a desktop, and the strip is sized for a thumb. */
+@media (min-width: 900px) {
+  .ka-getapp { display: none; }
+  .ka-has-getapp { padding-bottom: 0; }
+}
+
 /* End of Kaam Ase design system v1.0.0 */

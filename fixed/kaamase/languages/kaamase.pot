@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-08-28 03:10+0000\n"
+"POT-Creation-Date: 2026-09-01 16:52+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -203,6 +203,10 @@ msgstr ""
 msgid "Experience"
 msgstr ""
 
+#: inc/app-banner.php:183
+msgid "Faster, and it tells you when work appears"
+msgstr ""
+
 #: front-page.php:57
 msgid "Find a mason, electrician, plumber, driver or helper near you. Anywhere in Nagaland."
 msgstr ""
@@ -261,6 +265,10 @@ msgstr ""
 
 #: single-kaamase_gang.php:197 single-kaamase_job.php:267 single-kaamase_worker.php:283
 msgid "Get contact details"
+msgstr ""
+
+#: inc/app-banner.php:187
+msgid "Get it"
 msgstr ""
 
 #: index.php:266
@@ -335,8 +343,12 @@ msgstr ""
 msgid "Kaam Ase"
 msgstr ""
 
-#: functions.php:297
+#: functions.php:298
 msgid "Kaam Ase Core is not active."
+msgstr ""
+
+#: inc/app-banner.php:182
+msgid "Kaam Ase app"
 msgstr ""
 
 #: inc/setup.php:221
@@ -367,7 +379,7 @@ msgstr ""
 msgid "Kaam Ase theme is not running."
 msgstr ""
 
-#: functions.php:257
+#: functions.php:258
 msgid "Kaam Ase theme is running with missing files."
 msgstr ""
 
@@ -497,6 +509,10 @@ msgstr ""
 
 #: single-kaamase_worker.php:182
 msgid "Not given"
+msgstr ""
+
+#: inc/app-banner.php:191
+msgid "Not now"
 msgstr ""
 
 #: inc/enqueue.php:151
@@ -748,7 +764,7 @@ msgstr ""
 msgid "There is other work posted right now."
 msgstr ""
 
-#: functions.php:258
+#: functions.php:259
 msgid "These module files have not been uploaded yet. The site will work, but the features in them are not active."
 msgstr ""
 
@@ -928,7 +944,7 @@ msgstr ""
 msgid "Workers who have done a job for them rate them too. Open their page to see what they said."
 msgstr ""
 
-#: functions.php:298
+#: functions.php:299
 msgid "Workers, gangs, employers and jobs are stored by the Kaam Ase Core plugin. Until it is installed and activated, this theme will display ordinary pages and posts only."
 msgstr ""
 

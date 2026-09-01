@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-six files taken from inside them, three brand new
+the patched versions of thirty-six files taken from inside them, four brand new
 files, plus three translation templates.
 
 ## What to copy where
@@ -39,6 +39,7 @@ files, plus three translation templates.
 | `fixed/kaamase-pay/kaamase-pay.php` | `wp-content/plugins/kaamase-pay/kaamase-pay.php` |
 | `fixed/kaamase-core/kaamase-core.php` | `wp-content/plugins/kaamase-core/kaamase-core.php` |
 | `fixed/kaamase/front-page.php` | `wp-content/themes/kaamase/front-page.php` |
+| `fixed/kaamase/inc/app-banner.php` | `wp-content/themes/kaamase/inc/` **(new file)** |
 | `fixed/kaamase-core/includes/more-trades.php` | `wp-content/plugins/kaamase-core/includes/more-trades.php` |
 | `fixed/kaamase-core/includes/employer-index.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/not-confirmed.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
@@ -1258,6 +1259,59 @@ query, no listing, no API. `exposure.php` is untouched.
 profile from a signed-out browser. Nothing visible changes — that is correct.
 To confirm it is working, in phpMyAdmin check that `wp_kaamase_views` exists and
 has a row in it.
+
+## 28. "Get the app" on a phone
+
+⚠️ *`app-banner.php` is a **brand new file**. `functions.php`, `style.css` and
+`kaamase.pot` are new revisions.*
+
+A quiet strip along the bottom of the screen on Android, and Apple's own banner on
+iPhone. Both point at `/app`, so all the store routing from fix 26 does the work
+and no store URL is repeated anywhere.
+
+### A strip, not a pop-up
+
+Google demotes a mobile page that covers its own content with a box you must
+dismiss before reading. `indexes.php` says the trade and district pages are *"the
+only pages on the platform whose job is to be found by somebody who has never
+heard of Kaam Ase"* — a pop-up there works directly against the reason those pages
+exist. The other reason is the connection: somebody on 2G who has waited for a job
+to load should not have to fight a box before reading it.
+
+### iPhone gets Apple's banner instead of ours
+
+One meta tag, drawn by Safari itself. Worth having in place of our own strip
+because **Safari knows whether the app is already installed and says OPEN rather
+than GET** — nothing on a web page can know that. Our strip returns immediately on
+anything that is not Android, so the two can never both appear.
+
+### The browser decides, not PHP
+
+This is the part that matters, and it is the lesson from fix 26 applied before it
+could bite again. The site sits behind a page cache: a cached copy is one finished
+page handed to everybody, so **anything PHP decides about this particular visitor
+gets frozen into it**. The first desktop visitor after a purge would have cached
+the no-strip version, and every phone after that would be handed it — exactly what
+stopped `/app` redirecting for hours at a time.
+
+So the strip ships to everybody, hidden, and JavaScript reveals it. A cached page
+cannot be wrong about who is looking at it. Verified in the tests: no user agent,
+no IP, no `wp_is_mobile`, no login check anywhere in the PHP.
+
+### The rest
+
+- Dismissible, remembered for **30 days** in `localStorage`, wrapped in try/catch
+  so a private window does not break it.
+- Never on `/app`, never on a 404, never in wp-admin.
+- Hidden entirely above 900px — there is nothing to install on a desktop.
+- Sits clear of the home indicator on a phone with no buttons.
+- `style.css` gains one block and **no existing rule changes**.
+- `functions.php` gains **one line** in the module list.
+
+**Test:** open the site on an Android phone. The strip should appear at the
+bottom; tapping **Get it** should land you in Play. Dismiss it and reload — it
+should stay away. On an iPhone you should see Apple's banner at the top instead,
+and never both.
 
 ---
 
