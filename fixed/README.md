@@ -1448,6 +1448,56 @@ analytics cookies (cacheable).
 correct either way, but that setting is what made a private answer storable in the
 first place.
 
+## 31. Turning away an app version that has a fault in it
+
+⚠️ *`kaamase-core/includes/app-version.php` is a **brand new file**. Upload it.
+Nothing changes until you set a number: with the boxes empty the app is not told
+anything and nobody is stopped.*
+
+The app now reads two optional fields from `/reference` and shows an Update screen
+to anybody below the version named there. This is the site's half. The app's half
+ships in its next store build, so it has no effect on anyone running today's
+2.0.6 — that binary has no gate in it to trigger.
+
+**Settings → App version.** Two boxes and a message. Empty means off.
+
+### Why it is a screen and not a constant
+
+It gets reached for when something has gone wrong, which is exactly the moment
+nobody should be editing PHP. The owner sets it and lifts it without help.
+
+### Why it is never cached
+
+`/reference` is held in a transient for six hours. A floor written into that
+payload would take six hours to arrive, which is bad, and six hours to **remove**,
+which is far worse: one mistyped number would lock every phone out until the
+afternoon with no way back. So the two fields are merged into the answer after the
+cache is read, and are always live.
+
+### Off means absent, not empty
+
+With nothing set the keys are left out of the answer altogether rather than sent
+empty. The app treats a missing field as "let everybody in", and an absent key
+cannot be misread as a floor of zero.
+
+### The button that matters
+
+"Turn the gate off" is its own button, not "clear both boxes and save". It gets
+pressed by somebody who has just shut out every user by mistake, and at that
+moment one obvious button beats two fields and a save.
+
+Version strings take digits and dots only. `2.0.7-beta`, `v2.0.7` and anything
+else are refused and nothing is set, because a gate acting on a typo shuts out
+people it should not. Proved on twelve inputs, and on six shapes of request:
+off, off-with-empty-strings, one platform, both platforms with a message, a
+message with no floor, and a different route entirely.
+
+### The one thing it cannot check
+
+Whether the version you type actually exists in the stores. Type one that has not
+been released and every user is locked out with nothing to update to. The screen
+says so in red above the boxes, and the off button is the way back.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
