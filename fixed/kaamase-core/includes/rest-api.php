@@ -453,16 +453,6 @@ if ( ! function_exists( 'kaamase_register_rest_routes' ) ) {
 			)
 		);
 
-		register_rest_route(
-			KAAMASE_REST_NS,
-			'/employers/(?P<id>\d+)',
-			array(
-				'methods'             => 'GET',
-				'callback'            => 'kaamase_rest_employer',
-				'permission_callback' => $open,
-			)
-		);
-
 		/* ---- Contact ---- */
 
 		register_rest_route(
@@ -1883,30 +1873,6 @@ if ( ! function_exists( 'kaamase_rest_save_team' ) ) {
 		return new WP_REST_Response( kaamase_shape_worker( $result, true ), $team_id ? 200 : 201 );
 	}
 }
-
-if ( ! function_exists( 'kaamase_rest_employer' ) ) {
-	/**
-	 * One employer.
-	 *
-	 * @since 1.3.0
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
-	 */
-	function kaamase_rest_employer( $request ) {
-
-		$id   = absint( $request['id'] );
-		$post = get_post( $id );
-
-		if ( ! $post || 'kaamase_employer' !== $post->post_type || 'publish' !== $post->post_status ) {
-			return kaamase_rest_error(
-				new WP_Error( 'kaamase_not_found', __( 'That employer no longer exists.', 'kaamase-core' ), array( 'status' => 404 ) )
-			);
-		}
-
-		return new WP_REST_Response( kaamase_shape_employer( $post, true ), 200 );
-	}
-}
-
 
 if ( ! function_exists( 'kaamase_rest_by_slug' ) ) {
 	/**

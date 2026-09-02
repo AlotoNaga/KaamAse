@@ -617,6 +617,10 @@ msgstr ""
 msgid "App links"
 msgstr ""
 
+#: app-version.php:210
+msgid "App version"
+msgstr ""
+
 #: includes/dashboard.php:448
 msgid "Are you free for work?"
 msgstr ""
@@ -1344,6 +1348,10 @@ msgstr ""
 msgid "Employers who came back"
 msgstr ""
 
+#: app-version.php:342
+msgid "Empty means nobody is stopped"
+msgstr ""
+
 #: includes/email-check.php:680
 msgid "Empty this list"
 msgstr ""
@@ -1905,6 +1913,10 @@ msgstr ""
 
 #: includes/employer-index.php:325
 msgid "Individual"
+msgstr ""
+
+#: app-version.php:309
+msgid "iPhone: %1$s. Android: %2$s. Anybody below those is being stopped."
 msgstr ""
 
 #: includes/dashboard.php:207
@@ -2783,6 +2795,14 @@ msgstr ""
 msgid "Older"
 msgstr ""
 
+#: app-version.php:347
+msgid "Oldest Android version"
+msgstr ""
+
+#: app-version.php:337
+msgid "Oldest iPhone version"
+msgstr ""
+
 #: includes/standing.php:128
 msgid "On Kaam Ase since %s"
 msgstr ""
@@ -2885,6 +2905,10 @@ msgstr ""
 
 #: includes/profile-edit.php:653
 msgid "Optional. Registered businesses get taken more seriously by workers."
+msgstr ""
+
+#: app-version.php:364
+msgid "Optional. Shown above the Update button."
 msgstr ""
 
 #: includes/past-jobs.php:705
@@ -3090,6 +3114,10 @@ msgstr ""
 msgid "Please tell us a bit more about what happened, so we know where to start."
 msgstr ""
 
+#: app-version.php:362
+msgid "Please update Kaam Ase to carry on."
+msgstr ""
+
 #: includes/working-request.php:375
 msgid "Plenty of people here hire for one job and work on another. Add a worker profile to this same account and employers can find you too. It is free, and your login and your job posts stay exactly as they are."
 msgstr ""
@@ -3279,6 +3307,10 @@ msgstr ""
 
 #: includes/how-seen.php:338
 msgid "Read the whole thing"
+msgstr ""
+
+#: app-version.php:320
+msgid "Read this before you set a number."
 msgstr ""
 
 #: includes/dashboard.php:921
@@ -3488,6 +3520,10 @@ msgstr ""
 
 #: includes/dashboard.php:538
 msgid "Saved workers"
+msgstr ""
+
+#: app-version.php:264
+msgid "Saved."
 msgstr ""
 
 #: includes/services.php:70
@@ -3949,6 +3985,10 @@ msgstr ""
 msgid "Stop telling me about new work"
 msgstr ""
 
+#: app-version.php:295
+msgid "Stops an old version of the app being used. Somebody on a version below the one you set is shown an Update button and cannot go further until they update. Leave both boxes empty and nobody is stopped."
+msgstr ""
+
 #: includes/taxonomies.php:377
 msgid "Store keeper"
 msgstr ""
@@ -3977,8 +4017,24 @@ msgstr ""
 msgid "Switch this on only if you are finished with Kaam Ase and want everything gone when the plugin is deleted."
 msgstr ""
 
+#: app-version.php:261
+msgid "That is not a version number, so nothing was set. Use digits and dots only, like 2.0.7."
+msgstr ""
+
+#: app-version.php:246
+msgid "The gate is off. Every version can sign in again."
+msgstr ""
+
+#: app-version.php:305
+msgid "The gate is on right now."
+msgstr ""
+
 #: who-looked.php:464
 msgid "Their names are held for a year. A free account sees the last week, which is why this one looks empty. Rich Manu opens the rest of it."
+msgstr ""
+
+#: app-version.php:375
+msgid "Turn the gate off"
 msgstr ""
 
 #: includes/taxonomies.php:316
@@ -4641,6 +4697,10 @@ msgstr ""
 msgid "Type %s to switch it on"
 msgstr ""
 
+#: app-version.php:322
+msgid "Type a version that is already live in the App Store and on Google Play. If you type one that has not been released yet, every single user is locked out with no way back in until you come here and turn it off, and the stores have nothing for them to update to."
+msgstr ""
+
 #: includes/rest-api.php:1091
 msgid "Type DELETE to confirm you want to remove your account."
 msgstr ""
@@ -5016,6 +5076,10 @@ msgstr ""
 
 #: includes/job-alerts.php:809
 msgid "What time"
+msgstr ""
+
+#: app-version.php:357
+msgid "What to tell them"
 msgstr ""
 
 #: includes/install.php:667

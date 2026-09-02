@@ -1620,6 +1620,48 @@ states: nothing stored, a zero id, a trashed page, and a live one.
 `/privacy` does not currently say that opening somebody's profile shows them your
 name. It should.
 
+## 34. Review findings
+
+⚠️ *`rest-api.php` and `kaamase-core.pot` are new revisions.*
+
+Two faults found reviewing everything above, neither of them from today's work.
+
+### The employers endpoint was registered twice, with different locks
+
+`GET /employers/{id}` was registered at two places in `rest-api.php`. One carried
+`kaamase_rest_require_employer_browse`, the paid and confirmed check. The other
+carried the open one. `kaamase_rest_employer` was likewise defined twice, once at
+`@since 1.4.1` and once at `@since 1.3.0`.
+
+**Nothing was open.** `register_rest_route` merges rather than replaces, and
+dispatch takes the first handler matching the method, so the gated one won. That
+was proved by simulating the merge and the selection rather than trusting a
+reading of WordPress, and `function_exists` meant the newer definition won too.
+
+But it was one edit away from being open. Anybody reordering those two blocks —
+or adding a route between them — would have made the paid employer directory free
+to every signed-in account, silently, with both versions still sitting in the file
+looking deliberate. This is the same shape as the duplicate `kaamase_shape_employer`
+caught earlier in this programme.
+
+The dead registration and the dead definition are gone. What survives is the gated
+one, which is what was already running.
+
+### Sixteen strings could not be translated
+
+`app-version.php` never had its strings added to `kaamase-core.pot`. Added, and
+both templates now check clean: every `__()` and `esc_html_e()` in either the
+plugin or the theme has an entry, and every entry has a `msgstr`.
+
+### What the review checked
+
+42 PHP files parse. No duplicate function definitions anywhere in the tree. The
+nine privacy, authentication and payment functions are each defined exactly once
+and none were touched. CSS braces balance. Every file imported from the two zips —
+`dashboard.php` and the three single templates — differs from its original by
+**additions only, zero removed lines**. `who-looked.php` mentions a telephone
+number and an email in one comment and reads neither.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
