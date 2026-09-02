@@ -1508,6 +1508,50 @@ Whether the version you type actually exists in the stores. Type one that has no
 been released and every user is locked out with nothing to update to. The screen
 says so in red above the boxes, and the off button is the way back.
 
+## 32. View counts on cards — phase 2, part one
+
+⚠️ *`views.php`, `template-tags.php` and `style.css` are new revisions. Upload
+them.*
+
+The numbers are now shown on worker cards, team cards and job cards. Two days of
+counting gave 93 rows, 96 views across 53 different profiles and jobs, so the
+mechanism is proved on live traffic before anything was drawn.
+
+### Shown from one, never from zero
+
+The owner asked for no threshold, and that is what this does — a profile with one
+view says one view. Zero is the exception and renders nothing at all: a profile
+announcing "0 views" tells a worker who joined this morning that nobody wants
+them, which is worse than saying nothing.
+
+### One query for a page, not one per card
+
+A listing draws twenty cards. Twenty counts would be twenty queries on shared
+hosting for a number nobody came to the page to read. `the_posts` now primes the
+whole page in a single grouped query and the count function answers from that.
+Posts with no views are remembered as zero too, otherwise every empty profile on
+the page would fall through and ask again on its own.
+
+### Two densities
+
+A card already carries a rating, a wage and a button, so there it is the eye and
+the figure. A profile page has room for the word. The eye is stroked to the same
+weight as every other mark in the theme, nudged half a pixel down because a circle
+inside an almond reads high against a line of text, and the figures are tabular so
+they do not shuffle sideways as they grow — on a listing the eyes then line up
+down the column instead of drifting.
+
+The full density sets its own word spacing. One flex gap for both put
+"247&nbsp;&nbsp;views" a whole space apart and broke the phrase in half.
+
+Every count carries the sentence "Looked at 24 times" for a screen reader, in the
+theme's existing `.ka-sr`, because an eye and a figure alone are not a sentence.
+
+### Still to come
+
+The count on the profile and job **pages** themselves, and the "who looked at you"
+list. Both need template files that are not in this folder.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

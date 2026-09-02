@@ -249,6 +249,74 @@ if ( ! function_exists( 'kaamase_rating' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_views' ) ) {
+	/**
+	 * How many times this profile or job has been looked at.
+	 *
+	 * Nothing at all below one view. A profile announcing "0 views" is
+	 * worse than a profile that says nothing: it tells a worker who has
+	 * just joined that nobody wants them, on the day they signed up.
+	 * From one upward the real number is shown, never rounded and never
+	 * dressed up.
+	 *
+	 * Two densities. A card is dense and already carries a rating, a
+	 * wage and a button, so there it is the eye and the number. A
+	 * profile page has room to say the word.
+	 *
+	 * @since 1.5.0
+	 * @param int    $post_id Post ID. Defaults to the current post.
+	 * @param string $density tight for cards, full for a page of its own.
+	 * @return string Markup, or an empty string when there is nothing to say.
+	 */
+	function kaamase_views( $post_id = 0, $density = 'tight' ) {
+
+		$post_id = $post_id ? absint( $post_id ) : get_the_ID();
+
+		// The plugin owns the counting. The theme only ever draws it.
+		if ( ! $post_id || ! function_exists( 'kaamase_views_count' ) ) {
+			return '';
+		}
+
+		$views = kaamase_views_count( $post_id );
+		$total = isset( $views['total'] ) ? (int) $views['total'] : 0;
+
+		if ( $total < 1 ) {
+			return '';
+		}
+
+		$number = number_format_i18n( $total );
+
+		/* translators: %s: number of views */
+		$spoken = sprintf( _n( 'Looked at %s time', 'Looked at %s times', $total, 'kaamase' ), $number );
+
+		$word = 'full' === $density
+			/* translators: %s: number of views */
+			? '<span class="ka-views__word">' . esc_html( _n( 'view', 'views', $total, 'kaamase' ) ) . '</span>'
+			: '';
+
+		/*
+		 * Stroked to the same weight as every other mark in the theme,
+		 * and aria-hidden because the sentence after it already says
+		 * what it means.
+		 */
+		$eye = '<svg class="ka-views__eye" width="15" height="15" viewBox="0 0 24 24" fill="none"'
+			. ' stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'
+			. ' aria-hidden="true" focusable="false">'
+			. '<path d="M2 12s3.7-6.6 10-6.6 10 6.6 10 6.6-3.7 6.6-10 6.6S2 12 2 12z"/>'
+			. '<circle cx="12" cy="12" r="2.7"/></svg>';
+
+		return sprintf(
+			'<span class="ka-views ka-views--%1$s">%2$s<span class="ka-views__n">%3$s</span>%4$s'
+				. '<span class="ka-sr">%5$s</span></span>',
+			esc_attr( 'full' === $density ? 'full' : 'tight' ),
+			$eye,
+			esc_html( $number ),
+			$word,
+			esc_html( $spoken )
+		);
+	}
+}
+
 if ( ! function_exists( 'kaamase_wage' ) ) {
 	/**
 	 * Format a wage figure.
@@ -547,6 +615,7 @@ if ( ! function_exists( 'kaamase_worker_card' ) ) {
 		}
 
 		$experience = absint( kaamase_field( $post_id, 'years_experience' ) );
+		$views      = kaamase_views( $post_id );
 		?>
 		<article class="ka-card ka-card--link ka-worker-card">
 
@@ -581,18 +650,23 @@ if ( ! function_exists( 'kaamase_worker_card' ) ) {
 			<div class="ka-card__body">
 				<?php echo kaamase_trades( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
-				<?php if ( $experience ) : ?>
-					<p class="ka-small ka-soft ka-mt-4">
-						<?php
-						printf(
-							esc_html(
-								/* translators: %s: number of years */
-								_n( '%s year of experience', '%s years of experience', $experience, 'kaamase' )
-							),
-							esc_html( number_format_i18n( $experience ) )
-						);
-						?>
-					</p>
+				<?php if ( $experience || $views ) : ?>
+					<div class="ka-cluster ka-mt-4">
+						<?php if ( $experience ) : ?>
+							<span class="ka-small ka-soft">
+								<?php
+								printf(
+									esc_html(
+										/* translators: %s: number of years */
+										_n( '%s year of experience', '%s years of experience', $experience, 'kaamase' )
+									),
+									esc_html( number_format_i18n( $experience ) )
+								);
+								?>
+							</span>
+						<?php endif; ?>
+						<?php echo $views; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
 				<?php endif; ?>
 			</div>
 
@@ -777,16 +851,24 @@ if ( ! function_exists( 'kaamase_gang_card' ) ) {
 			<div class="ka-card__body">
 				<?php echo kaamase_trades( $post_id, 4 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
-				<?php if ( $leader ) : ?>
-					<p class="ka-small ka-mute ka-mt-4">
-						<?php
-						printf(
-							/* translators: %s: name of the team leader */
-							esc_html__( 'Led by %s', 'kaamase' ),
-							esc_html( $leader )
-						);
-						?>
-					</p>
+				<?php
+				$views = kaamase_views( $post_id );
+				?>
+				<?php if ( $leader || $views ) : ?>
+					<div class="ka-cluster ka-mt-4">
+						<?php if ( $leader ) : ?>
+							<span class="ka-small ka-mute">
+								<?php
+								printf(
+									/* translators: %s: name of the team leader */
+									esc_html__( 'Led by %s', 'kaamase' ),
+									esc_html( $leader )
+								);
+								?>
+							</span>
+						<?php endif; ?>
+						<?php echo $views; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
 				<?php endif; ?>
 			</div>
 
@@ -872,6 +954,7 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 				<?php
 				echo kaamase_place( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo kaamase_posted_ago( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo kaamase_views( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 			</div>
 

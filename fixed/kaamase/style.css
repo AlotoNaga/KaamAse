@@ -1998,4 +1998,55 @@ body.has-tabbar .ka-actionbar {
 }
 
 
+
+/* ==========================================================================
+   VIEW COUNT
+
+   Quiet on purpose. It sits beside a rating, a wage and a trade, and it
+   is the least important of them: worth knowing, never worth reading
+   first.
+   ========================================================================== */
+
+.ka-views {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-1);
+  color: var(--ka-text-mute);
+  font-size: var(--ka-text-sm);
+  /* Numbers that do not shuffle sideways as they grow. On a listing the
+     eyes then line up down the column instead of drifting. */
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Optically centred rather than baseline aligned. A circle inside an
+   almond reads high against a line of text unless it is nudged down. */
+.ka-views__eye {
+  flex-shrink: 0;
+  color: var(--ka-ink-400);
+  transform: translateY(0.5px);
+}
+
+.ka-views__n { font-weight: var(--ka-weight-medium); }
+
+/* Lighter than the number it follows, so the eye lands on the figure. */
+.ka-views__word { color: var(--ka-ink-500); }
+
+/* On a profile page of its own it is a fact about the page, not a scrap
+   of card furniture, so it is allowed a little more room and weight. */
+.ka-views--full {
+  /* A word space between the number and the word, not the wider gap
+     that sits after the eye. One flex gap for both put "247  views" a
+     whole space apart and broke the phrase in half. */
+  gap: var(--ka-1);
+  font-size: var(--ka-text-base);
+}
+
+.ka-views--full .ka-views__eye {
+  width: 17px;
+  height: 17px;
+  margin-right: var(--ka-1);
+}
+
+
 /* End of Kaam Ase design system v1.0.0 */

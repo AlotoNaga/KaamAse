@@ -445,6 +445,118 @@ add_action( 'shutdown', 'kaamase_view_record_pending' );
    later have one place to ask, rather than each writing its own SQL.
    ========================================================================== */
 
+if ( ! function_exists( 'kaamase_views_primed' ) ) {
+	/**
+	 * The counts already fetched for this page.
+	 *
+	 * @since 1.5.0
+	 * @param array|null $put Rows to remember, or null to read.
+	 * @return array Keyed by post ID.
+	 */
+	function kaamase_views_primed( $put = null ) {
+
+		static $primed = array();
+
+		if ( is_array( $put ) ) {
+			$primed = $primed + $put;
+		}
+
+		return $primed;
+	}
+}
+
+if ( ! function_exists( 'kaamase_views_prime' ) ) {
+	/**
+	 * Fetch the counts for a whole page in one go.
+	 *
+	 * Hooked to the_posts, so a listing pays one query for the numbers
+	 * on it rather than one per card. A post with no views at all still
+	 * gets an answer remembered, otherwise every empty profile on the
+	 * page would fall through and ask again on its own.
+	 *
+	 * @since 1.5.0
+	 * @param int[] $post_ids Posts about to be drawn.
+	 * @return void
+	 */
+	function kaamase_views_prime( $post_ids ) {
+
+		global $wpdb;
+
+		$post_ids = array_filter( array_map( 'absint', (array) $post_ids ) );
+		$already  = kaamase_views_primed();
+		$wanted   = array_diff( array_unique( $post_ids ), array_keys( $already ) );
+
+		if ( empty( $wanted ) || ! kaamase_views_ready() ) {
+			return;
+		}
+
+		$table = kaamase_views_table();
+		$in    = implode( ',', array_map( 'absint', $wanted ) );
+
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			"SELECT subject_id,
+					COALESCE(SUM(hits),0) AS total,
+					COUNT(DISTINCT CONCAT(viewer_id, ':', visitor_key)) AS people
+			 FROM {$table}
+			 WHERE subject_id IN ({$in})
+			 GROUP BY subject_id",
+			ARRAY_A
+		);
+		// phpcs:enable
+
+		$found = array();
+
+		foreach ( (array) $rows as $row ) {
+			$found[ (int) $row['subject_id'] ] = array(
+				'total'  => (int) $row['total'],
+				'people' => (int) $row['people'],
+				'days'   => KAAMASE_VIEWS_KEEP_DAYS,
+			);
+		}
+
+		// Nothing found still counts as an answer. See the note above.
+		foreach ( $wanted as $id ) {
+			if ( ! isset( $found[ $id ] ) ) {
+				$found[ $id ] = array( 'total' => 0, 'people' => 0, 'days' => KAAMASE_VIEWS_KEEP_DAYS );
+			}
+		}
+
+		kaamase_views_primed( $found );
+	}
+}
+
+if ( ! function_exists( 'kaamase_views_prime_loop' ) ) {
+	/**
+	 * Prime whatever a query is about to hand the page.
+	 *
+	 * @since 1.5.0
+	 * @param WP_Post[] $posts The posts.
+	 * @return WP_Post[] The same posts, untouched.
+	 */
+	function kaamase_views_prime_loop( $posts ) {
+
+		if ( is_admin() || empty( $posts ) || ! is_array( $posts ) ) {
+			return $posts;
+		}
+
+		$ids = array();
+
+		foreach ( $posts as $post ) {
+			if ( $post instanceof WP_Post && kaamase_view_subject_type( $post->post_type ) ) {
+				$ids[] = $post->ID;
+			}
+		}
+
+		if ( ! empty( $ids ) ) {
+			kaamase_views_prime( $ids );
+		}
+
+		return $posts;
+	}
+}
+add_filter( 'the_posts', 'kaamase_views_prime_loop' );
+
 if ( ! function_exists( 'kaamase_views_count' ) ) {
 	/**
 	 * How many views a profile or job has, and from how many people.
@@ -474,6 +586,24 @@ if ( ! function_exists( 'kaamase_views_count' ) ) {
 
 		if ( ! $post_id || ! kaamase_views_ready() ) {
 			return $empty;
+		}
+
+		/*
+		 * Answered from the batch when the page has already asked for
+		 * everything on it. A listing draws twenty cards, and twenty
+		 * separate counts is twenty queries on shared hosting for a
+		 * number nobody came to the page to read.
+		 *
+		 * Only the whole-window count is batched. A narrowed one is
+		 * rare and asks its own question.
+		 */
+		if ( ! $days ) {
+
+			$primed = kaamase_views_primed();
+
+			if ( isset( $primed[ $post_id ] ) ) {
+				return $primed[ $post_id ];
+			}
 		}
 
 		$table = kaamase_views_table();
