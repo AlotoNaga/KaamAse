@@ -39,6 +39,18 @@ msgstr ""
 msgid "%1$s on a free account, %2$s on this plan."
 msgstr ""
 
+#: who-looked.php:333
+msgid "%1$s person looked at you in the last %2$s."
+msgid_plural "%1$s people looked at you in the last %2$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: who-looked.php:405
+msgid "%1$s time, %2$s ago"
+msgid_plural "%1$s times, %2$s ago"
+msgstr[0] ""
+msgstr[1] ""
+
 #: includes/job-alerts.php:859
 msgid "%1$s, sent to %2$s"
 msgstr ""
@@ -118,6 +130,12 @@ msgstr[1] ""
 #: includes/registration.php:681
 msgid "%s never asks a worker for money."
 msgstr ""
+
+#: who-looked.php:451
+msgid "%s person looked at you before this week"
+msgid_plural "%s people looked at you before this week"
+msgstr[0] ""
+msgstr[1] ""
 
 #: includes/admin.php:813
 msgid "%s profile updated."
@@ -2021,6 +2039,10 @@ msgstr ""
 msgid "Kaam Ase is installed. Three things before you show it to anybody."
 msgstr ""
 
+#: who-looked.php:228
+msgid "Kaam Ase keeps a note of who opened your profile and your jobs. Sign in and it is yours."
+msgstr ""
+
 #: includes/install.php:685
 msgid "Kaam Ase means there is work. It is a hiring platform built in Nagaland, for Nagaland, by a company registered in Dimapur. Write the rest of this page yourself. People trust a page that sounds like a person more than one that sounds like a company."
 msgstr ""
@@ -2171,6 +2193,10 @@ msgstr ""
 
 #: includes/exposure.php:498
 msgid "Longest anybody has waited"
+msgstr ""
+
+#: who-looked.php:392
+msgid "Looked at %s"
 msgstr ""
 
 #: includes/taxonomies.php:647
@@ -2571,6 +2597,14 @@ msgstr ""
 
 #: includes/ratings.php:797
 msgid "Nobody sees this until both of you have answered. You cannot be punished for being honest."
+msgstr ""
+
+#: who-looked.php:319
+msgid "Nobody signed in has opened your profile in the last %s. Names appear here as soon as they do."
+msgstr ""
+
+#: who-looked.php:310
+msgid "Nobody this week"
 msgstr ""
 
 #: includes/rich-manu.php:457 includes/verify-requests.php:463
@@ -3528,12 +3562,20 @@ msgstr ""
 msgid "Security guard"
 msgstr ""
 
+#: who-looked.php:473
+msgid "See a whole year"
+msgstr ""
+
 #: includes/teams.php:116
 msgid "See how a contractor sees it"
 msgstr ""
 
 #: includes/dashboard.php:402
 msgid "See how others see your profile"
+msgstr ""
+
+#: who-looked.php:486
+msgid "See Rich Manu"
 msgstr ""
 
 #: includes/verify-requests.php:490
@@ -3729,6 +3771,10 @@ msgstr ""
 
 #: includes/rest-api.php:84
 msgid "Sign in to see who is hiring."
+msgstr ""
+
+#: who-looked.php:227
+msgid "Sign in to see who looked at you"
 msgstr ""
 
 #: includes/dashboard.php:52
@@ -3929,6 +3975,10 @@ msgstr ""
 
 #: includes/settings.php:273
 msgid "Switch this on only if you are finished with Kaam Ase and want everything gone when the plugin is deleted."
+msgstr ""
+
+#: who-looked.php:464
+msgid "Their names are held for a year. A free account sees the last week, which is why this one looks empty. Rich Manu opens the rest of it."
 msgstr ""
 
 #: includes/taxonomies.php:316
@@ -5089,6 +5139,10 @@ msgstr ""
 msgid "Who leads it"
 msgstr ""
 
+#: install.php:362
+msgid "Who looked at you"
+msgstr ""
+
 #: includes/contact.php:861 includes/contact.php:872
 msgid "Who looked you up"
 msgstr ""
@@ -5127,6 +5181,10 @@ msgstr ""
 
 #: includes/indexes.php:632
 msgid "Work available now"
+msgstr ""
+
+#: who-looked.php:476
+msgid "Work here comes back around. The employer who looked at you last March is the one to ring this March, and a week cannot tell you that. Rich Manu keeps the list for a year."
 msgstr ""
 
 #: includes/install.php:657
@@ -5244,6 +5302,10 @@ msgstr ""
 
 #: includes/install.php:782
 msgid "Write the Privacy and Terms pages. They are placeholders and both say so in public."
+msgstr ""
+
+#: who-looked.php:265
+msgid "year"
 msgstr ""
 
 #: includes/profile-edit.php:335
@@ -5433,6 +5495,10 @@ msgstr ""
 msgid "Your district."
 msgstr ""
 
+#: who-looked.php:175
+msgid "your employer profile"
+msgstr ""
+
 #: includes/dashboard.php:676
 msgid "Your first job is read by a person before workers see it. Usually done within a few hours. Nothing more is needed from you."
 msgstr ""
@@ -5461,6 +5527,10 @@ msgstr ""
 msgid "Your job on %s is being checked"
 msgstr ""
 
+#: who-looked.php:169
+msgid "your job, %s"
+msgstr ""
+
 #: includes/profile-edit.php:207 includes/reports.php:446
 msgid "Your name"
 msgstr ""
@@ -5475,6 +5545,10 @@ msgstr ""
 
 #: includes/reports.php:451
 msgid "Your phone number"
+msgstr ""
+
+#: who-looked.php:178
+msgid "your profile"
 msgstr ""
 
 #: includes/dashboard.php:287
@@ -5507,6 +5581,10 @@ msgstr ""
 
 #: includes/reports.php:754
 msgid "Your reference number is"
+msgstr ""
+
+#: who-looked.php:172
+msgid "your team"
 msgstr ""
 
 #: includes/teams.php:114

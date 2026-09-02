@@ -2060,4 +2060,52 @@ body.has-tabbar .ka-actionbar {
 }
 
 
+
+/* ==========================================================================
+   WHO LOOKED AT YOU
+
+   A list of people, so it is built as a list of people: a face, a name,
+   and underneath in smaller type what they did. Nothing is a table.
+   Tables of numbers are for the person running the platform, not for
+   somebody finding out that four employers read their profile.
+   ========================================================================== */
+
+.ka-looked {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius-lg);
+  overflow: hidden;
+}
+
+.ka-looked__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ka-4);
+  padding: var(--ka-4);
+}
+
+/* A hairline between people rather than a box around each. Boxes down a
+   list make every entry shout; a rule lets the names carry it. */
+.ka-looked__row + .ka-looked__row { border-top: 1px solid var(--ka-border); }
+
+.ka-looked__what { min-width: 0; }
+
+.ka-looked__who {
+  margin: 0;
+  font-weight: var(--ka-weight-medium);
+  line-height: var(--ka-leading-snug);
+}
+
+/* The two lines under a name are one thought, so they sit closer to
+   each other than the name sits to them. */
+.ka-looked__what p + p { margin-top: var(--ka-1); }
+
+/* The offer at the foot of the page. Amber, because it is the only
+   thing here asking for anything, and it should look like it. */
+.ka-looked__more { border-left: 3px solid var(--ka-amber-500); }
+
+
 /* End of Kaam Ase design system v1.0.0 */

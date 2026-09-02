@@ -354,6 +354,16 @@ if ( ! function_exists( 'kaamase_page_definitions' ) ) {
 				'content' => '[kaamase_employer_index]',
 			),
 
+			/*
+			 * Named for what the person came to find out, not for the
+			 * feature. Nobody arrives wanting "profile analytics".
+			 */
+			'who-looked' => array(
+				'title'   => __( 'Who looked at you', 'kaamase-core' ),
+				'slug'    => 'who-looked',
+				'content' => '[kaamase_who_looked]',
+			),
+
 			'report' => array(
 				'title'   => __( 'Report a problem', 'kaamase-core' ),
 				'slug'    => 'report',

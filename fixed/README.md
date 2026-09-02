@@ -1552,6 +1552,74 @@ theme's existing `.ka-sr`, because an eye and a figure alone are not a sentence.
 The count on the profile and job **pages** themselves, and the "who looked at you"
 list. Both need template files that are not in this folder.
 
+## 33. Who looked at you — phase 2, part two
+
+⚠️ *`who-looked.php` is a **brand new file**. `install.php`, `dashboard.php` and
+`kaamase-core.pot` are new revisions, plus `style.css` in the theme. The page
+builds itself the next time any wp-admin screen is loaded — see fix 21.*
+
+The other half of view counting. The number on a profile says how much interest
+there is; this says where it came from. **Settings are not needed and no menu has
+to be edited:** the page appears at `/who-looked/` and a button for it appears on
+the dashboard.
+
+### A week free, a year paid, and why they are different questions
+
+A worker looked at by four employers has something to act on **this week**, so
+holding that back entirely would make the counter on their profile a tease, and a
+number nobody can act on is worse than no number.
+
+Hiring here is seasonal, and that is what the paid window answers. The employer
+who looked in March is the one to ring in March next year. **The longer window is
+not a bigger version of the free one.** The offer says so in those words rather
+than selling more of the same.
+
+### The offer is silent when there is nothing to sell
+
+An empty week is the one moment the year is worth mentioning, so the question is
+asked — once, and only for a free account with an empty list: is there anything in
+the longer window? Then:
+
+- **Nothing this week, nothing before it** → no offer at all. Asking somebody to
+  pay for a longer view of an empty list is the kind of offer that teaches people
+  to distrust every later one.
+- **Nothing this week, four people before it** → *"4 people looked at you before
+  this week."* Specific, true, and the best moment it will ever have.
+- **Already paying** → never shown.
+
+The heading changes with it. "Nobody yet" means never, and when somebody did look
+— just further back than a free account sees — that heading is simply untrue, so
+it becomes "Nobody this week".
+
+### Names, and what is never shown
+
+Signed in viewers only; `kaamase_views_of_mine` already refuses to return
+strangers, because a line reading "somebody looked at you" tells nobody anything
+they can act on. Name and public profile link only — **never a telephone number
+and never an email.** Contact runs through the same per-profile reveal as
+everywhere else, and a list that printed numbers would be a way around the daily
+cap rather than a feature of the list.
+
+### Two queries for a list, not two per line
+
+A busy week is two hundred rows. Names and profile links are fetched for the whole
+list in two queries, and the titles primed in one more. Four hundred queries to
+print names is not something to put on this hosting.
+
+### Built out of what was already there
+
+The initials block is the theme's own `.ka-avatar--empty`, not a second one of the
+same thing. The dashboard button is guarded on the page actually existing rather
+than on `kaamase_page_url()` being non-empty — that function falls back to a
+guessed address, so testing it for emptiness proves nothing and would have put a
+button to a 404 on the dashboard before the pages were built. Checked on four
+states: nothing stored, a zero id, a trashed page, and a live one.
+
+### One thing for the owner to decide
+
+`/privacy` does not currently say that opening somebody's profile shows them your
+name. It should.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
