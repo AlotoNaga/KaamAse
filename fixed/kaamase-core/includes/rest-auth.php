@@ -768,3 +768,105 @@ function kaamase_revoke_tokens_on_password_change( $user_id, $old_user_data = nu
 	kaamase_revoke_token( $user_id );
 }
 add_action( 'profile_update', 'kaamase_revoke_tokens_on_password_change', 10, 2 );
+
+
+/* ==========================================================================
+   6. KEEPING PERSONAL ANSWERS OUT OF THE CACHE
+
+   A page cache decides what is "the same request" by the address and the
+   cookies. The app sends no cookies. It signs in with an Authorization
+   header, which the cache does not read and does not know exists.
+
+   So every phone asking GET /wp-json/kaamase/v1/me looks identical to
+   the cache: same address, no cookies. It stores the first answer and
+   hands that same person's name, telephone number and profile to every
+   phone that asks afterwards.
+
+   This is why the website was never affected. A browser carries the
+   WordPress sign in cookie, the cache sees it and steps aside. The app
+   carries nothing the cache understands.
+
+   The theme has the same guard for pages, but it cannot help here:
+   WordPress serves a REST route and stops inside parse_request, which
+   is before send_headers ever runs. An answer to the app therefore
+   passes none of the page protections, and needs its own.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_rest_is_personal' ) ) {
+	/**
+	 * Whether this REST request carries credentials.
+	 *
+	 * Deliberately reads the header and the cookie names only. Working
+	 * out which account it is would resolve the current user earlier
+	 * than the route expects, and the answer to "is this personal" does
+	 * not need a name attached to it.
+	 *
+	 * A stale or invalid credential counts as personal too. The cost of
+	 * being wrong that way is one answer not cached. The cost of being
+	 * wrong the other way is one person's details handed to a stranger.
+	 *
+	 * @since 1.5.0
+	 * @return bool
+	 */
+	function kaamase_rest_is_personal() {
+
+		if ( function_exists( 'kaamase_bearer_token' ) && '' !== kaamase_bearer_token() ) {
+			return true;
+		}
+
+		foreach ( array_keys( (array) $_COOKIE ) as $name ) {
+			if ( 0 === strpos( (string) $name, 'wordpress_logged_in_' ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_no_cache' ) ) {
+	/**
+	 * Forbid storing an answer that was written for one account.
+	 *
+	 * Public answers are left alone on purpose. A trade listing is the
+	 * same for everybody and is worth caching on a village connection.
+	 *
+	 * @since 1.5.0
+	 * @return void
+	 */
+	function kaamase_rest_no_cache() {
+
+		if ( ! kaamase_rest_is_personal() ) {
+			return;
+		}
+
+		/*
+		 * The constant and the switch before the headers_sent check.
+		 * Neither needs headers, and these two are what actually decide
+		 * whether the answer is kept. Response headers alone were not
+		 * enough on this server: the /app page sent them and was served
+		 * from store for hours.
+		 */
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
+		do_action( 'litespeed_control_set_nocache', 'kaamase personal api answer' );
+
+		if ( headers_sent() ) {
+			return;
+		}
+
+		nocache_headers();
+		header( 'Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0' );
+
+		/*
+		 * And for anything between here and the phone that stores
+		 * things anyway: this answer depends on who asked, and who
+		 * asked is in this header. A copy made for one must never be
+		 * handed to another.
+		 */
+		header( 'Vary: Authorization, Cookie', false );
+	}
+}
+add_action( 'rest_api_init', 'kaamase_rest_no_cache', 0 );

@@ -1390,6 +1390,64 @@ produces this exact symptom. Whether it is the hole these particular users fell
 through is not something the code can answer on its own — see the checks sent with
 this change.
 
+## 30. Why the app saw other people's accounts, and the website never did
+
+⚠️ *`kaamase-core/includes/rest-auth.php` is a new revision. Upload it, then purge
+the whole cache again.*
+
+Fix 29 stopped signed-in **pages** being stored. It could not have helped the app,
+and the sequence of events says so plainly: app 2.0.6 shipped with the offline
+cache fix and the mix-ups continued; uploading `security.php` and purging stopped
+them the same day. Something on the server was holding the wrong answer, and the
+purge is what let go of it.
+
+### What a page cache thinks "the same request" means
+
+The address, and the cookies. Nothing else.
+
+A browser carries the WordPress sign in cookie, so the cache sees two different
+people and steps aside. **The app carries no cookies at all.** It signs in with an
+`Authorization: Bearer` header, which the cache does not read and does not know
+exists.
+
+So every phone asking `GET /wp-json/kaamase/v1/me` looks identical to the cache:
+same address, no cookies. It stored the first answer and handed that one person's
+name, telephone number and profile to every phone that asked afterwards.
+
+That accounts for every fact — app only, website clean, purge fixed it instantly,
+and the app release did not.
+
+### Why fix 29 could not reach it
+
+WordPress serves a REST route and stops inside `parse_request`. `send_headers`,
+where the theme's guard lives, runs after that and never fires. An answer to the
+app passes none of the page protections, so it needs its own.
+
+### And why the purge alone was not the end of it
+
+Nothing stopped the next answer being stored the same way. The cache was empty,
+so the first app request after the purge became the new stored copy. It was going
+to come back.
+
+`rest_api_init` now sets `DONOTCACHEPAGE`, fires LiteSpeed's switch, and sends the
+headers for any request carrying a bearer token or a sign in cookie. Public
+answers are deliberately left cacheable — a trade listing is the same for
+everybody and worth caching on a village connection.
+
+An invalid or expired credential counts as personal too. Being wrong that way
+costs one answer not cached. Being wrong the other way hands somebody's telephone
+number to a stranger.
+
+Proved against the real function on four requests: no token (cacheable), bearer
+token (all five protections), sign in cookie (all five), and a stranger carrying
+analytics cookies (cacheable).
+
+### Worth checking in LiteSpeed
+
+**Cache → Cache REST API.** If it is on, turn it off. This change makes the site
+correct either way, but that setting is what made a private answer storable in the
+first place.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
