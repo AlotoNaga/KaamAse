@@ -1492,6 +1492,16 @@ people it should not. Proved on twelve inputs, and on six shapes of request:
 off, off-with-empty-strings, one platform, both platforms with a message, a
 message with no floor, and a different route entirely.
 
+### What leaves this site is a version or nothing
+
+The values are cleaned again *after* the filter runs, not only before it. A filter
+written carelessly could otherwise put `"Array"`, `"1"` or `"2.0.7-beta"` on the
+wire and leave the app to defend against our output. Only a string is accepted;
+an integer, a boolean, an array or markup omits the key, which the app reads as
+"let everybody in". Wrong in the safe direction. The message is stripped of markup
+and capped at 200 characters, because it is drawn on a screen somebody is stuck
+behind, on the smallest phone we build for.
+
 ### The one thing it cannot check
 
 Whether the version you type actually exists in the stores. Type one that has not

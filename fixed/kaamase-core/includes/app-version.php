@@ -144,9 +144,21 @@ if ( ! function_exists( 'kaamase_app_version_in_reference' ) ) {
 		$versions = kaamase_app_minimum_versions();
 		$floor    = array();
 
+		/*
+		 * Cleaned again after the filter, not just before it. A filter
+		 * returning an integer, an array or a beta string would
+		 * otherwise put "1", "Array" or "2.0.7-beta" on the wire, and
+		 * the far end would have to defend against our output. What
+		 * leaves here is a version or nothing at all.
+		 */
 		foreach ( array( 'ios', 'android' ) as $platform ) {
-			if ( ! empty( $versions[ $platform ] ) ) {
-				$floor[ $platform ] = (string) $versions[ $platform ];
+
+			$version = isset( $versions[ $platform ] ) && is_string( $versions[ $platform ] )
+				? kaamase_app_version_clean( $versions[ $platform ] )
+				: '';
+
+			if ( '' !== $version ) {
+				$floor[ $platform ] = $version;
 			}
 		}
 
@@ -164,8 +176,13 @@ if ( ! function_exists( 'kaamase_app_version_in_reference' ) ) {
 
 		$message = kaamase_app_update_message();
 
+		/*
+		 * Capped. This is drawn on a screen somebody is stuck behind,
+		 * on the smallest phone we build for, and an essay there is a
+		 * wall with no way past it.
+		 */
 		if ( '' !== $message ) {
-			$data['update_message'] = $message;
+			$data['update_message'] = mb_substr( wp_strip_all_tags( $message ), 0, 200 );
 		}
 
 		$response->set_data( $data );
