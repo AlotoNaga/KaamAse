@@ -2042,6 +2042,17 @@ body.has-tabbar .ka-actionbar {
   font-size: var(--ka-text-base);
 }
 
+/* At the foot of a profile card, behind a hairline. Above the rule are
+   facts about the person; below it is a fact about the page. Without the
+   rule it reads as something left over at the bottom. */
+.ka-profile__seen {
+  /* Same rule and the same spacing as .ka-profile__trades above it, so
+     the two read as sections of one card rather than two ideas. */
+  margin-top: var(--ka-6);
+  padding-top: var(--ka-4);
+  border-top: 1px solid var(--ka-border);
+}
+
 .ka-views--full .ka-views__eye {
   width: 17px;
   height: 17px;
