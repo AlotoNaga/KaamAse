@@ -1353,6 +1353,43 @@ and never both.
 
 ---
 
+## 29. Signed-in pages could still be stored by the cache
+
+⚠️ *`kaamase/inc/security.php` is a new revision. Upload it and then purge the
+whole cache — this stops new pages being stored, it does not remove ones already
+in there.*
+
+**Reported symptom: people signing in and finding somebody else's account.**
+
+`kaamase_no_cache_when_signed_in()` exists for exactly this. Its own note says a
+dashboard holds one person's data and that if a shared cache stores it, *"the next
+visitor through that cache can be served somebody else's profile"*. It called
+`nocache_headers()` and set a `Cache-Control` header, and nothing else.
+
+That is the method fix 26 had already proved does not work on this server. The
+`/app` page sent those same headers and LiteSpeed went on handing out a stored
+copy for hours at a time; what actually fixed it was `DONOTCACHEPAGE` plus
+LiteSpeed's own `litespeed_control_set_nocache`. Response headers ask politely.
+Those two are the switch.
+
+So the one function guarding every signed-in page was asking politely, on a server
+already known to ignore it.
+
+Now it defines `DONOTCACHEPAGE`, fires LiteSpeed's switch, and then sends the
+headers. The constant and the action are also moved above the `headers_sent()`
+check: neither needs headers, and skipping both because output had already begun
+left the most damaging case with no protection at all.
+
+Proved with the real function source under three conditions — a stranger (nothing
+fires, anonymous pages stay fast), signed in (all four fire), and signed in with
+headers already sent (the two that matter still fire, where the old code did
+nothing).
+
+**This is containment, not a confirmed diagnosis.** It closes a real hole that
+produces this exact symptom. Whether it is the hole these particular users fell
+through is not something the code can answer on its own — see the checks sent with
+this change.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
