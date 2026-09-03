@@ -990,37 +990,75 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 				<?php endif; ?>
 			</div>
 
-			<h3 class="ka-mt-4">
-				<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
-					<?php echo esc_html( get_the_title( $post_id ) ); ?>
-				</a>
-			</h3>
+			<div class="ka-card__head ka-mt-4">
 
-			<?php if ( $company ) : ?>
-				<p class="ka-small ka-soft">
-					<?php
-					echo esc_html( $company );
-
-					/*
-					 * The mark, when the person hiring is on Kaam Ase.
-					 *
-					 * Never on a job that staff put up for an outside
-					 * employer. Those carry somebody else's name and
-					 * have no account behind them, so the mark would be
-					 * the poster's rather than the hirer's, which is
-					 * the one way this badge could tell a lie.
-					 */
-					if ( function_exists( 'kaamase_called_badge' )
-						&& ! ( function_exists( 'kaamase_job_is_posted_for' ) && kaamase_job_is_posted_for( $post_id ) ) ) {
-
-						echo kaamase_called_badge( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							(int) get_post_field( 'post_author', $post_id ),
-							true
-						);
-					}
+				<?php
+				/*
+				 * The employer's poster, when there is one.
+				 *
+				 * Read as the featured image rather than through
+				 * kaamase_job_photos, because job-photos.php keeps the
+				 * featured image pointing at the first picture on every
+				 * save. That is one source of truth, it is what the app
+				 * draws on its own cards, and it means this works with
+				 * plain WordPress if the photo feature is ever off.
+				 *
+				 * Hidden from screen readers and skipped by the keyboard:
+				 * the heading beside it is the same link, and two links
+				 * to one job is one thing to tab past for nothing.
+				 */
+				if ( has_post_thumbnail( $post_id ) ) :
 					?>
-				</p>
-			<?php endif; ?>
+					<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="ka-job-card__photo" tabindex="-1" aria-hidden="true">
+						<?php
+						echo get_the_post_thumbnail( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							$post_id,
+							'kaamase-avatar',
+							array(
+								'alt'     => '',
+								'loading' => 'lazy',
+							)
+						);
+						?>
+					</a>
+				<?php endif; ?>
+
+				<div class="ka-job-card__id">
+
+					<h3>
+						<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
+							<?php echo esc_html( get_the_title( $post_id ) ); ?>
+						</a>
+					</h3>
+
+					<?php if ( $company ) : ?>
+						<p class="ka-small ka-soft">
+							<?php
+							echo esc_html( $company );
+
+							/*
+							 * The mark, when the person hiring is on Kaam Ase.
+							 *
+							 * Never on a job that staff put up for an outside
+							 * employer. Those carry somebody else's name and
+							 * have no account behind them, so the mark would be
+							 * the poster's rather than the hirer's, which is
+							 * the one way this badge could tell a lie.
+							 */
+							if ( function_exists( 'kaamase_called_badge' )
+								&& ! ( function_exists( 'kaamase_job_is_posted_for' ) && kaamase_job_is_posted_for( $post_id ) ) ) {
+
+								echo kaamase_called_badge( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									(int) get_post_field( 'post_author', $post_id ),
+									true
+								);
+							}
+							?>
+						</p>
+					<?php endif; ?>
+
+				</div>
+			</div>
 
 			<div class="ka-cluster ka-mt-4">
 				<?php

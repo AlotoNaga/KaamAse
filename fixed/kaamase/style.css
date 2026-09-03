@@ -1275,11 +1275,38 @@ body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-ar
 .ka-employer-card .ka-card__body { flex: 1; }
 
 .ka-worker-card__photo,
-.ka-employer-card__logo { display: block; flex-shrink: 0; }
+.ka-employer-card__logo,
+.ka-job-card__photo { display: block; flex-shrink: 0; }
 
 .ka-worker-card__id,
 .ka-gang-card__id,
-.ka-employer-card__id { flex: 1; min-width: 0; }
+.ka-employer-card__id,
+.ka-job-card__id { flex: 1; min-width: 0; }
+
+/* The employer's poster on a job card.
+
+   A thumbnail beside the title rather than a band across the top. These
+   are printed flyers -- a training course, a hiring drive -- and run
+   tall. Given the full width of the card one of them would be most of a
+   phone screen, and a listing is meant to be scrolled past several jobs
+   at a time, not one.
+
+   Square and cropped from the middle, which is where a flyer puts its
+   name. Sixty-four across, drawn from the 128px file, so it stays sharp
+   on a phone without fetching the poster at full size on a village
+   connection.
+
+   Nothing here applies when a job has no picture: the anchor is not
+   printed at all, and the head collapses to the title and the employer
+   exactly as it was. */
+.ka-job-card__photo img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--ka-radius-sm);
+  background: var(--ka-ink-100);
+}
 
 .ka-worker-card__name,
 .ka-gang-card__id h3,

@@ -2128,6 +2128,53 @@ None of that is a reason for the endpoint to *require* a token — it must keep
 working for a signed-out visitor, and it does. It is a reason for a client that
 has one to send it.
 
+## 42. The employer's poster, on the job card
+
+⚠️ *Two files: `kaamase/inc/template-tags.php` and `kaamase/style.css`. Bump the
+theme version in `style.css` so the new rules reach people who have visited
+before.*
+
+Worker cards have always carried a photograph. Job cards never did — not a
+broken one, an absent one. The app shows the poster on every job card, and those
+posters are doing real work for the employer: a training course, a hiring drive,
+a phone number, a venue.
+
+### Read from the featured image, not the photo list
+
+`job-photos.php` keeps the featured image pointing at the first picture on every
+save, and says why: *"The featured image matters beyond the theme. It is what a
+share card, a search engine and any future plugin will look for."*
+
+So the card reads that, through plain `has_post_thumbnail` and
+`get_the_post_thumbnail`. One source of truth, the same one the app draws from,
+and no dependence on the photo feature being installed at all.
+
+### A thumbnail, not a band across the top
+
+These are printed flyers and they run tall. Given the full width of a card, one
+of them would be most of a phone screen, and a listing exists to be scrolled past
+several jobs at a time.
+
+So: 64px square, cropped from the middle where a flyer puts its name, drawn from
+the already-registered 128px file so it stays sharp on a phone without fetching
+the poster at full size on a village connection. Beside the title, which is where
+the app puts it.
+
+The head is the same `.ka-card__head` flex row the worker and employer cards use,
+so a long title wraps beside the picture instead of under it, and the thumbnail
+stays at the top.
+
+### A job with no picture is untouched
+
+Most jobs have none, so this was the case to get right. The anchor is not printed
+at all, the row collapses to a single column, and the card renders exactly as it
+did before — same title, same spacing, no gap where a picture would have been.
+Checked at 360px alongside a card that has one.
+
+The photograph is skipped by the keyboard and hidden from screen readers, because
+the heading beside it is the same link and two links to one job is one thing to
+tab past for nothing. Same treatment as the worker card.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
