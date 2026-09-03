@@ -334,3 +334,173 @@ if ( ! function_exists( 'kaamase_views_rest_opened' ) ) {
 	}
 }
 add_filter( 'rest_post_dispatch', 'kaamase_views_rest_opened', 10, 3 );
+
+
+/* ==========================================================================
+   4. THE VIEWS THE CACHE SWALLOWS
+
+   A view is recorded on shutdown, and shutdown only happens if PHP ran.
+   When LiteSpeed answers from store PHP never starts, so nothing is
+   counted. Since fix 29 a signed in visitor always gets an uncached
+   page and is always counted; a signed out one usually is not. So the
+   count leans towards people with accounts and misses the visitor
+   arriving from Google, which is precisely who the trade and district
+   pages exist to reach.
+
+   The page therefore asks to be counted after it has loaded, from an
+   address the cache cannot answer.
+
+   Why this cannot inflate anything
+   --------------------------------
+   It goes through kaamase_record_view like everything else, and that
+   upsert only adds a hit when last_hit is older than the cooldown. So
+   when PHP did run and already counted the view, this second ask adds
+   nothing. It is the cooldown, not any cleverness here, that makes
+   asking twice safe.
+
+   The owner, staff and robots are refused there too, and a stranger is
+   still one visitor_key, so the most any single browser can add is one
+   hit per profile per thirty minutes.
+   ========================================================================== */
+
+/** Most times one browser may ask to be counted in an hour. */
+if ( ! defined( 'KAAMASE_SEEN_PER_HOUR' ) ) {
+	define( 'KAAMASE_SEEN_PER_HOUR', 120 );
+}
+
+if ( ! function_exists( 'kaamase_rest_seen' ) ) {
+	/**
+	 * Count a page that was served from the cache.
+	 *
+	 * @since 1.5.0
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response Always 204. The page is not waiting on an answer.
+	 */
+	function kaamase_rest_seen( $request ) {
+
+		$post_id = absint( $request->get_param( 'id' ) );
+
+		if ( ! $post_id || ! function_exists( 'kaamase_record_view' ) ) {
+			return new WP_REST_Response( null, 204 );
+		}
+
+		/*
+		 * A ceiling per browser per hour. The cooldown already stops one
+		 * profile being counted twice; this stops one script walking
+		 * every profile on the site. A person opening sixty profiles in
+		 * an hour is doing a hard day's looking and is still under it.
+		 */
+		if ( function_exists( 'kaamase_rate_bump' ) && function_exists( 'kaamase_view_visitor_key' ) ) {
+
+			$asked = kaamase_rate_bump( 'seen_' . kaamase_view_visitor_key(), HOUR_IN_SECONDS );
+
+			if ( $asked > KAAMASE_SEEN_PER_HOUR ) {
+				return new WP_REST_Response( null, 204 );
+			}
+		}
+
+		// Every rule about who counts lives there, not here.
+		kaamase_record_view( $post_id );
+
+		return new WP_REST_Response( null, 204 );
+	}
+}
+
+if ( ! function_exists( 'kaamase_views_seen_route' ) ) {
+	/**
+	 * Register the counting address.
+	 *
+	 * Public on purpose: the whole point is the visitor who has no
+	 * account. A POST, because it changes something, and because a GET
+	 * that changes something gets fired by link scanners and prefetch.
+	 *
+	 * @since 1.5.0
+	 * @return void
+	 */
+	function kaamase_views_seen_route() {
+
+		if ( ! defined( 'KAAMASE_REST_NS' ) ) {
+			return;
+		}
+
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/seen',
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'kaamase_rest_seen',
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'id' => array(
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+					),
+				),
+			)
+		);
+	}
+}
+add_action( 'rest_api_init', 'kaamase_views_seen_route' );
+
+if ( ! function_exists( 'kaamase_views_beacon' ) ) {
+	/**
+	 * Ask to be counted, once, after the page has loaded.
+	 *
+	 * sendBeacon where there is one: the browser posts it in its own
+	 * time, after the page is done, and it survives the reader tapping
+	 * a link immediately. It is the one request in the theme that is
+	 * allowed to happen after the page is usable, and it blocks nothing.
+	 *
+	 * The id is written into the page, and the page it is written into
+	 * is that same profile, so a cached copy carries the right number
+	 * for everybody who is handed it.
+	 *
+	 * @since 1.5.0
+	 * @return void
+	 */
+	function kaamase_views_beacon() {
+
+		if ( ! is_singular() || ! function_exists( 'kaamase_view_subject_type' ) ) {
+			return;
+		}
+
+		$post_id = (int) get_queried_object_id();
+
+		if ( ! $post_id || '' === kaamase_view_subject_type( (string) get_post_type( $post_id ) ) ) {
+			return;
+		}
+
+		$url = esc_url_raw( rest_url( KAAMASE_REST_NS . '/seen' ) );
+		?>
+		<script>
+		(function () {
+			var to = <?php echo wp_json_encode( $url ); ?>;
+			var body = new Blob(
+				[ JSON.stringify({ id: <?php echo (int) $post_id; ?> }) ],
+				{ type: 'application/json' }
+			);
+
+			/*
+			 * After load, never during it. On a village connection the
+			 * page finishing matters and this does not.
+			 */
+			function ask() {
+				try {
+					if (navigator.sendBeacon && navigator.sendBeacon(to, body)) { return; }
+					fetch(to, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ id: <?php echo (int) $post_id; ?> }),
+						keepalive: true
+					});
+				} catch (e) { /* Counting is never worth an error on the page. */ }
+			}
+
+			if (document.readyState === 'complete') { ask(); }
+			else { window.addEventListener('load', ask, { once: true }); }
+		})();
+		</script>
+		<?php
+	}
+}
+add_action( 'wp_footer', 'kaamase_views_beacon', 30 );

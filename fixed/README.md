@@ -1750,6 +1750,64 @@ A list is not somebody opening a profile. Nor is a failed request, a POST, a job
 action, a contact reveal, the saved list, `/me`, or another plugin's route.
 Checked on all fourteen.
 
+## 37. The views the cache was swallowing
+
+⚠️ *`views-api.php` is a new revision. Upload it. Nothing changes in the app.*
+
+A view is recorded on `shutdown`, and `shutdown` only happens if PHP ran. When
+LiteSpeed answers from store PHP never starts, so nothing is counted.
+
+Since fix 29 a signed-in visitor always gets an uncached page and is always
+counted. A signed-out one usually is not. So the count leans towards people with
+accounts and misses the visitor arriving from Google — which is precisely who the
+trade and district pages exist to reach.
+
+The page now asks to be counted after it has loaded, from an address the cache
+cannot answer.
+
+### Why asking twice cannot inflate anything
+
+It goes through `kaamase_record_view` like everything else, and that upsert only
+adds a hit when `last_hit` is older than the cooldown:
+
+```sql
+hits = hits + IF(last_hit < %d, 1, 0)
+```
+
+So on a cache **miss**, where PHP ran and already counted the view, the beacon
+that follows adds nothing. It is the cooldown, not any cleverness in the new code,
+that makes this safe. The owner, staff and robots are refused in the same place,
+and a stranger is still one `visitor_key`, so the most any single browser can add
+is one hit per profile per thirty minutes.
+
+On top of that, one browser may ask at most 120 times an hour. The cooldown
+already stops one profile being counted twice; the ceiling stops one script
+walking every profile on the site. Somebody opening sixty profiles in an hour is
+doing a hard day's looking and is still under it.
+
+### A POST, and after load
+
+A POST because it changes something, and because a GET that changes something gets
+fired by link scanners and browser prefetch — which would inflate counts with
+nobody having looked at anything.
+
+`sendBeacon` where there is one, so the browser sends it in its own time after the
+page is done and it survives the reader tapping a link immediately. It is the one
+request in the theme allowed to happen after the page is usable, and it blocks
+nothing. 811 bytes of inline script, no extra file to fetch.
+
+The id is written into the page, and the page it is written into is that same
+profile, so a cached copy carries the right number for everybody handed it.
+
+### What it does not do
+
+Somebody with JavaScript switched off is not counted — but they were only ever
+counted on a cache miss anyway, so nothing is lost that was working before.
+
+Printed only on a singular worker, team, employer or job. Checked: silent on an
+ordinary page, silent on a listing, silent when there is no id, and the endpoint
+refuses a missing id, a non-numeric id, and anything past the hourly ceiling.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
