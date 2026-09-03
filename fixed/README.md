@@ -1547,10 +1547,12 @@ The full density sets its own word spacing. One flex gap for both put
 Every count carries the sentence "Looked at 24 times" for a screen reader, in the
 theme's existing `.ka-sr`, because an eye and a figure alone are not a sentence.
 
-### Still to come
+### What followed
 
-The count on the profile and job **pages** themselves, and the "who looked at you"
-list. Both need template files that are not in this folder.
+The count on the profile and job pages themselves, in fix 33 below, and the "who
+looked at you" list in fix 34. The templates for both turned out to be in
+`kaamase.zip` and `kaamase-core.zip` at the root of this repository, which is
+where anything missing from this folder should be looked for first.
 
 ## 33. Who looked at you — phase 2, part two
 
