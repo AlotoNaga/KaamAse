@@ -252,3 +252,85 @@ if ( ! function_exists( 'kaamase_views_routes' ) ) {
 	}
 }
 add_action( 'rest_api_init', 'kaamase_views_routes' );
+
+
+/* ==========================================================================
+   3. COUNTING WHAT THE APP OPENS
+
+   The counter has never seen the app at all. kaamase_view_catch_singular
+   asks is_singular(), which is only ever true for a page of the website,
+   and a REST request stops inside parse_request long before that hook
+   runs. exposure.php says most of the traffic is the app, so the count
+   on every profile has been missing the majority of real openings since
+   the day it started.
+
+   Opening a profile in the app is the same act as opening it in a
+   browser, so it is counted the same way: the id is put where the
+   website puts it, and the shutdown handler that already exists records
+   it. One recording path, one set of rules. Nothing here decides who
+   counts -- kaamase_record_view still refuses the owner, refuses staff,
+   refuses robots and holds the thirty minute cooldown.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_views_rest_opened' ) ) {
+	/**
+	 * Note that this request opened one profile or job.
+	 *
+	 * Only a successful GET of a single record. A list is not somebody
+	 * opening a profile, and a failed request is not somebody seeing
+	 * one.
+	 *
+	 * @since 1.5.0
+	 * @param WP_HTTP_Response $response Response.
+	 * @param WP_REST_Server   $server   Server.
+	 * @param WP_REST_Request  $request  Request.
+	 * @return WP_HTTP_Response The response, untouched.
+	 */
+	function kaamase_views_rest_opened( $response, $server, $request ) {
+
+		unset( $server );
+
+		if ( ! defined( 'KAAMASE_REST_NS' ) || ! $request instanceof WP_REST_Request ) {
+			return $response;
+		}
+
+		if ( 'GET' !== $request->get_method() ) {
+			return $response;
+		}
+
+		if ( ! $response instanceof WP_REST_Response || 200 !== $response->get_status() ) {
+			return $response;
+		}
+
+		$ns    = preg_quote( KAAMASE_REST_NS, '#' );
+		$route = (string) $request->get_route();
+
+		/*
+		 * By id, and by slug. The slug routes are how a kaamase.com link
+		 * opens a profile inside the app, which is the whole point of
+		 * the universal links, and they carry no id in the address.
+		 */
+		$one = '#^/' . $ns . '/(workers|jobs|employers)/(?:slug/[a-z0-9\-_]+|\d+)$#';
+
+		if ( ! preg_match( $one, $route ) ) {
+			return $response;
+		}
+
+		$data = $response->get_data();
+
+		if ( ! is_array( $data ) || empty( $data['id'] ) ) {
+			return $response;
+		}
+
+		/*
+		 * Handed to the website's own pending slot rather than written
+		 * here. shutdown fires after a REST request as it does after a
+		 * page, so the same handler does the writing and the app can
+		 * never drift from the website about what counts.
+		 */
+		$GLOBALS['kaamase_view_pending'] = (int) $data['id'];
+
+		return $response;
+	}
+}
+add_filter( 'rest_post_dispatch', 'kaamase_views_rest_opened', 10, 3 );

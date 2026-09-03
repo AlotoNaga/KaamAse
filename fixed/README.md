@@ -1716,6 +1716,40 @@ and the server has already asked the question so the app does not have to.
 Checked on four states, matching the website's four exactly: free with visitors,
 paid with visitors, an empty week with people behind it, and nobody ever.
 
+## 36. The app had never counted a single view
+
+⚠️ *`views-api.php` is a new revision. Upload it. **Nothing changes in the app** —
+this is counted entirely on the server.*
+
+`kaamase_view_catch_singular` asks `is_singular()`, which is only ever true for a
+page of the website, and a REST request stops inside `parse_request` long before
+that hook runs. So the counter had never seen the app at all — not few views,
+none. `exposure.php` says in its own note that **most of the traffic is the app**,
+so every count on every profile has been missing the majority of real openings
+since the day counting started.
+
+That is the whole explanation for the numbers looking dead. The 73 worker views
+recorded so far are website-only.
+
+### The same act, so the same rules
+
+Opening a profile in the app is opening a profile. The route hands the id to the
+website's own pending slot and the `shutdown` handler that already exists does the
+writing — one recording path, one set of rules. Nothing new decides who counts:
+`kaamase_record_view` still refuses the owner, refuses staff, refuses robots, and
+holds the thirty minute cooldown, exactly as it does for the website.
+
+### What counts as an opening
+
+Only a successful `GET` of one record: `/workers/{id}`, `/jobs/{id}`,
+`/employers/{id}`, and the two slug routes — `/workers/slug/{slug}` and
+`/jobs/slug/{slug}`, which are how a `kaamase.com` link opens a profile inside the
+app and therefore how a shared link becomes a view.
+
+A list is not somebody opening a profile. Nor is a failed request, a POST, a job
+action, a contact reveal, the saved list, `/me`, or another plugin's route.
+Checked on all fourteen.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
