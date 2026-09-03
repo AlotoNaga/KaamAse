@@ -1662,6 +1662,60 @@ and none were touched. CSS braces balance. Every file imported from the two zips
 **additions only, zero removed lines**. `who-looked.php` mentions a telephone
 number and an email in one comment and reads neither.
 
+## 35. View counts and who looked at you, for the app — phase 3
+
+⚠️ *`views-api.php` is a **brand new file**. Nothing else changes. Upload it and
+the app can see both.*
+
+### rest-shape.php is not touched
+
+Every shape in that file already ends with `apply_filters`, so `views` is added
+through the filter and that file is not edited at all. This matters here
+specifically: a duplicate of a shape function was written once before in this
+programme and quietly replaced the real one, renaming a field and dropping
+another, with five callers still calling it. The safest edit to that file is none.
+
+### What every profile and job now carries
+
+```
+"views": { "total": 247, "people": 89 }
+```
+
+Both numbers, because one without the other misleads: four hundred views from
+three people is a different thing from four hundred views from four hundred
+people, and only the second is what somebody reading "400 views" assumes.
+
+On the short shape as well as the full one, because the app draws cards from the
+short one and the website shows the count on its cards. `/teams` shapes teams with
+`kaamase_shape_worker`, so teams are covered by the same filter.
+
+**A list costs no extra queries.** `the_posts` already primes every count on the
+page in one grouped query, and the REST list callbacks use `WP_Query`, so that
+fires for the app exactly as it does for the website.
+
+### GET /me/looked
+
+The same list the website draws, in the same window, decided in the same place.
+Two clients working out separately whether somebody has paid is two chances to
+disagree, and the one that disagrees quietly is the one nobody finds. So the
+server sends the window, whether they are paying, and **whether to show the
+offer** — the app does not recompute any of it.
+
+```
+window_days, is_paid, people,
+viewers[]: id, name, url, initials,
+           subject{ id, type, title, url }, hits, last_seen
+upgrade:   show, older_people
+```
+
+`upgrade.show` is false for a paying account, false for somebody nobody has ever
+looked at, and true otherwise. `older_people` is the number waiting behind the
+longer window when this week is empty — the one moment that offer is worth making,
+and the server has already asked the question so the app does not have to.
+
+Checked on four states, matching the website's four exactly: free with visitors,
+paid with visitors, an empty week with people behind it, and nobody ever.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
