@@ -2006,6 +2006,87 @@ It still says nothing at all when there is nothing to say, and still never
 announces a nought: `340 seen` on its own until something is opened, and the
 old `7 views` wording on a site that has not started counting showings yet.
 
+## 40. Urgent jobs were running three weeks, not three days
+
+⚠️ *One file: `kaamase-core/includes/services.php`. It has not been touched
+before this, so what you are uploading is the original with one block added.*
+
+Urgent is supposed to mean today. The plugin's own note says why:
+
+> *Urgent is limited to one open job at a time. If every listing is urgent,
+> urgent means nothing within a fortnight, and the tag stops working for the
+> person who actually needs somebody today.*
+
+A job gets 3 days if it is urgent and 21 if it is not. **Every urgent job was
+getting 21** — the same as an ordinary one — so for as long as the site has been
+running, the tag has meant nothing at all.
+
+### Why
+
+An ordering mistake in the one function that saves a job, used by the website
+form and the app alike:
+
+```
+1. wp_insert_post()                       creates the job
+2.   → fires kaamase_set_job_expiry
+3.     → asks kaamase_job_lifespan: 3 days or 21?
+4.       → reads the urgent flag           ← not written yet. Reads false. Stamps 21.
+5. kaamase_save_field( 'urgent', true )   the flag is written here, too late
+6. the expiry is never re-stamped         ("do not move an expiry the employer extended")
+```
+
+Step 4 asks a question that step 5 answers. The flag cannot be written earlier
+because there is no job to attach it to until step 1 has run.
+
+Run against the real `kaamase_job_lifespan` and `kaamase_set_job_expiry` in
+that order: an urgent job comes out at **21 days**. That is the fault, and it
+matches a live listing carrying the Urgent badge and saying *18d left* — 21
+minus the three days it had been up.
+
+### The fix
+
+The expiry is stamped once more at the end of the save, where the flag is
+stored and lifespan can read the truth. Written directly, because
+`kaamase_set_job_expiry` refuses to move an expiry that already exists — the
+right rule for an employer who extended one, the wrong rule for the placeholder
+it wrote itself moments earlier on a guess.
+
+| | before | now |
+| --- | --- | --- |
+| New urgent job | 21 days | **3 days** |
+| New ordinary job | 21 days | 21 days |
+| Ticking urgent on a job already running | no change | no change |
+
+**New jobs only, deliberately.** Ticking urgent on a listing that is already
+running still leaves its expiry alone. Three days from now would be *shorter*
+than a listing with six days left and *longer* than one with two, and neither is
+what the employer asked for.
+
+### Two things that were already right
+
+Reposting a closed job clears the expiry first, so it is stamped fresh — and by
+then the urgent flag is stored, so a reposted urgent job correctly gets 3 days.
+That path was never broken.
+
+And the website form and the app both post through the same `kaamase_save_job`,
+so this is one fix for both.
+
+### The jobs already running
+
+They keep the 21 days they were given. Nothing closes early because of this
+change, which is the safe answer — but it does mean urgent listings with two
+weeks left will be around until they run out. This finds them:
+
+```sql
+SELECT p.ID, p.post_title,
+       ROUND((e.meta_value - UNIX_TIMESTAMP()) / 86400) AS days_left
+FROM wp_posts p
+JOIN wp_postmeta u ON u.post_id = p.ID AND u.meta_key = '_kaamase_urgent'  AND u.meta_value = '1'
+JOIN wp_postmeta e ON e.post_id = p.ID AND e.meta_key = '_kaamase_expires'
+WHERE p.post_type = 'kaamase_job' AND p.post_status = 'publish'
+ORDER BY days_left DESC;
+```
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
