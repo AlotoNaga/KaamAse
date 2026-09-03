@@ -21,6 +21,10 @@ msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
+#: inc/template-tags.php:340
+msgid "%s opened"
+msgstr ""
+
 #: index.php:119
 msgid "%s result"
 msgid_plural "%s results"
@@ -559,6 +563,18 @@ msgstr ""
 msgid "Open menu"
 msgstr ""
 
+#: inc/template-tags.php:359
+msgid "opened %s time"
+msgid_plural "opened %s times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/template-tags.php:313
+msgid "Opened %s time"
+msgid_plural "Opened %s times"
+msgstr[0] ""
+msgstr[1] ""
+
 #: 404.php:146
 msgid "Or go to"
 msgstr ""
@@ -686,6 +702,10 @@ msgstr ""
 msgid "See this employer"
 msgstr ""
 
+#: inc/template-tags.php:334
+msgid "seen"
+msgstr ""
+
 #: inc/setup.php:450
 msgid "Set up menu"
 msgstr ""
@@ -697,6 +717,12 @@ msgstr ""
 #: inc/page-display.php:240
 msgid "Shown"
 msgstr ""
+
+#: inc/template-tags.php:352
+msgid "Shown %s time"
+msgid_plural "Shown %s times"
+msgstr[0] ""
+msgstr[1] ""
 
 #: header.php:124 header.php:180
 msgid "Sign in"
@@ -895,6 +921,12 @@ msgstr ""
 #: inc/template-tags.php:383
 msgid "Verified"
 msgstr ""
+
+#: inc/template-tags.php:317
+msgid "view"
+msgid_plural "views"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/template-tags.php:912
 msgid "View job"

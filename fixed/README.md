@@ -1810,6 +1810,124 @@ Printed only on a singular worker, team, employer or job. Checked: silent on an
 ordinary page, silent on a listing, silent when there is no id, and the endpoint
 refuses a missing id, a non-numeric id, and anything past the hourly ceiling.
 
+## 38. Counted for being seen, not only for being opened
+
+⚠️ *Four files: `kaamase-core/includes/views.php` and `views-api.php`,
+`kaamase/inc/template-tags.php` and `kaamase/style.css`. All four, and
+`views.php` first.*
+
+⚠️ **After uploading `views.php`, open wp-admin once.** The table is being
+changed, and by design that only happens on an admin page load — never from
+whatever visitor request happens to arrive first. Until you do, nothing at all
+is counted, openings included. It is one page load and it fixes itself.
+
+Somebody scrolling a list of workers has genuinely seen those workers. Until
+now none of that was counted: a view meant an opening, so a worker who appeared
+on the front page four hundred times and was opened twelve times had a profile
+that said 12.
+
+Both are now counted, and they are kept apart, because they are not the same
+claim.
+
+### The two numbers
+
+- **seen** — a card for this worker, team, employer or job came onto somebody's
+  screen in a list. Scrolling counts. Signing in is not needed.
+- **opened** — somebody went to the page itself. This is what was already being
+  counted, and it has not changed.
+
+A profile page says **`340 seen · 12 opened`**. A card in a listing has room for
+one figure, and it is the same one the profile page leads with — 340 — so a
+worker who sees 340 on their card does not open their page and find 12.
+
+Nothing is invented and nothing is rounded. Every showing is a card that was
+actually on somebody's screen, for at least a second, half of it visible.
+
+### What counts as being seen
+
+A card has to be **half visible and still there a second later**. A card that
+flicks past during a fast scroll was not read by anybody and is not counted —
+tested: five cards shown for three hundred milliseconds and then scrolled off
+count zero.
+
+Then the same cooldown idea as before, at ten minutes rather than thirty.
+Scrolling up and down the same list for five minutes is one showing, not sixty
+— tested, sixty showings in five minutes came to 1. Ten minutes later it is a
+fresh showing. Shorter than the thirty minutes on an opening because a list is
+scrolled through in a way a profile page is not, and because being shown is a
+smaller claim than being opened.
+
+Everything else is unchanged and is decided in one place: the owner is not
+counted looking at themselves, staff are not counted, and robots are not
+counted.
+
+### Why it cannot be inflated
+
+The same upsert that has always guarded this:
+
+```sql
+hits = hits + IF(last_hit < %d, 1, 0)
+```
+
+so a repeat inside the cooldown adds nothing, whatever asks. On top of that one
+browser may report at most 600 showings an hour — ten pages of twenty cards,
+looked at three times over, is 600, so a real person scrolling all afternoon is
+under it and a script walking the whole site is not. Openings keep their own
+separate ceiling of 120.
+
+Tested: forty batches of thirty were sent and exactly 600 were counted, the
+window did not slide, and openings were unaffected by the showings window being
+spent.
+
+### One database write per screen, not thirty
+
+The obvious way to enforce a ceiling is to bump the counter once per card, which
+on a listing is thirty `update_option` calls — thirty writes for one screen, on
+every listing, for every visitor. On shared hosting that is the feature turning
+into a load problem.
+
+The allowance is read once and written once per request instead, whatever the
+size of the batch. Measured: forty batches of thirty cards, twenty database
+writes. The window still starts at the first request in it and does not slide.
+
+The counts themselves cost nothing extra to draw. A listing was already fetching
+every count on the page in one query; it now fetches both kinds in that same
+query.
+
+### If the table cannot be changed
+
+The unique key is what keeps an opening and a showing of the same profile, by
+the same person, on the same day, from colliding. `dbDelta` will add the new
+column but will **not** rebuild a key that already exists under the same name,
+so the rebuild is done by hand — and then **checked**, not assumed.
+
+If that rebuild does not take, counting stays switched off and the next admin
+page load tries again. It would otherwise have carried on, with every showing
+quietly bumping that day's opened count instead. Numbers that are wrong and look
+right are worse than numbers that have stopped.
+
+### For the app
+
+`views` in the API grew a third field:
+
+```json
+"views": { "total": 12, "people": 9, "shown": 340 }
+```
+
+`total` and `people` are openings and mean exactly what they meant before, so an
+app build that has never heard of `shown` is unaffected. The `/seen` endpoint now
+takes `ids` and `kind` as well, so the app can report what its own lists put on
+screen. There is a message for the app side below the upload list.
+
+### What it does not do
+
+Somebody with JavaScript switched off is not counted, and neither is a browser
+too old for `IntersectionObserver` — on those the page still counts openings
+exactly as it did. Nothing is printed at all on a page with neither an opening
+nor a card, so terms and privacy carry no counter for something they have
+nothing to count. The whole script is 2.6 KB inline, with no extra file to
+fetch, and it runs after the page is usable.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

@@ -2040,7 +2040,16 @@ body.has-tabbar .ka-actionbar {
      whole space apart and broke the phrase in half. */
   gap: var(--ka-1);
   font-size: var(--ka-text-base);
+  /* "12,480 seen · 903 opened" is a good deal longer than "247 views",
+     so on a narrow phone it is allowed to fall onto a second line
+     rather than push the card sideways. Cards keep nowrap: there the
+     figure is short and a column of eyes should stay a column. */
+  flex-wrap: wrap;
+  white-space: normal;
 }
+
+/* Whatever else wraps, a figure never breaks away from its own eye. */
+.ka-views--full .ka-views__n { white-space: nowrap; }
 
 /* At the foot of a profile card, behind a hairline. Above the rule are
    facts about the person; below it is a fact about the page. Without the

@@ -62,8 +62,18 @@ if ( ! defined( 'KAAMASE_VIEWS_COOLDOWN' ) ) {
 }
 
 /** Bumped when the table's shape changes. */
+/*
+ * Being shown in a list again ten minutes later is a fresh showing.
+ * Shorter than the cooldown on an opening because a listing is scrolled
+ * through repeatedly in a way a profile page is not, and because being
+ * shown is a smaller claim than being opened.
+ */
+if ( ! defined( 'KAAMASE_SHOWN_COOLDOWN' ) ) {
+	define( 'KAAMASE_SHOWN_COOLDOWN', 10 * MINUTE_IN_SECONDS );
+}
+
 if ( ! defined( 'KAAMASE_VIEWS_SCHEMA' ) ) {
-	define( 'KAAMASE_VIEWS_SCHEMA', 1 );
+	define( 'KAAMASE_VIEWS_SCHEMA', 2 );
 }
 
 
@@ -95,7 +105,7 @@ if ( ! function_exists( 'kaamase_views_install' ) ) {
 	 * lost by calling this again.
 	 *
 	 * @since 1.4.3
-	 * @return void
+	 * @return bool Whether the table is now in the shape this code needs.
 	 */
 	function kaamase_views_install() {
 
@@ -124,17 +134,78 @@ if ( ! function_exists( 'kaamase_views_install' ) ) {
 				viewer_id bigint(20) unsigned NOT NULL DEFAULT 0,
 				visitor_key char(12) NOT NULL DEFAULT '',
 				seen_on date NOT NULL DEFAULT '1970-01-01',
+				kind varchar(6) NOT NULL DEFAULT 'open',
 				hits int(10) unsigned NOT NULL DEFAULT 0,
 				last_hit int(10) unsigned NOT NULL DEFAULT 0,
 				PRIMARY KEY  (id),
-				UNIQUE KEY seen (subject_id,viewer_id,visitor_key,seen_on),
+				UNIQUE KEY seen (subject_id,viewer_id,visitor_key,seen_on,kind),
 				KEY subject (subject_id,seen_on),
 				KEY viewer (viewer_id,seen_on),
 				KEY tidy (seen_on)
 			) {$collate};"
 		);
 
+		/*
+		 * After dbDelta, so the column the key names is already there,
+		 * and only when it is actually needed. See the helper below for
+		 * why dbDelta cannot be left to do this itself.
+		 */
+		if ( ! kaamase_views_key_has_kind() ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->query(
+				"ALTER TABLE {$table}
+				 DROP INDEX seen,
+				 ADD UNIQUE KEY seen (subject_id,viewer_id,visitor_key,seen_on,kind)"
+			);
+		}
+
+		/*
+		 * Checked again rather than assumed. If that ALTER did not take
+		 * -- no permission on a locked-down host, a lock it could not
+		 * get -- then the old key is still in place, and every showing
+		 * would collide with that day's opening and quietly bump the
+		 * opened count instead. Numbers that are wrong and look right
+		 * are worse than numbers that have stopped, so the schema is
+		 * not marked done, nothing is counted, and the next admin page
+		 * load tries again.
+		 */
+		if ( ! kaamase_views_key_has_kind() ) {
+			return false;
+		}
+
 		update_option( 'kaamase_views_schema', KAAMASE_VIEWS_SCHEMA, false );
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'kaamase_views_key_has_kind' ) ) {
+	/**
+	 * Whether the unique key tells an opening from a showing.
+	 *
+	 * dbDelta adds a column that is missing but will not rebuild a key
+	 * that already exists under the same name with different columns.
+	 * So on a site upgrading from schema 1 the kind column appears and
+	 * the key does not change, which is the one state that has to be
+	 * found and repaired rather than trusted.
+	 *
+	 * @since 1.5.0
+	 * @return bool
+	 */
+	function kaamase_views_key_has_kind() {
+
+		global $wpdb;
+
+		$table = kaamase_views_table();
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$index = $wpdb->get_results( "SHOW INDEX FROM {$table} WHERE Key_name = 'seen'", ARRAY_A );
+
+		if ( empty( $index ) ) {
+			return false;
+		}
+
+		return in_array( 'kind', (array) wp_list_pluck( $index, 'Column_name' ), true );
 	}
 }
 
@@ -175,9 +246,7 @@ if ( ! function_exists( 'kaamase_views_ready' ) ) {
 			return $ready;
 		}
 
-		kaamase_views_install();
-
-		$ready = true;
+		$ready = kaamase_views_install();
 
 		return $ready;
 	}
@@ -329,14 +398,18 @@ if ( ! function_exists( 'kaamase_record_view' ) ) {
 	 * first.
 	 *
 	 * @since 1.4.3
-	 * @param int $post_id The profile or job being looked at.
+	 * @param int    $post_id The profile or job being looked at.
+	 * @param string $kind    'open' when it was opened, 'shown' when it
+	 *                        only went past in a list. Anything else is
+	 *                        read as 'open'.
 	 * @return bool Whether anything was written.
 	 */
-	function kaamase_record_view( $post_id ) {
+	function kaamase_record_view( $post_id, $kind = 'open' ) {
 
 		global $wpdb;
 
 		$post_id = absint( $post_id );
+		$kind    = 'shown' === $kind ? 'shown' : 'open';
 
 		if ( ! $post_id || ! kaamase_views_ready() ) {
 			return false;
@@ -358,14 +431,14 @@ if ( ! function_exists( 'kaamase_record_view' ) ) {
 
 		$table = kaamase_views_table();
 		$now   = time();
-		$stale = $now - KAAMASE_VIEWS_COOLDOWN;
+		$stale = $now - ( 'shown' === $kind ? KAAMASE_SHOWN_COOLDOWN : KAAMASE_VIEWS_COOLDOWN );
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query(
 			$wpdb->prepare(
 				"INSERT INTO {$table}
-					(subject_id, subject_type, viewer_id, visitor_key, seen_on, hits, last_hit)
-				 VALUES (%d, %s, %d, %s, %s, 1, %d)
+					(subject_id, subject_type, viewer_id, visitor_key, seen_on, kind, hits, last_hit)
+				 VALUES (%d, %s, %d, %s, %s, %s, 1, %d)
 				 ON DUPLICATE KEY UPDATE
 					hits     = hits + IF(last_hit < %d, 1, 0),
 					last_hit = IF(last_hit < %d, VALUES(last_hit), last_hit)",
@@ -374,6 +447,7 @@ if ( ! function_exists( 'kaamase_record_view' ) ) {
 				$viewer_id,
 				$key,
 				gmdate( 'Y-m-d', $now ),
+				$kind,
 				$now,
 				$stale,
 				$stale
@@ -484,7 +558,18 @@ if ( ! function_exists( 'kaamase_views_prime' ) ) {
 
 		$post_ids = array_filter( array_map( 'absint', (array) $post_ids ) );
 		$already  = kaamase_views_primed();
-		$wanted   = array_diff( array_unique( $post_ids ), array_keys( $already ) );
+		$wanted   = array();
+
+		/*
+		 * Both kinds are fetched together, so a listing showing an
+		 * opened count and a shown count still pays for one query
+		 * rather than two.
+		 */
+		foreach ( array_unique( $post_ids ) as $id ) {
+			if ( ! isset( $already[ 'open:' . $id ] ) ) {
+				$wanted[] = $id;
+			}
+		}
 
 		if ( empty( $wanted ) || ! kaamase_views_ready() ) {
 			return;
@@ -495,12 +580,12 @@ if ( ! function_exists( 'kaamase_views_prime' ) ) {
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
-			"SELECT subject_id,
+			"SELECT subject_id, kind,
 					COALESCE(SUM(hits),0) AS total,
 					COUNT(DISTINCT CONCAT(viewer_id, ':', visitor_key)) AS people
 			 FROM {$table}
 			 WHERE subject_id IN ({$in})
-			 GROUP BY subject_id",
+			 GROUP BY subject_id, kind",
 			ARRAY_A
 		);
 		// phpcs:enable
@@ -508,17 +593,22 @@ if ( ! function_exists( 'kaamase_views_prime' ) ) {
 		$found = array();
 
 		foreach ( (array) $rows as $row ) {
-			$found[ (int) $row['subject_id'] ] = array(
+
+			$kind = 'shown' === $row['kind'] ? 'shown' : 'open';
+
+			$found[ $kind . ':' . (int) $row['subject_id'] ] = array(
 				'total'  => (int) $row['total'],
 				'people' => (int) $row['people'],
 				'days'   => KAAMASE_VIEWS_KEEP_DAYS,
 			);
 		}
 
-		// Nothing found still counts as an answer. See the note above.
+		// Nothing found still counts as an answer, for both kinds.
 		foreach ( $wanted as $id ) {
-			if ( ! isset( $found[ $id ] ) ) {
-				$found[ $id ] = array( 'total' => 0, 'people' => 0, 'days' => KAAMASE_VIEWS_KEEP_DAYS );
+			foreach ( array( 'open', 'shown' ) as $kind ) {
+				if ( ! isset( $found[ $kind . ':' . $id ] ) ) {
+					$found[ $kind . ':' . $id ] = array( 'total' => 0, 'people' => 0, 'days' => KAAMASE_VIEWS_KEEP_DAYS );
+				}
 			}
 		}
 
@@ -567,16 +657,19 @@ if ( ! function_exists( 'kaamase_views_count' ) ) {
 	 * what somebody reading "400 views" will assume.
 	 *
 	 * @since 1.4.3
-	 * @param int $post_id The profile or job.
-	 * @param int $days    How far back, or 0 for everything kept.
+	 * @param int    $post_id The profile or job.
+	 * @param int    $days    How far back, or 0 for everything kept.
+	 * @param string $kind    'open' for openings, 'shown' for showings in
+	 *                        a list. Anything else is read as 'open'.
 	 * @return array total, people, days.
 	 */
-	function kaamase_views_count( $post_id, $days = 0 ) {
+	function kaamase_views_count( $post_id, $days = 0, $kind = 'open' ) {
 
 		global $wpdb;
 
 		$post_id = absint( $post_id );
 		$days    = absint( $days );
+		$kind    = 'shown' === $kind ? 'shown' : 'open';
 
 		$empty = array(
 			'total'  => 0,
@@ -601,14 +694,14 @@ if ( ! function_exists( 'kaamase_views_count' ) ) {
 
 			$primed = kaamase_views_primed();
 
-			if ( isset( $primed[ $post_id ] ) ) {
-				return $primed[ $post_id ];
+			if ( isset( $primed[ $kind . ':' . $post_id ] ) ) {
+				return $primed[ $kind . ':' . $post_id ];
 			}
 		}
 
 		$table = kaamase_views_table();
 
-		$where = $wpdb->prepare( 'subject_id = %d', $post_id );
+		$where = $wpdb->prepare( 'subject_id = %d AND kind = %s', $post_id, $kind );
 
 		if ( $days ) {
 			$where .= $wpdb->prepare(
@@ -704,6 +797,7 @@ if ( ! function_exists( 'kaamase_views_of_mine' ) ) {
 				 FROM {$table}
 				 WHERE subject_id IN ({$in})
 				   AND viewer_id > 0
+				   AND kind = 'open'
 				   AND seen_on >= %s
 				 GROUP BY subject_id, subject_type, viewer_id
 				 ORDER BY last_seen DESC

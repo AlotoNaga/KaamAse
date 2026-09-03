@@ -28,28 +28,39 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'kaamase_views_shape' ) ) {
 	/**
-	 * The two numbers, shaped for the app.
+	 * The numbers, shaped for the app.
 	 *
-	 * Both, because one without the other misleads: four hundred views
-	 * from three people is a different thing from four hundred views
-	 * from four hundred people, and only the second is what somebody
-	 * reading "400 views" assumes.
+	 * total and people are openings, and both are given because one
+	 * without the other misleads: four hundred views from three people
+	 * is a different thing from four hundred views from four hundred
+	 * people, and only the second is what somebody reading "400 views"
+	 * assumes.
+	 *
+	 * shown is the third and much larger number: how many times a card
+	 * for this profile or job came onto somebody's screen in a list,
+	 * whether or not they opened it. Added, never substituted, so an
+	 * app build that has never heard of it goes on reading total and
+	 * people and behaves exactly as before.
 	 *
 	 * @since 1.5.0
 	 * @param int $post_id Profile or job.
-	 * @return array total and people.
+	 * @return array total, people and shown.
 	 */
 	function kaamase_views_shape( $post_id ) {
 
 		if ( ! function_exists( 'kaamase_views_count' ) ) {
-			return array( 'total' => 0, 'people' => 0 );
+			return array( 'total' => 0, 'people' => 0, 'shown' => 0 );
 		}
 
-		$views = kaamase_views_count( absint( $post_id ) );
+		$post_id = absint( $post_id );
+
+		$views = kaamase_views_count( $post_id );
+		$shown = kaamase_views_count( $post_id, 0, 'shown' );
 
 		return array(
 			'total'  => isset( $views['total'] ) ? (int) $views['total'] : 0,
 			'people' => isset( $views['people'] ) ? (int) $views['people'] : 0,
+			'shown'  => isset( $shown['total'] ) ? (int) $shown['total'] : 0,
 		);
 	}
 }
@@ -363,9 +374,25 @@ add_filter( 'rest_post_dispatch', 'kaamase_views_rest_opened', 10, 3 );
    hit per profile per thirty minutes.
    ========================================================================== */
 
-/** Most times one browser may ask to be counted in an hour. */
+/** Most openings one browser may report in an hour. */
 if ( ! defined( 'KAAMASE_SEEN_PER_HOUR' ) ) {
 	define( 'KAAMASE_SEEN_PER_HOUR', 120 );
+}
+
+/**
+ * Most showings one browser may report in an hour.
+ *
+ * Higher, because a listing legitimately produces many: ten pages of
+ * twenty cards, looked at three times over, is six hundred. Still a
+ * ceiling, so one script cannot walk the whole site.
+ */
+if ( ! defined( 'KAAMASE_SHOWN_PER_HOUR' ) ) {
+	define( 'KAAMASE_SHOWN_PER_HOUR', 600 );
+}
+
+/** Most ids one request may carry. */
+if ( ! defined( 'KAAMASE_SEEN_BATCH' ) ) {
+	define( 'KAAMASE_SEEN_BATCH', 30 );
 }
 
 if ( ! function_exists( 'kaamase_rest_seen' ) ) {
@@ -378,31 +405,135 @@ if ( ! function_exists( 'kaamase_rest_seen' ) ) {
 	 */
 	function kaamase_rest_seen( $request ) {
 
-		$post_id = absint( $request->get_param( 'id' ) );
+		if ( ! function_exists( 'kaamase_record_view' ) ) {
+			return new WP_REST_Response( null, 204 );
+		}
 
-		if ( ! $post_id || ! function_exists( 'kaamase_record_view' ) ) {
+		$kind = 'shown' === $request->get_param( 'kind' ) ? 'shown' : 'open';
+
+		/*
+		 * One id, or a batch. A profile page reports the one it is, a
+		 * listing reports what actually came onto the screen, and one
+		 * request carries the lot rather than one request per card.
+		 */
+		$ids = (array) $request->get_param( 'ids' );
+
+		if ( empty( $ids ) ) {
+			$ids = array( $request->get_param( 'id' ) );
+		}
+
+		/*
+		 * intval and then a test for greater than zero, never absint.
+		 * absint( -9 ) is 9, so a negative id would quietly be counted
+		 * against a different profile. That exact trap has been walked
+		 * into once already in this codebase.
+		 */
+		$ids = array_slice(
+			array_unique(
+				array_filter(
+					array_map( 'intval', $ids ),
+					static function ( $id ) {
+						return $id > 0;
+					}
+				)
+			),
+			0,
+			KAAMASE_SEEN_BATCH
+		);
+
+		if ( empty( $ids ) ) {
 			return new WP_REST_Response( null, 204 );
 		}
 
 		/*
-		 * A ceiling per browser per hour. The cooldown already stops one
-		 * profile being counted twice; this stops one script walking
-		 * every profile on the site. A person opening sixty profiles in
-		 * an hour is doing a hard day's looking and is still under it.
+		 * A ceiling per browser per hour, counted per id rather than per
+		 * request so a batch cannot walk past it. The cooldown already
+		 * stops one profile being counted twice; this stops one script
+		 * walking every profile on the site.
 		 */
-		if ( function_exists( 'kaamase_rate_bump' ) && function_exists( 'kaamase_view_visitor_key' ) ) {
+		$ceiling = 'shown' === $kind ? KAAMASE_SHOWN_PER_HOUR : KAAMASE_SEEN_PER_HOUR;
+		$allowed = kaamase_views_allowance( $kind, count( $ids ), $ceiling );
 
-			$asked = kaamase_rate_bump( 'seen_' . kaamase_view_visitor_key(), HOUR_IN_SECONDS );
-
-			if ( $asked > KAAMASE_SEEN_PER_HOUR ) {
-				return new WP_REST_Response( null, 204 );
-			}
+		if ( $allowed < 1 ) {
+			return new WP_REST_Response( null, 204 );
 		}
 
-		// Every rule about who counts lives there, not here.
-		kaamase_record_view( $post_id );
+		foreach ( array_slice( $ids, 0, $allowed ) as $post_id ) {
+			// Every rule about who counts lives there, not here.
+			kaamase_record_view( $post_id, $kind );
+		}
 
 		return new WP_REST_Response( null, 204 );
+	}
+}
+
+if ( ! function_exists( 'kaamase_views_allowance' ) ) {
+	/**
+	 * How many of the ids in this request the browser may still spend.
+	 *
+	 * One read and one write, whatever the size of the batch. The
+	 * obvious way round is to bump the counter once per id, and that is
+	 * an update_option per card: thirty database writes for one screen
+	 * of a listing, on every listing, for every visitor. On a shared
+	 * host that is the whole feature turning into a load problem.
+	 *
+	 * Written directly rather than through kaamase_rate_bump because
+	 * that helper adds exactly one. Everything else about it is kept:
+	 * the same option name, the same shape, and the same rule that the
+	 * window is measured from the first request in it and does not
+	 * slide, so somebody who keeps asking cannot hold it open and then
+	 * collect a fresh allowance.
+	 *
+	 * @since 1.5.0
+	 * @param string $kind    open or shown, so the two have separate windows.
+	 * @param int    $want    How many ids this request is asking to spend.
+	 * @param int    $ceiling Most one browser may spend in the hour.
+	 * @return int How many may be counted. Zero when the window is spent.
+	 */
+	function kaamase_views_allowance( $kind, $want, $ceiling ) {
+
+		$want = max( 0, (int) $want );
+
+		if ( ! function_exists( 'kaamase_rate_read' ) || ! function_exists( 'kaamase_view_visitor_key' ) ) {
+			/*
+			 * No throttle installed. The cooldown inside
+			 * kaamase_record_view is the real guard against a profile
+			 * being counted twice; this ceiling only stops a script
+			 * walking the whole site, and its absence is not a reason
+			 * to stop counting.
+			 */
+			return $want;
+		}
+
+		$bucket = 'seen_' . $kind . '_' . kaamase_view_visitor_key();
+		$stored = kaamase_rate_read( $bucket );
+		$used   = null === $stored ? 0 : (int) $stored['value'];
+		$take   = min( $want, (int) $ceiling - $used );
+
+		if ( $take < 1 ) {
+			return 0;
+		}
+
+		if ( null === $stored || ! function_exists( 'kaamase_rate_option_name' ) ) {
+
+			if ( function_exists( 'kaamase_rate_write' ) ) {
+				kaamase_rate_write( $bucket, $used + $take, HOUR_IN_SECONDS );
+			}
+
+			return $take;
+		}
+
+		// Keep the original expiry so the window does not slide.
+		update_option(
+			kaamase_rate_option_name( $bucket ),
+			array(
+				'value'   => $used + $take,
+				'expires' => (int) $stored['expires'],
+			),
+			false
+		);
+
+		return $take;
 	}
 }
 
@@ -431,9 +562,16 @@ if ( ! function_exists( 'kaamase_views_seen_route' ) ) {
 				'callback'            => 'kaamase_rest_seen',
 				'permission_callback' => '__return_true',
 				'args'                => array(
-					'id' => array(
-						'required'          => true,
+					'id'   => array(
 						'sanitize_callback' => 'absint',
+					),
+					'ids'  => array(
+						'type'  => 'array',
+						'items' => array( 'type' => 'integer' ),
+					),
+					'kind' => array(
+						'type' => 'string',
+						'enum' => array( 'open', 'shown' ),
 					),
 				),
 			)
@@ -442,31 +580,46 @@ if ( ! function_exists( 'kaamase_views_seen_route' ) ) {
 }
 add_action( 'rest_api_init', 'kaamase_views_seen_route' );
 
-if ( ! function_exists( 'kaamase_views_beacon' ) ) {
+if ( ! function_exists( 'kaamase_views_script' ) ) {
 	/**
-	 * Ask to be counted, once, after the page has loaded.
+	 * Report what was opened, and what came onto the screen.
 	 *
-	 * sendBeacon where there is one: the browser posts it in its own
-	 * time, after the page is done, and it survives the reader tapping
-	 * a link immediately. It is the one request in the theme that is
-	 * allowed to happen after the page is usable, and it blocks nothing.
+	 * One script for both, because they share the sending and because
+	 * two blocks on every page is two blocks of bytes on a village
+	 * connection.
 	 *
-	 * The id is written into the page, and the page it is written into
-	 * is that same profile, so a cached copy carries the right number
-	 * for everybody who is handed it.
+	 * An opening is the page itself. A showing is a card that actually
+	 * came into view in a listing, which is the thing that was asked
+	 * for: somebody scrolling past a worker has genuinely seen that
+	 * worker, and it is counted as being shown, never as being opened.
 	 *
 	 * @since 1.5.0
 	 * @return void
 	 */
-	function kaamase_views_beacon() {
+	function kaamase_views_script() {
 
-		if ( ! is_singular() || ! function_exists( 'kaamase_view_subject_type' ) ) {
+		if ( is_admin() || ! function_exists( 'kaamase_view_subject_type' ) ) {
 			return;
 		}
 
-		$post_id = (int) get_queried_object_id();
+		$opened = 0;
 
-		if ( ! $post_id || '' === kaamase_view_subject_type( (string) get_post_type( $post_id ) ) ) {
+		if ( is_singular() ) {
+
+			$post_id = (int) get_queried_object_id();
+
+			if ( $post_id && '' !== kaamase_view_subject_type( (string) get_post_type( $post_id ) ) ) {
+				$opened = $post_id;
+			}
+		}
+
+		/*
+		 * Nothing to report and no cards drawn means no script at all.
+		 * The pages that have neither are privacy, terms and the like,
+		 * and they should not carry two kilobytes for a counter that
+		 * has nothing to count.
+		 */
+		if ( ! $opened && empty( $GLOBALS['kaamase_cards_drawn'] ) ) {
 			return;
 		}
 
@@ -475,32 +628,94 @@ if ( ! function_exists( 'kaamase_views_beacon' ) ) {
 		<script>
 		(function () {
 			var to = <?php echo wp_json_encode( $url ); ?>;
-			var body = new Blob(
-				[ JSON.stringify({ id: <?php echo (int) $post_id; ?> }) ],
-				{ type: 'application/json' }
-			);
+			var opened = <?php echo (int) $opened; ?>;
+			var cards = document.querySelectorAll('[data-ka-seen]');
 
-			/*
-			 * After load, never during it. On a village connection the
-			 * page finishing matters and this does not.
-			 */
-			function ask() {
+			if (!opened && !cards.length) { return; }
+
+			function send(body) {
 				try {
-					if (navigator.sendBeacon && navigator.sendBeacon(to, body)) { return; }
+					var blob = new Blob([JSON.stringify(body)], { type: 'application/json' });
+					if (navigator.sendBeacon && navigator.sendBeacon(to, blob)) { return; }
 					fetch(to, {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({ id: <?php echo (int) $post_id; ?> }),
+						body: JSON.stringify(body),
 						keepalive: true
 					});
 				} catch (e) { /* Counting is never worth an error on the page. */ }
 			}
 
-			if (document.readyState === 'complete') { ask(); }
-			else { window.addEventListener('load', ask, { once: true }); }
+			/* ---- What was opened ---- */
+			function reportOpen() { if (opened) { send({ id: opened }); } }
+
+			if (document.readyState === 'complete') { reportOpen(); }
+			else { window.addEventListener('load', reportOpen, { once: true }); }
+
+			/* ---- What came onto the screen ---- */
+			if (!cards.length || !window.IntersectionObserver) { return; }
+
+			var waiting = [];
+			var done = {};
+			var timer = null;
+
+			function flush() {
+				timer = null;
+				if (!waiting.length) { return; }
+				/*
+				 * Thirty at a time, which is what the server accepts in
+				 * one request. A long listing sends two rather than one
+				 * oversized one that would be trimmed.
+				 */
+				while (waiting.length) {
+					send({ ids: waiting.splice(0, 30), kind: 'shown' });
+				}
+			}
+
+			var watcher = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+
+					var card = entry.target;
+
+					/* Scrolled back off before the second was up. */
+					if (!entry.isIntersecting) {
+						if (card._kaSeen) {
+							clearTimeout(card._kaSeen);
+							card._kaSeen = null;
+						}
+						return;
+					}
+
+					/* Already being timed. Do not start a second one. */
+					if (card._kaSeen) { return; }
+
+					var id = parseInt(card.getAttribute('data-ka-seen'), 10);
+
+					if (!id || done[id]) { watcher.unobserve(card); return; }
+
+					/*
+					 * Half the card, and still there a second later.
+					 * A card that flicks past during a fast scroll was
+					 * not read by anybody and is not counted.
+					 */
+					card._kaSeen = setTimeout(function () {
+						card._kaSeen = null;
+						if (done[id]) { return; }
+						done[id] = 1;
+						waiting.push(id);
+						watcher.unobserve(card);
+						if (!timer) { timer = setTimeout(flush, 4000); }
+					}, 1000);
+				});
+			}, { threshold: 0.5 });
+
+			Array.prototype.forEach.call(cards, function (card) { watcher.observe(card); });
+
+			// Whatever is still waiting when the page goes.
+			window.addEventListener('pagehide', flush);
 		})();
 		</script>
 		<?php
 	}
 }
-add_action( 'wp_footer', 'kaamase_views_beacon', 30 );
+add_action( 'wp_footer', 'kaamase_views_script', 30 );

@@ -280,19 +280,87 @@ if ( ! function_exists( 'kaamase_views' ) ) {
 		$views = kaamase_views_count( $post_id );
 		$total = isset( $views['total'] ) ? (int) $views['total'] : 0;
 
-		if ( $total < 1 ) {
+		/*
+		 * How many times a card for this profile came onto somebody's
+		 * screen. A far larger number than how many opened it, and a
+		 * different claim, so where there is room both are said and
+		 * which is which is spelled out. On a card there is room for
+		 * one number only, and it is this one: the same headline the
+		 * profile page leads with, so a worker who sees 340 on their
+		 * card does not open the page and find 12.
+		 *
+		 * Costs no extra query. The listing primes both kinds in the
+		 * one lookup it was already making.
+		 *
+		 * The constant is the plugin saying it knows the difference. An
+		 * older plugin has a kaamase_views_count that takes two
+		 * arguments and quietly ignores a third, which would hand back
+		 * the openings again and print the same number twice. Asking
+		 * first costs nothing and makes the order these files are
+		 * uploaded in stop mattering.
+		 */
+		$shown = defined( 'KAAMASE_SHOWN_COOLDOWN' )
+			? (int) kaamase_views_count( $post_id, 0, 'shown' )['total']
+			: 0;
+
+		if ( $total < 1 && $shown < 1 ) {
 			return '';
 		}
 
 		$number = number_format_i18n( $total );
 
 		/* translators: %s: number of views */
-		$spoken = sprintf( _n( 'Looked at %s time', 'Looked at %s times', $total, 'kaamase' ), $number );
+		$spoken = sprintf( _n( 'Opened %s time', 'Opened %s times', $total, 'kaamase' ), $number );
 
 		$word = 'full' === $density
 			/* translators: %s: number of views */
 			? '<span class="ka-views__word">' . esc_html( _n( 'view', 'views', $total, 'kaamase' ) ) . '</span>'
 			: '';
+
+		/*
+		 * Both, and the bigger one first, but only once there is a
+		 * bigger one. Until showings have accumulated this reads
+		 * exactly as it did before rather than announcing a nought.
+		 */
+		if ( $shown > 0 ) {
+
+			if ( 'full' === $density ) {
+
+				/*
+				 * The middle dot as a character, not as an entity.
+				 * Passed through esc_html an entity becomes visible
+				 * punctuation reading &middot; on the page.
+				 */
+				$tail = esc_html__( 'seen', 'kaamase' );
+
+				// Never announce a nought. Nothing opened yet says nothing.
+				if ( $total > 0 ) {
+					$tail .= ' · ' . sprintf(
+						/* translators: %s: number of times opened */
+						esc_html__( '%s opened', 'kaamase' ),
+						esc_html( $number )
+					);
+				}
+
+				$word = '<span class="ka-views__word">' . $tail . '</span>';
+			}
+
+			$number = number_format_i18n( $shown );
+
+			$seen_said = sprintf(
+				/* translators: %s: number of times shown in a list */
+				_n( 'Shown %s time', 'Shown %s times', $shown, 'kaamase' ),
+				number_format_i18n( $shown )
+			);
+
+			$spoken = $total > 0
+				? $seen_said . ', ' . sprintf(
+					/* translators: %s: number of times opened */
+					_n( 'opened %s time', 'opened %s times', $total, 'kaamase' ),
+					number_format_i18n( $total )
+				)
+				: $seen_said;
+		}
 
 		/*
 		 * Stroked to the same weight as every other mark in the theme,
@@ -617,7 +685,8 @@ if ( ! function_exists( 'kaamase_worker_card' ) ) {
 		$experience = absint( kaamase_field( $post_id, 'years_experience' ) );
 		$views      = kaamase_views( $post_id );
 		?>
-		<article class="ka-card ka-card--link ka-worker-card">
+		<?php $GLOBALS['kaamase_cards_drawn'] = true; ?>
+		<article class="ka-card ka-card--link ka-worker-card" data-ka-seen="<?php echo (int) $post_id; ?>">
 
 			<div class="ka-card__head">
 				<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="ka-worker-card__photo" tabindex="-1" aria-hidden="true">
@@ -721,7 +790,8 @@ if ( ! function_exists( 'kaamase_employer_card' ) ) {
 			'company'    => __( 'Company', 'kaamase' ),
 		);
 		?>
-		<article class="ka-card ka-card--link ka-employer-card">
+		<?php $GLOBALS['kaamase_cards_drawn'] = true; ?>
+		<article class="ka-card ka-card--link ka-employer-card" data-ka-seen="<?php echo (int) $post_id; ?>">
 
 			<div class="ka-card__head">
 				<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="ka-employer-card__logo" tabindex="-1" aria-hidden="true">
@@ -814,7 +884,8 @@ if ( ! function_exists( 'kaamase_gang_card' ) ) {
 		$size   = absint( kaamase_field( $post_id, 'headcount' ) );
 		$leader = (string) kaamase_field( $post_id, 'leader_name' );
 		?>
-		<article class="ka-card ka-card--link ka-gang-card">
+		<?php $GLOBALS['kaamase_cards_drawn'] = true; ?>
+		<article class="ka-card ka-card--link ka-gang-card" data-ka-seen="<?php echo (int) $post_id; ?>">
 
 			<div class="ka-card__head">
 				<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" tabindex="-1" aria-hidden="true">
@@ -909,7 +980,8 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 		$stay    = (bool) kaamase_field( $post_id, 'stay_provided' );
 		$company = (string) kaamase_field( $post_id, 'employer_name' );
 		?>
-		<article class="ka-card ka-card--link ka-job-card">
+		<?php $GLOBALS['kaamase_cards_drawn'] = true; ?>
+		<article class="ka-card ka-card--link ka-job-card" data-ka-seen="<?php echo (int) $post_id; ?>">
 
 			<div class="ka-cluster ka-cluster--between">
 				<?php echo kaamase_trades( $post_id, 2 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
