@@ -382,12 +382,18 @@ if ( ! defined( 'KAAMASE_SEEN_PER_HOUR' ) ) {
 /**
  * Most showings one browser may report in an hour.
  *
- * Higher, because a listing legitimately produces many: ten pages of
- * twenty cards, looked at three times over, is six hundred. Still a
- * ceiling, so one script cannot walk the whole site.
+ * Raised well above the old figure now that a card counts every time
+ * it comes past rather than once every ten minutes. Somebody scrolling
+ * a district back and forth for a whole afternoon is a real visitor
+ * and should not be cut off part way through.
+ *
+ * It is still a ceiling, and it is the only thing standing between the
+ * count and a script walking the site. Three thousand an hour is about
+ * fifty a minute sustained for sixty minutes, which is more looking
+ * than any person does; a script would pass it in seconds.
  */
 if ( ! defined( 'KAAMASE_SHOWN_PER_HOUR' ) ) {
-	define( 'KAAMASE_SHOWN_PER_HOUR', 600 );
+	define( 'KAAMASE_SHOWN_PER_HOUR', 3000 );
 }
 
 /** Most ids one request may carry. */
@@ -656,7 +662,6 @@ if ( ! function_exists( 'kaamase_views_script' ) ) {
 			if (!cards.length || !window.IntersectionObserver) { return; }
 
 			var waiting = [];
-			var done = {};
 			var timer = null;
 
 			function flush() {
@@ -677,33 +682,41 @@ if ( ! function_exists( 'kaamase_views_script' ) ) {
 
 					var card = entry.target;
 
-					/* Scrolled back off before the second was up. */
+					/*
+					 * Gone off the screen. Cancel a showing that had
+					 * not finished, and let the next arrival count as
+					 * a new one. Scrolling back up to a worker is
+					 * seeing that worker again, and it is counted
+					 * again -- which is the whole point of the number.
+					 */
 					if (!entry.isIntersecting) {
-						if (card._kaSeen) {
-							clearTimeout(card._kaSeen);
-							card._kaSeen = null;
+						if (card._kaTimer) {
+							clearTimeout(card._kaTimer);
+							card._kaTimer = null;
 						}
+						card._kaCounted = false;
 						return;
 					}
 
-					/* Already being timed. Do not start a second one. */
-					if (card._kaSeen) { return; }
+					/* Already timing, or already counted for this
+					   arrival. One showing per arrival, not one per
+					   event: the observer fires more than once for a
+					   card that is being scrolled slowly. */
+					if (card._kaTimer || card._kaCounted) { return; }
 
 					var id = parseInt(card.getAttribute('data-ka-seen'), 10);
 
-					if (!id || done[id]) { watcher.unobserve(card); return; }
+					if (!id) { watcher.unobserve(card); return; }
 
 					/*
 					 * Half the card, and still there a second later.
 					 * A card that flicks past during a fast scroll was
 					 * not read by anybody and is not counted.
 					 */
-					card._kaSeen = setTimeout(function () {
-						card._kaSeen = null;
-						if (done[id]) { return; }
-						done[id] = 1;
+					card._kaTimer = setTimeout(function () {
+						card._kaTimer = null;
+						card._kaCounted = true;
 						waiting.push(id);
-						watcher.unobserve(card);
 						if (!timer) { timer = setTimeout(flush, 4000); }
 					}, 1000);
 				});

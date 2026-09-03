@@ -89,9 +89,30 @@ while ( have_posts() ) :
 					<?php
 					echo kaamase_place( $kaamase_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo kaamase_posted_ago( $kaamase_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo kaamase_views( $kaamase_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 				</div>
+
+				<?php
+				/*
+				 * On a line of its own, and the full wording.
+				 *
+				 * It used to sit in the cluster above at card density,
+				 * which is why a job page said "19" while a worker page
+				 * said "7 seen, 3 opened". Two numbers and the words
+				 * that tell them apart do not fit on the end of a line
+				 * that already carries a place and a date, so it gets
+				 * its own line -- the same place the app puts it.
+				 */
+				$kaamase_seen = function_exists( 'kaamase_views' ) ? kaamase_views( $kaamase_id, 'full' ) : '';
+
+				if ( '' !== $kaamase_seen ) :
+					?>
+					<div class="ka-mt-4">
+						<?php echo $kaamase_seen; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+					<?php
+				endif;
+				?>
 
 			</header>
 

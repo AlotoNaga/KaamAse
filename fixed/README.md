@@ -1928,6 +1928,84 @@ nor a card, so terms and privacy carry no counter for something they have
 nothing to count. The whole script is 2.6 KB inline, with no extra file to
 fetch, and it runs after the page is usable.
 
+## 39. Every time it comes past, not once every ten minutes
+
+⚠️ *Three files: `kaamase-core/includes/views.php` and `views-api.php`, and
+`kaamase/single-kaamase_job.php`. No database change this time, and nothing to
+do in wp-admin afterwards.*
+
+Two things. A showing now means what the word means, and the job page says the
+same thing the worker page says.
+
+### A card is counted every time it comes past
+
+The rule was one showing per profile per person per ten minutes. Somebody
+scrolling a district up and down for five minutes counted as **one**. That is
+not an impression, it is a visit.
+
+The cooldown on a showing is now zero:
+
+| | before | now |
+| --- | --- | --- |
+| Scrolling one worker past 20 times in 5 minutes | 1 | **20** |
+| Two reports in the same second (a retry, a doubled beacon) | 1 | 1 |
+| Opening the same profile twice in 20 minutes | 1 | 1 |
+
+Zero is not "no guard". The counting statement only adds a hit when `last_hit`
+is older than the cooldown, so at zero two reports landing in the *same second*
+still collapse into one. That is the whole of what is left, and it is the part
+worth keeping: it stops a retry counting twice, and it can never suppress an
+honest showing, because a card has to be half visible for a full second before
+it is reported at all.
+
+**Openings are untouched.** Still thirty minutes. Opening the same worker twice
+in an afternoon is one person making one decision, and that has not changed.
+
+### The browser had its own, stricter rule
+
+The server was not the only thing suppressing this. The script marked each card
+finished for the whole page load and stopped watching it, so scrolling back up
+never counted at all, whatever the server would have allowed. Both had to go.
+
+A card is now watched for as long as the page is open. It counts once each time
+it **arrives** on the screen — not once per observer event, of which a slow
+scroll produces several. Scroll off, scroll back, and it counts again.
+
+Tested against a stubbed browser: three cards over three passes gave nine
+showings, the same eight events during one slow arrival gave one, a card that
+flicked past for 300ms gave none, and nothing was ever unwatched.
+
+### It costs nothing to store
+
+Worth being plain about, because "count everything" usually means a bigger
+table. It does not here. A row is one person, one profile, one day, with a
+counter on it. Three people scrolling the same worker ten times each is **three
+rows and thirty hits** — the same three rows it was before.
+
+The ceiling per browser went from 600 an hour to 3,000, because the old figure
+was set when a card could only count six times an hour. Three thousand is about
+fifty a minute sustained for a full hour, which is more looking than a person
+does and far less than a script would want.
+
+### The job page now says what the worker page says
+
+A worker page read `7 seen · 3 opened`. A job page read `19`. Three templates,
+and one of them asked for the compact card version:
+
+```
+single-kaamase_job.php     kaamase_views( $id );          ← the fault
+single-kaamase_worker.php  kaamase_views( $id, 'full' );
+single-kaamase_gang.php    kaamase_views( $id, 'full' );
+```
+
+Fixed, and moved onto a line of its own under the place and the date, which is
+where the app puts it. Two numbers and the words that tell them apart do not fit
+on the end of a line that already carries a place and a date.
+
+It still says nothing at all when there is nothing to say, and still never
+announces a nought: `340 seen` on its own until something is opened, and the
+old `7 views` wording on a site that has not started counting showings yet.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

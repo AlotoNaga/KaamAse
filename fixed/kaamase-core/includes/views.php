@@ -63,13 +63,25 @@ if ( ! defined( 'KAAMASE_VIEWS_COOLDOWN' ) ) {
 
 /** Bumped when the table's shape changes. */
 /*
- * Being shown in a list again ten minutes later is a fresh showing.
- * Shorter than the cooldown on an opening because a listing is scrolled
- * through repeatedly in a way a profile page is not, and because being
- * shown is a smaller claim than being opened.
+ * No cooldown on a showing. Every time a card comes past on somebody's
+ * screen is a separate showing, which is what a showing means: scroll
+ * down, scroll back up, and the second look counts as well as the
+ * first. This is the ordinary meaning of an impression and it is the
+ * behaviour the platform is meant to have.
+ *
+ * Zero still leaves one guard, and it is the one worth keeping. The
+ * counting statement only adds a hit when last_hit is older than this,
+ * so at zero two reports arriving in the same second collapse into
+ * one. That stops a retry or a double-fired beacon counting twice, and
+ * it costs nothing real: a card has to be half visible for a full
+ * second before it is reported at all, so no honest second showing can
+ * land inside the same second as the first.
+ *
+ * An opening keeps its thirty minutes. Opening a profile twice in an
+ * afternoon is one person deciding about one worker, not two views.
  */
 if ( ! defined( 'KAAMASE_SHOWN_COOLDOWN' ) ) {
-	define( 'KAAMASE_SHOWN_COOLDOWN', 10 * MINUTE_IN_SECONDS );
+	define( 'KAAMASE_SHOWN_COOLDOWN', 0 );
 }
 
 if ( ! defined( 'KAAMASE_VIEWS_SCHEMA' ) ) {
@@ -396,6 +408,12 @@ if ( ! function_exists( 'kaamase_record_view' ) ) {
 	 * the same statement rather than by reading first and writing after,
 	 * so two requests arriving together cannot both decide they are the
 	 * first.
+	 *
+	 * The two kinds hold that cooldown to very different lengths. An
+	 * opening is half an hour, because opening the same profile twice
+	 * in an afternoon is one person deciding about one worker. A
+	 * showing is one second, because being scrolled past twice is
+	 * genuinely being seen twice.
 	 *
 	 * @since 1.4.3
 	 * @param int    $post_id The profile or job being looked at.
