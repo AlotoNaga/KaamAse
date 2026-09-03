@@ -2087,6 +2087,47 @@ WHERE p.post_type = 'kaamase_job' AND p.post_status = 'publish'
 ORDER BY days_left DESC;
 ```
 
+## 41. One allowance each, not one between a whole village
+
+⚠️ *One file: `kaamase-core/includes/views-api.php`.*
+
+The hourly ceiling on showings was keyed on the visitor hash — a day, an IP
+address and a user agent — **even for somebody signed in**. That is fine on a
+website, where browsers and versions differ enough to tell people apart. It is
+wrong through a phone app, where every install of the same build sends the same
+user agent and a mobile carrier puts a great many people behind one address.
+
+Ten people on one carrier were sharing one allowance. Measured, with the ceiling
+at 3,000:
+
+| | counted before being cut off |
+| --- | --- |
+| Ten signed-in people, ceiling keyed on the address | 300 each |
+| Ten signed-in people, ceiling keyed on the account | 3,000 each |
+
+Three hundred showings is an afternoon's scrolling, and after that the tenth
+person in a village silently stops counting for everyone — suppressing exactly
+the number the last two changes existed to raise.
+
+The ceiling is now keyed on the account when the request carries one, and only
+falls back to the visitor hash when it does not.
+
+### Which makes signing in worth carrying
+
+An unauthenticated request is anonymous in two ways that matter, and neither is
+about the ceiling:
+
+- **The owner and staff checks never run.** Both are guarded on there being a
+  viewer id, so with no account attached a worker scrolling past their own card
+  counts as a showing of themselves, and staff scrolling a list inflate every
+  profile they pass.
+- **Everybody behind one address is one person** in the table, so the count of
+  distinct people looking is far too low.
+
+None of that is a reason for the endpoint to *require* a token — it must keep
+working for a signed-out visitor, and it does. It is a reason for a client that
+has one to send it.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

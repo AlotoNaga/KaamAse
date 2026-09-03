@@ -511,7 +511,26 @@ if ( ! function_exists( 'kaamase_views_allowance' ) ) {
 			return $want;
 		}
 
-		$bucket = 'seen_' . $kind . '_' . kaamase_view_visitor_key();
+		/*
+		 * Keyed on the account when there is one, and only falling back
+		 * to the visitor hash when there is not.
+		 *
+		 * That hash is a day, an address and a user agent. On a website
+		 * that separates people well enough, because browsers and
+		 * versions differ. Through a phone app it does not: every
+		 * install of the same build sends the same user agent, and a
+		 * mobile carrier in Nagaland puts a great many people behind one
+		 * address. Ten workers on the same network would have shared one
+		 * allowance and gone quiet after three hundred showings each --
+		 * suppressing exactly the count this is all meant to raise.
+		 *
+		 * Signing in solves it outright: one allowance per person,
+		 * wherever they are and whoever they share a connection with.
+		 */
+		$viewer = get_current_user_id();
+
+		$bucket = 'seen_' . $kind . '_'
+			. ( $viewer ? 'u' . (int) $viewer : kaamase_view_visitor_key() );
 		$stored = kaamase_rate_read( $bucket );
 		$used   = null === $stored ? 0 : (int) $stored['value'];
 		$take   = min( $want, (int) $ceiling - $used );
