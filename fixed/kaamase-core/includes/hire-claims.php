@@ -651,7 +651,17 @@ if ( ! function_exists( 'kaamase_hire_claims_section' ) ) {
 
 								<button class="ka-btn ka-btn--ghost ka-btn--sm" type="submit"
 									name="kaamase_claim_agreed" value="0">
-									<?php esc_html_e( 'No', 'kaamase-core' ); ?>
+									<?php
+									/*
+									 * Not a flat "No", which reads as calling
+									 * somebody a liar. Months after a week of
+									 * work, misremembering a name is far more
+									 * likely than inventing a job, and a button
+									 * that accuses gets pressed the other way
+									 * out of politeness. The app says the same.
+									 */
+									esc_html_e( 'I do not remember', 'kaamase-core' );
+									?>
 								</button>
 							</form>
 

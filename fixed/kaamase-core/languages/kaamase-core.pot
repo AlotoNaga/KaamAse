@@ -1839,6 +1839,10 @@ msgstr ""
 msgid "I am looking for workers"
 msgstr ""
 
+#: includes/hire-claims.php:661
+msgid "I do not remember"
+msgstr ""
+
 #: includes/hire-claims.php:404
 msgid "I have worked for them"
 msgstr ""
