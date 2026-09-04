@@ -1,0 +1,5929 @@
+# Copyright (C) Nagaland Me
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kaam Ase Core\n"
+"Report-Msgid-Bugs-To: https://kaamase.com\n"
+"POT-Creation-Date: 2026-09-01 11:18+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kaamase-core\n"
+
+#: includes/settings.php:460
+msgid "%1$d different people have now said: %2$s"
+msgstr ""
+
+#: includes/queries.php:1072 includes/reports.php:598 includes/services.php:638
+msgid "%1$s %2$s"
+msgstr ""
+
+#: includes/post-job.php:702
+msgid "%1$s %2$s needed"
+msgstr ""
+
+#: includes/post-job.php:693
+msgid "%1$s %2$s needed in %3$s"
+msgstr ""
+
+#: includes/indexes.php:602 includes/queries.php:1087
+msgid "%1$s in %2$s"
+msgstr ""
+
+#: includes/job-alerts.php:385
+msgid "%1$s new %2$s jobs in %3$s"
+msgstr ""
+
+#: includes/plan-pitch.php:327
+msgid "%1$s on a free account, %2$s on this plan."
+msgstr ""
+
+#: who-looked.php:333
+msgid "%1$s person looked at you in the last %2$s."
+msgid_plural "%1$s people looked at you in the last %2$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: who-looked.php:405
+msgid "%1$s time, %2$s ago"
+msgid_plural "%1$s times, %2$s ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/job-alerts.php:859
+msgid "%1$s, sent to %2$s"
+msgstr ""
+
+#: includes/dashboard.php:304
+msgid "%d%% done"
+msgstr ""
+
+#: includes/rich-manu.php:501
+msgid "%s"
+msgstr ""
+
+#: includes/not-confirmed.php:225
+msgid "%s account has not confirmed."
+msgid_plural "%s accounts have not confirmed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/queries.php:1095
+msgid "%s across Nagaland"
+msgstr ""
+
+#: includes/contact.php:889 includes/hiring-request.php:573
+msgid "%s ago"
+msgstr ""
+
+#: includes/indexes.php:174
+msgid "%s available"
+msgid_plural "%s available"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/indexes.php:526
+msgid "%s by district"
+msgstr ""
+
+#: includes/admin.php:131
+msgid "%s completed hires so far. The target in the plan was 50 in the first 90 days, filled by hand if necessary. Until that number moves, nothing else on this page matters."
+msgstr ""
+
+#: includes/exposure.php:505
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/employer-index.php:234
+msgid "%s employer"
+msgid_plural "%s employers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/indexes.php:610
+msgid "%s in Nagaland"
+msgstr ""
+
+#: includes/posted-for.php:133
+msgid "%s is hiring, not us. The number on this job is theirs, so you speak to them directly."
+msgstr ""
+
+#: includes/indexes.php:189 includes/indexes.php:304
+msgid "%s job open"
+msgid_plural "%s jobs open"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/push.php:176
+msgid "%s looked you up on Kaam Ase. They may call you."
+msgstr ""
+
+#: includes/dashboard.php:341
+msgid "%s more thing after these."
+msgid_plural "%s more things after these."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/registration.php:681
+msgid "%s never asks a worker for money."
+msgstr ""
+
+#: who-looked.php:451
+msgid "%s person looked at you before this week"
+msgid_plural "%s people looked at you before this week"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin.php:813
+msgid "%s profile updated."
+msgid_plural "%s profiles updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/queries.php:1079
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/indexes.php:294
+msgid "%s worker"
+msgid_plural "%s workers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin.php:671
+msgid ", %d day left"
+msgid_plural ", %d days left"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/posted-for.php:262
+msgid "10 digits"
+msgstr ""
+
+#: includes/registration.php:169
+msgid "10 digits. Your number is never shown on the site. Employers reach you through Kaam Ase."
+msgstr ""
+
+#: includes/registration.php:170
+msgid "10 digits. Your number is never shown on the site. Workers reach you through Kaam Ase."
+msgstr ""
+
+#: includes/past-jobs.php:298
+msgid "A closed job older than this stops being indexed by search engines. It stays on the site and stays browsable here. Set it to 0 to keep every closed job in search forever."
+msgstr ""
+
+#: includes/dashboard.php:186
+msgid "A colony council member, GB, church elder or a past employer. This is the strongest thing on your profile."
+msgstr ""
+
+#: includes/profile-edit.php:622
+msgid "A contractor"
+msgstr ""
+
+#: includes/how-seen.php:189
+msgid "A correct phone number."
+msgstr ""
+
+#: includes/reports.php:225
+msgid "A fake profile, or somebody pretending to be someone else"
+msgstr ""
+
+#: includes/plan-pitch.php:287
+msgid "A free account can get the phone number of %1$s workers in a day. On this plan it is %2$s. If you are ringing round twenty masons to find four who are free on Thursday, you will not be stopped halfway."
+msgstr ""
+
+#: includes/plan-pitch.php:307
+msgid "A free account posts %1$s jobs in a day. On this plan it is %2$s."
+msgstr ""
+
+#: includes/plan-pitch.php:317
+msgid "A free account puts %1$s picture on a job. On this plan it is %2$s. A photo of the site gets a job answered far more often than words alone."
+msgstr ""
+
+#: includes/plan-pitch.php:297
+msgid "A free account runs %1$s urgent job at a time and has to wait for it to close before marking another. On this plan you can run %2$s at once, so a week with several jobs starting tomorrow is not a problem."
+msgstr ""
+
+#: includes/settings.php:179
+msgid "A helpline printed on a safety page that rings out is worse than no helpline at all."
+msgstr ""
+
+#: includes/hire-claims.php:209
+msgid "A hire cannot be confirmed against this page."
+msgstr ""
+
+#: includes/job-screening.php:709
+msgid "A job post has been held before going live.\n\nIt matched: %1\\$s\n\nIt is not visible to anybody. Read it here:\n%2\\$s\n\nIf it is what it looks like, do not simply delete it. Keep the account and the post, and report it.\n"
+msgstr ""
+
+#: includes/job-screening.php:703
+msgid "A job post on %s needs looking at now"
+msgstr ""
+
+#: includes/install.php:732
+msgid "A lawyer needs to write this. The points below are the ones that will actually be argued about."
+msgstr ""
+
+#: includes/reports.php:237
+msgid "A listing has wrong or misleading information"
+msgstr ""
+
+#: includes/how-seen.php:153
+msgid "A new profile goes to the front."
+msgstr ""
+
+#: includes/entitlements.php:427
+msgid "A note on lowering these"
+msgstr ""
+
+#: includes/dashboard.php:588
+msgid "A person reads the first job from every new employer before workers see it. It is usually done within a few hours, and you will get an email when it goes live. Nothing more is needed from you. After this one, your jobs go live straight away."
+msgstr ""
+
+#: includes/rest-auth.php:621
+msgid "A phone"
+msgstr ""
+
+#: includes/settings.php:196
+msgid "A phone number is never put in a notification."
+msgstr ""
+
+#: includes/job-photos.php:564
+msgid "A photo of the site or the shop gets a job far more answers than words alone, and it shows the work is real."
+msgstr ""
+
+#: includes/teams.php:264
+msgid "A photo of the team"
+msgstr ""
+
+#: includes/how-seen.php:177
+msgid "A photograph."
+msgstr ""
+
+#: includes/teams.php:280
+msgid "A picture of the team on a site is worth more than anything you can write. We remove the hidden location information phones save inside photos."
+msgstr ""
+
+#: includes/schema.php:205
+msgid "A place to stay is provided."
+msgstr ""
+
+#: includes/profile-edit.php:188
+msgid "A plain photo of your face is enough. Profiles with a photo get called far more often."
+msgstr ""
+
+#: includes/how-seen.php:178
+msgid "A profile with a face gets tapped far more than one without. It does not have to be a good photograph. It has to be you."
+msgstr ""
+
+#: includes/dashboard.php:172
+msgid "A profile with a photo gets called far more often. A plain head and shoulders picture is enough."
+msgstr ""
+
+#: includes/email-check.php:528
+msgid "A real mailbox you have created on your own domain. Everything will be sent from this address, so it should be one people could reply to or one that says plainly it is not read."
+msgstr ""
+
+#: includes/verify-requests.php:267
+msgid "A real person rings the number on your profile. It takes a few minutes. We do not ask for money and we will never ask you for a code or a password on that call."
+msgstr ""
+
+#: includes/profile-edit.php:623
+msgid "A registered company"
+msgstr ""
+
+#: includes/how-seen.php:207
+msgid "A second profile."
+msgstr ""
+
+#: includes/services.php:444
+msgid "A team is two workers or more. If you work alone, your worker profile is the right listing."
+msgstr ""
+
+#: includes/plan-pitch.php:242
+msgid "A tick on your profile."
+msgstr ""
+
+#: includes/taxonomies.php:314
+msgid "AC repair"
+msgstr ""
+
+#: includes/email-check.php:656 includes/privacy.php:166 includes/reports.php:904
+msgid "About"
+msgstr ""
+
+#: includes/install.php:384
+msgid "About Kaam Ase"
+msgstr ""
+
+#: includes/standing.php:253
+msgid "About who is hiring"
+msgstr ""
+
+#: includes/profile-edit.php:659
+msgid "About your work"
+msgstr ""
+
+#: includes/reports.php:697
+msgid "About: %s"
+msgstr ""
+
+#: includes/email-check.php:670
+msgid "Accepted by the server"
+msgstr ""
+
+#: includes/email-check.php:687
+msgid "Accepted means the server took the message. It does not mean anybody received it. The only proof of that is looking in a real inbox."
+msgstr ""
+
+#: includes/fields.php:341
+msgid "Accommodation provided"
+msgstr ""
+
+#: includes/dashboard.php:869
+msgid "Account created"
+msgstr ""
+
+#: includes/taxonomies.php:366
+msgid "Accountant"
+msgstr ""
+
+#: includes/more-trades.php:110
+msgid "Accountant, accounts assistant, book keeping, Tally, billing, audit assistant."
+msgstr ""
+
+#: includes/hiring-request.php:525
+msgid "Accounts that are a worker and an employer at the same time. Anybody can add hiring to their own account, so nothing here is waiting on you. Removing hiring takes away job posting and leaves the worker profile, the ratings and the login untouched."
+msgstr ""
+
+#: includes/privacy.php:833
+msgid "Accounts that go unused are warned by email at around eighteen months, hidden from searches at twenty months, and have their personal details removed at two years. Signing in at any point stops this and restores the profile."
+msgstr ""
+
+#: includes/email-check.php:613
+msgid "Accounts that never confirmed"
+msgstr ""
+
+#: includes/hiring-request.php:540
+msgid "Action"
+msgstr ""
+
+#: includes/dashboard.php:328
+msgid "Add"
+msgstr ""
+
+#: includes/dashboard.php:171
+msgid "Add a photo of yourself"
+msgstr ""
+
+#: includes/how-seen.php:232
+msgid "Add a photograph and say what you actually do. That is what decides whether somebody calls."
+msgstr ""
+
+#: includes/install.php:398
+msgid "Add common questions here as they come up from real users. Do not write them in advance, write them after somebody asks."
+msgstr ""
+
+#: includes/taxonomies.php:179
+msgid "Add district"
+msgstr ""
+
+#: includes/post-types.php:173 includes/post-types.php:174
+msgid "Add employer"
+msgstr ""
+
+#: includes/hiring-request.php:184
+msgid "Add hiring to my account"
+msgstr ""
+
+#: includes/hiring-request.php:695
+msgid "Add job posting to this account"
+msgstr ""
+
+#: includes/taxonomies.php:226
+msgid "Add language"
+msgstr ""
+
+#: includes/post-types.php:123 includes/post-types.php:124
+msgid "Add team"
+msgstr ""
+
+#: includes/app-links.php:497
+msgid "Add the upload key fingerprint from the same screen as a second line. Builds you install straight onto a phone are signed with that one, and without it those builds will not open links even though the Play version does."
+msgstr ""
+
+#: includes/taxonomies.php:135
+msgid "Add trade"
+msgstr ""
+
+#: includes/post-types.php:73 includes/post-types.php:74
+msgid "Add worker"
+msgstr ""
+
+#: includes/install.php:392
+msgid "Add your contact details here. A phone number and an email address that a real person actually reads."
+msgstr ""
+
+#: includes/dashboard.php:145
+msgid "Add your phone number"
+msgstr ""
+
+#: includes/verify-requests.php:114
+msgid "Add your phone number to your profile. We cannot ring you without one."
+msgstr ""
+
+#: includes/dashboard.php:159
+msgid "Add your town"
+msgstr ""
+
+#: includes/dashboard.php:199
+msgid "Add your town or village"
+msgstr ""
+
+#: includes/dashboard.php:192
+msgid "Add your years of experience"
+msgstr ""
+
+#: includes/hiring-request.php:539
+msgid "Added"
+msgstr ""
+
+#: includes/gift.php:424
+msgid "Added on top of anything already running on their account."
+msgstr ""
+
+#: includes/how-seen.php:149
+msgid "After that it is turn taking."
+msgstr ""
+
+#: includes/rich-manu.php:467 includes/verify-requests.php:473
+msgid "After the call"
+msgstr ""
+
+#: includes/install.php:662
+msgid "Agree the rate out loud before the first day, not after."
+msgstr ""
+
+#: includes/install.php:663
+msgid "Agree when you will be paid. Daily, weekly or at the end."
+msgstr ""
+
+#: includes/taxonomies.php:334
+msgid "Agriculture"
+msgstr ""
+
+#: includes/queries.php:962
+msgid "All Nagaland"
+msgstr ""
+
+#: includes/admin.php:711 includes/install.php:341 includes/taxonomies.php:176
+msgid "All districts"
+msgstr ""
+
+#: includes/post-types.php:181
+msgid "All employers"
+msgstr ""
+
+#: includes/post-types.php:232
+msgid "All jobs"
+msgstr ""
+
+#: includes/taxonomies.php:223
+msgid "All languages"
+msgstr ""
+
+#: includes/closed-jobs.php:255
+msgid "All open jobs"
+msgstr ""
+
+#: includes/indexes.php:272
+msgid "All seventeen districts of Nagaland. Some are busy, some are just starting."
+msgstr ""
+
+#: includes/post-types.php:131
+msgid "All teams"
+msgstr ""
+
+#: includes/install.php:335 includes/taxonomies.php:130
+msgid "All trades"
+msgstr ""
+
+#: includes/post-types.php:81
+msgid "All workers"
+msgstr ""
+
+#: includes/how-seen.php:168
+msgid "Almost nobody hires across the state for a day of work. Your district is what puts you in front of the people close enough to call you."
+msgstr ""
+
+#: includes/registration.php:251
+msgid "Already registered?"
+msgstr ""
+
+#: includes/taxonomies.php:612
+msgid "Also written: %s"
+msgstr ""
+
+#: includes/how-seen.php:204
+msgid "Although we encourage you to actively use the Kaam Ase app, it does not change where you appear in the list. Open it when you need work, make sure you are available, and get on with your day otherwise."
+msgstr ""
+
+#: includes/how-seen.php:150
+msgid "Among available workers, whoever has gone longest without being on a first page goes to the top. Your turn comes around whether or not you do anything. Nobody sits at the bottom forever."
+msgstr ""
+
+#: includes/post-job.php:288 includes/reports.php:390
+msgid "Amount in rupees"
+msgstr ""
+
+#: includes/reports.php:910
+msgid "Amount owed"
+msgstr ""
+
+#: includes/reports.php:720
+msgid "Amount owed: rupees %s"
+msgstr ""
+
+#: includes/contact.php:884 includes/push.php:177
+msgid "An employer"
+msgstr ""
+
+#: includes/profile-edit.php:621
+msgid "An individual, building or fixing something"
+msgstr ""
+
+#: includes/app-links.php:426 includes/app-links.php:466
+msgid "Android"
+msgstr ""
+
+#: includes/taxonomies.php:645
+msgid "Angami"
+msgstr ""
+
+#: includes/reports.php:906
+msgid "Anonymous"
+msgstr ""
+
+#: includes/past-jobs.php:402
+msgid "Any district"
+msgstr ""
+
+#: includes/employer-index.php:324
+msgid "Any kind"
+msgstr ""
+
+#: includes/install.php:712
+msgid "Any third party that touches the data, including the hosting company."
+msgstr ""
+
+#: includes/past-jobs.php:388 includes/queries.php:946
+msgid "Any trade"
+msgstr ""
+
+#: includes/profile-edit.php:496
+msgid "Anything else about your work"
+msgstr ""
+
+#: includes/post-job.php:395
+msgid "Anything else they should know"
+msgstr ""
+
+#: includes/ratings.php:814
+msgid "Anything to add?"
+msgstr ""
+
+#: includes/rich-manu.php:517
+msgid "Anything worth remembering"
+msgstr ""
+
+#: includes/employer-index.php:344 includes/profile-edit.php:386 includes/teams.php:238
+msgid "Anywhere in Nagaland"
+msgstr ""
+
+#: includes/profile-edit.php:385
+msgid "Anywhere in my district"
+msgstr ""
+
+#: includes/teams.php:237
+msgid "Anywhere in our district"
+msgstr ""
+
+#: includes/taxonomies.php:644
+msgid "Ao"
+msgstr ""
+
+#: includes/app-links.php:377 includes/app-links.php:378 includes/app-links.php:411
+msgid "App links"
+msgstr ""
+
+#: app-version.php:210
+msgid "App version"
+msgstr ""
+
+#: includes/dashboard.php:448
+msgid "Are you free for work?"
+msgstr ""
+
+#: includes/privacy.php:676
+msgid "Are you still looking for work on %s?"
+msgstr ""
+
+#: includes/contact.php:734
+msgid "Ask to be verified"
+msgstr ""
+
+#: includes/verify-requests.php:264
+msgid "Ask us to ring you"
+msgstr ""
+
+#: includes/install.php:621
+msgid "Ask your colony council member, GB or church elder to vouch for you. This is the strongest thing on your profile."
+msgstr ""
+
+#: includes/install.php:783
+msgid "Ask your host to block PHP execution inside wp-content/uploads. Until that is done, an upload hole becomes a compromised server."
+msgstr ""
+
+#: includes/verify-requests.php:472
+msgid "Asked"
+msgstr ""
+
+#: includes/verify-requests.php:403 includes/verify-requests.php:414 includes/verify-requests.php:445
+msgid "Asked to be verified"
+msgstr ""
+
+#: includes/verify-requests.php:586
+msgid "Asked to be verified. Rung and spoken to."
+msgstr ""
+
+#: includes/hire-claims.php:480
+msgid "Asked. They will see it the next time they open Kaam Ase."
+msgstr ""
+
+#: includes/job-screening.php:798
+msgid "Asks the worker for money"
+msgstr ""
+
+#: includes/taxonomies.php:659
+msgid "Assamese"
+msgstr ""
+
+#: includes/taxonomies.php:351
+msgid "Assistant teacher"
+msgstr ""
+
+#: includes/registration.php:223
+msgid "At least 8 characters."
+msgstr ""
+
+#: includes/taxonomies.php:325
+msgid "Automobile electrician"
+msgstr ""
+
+#: includes/fields.php:117
+msgid "Availability"
+msgstr ""
+
+#: includes/dashboard.php:853
+msgid "Availability updated."
+msgstr ""
+
+#: includes/how-seen.php:145
+msgid "Available comes first."
+msgstr ""
+
+#: includes/dashboard.php:440 includes/queries.php:301
+msgid "Available now"
+msgstr ""
+
+#: includes/fields.php:166 includes/fields.php:249
+msgid "Average rating"
+msgstr ""
+
+#: includes/taxonomies.php:303
+msgid "Babysitter"
+msgstr ""
+
+#: includes/reports.php:776
+msgid "Back to Kaam Ase"
+msgstr ""
+
+#: includes/profile-edit.php:139
+msgid "Back to my account"
+msgstr ""
+
+#: includes/taxonomies.php:139
+msgid "Back to trades"
+msgstr ""
+
+#: includes/taxonomies.php:411
+msgid "Baker"
+msgstr ""
+
+#: includes/more-trades.php:115
+msgid "Baker, bakery worker, pastry, cake making, confectioner."
+msgstr ""
+
+#: includes/admin.php:376
+msgid "Balanced"
+msgstr ""
+
+#: includes/taxonomies.php:451
+msgid "Bamboo craftsman"
+msgstr ""
+
+#: includes/taxonomies.php:468
+msgid "Barber or hairdresser"
+msgstr ""
+
+#: includes/more-trades.php:123
+msgid "Barber, hairdresser, salon work, hair stylist."
+msgstr ""
+
+#: includes/install.php:664
+msgid "Be careful with a large advance from someone you have never worked with."
+msgstr ""
+
+#: includes/indexes.php:321
+msgid "Be the first"
+msgstr ""
+
+#: includes/taxonomies.php:467
+msgid "Beautician"
+msgstr ""
+
+#: includes/verify-requests.php:266
+msgid "Before we can ring you:"
+msgstr ""
+
+#: includes/contact.php:327
+msgid "Before you can see this number, finish your employer profile: confirm your email and add your phone number. It takes a minute and it means the person you are calling can see who asked."
+msgstr ""
+
+#: includes/install.php:660
+msgid "Before you start work"
+msgstr ""
+
+#: includes/dashboard.php:661
+msgid "Being checked"
+msgstr ""
+
+#: includes/app-links.php:431 includes/app-links.php:446
+msgid "Being served"
+msgstr ""
+
+#: includes/taxonomies.php:660
+msgid "Bengali"
+msgstr ""
+
+#: includes/employer-index.php:333 includes/queries.php:302
+msgid "Best rated"
+msgstr ""
+
+#: includes/taxonomies.php:320
+msgid "Bike mechanic"
+msgstr ""
+
+#: includes/contact.php:908
+msgid "Block"
+msgstr ""
+
+#: includes/contact.php:918
+msgid "Blocking stops that person seeing your number. They are not told."
+msgstr ""
+
+#: includes/past-jobs.php:719
+msgid "Browse all past jobs"
+msgstr ""
+
+#: includes/registration.php:298
+msgid "Building a house, running a site, or hiring for a business. Post jobs free."
+msgstr ""
+
+#: includes/teams.php:287
+msgid "Buildings you have worked on, how long you have worked together, tools you bring."
+msgstr ""
+
+#: includes/app-links.php:525
+msgid "Bundle identifier"
+msgstr ""
+
+#: includes/taxonomies.php:423
+msgid "Bus driver"
+msgstr ""
+
+#: includes/profile-edit.php:206
+msgid "Business or your name"
+msgstr ""
+
+#: includes/settings.php:254
+msgid "By default, deleting this plugin leaves every worker profile, job, rating and report in the database. Reinstalling brings it all back. That is on purpose: a plugin gets deleted for many reasons, and most of them are not a decision to destroy several hundred people's listings."
+msgstr ""
+
+#: includes/more-trades.php:121
+msgid "CCTV camera fitting, internet and wifi, cable, dish, networking."
+msgstr ""
+
+#: includes/taxonomies.php:328
+msgid "CCTV technician"
+msgstr ""
+
+#: includes/compat.php:217
+msgid "Call"
+msgstr ""
+
+#: includes/contact.php:665
+msgid "Call now"
+msgstr ""
+
+#: includes/rich-manu.php:672
+msgid "Called on %s."
+msgstr ""
+
+#: includes/rich-manu.php:403 includes/rich-manu.php:414 includes/rich-manu.php:443
+msgid "Calls to make"
+msgstr ""
+
+#: includes/privacy.php:832
+msgid "Camera metadata, including the location where a photograph was taken, is stripped from every upload before it is stored."
+msgstr ""
+
+#: includes/hiring-request.php:675
+msgid "Can post jobs"
+msgstr ""
+
+#: includes/taxonomies.php:319
+msgid "Car mechanic"
+msgstr ""
+
+#: includes/more-trades.php:116
+msgid "Car mechanic, bike mechanic, diesel mechanic, auto electrician, garage work, denting and painting, generator repair."
+msgstr ""
+
+#: includes/taxonomies.php:304
+msgid "Caregiver"
+msgstr ""
+
+#: includes/taxonomies.php:283
+msgid "Carpenter"
+msgstr ""
+
+#: includes/taxonomies.php:376
+msgid "Cashier"
+msgstr ""
+
+#: includes/taxonomies.php:649
+msgid "Chakhesang"
+msgstr ""
+
+#: includes/taxonomies.php:653
+msgid "Chang"
+msgstr ""
+
+#: includes/queries.php:926
+msgid "Change filters"
+msgstr ""
+
+#: includes/dashboard.php:1014
+msgid "Change password"
+msgstr ""
+
+#: includes/app-links.php:562
+msgid "Check that kaamase.com does not redirect to www.kaamase.com or the other way round. Neither Google nor Apple follows a redirect for these files, and a redirect is invisible in a browser because the browser follows it for you."
+msgstr ""
+
+#: includes/taxonomies.php:410
+msgid "Chef"
+msgstr ""
+
+#: includes/registration.php:218
+msgid "Choose a password"
+msgstr ""
+
+#: includes/profile-edit.php:457 includes/reports.php:359
+msgid "Choose one"
+msgstr ""
+
+#: includes/post-job.php:314 includes/posted-for.php:307
+msgid "Choose the district"
+msgstr ""
+
+#: includes/services.php:66
+msgid "Choose the district."
+msgstr ""
+
+#: includes/post-job.php:247 includes/posted-for.php:289
+msgid "Choose the trade"
+msgstr ""
+
+#: includes/reports.php:556 includes/services.php:617
+msgid "Choose what the report is about."
+msgstr ""
+
+#: includes/services.php:62
+msgid "Choose what work you need done."
+msgstr ""
+
+#: includes/registration.php:402 includes/rest-api.php:642
+msgid "Choose whether you are looking for work or looking for workers."
+msgstr ""
+
+#: includes/registration.php:181 includes/teams.php:204
+msgid "Choose your district"
+msgstr ""
+
+#: includes/services.php:452
+msgid "Choose your district."
+msgstr ""
+
+#: includes/registration.php:198
+msgid "Choose your trade"
+msgstr ""
+
+#: includes/profile-edit.php:464 includes/rest-shape.php:319
+msgid "Church elder or pastor"
+msgstr ""
+
+#: includes/queries.php:1017
+msgid "Clear"
+msgstr ""
+
+#: includes/admin.php:681 includes/dashboard.php:667
+msgid "Closed"
+msgstr ""
+
+#: includes/past-jobs.php:445
+msgid "Closed %s"
+msgstr ""
+
+#: includes/post-types.php:293
+msgid "Closed <span class=\"count\">(%s)</span>"
+msgid_plural "Closed <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/past-jobs.php:236
+msgid "Closed jobs stay on the site and stay readable. This screen decides where people can browse them and how long they stay in search results."
+msgstr ""
+
+#: includes/fields.php:361
+msgid "Closes on"
+msgstr ""
+
+#: includes/profile-edit.php:462 includes/rest-shape.php:317
+msgid "Colony council member"
+msgstr ""
+
+#: includes/employer-index.php:327
+msgid "Company"
+msgstr ""
+
+#: includes/taxonomies.php:431
+msgid "Computer and design"
+msgstr ""
+
+#: includes/taxonomies.php:365
+msgid "Computer operator"
+msgstr ""
+
+#: includes/taxonomies.php:353
+msgid "Computer teacher"
+msgstr ""
+
+#: includes/taxonomies.php:318
+msgid "Computer technician"
+msgstr ""
+
+#: includes/taxonomies.php:444
+msgid "Computers and websites (general)"
+msgstr ""
+
+#: includes/employer-index.php:196
+msgid "Confirm your email first"
+msgstr ""
+
+#: includes/contact.php:289
+msgid "Confirm your email first. We keep unconfirmed accounts away from other people's numbers."
+msgstr ""
+
+#: includes/registration.php:664
+msgid "Confirm your email for %s"
+msgstr ""
+
+#: includes/post-job.php:216
+msgid "Confirm your email to make jobs visible"
+msgstr ""
+
+#: includes/rest-api.php:92
+msgid "Confirm your email to see who is hiring. We sent you a link when you registered."
+msgstr ""
+
+#: includes/admin.php:97
+msgid "Confirmed hires, all time."
+msgstr ""
+
+#: includes/install.php:711
+msgid "Consent: how it is taken, and how it is withdrawn."
+msgstr ""
+
+#: includes/taxonomies.php:280
+msgid "Construction"
+msgstr ""
+
+#: includes/install.php:390
+msgid "Contact"
+msgstr ""
+
+#: includes/contact.php:742
+msgid "Contact details are not shown"
+msgstr ""
+
+#: includes/entitlements.php:60
+msgid "Contact lookups a day"
+msgstr ""
+
+#: includes/fields.php:284
+msgid "Contact number"
+msgstr ""
+
+#: includes/fields.php:207
+msgid "Contact person"
+msgstr ""
+
+#: includes/hiring-request.php:161
+msgid "Contact us"
+msgstr ""
+
+#: includes/taxonomies.php:440
+msgid "Content creator"
+msgstr ""
+
+#: includes/employer-index.php:326
+msgid "Contractor"
+msgstr ""
+
+#: includes/taxonomies.php:302
+msgid "Cook"
+msgstr ""
+
+#: includes/rich-manu.php:526
+msgid "Could not reach"
+msgstr ""
+
+#: includes/exposure.php:512
+msgid "Counted among the workers who have been seen before. It should stay small. If it climbs week after week, there are more workers than the listings can cycle through and the trade and district filters are doing the real work."
+msgstr ""
+
+#: includes/taxonomies.php:449
+msgid "Craft and making"
+msgstr ""
+
+#: includes/registration.php:243
+msgid "Create my account"
+msgstr ""
+
+#: includes/privacy.php:114
+msgid "Created"
+msgstr ""
+
+#: includes/taxonomies.php:367
+msgid "Customer service"
+msgstr ""
+
+#: includes/taxonomies.php:364
+msgid "Data entry operator"
+msgstr ""
+
+#: includes/settings.php:260
+msgid "Data removal is currently switched ON."
+msgstr ""
+
+#: includes/settings.php:347
+msgid "Data removal is now switched on. Deleting the plugin will destroy everything."
+msgstr ""
+
+#: includes/settings.php:333
+msgid "Data removal switched off. Your data is safe if the plugin is deleted."
+msgstr ""
+
+#: includes/privacy.php:170
+msgid "Date"
+msgstr ""
+
+#: includes/admin.php:528
+msgid "Day rate"
+msgstr ""
+
+#: includes/teams.php:221
+msgid "Day rate for the team"
+msgstr ""
+
+#: includes/profile-edit.php:349
+msgid "Day rate you expect"
+msgstr ""
+
+#: includes/reports.php:914
+msgid "Days worked"
+msgstr ""
+
+#: includes/profile-edit.php:871
+msgid "Delete my account"
+msgstr ""
+
+#: includes/profile-edit.php:903
+msgid "Delete my account for good"
+msgstr ""
+
+#: includes/settings.php:250
+msgid "Deleting the plugin"
+msgstr ""
+
+#: includes/email-check.php:631
+msgid "Delivery handled by"
+msgstr ""
+
+#: includes/taxonomies.php:463
+msgid "Delivery rider"
+msgstr ""
+
+#: includes/taxonomies.php:443
+msgid "Design and video (general)"
+msgstr ""
+
+#: includes/posted-for.php:364
+msgid "Details"
+msgstr ""
+
+#: includes/settings.php:178
+msgid "Dial every number you put here before you save it."
+msgstr ""
+
+#: includes/ratings.php:121
+msgid "Did they stick to the rate that was agreed?"
+msgstr ""
+
+#: includes/ratings.php:106
+msgid "Did they turn up on the day?"
+msgstr ""
+
+#: includes/hires.php:298 includes/push.php:268
+msgid "Did you hire them?"
+msgstr ""
+
+#: includes/hire-claims.php:558
+msgid "Did you work together?"
+msgstr ""
+
+#: includes/taxonomies.php:324
+msgid "Diesel mechanic"
+msgstr ""
+
+#: includes/taxonomies.php:437
+msgid "Digital marketer"
+msgstr ""
+
+#: includes/contact.php:542
+msgid "Direct number"
+msgstr ""
+
+#: includes/admin.php:355 includes/employer-index.php:342 includes/fields.php:87
+#: includes/fields.php:230 includes/fields.php:318 includes/past-jobs.php:400
+msgid "District"
+msgstr ""
+
+#: includes/taxonomies.php:181
+msgid "Districts"
+msgstr ""
+
+#: includes/teams.php:627
+msgid "Do you bring other workers?"
+msgstr ""
+
+#: includes/working-request.php:374
+msgid "Do you take work yourself?"
+msgstr ""
+
+#: includes/gstin.php:385
+msgid "Does not check out"
+msgstr ""
+
+#: includes/dashboard.php:856
+msgid "Done. That person can no longer see your number."
+msgstr ""
+
+#: includes/gift.php:350
+msgid "Done. Their account has it now."
+msgstr ""
+
+#: includes/verify-requests.php:449
+msgid "Done. Their profile has the mark now."
+msgstr ""
+
+#: includes/taxonomies.php:293
+msgid "Draughtsman"
+msgstr ""
+
+#: includes/taxonomies.php:305
+msgid "Driver"
+msgstr ""
+
+#: includes/taxonomies.php:419
+msgid "Driving and transport"
+msgstr ""
+
+#: includes/entitlements.php:430
+msgid "Dropping a free allowance to make room for something to sell is the most tempting mistake here, and the one that does lasting damage. Somebody who could do their work yesterday and cannot today does not read it as a new product, they read it as the platform turning on them. Raise what paying gets you rather than lowering what free gets you."
+msgstr ""
+
+#: includes/taxonomies.php:177
+msgid "Edit district"
+msgstr ""
+
+#: includes/post-types.php:175
+msgid "Edit employer"
+msgstr ""
+
+#: includes/post-types.php:226
+msgid "Edit job"
+msgstr ""
+
+#: includes/taxonomies.php:224
+msgid "Edit language"
+msgstr ""
+
+#: includes/dashboard.php:537
+msgid "Edit my details"
+msgstr ""
+
+#: includes/dashboard.php:545
+msgid "Edit my profile"
+msgstr ""
+
+#: includes/teams.php:642
+msgid "Edit my team"
+msgstr ""
+
+#: includes/post-types.php:125
+msgid "Edit team"
+msgstr ""
+
+#: includes/post-job.php:231
+msgid "Edit this job"
+msgstr ""
+
+#: includes/taxonomies.php:133
+msgid "Edit trade"
+msgstr ""
+
+#: includes/post-types.php:75
+msgid "Edit worker"
+msgstr ""
+
+#: includes/taxonomies.php:284
+msgid "Electrician"
+msgstr ""
+
+#: includes/taxonomies.php:326
+msgid "Electronics technician"
+msgstr ""
+
+#: includes/not-confirmed.php:239 includes/reports.php:909
+msgid "Email"
+msgstr ""
+
+#: includes/registration.php:147
+msgid "Email address"
+msgstr ""
+
+#: includes/gift.php:387
+msgid "Email address, username or user ID"
+msgstr ""
+
+#: includes/email-check.php:399 includes/email-check.php:400 includes/email-check.php:485
+msgid "Email check"
+msgstr ""
+
+#: includes/dashboard.php:846
+msgid "Email confirmed. Your profile is live."
+msgstr ""
+
+#: includes/settings.php:208
+msgid "Email me when somebody collects three flags"
+msgstr ""
+
+#: includes/gift.php:439
+msgid "Email them about it"
+msgstr ""
+
+#: includes/not-confirmed.php:199 includes/roles.php:154
+msgid "Employer"
+msgstr ""
+
+#: includes/fields.php:278
+msgid "Employer profile"
+msgstr ""
+
+#: includes/admin.php:372 includes/post-types.php:182
+msgid "Employers"
+msgstr ""
+
+#: includes/push.php:199
+msgid "Employers across Nagaland can find you now. Set yourself available when you are free for work."
+msgstr ""
+
+#: includes/dashboard.php:179
+msgid "Employers filter by rate. With no rate, you are left out of most searches."
+msgstr ""
+
+#: includes/how-seen.php:164
+msgid "Employers look for a mason, a driver, a carpenter. If your trade is missing or wrong you are not in that list at any position. Pick the one you actually do most."
+msgstr ""
+
+#: includes/profile-edit.php:248
+msgid "Employers look for people near the work."
+msgstr ""
+
+#: includes/dashboard.php:200
+msgid "Employers look for workers near the site."
+msgstr ""
+
+#: includes/dashboard.php:314
+msgid "Employers skip past profiles that are half empty. These are the ones that matter most."
+msgstr ""
+
+#: includes/admin.php:90
+msgid "Employers who came back"
+msgstr ""
+
+#: app-version.php:342
+msgid "Empty means nobody is stopped"
+msgstr ""
+
+#: includes/email-check.php:680
+msgid "Empty this list"
+msgstr ""
+
+#: includes/taxonomies.php:642
+msgid "English"
+msgstr ""
+
+#: includes/more-trades.php:124
+msgid "Event helper, decorator, tent work, catering staff, wedding work, sound and light."
+msgstr ""
+
+#: includes/taxonomies.php:471
+msgid "Event staff"
+msgstr ""
+
+#: includes/hiring-request.php:190
+msgid "Every job posted on Kaam Ase is checked. Anything that is not real work is removed and the account is closed."
+msgstr ""
+
+#: includes/indexes.php:142
+msgid "Every kind of work on Kaam Ase. Tap one to see who is available across Nagaland."
+msgstr ""
+
+#: includes/saved.php:422
+msgid "Everybody you have done a job for through Kaam Ase."
+msgstr ""
+
+#: includes/media.php:287
+msgid "Everything"
+msgstr ""
+
+#: includes/how-seen.php:190
+msgid "Everything above is wasted on a number that does not ring. Check it today."
+msgstr ""
+
+#: includes/job-screening.php:799
+msgid "Excludes people by tribe, religion or origin"
+msgstr ""
+
+#: includes/fields.php:104
+msgid "Expected day rate"
+msgstr ""
+
+#: includes/fields.php:110
+msgid "Expected monthly pay"
+msgstr ""
+
+#: includes/settings.php:170
+msgid "Extra emergency numbers"
+msgstr ""
+
+#: includes/posted-for.php:415
+msgid "Extras"
+msgstr ""
+
+#: includes/taxonomies.php:336
+msgid "Farm labour"
+msgstr ""
+
+#: includes/taxonomies.php:470
+msgid "Fashion designer"
+msgstr ""
+
+#: includes/roles.php:179
+msgid "Field agent"
+msgstr ""
+
+#: includes/queries.php:927
+msgid "Filter these results"
+msgstr ""
+
+#: includes/dashboard.php:544 includes/dashboard.php:1089 includes/saved.php:547
+msgid "Find work"
+msgstr ""
+
+#: includes/dashboard.php:536 includes/saved.php:546
+msgid "Find workers"
+msgstr ""
+
+#: includes/dashboard.php:299
+msgid "Finish your profile"
+msgstr ""
+
+#: includes/job-screening.php:801
+msgid "First post from this employer"
+msgstr ""
+
+#: includes/taxonomies.php:341
+msgid "Fish farm worker"
+msgstr ""
+
+#: includes/taxonomies.php:329
+msgid "Fitter"
+msgstr ""
+
+#: includes/settings.php:203
+msgid "Flag alerts"
+msgstr ""
+
+#: includes/post-job.php:370
+msgid "Food"
+msgstr ""
+
+#: includes/schema.php:201
+msgid "Food is provided."
+msgstr ""
+
+#: includes/fields.php:335 includes/posted-for.php:418
+msgid "Food provided"
+msgstr ""
+
+#: includes/teams.php:148
+msgid "For example: Imliakum mason team"
+msgstr ""
+
+#: includes/posted-for.php:233
+msgid "For jobs you have seen elsewhere and checked yourself. The job goes up under Kaam Ase with the employer's name on it, and workers get the employer's number, never yours. Ring the employer first and make sure the job is real and that they are happy to be listed."
+msgstr ""
+
+#: includes/install.php:658
+msgid "For maid, cook, babysitter and caregiver work, only verified employers can make contact. Tell someone you trust where you are going and who you are working for. If a place or a person does not feel right, leave. You do not need a reason and you do not need permission."
+msgstr ""
+
+#: includes/post-job.php:384
+msgid "For work away from home these matter as much as the rate. Say so if you provide them."
+msgstr ""
+
+#: includes/gift.php:96
+msgid "Forever"
+msgstr ""
+
+#: includes/admin.php:527
+msgid "Free"
+msgstr ""
+
+#: includes/queries.php:997
+msgid "Free for work now"
+msgstr ""
+
+#: includes/admin.php:100
+msgid "Free right now"
+msgstr ""
+
+#: includes/post-job.php:461
+msgid "Free to post. Open for three weeks, then it closes on its own so nobody answers a job that is already filled."
+msgstr ""
+
+#: includes/reports.php:905
+msgid "From"
+msgstr ""
+
+#: includes/reports.php:702
+msgid "From: %s"
+msgstr ""
+
+#: includes/taxonomies.php:452
+msgid "Furniture maker"
+msgstr ""
+
+#: includes/gstin.php:352
+msgid "GST"
+msgstr ""
+
+#: includes/fields.php:225 includes/profile-edit.php:648
+msgid "GST number"
+msgstr ""
+
+#: includes/gstin.php:239
+msgid "GST on file"
+msgstr ""
+
+#: includes/profile-edit.php:461 includes/rest-shape.php:316
+msgid "Gaon Bura"
+msgstr ""
+
+#: includes/taxonomies.php:306
+msgid "Gardener"
+msgstr ""
+
+#: includes/dashboard.php:185
+msgid "Get someone to vouch for you"
+msgstr ""
+
+#: includes/how-seen.php:231
+msgid "Get your trade and district right. That is what decides which lists you turn up in."
+msgstr ""
+
+#: includes/gift.php:460
+msgid "Give it"
+msgstr ""
+
+#: includes/post-job.php:403
+msgid "Give it a title"
+msgstr ""
+
+#: includes/gift.php:314 includes/gift.php:315 includes/gift.php:346
+msgid "Give the plan"
+msgstr ""
+
+#: includes/services.php:440
+msgid "Give the team a name. Your own name is fine."
+msgstr ""
+
+#: includes/gift.php:478
+msgid "Given"
+msgstr ""
+
+#: includes/gift.php:230
+msgid "Given by the owner. No payment taken."
+msgstr ""
+
+#: includes/gift.php:464
+msgid "Given so far"
+msgstr ""
+
+#: includes/gift.php:365
+msgid "Gives somebody the paid plan and the tick without taking any money. The tick means somebody at Kaam Ase knows who this person is, so give it to people that is true of."
+msgstr ""
+
+#: includes/contact.php:730 includes/employer-index.php:199 includes/registration.php:64
+msgid "Go to my account"
+msgstr ""
+
+#: includes/taxonomies.php:433
+msgid "Graphic designer"
+msgstr ""
+
+#: includes/more-trades.php:118
+msgid "Graphic designer, poster and banner design, logo, video editor, photo editing, social media, content creator."
+msgstr ""
+
+#: includes/install.php:737
+msgid "Grounds for removing an account: fraud, harassment, fake profiles, asking a worker for money."
+msgstr ""
+
+#: includes/posted-for.php:273
+msgid "Group name, link, or who told you. Only you see this."
+msgstr ""
+
+#: includes/taxonomies.php:338
+msgid "Harvest worker"
+msgstr ""
+
+#: includes/standing.php:113
+msgid "Has hired %d person through Kaam Ase"
+msgid_plural "Has hired %d people through Kaam Ase"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/taxonomies.php:395
+msgid "Health"
+msgstr ""
+
+#: includes/taxonomies.php:400
+msgid "Health worker"
+msgstr ""
+
+#: includes/taxonomies.php:424
+msgid "Heavy vehicle driver"
+msgstr ""
+
+#: includes/job-screening.php:736
+msgid "Held because"
+msgstr ""
+
+#: includes/hiring-request.php:461
+msgid "Hello %1\\$s,\n\nHiring has been added to your account. You can post jobs now, using the same login you already have. Your worker profile and your ratings are unchanged.\n\nPost a job here: %2\\$s\n"
+msgstr ""
+
+#: includes/rich-manu.php:349
+msgid "Hello %1\\$s,\n\nThank you for taking our call. Your profile now carries the mark that says \"%2\\$s\".\n\nIt shows wherever you appear, whether you are looking for work or hiring somebody.\n"
+msgstr ""
+
+#: includes/rich-manu.php:317
+msgid "Hello %1\\$s,\n\nThank you. %2\\$s is on your account and you can post as many urgent jobs as you need, starting now.\n\nThe tick is the other half and it comes after we speak to you. Somebody from Kaam Ase will ring the number on your profile in the next day or two. It is a short call: we confirm you are who you say you are, and then the tick goes on your account.\n\nIf your number has changed, update it on your profile so we can reach you.\n"
+msgstr ""
+
+#: includes/job-screening.php:602
+msgid "Hello %1\\$s,\n\nYour job \"%2\\$s\" has been saved and is being checked before workers see it. A person reads the first job from every new employer. It is usually done within a few hours and you will get another email when it goes live.\n\nNothing more is needed from you. After this one, your jobs go live straight away.\n\nYou can see it here: %3\\$s\n"
+msgstr ""
+
+#: includes/job-screening.php:653
+msgid "Hello %1\\$s,\n\n\"%2\\$s\" is live. Workers in your district can see it now, and it stays open for three weeks.\n\n%3\\$s\n\nShare that link on WhatsApp if you want it seen faster. Your next jobs go live straight away.\n"
+msgstr ""
+
+#: includes/dashboard.php:393
+msgid "Hello %s"
+msgstr ""
+
+#: includes/privacy.php:663 includes/privacy.php:685 includes/profile-edit.php:977
+#: includes/registration.php:673
+msgid "Hello %s,"
+msgstr ""
+
+#: includes/install.php:396
+msgid "Help centre"
+msgstr ""
+
+#: includes/settings.php:157
+msgid "Help phone number"
+msgstr ""
+
+#: includes/taxonomies.php:290
+msgid "Helper"
+msgstr ""
+
+#: includes/queries.php:296
+msgid "Highest pay"
+msgstr ""
+
+#: includes/taxonomies.php:643
+msgid "Hindi"
+msgstr ""
+
+#: includes/install.php:629
+msgid "Hire one person or a whole team with a leader."
+msgstr ""
+
+#: includes/fields.php:271
+msgid "Hiring as"
+msgstr ""
+
+#: includes/hiring-request.php:635
+msgid "Hiring removed. Their worker account is untouched."
+msgstr ""
+
+#: includes/hiring-request.php:158
+msgid "Hiring was not added to this account"
+msgstr ""
+
+#: includes/hiring-request.php:881
+msgid "Hiring was removed from this account. Get in touch if that was a mistake."
+msgstr ""
+
+#: includes/taxonomies.php:307
+msgid "Home nurse or attendant"
+msgstr ""
+
+#: includes/taxonomies.php:298
+msgid "Home services"
+msgstr ""
+
+#: includes/taxonomies.php:342
+msgid "Horticulture worker"
+msgstr ""
+
+#: includes/taxonomies.php:407
+msgid "Hotel and food"
+msgstr ""
+
+#: includes/taxonomies.php:414
+msgid "Hotel staff"
+msgstr ""
+
+#: includes/taxonomies.php:301
+msgid "House cleaner"
+msgstr ""
+
+#: includes/taxonomies.php:413
+msgid "Housekeeping staff"
+msgstr ""
+
+#: includes/reports.php:431
+msgid "How can we reach you"
+msgstr ""
+
+#: includes/hires.php:483 includes/ratings.php:794
+msgid "How did it go?"
+msgstr ""
+
+#: includes/teams.php:232
+msgid "How far will the team travel"
+msgstr ""
+
+#: includes/profile-edit.php:378
+msgid "How far will you travel"
+msgstr ""
+
+#: includes/job-alerts.php:831
+msgid "How it stands"
+msgstr ""
+
+#: includes/install.php:372
+msgid "How it works"
+msgstr ""
+
+#: includes/gift.php:413
+msgid "How long"
+msgstr ""
+
+#: includes/install.php:708
+msgid "How long data is kept, and what happens to an inactive account."
+msgstr ""
+
+#: includes/post-job.php:348
+msgid "How long is the work"
+msgstr ""
+
+#: includes/fields.php:313 includes/posted-for.php:406
+msgid "How long the work lasts"
+msgstr ""
+
+#: includes/schema.php:197
+msgid "How long the work lasts: %s"
+msgstr ""
+
+#: includes/reports.php:403
+msgid "How many days did you work"
+msgstr ""
+
+#: includes/entitlements.php:61
+msgid "How many different workers one account can get the number of in a day. This is the main protection against somebody harvesting phone numbers, so keep it a real number rather than a large one."
+msgstr ""
+
+#: includes/entitlements.php:68
+msgid "How many jobs one employer can have marked urgent at the same time. Urgent only means anything while it is rare. If everybody can mark everything urgent, the tag stops being read."
+msgstr ""
+
+#: includes/entitlements.php:75
+msgid "How many jobs one employer can post in a day. This is here to stop the listings being flooded by one account rather than to ration honest use, so it should sit well above what a real employer would ever need."
+msgstr ""
+
+#: includes/job-photos.php:74
+msgid "How many pictures one job post can carry. One is enough to make a listing worth looking at, which is why it is the free number. More is a reason to pay rather than something a job needs."
+msgstr ""
+
+#: includes/admin.php:416
+msgid "How many times"
+msgstr ""
+
+#: includes/post-job.php:262 includes/posted-for.php:345
+msgid "How many workers"
+msgstr ""
+
+#: includes/teams.php:156
+msgid "How many workers, including you"
+msgstr ""
+
+#: includes/reports.php:386
+msgid "How much are you owed"
+msgstr ""
+
+#: includes/how-seen.php:323 includes/how-seen.php:378
+msgid "How people find you"
+msgstr ""
+
+#: includes/install.php:709
+msgid "How somebody asks for their data, corrects it, or deletes their account."
+msgstr ""
+
+#: includes/how-seen.php:142
+msgid "How the order is decided"
+msgstr ""
+
+#: includes/email-check.php:608
+msgid "How things stand"
+msgstr ""
+
+#: includes/registration.php:233
+msgid "I agree to the %1$s and the %2$s."
+msgstr ""
+
+#: includes/working-request.php:378
+msgid "I also look for work"
+msgstr ""
+
+#: includes/registration.php:287
+msgid "I am looking for work"
+msgstr ""
+
+#: includes/registration.php:296
+msgid "I am looking for workers"
+msgstr ""
+
+#: includes/hire-claims.php:661
+msgid "I do not remember"
+msgstr ""
+
+#: includes/hire-claims.php:404
+msgid "I have worked for them"
+msgstr ""
+
+#: includes/hire-claims.php:403
+msgid "I hired this person"
+msgstr ""
+
+#: includes/post-job.php:422
+msgid "I need somebody today or tomorrow"
+msgstr ""
+
+#: includes/app-links.php:558
+msgid "If it still fails"
+msgstr ""
+
+#: includes/reports.php:768
+msgid "If somebody has done something serious, their account goes."
+msgstr ""
+
+#: includes/rest-api.php:839 includes/rest-api.php:854
+msgid "If that address has an account, we have sent it a link to set a new password."
+msgstr ""
+
+#: includes/posted-for.php:338
+msgid "If the original says negotiable, ask the employer for a figure when you ring. A job with no rate gets almost no answers."
+msgstr ""
+
+#: includes/email-check.php:627
+msgid "If this is not an address at your own domain, Gmail has good reason to treat it as forged."
+msgstr ""
+
+#: includes/settings.php:261
+msgid "If this plugin is deleted, every profile, job, rating, report and photograph goes with it and cannot be recovered."
+msgstr ""
+
+#: includes/reports.php:766
+msgid "If we can reach you, we call and ask what we need to know."
+msgstr ""
+
+#: includes/reports.php:166
+msgid "If you are in danger right now, do not use this form"
+msgstr ""
+
+#: includes/install.php:617
+msgid "If you are looking for work"
+msgstr ""
+
+#: includes/install.php:625
+msgid "If you are looking for workers"
+msgstr ""
+
+#: includes/email-check.php:731
+msgid "If you are reading this, mail from Kaam Ase reaches you. Nothing needs doing."
+msgstr ""
+
+#: includes/teams.php:137
+msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
+msgstr ""
+
+#: includes/registration.php:678
+msgid "If you did not create this account, ignore this message and nothing will happen."
+msgstr ""
+
+#: includes/privacy.php:689
+msgid "If you do nothing, we will hide your profile in a couple of months and remove your details after two years. You can come back at any time before then."
+msgstr ""
+
+#: includes/how-seen.php:275
+msgid "If you ever see something on Kaam Ase that looks like it contradicts this page, tell us. This page describes how the site is built, and if the two disagree then one of them is wrong and we want to know which."
+msgstr ""
+
+#: includes/profile-edit.php:981
+msgid "If you ever want to come back, you are welcome to register again."
+msgstr ""
+
+#: includes/ratings.php:821
+msgid "If you have worked for them, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
+msgstr ""
+
+#: includes/ratings.php:820
+msgid "If you hired this person, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
+msgstr ""
+
+#: includes/hiring-request.php:159
+msgid "If you think this is a mistake, get in touch and tell us about the work you hire for."
+msgstr ""
+
+#: includes/reports.php:347
+msgid "If you were not paid, or paid less than agreed, tell us here. We will look into it and speak to the other side. What you write is private."
+msgstr ""
+
+#: includes/teams.php:635
+msgid "If you work with a group, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and that is work you will not see otherwise."
+msgstr ""
+
+#: includes/how-seen.php:146
+msgid "If your profile says you are available for work, you are shown ahead of everybody marked busy. This is the single biggest thing you control and it is one tap. Turn it off when you are working. An employer who rings three busy people stops ringing anybody."
+msgstr ""
+
+#: includes/employer-index.php:325
+msgid "Individual"
+msgstr ""
+
+#: app-version.php:309
+msgid "iPhone: %1$s. Android: %2$s. Anybody below those is being stopped."
+msgstr ""
+
+#: includes/dashboard.php:207
+msgid "It helps an employer know you can talk to each other on site."
+msgstr ""
+
+#: includes/closed-jobs.php:313
+msgid "It is kept here so the record stays, but the work has gone."
+msgstr ""
+
+#: includes/dashboard.php:193
+msgid "It is the second thing an employer looks at, after the trade."
+msgstr ""
+
+#: includes/verify-requests.php:263
+msgid "It means somebody at Kaam Ase telephoned that person and spoke to them. It is not sold and it does not move anybody up a list. It only tells a stranger they are real, which is the one thing a stranger cannot tell on their own."
+msgstr ""
+
+#: includes/how-seen.php:212
+msgid "It means somebody at Kaam Ase telephoned that person and spoke to them. It tells a stranger they are real. It does not move them above you and it is not given out for using the app."
+msgstr ""
+
+#: includes/rich-manu.php:860
+msgid "It says we have spoken to them. It is not a promise about the quality of their work, and it does not replace agreeing the rate and the payment day before anybody starts."
+msgstr ""
+
+#: includes/email-check.php:534
+msgid "Its password"
+msgstr ""
+
+#: includes/job-photos.php:582
+msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
+msgstr ""
+
+#: includes/job-alerts.php:732 includes/job-alerts.php:733 includes/job-alerts.php:764
+msgid "Job alerts"
+msgstr ""
+
+#: includes/dashboard.php:857
+msgid "Job closed. Workers will stop calling about it."
+msgstr ""
+
+#: includes/post-types.php:234
+msgid "Job photo"
+msgstr ""
+
+#: includes/dashboard.php:854
+msgid "Job posted again. It is open for three weeks."
+msgstr ""
+
+#: includes/post-types.php:233
+msgid "Jobs"
+msgstr ""
+
+#: includes/profile-edit.php:881
+msgid "Jobs and ratings involving other people are kept without your name, because they are part of somebody else's record too."
+msgstr ""
+
+#: includes/admin.php:95 includes/fields.php:180
+msgid "Jobs completed"
+msgstr ""
+
+#: includes/admin.php:80
+msgid "Jobs filled"
+msgstr ""
+
+#: includes/hiring-request.php:538
+msgid "Jobs posted"
+msgstr ""
+
+#: includes/entitlements.php:74
+msgid "Jobs posted a day"
+msgstr ""
+
+#: includes/post-job.php:299
+msgid "Jobs without a rate get almost no answers. Put a real number even if it is negotiable."
+msgstr ""
+
+#: includes/privacy.php:342
+msgid "Jobs you posted were kept but your name and number were removed, because workers who did those jobs have ratings attached to them."
+msgstr ""
+
+#: includes/admin.php:534
+msgid "Joined"
+msgstr ""
+
+#: includes/admin.php:44 includes/admin.php:45 includes/admin.php:69
+msgid "Kaam Ase"
+msgstr ""
+
+#: includes/privacy.php:835
+msgid "Kaam Ase Core"
+msgstr ""
+
+#: kaamase-core.php:61
+msgid "Kaam Ase Core is not running."
+msgstr ""
+
+#: kaamase-core.php:303
+msgid "Kaam Ase Core is running with missing files."
+msgstr ""
+
+#: includes/hiring-request.php:671
+msgid "Kaam Ase hiring"
+msgstr ""
+
+#: includes/install.php:703
+msgid "Kaam Ase holds names, photographs, villages and phone numbers of real people. Under the Digital Personal Data Protection Act a privacy notice is a legal requirement, not a formality. Have a lawyer write this. Below is what they need to cover."
+msgstr ""
+
+#: includes/install.php:734
+msgid "Kaam Ase is a listing platform and not the employer. This is the single most important line."
+msgstr ""
+
+#: includes/install.php:668
+msgid "Kaam Ase is a listing platform. We introduce workers and employers to each other. We are not the employer, we do not pay wages and we are not present at the work site. What we can do is investigate a report, remove an account and keep a record."
+msgstr ""
+
+#: includes/install.php:623
+msgid "Kaam Ase is free for workers. Nobody from Kaam Ase will ever ask you for money."
+msgstr ""
+
+#: includes/install.php:655
+msgid "Kaam Ase is free for workers. We will never ask a worker for money, and neither should an employer. If anyone asks you to pay for a job, for registration, for a badge or for a placement, do not pay. Report it to us."
+msgstr ""
+
+#: includes/registration.php:247
+msgid "Kaam Ase is free. We will never ask a worker for money."
+msgstr ""
+
+#: includes/install.php:773
+msgid "Kaam Ase is installed. Three things before you show it to anybody."
+msgstr ""
+
+#: who-looked.php:228
+msgid "Kaam Ase keeps a note of who opened your profile and your jobs. Sign in and it is yours."
+msgstr ""
+
+#: includes/install.php:685
+msgid "Kaam Ase means there is work. It is a hiring platform built in Nagaland, for Nagaland, by a company registered in Dimapur. Write the rest of this page yourself. People trust a page that sounds like a person more than one that sounds like a company."
+msgstr ""
+
+#: includes/privacy.php:62 includes/privacy.php:236
+msgid "Kaam Ase profile and activity"
+msgstr ""
+
+#: includes/admin.php:853
+msgid "Kaam Ase rating: %s out of 5"
+msgstr ""
+
+#: includes/settings.php:134
+msgid "Kaam Ase settings"
+msgstr ""
+
+#: includes/privacy.php:830
+msgid "Kaam Ase stores the following about registered users: name, email address, phone number, district, town, trade, years of experience, expected rates, availability, profile photograph, photographs of past work, who vouched for them, ratings given and received, records of who looked up their contact details, and the date they agreed to the terms."
+msgstr ""
+
+#: includes/email-check.php:730
+msgid "Kaam Ase test message"
+msgstr ""
+
+#: includes/rich-manu.php:661
+msgid "Kaam Ase verification"
+msgstr ""
+
+#: includes/teams.php:634
+msgid "Keep the headcount right. It is the first thing a contractor looks at."
+msgstr ""
+
+#: includes/dashboard.php:288
+msgid "Keep your availability up to date and you will show up in more searches."
+msgstr ""
+
+#: includes/taxonomies.php:656
+msgid "Khiamniungan"
+msgstr ""
+
+#: includes/employer-index.php:354 includes/not-confirmed.php:236
+msgid "Kind"
+msgstr ""
+
+#: includes/taxonomies.php:412
+msgid "Kitchen helper"
+msgstr ""
+
+#: includes/taxonomies.php:648
+msgid "Konyak"
+msgstr ""
+
+#: includes/taxonomies.php:658
+msgid "Kuki"
+msgstr ""
+
+#: includes/taxonomies.php:399
+msgid "Lab technician"
+msgstr ""
+
+#: includes/taxonomies.php:291
+msgid "Labour"
+msgstr ""
+
+#: includes/taxonomies.php:228
+msgid "Languages"
+msgstr ""
+
+#: includes/profile-edit.php:404
+msgid "Languages you speak"
+msgstr ""
+
+#: includes/job-alerts.php:852
+msgid "Last run"
+msgstr ""
+
+#: includes/rest-auth.php:583
+msgid "Last used %s ago"
+msgstr ""
+
+#: includes/reports.php:398
+msgid "Last week, three days in March, and so on"
+msgstr ""
+
+#: includes/posted-for.php:358
+msgid "Leave blank and one is written for you"
+msgstr ""
+
+#: includes/post-job.php:407
+msgid "Leave blank and we will write one"
+msgstr ""
+
+#: includes/teams.php:173
+msgid "Leave blank if it is you"
+msgstr ""
+
+#: includes/post-job.php:446
+msgid "Leave blank to use your account number"
+msgstr ""
+
+#: includes/reports.php:378
+msgid "Leave empty if it is not about a person."
+msgstr ""
+
+#: includes/past-jobs.php:290
+msgid "Leave search after"
+msgstr ""
+
+#: includes/registration.php:115 includes/reports.php:332
+msgid "Leave this empty"
+msgstr ""
+
+#: includes/entitlements.php:323 includes/entitlements.php:324 includes/entitlements.php:375
+msgid "Limits"
+msgstr ""
+
+#: includes/teams.php:294 includes/teams.php:643
+msgid "List my team"
+msgstr ""
+
+#: includes/teams.php:131
+msgid "List your team"
+msgstr ""
+
+#: includes/teams.php:72
+msgid "Listing a team takes a couple of minutes once you have a worker account."
+msgstr ""
+
+#: includes/taxonomies.php:340
+msgid "Livestock worker"
+msgstr ""
+
+#: includes/taxonomies.php:426
+msgid "Loader"
+msgstr ""
+
+#: includes/more-trades.php:122
+msgid "Loader, unloading, godown work, packing, stock keeping, delivery agent, logistics helper."
+msgstr ""
+
+#: includes/post-types.php:183
+msgid "Logo"
+msgstr ""
+
+#: includes/profile-edit.php:166
+msgid "Logo or photo"
+msgstr ""
+
+#: includes/exposure.php:498
+msgid "Longest anybody has waited"
+msgstr ""
+
+#: who-looked.php:392
+msgid "Looked at %s"
+msgstr ""
+
+#: includes/taxonomies.php:647
+msgid "Lotha"
+msgstr ""
+
+#: includes/queries.php:305
+msgid "Lowest day rate"
+msgstr ""
+
+#: includes/taxonomies.php:300
+msgid "Maid"
+msgstr ""
+
+#: includes/email-check.php:522
+msgid "Mailbox address"
+msgstr ""
+
+#: includes/install.php:619
+msgid "Make a free profile. It takes a few minutes."
+msgstr ""
+
+#: includes/teams.php:74
+msgid "Make a free worker profile"
+msgstr ""
+
+#: includes/registration.php:291
+msgid "Make a worker profile"
+msgstr ""
+
+#: includes/app-links.php:563
+msgid "Make sure the domain in the Play Console is written exactly the way the site answers on, without www if the site has no www."
+msgstr ""
+
+#: includes/registration.php:131
+msgid "Make your free worker profile"
+msgstr ""
+
+#: includes/taxonomies.php:469
+msgid "Make-up artist"
+msgstr ""
+
+#: includes/app-links.php:414
+msgid "Makes a kaamase.com link open the app instead of a browser. Google and Apple both check this domain before they allow it, and this screen is what they read. Fill it in, save, then press Retry in the Play Console."
+msgstr ""
+
+#: includes/dashboard.php:710
+msgid "Mark as filled"
+msgstr ""
+
+#: includes/admin.php:741
+msgid "Mark verified"
+msgstr ""
+
+#: includes/plan-pitch.php:294
+msgid "Mark work urgent as often as you need."
+msgstr ""
+
+#: includes/reports.php:919
+msgid "Marked urgent. Deal with this first."
+msgstr ""
+
+#: includes/taxonomies.php:282
+msgid "Mason"
+msgstr ""
+
+#: includes/registration.php:289
+msgid "Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always."
+msgstr ""
+
+#: includes/job-screening.php:800
+msgid "May not be a job"
+msgstr ""
+
+#: includes/dashboard.php:1079 includes/dashboard.php:1099
+msgid "Me"
+msgstr ""
+
+#: includes/taxonomies.php:323
+msgid "Mechanic (general)"
+msgstr ""
+
+#: includes/taxonomies.php:401
+msgid "Medical assistant"
+msgstr ""
+
+#: includes/media.php:286
+msgid "Member photos"
+msgstr ""
+
+#: includes/taxonomies.php:317
+msgid "Mobile repair"
+msgstr ""
+
+#: includes/profile-edit.php:366
+msgid "Monthly pay you expect"
+msgstr ""
+
+#: includes/plan-pitch.php:314
+msgid "More pictures on a job."
+msgstr ""
+
+#: includes/profile-edit.php:583
+msgid "Most %1$s in %2$s ask around rupees %3$s a day. Yours is yours to decide."
+msgstr ""
+
+#: includes/queries.php:303
+msgid "Most experienced"
+msgstr ""
+
+#: includes/saved.php:421
+msgid "Most hiring is hiring the same person again. They are all here."
+msgstr ""
+
+#: includes/email-check.php:502
+msgid "Most hosts will not let a website hand mail straight to the machine it runs on. Sign in to a real mailbox on your own domain instead and it goes out properly, which is also what stops Gmail treating it as forged."
+msgstr ""
+
+#: includes/employer-index.php:332
+msgid "Most workers hired"
+msgstr ""
+
+#: includes/taxonomies.php:354
+msgid "Music teacher"
+msgstr ""
+
+#: includes/install.php:312
+msgid "My account"
+msgstr ""
+
+#: includes/profile-edit.php:152
+msgid "My details"
+msgstr ""
+
+#: includes/dashboard.php:631
+msgid "My jobs"
+msgstr ""
+
+#: includes/dashboard.php:972 includes/profile-edit.php:153
+msgid "My profile"
+msgstr ""
+
+#: includes/install.php:329 includes/teams.php:130 includes/teams.php:626
+msgid "My team"
+msgstr ""
+
+#: includes/gstin.php:176
+msgid "Nagaland"
+msgstr ""
+
+#: includes/taxonomies.php:641
+msgid "Nagamese"
+msgstr ""
+
+#: includes/not-confirmed.php:235
+msgid "Name"
+msgstr ""
+
+#: includes/email-check.php:575
+msgid "Name people see"
+msgstr ""
+
+#: includes/post-job.php:269
+msgid "Need a whole team? Put the number and we will show your job to team leaders too."
+msgstr ""
+
+#: includes/admin.php:404
+msgid "Needs your attention"
+msgstr ""
+
+#: includes/taxonomies.php:661
+msgid "Nepali"
+msgstr ""
+
+#: includes/job-alerts.php:863
+msgid "Never"
+msgstr ""
+
+#: includes/teams.php:259
+msgid "Never shown on the site. Contractors reach you through Kaam Ase and you can see who asked."
+msgstr ""
+
+#: includes/profile-edit.php:261
+msgid "Never shown on the site. People reach you through Kaam Ase, and you can see who asked."
+msgstr ""
+
+#: includes/post-job.php:448
+msgid "Never shown on the site. Workers reach you through Kaam Ase."
+msgstr ""
+
+#: includes/profile-edit.php:485
+msgid "Never shown publicly. Only we see it, and only to check if there is a problem. Ask them before you put their number here."
+msgstr ""
+
+#: includes/exposure.php:489
+msgid "Never yet reached one"
+msgstr ""
+
+#: includes/admin.php:598 includes/compat.php:152
+msgid "New"
+msgstr ""
+
+#: includes/job-alerts.php:374
+msgid "New %1$s work in %2$s"
+msgstr ""
+
+#: includes/taxonomies.php:180
+msgid "New district name"
+msgstr ""
+
+#: includes/post-types.php:176
+msgid "New employer"
+msgstr ""
+
+#: includes/standing.php:191
+msgid "New here, and has not hired anybody through Kaam Ase yet. That is normal for somebody who has just joined. Agree the rate and the payment day out loud before the first day, as you would with anyone."
+msgstr ""
+
+#: includes/post-types.php:227
+msgid "New job"
+msgstr ""
+
+#: includes/taxonomies.php:227
+msgid "New language name"
+msgstr ""
+
+#: includes/post-types.php:126
+msgid "New team"
+msgstr ""
+
+#: includes/taxonomies.php:136
+msgid "New trade name"
+msgstr ""
+
+#: includes/post-types.php:76
+msgid "New worker"
+msgstr ""
+
+#: includes/past-jobs.php:545
+msgid "Newer"
+msgstr ""
+
+#: includes/employer-index.php:331 includes/queries.php:294
+msgid "Newest first"
+msgstr ""
+
+#: includes/queries.php:304
+msgid "Newest profiles"
+msgstr ""
+
+#: includes/job-alerts.php:392
+msgid "Newest: %s. Open Kaam Ase to see the rest."
+msgstr ""
+
+#: includes/employer-index.php:443
+msgid "Next"
+msgstr ""
+
+#: includes/job-alerts.php:840
+msgid "Next run"
+msgstr ""
+
+#: includes/gift.php:512 includes/hires.php:340 includes/hiring-request.php:682
+msgid "No"
+msgstr ""
+
+#: includes/gift.php:360
+msgid "No account matched that. Try their email address."
+msgstr ""
+
+#: includes/past-jobs.php:484
+msgid "No closed jobs match that yet."
+msgstr ""
+
+#: includes/admin.php:86
+msgid "No data"
+msgstr ""
+
+#: includes/taxonomies.php:182
+msgid "No districts found."
+msgstr ""
+
+#: includes/post-types.php:179
+msgid "No employers found."
+msgstr ""
+
+#: includes/post-types.php:180
+msgid "No employers in trash."
+msgstr ""
+
+#: includes/gift.php:508
+msgid "No end date"
+msgstr ""
+
+#: includes/post-types.php:230
+msgid "No jobs found."
+msgstr ""
+
+#: includes/post-types.php:231
+msgid "No jobs in trash."
+msgstr ""
+
+#: includes/taxonomies.php:229
+msgid "No languages found."
+msgstr ""
+
+#: includes/saved.php:601
+msgid "No longer available"
+msgstr ""
+
+#: includes/not-confirmed.php:271
+msgid "No number given"
+msgstr ""
+
+#: includes/rich-manu.php:490
+msgid "No number on file"
+msgstr ""
+
+#: includes/past-jobs.php:254
+msgid "No page is set yet. Make a page called Past jobs, put the shortcode below in it, then choose it here."
+msgstr ""
+
+#: includes/rest-api.php:1035
+msgid "No photo arrived. Please try again."
+msgstr ""
+
+#: includes/job-photos.php:255
+msgid "No picture arrived."
+msgstr ""
+
+#: includes/job-photos.php:915
+msgid "No picture arrived. Please try again."
+msgstr ""
+
+#: includes/email-check.php:494
+msgid "No reason given."
+msgstr ""
+
+#: includes/reports.php:68
+msgid "No reports in trash."
+msgstr ""
+
+#: includes/reports.php:67
+msgid "No reports. Good."
+msgstr ""
+
+#: includes/post-types.php:129
+msgid "No teams found."
+msgstr ""
+
+#: includes/post-types.php:130
+msgid "No teams in trash."
+msgstr ""
+
+#: includes/taxonomies.php:138
+msgid "No trades found."
+msgstr ""
+
+#: includes/post-types.php:79
+msgid "No workers found."
+msgstr ""
+
+#: includes/post-types.php:80
+msgid "No workers in trash."
+msgstr ""
+
+#: includes/ratings.php:907
+msgid "No: %s"
+msgstr ""
+
+#: includes/how-seen.php:326 includes/how-seen.php:379
+msgid "Nobody can pay to be higher up this site. Four things decide whether you get called."
+msgstr ""
+
+#: includes/how-seen.php:252
+msgid "Nobody can pay to be higher up this site. There is no advertisement, no boosted profile and no hidden score. Here is exactly what decides who gets seen, so you can judge for yourself whether that is true."
+msgstr ""
+
+#: includes/closed-jobs.php:311
+msgid "Nobody has been rung and nothing has been counted against your lookups for today."
+msgstr ""
+
+#: includes/not-confirmed.php:215
+msgid "Nobody is waiting. Every account with a profile has confirmed its email."
+msgstr ""
+
+#: includes/employer-index.php:218
+msgid "Nobody matches that"
+msgstr ""
+
+#: includes/install.php:654
+msgid "Nobody pays to get a job"
+msgstr ""
+
+#: includes/indexes.php:316
+msgid "Nobody registered here yet."
+msgstr ""
+
+#: includes/ratings.php:797
+msgid "Nobody sees this until both of you have answered. You cannot be punished for being honest."
+msgstr ""
+
+#: who-looked.php:319
+msgid "Nobody signed in has opened your profile in the last %s. Names appear here as soon as they do."
+msgstr ""
+
+#: who-looked.php:310
+msgid "Nobody this week"
+msgstr ""
+
+#: includes/rich-manu.php:457 includes/verify-requests.php:463
+msgid "Nobody waiting."
+msgstr ""
+
+#: includes/indexes.php:180
+msgid "Nobody yet"
+msgstr ""
+
+#: includes/gift.php:470 includes/hiring-request.php:530
+msgid "Nobody yet."
+msgstr ""
+
+#: includes/contact.php:862
+msgid "Nobody yet. Finish your profile and set yourself available, and you will show up in more searches."
+msgstr ""
+
+#: includes/email-check.php:561
+msgid "None"
+msgstr ""
+
+#: includes/verify-requests.php:498
+msgid "None on the profile"
+msgstr ""
+
+#: includes/roles.php:498
+msgid "Not allowed"
+msgstr ""
+
+#: includes/job-alerts.php:846
+msgid "Not booked. Switch it on and save."
+msgstr ""
+
+#: includes/rich-manu.php:678
+msgid "Not called."
+msgstr ""
+
+#: includes/not-confirmed.php:65 includes/not-confirmed.php:66 includes/not-confirmed.php:204
+msgid "Not confirmed"
+msgstr ""
+
+#: includes/ratings.php:848 includes/rest-api.php:2316
+msgid "Not enough ratings yet to show a score. We wait until three people have worked with somebody, so that one bad day does not decide everything."
+msgstr ""
+
+#: includes/verify-requests.php:522
+msgid "Not now"
+msgstr ""
+
+#: includes/hiring-request.php:642
+msgid "Not removed. That account has no other role, so it would be left unable to sign in."
+msgstr ""
+
+#: includes/admin.php:575 includes/past-jobs.php:277
+msgid "Not set"
+msgstr ""
+
+#: includes/rest-auth.php:572
+msgid "Not used yet"
+msgstr ""
+
+#: includes/gift.php:450 includes/gift.php:481
+msgid "Note"
+msgstr ""
+
+#: includes/rich-manu.php:624
+msgid "Noted. They stay on the list, because they have paid and not yet had their call."
+msgstr ""
+
+#: includes/dashboard.php:859
+msgid "Noted. We will not ask about that one again."
+msgstr ""
+
+#: includes/admin.php:407
+msgid "Nothing flagged. Nobody has been reported for not paying or not turning up."
+msgstr ""
+
+#: includes/exposure.php:520
+msgid "Nothing here is affected by paying. Position is turn taking, not ranking, and no plan moves anybody up."
+msgstr ""
+
+#: includes/admin.php:370 includes/compat.php:176
+msgid "Nothing here yet"
+msgstr ""
+
+#: includes/entitlements.php:387
+msgid "Nothing is being charged for right now, so these numbers are the whole story. Somebody who runs out is told to come back tomorrow."
+msgstr ""
+
+#: includes/exposure.php:508
+msgid "Nothing recorded yet"
+msgstr ""
+
+#: includes/email-check.php:647
+msgid "Nothing recorded yet. Send a test above, or wait for the next person to sign up."
+msgstr ""
+
+#: includes/saved.php:541
+msgid "Nothing saved yet"
+msgstr ""
+
+#: includes/app-links.php:432
+msgid "Nothing yet. Fill in the package name and at least one fingerprint."
+msgstr ""
+
+#: includes/app-links.php:447
+msgid "Nothing yet. Fill in the team and bundle identifiers."
+msgstr ""
+
+#: includes/email-check.php:636
+msgid "Nothing. The site is handing mail straight to the server it runs on, which most hosts either refuse or send in a way Gmail distrusts."
+msgstr ""
+
+#: includes/verify-requests.php:471
+msgid "Number"
+msgstr ""
+
+#: includes/teams.php:252
+msgid "Number for the team"
+msgstr ""
+
+#: includes/post-job.php:441
+msgid "Number for this job"
+msgstr ""
+
+#: includes/fields.php:173 includes/fields.php:256
+msgid "Number of ratings"
+msgstr ""
+
+#: includes/fields.php:198
+msgid "Number of workers"
+msgstr ""
+
+#: includes/plan-pitch.php:284
+msgid "Numbers whenever you need them."
+msgstr ""
+
+#: includes/taxonomies.php:397
+msgid "Nurse"
+msgstr ""
+
+#: includes/more-trades.php:112
+msgid "Nurse, ANM, GNM, ward staff, nursing assistant, home nursing."
+msgstr ""
+
+#: includes/taxonomies.php:343
+msgid "Nursery worker"
+msgstr ""
+
+#: includes/admin.php:82
+msgid "Of jobs posted, how many got somebody."
+msgstr ""
+
+#: includes/email-check.php:617
+msgid "Of those, waiting more than three days"
+msgstr ""
+
+#: includes/admin.php:87
+msgid "Of workers hired, how many actually arrived. The whole business."
+msgstr ""
+
+#: includes/job-alerts.php:802
+msgid "Off until you switch it on. Leave it off until there is enough work being posted that a message is worth sending, because the first one somebody gets decides whether they keep the next."
+msgstr ""
+
+#: includes/taxonomies.php:363
+msgid "Office assistant"
+msgstr ""
+
+#: includes/taxonomies.php:360
+msgid "Office work"
+msgstr ""
+
+#: includes/past-jobs.php:553
+msgid "Older"
+msgstr ""
+
+#: app-version.php:347
+msgid "Oldest Android version"
+msgstr ""
+
+#: app-version.php:337
+msgid "Oldest iPhone version"
+msgstr ""
+
+#: includes/standing.php:128
+msgid "On Kaam Ase since %s"
+msgstr ""
+
+#: includes/admin.php:566 includes/dashboard.php:442
+msgid "On leave"
+msgstr ""
+
+#: includes/job-alerts.php:783
+msgid "Once a day, every worker who has new work posted in their trade and their district gets one message about all of it. Never more than one a day each, whatever gets posted. Nobody chooses a trade or a district for this: it uses what is already on their profile."
+msgstr ""
+
+#: includes/job-alerts.php:572
+msgid "Once a day, if new work has been posted in your trade and your district, we send one message with all of it. Never more than one a day, whatever gets posted."
+msgstr ""
+
+#: includes/job-alerts.php:653
+msgid "Once a day, one message with any new work in your trade and district. This does not affect messages about you, like somebody looking up your number."
+msgstr ""
+
+#: includes/gift.php:84
+msgid "One month"
+msgstr ""
+
+#: includes/dashboard.php:870
+msgid "One more step below, then people can find you."
+msgstr ""
+
+#: includes/app-links.php:457
+msgid "One of the fingerprints is not the expected shape. Google wants SHA-256, which is 32 pairs of characters joined by colons. SHA-1 is half that length and is the usual mistake. It has been kept exactly as you typed it in case it is right and this check is wrong."
+msgstr ""
+
+#: includes/job-screening.php:864
+msgid "One of these is serious. If the post is what it appears to be, do not just delete it. Keep the post and the account, and report it to the police."
+msgstr ""
+
+#: includes/settings.php:175
+msgid "One per line, as label then a comma then the number. For example: Dimapur police station, 03862123456"
+msgstr ""
+
+#: includes/app-links.php:548
+msgid "One per line. These must match what the app itself claims, and only affects iPhone: Android hands the app every link on the domain once the domain is verified."
+msgstr ""
+
+#: includes/gift.php:92
+msgid "One year"
+msgstr ""
+
+#: includes/job-photos.php:427
+msgid "Only %s picture was kept. That is what this account can put on a job."
+msgid_plural "Only %s pictures were kept. That is what this account can put on a job."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/profile-edit.php:384
+msgid "Only around my town"
+msgstr ""
+
+#: includes/teams.php:236
+msgid "Only around our town"
+msgstr ""
+
+#: includes/profile-edit.php:372
+msgid "Only if you want steady monthly work. Leave empty otherwise."
+msgstr ""
+
+#: includes/hire-claims.php:183
+msgid "Only somebody hiring can confirm a hire from this side."
+msgstr ""
+
+#: includes/admin.php:428 includes/admin.php:666 includes/dashboard.php:666
+msgid "Open"
+msgstr ""
+
+#: includes/reports.php:100
+msgid "Open <span class=\"count\">(%s)</span>"
+msgid_plural "Open <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/posted-for.php:218
+msgid "Open it"
+msgstr ""
+
+#: includes/admin.php:357
+msgid "Open jobs"
+msgstr ""
+
+#: includes/closed-jobs.php:245
+msgid "Open jobs in %s"
+msgstr ""
+
+#: includes/app-links.php:561
+msgid "Open the two links above. If either shows a page instead of plain text, something on this site is answering before the plugin does."
+msgstr ""
+
+#: includes/how-seen.php:203
+msgid "Opening the app every day."
+msgstr ""
+
+#: includes/ratings.php:816
+msgid "Optional. Keep it about the work."
+msgstr ""
+
+#: includes/profile-edit.php:653
+msgid "Optional. Registered businesses get taken more seriously by workers."
+msgstr ""
+
+#: app-version.php:364
+msgid "Optional. Shown above the Update button."
+msgstr ""
+
+#: includes/past-jobs.php:705
+msgid "Other past jobs like this"
+msgstr ""
+
+#: includes/taxonomies.php:460 includes/taxonomies.php:762
+msgid "Other work"
+msgstr ""
+
+#: includes/app-links.php:472
+msgid "Package name"
+msgstr ""
+
+#: includes/employer-index.php:434 includes/past-jobs.php:562
+msgid "Page %1$s of %2$s"
+msgstr ""
+
+#: includes/employer-index.php:420
+msgid "Pages"
+msgstr ""
+
+#: includes/job-photos.php:577
+msgid "Paid accounts can put more than one picture on a job."
+msgstr ""
+
+#: includes/rich-manu.php:676
+msgid "Paid and waiting to be rung."
+msgstr ""
+
+#: includes/taxonomies.php:286
+msgid "Painter"
+msgstr ""
+
+#: includes/closed-jobs.php:271 includes/past-jobs.php:203 includes/past-jobs.php:204
+#: includes/past-jobs.php:233
+msgid "Past jobs"
+msgstr ""
+
+#: includes/app-links.php:542
+msgid "Paths"
+msgstr ""
+
+#: includes/settings.php:452
+msgid "Pattern on Kaam Ase: %s"
+msgstr ""
+
+#: includes/admin.php:624 includes/fields.php:290 includes/posted-for.php:326
+msgid "Pay"
+msgstr ""
+
+#: includes/fields.php:297 includes/post-job.php:290
+msgid "Pay period"
+msgstr ""
+
+#: includes/how-seen.php:199
+msgid "Paying. There is nothing to buy."
+msgstr ""
+
+#: includes/entitlements.php:383
+msgid "Payments are switched on. People can buy more than the numbers below. Prices are set on the payments screen, not here."
+msgstr ""
+
+#: includes/verify-requests.php:458
+msgid "People who have asked to be telephoned. Payers are not in this list, they are on the Calls to make screen and they go first. Ring the number, speak to them, then give it here. Whatever length you choose runs out on its own, and the mark goes with it."
+msgstr ""
+
+#: includes/rich-manu.php:449
+msgid "People who have paid for %s and are waiting to be rung. They already have unlimited urgent posts. The tick goes on only after you have spoken to them, which is what makes it worth anything."
+msgstr ""
+
+#: includes/privacy.php:197
+msgid "People who looked up your contact details"
+msgstr ""
+
+#: includes/saved.php:414
+msgid "People you have worked for"
+msgstr ""
+
+#: includes/teams.php:227
+msgid "Per worker per day is the usual way to quote it. Say so in the description if you mean something else."
+msgstr ""
+
+#: includes/hiring-request.php:537 includes/rich-manu.php:464
+msgid "Person"
+msgstr ""
+
+#: includes/taxonomies.php:398
+msgid "Pharmacist"
+msgstr ""
+
+#: includes/more-trades.php:113
+msgid "Pharmacist, medical shop, lab technician, clinic assistant, dispenser, physiotherapy, health worker."
+msgstr ""
+
+#: includes/taxonomies.php:652
+msgid "Phom"
+msgstr ""
+
+#: includes/not-confirmed.php:237 includes/reports.php:908
+msgid "Phone"
+msgstr ""
+
+#: includes/settings.php:185
+msgid "Phone app notifications"
+msgstr ""
+
+#: includes/fields.php:76 includes/fields.php:213 includes/profile-edit.php:254
+#: includes/registration.php:159
+msgid "Phone number"
+msgstr ""
+
+#: includes/privacy.php:831
+msgid "Phone numbers are never shown publicly. They are released one at a time to signed in, verified accounts, and every release is recorded and shown to the person it belongs to."
+msgstr ""
+
+#: includes/reports.php:713
+msgid "Phone: %s"
+msgstr ""
+
+#: includes/rest-auth.php:611
+msgid "Phones signed in"
+msgstr ""
+
+#: includes/profile-edit.php:167
+msgid "Photo of yourself"
+msgstr ""
+
+#: includes/taxonomies.php:465
+msgid "Photographer"
+msgstr ""
+
+#: includes/rest-api.php:1044
+msgid "Photos need to be a JPG, PNG or WEBP."
+msgstr ""
+
+#: includes/job-photos.php:73
+msgid "Photos on a job"
+msgstr ""
+
+#: includes/media.php:333
+msgid "Photos uploaded by workers and employers are hidden here so this stays a library of the site's own images. Use the dropdown above to see them."
+msgstr ""
+
+#: includes/taxonomies.php:402
+msgid "Physiotherapist"
+msgstr ""
+
+#: includes/job-photos.php:515 includes/posted-for.php:375
+msgid "Pictures"
+msgstr ""
+
+#: includes/gift.php:394
+msgid "Plan to record"
+msgstr ""
+
+#: includes/how-seen.php:182
+msgid "Plastering, shuttering, tile work, night shifts, your own tools. Somebody deciding between two masons decides on this."
+msgstr ""
+
+#: includes/app-links.php:494
+msgid "Play Console, Test and release, App signing. Copy the SHA-256 certificate fingerprint from the app signing key. One per line if you have more than one."
+msgstr ""
+
+#: includes/registration.php:426 includes/rest-api.php:666
+msgid "Please agree to the terms and the privacy notice."
+msgstr ""
+
+#: includes/registration.php:418 includes/rest-api.php:658
+msgid "Please choose the work you do."
+msgstr ""
+
+#: includes/registration.php:414 includes/rest-api.php:654 includes/services.php:304
+msgid "Please choose your district."
+msgstr ""
+
+#: includes/registration.php:410 includes/rest-api.php:650
+msgid "Please enter a working email address."
+msgstr ""
+
+#: includes/registration.php:406 includes/rest-api.php:646
+msgid "Please enter your name."
+msgstr ""
+
+#: includes/registration.php:442 includes/rest-api.php:670
+msgid "Please enter your phone number."
+msgstr ""
+
+#: includes/post-job.php:203 includes/profile-edit.php:126 includes/registration.php:78
+#: includes/reports.php:313 includes/teams.php:101
+msgid "Please fix this"
+msgstr ""
+
+#: includes/services.php:308
+msgid "Please put a phone number. It should be 10 digits starting with 6, 7, 8 or 9."
+msgstr ""
+
+#: includes/services.php:300
+msgid "Please put your name."
+msgstr ""
+
+#: includes/reports.php:560 includes/services.php:621
+msgid "Please tell us a bit more about what happened, so we know where to start."
+msgstr ""
+
+#: app-version.php:362
+msgid "Please update Kaam Ase to carry on."
+msgstr ""
+
+#: includes/working-request.php:375
+msgid "Plenty of people here hire for one job and work on another. Add a worker profile to this same account and employers can find you too. It is free, and your login and your job posts stay exactly as they are."
+msgstr ""
+
+#: includes/taxonomies.php:285
+msgid "Plumber"
+msgstr ""
+
+#: includes/taxonomies.php:657
+msgid "Pochury"
+msgstr ""
+
+#: includes/reports.php:140
+msgid "Police and emergency"
+msgstr ""
+
+#: includes/email-check.php:555
+msgid "Port"
+msgstr ""
+
+#: includes/email-check.php:569
+msgid "Port 465 with SSL is the usual pair. If that is refused, try 587 with TLS."
+msgstr ""
+
+#: includes/job-screening.php:797
+msgid "Possible sexual services"
+msgstr ""
+
+#: includes/job-screening.php:795
+msgid "Possible trafficking or bonded labour"
+msgstr ""
+
+#: includes/job-screening.php:796
+msgid "Possibly involves someone under 18"
+msgstr ""
+
+#: includes/dashboard.php:535 includes/install.php:306 includes/post-job.php:232
+#: includes/post-types.php:224 includes/post-types.php:225
+msgid "Post a job"
+msgstr ""
+
+#: includes/posted-for.php:179 includes/posted-for.php:211
+msgid "Post a job for somebody"
+msgstr ""
+
+#: includes/dashboard.php:689
+msgid "Post again"
+msgstr ""
+
+#: includes/plan-pitch.php:304
+msgid "Post as much work as you have."
+msgstr ""
+
+#: includes/posted-for.php:180
+msgid "Post for somebody"
+msgstr ""
+
+#: includes/dashboard.php:1064
+msgid "Post job"
+msgstr ""
+
+#: includes/install.php:627
+msgid "Post the job with the rate, how many workers you need and when you need them."
+msgstr ""
+
+#: includes/post-job.php:456
+msgid "Post this job"
+msgstr ""
+
+#: includes/dashboard.php:640
+msgid "Post your first job"
+msgstr ""
+
+#: includes/posted-for.php:65
+msgid "Posted for an outside employer"
+msgstr ""
+
+#: includes/admin.php:92
+msgid "Posted more than once. The clearest sign it works."
+msgstr ""
+
+#: includes/post-job.php:158
+msgid "Posting a job takes two minutes once you have an account."
+msgstr ""
+
+#: includes/taxonomies.php:339
+msgid "Poultry worker"
+msgstr ""
+
+#: includes/taxonomies.php:352
+msgid "Pre-school teacher"
+msgstr ""
+
+#: includes/employer-index.php:424
+msgid "Previous"
+msgstr ""
+
+#: includes/install.php:404
+msgid "Privacy"
+msgstr ""
+
+#: includes/post-types.php:83
+msgid "Profile photo"
+msgstr ""
+
+#: includes/dashboard.php:855
+msgid "Profile saved."
+msgstr ""
+
+#: includes/job-screening.php:859
+msgid "Publishing it from here clears it, and this employer's later jobs will go live on their own."
+msgstr ""
+
+#: includes/services.php:456
+msgid "Put a phone number for the team. It should be 10 digits starting with 6, 7, 8 or 9."
+msgstr ""
+
+#: includes/posted-for.php:491
+msgid "Put the name of the person or firm hiring."
+msgstr ""
+
+#: includes/services.php:76
+msgid "Put the rate you are paying. Jobs with no rate get almost no answers."
+msgstr ""
+
+#: includes/gift.php:434
+msgid "Put the tick on their profile"
+msgstr ""
+
+#: includes/posted-for.php:495
+msgid "Put their number. Ten digits starting with 6, 7, 8 or 9. Without it this job is no use to anybody."
+msgstr ""
+
+#: includes/posted-for.php:426
+msgid "Put this job up"
+msgstr ""
+
+#: includes/profile-edit.php:359
+msgid "Put what you normally ask for. Employers filter by rate, so leaving it empty keeps you out of most searches."
+msgstr ""
+
+#: includes/install.php:620
+msgid "Put your trade, your district and the day rate you expect."
+msgstr ""
+
+#: includes/verify-requests.php:518
+msgid "Rang them, give it"
+msgstr ""
+
+#: includes/install.php:630
+msgid "Rate the worker afterwards. They rate you too."
+msgstr ""
+
+#: includes/hires.php:504
+msgid "Rate them"
+msgstr ""
+
+#: includes/standing.php:98
+msgid "Rated %1$s by %2$d worker"
+msgid_plural "Rated %1$s by %2$d workers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/ratings.php:847 includes/ratings.php:869
+msgid "Ratings"
+msgstr ""
+
+#: includes/ratings.php:368
+msgid "Ratings can only be left after real work. If you worked together, confirm the hire first."
+msgstr ""
+
+#: includes/ratings.php:818
+msgid "Ratings open once a hire is confirmed"
+msgstr ""
+
+#: includes/privacy.php:162
+msgid "Ratings you gave"
+msgstr ""
+
+#: includes/privacy.php:371
+msgid "Ratings you gave were kept without your name, because they are part of somebody else's record."
+msgstr ""
+
+#: includes/how-seen.php:185
+msgid "Ratings, once three people have worked with you."
+msgstr ""
+
+#: includes/exposure.php:485
+msgid "Reached a first page at least once"
+msgstr ""
+
+#: includes/how-seen.php:338
+msgid "Read the whole thing"
+msgstr ""
+
+#: app-version.php:320
+msgid "Read this before you set a number."
+msgstr ""
+
+#: includes/dashboard.php:921
+msgid "Rebuild my profile"
+msgstr ""
+
+#: includes/email-check.php:643
+msgid "Recent messages"
+msgstr ""
+
+#: includes/taxonomies.php:362
+msgid "Receptionist"
+msgstr ""
+
+#: includes/more-trades.php:109
+msgid "Receptionist, front desk, office assistant, clerk, data entry, computer operator, office boy, admin work."
+msgstr ""
+
+#: includes/rich-manu.php:696
+msgid "Record that I have spoken to this person"
+msgstr ""
+
+#: includes/rich-manu.php:750
+msgid "Recorded by hand from the user record."
+msgstr ""
+
+#: includes/reports.php:903
+msgid "Reference"
+msgstr ""
+
+#: includes/taxonomies.php:315
+msgid "Refrigerator repair"
+msgstr ""
+
+#: includes/email-check.php:156
+msgid "Refused, no reason given."
+msgstr ""
+
+#: includes/install.php:300
+msgid "Register"
+msgstr ""
+
+#: includes/post-job.php:160 includes/registration.php:132
+msgid "Register as an employer"
+msgstr ""
+
+#: includes/registration.php:300
+msgid "Register as employer"
+msgstr ""
+
+#: includes/post-job.php:157 includes/teams.php:71
+msgid "Register first, it is free"
+msgstr ""
+
+#: includes/not-confirmed.php:240
+msgid "Registered"
+msgstr ""
+
+#: includes/job-photos.php:536
+msgid "Remove"
+msgstr ""
+
+#: includes/hiring-request.php:587
+msgid "Remove hiring"
+msgstr ""
+
+#: includes/hiring-request.php:694
+msgid "Remove job posting from this account"
+msgstr ""
+
+#: includes/post-types.php:85
+msgid "Remove profile photo"
+msgstr ""
+
+#: includes/rich-manu.php:695
+msgid "Remove the call record and the mark"
+msgstr ""
+
+#: includes/profile-edit.php:176 includes/teams.php:271
+msgid "Remove this photo"
+msgstr ""
+
+#: includes/admin.php:742
+msgid "Remove verified"
+msgstr ""
+
+#: includes/privacy.php:202 includes/privacy.php:360 includes/privacy.php:403
+msgid "Removed account"
+msgstr ""
+
+#: includes/taxonomies.php:651
+msgid "Rengma"
+msgstr ""
+
+#: includes/taxonomies.php:312
+msgid "Repair and technical"
+msgstr ""
+
+#: includes/reports.php:65 includes/reports.php:599 includes/services.php:639
+msgid "Report"
+msgstr ""
+
+#: includes/dashboard.php:1004 includes/install.php:358 includes/reports.php:340
+msgid "Report a problem"
+msgstr ""
+
+#: includes/reports.php:882
+msgid "Report details"
+msgstr ""
+
+#: includes/reports.php:69 includes/reports.php:70
+msgid "Reports"
+msgstr ""
+
+#: includes/rich-manu.php:84
+msgid "Rich Manu"
+msgstr ""
+
+#: includes/how-seen.php:200
+msgid "Rich Manu gives an employer more phone lookups in a day and lets them mark more jobs urgent. It does not move anybody up a list, and it never will. If it did, the person at the top would be the person with money rather than the person free for work on Thursday, and every employer here would learn to ignore the top of the list."
+msgstr ""
+
+#: includes/rich-manu.php:465
+msgid "Ring"
+msgstr ""
+
+#: includes/install.php:738
+msgid "Rules on ratings, and what happens to a disputed one."
+msgstr ""
+
+#: includes/gift.php:479
+msgid "Runs until"
+msgstr ""
+
+#: includes/posted-for.php:330
+msgid "Rupees"
+msgstr ""
+
+#: includes/services.php:84
+msgid "Rupees %1$s is below the legal minimum wage of rupees %2$s. Check the amount, or change the pay period if you picked the wrong one."
+msgstr ""
+
+#: includes/sharing.php:207
+msgid "Rupees %s"
+msgstr ""
+
+#: includes/sharing.php:200
+msgid "Rupees %s a day"
+msgstr ""
+
+#: includes/sharing.php:201
+msgid "Rupees %s a month"
+msgstr ""
+
+#: includes/sharing.php:202
+msgid "Rupees %s an hour"
+msgstr ""
+
+#: includes/sharing.php:203
+msgid "Rupees %s for the job"
+msgstr ""
+
+#: includes/install.php:378
+msgid "Safety"
+msgstr ""
+
+#: includes/hire-claims.php:607
+msgid "Said so %s ago"
+msgstr ""
+
+#: includes/taxonomies.php:374
+msgid "Sales executive"
+msgstr ""
+
+#: includes/more-trades.php:111
+msgid "Salesman, saleswoman, sales executive, shop assistant, counter staff, cashier, store keeper, godown in charge."
+msgstr ""
+
+#: includes/taxonomies.php:654
+msgid "Sangtam"
+msgstr ""
+
+#: includes/profile-edit.php:266 includes/saved.php:189
+msgid "Save"
+msgstr ""
+
+#: includes/post-job.php:455
+msgid "Save changes"
+msgstr ""
+
+#: includes/teams.php:293
+msgid "Save my team"
+msgstr ""
+
+#: includes/email-check.php:585
+msgid "Save the mailbox"
+msgstr ""
+
+#: includes/saved.php:189
+msgid "Save this job"
+msgstr ""
+
+#: includes/dashboard.php:1074 includes/dashboard.php:1094 includes/install.php:318
+#: includes/saved.php:186 includes/saved.php:534
+msgid "Saved"
+msgstr ""
+
+#: includes/dashboard.php:546
+msgid "Saved jobs"
+msgstr ""
+
+#: includes/dashboard.php:538
+msgid "Saved workers"
+msgstr ""
+
+#: app-version.php:264
+msgid "Saved."
+msgstr ""
+
+#: includes/services.php:70
+msgid "Say how many workers you need."
+msgstr ""
+
+#: includes/dashboard.php:152
+msgid "Say what kind of employer you are"
+msgstr ""
+
+#: includes/how-seen.php:181
+msgid "Say what you actually do."
+msgstr ""
+
+#: includes/install.php:628
+msgid "Say whether food, stay or transport is provided. Workers decide on this as much as on the rate."
+msgstr ""
+
+#: includes/dashboard.php:206
+msgid "Say which languages you speak"
+msgstr ""
+
+#: includes/rest-api.php:1670
+msgid "Say which phone to sign out."
+msgstr ""
+
+#: includes/how-seen.php:230
+msgid "Say you are available. Available workers are shown ahead of busy ones, and it is one tap."
+msgstr ""
+
+#: includes/more-trades.php:108
+msgid "School teacher, assistant teacher, private tuition, coaching class, music teacher, computer teacher, sports coach, pre school."
+msgstr ""
+
+#: includes/privacy.php:178
+msgid "Score"
+msgstr ""
+
+#: includes/taxonomies.php:175
+msgid "Search districts"
+msgstr ""
+
+#: includes/post-types.php:178
+msgid "Search employers"
+msgstr ""
+
+#: includes/post-types.php:229
+msgid "Search jobs"
+msgstr ""
+
+#: includes/taxonomies.php:222
+msgid "Search languages"
+msgstr ""
+
+#: includes/reports.php:66
+msgid "Search reports"
+msgstr ""
+
+#: includes/post-types.php:128
+msgid "Search teams"
+msgstr ""
+
+#: includes/taxonomies.php:129
+msgid "Search trades"
+msgstr ""
+
+#: includes/post-types.php:78
+msgid "Search workers"
+msgstr ""
+
+#: includes/taxonomies.php:462
+msgid "Security guard"
+msgstr ""
+
+#: who-looked.php:473
+msgid "See a whole year"
+msgstr ""
+
+#: includes/teams.php:116
+msgid "See how a contractor sees it"
+msgstr ""
+
+#: includes/dashboard.php:402
+msgid "See how others see your profile"
+msgstr ""
+
+#: who-looked.php:486
+msgid "See Rich Manu"
+msgstr ""
+
+#: includes/verify-requests.php:490
+msgid "See their profile"
+msgstr ""
+
+#: includes/hiring-request.php:560
+msgid "See their worker profile"
+msgstr ""
+
+#: includes/plan-pitch.php:164
+msgid "See what %s gives you"
+msgstr ""
+
+#: includes/plan-pitch.php:167
+msgid "See what you get"
+msgstr ""
+
+#: includes/email-check.php:599
+msgid "Send a test"
+msgstr ""
+
+#: includes/email-check.php:516
+msgid "Send all mail through this mailbox"
+msgstr ""
+
+#: includes/dashboard.php:820
+msgid "Send it again"
+msgstr ""
+
+#: includes/job-alerts.php:873
+msgid "Send it now"
+msgstr ""
+
+#: includes/email-check.php:589
+msgid "Send one now"
+msgstr ""
+
+#: includes/settings.php:190
+msgid "Send push notifications to the Kaam Ase app"
+msgstr ""
+
+#: includes/ratings.php:821
+msgid "Send rating"
+msgstr ""
+
+#: includes/settings.php:144
+msgid "Send reports to"
+msgstr ""
+
+#: includes/job-alerts.php:793
+msgid "Send them"
+msgstr ""
+
+#: includes/reports.php:464
+msgid "Send this"
+msgstr ""
+
+#: includes/email-check.php:624
+msgid "Sending as"
+msgstr ""
+
+#: includes/job-alerts.php:878
+msgid "Sending now counts for today, so anybody reached will not get the scheduled one as well. Use it once to see that it works, not to test repeatedly."
+msgstr ""
+
+#: includes/job-alerts.php:773
+msgid "Sent to %s person."
+msgid_plural "Sent to %s people."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:848
+msgid "Sent. Check your email."
+msgstr ""
+
+#: includes/email-check.php:546
+msgid "Server"
+msgstr ""
+
+#: includes/install.php:781
+msgid "Set permalinks to Post name under Settings, Permalinks. Nothing on this platform works with plain permalinks."
+msgstr ""
+
+#: includes/post-types.php:84
+msgid "Set profile photo"
+msgstr ""
+
+#: includes/reports.php:941
+msgid "Set the status to Closed when it is dealt with. Reports are never shown on the website."
+msgstr ""
+
+#: includes/dashboard.php:178
+msgid "Set your day rate"
+msgstr ""
+
+#: includes/install.php:622
+msgid "Set yourself available when you are free and busy when you are not."
+msgstr ""
+
+#: includes/dashboard.php:465
+msgid "Set yourself working when you take a job. It stops employers calling you for nothing, and it keeps your rating clean."
+msgstr ""
+
+#: includes/settings.php:47 includes/settings.php:48 kaamase-core.php:329
+msgid "Settings"
+msgstr ""
+
+#: includes/taxonomies.php:454
+msgid "Sewing machine operator"
+msgstr ""
+
+#: includes/posted-for.php:128
+msgid "Shared by Kaam Ase."
+msgstr ""
+
+#: includes/taxonomies.php:372
+msgid "Shop and sales"
+msgstr ""
+
+#: includes/taxonomies.php:390
+msgid "Shop and sales (general)"
+msgstr ""
+
+#: includes/taxonomies.php:375
+msgid "Shop assistant"
+msgstr ""
+
+#: includes/employer-index.php:365 includes/past-jobs.php:410 includes/queries.php:973
+msgid "Show"
+msgstr ""
+
+#: includes/employer-index.php:223
+msgid "Show all employers"
+msgstr ""
+
+#: includes/queries.php:1012
+msgid "Show results"
+msgstr ""
+
+#: includes/employer-index.php:376
+msgid "Show these"
+msgstr ""
+
+#: includes/app-links.php:480
+msgid "Shown in the Play Console beside the app name."
+msgstr ""
+
+#: includes/settings.php:163
+msgid "Shown to people who cannot use the website. Many workers will phone rather than fill in a form, and a platform with no number to call looks like one that does not want to be reached."
+msgstr ""
+
+#: includes/contact.php:726 includes/dashboard.php:54 includes/employer-index.php:190
+#: includes/registration.php:252 includes/saved.php:374
+msgid "Sign in"
+msgstr ""
+
+#: includes/privacy.php:667
+msgid "Sign in and it comes straight back."
+msgstr ""
+
+#: includes/job-alerts.php:621 includes/verify-requests.php:372
+msgid "Sign in first."
+msgstr ""
+
+#: includes/compat.php:223
+msgid "Sign in to contact"
+msgstr ""
+
+#: includes/rest-api.php:60
+msgid "Sign in to do that."
+msgstr ""
+
+#: includes/profile-edit.php:88
+msgid "Sign in to edit your profile"
+msgstr ""
+
+#: includes/ratings.php:348 includes/services.php:532
+msgid "Sign in to leave a rating."
+msgstr ""
+
+#: includes/contact.php:275
+msgid "Sign in to see contact details. It takes a minute and it keeps numbers away from strangers."
+msgstr ""
+
+#: includes/saved.php:372
+msgid "Sign in to see the things you saved."
+msgstr ""
+
+#: includes/employer-index.php:187
+msgid "Sign in to see who is hiring"
+msgstr ""
+
+#: includes/rest-api.php:84
+msgid "Sign in to see who is hiring."
+msgstr ""
+
+#: who-looked.php:227
+msgid "Sign in to see who looked at you"
+msgstr ""
+
+#: includes/dashboard.php:52
+msgid "Sign in to see your account."
+msgstr ""
+
+#: includes/dashboard.php:1019
+msgid "Sign out"
+msgstr ""
+
+#: includes/rest-auth.php:643
+msgid "Sign out of every phone"
+msgstr ""
+
+#: includes/rest-auth.php:630
+msgid "Sign this phone out"
+msgstr ""
+
+#: includes/taxonomies.php:453
+msgid "Signboard maker"
+msgstr ""
+
+#: includes/rest-auth.php:716
+msgid "Signed out. That phone will have to sign in again to use the app."
+msgstr ""
+
+#: includes/app-links.php:487
+msgid "Signing fingerprints"
+msgstr ""
+
+#: includes/media.php:285
+msgid "Site images"
+msgstr ""
+
+#: includes/job-alerts.php:820
+msgid "Site time. Early morning works best: somebody deciding whether to look for work today decides it before they leave the house."
+msgstr ""
+
+#: includes/profile-edit.php:407
+msgid "So an employer knows you can understand each other on site."
+msgstr ""
+
+#: includes/taxonomies.php:436
+msgid "Social media manager"
+msgstr ""
+
+#: includes/taxonomies.php:439
+msgid "Software developer"
+msgstr ""
+
+#: includes/more-trades.php:120
+msgid "Solar panel fitting, inverter, battery, UPS."
+msgstr ""
+
+#: includes/taxonomies.php:327
+msgid "Solar technician"
+msgstr ""
+
+#: includes/reports.php:233
+msgid "Somebody agreed to a job and did not turn up"
+msgstr ""
+
+#: includes/reports.php:217
+msgid "Somebody asked a worker for money to get a job"
+msgstr ""
+
+#: includes/reports.php:221
+msgid "Somebody behaved badly, threatened or harassed"
+msgstr ""
+
+#: includes/rich-manu.php:858
+msgid "Somebody from Kaam Ase telephoned this person and confirmed they are who they say they are."
+msgstr ""
+
+#: includes/push.php:173
+msgid "Somebody has your number"
+msgstr ""
+
+#: includes/post-job.php:897
+msgid "Somebody is reading it before it goes out to workers. This is usually done within a few hours, and every job on Kaam Ase gets the same check. Nothing more is needed from you."
+msgstr ""
+
+#: includes/profile-edit.php:445
+msgid "Somebody local who knows you and will say so. A colony council member, a GB, a church elder, a student union officer, or somebody you worked for before. This carries more weight with employers than anything else on your profile."
+msgstr ""
+
+#: includes/hire-claims.php:581
+msgid "Somebody on Kaam Ase"
+msgstr ""
+
+#: includes/reports.php:765
+msgid "Somebody reads it within two working days."
+msgstr ""
+
+#: includes/how-seen.php:154
+msgid "Somebody who joined this morning has waited longer than everybody, as far as the list is concerned, so they are seen on their first day rather than waiting weeks for a turn."
+msgstr ""
+
+#: includes/profile-edit.php:466
+msgid "Someone I worked for"
+msgstr ""
+
+#: includes/profile-edit.php:467
+msgid "Someone else who knows me"
+msgstr ""
+
+#: includes/rest-shape.php:321
+msgid "Someone they worked for"
+msgstr ""
+
+#: includes/rest-shape.php:322
+msgid "Someone who knows them"
+msgstr ""
+
+#: includes/reports.php:245
+msgid "Something else"
+msgstr ""
+
+#: includes/email-check.php:457
+msgid "Something is configuring the mailer"
+msgstr ""
+
+#: includes/reports.php:241
+msgid "Something on the website is broken"
+msgstr ""
+
+#: includes/services.php:577
+msgid "Something went wrong saving that rating."
+msgstr ""
+
+#: includes/reports.php:616
+msgid "Something went wrong sending that. Please try again, or call us."
+msgstr ""
+
+#: includes/dashboard.php:913
+msgid "Something went wrong when your account was made. Tap below and we will build it again. Nothing else about your account changes."
+msgstr ""
+
+#: includes/registration.php:350
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: includes/post-job.php:375
+msgid "Somewhere to stay"
+msgstr ""
+
+#: includes/rich-manu.php:522
+msgid "Spoken to them"
+msgstr ""
+
+#: includes/taxonomies.php:355
+msgid "Sports coach"
+msgstr ""
+
+#: includes/hire-claims.php:191
+msgid "Staff accounts do not record hires of their own."
+msgstr ""
+
+#: includes/fields.php:308 includes/posted-for.php:397
+msgid "Start date"
+msgstr ""
+
+#: includes/admin.php:625
+msgid "State"
+msgstr ""
+
+#: includes/fields.php:354
+msgid "Status"
+msgstr ""
+
+#: includes/posted-for.php:419
+msgid "Stay provided"
+msgstr ""
+
+#: includes/taxonomies.php:289
+msgid "Steel fixer"
+msgstr ""
+
+#: includes/job-alerts.php:594
+msgid "Stop telling me about new work"
+msgstr ""
+
+#: app-version.php:295
+msgid "Stops an old version of the app being used. Somebody on a version below the one you set is shown an Update button and cannot go further until they update. Leave both boxes empty and nobody is stopped."
+msgstr ""
+
+#: includes/taxonomies.php:377
+msgid "Store keeper"
+msgstr ""
+
+#: includes/profile-edit.php:465 includes/rest-shape.php:320
+msgid "Student or workers union officer"
+msgstr ""
+
+#: includes/taxonomies.php:646
+msgid "Sumi"
+msgstr ""
+
+#: includes/taxonomies.php:292
+msgid "Surveyor"
+msgstr ""
+
+#: includes/settings.php:267
+msgid "Switch data removal back off"
+msgstr ""
+
+#: includes/settings.php:293
+msgid "Switch data removal on"
+msgstr ""
+
+#: includes/settings.php:273
+msgid "Switch this on only if you are finished with Kaam Ase and want everything gone when the plugin is deleted."
+msgstr ""
+
+#: includes/hire-claims.php:278
+msgid "That is enough hires to confirm for one day. Try again tomorrow."
+msgstr ""
+
+#: app-version.php:261
+msgid "That is not a version number, so nothing was set. Use digits and dots only, like 2.0.7."
+msgstr ""
+
+#: includes/hire-claims.php:170
+msgid "That is your own profile."
+msgstr ""
+
+#: includes/hire-claims.php:331
+msgid "That question is no longer waiting for an answer."
+msgstr ""
+
+#: app-version.php:246
+msgid "The gate is off. Every version can sign in again."
+msgstr ""
+
+#: app-version.php:305
+msgid "The gate is on right now."
+msgstr ""
+
+#: who-looked.php:464
+msgid "Their names are held for a year. A free account sees the last week, which is why this one looks empty. Rich Manu opens the rest of it."
+msgstr ""
+
+#: includes/hire-claims.php:561
+msgid "These people say you worked together. Agreeing is what lets the two of you rate each other, and nobody sees a rating until you have both written one."
+msgstr ""
+
+#: includes/hire-claims.php:250
+msgid "They have already been asked. It is with them now."
+msgstr ""
+
+#: includes/hire-claims.php:263
+msgid "They said no to this recently. You can ask again in a week."
+msgstr ""
+
+#: includes/hire-claims.php:409
+msgid "They will be asked to agree before either of you can rate the other."
+msgstr ""
+
+#: app-version.php:375
+msgid "Turn the gate off"
+msgstr ""
+
+#: includes/taxonomies.php:316
+msgid "TV repair"
+msgstr ""
+
+#: includes/taxonomies.php:466
+msgid "Tailor"
+msgstr ""
+
+#: includes/settings.php:299
+msgid "Take a database backup before you touch this, and check that the backup restores. A backup nobody has tested is not a backup."
+msgstr ""
+
+#: includes/gift.php:517
+msgid "Take it back"
+msgstr ""
+
+#: includes/teams.php:306
+msgid "Take my team listing down"
+msgstr ""
+
+#: includes/teams.php:305
+msgid "Take the team listing down? Your own worker profile stays."
+msgstr ""
+
+#: includes/gift.php:354
+msgid "Taken back."
+msgstr ""
+
+#: includes/verify-requests.php:453
+msgid "Taken off the list. They can ask again in a month."
+msgstr ""
+
+#: includes/registration.php:676
+msgid "Tap the link below to confirm your email address. Your profile goes live as soon as you do."
+msgstr ""
+
+#: includes/post-job.php:900
+msgid "Tap the link in your email and it goes live straight away."
+msgstr ""
+
+#: includes/taxonomies.php:421
+msgid "Taxi driver"
+msgstr ""
+
+#: includes/taxonomies.php:350
+msgid "Teacher"
+msgstr ""
+
+#: includes/taxonomies.php:348
+msgid "Teaching and childcare"
+msgstr ""
+
+#: includes/not-confirmed.php:198
+msgid "Team"
+msgstr ""
+
+#: includes/app-links.php:510
+msgid "Team identifier"
+msgstr ""
+
+#: includes/fields.php:193
+msgid "Team leader"
+msgstr ""
+
+#: includes/post-types.php:133
+msgid "Team photo"
+msgstr ""
+
+#: includes/dashboard.php:860
+msgid "Team saved."
+msgstr ""
+
+#: includes/post-types.php:132
+msgid "Teams"
+msgstr ""
+
+#: includes/teams.php:82
+msgid "Teams are listed by the worker who leads them. If you hire teams rather than lead one, post a job instead and say how many workers you need."
+msgstr ""
+
+#: includes/indexes.php:628
+msgid "Teams for hire"
+msgstr ""
+
+#: includes/reports.php:418
+msgid "Tell it in your own words. Dates and places help."
+msgstr ""
+
+#: includes/job-alerts.php:595
+msgid "Tell me about new work"
+msgstr ""
+
+#: includes/indexes.php:209
+msgid "Tell us"
+msgstr ""
+
+#: includes/reports.php:348
+msgid "Tell us what happened. What you write here is private. It is never shown on anybody's profile and the person you are reporting is not told who reported them."
+msgstr ""
+
+#: includes/indexes.php:206
+msgid "Tell us what you do and we will add it. This list is meant to cover the work people actually do in Nagaland, not a list somebody wrote in an office."
+msgstr ""
+
+#: includes/job-alerts.php:569
+msgid "Telling you about new work"
+msgstr ""
+
+#: includes/app-links.php:518
+msgid "Ten characters, top right of the Apple developer account page."
+msgstr ""
+
+#: includes/install.php:410
+msgid "Terms"
+msgstr ""
+
+#: includes/ratings.php:779
+msgid "Thank you, your rating is saved. It appears once the other side has written theirs."
+msgstr ""
+
+#: includes/rest-api.php:2365
+msgid "Thank you. It appears once the other side has written theirs."
+msgstr ""
+
+#: includes/dashboard.php:858
+msgid "Thank you. You can rate each other now, and it helps the next person."
+msgstr ""
+
+#: includes/gstin.php:273
+msgid "That GST number does not look right. It is 15 characters, and the last one is a check character, so a single wrong letter makes the whole number fail. Copy it from your registration certificate. You can also leave it blank."
+msgstr ""
+
+#: includes/hiring-request.php:893 includes/working-request.php:297
+msgid "That did not work. Please try again."
+msgstr ""
+
+#: includes/rest-api.php:762
+msgid "That email address and password do not match. Check both and try again."
+msgstr ""
+
+#: includes/rest-api.php:1798
+msgid "That employer is not available."
+msgstr ""
+
+#: includes/rest-api.php:1792 includes/rest-api.php:1902
+msgid "That employer no longer exists."
+msgstr ""
+
+#: includes/job-photos.php:273
+msgid "That file is not a picture. Only JPG, PNG and WEBP photos can go on a job."
+msgstr ""
+
+#: includes/fields.php:885
+msgid "That filter is not available."
+msgstr ""
+
+#: includes/registration.php:338
+msgid "That form expired. Please try again."
+msgstr ""
+
+#: includes/rest-api.php:1682
+msgid "That is a lot of sign outs at once. Try again in an hour, or use the website."
+msgstr ""
+
+#: includes/rest-api.php:2464
+msgid "That is not a push token we recognise."
+msgstr ""
+
+#: includes/rest-api.php:967
+msgid "That is not an availability we know about."
+msgstr ""
+
+#: includes/services.php:159
+msgid "That job is not yours to edit."
+msgstr ""
+
+#: includes/job-photos.php:894 includes/rest-api.php:1524
+msgid "That job is not yours."
+msgstr ""
+
+#: includes/rest-api.php:1467
+msgid "That job no longer exists."
+msgstr ""
+
+#: includes/dashboard.php:847
+msgid "That link did not work. It may have expired. Send a new one below."
+msgstr ""
+
+#: includes/rest-api.php:1945
+msgid "That link does not lead anywhere any more."
+msgstr ""
+
+#: includes/rest-api.php:2113
+msgid "That no longer exists."
+msgstr ""
+
+#: includes/registration.php:444 includes/rest-api.php:672 includes/services.php:99
+msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
+msgstr ""
+
+#: includes/job-photos.php:266
+msgid "That picture did not upload. Please try again."
+msgstr ""
+
+#: includes/job-photos.php:265
+msgid "That picture was too big for the server to take. Photos straight from a phone are often very large. Try one taken at a smaller size."
+msgstr ""
+
+#: includes/rest-api.php:1827
+msgid "That profile is not available."
+msgstr ""
+
+#: includes/services.php:287
+msgid "That profile is not yours to edit."
+msgstr ""
+
+#: includes/rest-api.php:973 includes/rest-api.php:1029
+msgid "That profile is not yours."
+msgstr ""
+
+#: includes/contact.php:269 includes/ratings.php:354 includes/rest-api.php:1821
+#: includes/services.php:283
+msgid "That profile no longer exists."
+msgstr ""
+
+#: includes/services.php:428
+msgid "That team is not yours to edit."
+msgstr ""
+
+#: includes/registration.php:357 includes/reports.php:521
+msgid "That was too quick. Please try again."
+msgstr ""
+
+#: includes/rich-manu.php:665
+msgid "The call"
+msgstr ""
+
+#: includes/rich-manu.php:685
+msgid "The call is recorded but the mark is not showing, because their plan is not running. It comes back on its own if they pay again. Nothing needs doing here."
+msgstr ""
+
+#: includes/gift.php:443
+msgid "The email thanks them for taking our call, so leave it off unless you actually rang them."
+msgstr ""
+
+#: includes/closed-jobs.php:191
+msgid "The employer has closed this job."
+msgstr ""
+
+#: includes/posted-for.php:279
+msgid "The job"
+msgstr ""
+
+#: includes/posted-for.php:216
+msgid "The job is up."
+msgstr ""
+
+#: includes/email-check.php:499
+msgid "The mailbox mail goes out through"
+msgstr ""
+
+#: includes/closed-jobs.php:305
+msgid "The number for this job is closed"
+msgstr ""
+
+#: includes/posted-for.php:136
+msgid "The number on this job belongs to the employer, not to us. You speak to them directly."
+msgstr ""
+
+#: includes/past-jobs.php:268
+msgid "The page"
+msgstr ""
+
+#: includes/past-jobs.php:283
+msgid "The page carrying the shortcode. Closed jobs link back to it, which is what stops them going orphaned."
+msgstr ""
+
+#: includes/email-check.php:540
+msgid "The password of that mailbox, not your hosting password and not your WordPress password. Leave the dots alone if you are only changing something else on this screen."
+msgstr ""
+
+#: includes/posted-for.php:251
+msgid "The person or firm hiring"
+msgstr ""
+
+#: includes/email-check.php:489
+msgid "The server accepted it. That means it left here. Go and look in the inbox now, and in Spam and Promotions as well. If it is not in any of them within a few minutes, it is being dropped after it leaves."
+msgstr ""
+
+#: includes/email-check.php:493
+msgid "The server refused to send it."
+msgstr ""
+
+#: includes/gift.php:430
+msgid "The tick"
+msgstr ""
+
+#: includes/how-seen.php:211
+msgid "The tick is not a rank."
+msgstr ""
+
+#: includes/verify-requests.php:262
+msgid "The tick on a profile"
+msgstr ""
+
+#: includes/posted-for.php:247 includes/profile-edit.php:449
+msgid "Their name"
+msgstr ""
+
+#: includes/reports.php:376
+msgid "Their name, or the link to their profile"
+msgstr ""
+
+#: includes/posted-for.php:258
+msgid "Their number"
+msgstr ""
+
+#: includes/profile-edit.php:480
+msgid "Their phone number"
+msgstr ""
+
+#: includes/fields.php:145
+msgid "Their position"
+msgstr ""
+
+#: includes/how-seen.php:233
+msgid "Then wait. The order is turn taking, so everybody reaches the top. Nobody can pay to get there sooner."
+msgstr ""
+
+#: includes/gift.php:370
+msgid "There are no plans set up yet. Make one on the Plans screen first, otherwise the app will not show the plan as running."
+msgstr ""
+
+#: includes/past-jobs.php:244
+msgid "There is %s closed job."
+msgid_plural "There are %s closed jobs."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/rest-api.php:2237
+msgid "There is no open question about that person."
+msgstr ""
+
+#: includes/job-alerts.php:586
+msgid "These are off."
+msgstr ""
+
+#: includes/job-alerts.php:585
+msgid "These are on."
+msgstr ""
+
+#: includes/admin.php:72
+msgid "These are the numbers that say whether this is working. Registrations and page views are not on this page on purpose."
+msgstr ""
+
+#: includes/rest-auth.php:614
+msgid "These are the phones the Kaam Ase app is signed in on with your account. If you do not recognise one, or a phone was lost or sold, sign it out here."
+msgstr ""
+
+#: includes/saved.php:604
+msgid "These closed or were taken down. Kept here so you know what happened to them."
+msgstr ""
+
+#: kaamase-core.php:304
+msgid "These core files have not been uploaded yet. The plugin cannot work properly without them."
+msgstr ""
+
+#: includes/not-confirmed.php:208
+msgid "These people registered but never opened the link in their email, so their profile is hidden and nobody can find them. Ring them, explain what the link is for, and they can confirm while you are on the phone."
+msgstr ""
+
+#: includes/exposure.php:493
+msgid "These sort ahead of everybody, so they are next in line rather than forgotten."
+msgstr ""
+
+#: includes/rich-manu.php:859
+msgid "They also pay for a Kaam Ase plan. The mark stays while that plan is running and goes when it stops."
+msgstr ""
+
+#: includes/settings.php:197
+msgid "They pass through Expo and sit readable on a locked screen."
+msgstr ""
+
+#: includes/teams.php:81
+msgid "This account cannot list a team"
+msgstr ""
+
+#: includes/services.php:417
+msgid "This account cannot list a team."
+msgstr ""
+
+#: includes/post-job.php:183
+msgid "This account cannot post jobs"
+msgstr ""
+
+#: includes/hiring-request.php:171
+msgid "This account cannot post jobs yet"
+msgstr ""
+
+#: includes/services.php:151
+msgid "This account cannot post jobs."
+msgstr ""
+
+#: includes/hiring-request.php:702
+msgid "This adds or removes the employer role only. Everything else about the account is left alone."
+msgstr ""
+
+#: includes/reports.php:170
+msgid "This is a website. Nobody reads it at night. Call one of these instead."
+msgstr ""
+
+#: includes/ratings.php:817
+msgid "This is shown publicly with your name on it."
+msgstr ""
+
+#: includes/email-check.php:495
+msgid "This is the answer. Nobody is receiving anything, and no wording or button will change that. It needs a proper sending service configured before anything else is worth trying."
+msgstr ""
+
+#: includes/teams.php:163
+msgid "This is the first thing a contractor looks at. Put the number that actually turns up."
+msgstr ""
+
+#: includes/email-check.php:620
+msgid "This is the number that matters. Somebody who joined an hour ago has not failed to confirm yet."
+msgstr ""
+
+#: includes/job-photos.php:907
+msgid "This job already has all the pictures this account can add."
+msgstr ""
+
+#: includes/plan-pitch.php:83
+msgid "This job has all the pictures one job can carry. Remove one to put a different one up."
+msgstr ""
+
+#: includes/job-photos.php:570
+msgid "This job has all the pictures this account can add. Remove one to put a different one up."
+msgstr ""
+
+#: includes/closed-jobs.php:187
+msgid "This job has been filled."
+msgstr ""
+
+#: includes/rest-api.php:1478 includes/rest-api.php:1955
+msgid "This job has closed. It was probably filled."
+msgstr ""
+
+#: includes/closed-jobs.php:306 includes/saved.php:616
+msgid "This job is closed"
+msgstr ""
+
+#: includes/closed-jobs.php:204
+msgid "This job is closed."
+msgstr ""
+
+#: includes/job-screening.php:837
+msgid "This job is held and is not visible to anybody."
+msgstr ""
+
+#: includes/closed-jobs.php:199
+msgid "This job ran out on %s."
+msgstr ""
+
+#: includes/employer-index.php:188
+msgid "This list shows every employer on Kaam Ase, which district they are in, how many workers they have taken on and how those workers rated them. It is for people with an account, so that employers are not listed on the open internet."
+msgstr ""
+
+#: includes/job-alerts.php:602
+msgid "This only covers new work. You will still hear when somebody looks up your number and when we ask whether you were hired, because those are about you and there are only a few of them."
+msgstr ""
+
+#: includes/install.php:702 includes/install.php:731
+msgid "This page is not written yet. Do not launch with it as it stands."
+msgstr ""
+
+#: includes/contact.php:651
+msgid "This person has not added a phone number yet. Nothing we can do from here."
+msgstr ""
+
+#: kaamase-core.php:64
+msgid "This plugin needs PHP %1$s or newer (running %2$s) and WordPress %3$s or newer (running %4$s)."
+msgstr ""
+
+#: includes/email-check.php:454
+msgid "This plugin, through your own mailbox"
+msgstr ""
+
+#: includes/saved.php:617
+msgid "This profile is not available"
+msgstr ""
+
+#: includes/profile-edit.php:877
+msgid "This removes your profile, your photo and your details from Kaam Ase. It cannot be undone and you would have to start again."
+msgstr ""
+
+#: includes/posted-for.php:252
+msgid "This shows on the job as who is hiring."
+msgstr ""
+
+#: includes/rest-auth.php:642
+msgid "This signs you out of the app on every phone, including this one. Are you sure?"
+msgstr ""
+
+#: includes/gift.php:88
+msgid "Three months"
+msgstr ""
+
+#: includes/settings.php:464
+msgid "Three people saying the same thing about the same person is a pattern, not a bad day. Phone them before it turns into a public argument."
+msgstr ""
+
+#: includes/admin.php:437
+msgid "Three people saying the same thing about the same person is a pattern. Phone them before it turns into a public argument. That call is the whole job."
+msgstr ""
+
+#: includes/settings.php:211
+msgid "Three separate workers saying the same employer did not pay is a pattern. This is the alert that lets you phone them before it becomes a public argument."
+msgstr ""
+
+#: includes/settings.php:193
+msgid "Three things only: somebody looked up your number, your profile went live, and did you hire them. Nothing else, because an app that notifies about every new listing gets muted within a week and then cannot tell anybody the one thing that mattered."
+msgstr ""
+
+#: includes/gift.php:480
+msgid "Tick"
+msgstr ""
+
+#: includes/rich-manu.php:610
+msgid "Tick added, and they have been emailed."
+msgstr ""
+
+#: includes/services.php:448
+msgid "Tick at least one kind of work the team does."
+msgstr ""
+
+#: includes/services.php:312
+msgid "Tick at least one kind of work you do."
+msgstr ""
+
+#: includes/teams.php:183
+msgid "Tick everything the team can cover between them."
+msgstr ""
+
+#: includes/profile-edit.php:318
+msgid "Tick everything you can do. More trades means more searches you appear in."
+msgstr ""
+
+#: includes/taxonomies.php:288
+msgid "Tile worker"
+msgstr ""
+
+#: includes/posted-for.php:354 includes/privacy.php:110
+msgid "Title"
+msgstr ""
+
+#: includes/email-check.php:655
+msgid "To"
+msgstr ""
+
+#: includes/registration.php:369 includes/rest-api.php:625
+msgid "Too many attempts from this connection. Please try again later."
+msgstr ""
+
+#: includes/throttle.php:377
+msgid "Too many attempts from this connection. Please wait a while and try again."
+msgstr ""
+
+#: includes/rest-api.php:740
+msgid "Too many sign in attempts. Please wait a few minutes and try again."
+msgstr ""
+
+#: includes/fields.php:235
+msgid "Town"
+msgstr ""
+
+#: includes/fields.php:92 includes/fields.php:323 includes/post-job.php:325
+#: includes/posted-for.php:317 includes/profile-edit.php:243 includes/teams.php:214
+msgid "Town or village"
+msgstr ""
+
+#: includes/taxonomies.php:337
+msgid "Tractor driver"
+msgstr ""
+
+#: includes/past-jobs.php:386 includes/posted-for.php:285 includes/queries.php:944
+msgid "Trade"
+msgstr ""
+
+#: includes/taxonomies.php:131
+msgid "Trade category"
+msgstr ""
+
+#: includes/taxonomies.php:132
+msgid "Trade category:"
+msgstr ""
+
+#: includes/taxonomies.php:137
+msgid "Trades"
+msgstr ""
+
+#: includes/fields.php:347 includes/posted-for.php:420
+msgid "Transport provided"
+msgstr ""
+
+#: includes/post-job.php:380
+msgid "Transport to the site"
+msgstr ""
+
+#: includes/taxonomies.php:422
+msgid "Truck driver"
+msgstr ""
+
+#: includes/more-trades.php:117
+msgid "Truck driver, bus driver, tipper, JCB, excavator, heavy vehicle licence."
+msgstr ""
+
+#: includes/admin.php:529
+msgid "Trust"
+msgstr ""
+
+#: includes/employer-index.php:220
+msgid "Try a different district, or clear the filters to see everybody."
+msgstr ""
+
+#: includes/admin.php:85
+msgid "Turned up"
+msgstr ""
+
+#: includes/taxonomies.php:464
+msgid "Tutor"
+msgstr ""
+
+#: includes/past-jobs.php:301
+msgid "Twelve is a sensible starting point. Nothing on the site is old enough for this to do anything yet."
+msgstr ""
+
+#: includes/how-seen.php:208
+msgid "Two profiles split your ratings and your history in half, so both do worse than one would have. Employers also notice, and it is the kind of thing that gets both taken down."
+msgstr ""
+
+#: includes/posted-for.php:410
+msgid "Two weeks, one month, ongoing"
+msgstr ""
+
+#: includes/post-job.php:352
+msgid "Two weeks, three months, ongoing"
+msgstr ""
+
+#: includes/fields.php:220
+msgid "Type"
+msgstr ""
+
+#: includes/profile-edit.php:893
+msgid "Type %s to confirm"
+msgstr ""
+
+#: includes/settings.php:285
+msgid "Type %s to switch it on"
+msgstr ""
+
+#: app-version.php:322
+msgid "Type a version that is already live in the App Store and on Google Play. If you type one that has not been released yet, every single user is locked out with no way back in until you come here and turn it off, and the stores have nothing for them to update to."
+msgstr ""
+
+#: includes/rest-api.php:1091
+msgid "Type DELETE to confirm you want to remove your account."
+msgstr ""
+
+#: includes/settings.php:342
+msgid "Type the phrase exactly. Nothing has been changed."
+msgstr ""
+
+#: includes/profile-edit.php:944
+msgid "Type the word exactly to confirm you want to delete your account."
+msgstr ""
+
+#: includes/reports.php:686
+msgid "URGENT: "
+msgstr ""
+
+#: includes/contact.php:904
+msgid "Unblock"
+msgstr ""
+
+#: includes/posted-for.php:385
+msgid "Up to %s. A screenshot of the original post is not a picture of the work, so use a photo of the site or the shop where you can get one."
+msgstr ""
+
+#: includes/taxonomies.php:178
+msgid "Update district"
+msgstr ""
+
+#: includes/taxonomies.php:225
+msgid "Update language"
+msgstr ""
+
+#: includes/taxonomies.php:134
+msgid "Update trade"
+msgstr ""
+
+#: includes/queries.php:295
+msgid "Urgent first"
+msgstr ""
+
+#: includes/fields.php:329
+msgid "Urgent hiring"
+msgstr ""
+
+#: includes/entitlements.php:67
+msgid "Urgent jobs at once"
+msgstr ""
+
+#: includes/post-job.php:429
+msgid "Urgent jobs go to the top and close after three days. One at a time."
+msgstr ""
+
+#: includes/queries.php:988
+msgid "Urgent only"
+msgstr ""
+
+#: includes/posted-for.php:417
+msgid "Urgent, needed today or tomorrow"
+msgstr ""
+
+#: includes/email-check.php:603
+msgid "Use an address on Gmail, because that is what most people here use and it is the strictest. If this says refused, the problem is the server. If it says accepted and nothing arrives, the problem is that Gmail is throwing it away, which is a different fix."
+msgstr ""
+
+#: includes/email-check.php:512
+msgid "Use it"
+msgstr ""
+
+#: includes/rich-manu.php:703
+msgid "Use this when somebody has paid but never appeared on the Calls to make list, which happens if their payment did not reach the server. Only tick it after you have actually telephoned them: the mark tells workers we have, and it is worth nothing the moment that stops being true."
+msgstr ""
+
+#: includes/rest-auth.php:578
+msgid "Used in the last hour"
+msgstr ""
+
+#: includes/app-links.php:564
+msgid "Verification is not instant. Give it a day after saving before deciding it has not worked."
+msgstr ""
+
+#: includes/admin.php:586 includes/fields.php:159 includes/fields.php:242
+#: includes/rich-manu.php:171
+msgid "Verified"
+msgstr ""
+
+#: includes/employer-index.php:334
+msgid "Verified only"
+msgstr ""
+
+#: includes/taxonomies.php:434
+msgid "Video editor"
+msgstr ""
+
+#: includes/taxonomies.php:435
+msgid "Videographer"
+msgstr ""
+
+#: includes/post-types.php:177
+msgid "View employer"
+msgstr ""
+
+#: includes/post-types.php:228
+msgid "View job"
+msgstr ""
+
+#: includes/post-types.php:77
+msgid "View profile"
+msgstr ""
+
+#: includes/post-types.php:127
+msgid "View team"
+msgstr ""
+
+#: includes/profile-edit.php:463 includes/rest-shape.php:318
+msgid "Village council member"
+msgstr ""
+
+#: includes/admin.php:582
+msgid "Vouched"
+msgstr ""
+
+#: includes/fields.php:139
+msgid "Vouched by"
+msgstr ""
+
+#: includes/queries.php:1004
+msgid "Vouched only"
+msgstr ""
+
+#: includes/fields.php:151
+msgid "Voucher phone number"
+msgstr ""
+
+#: includes/dashboard.php:1009
+msgid "Wage complaint"
+msgstr ""
+
+#: includes/reports.php:595 includes/services.php:635
+msgid "Wage complaint %s"
+msgstr ""
+
+#: includes/install.php:364 includes/reports.php:339
+msgid "Wage or job complaint"
+msgstr ""
+
+#: includes/install.php:735
+msgid "Wages are agreed and paid between the worker and the employer. Kaam Ase does not hold or guarantee them."
+msgstr ""
+
+#: includes/taxonomies.php:409
+msgid "Waiter"
+msgstr ""
+
+#: includes/more-trades.php:114
+msgid "Waiter, waitress, kitchen helper, dishwasher, room service, housekeeping, hotel front desk, steward."
+msgstr ""
+
+#: includes/rich-manu.php:466
+msgid "Waiting"
+msgstr ""
+
+#: includes/admin.php:860
+msgid "Waiting for the other side to rate. Do not approve by hand, it releases one rating without the other."
+msgstr ""
+
+#: includes/dashboard.php:663
+msgid "Waiting for you to confirm your email"
+msgstr ""
+
+#: includes/taxonomies.php:425
+msgid "Warehouse worker"
+msgstr ""
+
+#: includes/ratings.php:116
+msgid "Was the work done properly?"
+msgstr ""
+
+#: includes/ratings.php:79
+msgid "Was the work what they described?"
+msgstr ""
+
+#: includes/reports.php:772
+msgid "We are a listing platform, not a court and not the police. We cannot make anybody pay you. What we can do is look into it, keep a record, and remove people who cheat."
+msgstr ""
+
+#: includes/verify-requests.php:268
+msgid "We cannot take a new request on this account at the moment. Try again in a few weeks."
+msgstr ""
+
+#: includes/registration.php:453 includes/rest-api.php:677
+msgid "We could not create an account with those details. If you already have one, try signing in."
+msgstr ""
+
+#: includes/reports.php:751
+msgid "We have it"
+msgstr ""
+
+#: includes/rest-api.php:2437
+msgid "We have it. Somebody reads it within two working days."
+msgstr ""
+
+#: includes/privacy.php:688
+msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
+msgstr ""
+
+#: includes/contact.php:678
+msgid "We have told %s that you looked up their number. Agree the rate before work starts."
+msgstr ""
+
+#: includes/dashboard.php:849 includes/rest-api.php:875
+msgid "We just sent one. Please wait a few minutes before asking again."
+msgstr ""
+
+#: includes/reports.php:468
+msgid "We read everything within two working days. Nothing you write here appears anywhere on the website."
+msgstr ""
+
+#: includes/profile-edit.php:193
+msgid "We remove the hidden location information that phones save inside photos, so uploading a picture taken at home does not tell anybody where you live."
+msgstr ""
+
+#: includes/plan-pitch.php:243
+msgid "We ring you and speak to you. Once we have, the mark goes on your profile and stays there. A worker looking at an unknown number can see that somebody at Kaam Ase has checked who you are, which is the difference between a call answered and a call ignored."
+msgstr ""
+
+#: includes/registration.php:153
+msgid "We send one link to this address to confirm it is yours."
+msgstr ""
+
+#: includes/dashboard.php:809
+msgid "We sent a link to %s. Tap it and your profile goes live straight away."
+msgstr ""
+
+#: includes/employer-index.php:197
+msgid "We sent you a link when you registered. Open it and this list is yours. It is held back from unconfirmed accounts because an employer directory is worth harvesting."
+msgstr ""
+
+#: includes/reports.php:767
+msgid "We speak to the other side. We never tell them who reported it."
+msgstr ""
+
+#: includes/how-seen.php:186
+msgid "We wait for three before showing a score, so one bad day does not decide everything. When somebody hires you, answer the question we send afterwards. That is what builds it."
+msgstr ""
+
+#: includes/rich-manu.php:311
+msgid "We will call you about %s"
+msgstr ""
+
+#: includes/taxonomies.php:455
+msgid "Weaver"
+msgstr ""
+
+#: includes/taxonomies.php:438
+msgid "Web developer"
+msgstr ""
+
+#: includes/more-trades.php:119
+msgid "Website work, software, computer programmer, IT support, networking, data work."
+msgstr ""
+
+#: includes/taxonomies.php:287
+msgid "Welder"
+msgstr ""
+
+#: includes/ratings.php:111
+msgid "Were they on time?"
+msgstr ""
+
+#: includes/ratings.php:69
+msgid "Were you paid the amount that was agreed?"
+msgstr ""
+
+#: includes/ratings.php:74
+msgid "Were you paid when they said you would be?"
+msgstr ""
+
+#: includes/ratings.php:84
+msgid "Were you treated properly?"
+msgstr ""
+
+#: includes/admin.php:415
+msgid "What"
+msgstr ""
+
+#: includes/posted-for.php:263
+msgid "What a worker gets when they ask for contact details. Never shown openly on the page."
+msgstr ""
+
+#: includes/profile-edit.php:455
+msgid "What are they"
+msgstr ""
+
+#: includes/post-job.php:280
+msgid "What are you paying"
+msgstr ""
+
+#: includes/registration.php:281
+msgid "What brings you here?"
+msgstr ""
+
+#: includes/how-seen.php:174
+msgid "What decides whether they call"
+msgstr ""
+
+#: includes/how-seen.php:160
+msgid "What decides whether you are in the list at all"
+msgstr ""
+
+#: includes/post-job.php:366
+msgid "What do you provide"
+msgstr ""
+
+#: includes/how-seen.php:196
+msgid "What does not work"
+msgstr ""
+
+#: includes/entitlements.php:378
+msgid "What everybody gets for free. These apply whether or not anything is being charged for, because they are what stops one account from taking more out of the platform than it puts in."
+msgstr ""
+
+#: includes/email-check.php:657 includes/reports.php:413
+msgid "What happened"
+msgstr ""
+
+#: includes/install.php:736
+msgid "What happens in a wage dispute, and what the platform will and will not do."
+msgstr ""
+
+#: includes/reports.php:762
+msgid "What happens now"
+msgstr ""
+
+#: includes/app-links.php:417
+msgid "What is being served right now"
+msgstr ""
+
+#: includes/install.php:705
+msgid "What is collected: name, photograph, phone number, district, town, trade, work history, ratings."
+msgstr ""
+
+#: includes/reports.php:355
+msgid "What is it about"
+msgstr ""
+
+#: includes/install.php:707
+msgid "What is shown publicly and what is never shown. Phone numbers are never shown."
+msgstr ""
+
+#: includes/teams.php:143
+msgid "What is the team called"
+msgstr ""
+
+#: includes/admin.php:358
+msgid "What it needs"
+msgstr ""
+
+#: includes/profile-edit.php:615
+msgid "What kind of employer are you"
+msgstr ""
+
+#: includes/teams.php:285
+msgid "What the team has built"
+msgstr ""
+
+#: includes/post-job.php:398
+msgid "What the work involves, what tools they need, who to ask for on the day."
+msgstr ""
+
+#: includes/posted-for.php:368
+msgid "What the work is, in your own words."
+msgstr ""
+
+#: includes/job-alerts.php:809
+msgid "What time"
+msgstr ""
+
+#: app-version.php:357
+msgid "What to tell them"
+msgstr ""
+
+#: includes/install.php:667
+msgid "What we are and are not"
+msgstr ""
+
+#: includes/profile-edit.php:313 includes/registration.php:194
+msgid "What work do you do"
+msgstr ""
+
+#: includes/post-job.php:243
+msgid "What work do you need done"
+msgstr ""
+
+#: includes/teams.php:178
+msgid "What work does the team do"
+msgstr ""
+
+#: includes/profile-edit.php:662
+msgid "What you build, how you pay, anything a worker should know before taking a job with you."
+msgstr ""
+
+#: includes/plan-pitch.php:390
+msgid "What you get"
+msgstr ""
+
+#: includes/profile-edit.php:498
+msgid "What you have built, what tools you have, anything an employer should know."
+msgstr ""
+
+#: includes/contact.php:670
+msgid "WhatsApp"
+msgstr ""
+
+#: includes/fields.php:82
+msgid "WhatsApp number"
+msgstr ""
+
+#: includes/email-check.php:654 includes/privacy.php:205 includes/reports.php:913
+msgid "When"
+msgstr ""
+
+#: includes/reports.php:395
+msgid "When did you do the work"
+msgstr ""
+
+#: includes/post-job.php:339
+msgid "When does it start"
+msgstr ""
+
+#: includes/saved.php:543
+msgid "When you find a worker you might use later, open their profile and tap Save. Saving is free and it does not use a contact lookup."
+msgstr ""
+
+#: includes/saved.php:544
+msgid "When you see a job worth coming back to, open it and tap Save this job."
+msgstr ""
+
+#: includes/admin.php:526 includes/admin.php:623 includes/not-confirmed.php:238
+msgid "Where"
+msgstr ""
+
+#: includes/admin.php:141
+msgid "Where people are"
+msgstr ""
+
+#: includes/post-job.php:329
+msgid "Where the work actually is"
+msgstr ""
+
+#: includes/posted-for.php:71
+msgid "Where this job came from"
+msgstr ""
+
+#: includes/settings.php:150
+msgid "Where wage complaints and safety reports are emailed. Use an address a person actually opens, not a general company inbox nobody reads on a Saturday."
+msgstr ""
+
+#: includes/posted-for.php:269
+msgid "Where you saw it"
+msgstr ""
+
+#: includes/install.php:740
+msgid "Which courts have jurisdiction."
+msgstr ""
+
+#: includes/media.php:291
+msgid "Which images to show"
+msgstr ""
+
+#: includes/app-links.php:537
+msgid "Which links open the app"
+msgstr ""
+
+#: includes/gift.php:405
+msgid "Which plan their account will say they are on. Nothing is charged."
+msgstr ""
+
+#: includes/admin.php:414 includes/gift.php:383 includes/gift.php:477
+#: includes/privacy.php:201 includes/verify-requests.php:470
+msgid "Who"
+msgstr ""
+
+#: includes/profile-edit.php:442
+msgid "Who can vouch for you"
+msgstr ""
+
+#: includes/exposure.php:445 includes/exposure.php:446 includes/exposure.php:472
+msgid "Who is being seen"
+msgstr ""
+
+#: includes/install.php:352 includes/posted-for.php:241
+msgid "Who is hiring"
+msgstr ""
+
+#: includes/reports.php:372
+msgid "Who is this about"
+msgstr ""
+
+#: includes/teams.php:169
+msgid "Who leads it"
+msgstr ""
+
+#: install.php:362
+msgid "Who looked at you"
+msgstr ""
+
+#: includes/contact.php:861 includes/contact.php:872
+msgid "Who looked you up"
+msgstr ""
+
+#: includes/install.php:739
+msgid "Who owns the photographs a worker uploads."
+msgstr ""
+
+#: includes/profile-edit.php:640
+msgid "Who should they ask for"
+msgstr ""
+
+#: includes/install.php:710
+msgid "Who to contact about a data problem, with a name and a real address."
+msgstr ""
+
+#: includes/reports.php:371
+msgid "Who was supposed to pay you"
+msgstr ""
+
+#: includes/install.php:706
+msgid "Why each item is collected, in plain language."
+msgstr ""
+
+#: includes/gift.php:454
+msgid "Why they were given it. Only you see this."
+msgstr ""
+
+#: includes/fields.php:124
+msgid "Willing to travel"
+msgstr ""
+
+#: includes/reports.php:144
+msgid "Women helpline"
+msgstr ""
+
+#: includes/indexes.php:632
+msgid "Work available now"
+msgstr ""
+
+#: who-looked.php:476
+msgid "Work here comes back around. The employer who looked at you last March is the one to ring this March, and a week cannot tell you that. Rich Manu keeps the list for a year."
+msgstr ""
+
+#: includes/install.php:657
+msgid "Work in someone else's home"
+msgstr ""
+
+#: includes/job-alerts.php:836
+msgid "Work posted in the last day"
+msgstr ""
+
+#: includes/reports.php:229
+msgid "Work was done and not paid for"
+msgstr ""
+
+#: includes/saved.php:489
+msgid "Worked together %s ago"
+msgstr ""
+
+#: includes/not-confirmed.php:197 includes/roles.php:132
+msgid "Worker"
+msgstr ""
+
+#: includes/exposure.php:475
+msgid "Worker listings put whoever has waited longest at the top. These numbers say whether that is actually turning over. If nobody has waited more than a few days, it is working."
+msgstr ""
+
+#: includes/exposure.php:481
+msgid "Worker profiles"
+msgstr ""
+
+#: includes/admin.php:356 includes/admin.php:374 includes/dashboard.php:1069
+#: includes/post-job.php:686 includes/post-types.php:82
+msgid "Workers"
+msgstr ""
+
+#: includes/indexes.php:624
+msgid "Workers across Nagaland"
+msgstr ""
+
+#: includes/indexes.php:618
+msgid "Workers and jobs in %s"
+msgstr ""
+
+#: includes/dashboard.php:146
+msgid "Workers cannot be introduced to you without it."
+msgstr ""
+
+#: includes/dashboard.php:315
+msgid "Workers decide whether to answer based on what your profile shows."
+msgstr ""
+
+#: includes/fields.php:263
+msgid "Workers hired"
+msgstr ""
+
+#: includes/fields.php:368
+msgid "Workers hired so far"
+msgstr ""
+
+#: includes/post-job.php:869
+msgid "Workers in this district can see it now. It stays open for three weeks, then closes on its own. Share the link on WhatsApp if you want it seen faster."
+msgstr ""
+
+#: includes/admin.php:102
+msgid "Workers marked available today."
+msgstr ""
+
+#: includes/dashboard.php:160
+msgid "Workers nearby will see your jobs first."
+msgstr ""
+
+#: includes/fields.php:303
+msgid "Workers needed"
+msgstr ""
+
+#: includes/profile-edit.php:634
+msgid "Workers treat an individual building a house differently from a contractor running four sites. Both are fine, they just want to know."
+msgstr ""
+
+#: includes/dashboard.php:153
+msgid "Workers treat an individual building a house differently from a contractor."
+msgstr ""
+
+#: includes/profile-edit.php:187
+msgid "Workers trust a job more when they can see who is behind it."
+msgstr ""
+
+#: includes/hiring-request.php:493 includes/hiring-request.php:494 includes/hiring-request.php:522
+msgid "Workers who hire"
+msgstr ""
+
+#: includes/saved.php:413
+msgid "Workers you have hired before"
+msgstr ""
+
+#: includes/admin.php:565 includes/dashboard.php:441
+msgid "Working"
+msgstr ""
+
+#: includes/ratings.php:126
+msgid "Would you hire them again?"
+msgstr ""
+
+#: includes/ratings.php:89
+msgid "Would you work for them again?"
+msgstr ""
+
+#: includes/reports.php:759
+msgid "Write it down. Quote it if you contact us again about the same thing."
+msgstr ""
+
+#: includes/install.php:714
+msgid "Write it so a worker with limited English can understand it. If they cannot understand it, consent was not informed."
+msgstr ""
+
+#: includes/install.php:782
+msgid "Write the Privacy and Terms pages. They are placeholders and both say so in public."
+msgstr ""
+
+#: who-looked.php:265
+msgid "year"
+msgstr ""
+
+#: includes/profile-edit.php:335
+msgid "Years doing this work"
+msgstr ""
+
+#: includes/fields.php:98
+msgid "Years of experience"
+msgstr ""
+
+#: includes/admin.php:564 includes/gift.php:512 includes/hiring-request.php:681
+msgid "Yes"
+msgstr ""
+
+#: includes/hires.php:335
+msgid "Yes, I hired them"
+msgstr ""
+
+#: includes/job-alerts.php:799
+msgid "Yes, send the daily message"
+msgstr ""
+
+#: includes/hire-claims.php:622
+msgid "Yes, we did"
+msgstr ""
+
+#: includes/taxonomies.php:655
+msgid "Yimkhiung"
+msgstr ""
+
+#: includes/entitlements.php:229 includes/services.php:93
+msgid "You already have an urgent job running. One at a time."
+msgstr ""
+
+#: includes/rich-manu.php:1004
+msgid "You already have an urgent job running. Urgent only means anything while it is rare, so everybody gets one at a time. With %s you can mark as many as you need, and we ring you and put a tick on your profile."
+msgstr ""
+
+#: includes/post-job.php:428
+msgid "You already have one urgent job running. Close it first, or leave this one normal. One urgent job at a time keeps the tag worth something."
+msgstr ""
+
+#: includes/hire-claims.php:239
+msgid "You are already able to rate each other."
+msgstr ""
+
+#: includes/registration.php:62
+msgid "You are already signed in."
+msgstr ""
+
+#: includes/verify-requests.php:265
+msgid "You are on the list. We will ring the number on your profile. Keep it switched on and answer numbers you do not know for the next few days."
+msgstr ""
+
+#: includes/reports.php:438
+msgid "You are signed in as %s, so we already have your details. They are not shared with the person you are reporting."
+msgstr ""
+
+#: includes/job-photos.php:554
+msgid "You can add %s picture to this job."
+msgid_plural "You can add up to %s pictures to this job."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/registration.php:211
+msgid "You can add more trades to your profile afterwards."
+msgstr ""
+
+#: includes/reports.php:457
+msgid "You can leave both empty and send this without your name. We will still read it and act on it, but we will not be able to tell you what happened, and we cannot chase a wage complaint without being able to reach you."
+msgstr ""
+
+#: includes/hiring-request.php:455
+msgid "You can now post jobs on %s"
+msgstr ""
+
+#: includes/post-job.php:217
+msgid "You can write the job now. It goes live the moment you tap the link in your email."
+msgstr ""
+
+#: includes/roles.php:497
+msgid "You cannot change your own account type. Contact Kaam Ase if you need to."
+msgstr ""
+
+#: includes/contact.php:297
+msgid "You cannot contact this person."
+msgstr ""
+
+#: includes/email-check.php:705 includes/email-check.php:761 includes/gift.php:547
+#: includes/gift.php:587 includes/hiring-request.php:513 includes/job-alerts.php:896
+msgid "You cannot do that."
+msgstr ""
+
+#: includes/ratings.php:358
+msgid "You cannot rate yourself."
+msgstr ""
+
+#: includes/not-confirmed.php:187
+msgid "You cannot see this page."
+msgstr ""
+
+#: includes/hires.php:489
+msgid "You did work for these people. A few yes or no questions each, including whether you were paid what was agreed. Neither side sees the other's answers until you have both written one."
+msgstr ""
+
+#: includes/ratings.php:362
+msgid "You have already rated this person."
+msgstr ""
+
+#: includes/plan-pitch.php:81
+msgid "You have as many urgent jobs running as one account can have at once. Close one and you can mark another."
+msgstr ""
+
+#: includes/contact.php:346 includes/entitlements.php:231
+msgid "You have looked up a lot of numbers today. Try again tomorrow."
+msgstr ""
+
+#: includes/dashboard.php:638
+msgid "You have not posted a job yet."
+msgstr ""
+
+#: includes/privacy.php:666
+msgid "You have not used your account for a long time, so we have hidden your profile from searches. Nothing is deleted."
+msgstr ""
+
+#: includes/entitlements.php:230 includes/services.php:105
+msgid "You have posted a lot of jobs today. Try again tomorrow."
+msgstr ""
+
+#: includes/plan-pitch.php:82
+msgid "You have posted all the jobs one account can post in a day. It starts again after midnight."
+msgstr ""
+
+#: includes/entitlements.php:242
+msgid "You have posted all the jobs this account can post today. You can get more now, or wait until tomorrow."
+msgstr ""
+
+#: includes/hire-claims.php:389
+msgid "You have said you worked together. It opens as soon as they agree."
+msgstr ""
+
+#: includes/reports.php:531 includes/rest-api.php:2424
+msgid "You have sent several already. If it is urgent, call us instead."
+msgstr ""
+
+#: includes/plan-pitch.php:80
+msgid "You have used today's contact lookups. That cap is on every account including yours, and it is there to stop numbers being harvested. It starts again after midnight."
+msgstr ""
+
+#: includes/entitlements.php:243
+msgid "You have used today's contact lookups. You can get more now, or wait until tomorrow."
+msgstr ""
+
+#: includes/entitlements.php:241
+msgid "You have used your urgent jobs. You can get more, or wait until one of the current ones closes."
+msgstr ""
+
+#: includes/hires.php:320
+msgid "You looked them up %s ago"
+msgstr ""
+
+#: includes/push.php:271
+msgid "You looked up %s recently. Telling us what happened lets you both rate each other."
+msgstr ""
+
+#: includes/hires.php:301
+msgid "You looked up these numbers recently. Telling us what happened is what lets you and them rate each other, and it is the only reason the ratings on this site mean anything."
+msgstr ""
+
+#: includes/hire-claims.php:199
+msgid "You need a worker profile before you can say you worked somewhere."
+msgstr ""
+
+#: includes/hiring-request.php:175
+msgid "You registered as a worker. If you also hire people, add hiring to this same account. It happens straight away. You keep your profile, your ratings and your login exactly as they are."
+msgstr ""
+
+#: includes/post-job.php:184
+msgid "You registered as a worker. If you also hire people, get in touch and we will add hiring to your account."
+msgstr ""
+
+#: includes/hires.php:488
+msgid "You worked with these people. A few yes or no questions each. Neither of you sees the other's answers until you have both written one, so you cannot be punished for being honest."
+msgstr ""
+
+#: includes/profile-edit.php:969
+msgid "Your %s account is closed"
+msgstr ""
+
+#: includes/privacy.php:654
+msgid "Your %s profile is hidden for now"
+msgstr ""
+
+#: includes/profile-edit.php:980
+msgid "Your account and your profile have been removed. Nothing of yours is left on the site."
+msgstr ""
+
+#: includes/privacy.php:174
+msgid "Your comment"
+msgstr ""
+
+#: includes/how-seen.php:167
+msgid "Your district."
+msgstr ""
+
+#: who-looked.php:175
+msgid "your employer profile"
+msgstr ""
+
+#: includes/dashboard.php:676
+msgid "Your first job is read by a person before workers see it. Usually done within a few hours. Nothing more is needed from you."
+msgstr ""
+
+#: includes/registration.php:138
+msgid "Your full name"
+msgstr ""
+
+#: includes/post-job.php:866
+msgid "Your job is live"
+msgstr ""
+
+#: includes/job-screening.php:647
+msgid "Your job is live on %s"
+msgstr ""
+
+#: includes/dashboard.php:587
+msgid "Your job is saved and is being checked"
+msgstr ""
+
+#: includes/post-job.php:867
+msgid "Your job is saved but not live yet"
+msgstr ""
+
+#: includes/job-screening.php:596
+msgid "Your job on %s is being checked"
+msgstr ""
+
+#: who-looked.php:169
+msgid "your job, %s"
+msgstr ""
+
+#: includes/profile-edit.php:207 includes/reports.php:446
+msgid "Your name"
+msgstr ""
+
+#: includes/teams.php:150
+msgid "Your own name works perfectly well. Contractors remember people, not brands."
+msgstr ""
+
+#: includes/registration.php:422 includes/rest-api.php:662
+msgid "Your password needs at least 8 characters."
+msgstr ""
+
+#: includes/reports.php:451
+msgid "Your phone number"
+msgstr ""
+
+#: who-looked.php:178
+msgid "your profile"
+msgstr ""
+
+#: includes/dashboard.php:287
+msgid "Your profile is complete"
+msgstr ""
+
+#: includes/dashboard.php:804
+msgid "Your profile is hidden until you confirm your email"
+msgstr ""
+
+#: includes/push.php:198
+msgid "Your profile is live"
+msgstr ""
+
+#: includes/dashboard.php:911
+msgid "Your profile is missing"
+msgstr ""
+
+#: includes/rest-api.php:933
+msgid "Your profile is missing. Open the app again and we will rebuild it."
+msgstr ""
+
+#: includes/dashboard.php:407
+msgid "Your profile is not live yet. Confirm your email to publish it."
+msgstr ""
+
+#: includes/verify-requests.php:106
+msgid "Your profile needs to be finished and live first."
+msgstr ""
+
+#: includes/reports.php:754
+msgid "Your reference number is"
+msgstr ""
+
+#: who-looked.php:172
+msgid "your team"
+msgstr ""
+
+#: includes/teams.php:114
+msgid "Your team is listed"
+msgstr ""
+
+#: includes/dashboard.php:861
+msgid "Your team listing is down. Your own profile is untouched."
+msgstr ""
+
+#: includes/rich-manu.php:345
+msgid "Your tick is on your account"
+msgstr ""
+
+#: includes/indexes.php:204
+msgid "Your trade not listed?"
+msgstr ""
+
+#: includes/how-seen.php:163
+msgid "Your trade."
+msgstr ""
+
+#: includes/taxonomies.php:650
+msgid "Zeliang"
+msgstr ""
+
+#: includes/reports.php:704
+msgid "anonymous"
+msgstr ""
+
+#: includes/post-job.php:293 includes/posted-for.php:334
+msgid "for the whole job"
+msgstr ""
+
+#: includes/app-links.php:441 includes/app-links.php:504
+msgid "iPhone"
+msgstr ""
+
+#: includes/past-jobs.php:296
+msgid "months"
+msgstr ""
+
+#: includes/reports.php:698
+msgid "not given"
+msgstr ""
+
+#: includes/dashboard.php:55
+msgid "or"
+msgstr ""
+
+#: includes/gstin.php:177
+msgid "outside Nagaland"
+msgstr ""
+
+#: includes/post-job.php:291 includes/posted-for.php:332
+msgid "per day"
+msgstr ""
+
+#: includes/post-job.php:294 includes/posted-for.php:335
+msgid "per hour"
+msgstr ""
+
+#: includes/post-job.php:292 includes/posted-for.php:333
+msgid "per month"
+msgstr ""
+
+#: includes/registration.php:235
+msgid "privacy notice"
+msgstr ""
+
+#: includes/dashboard.php:57
+msgid "register free"
+msgstr ""
+
+#: includes/registration.php:234
+msgid "terms"
+msgstr ""
+
+#: includes/profile-edit.php:579
+msgid "workers"
+msgstr ""
+
+#: includes/settings.php:286 includes/settings.php:339
+msgctxt "confirmation phrase for wiping all platform data"
+msgid "DELETE EVERYTHING"
+msgstr ""
+
+#: includes/profile-edit.php:894 includes/profile-edit.php:941
+msgctxt "confirmation word, keep it short and in capitals"
+msgid "DELETE"
+msgstr ""
+
+#: includes/post-types.php:285
+msgctxt "job status"
+msgid "Closed"
+msgstr ""
+
+#: includes/post-types.php:171
+msgctxt "post type general name"
+msgid "Employers"
+msgstr ""
+
+#: includes/post-types.php:222
+msgctxt "post type general name"
+msgid "Jobs"
+msgstr ""
+
+#: includes/reports.php:63
+msgctxt "post type general name"
+msgid "Reports"
+msgstr ""
+
+#: includes/post-types.php:121
+msgctxt "post type general name"
+msgid "Teams"
+msgstr ""
+
+#: includes/post-types.php:71
+msgctxt "post type general name"
+msgid "Workers"
+msgstr ""
+
+#: includes/post-types.php:172
+msgctxt "post type singular name"
+msgid "Employer"
+msgstr ""
+
+#: includes/post-types.php:223
+msgctxt "post type singular name"
+msgid "Job"
+msgstr ""
+
+#: includes/reports.php:64
+msgctxt "post type singular name"
+msgid "Report"
+msgstr ""
+
+#: includes/post-types.php:122
+msgctxt "post type singular name"
+msgid "Team"
+msgstr ""
+
+#: includes/post-types.php:72
+msgctxt "post type singular name"
+msgid "Worker"
+msgstr ""
+
+#: includes/reports.php:93
+msgctxt "report status"
+msgid "Open"
+msgstr ""
+
+#: includes/taxonomies.php:173
+msgctxt "taxonomy general name"
+msgid "Districts"
+msgstr ""
+
+#: includes/taxonomies.php:220
+msgctxt "taxonomy general name"
+msgid "Languages"
+msgstr ""
+
+#: includes/taxonomies.php:127
+msgctxt "taxonomy general name"
+msgid "Trades"
+msgstr ""
+
+#: includes/taxonomies.php:174
+msgctxt "taxonomy singular name"
+msgid "District"
+msgstr ""
+
+#: includes/taxonomies.php:221
+msgctxt "taxonomy singular name"
+msgid "Language"
+msgstr ""
+
+#: includes/taxonomies.php:128
+msgctxt "taxonomy singular name"
+msgid "Trade"
+msgstr ""
+

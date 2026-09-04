@@ -1,0 +1,2147 @@
+/*
+Theme Name: Kaam Ase
+Theme URI: https://kaamase.com
+Author: Nagaland Me
+Author URI: https://nagaland.me
+Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
+Version: 1.5.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 8.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: kaamase
+Tags: hiring, jobs, marketplace, mobile first, accessible
+*/
+
+/* ==========================================================================
+   KAAM ASE DESIGN SYSTEM v1.0.0
+
+   Rules this file follows and every later file must follow:
+
+   1. No web fonts. System stack only. Saves about 100KB and one round trip
+      on a 2G connection in a village.
+   2. No external requests of any kind. No CDN, no analytics font, nothing.
+   3. Everything in one stylesheet. Fewer requests beats smaller files on
+      high latency networks.
+   4. Minimum touch target is 48px. People tap this with wet or rough hands
+      on a cracked screen.
+   5. Contrast is high everywhere. This gets used outdoors in daylight.
+   6. Nothing depends on colour alone. Every status has a shape or a word
+      next to it, because some users will not read the label.
+   7. Mobile is the design. Desktop is the adaptation.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. TOKENS
+   ========================================================================== */
+
+:root {
+
+  /* Brand
+     Green is the hills and reads as go, available, working.
+     Amber is the action colour, borrowed from work site visibility. */
+  --ka-green-900: #06301b;
+  --ka-green-800: #0b4527;
+  --ka-green-700: #10603a;
+  --ka-green-600: #157a4a;
+  --ka-green-500: #1f9560;
+  --ka-green-100: #dff0e6;
+  --ka-green-50:  #f0f8f3;
+
+  --ka-amber-700: #a35a06;
+  --ka-amber-600: #c26e08;
+  --ka-amber-500: #e8890b;
+  --ka-amber-400: #f5a623;
+  --ka-amber-100: #fdf0d9;
+  --ka-amber-50:  #fef8ed;
+
+  /* Neutrals are warm, not blue grey. Blue grey reads as corporate
+     software. Warm reads as paper and dust. */
+  --ka-ink-900: #17150f;
+  --ka-ink-800: #2b2820;
+  --ka-ink-700: #46423a;
+  --ka-ink-600: #6b665c;
+  --ka-ink-500: #8f8a80;
+  --ka-ink-400: #b5b0a6;
+  --ka-ink-300: #d8d4cb;
+  --ka-ink-200: #e8e5de;
+  --ka-ink-100: #f4f2ed;
+  --ka-ink-50:  #faf9f6;
+  --ka-white:   #ffffff;
+
+  /* Status
+     Used for availability, verification and job state. */
+  --ka-live:      #0f8a3c;
+  --ka-live-bg:   #e4f4e9;
+  --ka-busy:      #c0392b;
+  --ka-busy-bg:   #fbe9e7;
+  --ka-leave:     #b7791f;
+  --ka-leave-bg:  #fdf3e0;
+  --ka-info:      #1d5f8a;
+  --ka-info-bg:   #e6f0f7;
+
+  /* Surface */
+  --ka-bg:          var(--ka-ink-50);
+  --ka-surface:     var(--ka-white);
+  --ka-surface-alt: var(--ka-ink-100);
+  --ka-border:      var(--ka-ink-200);
+  --ka-border-firm: var(--ka-ink-300);
+
+  /* Text */
+  --ka-text:        var(--ka-ink-900);
+  --ka-text-soft:   var(--ka-ink-700);
+  --ka-text-mute:   var(--ka-ink-600);
+  --ka-text-invert: var(--ka-white);
+
+  /* Type
+     System stack. Noto Sans is included because most Android devices in
+     India ship with it and it covers Devanagari well for Hindi strings.
+     Nothing is downloaded either way. */
+  --ka-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+             "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  --ka-font-num: ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
+
+  /* Type scale. Base is 16px and never smaller than 14px anywhere.
+     Older eyes, cheap screens, bright sunlight. */
+  --ka-text-xs:   0.8125rem;  /* 13px, badges only */
+  --ka-text-sm:   0.875rem;   /* 14px, floor for body */
+  --ka-text-base: 1rem;       /* 16px */
+  --ka-text-lg:   1.125rem;   /* 18px */
+  --ka-text-xl:   1.3125rem;  /* 21px */
+  --ka-text-2xl:  1.625rem;   /* 26px */
+  --ka-text-3xl:  2rem;       /* 32px */
+
+  --ka-leading-tight: 1.2;
+  --ka-leading-snug:  1.35;
+  --ka-leading:       1.55;
+
+  --ka-weight-normal: 400;
+  --ka-weight-medium: 500;
+  --ka-weight-bold:   700;
+
+  /* Space. 4px base. */
+  --ka-1:  0.25rem;
+  --ka-2:  0.5rem;
+  --ka-3:  0.75rem;
+  --ka-4:  1rem;
+  --ka-5:  1.25rem;
+  --ka-6:  1.5rem;
+  --ka-8:  2rem;
+  --ka-10: 2.5rem;
+  --ka-12: 3rem;
+  --ka-16: 4rem;
+
+  /* Shape */
+  --ka-radius-sm:   6px;
+  --ka-radius:      10px;
+  --ka-radius-lg:   14px;
+  --ka-radius-pill: 999px;
+
+  /* Depth. Kept shallow. Heavy shadows look expensive and load slow
+     on cheap GPUs. */
+  --ka-shadow-sm: 0 1px 2px rgba(23, 21, 15, 0.07);
+  --ka-shadow:    0 2px 6px rgba(23, 21, 15, 0.09);
+  --ka-shadow-lg: 0 8px 24px rgba(23, 21, 15, 0.13);
+
+  /* Controls */
+  --ka-tap: 48px;          /* minimum touch target, never reduce */
+  --ka-tap-lg: 56px;       /* primary actions */
+  --ka-focus: 3px;
+
+  /* Layout */
+  --ka-container: 1180px;
+  --ka-container-narrow: 720px;
+  --ka-gutter: var(--ka-4);
+
+  /* Motion. Short. Long animations feel broken on slow devices. */
+  --ka-ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --ka-fast: 120ms;
+  --ka-slow: 220ms;
+
+  /* Stack order */
+  --ka-z-sticky: 100;
+  --ka-z-header: 200;
+  --ka-z-nav:    300;
+  --ka-z-modal:  400;
+  --ka-z-toast:  500;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --ka-gutter: var(--ka-6);
+    --ka-text-3xl: 2.5rem;
+    --ka-text-2xl: 1.875rem;
+  }
+}
+
+/* Users who ask for less motion get none. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --ka-fast: 0ms; --ka-slow: 0ms; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ==========================================================================
+   2. RESET
+   Small on purpose. A full normalize is mostly dead weight in 2026.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ka-bg);
+  color: var(--ka-text);
+  font-family: var(--ka-font);
+  font-size: var(--ka-text-base);
+  line-height: var(--ka-leading);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+
+h1, h2, h3, h4 {
+  line-height: var(--ka-leading-tight);
+  font-weight: var(--ka-weight-bold);
+  color: var(--ka-ink-900);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--ka-text-3xl); letter-spacing: -0.02em; }
+h2 { font-size: var(--ka-text-2xl); letter-spacing: -0.015em; }
+h3 { font-size: var(--ka-text-xl); }
+h4 { font-size: var(--ka-text-lg); }
+
+p { text-wrap: pretty; }
+
+ul, ol { margin: 0; padding: 0; }
+li { list-style: none; }
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Every uploaded photo gets a placeholder tone so a slow image does not
+   flash white and shift the layout. */
+img { background-color: var(--ka-ink-100); }
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button { background: none; border: none; padding: 0; cursor: pointer; }
+
+a { color: var(--ka-green-700); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--ka-green-600); }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--ka-border);
+  margin: var(--ka-6) 0;
+}
+
+table { border-collapse: collapse; width: 100%; }
+
+
+/* ==========================================================================
+   3. ACCESSIBILITY
+   ========================================================================== */
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: var(--ka-focus) solid var(--ka-amber-500);
+  outline-offset: 2px;
+  border-radius: var(--ka-radius-sm);
+}
+
+.ka-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ka-skip {
+  position: absolute;
+  top: -100px; left: var(--ka-4);
+  z-index: var(--ka-z-toast);
+  background: var(--ka-green-700);
+  color: var(--ka-text-invert);
+  padding: var(--ka-3) var(--ka-5);
+  border-radius: 0 0 var(--ka-radius) var(--ka-radius);
+  font-weight: var(--ka-weight-medium);
+  text-decoration: none;
+  transition: top var(--ka-fast) var(--ka-ease);
+}
+.ka-skip:focus { top: 0; color: var(--ka-text-invert); }
+
+
+/* ==========================================================================
+   4. LAYOUT PRIMITIVES
+   ========================================================================== */
+
+.ka-container {
+  width: 100%;
+  max-width: var(--ka-container);
+  margin-inline: auto;
+  padding-inline: var(--ka-gutter);
+}
+
+.ka-container--narrow { max-width: var(--ka-container-narrow); }
+
+.ka-section { padding-block: var(--ka-8); }
+@media (min-width: 768px) { .ka-section { padding-block: var(--ka-12); } }
+
+/* Vertical rhythm. Use instead of margins on children. */
+.ka-stack > * + * { margin-top: var(--ka-4); }
+.ka-stack--sm > * + * { margin-top: var(--ka-2); }
+.ka-stack--lg > * + * { margin-top: var(--ka-6); }
+
+/* Horizontal group that wraps. */
+.ka-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ka-2);
+  align-items: center;
+}
+.ka-cluster--between { justify-content: space-between; }
+.ka-cluster--gap-lg { gap: var(--ka-4); }
+
+/* Card grid. One column on a phone, always. */
+.ka-grid {
+  display: grid;
+  gap: var(--ka-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px)  { .ka-grid--2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px)  { .ka-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .ka-grid--4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* Sidebar plus content. Stacks on mobile. */
+.ka-split { display: grid; gap: var(--ka-6); grid-template-columns: 1fr; }
+@media (min-width: 1024px) {
+  .ka-split { grid-template-columns: 280px 1fr; align-items: start; }
+  .ka-split--right { grid-template-columns: 1fr 320px; }
+}
+
+
+/* ==========================================================================
+   5. BUTTONS
+   Every button clears 48px. Primary actions clear 56px.
+   ========================================================================== */
+
+.ka-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ka-2);
+  min-height: var(--ka-tap);
+  padding: var(--ka-3) var(--ka-5);
+  border-radius: var(--ka-radius);
+  font-size: var(--ka-text-base);
+  font-weight: var(--ka-weight-medium);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--ka-fast) var(--ka-ease),
+              border-color var(--ka-fast) var(--ka-ease),
+              transform var(--ka-fast) var(--ka-ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ka-btn:active { transform: translateY(1px); }
+
+.ka-btn:disabled,
+.ka-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ka-btn--primary {
+  background: var(--ka-green-700);
+  color: var(--ka-text-invert);
+}
+.ka-btn--primary:hover { background: var(--ka-green-800); color: var(--ka-text-invert); }
+
+/* The one colour that means act now. Used for call, apply, hire. */
+.ka-btn--action {
+  background: var(--ka-amber-500);
+  color: var(--ka-ink-900);
+  font-weight: var(--ka-weight-bold);
+}
+.ka-btn--action:hover { background: var(--ka-amber-400); color: var(--ka-ink-900); }
+
+.ka-btn--outline {
+  background: var(--ka-surface);
+  color: var(--ka-green-800);
+  border-color: var(--ka-border-firm);
+}
+.ka-btn--outline:hover { background: var(--ka-green-50); border-color: var(--ka-green-600); }
+
+.ka-btn--ghost { background: transparent; color: var(--ka-text-soft); }
+.ka-btn--ghost:hover { background: var(--ka-surface-alt); color: var(--ka-text); }
+
+.ka-btn--danger { background: var(--ka-busy); color: var(--ka-text-invert); }
+.ka-btn--danger:hover { background: #a5322a; color: var(--ka-text-invert); }
+
+.ka-btn--lg { min-height: var(--ka-tap-lg); font-size: var(--ka-text-lg); padding-inline: var(--ka-6); }
+.ka-btn--sm { min-height: 40px; font-size: var(--ka-text-sm); padding: var(--ka-2) var(--ka-3); }
+.ka-btn--block { display: flex; width: 100%; }
+
+/* Square icon button. Still 48px. */
+.ka-btn--icon { width: var(--ka-tap); padding: 0; }
+
+
+/* ==========================================================================
+   6. FORMS
+   ========================================================================== */
+
+.ka-field { display: block; }
+.ka-field + .ka-field { margin-top: var(--ka-4); }
+
+.ka-label {
+  display: block;
+  margin-bottom: var(--ka-2);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-text-soft);
+}
+
+.ka-label__req { color: var(--ka-busy); margin-left: 2px; }
+
+.ka-input,
+.ka-select,
+.ka-textarea {
+  display: block;
+  width: 100%;
+  min-height: var(--ka-tap);
+  padding: var(--ka-3);
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-firm);
+  border-radius: var(--ka-radius);
+  font-size: var(--ka-text-base); /* never below 16px or iOS zooms on focus */
+  color: var(--ka-text);
+  transition: border-color var(--ka-fast) var(--ka-ease),
+              box-shadow var(--ka-fast) var(--ka-ease);
+}
+
+.ka-input::placeholder,
+.ka-textarea::placeholder { color: var(--ka-ink-500); }
+
+.ka-input:focus,
+.ka-select:focus,
+.ka-textarea:focus {
+  border-color: var(--ka-green-600);
+  box-shadow: 0 0 0 3px var(--ka-green-100);
+  outline: none;
+}
+
+.ka-textarea { min-height: 120px; resize: vertical; line-height: var(--ka-leading); }
+
+.ka-select {
+  appearance: none;
+  padding-right: var(--ka-10);
+  /* Drawn as a stroked chevron. Filling this path instead renders a solid
+     triangle, which is what the browser was showing before. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236b665c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--ka-3) center;
+  background-size: 20px;
+}
+
+.ka-input[aria-invalid="true"],
+.ka-select[aria-invalid="true"],
+.ka-textarea[aria-invalid="true"] {
+  border-color: var(--ka-busy);
+  background: var(--ka-busy-bg);
+}
+
+.ka-hint { margin-top: var(--ka-2); font-size: var(--ka-text-sm); color: var(--ka-text-mute); }
+.ka-error { margin-top: var(--ka-2); font-size: var(--ka-text-sm); color: var(--ka-busy); font-weight: var(--ka-weight-medium); }
+
+/* Checkbox and radio rows. The whole row is the target, not the box. */
+.ka-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ka-3);
+  min-height: var(--ka-tap);
+  padding: var(--ka-2) 0;
+  cursor: pointer;
+}
+.ka-check input { width: 22px; height: 22px; margin-top: 2px; flex-shrink: 0; accent-color: var(--ka-green-700); }
+.ka-check span { font-size: var(--ka-text-base); }
+
+/* Search bar used on the browse screens. */
+.ka-search { display: flex; gap: var(--ka-2); }
+.ka-search .ka-input { flex: 1; }
+
+
+/* ==========================================================================
+   7. CARDS
+   ========================================================================== */
+
+.ka-card {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius-lg);
+  padding: var(--ka-4);
+  box-shadow: var(--ka-shadow-sm);
+  transition: box-shadow var(--ka-fast) var(--ka-ease),
+              border-color var(--ka-fast) var(--ka-ease);
+}
+
+.ka-card--link:hover { box-shadow: var(--ka-shadow); border-color: var(--ka-border-firm); }
+.ka-card--flat { box-shadow: none; }
+.ka-card--pad-lg { padding: var(--ka-6); }
+
+.ka-card__head { display: flex; gap: var(--ka-3); align-items: flex-start; }
+.ka-card__body { margin-top: var(--ka-3); }
+.ka-card__foot {
+  margin-top: var(--ka-4);
+  padding-top: var(--ka-3);
+  border-top: 1px solid var(--ka-border);
+}
+
+/* Worker and gang avatars. Fixed size so the grid never jumps. */
+.ka-avatar {
+  width: 56px; height: 56px;
+  border-radius: var(--ka-radius);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--ka-ink-200);
+}
+.ka-avatar--lg { width: 88px; height: 88px; border-radius: var(--ka-radius-lg); }
+.ka-avatar--sm { width: 40px; height: 40px; border-radius: var(--ka-radius-sm); }
+
+/* Fallback when there is no photo. Initials on a tinted block. */
+.ka-avatar--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ka-green-100);
+  color: var(--ka-green-800);
+  font-weight: var(--ka-weight-bold);
+  font-size: var(--ka-text-lg);
+}
+
+
+/* ==========================================================================
+   8. BADGES, PILLS AND STATUS
+   Rule: a status is never colour only. It always carries a word.
+   ========================================================================== */
+
+.ka-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-1);
+  padding: 3px var(--ka-2);
+  border-radius: var(--ka-radius-sm);
+  font-size: var(--ka-text-xs);
+  font-weight: var(--ka-weight-medium);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ka-badge--verified { background: var(--ka-green-100); color: var(--ka-green-800); }
+.ka-badge--vouched  { background: var(--ka-info-bg);   color: var(--ka-info); }
+.ka-badge--new      { background: var(--ka-amber-100); color: var(--ka-amber-700); }
+.ka-badge--neutral  { background: var(--ka-ink-100);   color: var(--ka-ink-700); }
+
+/* Availability. Dot plus word. */
+.ka-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-2);
+  padding: var(--ka-1) var(--ka-3);
+  border-radius: var(--ka-radius-pill);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  white-space: nowrap;
+}
+.ka-status::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.ka-status--live  { background: var(--ka-live-bg);  color: var(--ka-live); }
+.ka-status--busy  { background: var(--ka-busy-bg);  color: var(--ka-busy); }
+.ka-status--leave { background: var(--ka-leave-bg); color: var(--ka-leave); }
+
+/* Trade chips. Also used for district filters. */
+.ka-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-1);
+  min-height: 38px;
+  padding: var(--ka-2) var(--ka-3);
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-firm);
+  border-radius: var(--ka-radius-pill);
+  font-size: var(--ka-text-sm);
+  color: var(--ka-text-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--ka-fast) var(--ka-ease),
+              border-color var(--ka-fast) var(--ka-ease);
+}
+.ka-chip:hover { background: var(--ka-green-50); border-color: var(--ka-green-500); color: var(--ka-green-800); }
+.ka-chip[aria-pressed="true"],
+.ka-chip--on {
+  background: var(--ka-green-700);
+  border-color: var(--ka-green-700);
+  color: var(--ka-text-invert);
+}
+
+/* Horizontal scroller for chips on a phone. No wrap, swipe instead. */
+.ka-chips-scroll {
+  display: flex;
+  gap: var(--ka-2);
+  overflow-x: auto;
+  padding-bottom: var(--ka-2);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.ka-chips-scroll::-webkit-scrollbar { display: none; }
+
+/* Wage figure. Tabular numbers so columns line up. */
+.ka-wage {
+  font-family: var(--ka-font-num);
+  font-weight: var(--ka-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--ka-ink-900);
+}
+.ka-wage__unit { font-family: var(--ka-font); font-weight: var(--ka-weight-normal); font-size: var(--ka-text-sm); color: var(--ka-text-mute); }
+
+/* Rating. Star glyph plus number, never stars alone. */
+.ka-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-1);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-ink-800);
+}
+.ka-rating__star { color: var(--ka-amber-500); }
+.ka-rating__count { color: var(--ka-text-mute); font-weight: var(--ka-weight-normal); }
+
+
+/* ==========================================================================
+   9. NOTICES
+   ========================================================================== */
+
+.ka-notice {
+  display: flex;
+  gap: var(--ka-3);
+  padding: var(--ka-4);
+  border-radius: var(--ka-radius);
+  border-left: 4px solid;
+  font-size: var(--ka-text-sm);
+}
+.ka-notice__title { font-weight: var(--ka-weight-bold); display: block; margin-bottom: var(--ka-1); }
+
+.ka-notice--info  { background: var(--ka-info-bg);  border-color: var(--ka-info);  color: var(--ka-ink-800); }
+.ka-notice--ok    { background: var(--ka-live-bg);  border-color: var(--ka-live);  color: var(--ka-ink-800); }
+.ka-notice--warn  { background: var(--ka-leave-bg); border-color: var(--ka-leave); color: var(--ka-ink-800); }
+.ka-notice--error { background: var(--ka-busy-bg);  border-color: var(--ka-busy);  color: var(--ka-ink-800); }
+
+/* Dashboard banner. This is what carries the phone verification prompt
+   to accounts created before that feature ships. */
+.ka-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ka-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ka-4);
+  background: var(--ka-amber-50);
+  border: 1px solid var(--ka-amber-400);
+  border-radius: var(--ka-radius);
+}
+
+
+/* ==========================================================================
+   10. HEADER AND NAVIGATION
+   ========================================================================== */
+
+.ka-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--ka-z-header);
+  background: var(--ka-surface);
+  border-bottom: 1px solid var(--ka-border);
+}
+
+.ka-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ka-3);
+  min-height: 60px;
+}
+
+.ka-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-2);
+  font-size: var(--ka-text-xl);
+  font-weight: var(--ka-weight-bold);
+  color: var(--ka-green-800);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.ka-logo:hover { color: var(--ka-green-700); }
+
+.ka-nav { display: none; }
+.ka-nav__list { display: flex; gap: var(--ka-1); align-items: center; }
+.ka-nav__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--ka-tap);
+  padding: 0 var(--ka-3);
+  border-radius: var(--ka-radius);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-text-soft);
+  text-decoration: none;
+}
+.ka-nav__link:hover { background: var(--ka-surface-alt); color: var(--ka-text); }
+.ka-nav__link[aria-current="page"] { color: var(--ka-green-800); background: var(--ka-green-50); }
+
+@media (min-width: 900px) {
+  .ka-nav { display: block; }
+  .ka-menu-toggle { display: none; }
+}
+
+.ka-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ka-tap);
+  height: var(--ka-tap);
+  border-radius: var(--ka-radius);
+  color: var(--ka-ink-800);
+}
+.ka-menu-toggle:hover { background: var(--ka-surface-alt); }
+
+/* Bottom bar on phones. This is the real navigation for most users.
+   Five slots maximum. Anything else goes behind More. */
+.ka-tabbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: var(--ka-z-nav);
+  display: flex;
+  background: var(--ka-surface);
+  border-top: 1px solid var(--ka-border);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.ka-tabbar__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--ka-tap);
+  padding: var(--ka-2) var(--ka-1);
+  font-size: var(--ka-text-xs);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-text-mute);
+  text-decoration: none;
+}
+.ka-tabbar__item[aria-current="page"] { color: var(--ka-green-700); }
+.ka-tabbar__icon { width: 24px; height: 24px; }
+
+/* Body needs clearance so the bar never covers the last card. */
+body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-area-inset-bottom, 0)); }
+
+@media (min-width: 900px) {
+  .ka-tabbar { display: none; }
+  body.has-tabbar { padding-bottom: 0; }
+}
+
+
+/* ==========================================================================
+   11. FOOTER
+   ========================================================================== */
+
+.ka-footer {
+  margin-top: var(--ka-12);
+  padding-block: var(--ka-8);
+  background: var(--ka-green-900);
+  color: var(--ka-ink-300);
+  font-size: var(--ka-text-sm);
+}
+/* The verified mark, and what it says when opened.
+
+   details and summary rather than a script, so it works on a cheap
+   phone the moment the page renders rather than once JavaScript has
+   caught up. A tick nobody can question is worth less than one they
+   can. */
+.ka-called-wrap { display: inline-block; position: relative; }
+
+.ka-called-wrap > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.ka-called-wrap > summary::-webkit-details-marker { display: none; }
+
+.ka-called__panel {
+  position: absolute;
+  z-index: var(--ka-z-toast);
+  top: calc(100% + var(--ka-2));
+  left: 0;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - var(--ka-8)));
+  padding: var(--ka-4);
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius);
+  box-shadow: var(--ka-shadow);
+}
+
+.ka-called__panel p {
+  margin: 0 0 var(--ka-3);
+  font-size: var(--ka-text-sm);
+  line-height: 1.5;
+  color: var(--ka-text);
+}
+
+.ka-called__panel p:last-child {
+  margin-bottom: 0;
+  color: var(--ka-text-soft);
+}
+
+/* Near the right edge the panel would otherwise run off the screen. */
+@media (max-width: 480px) {
+  .ka-called__panel { left: auto; right: 0; }
+}
+
+/* The mark left by a verification call.
+
+   Drawn rather than typed, because a tick character renders as an empty
+   box on some of the cheaper Android builds common here, and an empty
+   box on a trust mark is worse than no mark at all.
+
+   Green rather than amber. Amber is the action colour on this site, and
+   nobody should tap a trust mark expecting it to do something. */
+.ka-called {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-2);
+  vertical-align: middle;
+}
+
+.ka-tick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 50%;
+  background: var(--ka-green-600);
+}
+
+.ka-tick svg {
+  width: 0.9em;
+  height: 0.9em;
+  fill: var(--ka-white);
+}
+
+.ka-called__text {
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-green-700);
+  line-height: 1.2;
+}
+
+/* On a card there is no room for the sentence, so the mark stands alone
+   and the words go to screen readers and to the tooltip. */
+.ka-called--compact .ka-tick { width: 1.1em; height: 1.1em; }
+
+/* Filter panel, collapsed by default. */
+
+/* Filters, collapsed by default.
+
+   The panel is a form, and a form is not what somebody came to the page
+   for. On a phone it filled the screen and pushed every worker below
+   the fold, so the answer to "who is available" was a set of dropdowns.
+
+   Closed, it is one line they can ignore. It opens itself whenever a
+   filter is already applied, because a hidden panel that is silently
+   narrowing the results is worse than a visible one. */
+.ka-filters-wrap { margin-bottom: var(--ka-4); }
+
+.ka-filters-toggle {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-2);
+  min-height: var(--ka-tap);
+  padding: var(--ka-3) var(--ka-4);
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-green-700);
+}
+
+/* Safari still draws its own marker without this. */
+.ka-filters-toggle::-webkit-details-marker { display: none; }
+
+.ka-filters-toggle::after {
+  content: "\25BE";
+  font-size: var(--ka-text-sm);
+  transition: transform var(--ka-fast) var(--ka-ease);
+}
+
+.ka-filters-wrap[open] > .ka-filters-toggle {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ka-filters-wrap[open] > .ka-filters-toggle::after { transform: rotate(180deg); }
+
+.ka-filters-wrap[open] > .ka-filters { margin-top: 0; border-top-left-radius: 0; }
+
+/* Footer columns.
+
+   The general grid utility is one column until 640px. In the footer
+   that turns four short link lists into a single strip running down
+   the left with the whole right of the screen empty, which is a lot
+   of scrolling for four words per row.
+
+   So the footer gets its own rule: two columns from the narrowest
+   phone, four once there is room for them. The brand block spans the
+   full width until the wide layout, because its sentence needs the
+   line length and reads badly in a half width column. */
+.ka-footer__grid {
+  display: grid;
+  gap: var(--ka-6) var(--ka-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ka-footer__grid > .ka-footer__brand { grid-column: 1 / -1; }
+
+/* Help is the fourth block, so in two columns it lands alone on its own
+   row with the right half empty. It spans instead, and its three links
+   sit in two text columns to fill the space. The safety note under them
+   gets the full width it needs: at half width it was breaking into four
+   lines of three words. */
+.ka-footer__help { grid-column: 1 / -1; }
+.ka-footer__help > ul { columns: 2; column-gap: var(--ka-4); }
+.ka-footer__help > ul > li { break-inside: avoid; }
+
+@media (min-width: 1024px) {
+  .ka-footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+  .ka-footer__grid > .ka-footer__brand,
+  .ka-footer__help { grid-column: auto; }
+  .ka-footer__help > ul { columns: auto; }
+}
+
+.ka-footer a { color: var(--ka-ink-100); text-decoration: none; }
+.ka-footer a:hover { color: var(--ka-white); text-decoration: underline; }
+.ka-footer__title {
+  color: var(--ka-white);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--ka-3);
+}
+.ka-footer__legal {
+  margin-top: var(--ka-8);
+  padding-top: var(--ka-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--ka-ink-400);
+  font-size: var(--ka-text-xs);
+}
+
+
+/* ==========================================================================
+   12. EMPTY AND LOADING STATES
+   These matter more than usual here. Early on, most screens will be empty,
+   and an empty screen that explains itself is the difference between a
+   user coming back and a user deciding the app is broken.
+   ========================================================================== */
+
+.ka-empty {
+  padding: var(--ka-10) var(--ka-4);
+  text-align: center;
+  background: var(--ka-surface);
+  border: 1px dashed var(--ka-border-firm);
+  border-radius: var(--ka-radius-lg);
+}
+.ka-empty__icon { margin: 0 auto var(--ka-4); width: 56px; height: 56px; color: var(--ka-ink-400); }
+.ka-empty__title { font-size: var(--ka-text-lg); font-weight: var(--ka-weight-bold); margin-bottom: var(--ka-2); }
+.ka-empty__text { color: var(--ka-text-mute); max-width: 40ch; margin: 0 auto var(--ka-5); }
+
+.ka-skeleton {
+  background: linear-gradient(90deg, var(--ka-ink-100) 25%, var(--ka-ink-200) 37%, var(--ka-ink-100) 63%);
+  background-size: 400% 100%;
+  animation: ka-shimmer 1.4s ease infinite;
+  border-radius: var(--ka-radius-sm);
+}
+.ka-skeleton--line { height: 14px; margin-bottom: var(--ka-2); }
+.ka-skeleton--avatar { width: 56px; height: 56px; border-radius: var(--ka-radius); }
+
+@keyframes ka-shimmer {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+
+/* ==========================================================================
+   13. COMPONENTS
+
+   Sections 1 to 12 are the primitives. This section is the actual
+   furniture: the hero, the cards, the drawer, the profile screens.
+
+   Everything here is written against markup that already exists in the
+   templates. Nothing invents a new class, and nothing depends on
+   JavaScript to look correct.
+   ========================================================================== */
+
+:root {
+  /* Matches the min-height on .ka-header__bar. The drawer and the
+     sticky offsets are measured from it, so it lives in one place. */
+  --ka-header-h: 60px;
+}
+
+
+/* --------------------------------------------------------------------------
+   13.1 Page shell
+   -------------------------------------------------------------------------- */
+
+.ka-main { display: block; min-height: 50vh; }
+.ka-main:focus { outline: none; }
+
+/* Section heading scale, used where a heading is not an h1 to h4. */
+.ka-text-xl   { font-size: var(--ka-text-xl); line-height: var(--ka-leading-snug); font-weight: var(--ka-weight-bold); }
+.ka-text-lg   { font-size: var(--ka-text-lg); line-height: var(--ka-leading-snug); font-weight: var(--ka-weight-bold); }
+.ka-text-base { font-size: var(--ka-text-base); font-weight: var(--ka-weight-normal); }
+
+/* Intro sentence under a heading. Bigger than body, softer than a heading. */
+.ka-lead {
+  font-size: var(--ka-text-lg);
+  line-height: var(--ka-leading-snug);
+  color: var(--ka-text-soft);
+  max-width: 60ch;
+}
+
+
+/* --------------------------------------------------------------------------
+   13.2 Header extras and the mobile drawer
+
+   The drawer is a details element, so all of this is presentation on top
+   of something that already opens and closes with no script.
+   -------------------------------------------------------------------------- */
+
+.ka-header__logo img { max-height: 40px; width: auto; }
+.ka-header__actions { flex-wrap: nowrap; }
+
+.ka-drawer { position: static; }
+
+.ka-drawer > summary {
+  list-style: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ka-drawer > summary::-webkit-details-marker { display: none; }
+.ka-drawer > summary::marker { content: ""; }
+
+/* Swap hamburger for cross when open. Both icons are always in the
+   markup, so without this rule they stack on top of each other. */
+.ka-drawer__close { display: none; }
+.ka-drawer[open] .ka-drawer__open { display: none; }
+.ka-drawer[open] .ka-drawer__close { display: inline-flex; }
+
+.ka-drawer__panel {
+  position: fixed;
+  top: var(--ka-header-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--ka-z-nav);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ka-surface);
+  border-top: 1px solid var(--ka-border);
+  padding: var(--ka-5) var(--ka-gutter) var(--ka-16);
+  animation: ka-drawer-in var(--ka-slow) var(--ka-ease);
+}
+
+@keyframes ka-drawer-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.ka-drawer__actions { margin-top: var(--ka-6); }
+
+
+/* --------------------------------------------------------------------------
+   13.3 Navigation lists and submenus
+   -------------------------------------------------------------------------- */
+
+.ka-nav__item { position: relative; }
+
+.ka-nav__list--stack { display: block; }
+.ka-nav__list--stack > .ka-nav__item + .ka-nav__item { border-top: 1px solid var(--ka-border); }
+
+.ka-nav__link--stack {
+  justify-content: flex-start;
+  gap: var(--ka-3);
+  width: 100%;
+  min-height: var(--ka-tap-lg);
+  padding: var(--ka-3) var(--ka-2);
+  font-size: var(--ka-text-base);
+  color: var(--ka-text);
+  border-radius: var(--ka-radius);
+}
+
+.ka-nav__icon { flex-shrink: 0; color: var(--ka-ink-500); }
+.ka-nav__text { display: block; }
+
+/* A menu item description. Set in Appearance, Menus. Worth having on the
+   mobile drawer where there is room to explain what a link does. */
+.ka-nav__desc { display: block; margin-top: 2px; }
+
+.ka-nav__sub {
+  display: block;
+  margin: 0 0 var(--ka-2) var(--ka-4);
+  padding-left: var(--ka-3);
+  border-left: 2px solid var(--ka-border);
+}
+.ka-nav__sub--nested { margin-left: var(--ka-3); }
+
+.ka-nav__link--sub { font-weight: var(--ka-weight-normal); color: var(--ka-text-soft); }
+
+/* Submenu toggle. Ships hidden and is revealed by the script, so a
+   browser with no JavaScript simply shows the submenu open. */
+.ka-nav__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ka-tap);
+  height: var(--ka-tap);
+  border-radius: var(--ka-radius);
+  color: var(--ka-text-soft);
+}
+.ka-nav__toggle:hover { background: var(--ka-surface-alt); }
+.ka-nav__toggle[hidden] { display: none; }
+
+.ka-nav__chevron { transition: transform var(--ka-fast) var(--ka-ease); }
+.ka-nav__toggle[aria-expanded="false"] .ka-nav__chevron { transform: rotate(-90deg); }
+
+/* Desktop dropdown. Only from the large breakpoint, where hover exists. */
+@media (min-width: 900px) {
+  .ka-nav .ka-nav__sub {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: var(--ka-z-header);
+    min-width: 220px;
+    margin: 0;
+    padding: var(--ka-2);
+    background: var(--ka-surface);
+    border: 1px solid var(--ka-border);
+    border-radius: var(--ka-radius);
+    box-shadow: var(--ka-shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--ka-fast) var(--ka-ease);
+  }
+
+  .ka-nav .ka-nav__item--parent:hover > .ka-nav__sub,
+  .ka-nav .ka-nav__item--parent:focus-within > .ka-nav__sub {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   13.4 Hero
+
+   The first screen. Warm, high contrast, and the search card is the
+   brightest object on it because searching is the one thing this page
+   is asking a visitor to do.
+   -------------------------------------------------------------------------- */
+
+.ka-hero {
+  position: relative;
+  padding-block: var(--ka-10) var(--ka-8);
+  background:
+    radial-gradient(1200px 400px at 15% -10%, var(--ka-green-100), transparent 60%),
+    linear-gradient(170deg, var(--ka-green-50) 0%, var(--ka-bg) 70%);
+  border-bottom: 1px solid var(--ka-border);
+}
+
+@media (min-width: 768px) {
+  .ka-hero { padding-block: var(--ka-16) var(--ka-12); }
+}
+
+.ka-hero__inner { max-width: 860px; }
+
+.ka-hero__title {
+  font-size: var(--ka-text-3xl);
+  color: var(--ka-green-900);
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .ka-hero__title { font-size: 3rem; }
+}
+
+.ka-hero__lead {
+  font-size: var(--ka-text-lg);
+  line-height: var(--ka-leading-snug);
+  color: var(--ka-text-soft);
+  max-width: 46ch;
+}
+
+@media (min-width: 768px) {
+  .ka-hero__lead { font-size: var(--ka-text-xl); }
+}
+
+.ka-hero__search {
+  box-shadow: var(--ka-shadow-lg);
+  border-color: var(--ka-border-firm);
+}
+
+/* One column on a phone, three across from tablet up. The button sits on
+   its own row on a phone so it stays full width and thumb sized. */
+.ka-hero__fields { display: grid; gap: var(--ka-4); grid-template-columns: 1fr; }
+
+@media (min-width: 720px) {
+  .ka-hero__fields { grid-template-columns: 1fr 1fr auto; align-items: end; }
+  .ka-hero__submit { min-width: 160px; }
+}
+
+/* The field wrapper is a .ka-field, which adds a top margin to siblings.
+   Inside a grid that margin fights the gap, so remove it. */
+.ka-hero__fields .ka-field + .ka-field { margin-top: 0; }
+
+
+/* --------------------------------------------------------------------------
+   13.5 Cards for people, teams and jobs
+   -------------------------------------------------------------------------- */
+
+.ka-worker-card,
+.ka-gang-card,
+.ka-job-card,
+.ka-employer-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Push the footer to the bottom so a row of cards has its wage figures
+   and buttons on one line, whatever the card above them contains. */
+.ka-worker-card .ka-card__foot,
+.ka-gang-card .ka-card__foot,
+.ka-job-card .ka-card__foot,
+.ka-employer-card .ka-card__foot { margin-top: auto; }
+
+.ka-worker-card .ka-card__body,
+.ka-gang-card .ka-card__body,
+.ka-employer-card .ka-card__body { flex: 1; }
+
+.ka-worker-card__photo,
+.ka-employer-card__logo,
+.ka-job-card__photo { display: block; flex-shrink: 0; }
+
+.ka-worker-card__id,
+.ka-gang-card__id,
+.ka-employer-card__id,
+.ka-job-card__id { flex: 1; min-width: 0; }
+
+/* The employer's poster on a job card.
+
+   A thumbnail beside the title rather than a band across the top. These
+   are printed flyers -- a training course, a hiring drive -- and run
+   tall. Given the full width of the card one of them would be most of a
+   phone screen, and a listing is meant to be scrolled past several jobs
+   at a time, not one.
+
+   Square and cropped from the middle, which is where a flyer puts its
+   name. Sixty-four across, drawn from the 128px file, so it stays sharp
+   on a phone without fetching the poster at full size on a village
+   connection.
+
+   Nothing here applies when a job has no picture: the anchor is not
+   printed at all, and the head collapses to the title and the employer
+   exactly as it was. */
+.ka-job-card__photo img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--ka-radius-sm);
+  background: var(--ka-ink-100);
+}
+
+.ka-worker-card__name,
+.ka-gang-card__id h3,
+.ka-employer-card__name {
+  font-size: var(--ka-text-lg);
+  line-height: var(--ka-leading-snug);
+}
+
+.ka-worker-card__name a,
+.ka-gang-card__id h3 a,
+.ka-job-card h3 a,
+.ka-employer-card__name a {
+  color: var(--ka-ink-900);
+  text-decoration: none;
+}
+.ka-worker-card__name a:hover,
+.ka-gang-card__id h3 a:hover,
+.ka-job-card h3 a:hover,
+.ka-employer-card__name a:hover { color: var(--ka-green-700); text-decoration: underline; }
+
+/* The status pill sits top right of the card head and must not squash
+   the name column when the name is long. */
+.ka-worker-card .ka-card__head > .ka-status,
+.ka-gang-card .ka-card__head > .ka-status { flex-shrink: 0; margin-left: auto; }
+
+.ka-job-card h3 { font-size: var(--ka-text-lg); }
+
+/* Featured image inside a generic card. */
+.ka-card__image {
+  width: 100%;
+  border-radius: var(--ka-radius);
+  margin-bottom: var(--ka-4);
+}
+
+/* Town and district line. */
+.ka-place { display: inline-block; }
+
+.ka-trade,
+.ka-district { color: var(--ka-text-soft); }
+
+/* Urgent is its own badge rather than reusing New, because a worker
+   scanning a list needs those two to read differently. */
+.ka-badge--urgent {
+  background: var(--ka-busy-bg);
+  color: var(--ka-busy);
+  font-weight: var(--ka-weight-bold);
+}
+
+
+/* --------------------------------------------------------------------------
+   13.6 Front page sections
+   -------------------------------------------------------------------------- */
+
+/* How it works. Numbered, and the numbers are the decoration. */
+.ka-how { background: var(--ka-surface); border-block: 1px solid var(--ka-border); }
+
+.ka-how ol { counter-reset: none; }
+
+.ka-how__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--ka-4);
+  border-radius: var(--ka-radius-pill);
+  background: var(--ka-green-100);
+  color: var(--ka-green-800);
+  font-size: var(--ka-text-lg);
+  font-weight: var(--ka-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The two doors. Each one carries the colour of the action inside it, so
+   a visitor can tell them apart before reading either heading. */
+.ka-door { position: relative; overflow: hidden; }
+
+.ka-door::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+}
+
+.ka-door--worker::before { background: var(--ka-green-600); }
+.ka-door--employer::before { background: var(--ka-amber-500); }
+
+.ka-door--worker { background: linear-gradient(180deg, var(--ka-green-50), var(--ka-surface) 55%); }
+.ka-door--employer { background: linear-gradient(180deg, var(--ka-amber-50), var(--ka-surface) 55%); }
+
+.ka-door .ka-btn { width: 100%; }
+
+@media (min-width: 640px) {
+  .ka-door .ka-btn { width: auto; }
+}
+
+/* Trust band. Quiet on purpose. Four statements, no icons, no boxes. */
+.ka-trust { background: var(--ka-green-900); color: var(--ka-ink-200); }
+.ka-trust h3 { color: var(--ka-white); font-size: var(--ka-text-base); margin-bottom: var(--ka-2); }
+.ka-trust .ka-soft { color: var(--ka-ink-300); }
+
+.ka-trust__item {
+  padding-left: var(--ka-4);
+  border-left: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+
+/* --------------------------------------------------------------------------
+   13.7 Page headers, filters and pagination
+   -------------------------------------------------------------------------- */
+
+.ka-page-head { max-width: 70ch; }
+.ka-page-head__desc { margin-top: var(--ka-2); }
+.ka-page-head__term { color: var(--ka-green-700); }
+.ka-page-head__search { max-width: 520px; }
+
+.ka-searchform { width: 100%; }
+
+/* The filter bar above a listing. A plain GET form laid out as a grid so
+   it does not become a tall stack of controls on a phone. */
+.ka-filters {
+  display: grid;
+  gap: var(--ka-4);
+  grid-template-columns: 1fr;
+  align-items: end;
+  margin-bottom: var(--ka-6);
+}
+
+@media (min-width: 640px) { .ka-filters { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .ka-filters { grid-template-columns: repeat(4, 1fr); } }
+
+.ka-filters .ka-field + .ka-field { margin-top: 0; }
+
+.ka-pagination { display: block; }
+
+.ka-pagination ul { justify-content: center; }
+
+.ka-pagination .page-numbers {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--ka-tap);
+  min-height: var(--ka-tap);
+  padding: 0 var(--ka-3);
+  border: 1px solid var(--ka-border-firm);
+  border-radius: var(--ka-radius);
+  background: var(--ka-surface);
+  color: var(--ka-text-soft);
+  font-weight: var(--ka-weight-medium);
+  text-decoration: none;
+}
+
+.ka-pagination .page-numbers:hover { background: var(--ka-green-50); border-color: var(--ka-green-600); color: var(--ka-green-800); }
+
+.ka-pagination .page-numbers.current {
+  background: var(--ka-green-700);
+  border-color: var(--ka-green-700);
+  color: var(--ka-text-invert);
+}
+
+.ka-pagination .page-numbers.dots { border-color: transparent; background: none; }
+
+
+/* --------------------------------------------------------------------------
+   13.8 Forms in the flow
+
+   The core plugin renders registration, job posting and profile editing
+   as .ka-form. They are read on a phone, one field at a time.
+   -------------------------------------------------------------------------- */
+
+.ka-form { max-width: 640px; }
+.ka-form fieldset { margin: 0; padding: 0; border: 0; }
+.ka-form legend { padding: 0; }
+
+/* A fieldset styled as a card needs its padding back, since the reset
+   above strips it. Used for the vouching block. */
+.ka-form fieldset.ka-card { padding: var(--ka-6); }
+
+.ka-save-form { display: inline-block; }
+
+
+/* --------------------------------------------------------------------------
+   13.9 Profile screens
+   -------------------------------------------------------------------------- */
+
+/* Clearance for the fixed action bar at the bottom of a profile. */
+.ka-profile,
+.ka-job { padding-bottom: calc(var(--ka-tap-lg) + var(--ka-8)); }
+
+.ka-profile__head { border-color: var(--ka-border-firm); }
+
+.ka-profile__identity {
+  display: flex;
+  gap: var(--ka-4);
+  align-items: flex-start;
+}
+
+.ka-profile__titles { flex: 1; min-width: 0; }
+
+.ka-profile__name {
+  font-size: var(--ka-text-2xl);
+  margin-bottom: var(--ka-2);
+}
+
+.ka-avatar--xl { width: 96px; height: 96px; border-radius: var(--ka-radius-lg); font-size: var(--ka-text-2xl); }
+
+@media (min-width: 640px) {
+  .ka-avatar--xl { width: 128px; height: 128px; }
+}
+
+.ka-profile__trades { padding-top: var(--ka-4); border-top: 1px solid var(--ka-border); }
+
+/* The vouch. Given real weight, because a named local authority standing
+   behind somebody is the strongest signal on this platform. */
+.ka-vouch {
+  padding: var(--ka-6);
+  border-radius: var(--ka-radius-lg);
+  background: var(--ka-info-bg);
+  border: 1px solid rgba(29, 95, 138, 0.22);
+}
+
+.ka-vouch__title {
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ka-info);
+  margin-bottom: var(--ka-2);
+}
+
+.ka-vouch__name { font-size: var(--ka-text-xl); font-weight: var(--ka-weight-bold); color: var(--ka-ink-900); }
+.ka-vouch__role { color: var(--ka-text-soft); }
+
+/* Facts strip. Two up on a phone so it never becomes a long column. */
+.ka-facts {
+  display: grid;
+  gap: var(--ka-4);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .ka-facts { grid-template-columns: repeat(4, 1fr); }
+}
+
+.ka-fact {
+  padding: var(--ka-4);
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius);
+}
+
+.ka-fact__label {
+  font-size: var(--ka-text-xs);
+  font-weight: var(--ka-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ka-text-mute);
+  margin-bottom: var(--ka-1);
+}
+
+.ka-fact__value {
+  font-size: var(--ka-text-lg);
+  font-weight: var(--ka-weight-bold);
+  line-height: var(--ka-leading-snug);
+  color: var(--ka-ink-900);
+}
+
+/* The pay block on a job, and the headcount block on a team. The single
+   largest thing on the screen, because it is the first question. */
+.ka-payblock {
+  padding: var(--ka-6);
+  border-radius: var(--ka-radius-lg);
+  background: linear-gradient(180deg, var(--ka-amber-50), var(--ka-surface) 70%);
+  border: 1px solid var(--ka-amber-400);
+}
+
+.ka-payblock__label {
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ka-amber-700);
+  margin-bottom: var(--ka-2);
+}
+
+.ka-payblock__figure { line-height: 1.1; }
+.ka-payblock__figure .ka-wage { font-size: var(--ka-text-3xl); }
+.ka-payblock__figure .ka-wage__unit { font-size: var(--ka-text-base); }
+
+/* Contact screen, rendered by the plugin into the content. */
+.ka-contact { border-color: var(--ka-green-600); }
+
+.ka-contact__number {
+  font-size: var(--ka-text-3xl);
+  letter-spacing: 0.04em;
+  margin-top: var(--ka-1);
+}
+
+
+/* --------------------------------------------------------------------------
+   13.10 Sticky action bar
+
+   Sits above the tab bar on a phone. An employer who has read to the
+   bottom of a profile should never have to scroll back up to call.
+   -------------------------------------------------------------------------- */
+
+.ka-actionbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--ka-z-sticky);
+  background: var(--ka-surface);
+  border-top: 1px solid var(--ka-border-firm);
+  box-shadow: 0 -2px 10px rgba(23, 21, 15, 0.08);
+  padding: var(--ka-3) 0 calc(var(--ka-3) + env(safe-area-inset-bottom, 0));
+}
+
+/* Clear the bottom tab bar when one is present. */
+body.has-tabbar .ka-actionbar {
+  bottom: calc(var(--ka-tap) + env(safe-area-inset-bottom, 0));
+  padding-bottom: var(--ka-3);
+}
+
+@media (min-width: 900px) {
+  body.has-tabbar .ka-actionbar { bottom: 0; }
+}
+
+.ka-actionbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ka-4);
+}
+
+.ka-actionbar__meta { display: flex; flex-direction: column; line-height: var(--ka-leading-snug); }
+
+/* On a phone the bar holds one button and it takes the full width. */
+.ka-actionbar .ka-btn { flex: 1; min-height: var(--ka-tap-lg); }
+
+@media (min-width: 640px) {
+  .ka-actionbar .ka-btn { flex: 0 0 auto; min-width: 240px; }
+}
+
+
+/* --------------------------------------------------------------------------
+   13.11 Long form content
+
+   The reset at the top of this file strips list markers from everything,
+   which is right for navigation and wrong for a page somebody wrote. The
+   Safety, Privacy, Terms and How it works pages are all lists, and
+   without this they render as unindented run on lines.
+   -------------------------------------------------------------------------- */
+
+.ka-prose { max-width: 70ch; }
+.ka-prose > * + * { margin-top: var(--ka-4); }
+
+.ka-prose h2 { font-size: var(--ka-text-2xl); margin-top: var(--ka-8); }
+.ka-prose h3 { font-size: var(--ka-text-xl); margin-top: var(--ka-6); }
+.ka-prose h4 { margin-top: var(--ka-6); }
+
+.ka-prose ul,
+.ka-prose ol { padding-left: var(--ka-6); }
+
+.ka-prose li { list-style: disc; }
+.ka-prose ol > li { list-style: decimal; }
+.ka-prose li + li { margin-top: var(--ka-2); }
+.ka-prose li::marker { color: var(--ka-ink-400); }
+
+.ka-prose a { font-weight: var(--ka-weight-medium); }
+
+.ka-prose blockquote {
+  padding: var(--ka-4) var(--ka-5);
+  border-left: 4px solid var(--ka-green-600);
+  background: var(--ka-green-50);
+  border-radius: 0 var(--ka-radius) var(--ka-radius) 0;
+  color: var(--ka-text-soft);
+}
+
+.ka-prose img { border-radius: var(--ka-radius); }
+
+.ka-prose code {
+  padding: 2px 6px;
+  border-radius: var(--ka-radius-sm);
+  background: var(--ka-surface-alt);
+  font-family: var(--ka-font-num);
+  font-size: 0.9em;
+}
+
+.ka-prose pre {
+  padding: var(--ka-4);
+  border-radius: var(--ka-radius);
+  background: var(--ka-ink-900);
+  color: var(--ka-ink-100);
+  overflow-x: auto;
+}
+.ka-prose pre code { background: none; padding: 0; color: inherit; }
+
+/* Tables scroll inside themselves rather than pushing the page sideways. */
+.ka-prose table { display: block; overflow-x: auto; white-space: nowrap; }
+.ka-prose th,
+.ka-prose td { padding: var(--ka-2) var(--ka-3); border-bottom: 1px solid var(--ka-border); text-align: left; }
+.ka-prose th { font-weight: var(--ka-weight-bold); }
+
+/* The plugin renders its screens straight into the content, and those
+   already carry their own layout. Do not constrain them. */
+.ka-prose > .ka-form,
+.ka-prose > .ka-grid,
+.ka-prose > .ka-stack--lg,
+.ka-prose > .ka-section,
+.ka-prose > .ka-filters { max-width: none; }
+
+.ka-page__media { margin: 0; }
+.ka-page__image { width: 100%; border-radius: var(--ka-radius-lg); }
+
+/* Previous and next under a post. */
+.ka-postnav { display: grid; gap: var(--ka-4); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .ka-postnav { grid-template-columns: 1fr 1fr; } }
+.ka-postnav a { text-decoration: none; color: var(--ka-text); }
+.ka-postnav strong { display: block; margin-top: var(--ka-1); color: var(--ka-green-800); }
+
+
+/* --------------------------------------------------------------------------
+   13.12 404 and offline
+   -------------------------------------------------------------------------- */
+
+.ka-404__links ul { margin-top: var(--ka-4); }
+.ka-404__links a { text-decoration: none; font-weight: var(--ka-weight-medium); }
+
+.ka-footer__brand p { max-width: 34ch; }
+
+/* Connection lost banner, injected by the script. */
+.ka-offline {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--ka-z-toast);
+  padding: var(--ka-3) var(--ka-4);
+  background: var(--ka-busy);
+  color: var(--ka-text-invert);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  text-align: center;
+}
+
+.ka-icon { flex-shrink: 0; }
+
+
+/* ==========================================================================
+   14. UTILITIES
+   Small and deliberate. Not a utility framework.
+   ========================================================================== */
+
+.ka-hide { display: none !important; }
+@media (max-width: 639px)  { .ka-hide-sm { display: none !important; } }
+@media (min-width: 900px)  { .ka-hide-lg { display: none !important; } }
+
+.ka-center { text-align: center; }
+.ka-right  { text-align: right; }
+
+.ka-mute  { color: var(--ka-text-mute); }
+.ka-soft  { color: var(--ka-text-soft); }
+.ka-small { font-size: var(--ka-text-sm); }
+.ka-xs    { font-size: var(--ka-text-xs); }
+.ka-bold  { font-weight: var(--ka-weight-bold); }
+
+.ka-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ka-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ka-mt-0 { margin-top: 0 !important; }
+.ka-mt-4 { margin-top: var(--ka-4) !important; }
+.ka-mt-6 { margin-top: var(--ka-6) !important; }
+.ka-mb-4 { margin-bottom: var(--ka-4) !important; }
+
+.ka-full { width: 100%; }
+
+
+/* ==========================================================================
+   15. PRINT
+   Contractors print worker lists and muster sheets. Make that not ugly.
+   ========================================================================== */
+
+@media print {
+  .ka-header, .ka-tabbar, .ka-footer, .ka-btn, .ka-chips-scroll,
+  .ka-actionbar, .ka-offline, .ka-filters, .ka-pagination, .ka-drawer { display: none !important; }
+
+  /* The clearance reserved for the fixed action bar is dead space on paper. */
+  .ka-profile, .ka-job { padding-bottom: 0 !important; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  .ka-card { border: 1px solid #999; box-shadow: none; break-inside: avoid; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 10pt; color: #555; }
+}
+
+/* ==========================================================================
+   GET THE APP
+
+   A strip along the bottom on Android. Printed hidden and shown by the
+   browser, so a cached page cannot show it to the wrong person.
+   ========================================================================== */
+
+.ka-getapp {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: var(--ka-3);
+  padding: var(--ka-3) var(--ka-4);
+  background: var(--ka-surface);
+  border-top: 1px solid var(--ka-border);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  /* Clear of the home indicator on a phone with no buttons. */
+  padding-bottom: calc(var(--ka-3) + env(safe-area-inset-bottom, 0px));
+}
+
+/* An author rule beats the browser's own [hidden] { display: none }, so
+   the attribute has to be said again here. Without it the strip shows on
+   an iPhone, where Apple's banner is meant to be the only offer, and the
+   close button appears to do nothing. */
+.ka-getapp[hidden] { display: none; }
+
+.ka-getapp__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ka-radius);
+}
+
+/* Takes the slack, and lets a long line shorten rather than push the
+   button off the edge. */
+.ka-getapp__words {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: var(--ka-leading-snug);
+}
+
+.ka-getapp__words strong { font-size: var(--ka-text-sm); }
+
+.ka-getapp__words span {
+  color: var(--ka-text-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ka-getapp .ka-btn { flex-shrink: 0; }
+
+.ka-getapp__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ka-tap);
+  height: var(--ka-tap);
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--ka-text-soft);
+  cursor: pointer;
+}
+
+.ka-getapp__close:hover { color: var(--ka-text); }
+
+/* So the strip never covers the last thing on the page. Added by the
+   same script that shows the strip, and removed when it is dismissed. */
+.ka-has-getapp { padding-bottom: 5.5rem; }
+
+/* Nothing to install on a desktop, and the strip is sized for a thumb. */
+@media (min-width: 900px) {
+  .ka-getapp { display: none; }
+  .ka-has-getapp { padding-bottom: 0; }
+}
+
+
+/* ==========================================================================
+   THE APP, ON THE HOME PAGE
+
+   Sits above the two doors. Kept low and quiet on purpose: it is one
+   row, not a banner, because the two doors under it are the only two
+   things on this page that grow the business.
+   ========================================================================== */
+
+/* Tighter than a full section. The two doors follow immediately and the
+   pair should read as one idea, not two unrelated blocks. */
+.ka-section--app { padding-bottom: 0; }
+
+.ka-appcta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ka-4);
+  padding: var(--ka-5);
+  background: var(--ka-green-50);
+  border: 1px solid var(--ka-green-100);
+  border-radius: var(--ka-radius-lg);
+}
+
+.ka-appcta__icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--ka-radius);
+  box-shadow: var(--ka-shadow-sm);
+}
+
+/* Takes the slack so the icon and the shops keep their size.
+
+   12rem rather than 10: at 10 the icon and the words share a row on a
+   320px screen and save about 40px of height, but the name then breaks
+   as "Get the Kaam / Ase app". A whole name is worth more than 40px on
+   a screen size almost nobody has. */
+.ka-appcta__words {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+/* Smaller here than the section headings elsewhere, because at 360px
+   the larger size breaks the name in half: "Get the Kaam / Ase app". */
+.ka-appcta__title {
+  margin: 0;
+  font-size: var(--ka-text-lg);
+  line-height: var(--ka-leading-tight);
+  text-wrap: balance;
+}
+
+.ka-appcta__sub {
+  margin-top: var(--ka-1);
+  color: var(--ka-text-soft);
+  font-size: var(--ka-text-sm);
+}
+
+/* Two equal columns from the narrowest screen up. Left to wrap, the
+   second shop ends up a different width from the first and reads as an
+   afterthought. */
+.ka-appcta__stores {
+  display: grid;
+  /* Side by side while both fit whole, stacked below that. A fixed two
+     columns squeezes "Google Play" onto two lines on a 360px screen,
+     which is most of the cheap phones this is built for. */
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: var(--ka-3);
+  width: 100%;
+}
+
+.ka-store {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ka-2);
+  min-height: var(--ka-tap);
+  padding: var(--ka-2);
+  background: var(--ka-ink-900);
+  color: var(--ka-white);
+  border-radius: var(--ka-radius);
+  text-decoration: none;
+}
+
+.ka-store:hover,
+.ka-store:focus-visible { background: var(--ka-ink-800); color: var(--ka-white); }
+
+.ka-store svg { flex-shrink: 0; }
+
+.ka-store__words {
+  display: flex;
+  flex-direction: column;
+  /* Ranged left against each other. Centred, the small word floats over
+     the big one and the pair stops reading as one label. */
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+/* The phone, not the shop. Somebody choosing between these knows what
+   is in their hand and may never have heard of an App Store. */
+.ka-store__where {
+  font-size: var(--ka-text-sm);
+  color: var(--ka-ink-300);
+}
+
+.ka-store__name {
+  font-size: var(--ka-text-base);
+  font-weight: var(--ka-weight-medium);
+}
+
+/* Neither line ever breaks. A shop name split over two lines reads as a
+   fault, and the grid above is what makes room instead. */
+.ka-store__where,
+.ka-store__name { white-space: nowrap; }
+
+@media (min-width: 700px) {
+  .ka-appcta { gap: var(--ka-6); padding: var(--ka-6); }
+
+  .ka-appcta__title { font-size: var(--ka-text-xl); }
+
+  /* Off to the right, so the row reads icon, words, then the two shops. */
+  .ka-appcta__stores {
+    width: auto;
+    grid-template-columns: auto auto;
+    margin-left: auto;
+  }
+
+  .ka-store {
+    justify-content: flex-start;
+    gap: var(--ka-3);
+    padding-inline: var(--ka-4);
+  }
+}
+
+
+
+/* ==========================================================================
+   VIEW COUNT
+
+   Quiet on purpose. It sits beside a rating, a wage and a trade, and it
+   is the least important of them: worth knowing, never worth reading
+   first.
+   ========================================================================== */
+
+.ka-views {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-1);
+  color: var(--ka-text-mute);
+  font-size: var(--ka-text-sm);
+  /* Numbers that do not shuffle sideways as they grow. On a listing the
+     eyes then line up down the column instead of drifting. */
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Optically centred rather than baseline aligned. A circle inside an
+   almond reads high against a line of text unless it is nudged down. */
+.ka-views__eye {
+  flex-shrink: 0;
+  color: var(--ka-ink-400);
+  transform: translateY(0.5px);
+}
+
+.ka-views__n { font-weight: var(--ka-weight-medium); }
+
+/* Lighter than the number it follows, so the eye lands on the figure. */
+.ka-views__word { color: var(--ka-ink-500); }
+
+/* On a profile page of its own it is a fact about the page, not a scrap
+   of card furniture, so it is allowed a little more room and weight. */
+.ka-views--full {
+  /* A word space between the number and the word, not the wider gap
+     that sits after the eye. One flex gap for both put "247  views" a
+     whole space apart and broke the phrase in half. */
+  gap: var(--ka-1);
+  font-size: var(--ka-text-base);
+  /* "12,480 seen · 903 opened" is a good deal longer than "247 views",
+     so on a narrow phone it is allowed to fall onto a second line
+     rather than push the card sideways. Cards keep nowrap: there the
+     figure is short and a column of eyes should stay a column. */
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+/* Whatever else wraps, a figure never breaks away from its own eye. */
+.ka-views--full .ka-views__n { white-space: nowrap; }
+
+/* At the foot of a profile card, behind a hairline. Above the rule are
+   facts about the person; below it is a fact about the page. Without the
+   rule it reads as something left over at the bottom. */
+.ka-profile__seen {
+  /* Same rule and the same spacing as .ka-profile__trades above it, so
+     the two read as sections of one card rather than two ideas. */
+  margin-top: var(--ka-6);
+  padding-top: var(--ka-4);
+  border-top: 1px solid var(--ka-border);
+}
+
+.ka-views--full .ka-views__eye {
+  width: 17px;
+  height: 17px;
+  margin-right: var(--ka-1);
+}
+
+
+
+/* ==========================================================================
+   WHO LOOKED AT YOU
+
+   A list of people, so it is built as a list of people: a face, a name,
+   and underneath in smaller type what they did. Nothing is a table.
+   Tables of numbers are for the person running the platform, not for
+   somebody finding out that four employers read their profile.
+   ========================================================================== */
+
+.ka-looked {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius-lg);
+  overflow: hidden;
+}
+
+.ka-looked__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ka-4);
+  padding: var(--ka-4);
+}
+
+/* A hairline between people rather than a box around each. Boxes down a
+   list make every entry shout; a rule lets the names carry it. */
+.ka-looked__row + .ka-looked__row { border-top: 1px solid var(--ka-border); }
+
+.ka-looked__what { min-width: 0; }
+
+.ka-looked__who {
+  margin: 0;
+  font-weight: var(--ka-weight-medium);
+  line-height: var(--ka-leading-snug);
+}
+
+/* The two lines under a name are one thought, so they sit closer to
+   each other than the name sits to them. */
+.ka-looked__what p + p { margin-top: var(--ka-1); }
+
+/* The offer at the foot of the page. Amber, because it is the only
+   thing here asking for anything, and it should look like it. */
+.ka-looked__more { border-left: 3px solid var(--ka-amber-500); }
+
+
+/* End of Kaam Ase design system v1.0.0 */

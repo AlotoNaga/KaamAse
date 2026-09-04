@@ -63,6 +63,41 @@ if ( ! function_exists( 'kaamase_rest_require_login' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_rest_require_employer_browse' ) ) {
+	/**
+	 * Whether this caller may read the employer directory.
+	 *
+	 * The decision itself is kaamase_may_browse_employers(), which is
+	 * the same function the website page calls. This only turns its
+	 * answer into the shape a permission callback has to return, and
+	 * separates the two refusals so the app can tell them apart: 401
+	 * means sign in, 403 means signed in but not allowed yet.
+	 *
+	 * @since 1.4.1
+	 * @return true|WP_Error
+	 */
+	function kaamase_rest_require_employer_browse() {
+
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'kaamase_signed_out',
+				__( 'Sign in to see who is hiring.', 'kaamase-core' ),
+				array( 'status' => 401 )
+			);
+		}
+
+		if ( ! function_exists( 'kaamase_may_browse_employers' ) || ! kaamase_may_browse_employers() ) {
+			return new WP_Error(
+				'kaamase_needs_verified_email',
+				__( 'Confirm your email to see who is hiring. We sent you a link when you registered.', 'kaamase-core' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		return true;
+	}
+}
+
 if ( ! function_exists( 'kaamase_rest_error' ) ) {
 	/**
 	 * Turn a WP_Error into a response the app can act on.
@@ -345,6 +380,62 @@ if ( ! function_exists( 'kaamase_register_rest_routes' ) ) {
 			)
 		);
 
+		/*
+		 * The phones this account is signed in on.
+		 *
+		 * The website has had this since the day tokens were added and
+		 * the app never has, which is backwards: the person whose phone
+		 * was stolen is holding a different phone, and the thing in
+		 * their hand is far more likely to be the app than a browser.
+		 */
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/devices',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_rest_devices',
+				'permission_callback' => $auth,
+			)
+		);
+
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/devices/revoke',
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'kaamase_rest_revoke_device',
+				'permission_callback' => $auth,
+			)
+		);
+
+		/*
+		 * The employer directory.
+		 *
+		 * The only listing on this API that is not open. Browsing
+		 * workers and jobs signed out is deliberate; a directory of
+		 * every business on the platform is not the same thing, and no
+		 * employer agreed to that when they registered.
+		 */
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/employers',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_rest_employers',
+				'permission_callback' => 'kaamase_rest_require_employer_browse',
+			)
+		);
+
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/employers/(?P<id>\d+)',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_rest_employer',
+				'permission_callback' => 'kaamase_rest_require_employer_browse',
+			)
+		);
+
 		register_rest_route(
 			KAAMASE_REST_NS,
 			'/teams',
@@ -359,16 +450,6 @@ if ( ! function_exists( 'kaamase_register_rest_routes' ) ) {
 					'callback'            => 'kaamase_rest_save_team',
 					'permission_callback' => $auth,
 				),
-			)
-		);
-
-		register_rest_route(
-			KAAMASE_REST_NS,
-			'/employers/(?P<id>\d+)',
-			array(
-				'methods'             => 'GET',
-				'callback'            => 'kaamase_rest_employer',
-				'permission_callback' => $open,
 			)
 		);
 
@@ -1490,6 +1571,228 @@ if ( ! function_exists( 'kaamase_rest_workers' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_rest_device_list' ) ) {
+	/**
+	 * Every phone this account is signed in on, marking the one asking.
+	 *
+	 * is_current is the whole reason this is not just kaamase_user_devices()
+	 * handed straight out. A list of four identical rows called "Kaam Ase
+	 * app" is useless for the job it exists to do: somebody has to be able
+	 * to tell which one is in their hand before they dare sign the others
+	 * out, and only the server can say, because the phone knows its token
+	 * but not which stored entry that token became.
+	 *
+	 * The handle compared here is a hash of the stored hash, so nothing
+	 * that could be replayed as a credential is computed or returned.
+	 *
+	 * @since 1.4.2
+	 * @param int $user_id Account.
+	 * @return array[]
+	 */
+	function kaamase_rest_device_list( $user_id ) {
+
+		$devices = kaamase_user_devices( $user_id );
+		$bearer  = kaamase_bearer_token();
+
+		$current = '';
+
+		if ( $bearer ) {
+			$current = kaamase_device_id( array( 'hash' => kaamase_hash_token( $bearer ) ) );
+		}
+
+		foreach ( $devices as $at => $device ) {
+			$devices[ $at ]['is_current'] = ( '' !== $current && $device['id'] === $current );
+		}
+
+		return $devices;
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_devices' ) ) {
+	/**
+	 * List the phones this account is signed in on.
+	 *
+	 * @since 1.4.2
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_devices() {
+
+		return new WP_REST_Response(
+			array( 'items' => kaamase_rest_device_list( get_current_user_id() ) ),
+			200
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_revoke_device' ) ) {
+	/**
+	 * Sign a phone out.
+	 *
+	 * device takes a handle from the list, or one of two words:
+	 *
+	 *   others  everything except the phone asking. What somebody whose
+	 *           phone was stolen actually wants, and the only one of the
+	 *           three that leaves them still signed in.
+	 *   all     everything, this phone included. Matches the website's
+	 *           Sign out everywhere.
+	 *
+	 * Rate limited, because this is the one endpoint where a stolen
+	 * phone can act against the person it was stolen from. It cannot be
+	 * prevented outright -- whoever holds the phone holds a valid token,
+	 * and they could already read everything the account can see -- but
+	 * it can be kept to a handful of attempts an hour, which is more
+	 * than any honest person needs and not enough to grind through
+	 * anything.
+	 *
+	 * @since 1.4.2
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_revoke_device( $request ) {
+
+		$user_id = get_current_user_id();
+		$device  = sanitize_key( (string) $request->get_param( 'device' ) );
+
+		if ( '' === $device ) {
+			return kaamase_rest_error(
+				new WP_Error(
+					'kaamase_no_device',
+					__( 'Say which phone to sign out.', 'kaamase-core' ),
+					array( 'status' => 400 )
+				)
+			);
+		}
+
+		$key = 'devices_' . $user_id;
+
+		if ( kaamase_rate_value( $key, 0 ) >= 20 ) {
+			return kaamase_rest_error(
+				new WP_Error(
+					'kaamase_limit',
+					__( 'That is a lot of sign outs at once. Try again in an hour, or use the website.', 'kaamase-core' ),
+					array( 'status' => 429 )
+				)
+			);
+		}
+
+		kaamase_rate_bump( $key, HOUR_IN_SECONDS );
+
+		if ( 'all' === $device ) {
+
+			kaamase_revoke_token( $user_id );
+
+		} elseif ( 'others' === $device ) {
+
+			/*
+			 * Everything except this phone, done by revoking each other
+			 * handle rather than by revoking all and re-issuing. Re-issuing
+			 * would hand back a new token the app would have to notice and
+			 * store, and a phone that missed that response would be signed
+			 * out by the very action meant to keep it signed in.
+			 */
+			foreach ( kaamase_rest_device_list( $user_id ) as $entry ) {
+
+				if ( empty( $entry['is_current'] ) ) {
+					kaamase_revoke_device( $user_id, (string) $entry['id'] );
+				}
+			}
+		} else {
+
+			kaamase_revoke_device( $user_id, $device );
+		}
+
+		/*
+		 * The refreshed list comes back with the answer, so the screen
+		 * somebody is staring at during a theft updates from the reply
+		 * rather than from a second request that might not arrive.
+		 */
+		return new WP_REST_Response(
+			array(
+				'ok'    => true,
+				'items' => kaamase_rest_device_list( $user_id ),
+			),
+			200
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_employers' ) ) {
+	/**
+	 * The employer directory.
+	 *
+	 * Filters and sorting are built by the same function the website
+	 * page uses, so the two cannot drift apart. In particular the sort
+	 * goes through kaamase_number_sort_args(), which LEFT JOINs: an
+	 * employer who has hired nobody yet still appears.
+	 *
+	 * @since 1.4.1
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_employers( $request ) {
+
+		$args = kaamase_employer_query_args(
+			array(
+				'district' => (string) $request->get_param( 'district' ),
+				'type'     => (string) $request->get_param( 'type' ),
+				'sort'     => (string) $request->get_param( 'sort' ),
+				/*
+				 * Passed through raw. kaamase_employer_query_args() does
+				 * the clamping, and doing it twice is how the two paths
+				 * end up disagreeing: absint() here would turn page -5
+				 * into page 5 before the clamp ever saw it.
+				 */
+				'paged'    => $request->get_param( 'page' ),
+			)
+		);
+
+		$query = new WP_Query( $args );
+
+		$items = array_map(
+			static function ( $post ) {
+				return kaamase_shape_employer( $post, false );
+			},
+			(array) $query->posts
+		);
+
+		return kaamase_rest_list_response(
+			array_filter( $items ),
+			$query->found_posts,
+			$args['paged'],
+			$args['posts_per_page']
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_employer' ) ) {
+	/**
+	 * One employer.
+	 *
+	 * @since 1.4.1
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_employer( $request ) {
+
+		$id   = absint( $request['id'] );
+		$post = get_post( $id );
+
+		if ( ! $post || 'kaamase_employer' !== $post->post_type ) {
+			return kaamase_rest_error(
+				new WP_Error( 'kaamase_not_found', __( 'That employer no longer exists.', 'kaamase-core' ), array( 'status' => 404 ) )
+			);
+		}
+
+		if ( 'publish' !== $post->post_status && ! current_user_can( 'edit_post', $id ) ) {
+			return kaamase_rest_error(
+				new WP_Error( 'kaamase_not_found', __( 'That employer is not available.', 'kaamase-core' ), array( 'status' => 404 ) )
+			);
+		}
+
+		return new WP_REST_Response( kaamase_shape_employer( $post, true ), 200 );
+	}
+}
+
 if ( ! function_exists( 'kaamase_rest_worker' ) ) {
 	/**
 	 * One worker or team.
@@ -1570,30 +1873,6 @@ if ( ! function_exists( 'kaamase_rest_save_team' ) ) {
 		return new WP_REST_Response( kaamase_shape_worker( $result, true ), $team_id ? 200 : 201 );
 	}
 }
-
-if ( ! function_exists( 'kaamase_rest_employer' ) ) {
-	/**
-	 * One employer.
-	 *
-	 * @since 1.3.0
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
-	 */
-	function kaamase_rest_employer( $request ) {
-
-		$id   = absint( $request['id'] );
-		$post = get_post( $id );
-
-		if ( ! $post || 'kaamase_employer' !== $post->post_type || 'publish' !== $post->post_status ) {
-			return kaamase_rest_error(
-				new WP_Error( 'kaamase_not_found', __( 'That employer no longer exists.', 'kaamase-core' ), array( 'status' => 404 ) )
-			);
-		}
-
-		return new WP_REST_Response( kaamase_shape_employer( $post, true ), 200 );
-	}
-}
-
 
 if ( ! function_exists( 'kaamase_rest_by_slug' ) ) {
 	/**
