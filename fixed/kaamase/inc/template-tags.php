@@ -914,6 +914,29 @@ if ( ! function_exists( 'kaamase_gang_card' ) ) {
 					<?php endif; ?>
 
 					<?php echo kaamase_place( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+
+					<div class="ka-cluster ka-mt-4">
+						<?php
+						/*
+						 * The score and the marks, exactly as a worker
+						 * card has drawn them all along. A team was the
+						 * one card in the theme given neither, while the
+						 * app has shown both for teams since it was
+						 * written -- teams travel through the same shape
+						 * as a worker there.
+						 *
+						 * kaamase_rating falls back to the New badge
+						 * below three ratings rather than printing
+						 * nothing, which is what makes a team with no
+						 * score read the same as a worker with none.
+						 */
+						echo kaamase_rating( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							kaamase_field( $post_id, 'rating_average', 0 ),
+							kaamase_field( $post_id, 'rating_count', 0 )
+						);
+						echo kaamase_badges( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						?>
+					</div>
 				</div>
 
 				<?php echo kaamase_status( kaamase_field( $post_id, 'availability' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

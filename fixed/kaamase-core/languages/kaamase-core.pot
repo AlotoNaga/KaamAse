@@ -213,6 +213,10 @@ msgstr ""
 msgid "A helpline printed on a safety page that rings out is worse than no helpline at all."
 msgstr ""
 
+#: includes/hire-claims.php:209
+msgid "A hire cannot be confirmed against this page."
+msgstr ""
+
 #: includes/job-screening.php:709
 msgid "A job post has been held before going live.\n\nIt matched: %1\\$s\n\nIt is not visible to anybody. Read it here:\n%2\\$s\n\nIf it is what it looks like, do not simply delete it. Keep the account and the post, and report it.\n"
 msgstr ""
@@ -655,6 +659,10 @@ msgstr ""
 
 #: includes/verify-requests.php:586
 msgid "Asked to be verified. Rung and spoken to."
+msgstr ""
+
+#: includes/hire-claims.php:480
+msgid "Asked. They will see it the next time they open Kaam Ase."
 msgstr ""
 
 #: includes/job-screening.php:798
@@ -1165,6 +1173,10 @@ msgstr ""
 
 #: includes/hires.php:298 includes/push.php:268
 msgid "Did you hire them?"
+msgstr ""
+
+#: includes/hire-claims.php:558
+msgid "Did you work together?"
 msgstr ""
 
 #: includes/taxonomies.php:324
@@ -1827,6 +1839,14 @@ msgstr ""
 msgid "I am looking for workers"
 msgstr ""
 
+#: includes/hire-claims.php:404
+msgid "I have worked for them"
+msgstr ""
+
+#: includes/hire-claims.php:403
+msgid "I hired this person"
+msgstr ""
+
 #: includes/post-job.php:422
 msgid "I need somebody today or tomorrow"
 msgstr ""
@@ -1893,6 +1913,14 @@ msgstr ""
 
 #: includes/profile-edit.php:981
 msgid "If you ever want to come back, you are welcome to register again."
+msgstr ""
+
+#: includes/ratings.php:821
+msgid "If you have worked for them, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
+msgstr ""
+
+#: includes/ratings.php:820
+msgid "If you hired this person, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
 msgstr ""
 
 #: includes/hiring-request.php:159
@@ -2869,6 +2897,10 @@ msgstr ""
 msgid "Only if you want steady monthly work. Leave empty otherwise."
 msgstr ""
 
+#: includes/hire-claims.php:183
+msgid "Only somebody hiring can confirm a hire from this side."
+msgstr ""
+
 #: includes/admin.php:428 includes/admin.php:666 includes/dashboard.php:666
 msgid "Open"
 msgstr ""
@@ -3289,6 +3321,10 @@ msgstr ""
 msgid "Ratings can only be left after real work. If you worked together, confirm the hire first."
 msgstr ""
 
+#: includes/ratings.php:818
+msgid "Ratings open once a hire is confirmed"
+msgstr ""
+
 #: includes/privacy.php:162
 msgid "Ratings you gave"
 msgstr ""
@@ -3475,6 +3511,10 @@ msgstr ""
 
 #: includes/install.php:378
 msgid "Safety"
+msgstr ""
+
+#: includes/hire-claims.php:607
+msgid "Said so %s ago"
 msgstr ""
 
 #: includes/taxonomies.php:374
@@ -3897,6 +3937,10 @@ msgstr ""
 msgid "Somebody local who knows you and will say so. A colony council member, a GB, a church elder, a student union officer, or somebody you worked for before. This carries more weight with employers than anything else on your profile."
 msgstr ""
 
+#: includes/hire-claims.php:581
+msgid "Somebody on Kaam Ase"
+msgstr ""
+
 #: includes/reports.php:765
 msgid "Somebody reads it within two working days."
 msgstr ""
@@ -4017,8 +4061,20 @@ msgstr ""
 msgid "Switch this on only if you are finished with Kaam Ase and want everything gone when the plugin is deleted."
 msgstr ""
 
+#: includes/hire-claims.php:278
+msgid "That is enough hires to confirm for one day. Try again tomorrow."
+msgstr ""
+
 #: app-version.php:261
 msgid "That is not a version number, so nothing was set. Use digits and dots only, like 2.0.7."
+msgstr ""
+
+#: includes/hire-claims.php:170
+msgid "That is your own profile."
+msgstr ""
+
+#: includes/hire-claims.php:331
+msgid "That question is no longer waiting for an answer."
 msgstr ""
 
 #: app-version.php:246
@@ -4031,6 +4087,22 @@ msgstr ""
 
 #: who-looked.php:464
 msgid "Their names are held for a year. A free account sees the last week, which is why this one looks empty. Rich Manu opens the rest of it."
+msgstr ""
+
+#: includes/hire-claims.php:561
+msgid "These people say you worked together. Agreeing is what lets the two of you rate each other, and nobody sees a rating until you have both written one."
+msgstr ""
+
+#: includes/hire-claims.php:250
+msgid "They have already been asked. It is with them now."
+msgstr ""
+
+#: includes/hire-claims.php:263
+msgid "They said no to this recently. You can ask again in a week."
+msgstr ""
+
+#: includes/hire-claims.php:409
+msgid "They will be asked to agree before either of you can rate the other."
 msgstr ""
 
 #: app-version.php:375
@@ -5392,6 +5464,10 @@ msgstr ""
 msgid "Yes, send the daily message"
 msgstr ""
 
+#: includes/hire-claims.php:622
+msgid "Yes, we did"
+msgstr ""
+
 #: includes/taxonomies.php:655
 msgid "Yimkhiung"
 msgstr ""
@@ -5406,6 +5482,10 @@ msgstr ""
 
 #: includes/post-job.php:428
 msgid "You already have one urgent job running. Close it first, or leave this one normal. One urgent job at a time keeps the tag worth something."
+msgstr ""
+
+#: includes/hire-claims.php:239
+msgid "You are already able to rate each other."
 msgstr ""
 
 #: includes/registration.php:62
@@ -5499,6 +5579,10 @@ msgstr ""
 msgid "You have posted all the jobs this account can post today. You can get more now, or wait until tomorrow."
 msgstr ""
 
+#: includes/hire-claims.php:389
+msgid "You have said you worked together. It opens as soon as they agree."
+msgstr ""
+
 #: includes/reports.php:531 includes/rest-api.php:2424
 msgid "You have sent several already. If it is urgent, call us instead."
 msgstr ""
@@ -5525,6 +5609,10 @@ msgstr ""
 
 #: includes/hires.php:301
 msgid "You looked up these numbers recently. Telling us what happened is what lets you and them rate each other, and it is the only reason the ratings on this site mean anything."
+msgstr ""
+
+#: includes/hire-claims.php:199
+msgid "You need a worker profile before you can say you worked somewhere."
 msgstr ""
 
 #: includes/hiring-request.php:175

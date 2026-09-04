@@ -2175,6 +2175,103 @@ The photograph is skipped by the keyboard and hidden from screen readers, becaus
 the heading beside it is the same link and two links to one job is one thing to
 tab past for nothing. Same treatment as the worker card.
 
+## 43. Opening the ratings up
+
+⚠️ *Four files. `kaamase-core/includes/hire-claims.php` is **brand new**;
+`ratings.php` and `kaamase-core/languages/kaamase-core.pot` are new revisions;
+`kaamase/inc/template-tags.php` is a new revision of the theme file. **`hires.php`
+is deliberately not in this list** — the existing hire flow is untouched.*
+
+Every rating depends on a recorded hire, and until now exactly one thing could
+record one: an employer revealing a worker's number, then answering *yes I hired
+them* two days later on their dashboard.
+
+That is a narrow door. Hiring here happens on the phone, on WhatsApp, through a
+cousin, at the work site. None of it goes through a contact reveal, so none of it
+produced a hire, so none of those people could ever rate each other — and no
+screen told them why. One mis-tap on **No** ended it permanently, for both of
+them, and the worker never knew the question had been asked.
+
+### 1. The form used to disappear without a word
+
+`kaamase_rating_form()` returned an empty string to anybody who could not rate.
+No heading, no message, nothing. The function already knew the reason and threw
+it away.
+
+It now says so — but only where saying so helps:
+
+- **only** for a missing hire. Telling a signed-out reader to sign in repeats the
+  button already on the page, and telling somebody they cannot rate themselves is
+  noise on the one page they look at most.
+- **only** to somebody on the other side of the market. A worker reading another
+  worker's page is not waiting on a hire, and a message about confirming one
+  would only confuse them.
+
+### 2. A second door, which does not touch the first
+
+`hire-claims.php` is new and `hires.php` is unchanged. The reveal flow works
+exactly as it did; this adds a way in beside it.
+
+A button appears inside that new notice — **I hired this person** on a worker or
+team, **I have worked for them** on an employer. It reaches all three profile
+pages through a filter, so not one line of any template changed.
+
+**The other person has to agree.** The existing answer is one-sided on purpose:
+the employer paid a contact lookup, and the reveal is evidence that a real
+approach happened. A claim made here has no evidence behind it, and letting it
+stand alone would let anybody manufacture a hire with a stranger — and with it
+the right to rate them. On a platform where a bad score costs somebody work, that
+is not a small thing. So it goes to the other person, in both directions, as a
+question on their dashboard: **Did you work together?**
+
+That question reaches workers as well as employers, because the dashboard fires
+its prompt hook above everything type-specific.
+
+### Nothing here is permanent
+
+Which is the other half of the "No" problem:
+
+| | |
+| --- | --- |
+| Refused | can be asked again after **7 days** |
+| Never answered | dropped after **30 days**, so it can be made afresh |
+| Already connected | refused — there is nothing to confirm |
+| Same claim twice | refused while it is still with the other person |
+| Ceiling | **10 claims per person per day** |
+
+Tested against the real functions: an employer claiming a worker, a worker
+claiming an employer, both resolving to the same pair the other way round;
+somebody else's reference refused; answering twice refused; a refusal blocked on
+the same day and accepted eight days later; and the ceiling stopping at exactly
+ten.
+
+### It works in the app too
+
+Three addresses, all requiring a signed-in account:
+
+```
+GET  /kaamase/v1/hire-claims          what this account has been asked to agree to
+POST /kaamase/v1/hire-claims          { "profile": 123 }        say a hire happened
+POST /kaamase/v1/hire-claims/answer   { "ref": "...", "confirm": true }
+```
+
+### 3. Teams finally get their score and their marks
+
+The one card in the theme with neither, while the app has shown both for teams
+since it was written — teams travel through the same shape as a worker there.
+Now identical to the worker card, which means a team with no ratings reads
+**New**, exactly as a worker with none does.
+
+### What was deliberately left alone
+
+The **three-rating threshold stays at three**. The stars are not missing; there
+are almost no ratings, because until now almost nobody could leave one. Once the
+door is open three will arrive quickly and the scores appear on their own. The
+reason for the threshold has not changed:
+
+> In a market this small a single angry employer could otherwise end somebody's
+> livelihood with one click on a bad afternoon.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
