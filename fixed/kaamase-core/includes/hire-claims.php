@@ -176,6 +176,22 @@ if ( ! function_exists( 'kaamase_hire_claim_pairing' ) ) {
 			return new WP_Error( 'kaamase_claim_self', __( 'That is your own profile.', 'kaamase-core' ) );
 		}
 
+		/*
+		 * Not staff. An administrator holds every capability on the
+		 * site, so without this the button would sit on every worker in
+		 * the district for the people who run the platform -- and
+		 * pressing it would record the staff member as the employer,
+		 * raising that worker's completed jobs and the staff member's
+		 * hires made for a hire that never happened.
+		 *
+		 * The rest of the plugin already takes this line: a view is not
+		 * counted for staff, and the rating threshold treats them as
+		 * somebody looking on rather than taking part.
+		 */
+		if ( user_can( $user_id, 'manage_options' ) ) {
+			return new WP_Error( 'kaamase_claim_staff', __( 'Staff accounts do not record hires of their own.', 'kaamase-core' ) );
+		}
+
 		// An employer saying they hired this worker or this team.
 		if ( in_array( $post->post_type, array( 'kaamase_worker', 'kaamase_gang' ), true ) ) {
 
@@ -524,6 +540,17 @@ if ( ! function_exists( 'kaamase_hire_claims_due' ) ) {
 			}
 
 			if ( ( time() - absint( $claim['time'] ) ) > KAAMASE_CLAIM_WINDOW ) {
+				continue;
+			}
+
+			/*
+			 * The hire arrived some other way while this was waiting --
+			 * most likely the employer answered the reveal question, or
+			 * the same pair was claimed from both sides at once. There
+			 * is nothing left to agree to, so do not ask.
+			 */
+			if ( function_exists( 'kaamase_hire_exists_between' )
+				&& kaamase_hire_exists_between( absint( $claim['worker'] ), absint( $claim['employer'] ) ) ) {
 				continue;
 			}
 

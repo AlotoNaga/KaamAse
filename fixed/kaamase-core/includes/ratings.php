@@ -793,6 +793,17 @@ if ( ! function_exists( 'kaamase_rating_blocked_notice' ) ) {
 			return '';
 		}
 
+		/*
+		 * Not staff. They hold every capability, so they would see this
+		 * on every profile on the site, and they are not a party to any
+		 * of these hires. The rest of the plugin treats them the same
+		 * way: their views are not counted and the rating threshold
+		 * does not apply to them.
+		 */
+		if ( user_can( $user_id, 'manage_options' ) ) {
+			return '';
+		}
+
 		$about_worker = in_array( $post->post_type, array( 'kaamase_worker', 'kaamase_gang' ), true );
 
 		/*
