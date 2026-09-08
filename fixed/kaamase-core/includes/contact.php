@@ -664,7 +664,29 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 		$channel = kaamase_contact_channel( $post_id );
 		$number  = $channel['number'];
-		$name    = get_the_title( $post_id );
+
+		/*
+		 * The stored name, not the displayed one.
+		 *
+		 * get_the_title() runs the the_title filter, and verified-mark.php
+		 * hooks that to append the tick as markup whenever the title being
+		 * asked for belongs to the profile currently being viewed. This
+		 * block is printed by the_content on that very profile, so every
+		 * condition of that filter is met and the name arrives carrying a
+		 * span and an svg inside it.
+		 *
+		 * Escaping it then does exactly what escaping is for and prints
+		 * the markup as words, which is the tag soup that appeared in the
+		 * heading and in the sentence below. Unescaping it instead would
+		 * be the wrong repair: a name is user supplied, and it would put
+		 * whatever somebody typed into their profile straight into the
+		 * page.
+		 *
+		 * So the raw title is asked for. The tick still renders where it
+		 * is meant to, in the page heading the theme prints, and this
+		 * block gets a plain name it can safely escape.
+		 */
+		$name = (string) get_post_field( 'post_title', $post_id, 'raw' );
 
 		ob_start();
 		?>
@@ -712,13 +734,42 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 			<p class="ka-small ka-mute ka-mt-4">
 				<?php
-				printf(
-					esc_html(
-						/* translators: %s: number of lookups left today */
-						_n( '%s lookup left today.', '%s lookups left today.', kaamase_contact_quota_left( $user_id ), 'kaamase-core' )
-					),
-					esc_html( number_format_i18n( kaamase_contact_quota_left( $user_id ) ) )
-				);
+				/*
+				 * An account that is not metered is told so, rather than
+				 * counted.
+				 *
+				 * Staff and field agents come back from the allowance
+				 * layer as PHP_INT_MAX, which is how that layer says "no
+				 * limit". Subtracting today's lookups from it and running
+				 * the result through number_format_i18n printed
+				 * 9,223,372,036,854,775,806 lookups left today on the
+				 * screen, which is not a number anybody can read and is
+				 * not a promise anybody should make.
+				 *
+				 * The limit is what gets tested, not what is left. What
+				 * is left has already had today's count taken off it, so
+				 * it never equals the sentinel after the first lookup and
+				 * a test against it would work only until somebody used
+				 * the page.
+				 */
+				$daily = kaamase_contact_daily_limit( $user_id );
+
+				if ( $daily >= PHP_INT_MAX ) {
+
+					esc_html_e( 'This account has no daily limit.', 'kaamase-core' );
+
+				} else {
+
+					$left = kaamase_contact_quota_left( $user_id );
+
+					printf(
+						esc_html(
+							/* translators: %s: number of lookups left today */
+							_n( '%s lookup left today.', '%s lookups left today.', $left, 'kaamase-core' )
+						),
+						esc_html( number_format_i18n( $left ) )
+					);
+				}
 				?>
 			</p>
 
