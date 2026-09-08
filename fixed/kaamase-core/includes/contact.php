@@ -422,6 +422,55 @@ if ( ! function_exists( 'kaamase_contact_quota_key' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_contact_unmetered' ) ) {
+	/**
+	 * Whether this account has no daily limit at all.
+	 *
+	 * The allowance layer says "not metered" by answering PHP_INT_MAX,
+	 * which is true and also unprintable. Staff and field agents come
+	 * back that way.
+	 *
+	 * The LIMIT is what gets asked about, never what is left. What is
+	 * left has already had today's lookups taken off it, so it stops
+	 * equalling the sentinel the moment somebody uses the page, and a
+	 * test against it would work exactly until it mattered.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return bool
+	 */
+	function kaamase_contact_unmetered( $user_id ) {
+		return kaamase_contact_daily_limit( $user_id ) >= PHP_INT_MAX;
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_quota_wire' ) ) {
+	/**
+	 * The lookups left, as a number that survives the journey.
+	 *
+	 * JSON carries integers, JavaScript reads them as doubles, and
+	 * anything above 9,007,199,254,740,991 loses precision on the way
+	 * in. PHP_INT_MAX minus today's count is well past that, so an
+	 * unmetered account was sending the app a number it could not hold
+	 * and the app was displaying whatever came out of the rounding.
+	 *
+	 * Two things travel now: quota_unlimited, which is the truth, and
+	 * this, which is a figure old builds can still print. A client that
+	 * reads the flag ignores this entirely. One that does not gets a
+	 * large, readable, harmless number instead of arithmetic noise.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return int
+	 */
+	function kaamase_contact_quota_wire( $user_id ) {
+
+		$left = kaamase_contact_quota_left( $user_id );
+
+		return kaamase_contact_unmetered( $user_id ) ? 9999 : (int) $left;
+	}
+}
+
 if ( ! function_exists( 'kaamase_contact_quota_left' ) ) {
 	/**
 	 * How many reveals this user has left today.
@@ -746,15 +795,11 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 				 * screen, which is not a number anybody can read and is
 				 * not a promise anybody should make.
 				 *
-				 * The limit is what gets tested, not what is left. What
-				 * is left has already had today's count taken off it, so
-				 * it never equals the sentinel after the first lookup and
-				 * a test against it would work only until somebody used
-				 * the page.
+				 * Asked through kaamase_contact_unmetered(), which is the
+				 * one place that knows what the sentinel means, and is
+				 * the same test the app is answered with.
 				 */
-				$daily = kaamase_contact_daily_limit( $user_id );
-
-				if ( $daily >= PHP_INT_MAX ) {
+				if ( kaamase_contact_unmetered( $user_id ) ) {
 
 					esc_html_e( 'This account has no daily limit.', 'kaamase-core' );
 

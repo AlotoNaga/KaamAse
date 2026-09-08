@@ -1964,7 +1964,8 @@ if ( ! function_exists( 'kaamase_rest_contact' ) ) {
 					'code'       => $allowed->get_error_code(),
 					'message'    => $allowed->get_error_message(),
 					'messages'   => array( $allowed->get_error_message() ),
-					'quota_left' => kaamase_contact_quota_left( $user_id ),
+					'quota_left' => kaamase_contact_quota_wire( $user_id ),
+					'quota_unlimited' => kaamase_contact_unmetered( $user_id ),
 				),
 				403
 			);
@@ -1988,7 +1989,8 @@ if ( ! function_exists( 'kaamase_rest_contact' ) ) {
 				'label'      => (string) $channel['label'],
 				'whatsapp'   => $number ? 'https://wa.me/91' . $number : '',
 				'tel'        => $number ? 'tel:+91' . $number : '',
-				'quota_left' => kaamase_contact_quota_left( $user_id ),
+				'quota_left' => kaamase_contact_quota_wire( $user_id ),
+				'quota_unlimited' => kaamase_contact_unmetered( $user_id ),
 			),
 			200
 		);

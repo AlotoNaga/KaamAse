@@ -653,7 +653,8 @@ if ( ! function_exists( 'kaamase_shape_me' ) ) {
 			'team_id'       => $team_id ? (int) $team_id : 0,
 			'can_post_jobs' => user_can( $user_id, 'create_kaamase_jobs' ),
 			'can_add_team'  => user_can( $user_id, 'create_kaamase_gangs' ),
-			'quota_left'    => kaamase_contact_quota_left( $user_id ),
+			'quota_left'    => kaamase_contact_quota_wire( $user_id ),
+			'quota_unlimited' => kaamase_contact_unmetered( $user_id ),
 			'profile_state' => $profile ? $profile->post_status : 'missing',
 		);
 
