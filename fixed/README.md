@@ -15,10 +15,8 @@ never reaches the site.
 
 Nothing outside `fixed/` should be touched. The plugin holds around thirty more
 files that were never changed, and copying an old copy of one of those over the
-live version would undo work that is already running. In particular there is an
-existing `includes/push.php` that sends notifications on a contact reveal, on
-verification and on the daily hire question. It is not in `fixed/` and must be
-left exactly where it is.
+live version would undo work that is already running. If a file is not in
+`fixed/`, leave it alone.
 
 ## What to copy where
 
@@ -70,6 +68,7 @@ left exactly where it is.
 | `fixed/kaamase-core/includes/who-looked.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/google-signin.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/number-requests.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/push.php` | `wp-content/plugins/kaamase-core/includes/push.php` |
 
 **New folders to create** (they do not exist on your site yet):
 

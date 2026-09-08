@@ -550,21 +550,18 @@ if ( ! function_exists( 'kaamase_number_request_decide' ) ) {
 
 if ( ! function_exists( 'kaamase_number_tell' ) ) {
 	/**
-	 * Tell somebody, by whatever reaches them.
+	 * Tell somebody, through the platform's own notification layer.
 	 *
-	 * The phone through the plugin's own push layer, which already
-	 * holds the endpoint, the site setting and the non blocking send.
-	 * Email when that cannot reach them, because a worker who signed up
-	 * on the website and never installed the app still has to know
-	 * somebody is waiting on an answer.
+	 * A thin pass through to kaamase_notify_user() in push.php, which
+	 * already decides between a phone and an email and holds the site
+	 * setting, the endpoint and the wording rules. This once had its own
+	 * copy of that logic, which meant two places deciding how Kaam Ase
+	 * speaks to people and two places to forget when one changed.
 	 *
-	 * Never both. Two copies of one sentence teaches people this
-	 * platform is noisy, and the ones who learn that read neither.
-	 *
-	 * Whether push is possible is decided here rather than trusted to
-	 * the send. kaamase_push_to_user() returns nothing and posts without
-	 * blocking, by design, so there is no success to wait for: asking
-	 * first is the only way to know an email is needed.
+	 * Guarded because push.php is a separate file and a missing one
+	 * should cost a notification rather than fatal a request somebody is
+	 * in the middle of. The request itself is already saved by the time
+	 * this runs, and it is on the dashboard either way.
 	 *
 	 * @since 1.6.0
 	 * @param int    $user_id  Who to tell.
@@ -576,51 +573,11 @@ if ( ! function_exists( 'kaamase_number_tell' ) ) {
 	 */
 	function kaamase_number_tell( $user_id, $title, $body, $data = array(), $mail_url = '' ) {
 
-		$user_id = (int) $user_id;
-
-		if ( ! $user_id ) {
+		if ( ! function_exists( 'kaamase_notify_user' ) ) {
 			return;
 		}
 
-		$tokens = function_exists( 'kaamase_meta_array' )
-			? kaamase_meta_array( get_user_meta( $user_id, 'kaamase_push_tokens', true ) )
-			: array();
-
-		$by_phone = ! empty( $tokens )
-			&& function_exists( 'kaamase_push_enabled' )
-			&& kaamase_push_enabled()
-			&& function_exists( 'kaamase_push_to_user' );
-
-		if ( $by_phone ) {
-			kaamase_push_to_user( $user_id, $title, $body, $data );
-			return;
-		}
-
-		$user = get_userdata( $user_id );
-
-		if ( ! $user || empty( $user->user_email ) ) {
-			return;
-		}
-
-		$lines = array( $body );
-
-		if ( '' !== $mail_url ) {
-			$lines[] = '';
-			$lines[] = $mail_url;
-		}
-
-		$lines[] = '';
-		$lines[] = sprintf(
-			/* translators: %s: site name */
-			__( '%s never asks a worker for money.', 'kaamase-core' ),
-			wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES )
-		);
-
-		wp_mail(
-			$user->user_email,
-			wp_specialchars_decode( (string) $title, ENT_QUOTES ),
-			implode( "\n", $lines )
-		);
+		kaamase_notify_user( $user_id, $title, $body, $data, $mail_url );
 	}
 }
 
