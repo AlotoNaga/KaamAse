@@ -329,6 +329,33 @@ if ( ! function_exists( 'kaamase_can_contact' ) ) {
 			}
 		}
 
+		/**
+		 * Filters one last refusal in, after the platform's own rules.
+		 *
+		 * Here rather than at the top so that everything the platform
+		 * itself insists on has already been said. Somebody who has not
+		 * confirmed their email should be told that, not sent down a
+		 * path that ends in the same place.
+		 *
+		 * Before the daily cap on purpose. A refusal from here means no
+		 * number was seen, and charging somebody a lookup for a number
+		 * they were not shown is taking something for nothing.
+		 *
+		 * Return a WP_Error to refuse, carrying a sentence written for
+		 * the person who will read it and a code the app can act on.
+		 * Return null to say nothing.
+		 *
+		 * @since 1.6.0
+		 * @param null|WP_Error $veto    Refusal so far.
+		 * @param int           $post_id Profile or job being asked about.
+		 * @param int           $user_id Who is asking.
+		 */
+		$veto = apply_filters( 'kaamase_contact_veto', null, (int) $post_id, $user_id );
+
+		if ( is_wp_error( $veto ) ) {
+			return $veto;
+		}
+
 		// Daily cap.
 		if ( ! kaamase_contact_quota_left( $user_id ) ) {
 			/*
