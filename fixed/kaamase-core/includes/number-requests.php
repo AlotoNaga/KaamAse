@@ -114,6 +114,48 @@ if ( ! function_exists( 'kaamase_number_is_hidden' ) ) {
 }
 
 
+if ( ! function_exists( 'kaamase_number_my_profile' ) ) {
+	/**
+	 * The profile whose number this account controls.
+	 *
+	 * Not kaamase_profile_id, and the difference is a real bug rather
+	 * than a nicety. That value is whichever profile the account made
+	 * first, and an account can hold a worker profile and an employer
+	 * profile at once. Somebody who registered to hire, then later
+	 * added a working profile, has their employer profile stored there.
+	 * Reading it would have pointed every one of these screens and
+	 * endpoints at the wrong post: their requests would never appear
+	 * and their setting would be saved somewhere it does nothing.
+	 *
+	 * Asked for by side instead, worker first, then team, because only
+	 * those two can hold a number back.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return int Profile ID, or 0 when they have neither.
+	 */
+	function kaamase_number_my_profile( $user_id ) {
+
+		$user_id = (int) $user_id;
+
+		if ( ! $user_id || ! function_exists( 'kaamase_get_user_profile' ) ) {
+			return 0;
+		}
+
+		foreach ( array( 'kaamase_worker', 'kaamase_gang' ) as $type ) {
+
+			$profile = (int) kaamase_get_user_profile( $user_id, $type );
+
+			if ( $profile && kaamase_user_owns( $profile, $user_id ) ) {
+				return $profile;
+			}
+		}
+
+		return 0;
+	}
+}
+
+
 /* ==========================================================================
    2. WHO SEES IT ANYWAY
    ========================================================================== */
@@ -326,6 +368,32 @@ if ( ! function_exists( 'kaamase_number_request_add' ) ) {
 			return new WP_Error(
 				'kaamase_blocked',
 				__( 'You cannot contact this person.', 'kaamase-core' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		/*
+		 * The safety gate, asked here as well as at the number itself.
+		 *
+		 * Somebody who cannot be given a maid's or a cook's number
+		 * until they hold a finished employer profile must not be able
+		 * to ask for one either. The gate would still stop them at the
+		 * number, since it runs before this feature's own check, so
+		 * nothing leaks without this. What it prevents is worse than a
+		 * leak in its own way: a worker reading a request, agreeing to
+		 * share, and the platform then refusing the person she just
+		 * said yes to. She would have no way to understand why, and the
+		 * decision she made would have counted for nothing.
+		 */
+		if (
+			function_exists( 'kaamase_profile_is_protected' )
+			&& kaamase_profile_is_protected( $post_id )
+			&& function_exists( 'kaamase_may_contact_home_worker' )
+			&& ! kaamase_may_contact_home_worker( $user_id )
+		) {
+			return new WP_Error(
+				'kaamase_needs_verified_employer',
+				__( 'Before you can ask for this number, finish your employer profile: confirm your email and add your phone number. It takes a minute and it means the person you are asking can see who is asking.', 'kaamase-core' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -707,7 +775,19 @@ if ( ! function_exists( 'kaamase_number_dashboard_prompt' ) ) {
 	 */
 	function kaamase_number_dashboard_prompt( $user_id, $profile, $type ) {
 
-		unset( $type );
+		unset( $profile, $type );
+
+		/*
+		 * The working profile, not whichever one the dashboard is
+		 * currently showing. Somebody who holds both profiles and is
+		 * looking at the hiring side still needs to be told that three
+		 * people are waiting on their number.
+		 */
+		$profile = kaamase_number_my_profile( $user_id );
+
+		if ( ! $profile ) {
+			return;
+		}
 
 		$pending = kaamase_number_pending( $profile );
 
@@ -797,9 +877,17 @@ if ( ! function_exists( 'kaamase_number_dashboard_setting' ) ) {
 	 */
 	function kaamase_number_dashboard_setting( $user_id, $profile, $type ) {
 
-		unset( $user_id );
+		unset( $profile, $type );
 
-		if ( 'worker' !== $type ) {
+		/*
+		 * Shown to anybody who has a working profile, rather than to
+		 * whoever the dashboard currently calls a worker. The setting
+		 * belongs to the profile that carries the number, and an
+		 * account holding both sides still has one of those.
+		 */
+		$profile = kaamase_number_my_profile( $user_id );
+
+		if ( ! $profile ) {
 			return;
 		}
 
@@ -1042,12 +1130,19 @@ if ( ! function_exists( 'kaamase_number_shape_me' ) ) {
 			return $me;
 		}
 
-		$profile = isset( $me['profile_id'] ) ? (int) $me['profile_id'] : 0;
+		/*
+		 * Resolved by side rather than read off the account object.
+		 *
+		 * me.profile_id follows the side the account is currently
+		 * treated as, so somebody whose type says employer would see a
+		 * count of zero on an app badge while people waited on their
+		 * working profile. The badge has to count what is actually
+		 * waiting, not what side they happen to be viewing.
+		 */
+		$profile = kaamase_number_my_profile( $user_id );
 
 		$me['phone_hidden']            = $profile ? kaamase_number_is_hidden( $profile ) : false;
 		$me['number_requests_waiting'] = $profile ? count( kaamase_number_pending( $profile ) ) : 0;
-
-		unset( $user_id );
 
 		return $me;
 	}
@@ -1090,7 +1185,7 @@ if ( ! function_exists( 'kaamase_rest_number_waiting' ) ) {
 	function kaamase_rest_number_waiting() {
 
 		$user_id = get_current_user_id();
-		$profile = (int) get_user_meta( $user_id, 'kaamase_profile_id', true );
+		$profile = kaamase_number_my_profile( $user_id );
 		$items   = array();
 
 		if ( $profile && kaamase_user_owns( $profile, $user_id ) ) {
@@ -1132,7 +1227,7 @@ if ( ! function_exists( 'kaamase_rest_number_decide' ) ) {
 	function kaamase_rest_number_decide( $request ) {
 
 		$user_id  = get_current_user_id();
-		$profile  = (int) get_user_meta( $user_id, 'kaamase_profile_id', true );
+		$profile = kaamase_number_my_profile( $user_id );
 		$decision = sanitize_key( (string) $request->get_param( 'decision' ) );
 
 		if ( ! in_array( $decision, array( 'approve', 'reject' ), true ) ) {
@@ -1177,7 +1272,7 @@ if ( ! function_exists( 'kaamase_rest_number_setting' ) ) {
 	function kaamase_rest_number_setting( $request ) {
 
 		$user_id = get_current_user_id();
-		$profile = (int) get_user_meta( $user_id, 'kaamase_profile_id', true );
+		$profile = kaamase_number_my_profile( $user_id );
 
 		if ( ! $profile || ! kaamase_user_owns( $profile, $user_id ) ) {
 			return kaamase_rest_error(
@@ -1257,3 +1352,83 @@ if ( ! function_exists( 'kaamase_number_routes' ) ) {
 	}
 }
 add_action( 'rest_api_init', 'kaamase_number_routes' );
+
+
+/* ==========================================================================
+   8. FORGETTING SOMEBODY
+
+   A request carries who asked, which is personal data sitting on
+   somebody else's profile. When an account is erased it has to go with
+   them, and it will not go on its own: it is not stored against their
+   user record, so deleting the user leaves it behind.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_number_forget_asker' ) ) {
+	/**
+	 * Remove every request one person made, wherever it was made.
+	 *
+	 * Their own profile is not touched here. The eraser deletes that
+	 * post outright, and the requests made OF them go with it.
+	 *
+	 * Walked in PHP rather than matched in SQL. These are stored as a
+	 * serialised list, and the only way to find a user id inside one
+	 * from the database is a LIKE against serialised bytes, which
+	 * quietly stops matching the day the stored shape changes. Erasure
+	 * is a rare, deliberate act, and being right matters more than
+	 * being quick.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id The person being forgotten.
+	 * @return bool Whether anything was removed.
+	 */
+	function kaamase_number_forget_asker( $user_id ) {
+
+		$user_id = (int) $user_id;
+
+		if ( ! $user_id ) {
+			return false;
+		}
+
+		$profiles = get_posts(
+			array(
+				'post_type'      => array( 'kaamase_worker', 'kaamase_gang' ),
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_key'       => 'kaamase_number_requests',
+			)
+		);
+
+		$removed = false;
+
+		foreach ( (array) $profiles as $profile_id ) {
+
+			$requests = kaamase_number_requests( $profile_id );
+
+			$left = array_values(
+				array_filter(
+					$requests,
+					static function ( $request ) use ( $user_id ) {
+						return $request['from'] !== $user_id;
+					}
+				)
+			);
+
+			if ( count( $left ) === count( $requests ) ) {
+				continue;
+			}
+
+			if ( empty( $left ) ) {
+				delete_post_meta( (int) $profile_id, 'kaamase_number_requests' );
+			} else {
+				kaamase_number_requests_save( $profile_id, $left );
+			}
+
+			$removed = true;
+		}
+
+		return $removed;
+	}
+}

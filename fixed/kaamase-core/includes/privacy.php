@@ -298,6 +298,21 @@ if ( ! function_exists( 'kaamase_erase_personal_data' ) ) {
 			$removed = true;
 		}
 
+		/*
+		 * Requests they made for somebody's hidden number, for the same
+		 * reason and with the same asymmetry. The requests made OF them
+		 * sit on their own profile and go when it is deleted below. The
+		 * ones they made sit on other people's profiles, carry their
+		 * name to whoever reads them, and would otherwise outlive the
+		 * account entirely.
+		 */
+		if ( function_exists( 'kaamase_number_forget_asker' ) ) {
+
+			if ( kaamase_number_forget_asker( $user->ID ) ) {
+				$removed = true;
+			}
+		}
+
 		/* ---- Profiles and teams: deleted outright ---- */
 
 		foreach ( array( 'kaamase_worker', 'kaamase_gang', 'kaamase_employer' ) as $type ) {
