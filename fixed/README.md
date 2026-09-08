@@ -5,8 +5,20 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of thirty-six files taken from inside them, four brand new
+the patched versions of forty-one files taken from inside them, ten brand new
 files, plus three translation templates.
+
+Everything in `fixed/` is meant to be copied up. If a file is in there and not
+in the table below, that is a fault in the table rather than a file you may
+skip: the table is the whole instruction, and a file missed here is a file that
+never reaches the site.
+
+Nothing outside `fixed/` should be touched. The plugin holds around thirty more
+files that were never changed, and copying an old copy of one of those over the
+live version would undo work that is already running. In particular there is an
+existing `includes/push.php` that sends notifications on a contact reveal, on
+verification and on the daily hire question. It is not in `fixed/` and must be
+left exactly where it is.
 
 ## What to copy where
 
@@ -49,6 +61,15 @@ files, plus three translation templates.
 | `fixed/kaamase/inc/setup.php` | `wp-content/themes/kaamase/inc/setup.php` |
 | `fixed/kaamase/footer.php` | `wp-content/themes/kaamase/footer.php` |
 | `fixed/kaamase/style.css` | `wp-content/themes/kaamase/style.css` |
+| `fixed/kaamase-core/includes/dashboard.php` | `wp-content/plugins/kaamase-core/includes/dashboard.php` |
+| `fixed/kaamase-core/includes/ratings.php` | `wp-content/plugins/kaamase-core/includes/ratings.php` |
+| `fixed/kaamase-core/includes/rest-shape.php` | `wp-content/plugins/kaamase-core/includes/rest-shape.php` |
+| `fixed/kaamase-core/includes/standing.php` | `wp-content/plugins/kaamase-core/includes/standing.php` |
+| `fixed/kaamase/single-kaamase_worker.php` | `wp-content/themes/kaamase/single-kaamase_worker.php` |
+| `fixed/kaamase/single-kaamase_gang.php` | `wp-content/themes/kaamase/single-kaamase_gang.php` |
+| `fixed/kaamase-core/includes/who-looked.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/google-signin.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/number-requests.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 **New folders to create** (they do not exist on your site yet):
 

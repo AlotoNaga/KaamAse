@@ -548,6 +548,82 @@ if ( ! function_exists( 'kaamase_number_request_decide' ) ) {
    computers, and a number that leaks that way cannot be put back.
    ========================================================================== */
 
+if ( ! function_exists( 'kaamase_number_tell' ) ) {
+	/**
+	 * Tell somebody, by whatever reaches them.
+	 *
+	 * The phone through the plugin's own push layer, which already
+	 * holds the endpoint, the site setting and the non blocking send.
+	 * Email when that cannot reach them, because a worker who signed up
+	 * on the website and never installed the app still has to know
+	 * somebody is waiting on an answer.
+	 *
+	 * Never both. Two copies of one sentence teaches people this
+	 * platform is noisy, and the ones who learn that read neither.
+	 *
+	 * Whether push is possible is decided here rather than trusted to
+	 * the send. kaamase_push_to_user() returns nothing and posts without
+	 * blocking, by design, so there is no success to wait for: asking
+	 * first is the only way to know an email is needed.
+	 *
+	 * @since 1.6.0
+	 * @param int    $user_id  Who to tell.
+	 * @param string $title    Short line, and the email subject.
+	 * @param string $body     The sentence.
+	 * @param array  $data     Where the app should open.
+	 * @param string $mail_url A link for the end of the email.
+	 * @return void
+	 */
+	function kaamase_number_tell( $user_id, $title, $body, $data = array(), $mail_url = '' ) {
+
+		$user_id = (int) $user_id;
+
+		if ( ! $user_id ) {
+			return;
+		}
+
+		$tokens = function_exists( 'kaamase_meta_array' )
+			? kaamase_meta_array( get_user_meta( $user_id, 'kaamase_push_tokens', true ) )
+			: array();
+
+		$by_phone = ! empty( $tokens )
+			&& function_exists( 'kaamase_push_enabled' )
+			&& kaamase_push_enabled()
+			&& function_exists( 'kaamase_push_to_user' );
+
+		if ( $by_phone ) {
+			kaamase_push_to_user( $user_id, $title, $body, $data );
+			return;
+		}
+
+		$user = get_userdata( $user_id );
+
+		if ( ! $user || empty( $user->user_email ) ) {
+			return;
+		}
+
+		$lines = array( $body );
+
+		if ( '' !== $mail_url ) {
+			$lines[] = '';
+			$lines[] = $mail_url;
+		}
+
+		$lines[] = '';
+		$lines[] = sprintf(
+			/* translators: %s: site name */
+			__( '%s never asks a worker for money.', 'kaamase-core' ),
+			wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES )
+		);
+
+		wp_mail(
+			$user->user_email,
+			wp_specialchars_decode( (string) $title, ENT_QUOTES ),
+			implode( "\n", $lines )
+		);
+	}
+}
+
 if ( ! function_exists( 'kaamase_number_tell_owner' ) ) {
 	/**
 	 * Tell a worker that somebody has asked.
@@ -567,7 +643,7 @@ if ( ! function_exists( 'kaamase_number_tell_owner' ) ) {
 
 		$who = kaamase_number_describe( $asker );
 
-		kaamase_notify(
+		kaamase_number_tell(
 			(int) $post->post_author,
 			__( 'Somebody wants your number', 'kaamase-core' ),
 			sprintf(
@@ -609,7 +685,7 @@ if ( ! function_exists( 'kaamase_number_tell_asker' ) ) {
 
 		if ( 'approved' === $decision ) {
 
-			kaamase_notify(
+			kaamase_number_tell(
 				$asker,
 				__( 'You can see the number now', 'kaamase-core' ),
 				sprintf(
@@ -627,7 +703,7 @@ if ( ! function_exists( 'kaamase_number_tell_asker' ) ) {
 			return;
 		}
 
-		kaamase_notify(
+		kaamase_number_tell(
 			$asker,
 			__( 'Your request was turned down', 'kaamase-core' ),
 			sprintf(
