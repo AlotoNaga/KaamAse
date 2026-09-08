@@ -1302,7 +1302,16 @@ if ( ! function_exists( 'kaamase_google_pending' ) ) {
 			$handle = isset( $_GET['kaamase_google'] ) ? sanitize_text_field( wp_unslash( $_GET['kaamase_google'] ) ) : '';
 		}
 
-		if ( '' === $handle ) {
+		/*
+		 * Exactly what kaamase_google_stash() produces and nothing else.
+		 *
+		 * The handle is pasted into a transient name, and an option name
+		 * has a length limit in the database, so an over long value
+		 * arriving in the address bar would be asking a question the
+		 * store cannot answer. Anything not of our own making is simply
+		 * not a handle.
+		 */
+		if ( ! preg_match( '/^[A-Za-z0-9]{32}$/', $handle ) ) {
 			return array();
 		}
 
