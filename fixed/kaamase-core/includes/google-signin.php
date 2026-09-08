@@ -1203,14 +1203,36 @@ if ( ! function_exists( 'kaamase_google_button' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_google_login_drawn' ) ) {
+	/**
+	 * Whether the sign in screen has already been given the button.
+	 *
+	 * Asked because the button is offered at two points on that screen
+	 * and must appear once. See the note on the second one below.
+	 *
+	 * @since 1.6.0
+	 * @param bool $mark Pass true to record that it has been drawn.
+	 * @return bool
+	 */
+	function kaamase_google_login_drawn( $mark = false ) {
+
+		static $drawn = false;
+
+		if ( $mark ) {
+			$drawn = true;
+		}
+
+		return $drawn;
+	}
+}
+
 if ( ! function_exists( 'kaamase_google_login_screen' ) ) {
 	/**
 	 * Put the button on the WordPress sign in screen.
 	 *
-	 * Above the form rather than inside it. login_form would drop the
-	 * button between the password box and the submit button, where it
-	 * reads as part of the password form and sits inside a form element
-	 * it has nothing to do with.
+	 * Above the form rather than inside it. This is where somebody
+	 * looks first, and a button here reads as its own way in rather
+	 * than as part of the password form.
 	 *
 	 * @since 1.6.0
 	 * @param string $message Existing message markup.
@@ -1226,10 +1248,45 @@ if ( ! function_exists( 'kaamase_google_login_screen' ) ) {
 				. '</div>';
 		}
 
-		return $message . kaamase_google_button();
+		$button = kaamase_google_button();
+
+		if ( '' !== $button ) {
+			kaamase_google_login_drawn( true );
+		}
+
+		return $message . $button;
 	}
 }
 add_filter( 'login_message', 'kaamase_google_login_screen' );
+
+if ( ! function_exists( 'kaamase_google_login_fallback' ) ) {
+	/**
+	 * Draw the button inside the form when nothing drew it above.
+	 *
+	 * login_message is the right place and is used first. It is also
+	 * the one a replacement sign in screen is most likely to drop:
+	 * plugins that render their own form often never apply that filter,
+	 * and the result is a site where Google sign in works everywhere
+	 * except the page people actually sign in on.
+	 *
+	 * login_form runs later and inside the form, so this only fires
+	 * when the preferred position produced nothing. Somebody with an
+	 * account is exactly who needs this button, so it is worth having
+	 * two ways for it to arrive.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	function kaamase_google_login_fallback() {
+
+		if ( kaamase_google_login_drawn() ) {
+			return;
+		}
+
+		echo kaamase_google_button(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+}
+add_action( 'login_form', 'kaamase_google_login_fallback' );
 
 if ( ! function_exists( 'kaamase_google_on_register_page' ) ) {
 	/**
