@@ -455,6 +455,20 @@ if ( ! function_exists( 'kaamase_shape_employer' ) ) {
 				'verified' => (bool) kaamase_field( $id, 'verified', false ),
 			),
 			'is_mine'    => kaamase_user_owns( $id ),
+
+			/*
+			 * Whether the caller has this one saved.
+			 *
+			 * The worker and job shapes have carried this from the
+			 * start; the employer shape never did, and the omission was
+			 * not a decision. kaamase_post_types() has always included
+			 * employers, so the save handler and the toggle endpoint
+			 * both accepted one, and the website offers the button on
+			 * an employer profile. The app could not: with no flag to
+			 * read it had no way to know which state to draw, so it
+			 * left the button off rather than guess.
+			 */
+			'saved'      => is_user_logged_in() && kaamase_is_saved( $id ),
 		);
 
 		if ( $full ) {

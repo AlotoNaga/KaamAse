@@ -2550,6 +2550,24 @@ The endpoint now accepts an optional `saved` boolean and sets that state however
 many times it is asked. **Omitting the field keeps the old behaviour exactly**, so
 nothing already shipped changes.
 
+### The employer shape had no `saved` flag
+
+Found while the app was being built. The worker and job shapes have carried
+`saved` from the start; the employer shape never did, and the omission was not a
+decision — nothing had needed it while employers were being shaped as workers.
+
+The consequence was one-sided. The website could offer a Save button on an
+employer profile, because it asks `kaamase_is_saved()` directly. The app could
+not: with no flag in the response it had no way to know whether to draw *Save* or
+*Saved*, so it left the button off employer profiles rather than guess at the
+state. A saved employer still appeared in the list and could still be removed
+there; only the profile button was missing.
+
+`kaamase_shape_employer()` now carries `saved`, set exactly as the other two set
+it. **Purely additive** — a field appearing in a response breaks no client, so
+this one is safe to upload at any point, in any order, unlike the employer
+shaping change above.
+
 ### What was left alone
 
 The **worked with** list on the same page is not a saved list and has no remove
