@@ -513,9 +513,100 @@ table { border-collapse: collapse; width: 100%; }
               border-color var(--ka-fast) var(--ka-ease);
 }
 
+/*
+ * A card that is itself a link.
+ *
+ * An underline set on an anchor is inherited by every line inside it and
+ * cannot be switched off further down: only the anchor itself can remove
+ * it. So a card wrapped in a link had its heading and its paragraph
+ * underlined from edge to edge, which reads as broken rather than as
+ * clickable. The buttons inside escaped it only because inline-flex makes
+ * an atomic box the underline cannot cross, which is why half the card
+ * looked wrong and half looked fine.
+ *
+ * Colour is deliberately left alone here. Most of these cards are an
+ * article or a list item, where there is nothing to change, and the two
+ * that really are anchors want their own treatment rather than a blanket
+ * one.
+ */
+.ka-card--link { text-decoration: none; }
 .ka-card--link:hover { box-shadow: var(--ka-shadow); border-color: var(--ka-border-firm); }
 .ka-card--flat { box-shadow: none; }
 .ka-card--pad-lg { padding: var(--ka-6); }
+
+
+/* --------------------------------------------------------------------------
+   The two doors on the register page
+
+   One question, two answers, and the whole page is that choice. Each is a
+   card you press anywhere on rather than a heading with a button somewhere
+   underneath it, because the target on a phone should be the card.
+
+   The stripe along the top is the only decoration and it earns its place:
+   green for working, amber for hiring, the same two colours those paths
+   use everywhere else on the site. Somebody who has been here before
+   recognises which is which before reading a word.
+   -------------------------------------------------------------------------- */
+
+.ka-choice {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--ka-8);
+  color: var(--ka-text);
+  transition: box-shadow var(--ka-fast) var(--ka-ease),
+              border-color var(--ka-fast) var(--ka-ease),
+              transform var(--ka-fast) var(--ka-ease);
+}
+
+.ka-choice::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
+.ka-choice--worker::before   { background: var(--ka-green-600); }
+.ka-choice--employer::before { background: var(--ka-amber-500); }
+
+.ka-choice__title {
+  margin: 0;
+  font-size: var(--ka-text-xl);
+  line-height: var(--ka-leading-snug);
+  color: var(--ka-text);
+}
+
+/*
+ * The description grows so both cards end up the same height and the two
+ * buttons line up, however unevenly the sentences wrap. Side by side,
+ * buttons at different heights read as one being the lesser option.
+ */
+.ka-choice__body {
+  flex: 1 1 auto;
+  margin: var(--ka-3) 0 0;
+  color: var(--ka-text-soft);
+}
+
+.ka-choice .ka-btn { margin-top: var(--ka-6); }
+
+.ka-choice:hover { transform: translateY(-2px); }
+.ka-choice:focus-visible { outline: var(--ka-focus); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ka-choice { transition: none; }
+  .ka-choice:hover { transform: none; }
+}
+
+/* The way back out, for somebody who is already registered. */
+.ka-choice-foot {
+  margin-top: var(--ka-6);
+  text-align: center;
+  font-size: var(--ka-text-sm);
+  color: var(--ka-text-soft);
+}
 
 .ka-card__head { display: flex; gap: var(--ka-3); align-items: flex-start; }
 .ka-card__body { margin-top: var(--ka-3); }

@@ -1162,7 +1162,7 @@ if ( ! function_exists( 'kaamase_google_button' ) ) {
 	 * @param string $label What the button should say.
 	 * @return string Markup, empty when the feature is off.
 	 */
-	function kaamase_google_button( $label = '' ) {
+	function kaamase_google_button( $label = '', $above = false ) {
 
 		$client = kaamase_google_web_client_id();
 
@@ -1172,9 +1172,23 @@ if ( ! function_exists( 'kaamase_google_button' ) ) {
 
 		$label = '' !== $label ? $label : __( 'or sign in with a password below', 'kaamase-core' );
 
+		/*
+		 * The caption sits under the button when the button comes first
+		 * and over it when it comes last, so that in both places it reads
+		 * as the join between this way in and the other one rather than
+		 * as a stray line of text.
+		 */
+		$caption = sprintf(
+			'<p class="ka-small ka-mute" style="text-align:center;margin:%s;">%s</p>',
+			$above ? '0 0 12px' : '12px 0 0',
+			esc_html( $label )
+		);
+
 		ob_start();
 		?>
 		<div class="ka-google" style="margin:0 0 18px;">
+
+			<?php echo $above ? $caption : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 			<div id="g_id_onload"
 				data-client_id="<?php echo esc_attr( $client ); ?>"
@@ -1192,9 +1206,7 @@ if ( ! function_exists( 'kaamase_google_button' ) ) {
 				data-logo_alignment="left"
 				style="display:flex;justify-content:center;"></div>
 
-			<p class="ka-small ka-mute" style="text-align:center;margin:12px 0 0;">
-				<?php echo esc_html( $label ); ?>
-			</p>
+			<?php echo $above ? '' : $caption; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 		<script src="https://accounts.google.com/gsi/client" async defer></script>
 		<?php
@@ -1312,6 +1324,34 @@ if ( ! function_exists( 'kaamase_google_on_register_page' ) ) {
 
 		if ( $pending ) {
 			return kaamase_google_finish_form( $pending );
+		}
+
+		/*
+		 * Where the button goes depends on which step this is.
+		 *
+		 * On the first screen the page is one question with two answers,
+		 * and putting a third way in above the question answers it before
+		 * it has been asked. It goes underneath, after the choice has been
+		 * offered.
+		 *
+		 * On the form itself the opposite holds. Somebody looking at a
+		 * dozen fields wants to know there is a shorter way before they
+		 * start filling them in, not after.
+		 */
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$type = isset( $_GET['type'] ) ? sanitize_key( wp_unslash( $_GET['type'] ) ) : '';
+
+		if ( ! in_array( $type, array( 'worker', 'employer' ), true ) ) {
+
+			/*
+			 * Just "or". The line above it already says "Already
+			 * registered? Sign in", so this joins the two ways a
+			 * returning person gets back in rather than introducing
+			 * the idea a second time.
+			 */
+			$button = kaamase_google_button( __( 'or', 'kaamase-core' ), true );
+
+			return '' === $button ? $output : $output . $button;
 		}
 
 		$button = kaamase_google_button( __( 'or fill in the form below', 'kaamase-core' ) );
