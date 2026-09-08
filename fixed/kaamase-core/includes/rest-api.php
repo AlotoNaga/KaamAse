@@ -2023,9 +2023,28 @@ if ( ! function_exists( 'kaamase_rest_saved' ) ) {
 				continue;
 			}
 
-			$shaped = ( 'kaamase_job' === $post->post_type )
-				? kaamase_shape_job( $post, false )
-				: kaamase_shape_worker( $post, false );
+			/*
+			 * An employer gets the employer shape.
+			 *
+			 * This asked only whether the thing was a job and shaped
+			 * everything else as a worker, so a saved employer reached
+			 * the app carrying a day rate, a trade list and an
+			 * availability light that no employer has, and missing the
+			 * hire count that is the only thing worth showing about
+			 * one. The worked with list below has always shaped them
+			 * correctly; this one never did.
+			 */
+			switch ( $post->post_type ) {
+				case 'kaamase_job':
+					$shaped = kaamase_shape_job( $post, false );
+					break;
+				case 'kaamase_employer':
+					$shaped = kaamase_shape_employer( $post, false );
+					break;
+				default:
+					$shaped = kaamase_shape_worker( $post, false );
+					break;
+			}
 
 			if ( $shaped ) {
 				$saved[] = $shaped;
@@ -2083,14 +2102,38 @@ if ( ! function_exists( 'kaamase_rest_toggle_saved' ) ) {
 		}
 
 		$saved = kaamase_get_saved( $user_id );
+		$has   = in_array( $id, $saved, true );
 
-		if ( in_array( $id, $saved, true ) ) {
+		/*
+		 * Say what you want, or leave it to toggle.
+		 *
+		 * A toggle is right for a button on a profile, where the button
+		 * shows the current state and pressing it means "the other one".
+		 * It is wrong for Remove on a saved list: a tap that times out
+		 * and is retried, or a double tap on a slow phone, sends the
+		 * same toggle twice and puts the thing back. The person sees an
+		 * item they removed reappear and has no idea why.
+		 *
+		 * So a caller may state the state it wants and get it, however
+		 * many times it asks. Omitting the field keeps the old
+		 * behaviour exactly, so nothing already shipped changes.
+		 */
+		$wanted = $request->get_param( 'saved' );
+		$want   = null === $wanted ? ! $has : rest_sanitize_boolean( $wanted );
+
+		if ( $want ) {
+
+			if ( ! $has ) {
+				array_unshift( $saved, $id );
+				$saved = array_slice( array_unique( $saved ), 0, kaamase_saved_limit() );
+			}
+
+			$now = true;
+
+		} else {
+
 			$saved = array_values( array_diff( $saved, array( $id ) ) );
 			$now   = false;
-		} else {
-			array_unshift( $saved, $id );
-			$saved = array_slice( array_unique( $saved ), 0, kaamase_saved_limit() );
-			$now   = true;
 		}
 
 		update_user_meta( $user_id, 'kaamase_saved', $saved );

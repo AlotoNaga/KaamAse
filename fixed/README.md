@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of forty-two files taken from inside them, ten brand new
+the patched versions of forty-three files taken from inside them, ten brand new
 files, plus three translation templates.
 
 Everything in `fixed/` is meant to be copied up. If a file is in there and not
@@ -69,6 +69,12 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/google-signin.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/number-requests.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/push.php` | `wp-content/plugins/kaamase-core/includes/push.php` |
+| `fixed/kaamase-core/includes/saved.php` | `wp-content/plugins/kaamase-core/includes/saved.php` |
+| `fixed/kaamase-core/includes/services.php` | `wp-content/plugins/kaamase-core/includes/services.php` |
+| `fixed/kaamase/single-kaamase_job.php` | `wp-content/themes/kaamase/single-kaamase_job.php` |
+| `fixed/kaamase-core/includes/app-version.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/hire-claims.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/views-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 **New folders to create** (they do not exist on your site yet):
 
@@ -2486,6 +2492,70 @@ looking at a dozen fields wants to know there is a shorter way before they start
 not after.
 
 Checked in Chromium at phone and desktop widths.
+
+---
+
+## 49. Unsaving from the saved list
+
+⚠️ *Four files. `kaamase-core/includes/saved.php` is a **new revision of an
+existing file** that was not previously in `fixed/`; `rest-api.php` and
+`kaamase/style.css` are new revisions. **`worked-with.php` and the rehire list
+are deliberately untouched** — see the end of this section.*
+
+Removing something you had saved was only possible from the thing's own page.
+You opened a profile in order to say you did not want to keep it, which is the
+opposite of what the saved list is for.
+
+### The closed items already had the button
+
+`kaamase_saved_section()` rendered `kaamase_save_button()` on the **No longer
+available** list at the bottom and on nothing else. So the items nobody revisits
+could be removed in one tap, and the live ones — the entire point of the page —
+could not. The button now sits under every card.
+
+Under the card rather than over it, and quiet rather than loud. Somebody opening
+this page is looking for the thing they saved, not for the way to throw it away,
+and on a phone a stray tap should land on the card and open it.
+
+It also says **Remove** here instead of **Saved**. On a profile, *Saved* is
+reporting a state and pressing it undoes that. On a page where everything is
+saved by definition, a column of buttons all saying *Saved* says nothing at all.
+
+### Employers were saveable but not savable
+
+`kaamase_post_types()` has always included `kaamase_employer`, so the toggle
+handler and the app endpoint both accepted one happily. Two places disagreed:
+
+- `kaamase_append_save_button()` listed job, worker and team and left employers
+  out, so no employer profile on the website ever showed the button. A worker who
+  ended up with a saved employer through the app had no way to remove it from a
+  browser.
+- The card `switch` on the saved page had no `kaamase_employer` case and fell
+  through to `default`, so a saved employer was drawn as a **worker**: a day rate,
+  a trade and an availability light, none of which an employer has.
+  `kaamase_employer_card()` already existed a few functions above and was only
+  ever called from the worked with list.
+
+`/saved` in the app had the same fault from the other end — it asked only whether
+the thing was a job and shaped everything else as a worker.
+
+### A toggle is the wrong verb for Remove
+
+`POST /saved/{id}` toggles, which is right for a button on a profile that shows
+the current state. It is wrong for **Remove** on a list: a tap that times out and
+is retried, or a double tap on a slow phone, sends the same toggle twice and puts
+the thing back. The person watches an item they removed reappear.
+
+The endpoint now accepts an optional `saved` boolean and sets that state however
+many times it is asked. **Omitting the field keeps the old behaviour exactly**, so
+nothing already shipped changes.
+
+### What was left alone
+
+The **worked with** list on the same page is not a saved list and has no remove
+button. It is built from the hire record — for a worker it is the record of who
+has actually paid them, which is the most valuable thing they own here. A button
+that quietly deletes evidence of a hire is not a convenience.
 
 ---
 

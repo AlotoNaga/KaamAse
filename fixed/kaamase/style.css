@@ -600,6 +600,37 @@ table { border-collapse: collapse; width: 100%; }
   .ka-choice:hover { transform: none; }
 }
 
+/* --------------------------------------------------------------------------
+   A row on the saved list
+
+   The card and the way to remove it. The card functions belong to the
+   theme and print themselves, so the button goes underneath in a wrapper
+   rather than inside, which keeps every card on the site identical to
+   every other one.
+
+   Under the card and not over it, and quiet rather than loud: somebody
+   opening this page is looking for the thing they saved, not for the way
+   to throw it away. Full width because the wrapper is the grid cell, and
+   a stray tap on a phone should land on the card and open it, not on a
+   small target that removes it.
+   -------------------------------------------------------------------------- */
+
+.ka-saved-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ka-saved-item > .ka-card { flex: 1 1 auto; }
+
+.ka-saved-item__act {
+  margin-top: var(--ka-2);
+  display: flex;
+}
+
+.ka-saved-item__act .ka-save-form { width: 100%; }
+.ka-saved-item__act .ka-btn { width: 100%; }
+
 /* The way back out, for somebody who is already registered. */
 .ka-choice-foot {
   margin-top: var(--ka-6);
