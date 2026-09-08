@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of forty-one files taken from inside them, ten brand new
+the patched versions of forty-two files taken from inside them, ten brand new
 files, plus three translation templates.
 
 Everything in `fixed/` is meant to be copied up. If a file is in there and not
@@ -2291,6 +2291,203 @@ reason for the threshold has not changed:
 
 > In a market this small a single angry employer could otherwise end somebody's
 > livelihood with one click on a bad afternoon.
+
+## 44. Signing in with Google
+
+⚠️ *One file. `kaamase-core/includes/google-signin.php` is **brand new**. Nothing
+else was touched: email and password still work exactly as they did, on the
+website and in the app.*
+
+A worker registering on a phone at a labour point has to invent a password,
+remember it, and type it again next time. Most do not, and the ones who cannot
+get back in do not send a support email — they stop using the platform. A Google
+account is the one credential nearly every Android phone here already has.
+
+**The token is checked here, not by asking Google on every sign in.** Google
+hands over a signed ID token; this verifies the RS256 signature against Google's
+published keys, then the issuer, then that the audience is one of our own client
+IDs, then the expiry. Sending each worker's sign in to a third party and waiting
+on the reply is a round trip this connection cannot afford. The same reasoning
+that kept a JWT plugin out of `rest-auth.php` applies.
+
+**Everything rests on one flag.** Google says whether it has confirmed the
+mailbox. An account here is matched by email address, so an unconfirmed one would
+let somebody claim an account by typing its address into a Google profile. A
+token without `email_verified` is refused outright.
+
+**Two doors, one account.** Somebody who registered with a password and later
+taps Google on that same address is signed into the account they already have.
+Refusing would wall them out over a password they have forgotten, which is the
+problem this solves.
+
+**Google supplies a name and an email and nothing else,** so a new account still
+answers the questions the platform cannot work without: which side of the market,
+district, trade, phone. The app asks on a second call and the website on a short
+form, and both re-verify the same token, so nothing half made is held on this end
+between the two steps.
+
+Off until a client ID is set, under **Settings → Google sign in**. With the
+settings empty no button renders, the endpoints say the door is closed, and the
+site behaves exactly as it did before this file existed.
+
+---
+
+## 45. Keeping a phone number back, and asking for it
+
+⚠️ *Three files. `kaamase-core/includes/number-requests.php` is **brand new**;
+`contact.php` and `privacy.php` are new revisions.*
+
+A worker may choose not to show their number. Anybody who wants it asks, the
+worker is told on their phone, and the worker decides. Nothing is revealed until
+they say yes.
+
+**Off by default, and worded to stay that way.** A number anybody can ring is the
+point of this platform. An employer standing in a hardware shop with a job
+starting tomorrow rings the three numbers they can see, not the one they have to
+apply for. The dashboard says that plainly where somebody is about to make the
+choice, rather than burying it in help they will read afterwards.
+
+**Paid plans see every number regardless.** They have bought reach on the hiring
+side, a hidden number defeats exactly that, and selling access and then
+withholding it is selling something you do not have.
+
+**A job post can never be hidden.** Somebody answering an advert has to be able to
+ring it; an advert you cannot reply to is not an advert.
+
+**Enforced in one place.** Every route to a number — the website screen and the
+app endpoint alike — goes through `kaamase_can_contact()`, so that is where the
+check lives, through a new `kaamase_contact_veto` filter. It sits *after* the
+platform's own rules, so an unconfirmed account is still told to confirm rather
+than sent down a path ending in the same place, and *before* the daily cap, so a
+refusal never costs somebody a lookup they did not get.
+
+Three faults were found reviewing it before it shipped, all fixed:
+
+- **The wrong profile.** Every endpoint read `kaamase_profile_id`, which is
+  whichever profile an account made first. An account can hold a worker profile
+  and an employer profile at once, so somebody who registered to hire and later
+  added a working profile had all of this pointed at the wrong post: requests
+  would never have appeared and the setting saved somewhere it does nothing.
+- **The safety gate.** Somebody who cannot be given a maid's or a cook's number
+  until they hold a finished employer profile could still ask for one. Nothing
+  leaked, but the worker would have agreed to share and watched the platform
+  refuse the person she had just said yes to.
+- **Erasure.** A request carries who asked and sits on somebody else's profile,
+  so deleting the account left it behind with their name on it.
+
+---
+
+## 46. Push notifications — a daily task that starved most of the platform
+
+⚠️ *One file. `kaamase-core/includes/push.php` is a **new revision of an existing
+file**, not a new one. Every function, hook and notification body from the live
+version is unchanged.*
+
+**The bug.** `kaamase_push_hire_questions()` asked `get_users` for a hundred
+accounts holding the meta and gave it no order. `get_users` sorts by login when
+nothing says otherwise, so it took the same hundred logins every night, for ever.
+Anybody sorting below them was never asked — not asked late, *never*. Their hire
+question sat on the dashboard waiting to be stumbled on, and the ratings that
+hang on the answer never came.
+
+It would have surfaced only as ratings quietly drying up for everybody with a
+late alphabet, once the platform passed a hundred outstanding questions. A cursor
+now walks the list a batch a night, ordered by ID because a login can change and
+an ID cannot, and wraps at the end. Simulated over 250 accounts: all 250 reached
+in three nights.
+
+**`kaamase_notify_user()`** sends by phone when there is one and by email when
+there is not, never both. Half this platform registered on the website and never
+installed anything, and a notification layer that only speaks to app users
+quietly decides those people need not be told.
+
+**Tokens are checked** against the shape `/push/register` accepts. A malformed
+value stored by an older build cost a slot in every batch and could never be
+delivered to. **Titles and bodies are cut** to what a phone shows — a sentence
+chopped by the notification shade mid word reads like a broken app. **A filter
+runs before each send,** so a per person mute can be added later without touching
+this file.
+
+---
+
+## 47. The contact screen — markup on the page, and a number nobody can read
+
+⚠️ *Three files. `contact.php`, `rest-api.php` and `rest-shape.php` are new
+revisions.*
+
+Two faults on the same block, both visible only to particular people, which is
+why they came and went.
+
+**Tag soup in the name.** `verified-mark.php` hooks `the_title` to append the tick
+as a span and an svg, but only when the title asked for belongs to the profile
+being viewed. This block is printed by `the_content` on that very profile, so
+every condition of that filter is met and the name arrives carrying markup.
+Escaping it then does exactly what escaping is for and prints the tags as words —
+in the heading and again in the sentence underneath. **It shows on verified
+profiles and nowhere else,** which is what made it look intermittent.
+
+Unescaping would have been the wrong repair. A name is whatever somebody typed
+into their profile, and printing it raw puts that straight into the page. The
+stored title is asked for instead, so the tick still renders where the theme
+means it to and this block gets a plain name it can safely escape.
+
+**The unreadable number.** Staff and field agents come back from the allowance
+layer as `PHP_INT_MAX`, which is how that layer says *not metered*. Today's
+lookups were subtracted from it and the result printed, so the page offered
+**9,223,372,036,854,775,806 lookups left today**. Those accounts are now told they
+have no daily limit.
+
+The same value went to the app as `quota_left`. JSON carries integers, JavaScript
+reads them as doubles, and anything above 9,007,199,254,740,991 loses precision on
+the way in — so the app was not being given a large number, it was being given
+arithmetic noise. **`quota_unlimited`** now travels alongside it and is the truth;
+`quota_left` stays a number an older build can still print, capped so it survives
+the journey. Nothing changes for anybody who is actually metered.
+
+The limit is what gets tested, never what is left. What is left has already had
+today's lookups taken off it, so it stops equalling the sentinel the moment
+somebody uses the page.
+
+---
+
+## 48. The two doors on the register page
+
+⚠️ *Three files. `kaamase/style.css`, `kaamase-core/includes/registration.php` and
+`google-signin.php` are new revisions.*
+
+**The underlines were a bug, not a style.** A card that is itself a link had every
+line inside it underlined edge to edge, heading and sentence alike, which reads as
+broken rather than as clickable. An underline set on an anchor is inherited by
+everything inside and cannot be switched off further down: only the anchor can
+remove it, and nothing did. The buttons escaped it only because `inline-flex`
+makes an atomic box the underline cannot cross, which is why half of each card
+looked wrong and half looked fine.
+
+Fixed on `.ka-card--link` itself, so the prev and next cards on a post are mended
+by the same line. Colour is deliberately left alone there: most of those cards are
+an `article` or a list item with nothing to change.
+
+The rest is the rework. **The buttons now fill their card** instead of sitting at
+whatever width their text happened to be, and **the two cards end at the same
+height** with their buttons on one line — side by side, an uneven pair reads as
+one being the lesser option. **A stripe along the top** says which door is which
+in the colours those paths already use everywhere else: green for working, amber
+for hiring.
+
+**Somebody already registered had no way off this screen.** The form on the next
+one has offered a sign in link since the beginning, but the chooser never did, so
+anybody who landed here by mistake had to pick a side they did not want in order
+to find it.
+
+**The Google button moves under the choice rather than over it.** This screen is
+one question with two answers, and a third way in above the question answers it
+before it has been asked. On the form itself it stays where it was: somebody
+looking at a dozen fields wants to know there is a shorter way before they start,
+not after.
+
+Checked in Chromium at phone and desktop widths.
+
+---
 
 ## Not changed, and why
 
