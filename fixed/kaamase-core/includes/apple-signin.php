@@ -666,6 +666,33 @@ if ( ! function_exists( 'kaamase_apple_attach' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_apple_proved_address' ) ) {
+	/**
+	 * Whether Apple has just proved the address this account carries.
+	 *
+	 * The single rule deciding whether an account may be confirmed on an
+	 * Apple token alone. An account made through the completion form
+	 * carries an address somebody typed and nobody checked, with the Apple
+	 * id attached to it, so finding it by that Apple id proves who
+	 * authorised and nothing whatever about what they typed.
+	 *
+	 * @since 1.7.1
+	 * @param int   $user_id User ID.
+	 * @param array $claims  Verified claims.
+	 * @return bool
+	 */
+	function kaamase_apple_proved_address( $user_id, $claims ) {
+
+		if ( '' === $claims['email'] || empty( $claims['confirmed'] ) ) {
+			return false;
+		}
+
+		$user = get_userdata( (int) $user_id );
+
+		return $user && strtolower( $user->user_email ) === strtolower( $claims['email'] );
+	}
+}
+
 if ( ! function_exists( 'kaamase_apple_mark_verified' ) ) {
 	/**
 	 * Treat the account as confirmed, and publish what was waiting.
@@ -978,7 +1005,16 @@ if ( ! function_exists( 'kaamase_rest_apple' ) ) {
 
 		kaamase_login_succeeded();
 		kaamase_apple_attach( $user_id, $claims );
-		kaamase_apple_mark_verified( $user_id );
+
+		/*
+		 * Confirming here on the Apple token alone would settle a typed
+		 * address on Apple's word about a different one, and publish the
+		 * profile carrying it. The link in the inbox settles a typed
+		 * address, here as in the ordinary registration form.
+		 */
+		if ( kaamase_apple_proved_address( $user_id, $claims ) ) {
+			kaamase_apple_mark_verified( $user_id );
+		}
 
 		return kaamase_apple_session( $user_id, (string) $request->get_param( 'device' ) );
 	}
@@ -1013,8 +1049,19 @@ if ( ! function_exists( 'kaamase_rest_apple_complete' ) ) {
 		$existing = kaamase_apple_find_user( $claims );
 
 		if ( $existing ) {
+
 			kaamase_apple_attach( $existing, $claims );
-			kaamase_apple_mark_verified( $existing );
+
+			/*
+			 * Sending this form twice reaches here the second time, and
+			 * the account the first send made carries the address typed
+			 * into it. Confirming on the token alone would let anybody
+			 * confirm any address by tapping the button again.
+			 */
+			if ( kaamase_apple_proved_address( $existing, $claims ) ) {
+				kaamase_apple_mark_verified( $existing );
+			}
+
 			return kaamase_apple_session( $existing, (string) $request->get_param( 'device' ) );
 		}
 

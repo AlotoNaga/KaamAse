@@ -2798,6 +2798,35 @@ Three separate things stop that, and only the first is a check:
 new either way: `kaamase_create_account()` has just made it, and refused outright
 if the address belonged to anybody.
 
+### The fourth thing, which the first version of this got wrong
+
+Letting an account exist with a typed address broke an assumption the rest of the
+file was quietly resting on. Before this section, every Apple-linked account
+carried an address out of a token, so confirming an account the moment its Apple
+id was recognised was always right. It is not right any more.
+
+An account made through the completion form carries an address somebody typed and
+nobody checked, with the Apple id attached to it. Signing in with Apple again — or
+simply sending the completion form a second time — finds that account by its Apple
+id. Confirming it there would confirm an unproven address on the strength of the
+Apple token, publish the profile carrying it, and hand anybody a one-tap way to
+put somebody else's address on a confirmed public profile. Sending the form twice
+was enough.
+
+`kaamase_apple_proved_address()` is now the single rule, and every call to
+`kaamase_apple_mark_verified()` goes through it. It confirms only when Apple sent
+an address on **this** request, marked it verified, and that address is the one
+the account actually carries. Being found by an Apple id proves who authorised,
+and nothing about what they typed. The link in the inbox settles a typed address,
+here exactly as in the ordinary registration form.
+
+The address comparison matters as much as the presence check. An account made
+with a typed address keeps its Apple id, so if that Apple id is later revoked and
+re-authorised — which is what happens all day while this is being tested — Apple
+can hand over a relay address for an account whose stored address is something
+else entirely. Confirming on that would settle one address on Apple's word about
+a different one.
+
 ### Absent and unusable are different answers
 
 A second, quieter fault in the same file:
