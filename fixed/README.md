@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of forty-three files taken from inside them, ten brand new
+the patched versions of forty-three files taken from inside them, twelve brand new
 files, plus three translation templates.
 
 Everything in `fixed/` is meant to be copied up. If a file is in there and not
@@ -70,6 +70,8 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/number-requests.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/push.php` | `wp-content/plugins/kaamase-core/includes/push.php` |
 | `fixed/kaamase-core/includes/saved.php` | `wp-content/plugins/kaamase-core/includes/saved.php` |
+| `fixed/kaamase-core/includes/apple-signin.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/account-password.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/services.php` | `wp-content/plugins/kaamase-core/includes/services.php` |
 | `fixed/kaamase/single-kaamase_job.php` | `wp-content/themes/kaamase/single-kaamase_job.php` |
 | `fixed/kaamase-core/includes/app-version.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
@@ -2631,6 +2633,85 @@ shows the whole list and now filters it the same way.
 `POST /worked-with/{id}` takes `{hidden: true｜false}` and defaults to hiding.
 Explicit, for the reason the saved list is: a tap that times out and is retried
 must not put the row back.
+
+---
+
+## 51. Sign in with Apple, and a password for accounts that never had one
+
+⚠️ *Three files. `kaamase-core/includes/apple-signin.php` and
+`account-password.php` are **brand new**; `google-signin.php` is a new revision
+whose diff is **seven added lines and nothing removed**.*
+
+Apple refused version 2.0.9 under guideline 4.8: an app offering a third party
+sign in must also offer one that collects only a name and an email, lets somebody
+keep that email private, and does not follow them for advertising. Email and
+password does not qualify — it cannot hide the address from us. Sign in with
+Apple is the one Apple names.
+
+### The shortcut that was not taken
+
+Google on Android, Apple on iPhone would have satisfied the rule and was the
+wrong shape for these users. People here share and borrow phones, and employers
+look at profiles on somebody else's desktop. Splitting the providers makes an
+account belong to the family of device that made it, and would have locked
+anybody who signed up on an iPhone out of the website entirely.
+
+So Apple is **added** and Google stays everywhere. Nothing was removed.
+
+### Three things about Apple that are not true of Google
+
+**The name arrives once and never again.** Apple hands it to the app on the first
+authorisation, not in the token, and never afterwards. The account is built from
+what the app sends, and a missing name is a plain validation error rather than
+something the server can paper over — there is nothing anywhere to fall back to.
+
+**The email may be a forwarding address.** Somebody may hide theirs and what
+arrives is a `privaterelay.appleid.com` address. It is real and it forwards, so
+it is accepted as real.
+
+**The email may not arrive at all.** Apple sends it on first authorisation and is
+not obliged to send it again, so a returning person is matched on the Apple
+account id, which never changes. A token with no email is accepted rather than
+refused; the address is only required when there is nobody to match yet, and the
+error in that case tells somebody how to make Apple send it again.
+
+### The crypto is copied on purpose
+
+The base64url, DER and key rebuilding are the same shape as the ones in
+`google-signin.php` and were deliberately not shared into a common file. That
+code is live, verified against OpenSSL, and holds up every Google sign in on the
+platform. Rewriting it to serve two callers would risk a working door to save a
+hundred lines. A third provider would be the moment to lift it out.
+
+### Closing the password gap
+
+An account made with Google or Apple gets a random thirty two character password
+its owner is never shown. Correct — nobody should be handed a password they did
+not choose. The consequence was not: signing in on the website, or on a phone
+where that provider is not offered, meant a **Forgot password** link for a
+password that never existed.
+
+`account-password.php` lets somebody set one from inside, while signed in, and it
+then works everywhere. Three decisions in it are worth knowing:
+
+- **It uses `wp_set_password()`, not `wp_update_user()`.** The latter fires
+  `profile_update`, which `rest-auth.php` answers by revoking every token on the
+  account. Right for a password *reset*; wrong here, where being signed out at the
+  moment of success reads as failure.
+- **The old password is still required where there is one.** A stolen bearer token
+  should not be able to become a permanent credential. Where there has never been
+  a password there is nothing to ask for, and demanding it would lock out exactly
+  the people this exists for.
+- **An unmarked account counts as having a password.** Only accounts built by a
+  provider are marked, so the default is the safe one: being wrong costs somebody
+  one trip through Forgot password rather than opening a way past the check.
+
+Either way the account is told by email that a password was set — by email
+specifically, because a notification on a stolen handset is read by whoever stole
+it.
+
+The seven lines added to `google-signin.php` mark new Google accounts the same
+way. Google accounts made before this still use Forgot password, which works.
 
 ---
 

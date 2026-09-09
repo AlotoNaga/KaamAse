@@ -866,6 +866,14 @@ if ( ! function_exists( 'kaamase_google_create' ) ) {
 			return $user_id;
 		}
 
+		/*
+		 * Marked as having no password of their own choosing, so the
+		 * account screen can offer to set one rather than sending
+		 * somebody to a Forgot link for a password they never had. See
+		 * account-password.php, which reads this.
+		 */
+		update_user_meta( $user_id, 'kaamase_password_source', 'google' );
+
 		kaamase_google_attach( $user_id, $claims );
 		kaamase_google_mark_verified( $user_id );
 
