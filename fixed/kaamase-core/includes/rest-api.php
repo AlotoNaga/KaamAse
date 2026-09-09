@@ -487,6 +487,16 @@ if ( ! function_exists( 'kaamase_register_rest_routes' ) ) {
 			)
 		);
 
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/worked-with/(?P<id>\d+)',
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'kaamase_rest_worked_hide',
+				'permission_callback' => $auth,
+			)
+		);
+
 		/* ---- Hires and ratings ---- */
 
 		register_rest_route(
@@ -2053,7 +2063,11 @@ if ( ! function_exists( 'kaamase_rest_saved' ) ) {
 
 		$worked = array();
 
-		foreach ( kaamase_worked_with( $user_id ) as $entry ) {
+		/*
+		 * The list as this person has chosen to keep it. The record
+		 * itself is untouched: see kaamase_worked_with_visible().
+		 */
+		foreach ( kaamase_worked_with_visible( $user_id ) as $entry ) {
 
 			$post = get_post( $entry['post_id'] );
 
@@ -2139,6 +2153,56 @@ if ( ! function_exists( 'kaamase_rest_toggle_saved' ) ) {
 		update_user_meta( $user_id, 'kaamase_saved', $saved );
 
 		return new WP_REST_Response( array( 'saved' => $now ), 200 );
+	}
+}
+
+
+if ( ! function_exists( 'kaamase_rest_worked_hide' ) ) {
+	/**
+	 * Take somebody off the caller's worked with list, or put them back.
+	 *
+	 * Hides, never deletes. The hire is what ratings are permitted on
+	 * and what a worker's record of who paid them is made of, so a
+	 * button on a list must not be able to destroy it. This writes a
+	 * note against the person doing the hiding; the other side's list
+	 * is untouched, and kaamase_pending_ratings() still sees the hire.
+	 *
+	 * @since 1.6.0
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_rest_worked_hide( $request ) {
+
+		$id      = absint( $request['id'] );
+		$user_id = get_current_user_id();
+		$post    = get_post( $id );
+
+		if ( ! $post || ! in_array( $post->post_type, kaamase_post_types(), true ) ) {
+			return kaamase_rest_error(
+				new WP_Error( 'kaamase_not_found', __( 'That no longer exists.', 'kaamase-core' ), array( 'status' => 404 ) )
+			);
+		}
+
+		$hidden = kaamase_worked_hidden( $user_id );
+		$has    = in_array( $id, $hidden, true );
+
+		/*
+		 * Explicit by default, for the reason the saved list is: a tap
+		 * that times out and is retried must not put the row back.
+		 */
+		$wanted = $request->get_param( 'hidden' );
+		$want   = null === $wanted ? true : rest_sanitize_boolean( $wanted );
+
+		if ( $want && ! $has ) {
+			$hidden[] = $id;
+			$hidden   = array_slice( array_values( array_unique( $hidden ) ), -500 );
+		} elseif ( ! $want && $has ) {
+			$hidden = array_values( array_diff( $hidden, array( $id ) ) );
+		}
+
+		update_user_meta( $user_id, 'kaamase_worked_hidden', $hidden );
+
+		return new WP_REST_Response( array( 'hidden' => (bool) $want ), 200 );
 	}
 }
 

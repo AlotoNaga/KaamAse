@@ -419,6 +419,165 @@ if ( ! function_exists( 'kaamase_saved_shortcode' ) ) {
 }
 add_shortcode( 'kaamase_saved', 'kaamase_saved_shortcode' );
 
+if ( ! function_exists( 'kaamase_worked_hidden' ) ) {
+	/**
+	 * People this user has taken off their own worked with list.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID. Defaults to the current user.
+	 * @return int[] Profile IDs.
+	 */
+	function kaamase_worked_hidden( $user_id = 0 ) {
+
+		$user_id = $user_id ? absint( $user_id ) : get_current_user_id();
+
+		if ( ! $user_id ) {
+			return array();
+		}
+
+		return array_map( 'absint', kaamase_meta_array( get_user_meta( $user_id, 'kaamase_worked_hidden', true ) ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_worked_with_visible' ) ) {
+	/**
+	 * The worked with list as this person has chosen to keep it.
+	 *
+	 * A separate function rather than a filter inside
+	 * kaamase_worked_with(), and the reason is hires.php.
+	 *
+	 * kaamase_pending_ratings() walks that same list to work out who
+	 * somebody still owes a rating. Filtering at the source would mean
+	 * that tidying a name off a list also, silently, stopped the
+	 * platform ever asking about them again. Ratings are the thing this
+	 * whole platform runs on and they are not a display preference.
+	 *
+	 * So the record stays whole and only the screen is filtered.
+	 * Somebody may still be asked to rate a person they have hidden,
+	 * once, which is the right way round: the list is theirs to tidy,
+	 * the rating is owed to the other person.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID. Defaults to the current user.
+	 * @return array[] Entries with post_id and time, newest first.
+	 */
+	function kaamase_worked_with_visible( $user_id = 0 ) {
+
+		$user_id = $user_id ? absint( $user_id ) : get_current_user_id();
+		$hidden  = kaamase_worked_hidden( $user_id );
+
+		if ( empty( $hidden ) ) {
+			return kaamase_worked_with( $user_id );
+		}
+
+		return array_values(
+			array_filter(
+				kaamase_worked_with( $user_id ),
+				static function ( $entry ) use ( $hidden ) {
+					return ! in_array( (int) $entry['post_id'], $hidden, true );
+				}
+			)
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_handle_worked_hide' ) ) {
+	/**
+	 * Take somebody off the worked with list, or put them back.
+	 *
+	 * Nothing is deleted. The hire itself is what ratings are allowed
+	 * on, what the standing lines count, and for a worker it is the
+	 * record of who has actually paid them. A button on a list must not
+	 * be able to destroy that, so this writes a note against the person
+	 * doing the hiding and leaves the hire exactly where it is. The
+	 * other side's list is untouched.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	function kaamase_handle_worked_hide() {
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( empty( $_POST['kaamase_action'] ) || 'worked_hide' !== $_POST['kaamase_action'] ) {
+			return;
+		}
+
+		if (
+			! is_user_logged_in()
+			|| empty( $_POST['kaamase_worked_nonce'] )
+			|| ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['kaamase_worked_nonce'] ) ), 'kaamase_worked_hide' )
+		) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = isset( $_POST['kaamase_worked_id'] ) ? absint( $_POST['kaamase_worked_id'] ) : 0;
+
+		$post = get_post( $post_id );
+
+		if ( ! $post || ! in_array( $post->post_type, kaamase_post_types(), true ) ) {
+			return;
+		}
+
+		$user_id = get_current_user_id();
+		$hidden  = kaamase_worked_hidden( $user_id );
+
+		if ( ! in_array( $post_id, $hidden, true ) ) {
+
+			$hidden[] = $post_id;
+
+			/*
+			 * Capped for the same reason the saved list is. Somebody
+			 * cannot have hidden more people than they have worked
+			 * with, but a stored list with no ceiling is a stored list
+			 * that eventually costs something to read.
+			 */
+			$hidden = array_slice( array_values( array_unique( $hidden ) ), -500 );
+
+			update_user_meta( $user_id, 'kaamase_worked_hidden', $hidden );
+		}
+
+		wp_safe_redirect( kaamase_page_url( 'saved' ) );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'kaamase_handle_worked_hide' );
+
+if ( ! function_exists( 'kaamase_worked_hide_button' ) ) {
+	/**
+	 * The control that takes one person off the list.
+	 *
+	 * Says Remove rather than Hide. Hide invites the question of who
+	 * else can still see it, and the answer is that this was never
+	 * anybody else's list to see.
+	 *
+	 * @since 1.6.0
+	 * @param int $post_id Profile ID.
+	 * @return string Markup.
+	 */
+	function kaamase_worked_hide_button( $post_id ) {
+
+		if ( ! is_user_logged_in() ) {
+			return '';
+		}
+
+		ob_start();
+		?>
+		<form method="post" action="" class="ka-save-form" style="display:block;">
+			<?php wp_nonce_field( 'kaamase_worked_hide', 'kaamase_worked_nonce' ); ?>
+			<input type="hidden" name="kaamase_action" value="worked_hide">
+			<input type="hidden" name="kaamase_worked_id" value="<?php echo esc_attr( absint( $post_id ) ); ?>">
+
+			<button type="submit" class="ka-btn ka-btn--outline ka-btn--sm">
+				<?php esc_html_e( 'Remove', 'kaamase-core' ); ?>
+			</button>
+		</form>
+		<?php
+
+		return (string) ob_get_clean();
+	}
+}
+
 if ( ! function_exists( 'kaamase_rehire_section' ) ) {
 	/**
 	 * Render the worked with before list.
@@ -429,7 +588,7 @@ if ( ! function_exists( 'kaamase_rehire_section' ) ) {
 	 */
 	function kaamase_rehire_section( $type ) {
 
-		$entries = kaamase_worked_with();
+		$entries = kaamase_worked_with_visible();
 
 		if ( empty( $entries ) ) {
 			return '';
@@ -464,14 +623,33 @@ if ( ! function_exists( 'kaamase_rehire_section' ) ) {
 					if ( ! $post || 'publish' !== $post->post_status ) {
 						continue;
 					}
+					?>
+					<div class="ka-saved-item">
+						<?php
+						if ( 'kaamase_gang' === $post->post_type ) {
+							kaamase_gang_card( $post->ID );
+						} elseif ( 'kaamase_worker' === $post->post_type ) {
+							kaamase_worker_card( $post->ID );
+						} else {
+							kaamase_employer_card( $post->ID, $entry['time'] );
+						}
+						?>
 
-					if ( 'kaamase_gang' === $post->post_type ) {
-						kaamase_gang_card( $post->ID );
-					} elseif ( 'kaamase_worker' === $post->post_type ) {
-						kaamase_worker_card( $post->ID );
-					} else {
-						kaamase_employer_card( $post->ID, $entry['time'] );
-					}
+						<?php
+						/*
+						 * Twelve at a time, and removing one lets the
+						 * thirteenth up. Somebody with a long history
+						 * can therefore work through the whole list
+						 * even though only a dozen are ever on screen,
+						 * which is why this section did not also need
+						 * its cap lifting.
+						 */
+						?>
+						<div class="ka-saved-item__act">
+							<?php echo kaamase_worked_hide_button( $post->ID ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						</div>
+					</div>
+					<?php
 
 				endforeach;
 				?>

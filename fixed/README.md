@@ -2577,6 +2577,63 @@ that quietly deletes evidence of a hire is not a convenience.
 
 ---
 
+## 50. Removing somebody from the worked with list
+
+⚠️ *Two files. `kaamase-core/includes/saved.php` and `rest-api.php` are new
+revisions. **`kaamase_worked_with()` itself is byte for byte unchanged** — that
+matters, and the reason is below.*
+
+The saved list could be pruned from section 49 onwards. The list above it could
+not, and it is the one that grows on its own: work for a hundred different people
+and a hundred cards arrive whether you want them or not.
+
+### What it is not
+
+Not a saved list. Nothing was ever saved. `kaamase_worked_with()` reads the hire
+record on the worker's profile and rebuilds the list on every page load, so there
+was no stored entry to remove — the only thing that could have been deleted was
+the hire.
+
+Worth knowing before anybody is tempted: **repeat work with one person is already
+one card.** That function deduplicates by profile and keeps the most recent date,
+so being hired fifty times by the same employer has always been a single row. The
+list grows with the number of *people*, never the number of jobs.
+
+### Why this hides rather than deletes
+
+`kaamase_can_rate()` gates on `kaamase_hire_exists_between()`, which reads the
+same `_kaamase_hires` meta the list is built from. Deleting an entry would
+therefore end both sides' ability to rate each other, permanently, and silently:
+one person tidying their screen would strip the other of a rating they were owed.
+For a worker that record is also the evidence of who has actually paid them.
+
+So a note is written against the person doing the hiding and the hire stays
+exactly where it is. The other side's list does not change.
+
+### Why the filter is not inside `kaamase_worked_with()`
+
+Because `hires.php` reads it too. `kaamase_pending_ratings()` walks that same list
+to decide who somebody still owes a rating, and filtering at the source would have
+meant that tidying a name off a screen also stopped the platform ever asking about
+them again.
+
+`kaamase_worked_with_visible()` is a separate function used only by the two places
+that draw the list. Somebody may still be asked, once, to rate a person they have
+hidden. That is the right way round: the list is theirs to tidy, the rating is
+owed to somebody else.
+
+### Twelve at a time, and that is still fine
+
+The website has always shown twelve. Removing one lets the thirteenth up, so a
+long history can be worked through in full without the cap being lifted. The app
+shows the whole list and now filters it the same way.
+
+`POST /worked-with/{id}` takes `{hidden: true｜false}` and defaults to hiding.
+Explicit, for the reason the saved list is: a tap that times out and is retried
+must not put the row back.
+
+---
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
