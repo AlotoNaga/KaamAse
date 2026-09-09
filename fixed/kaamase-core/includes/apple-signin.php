@@ -552,11 +552,26 @@ if ( ! function_exists( 'kaamase_apple_verify' ) ) {
 		 * required at the point an account has to be found or made by
 		 * it. Refusing a token for want of an email would lock out
 		 * exactly the people who have used the app longest.
+		 *
+		 * Absent and unusable are two different answers, and the first
+		 * version of this could not tell them apart. It sanitised first
+		 * and rejected only what survived, so a claim Apple did send but
+		 * sanitize_email() emptied came out identical to no claim at all
+		 * — and the caller reported it as "Apple sent no email address",
+		 * sending somebody off to remove the app from their Apple
+		 * settings to fix a malformed token. A claim that arrived and
+		 * will not parse is a bad token. Only a claim that never arrived
+		 * is missing.
 		 */
-		$email = isset( $claims['email'] ) ? sanitize_email( (string) $claims['email'] ) : '';
+		$email = '';
 
-		if ( '' !== $email && ! is_email( $email ) ) {
-			return $fail;
+		if ( isset( $claims['email'] ) && '' !== trim( (string) $claims['email'] ) ) {
+
+			$email = sanitize_email( (string) $claims['email'] );
+
+			if ( ! is_email( $email ) ) {
+				return $fail;
+			}
 		}
 
 		/*
@@ -700,10 +715,11 @@ if ( ! function_exists( 'kaamase_apple_signup_errors' ) ) {
 	 * form, minus the password and the email, which Apple has settled.
 	 *
 	 * @since 1.7.0
-	 * @param array $data Submitted values, already sanitised.
+	 * @param array $data        Submitted values, already sanitised.
+	 * @param bool  $needs_email Whether the form had to ask for an address.
 	 * @return string[] Messages, empty when everything is in order.
 	 */
-	function kaamase_apple_signup_errors( $data ) {
+	function kaamase_apple_signup_errors( $data, $needs_email = false ) {
 
 		$errors = array();
 
@@ -713,6 +729,26 @@ if ( ! function_exists( 'kaamase_apple_signup_errors' ) ) {
 
 		if ( '' === trim( $data['name'] ) ) {
 			$errors[] = __( 'Please enter your name.', 'kaamase-core' );
+		}
+
+		/*
+		 * Only asked for when Apple sent nothing, and checked here the
+		 * same way the ordinary registration form checks it, including
+		 * the deliberately vague answer for an address that is already
+		 * registered. That wording is not politeness: a reply that says
+		 * plainly whether an address has an account turns this endpoint
+		 * into a way to find out who is on the platform.
+		 */
+		if ( $needs_email ) {
+
+			if ( '' === $data['email_in'] ) {
+				$errors[] = __( 'Please enter your email address.', 'kaamase-core' );
+			} elseif ( ! is_email( $data['email'] ) ) {
+				$errors[] = __( 'Please enter a working email address.', 'kaamase-core' );
+			} elseif ( email_exists( $data['email'] ) ) {
+				// Same wording as rest-api.php and registration.php, on purpose.
+				$errors[] = __( 'We could not create an account with those details. If you already have one, try signing in.', 'kaamase-core' );
+			}
 		}
 
 		if ( '' === $data['district'] ) {
@@ -754,19 +790,36 @@ if ( ! function_exists( 'kaamase_apple_create' ) ) {
 	function kaamase_apple_create( $claims, $data ) {
 
 		/*
-		 * The confirmation email is held back for this one call. It
-		 * would arrive asking somebody to confirm an address Apple
-		 * confirmed a second earlier, and the link inside it is deleted
-		 * moments later anyway. Blocking the send from out here leaves
-		 * registration.php working exactly as it does today.
+		 * Where the address came from decides two things, and it is the
+		 * only thing that decides them.
+		 *
+		 * Out of the token, Apple has proved it. The confirmation email
+		 * is held back — it would arrive asking somebody to confirm an
+		 * address Apple confirmed a second earlier, and the link inside
+		 * it is deleted moments later anyway — and the account is
+		 * confirmed on the spot.
+		 *
+		 * Typed in by hand, nobody has proved anything at all. Arriving
+		 * beside a valid Apple token proves the person holds that Apple
+		 * account; it says nothing whatever about the address they typed
+		 * next to it. So it is treated exactly as an address typed into
+		 * the ordinary registration form: the account is made
+		 * unconfirmed, its profile stays a draft, and the confirmation
+		 * email goes out and does its ordinary job. Anything kinder than
+		 * that would let anybody claim any address.
 		 */
-		add_filter( 'pre_wp_mail', '__return_false', 99 );
+		$from_apple = ( '' !== $claims['email'] );
+		$email      = $from_apple ? $claims['email'] : $data['email'];
+
+		if ( $from_apple ) {
+			add_filter( 'pre_wp_mail', '__return_false', 99 );
+		}
 
 		$user_id = kaamase_create_account(
 			array(
 				'type'     => $data['type'],
 				'name'     => $data['name'],
-				'email'    => $claims['email'],
+				'email'    => $email,
 				'phone'    => $data['phone'],
 				'district' => $data['district'],
 				'trade'    => $data['trade'],
@@ -774,9 +827,27 @@ if ( ! function_exists( 'kaamase_apple_create' ) ) {
 			)
 		);
 
-		remove_filter( 'pre_wp_mail', '__return_false', 99 );
+		if ( $from_apple ) {
+			remove_filter( 'pre_wp_mail', '__return_false', 99 );
+		}
 
 		if ( is_wp_error( $user_id ) ) {
+
+			/*
+			 * wp_insert_user is the real guard on a duplicate address, and
+			 * it runs whatever the check before it concluded, so two
+			 * requests arriving together still cannot both get through. Its
+			 * own wording says outright that the address is taken, so it
+			 * is replaced here with the vague answer used everywhere else.
+			 */
+			if ( 'existing_user_email' === $user_id->get_error_code() ) {
+				return new WP_Error(
+					'kaamase_invalid_registration',
+					__( 'We could not create an account with those details. If you already have one, try signing in.', 'kaamase-core' ),
+					array( 'status' => 400 )
+				);
+			}
+
 			return $user_id;
 		}
 
@@ -787,8 +858,18 @@ if ( ! function_exists( 'kaamase_apple_create' ) ) {
 		 */
 		update_user_meta( $user_id, 'kaamase_password_source', 'apple' );
 
+		/*
+		 * Safe on either path because the account is new. Linking the
+		 * Apple id to an account that already existed is the takeover
+		 * this whole shape is built to prevent, and it cannot happen
+		 * here: kaamase_create_account() has just made this account, and
+		 * refused outright if the address belonged to anybody.
+		 */
 		kaamase_apple_attach( $user_id, $claims );
-		kaamase_apple_mark_verified( $user_id );
+
+		if ( $from_apple ) {
+			kaamase_apple_mark_verified( $user_id );
+		}
 
 		return (int) $user_id;
 	}
@@ -863,25 +944,21 @@ if ( ! function_exists( 'kaamase_rest_apple' ) ) {
 		if ( ! $user_id ) {
 
 			/*
-			 * Nobody yet, and no address to make one with.
+			 * Nobody yet, so the app is told what is still needed. An
+			 * empty address is part of that answer rather than a refusal.
 			 *
-			 * Apple only sends the email on the first authorisation. If
-			 * somebody removes the app from their Apple ID and signs in
-			 * again, a fresh first authorisation follows and the address
-			 * comes back, so this is recoverable rather than terminal
-			 * and the message says how.
-			 */
-			if ( '' === $claims['email'] ) {
-				return kaamase_rest_error(
-					new WP_Error(
-						'kaamase_apple_no_email',
-						__( 'Apple did not send an email address this time, so a new account cannot be made. Open Settings, Apple Account, Sign in with Apple, remove Kaam Ase, then try again.', 'kaamase-core' ),
-						array( 'status' => 409 )
-					)
-				);
-			}
-
-			/*
+			 * This used to be a 409 telling somebody to remove Kaam Ase
+			 * from their Apple settings and start again. Apple hands the
+			 * address over on the first authorisation and never again, so
+			 * anybody who reached this screen once and closed it was
+			 * finished with Apple for good — and the reply read like an
+			 * instruction while being a dead end. Closing a form is not a
+			 * mistake somebody should be locked out for. The form asks for
+			 * an address instead.
+			 *
+			 * email_needed says the same thing as an empty email, for
+			 * anything that would rather read a flag than test a string.
+			 *
 			 * Not a failure, so the login counter is left alone. This is
 			 * the ordinary first visit of somebody who has never
 			 * registered, and counting it against them would lock out a
@@ -891,6 +968,7 @@ if ( ! function_exists( 'kaamase_rest_apple' ) ) {
 				array(
 					'needs_profile' => true,
 					'email'         => $claims['email'],
+					'email_needed'  => ( '' === $claims['email'] ),
 					'name'          => '',
 					'private_email' => (bool) $claims['private'],
 				),
@@ -940,18 +1018,22 @@ if ( ! function_exists( 'kaamase_rest_apple_complete' ) ) {
 			return kaamase_apple_session( $existing, (string) $request->get_param( 'device' ) );
 		}
 
-		if ( '' === $claims['email'] ) {
-			return kaamase_rest_error(
-				new WP_Error(
-					'kaamase_apple_no_email',
-					__( 'Apple did not send an email address this time, so a new account cannot be made. Open Settings, Apple Account, Sign in with Apple, remove Kaam Ase, then try again.', 'kaamase-core' ),
-					array( 'status' => 409 )
-				)
-			);
-		}
-
 		$phone_in = sanitize_text_field( (string) $request->get_param( 'phone' ) );
+		$email_in = trim( (string) $request->get_param( 'email' ) );
 
+		/*
+		 * The typed address is kept here, in $data, and deliberately
+		 * never written into $claims.
+		 *
+		 * $claims is what the token said, and kaamase_apple_find_user()
+		 * will match an account by the address in it. Putting a typed
+		 * address there would be the whole takeover: authorise with your
+		 * own Apple id, type somebody else's address, and be handed
+		 * their account. Keeping the two apart means an address nobody
+		 * has proved can never reach the code that finds accounts — not
+		 * by policy, but because it is not in the variable that function
+		 * reads.
+		 */
 		$data = array(
 			'type'     => sanitize_key( (string) $request->get_param( 'type' ) ),
 			'name'     => sanitize_text_field( (string) $request->get_param( 'name' ) ),
@@ -959,6 +1041,8 @@ if ( ! function_exists( 'kaamase_rest_apple_complete' ) ) {
 			'trade'    => kaamase_match_trade( (string) $request->get_param( 'trade' ) ),
 			'phone_in' => $phone_in,
 			'phone'    => kaamase_sanitize_phone( $phone_in ),
+			'email_in' => $email_in,
+			'email'    => sanitize_email( $email_in ),
 			'agreed'   => (bool) $request->get_param( 'agreed' ),
 		);
 
@@ -971,7 +1055,7 @@ if ( ! function_exists( 'kaamase_rest_apple_complete' ) ) {
 		 * back to. The form asks for it, so an empty one is a plain
 		 * validation error rather than a silent blank.
 		 */
-		$errors = kaamase_apple_signup_errors( $data );
+		$errors = kaamase_apple_signup_errors( $data, '' === $claims['email'] );
 
 		if ( ! empty( $errors ) ) {
 			return kaamase_rest_error(

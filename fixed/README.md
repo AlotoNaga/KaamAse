@@ -2672,8 +2672,9 @@ it is accepted as real.
 **The email may not arrive at all.** Apple sends it on first authorisation and is
 not obliged to send it again, so a returning person is matched on the Apple
 account id, which never changes. A token with no email is accepted rather than
-refused; the address is only required when there is nobody to match yet, and the
-error in that case tells somebody how to make Apple send it again.
+refused; the address is only required when there is nobody to match yet, and
+section 52 covers what happens then. The first version of this refused, and that
+was wrong.
 
 ### The crypto is copied on purpose
 
@@ -2714,6 +2715,128 @@ The seven lines added to `google-signin.php` mark new Google accounts the same
 way. Google accounts made before this still use Forgot password, which works.
 
 ---
+
+## 52. When Apple never sends the email again
+
+⚠️ *One file. `kaamase-core/includes/apple-signin.php` replaces the copy from
+section 51. Nothing else changed.*
+
+### The dead end
+
+Apple hands over an email address on the **first** authorisation for an app and
+never again. Section 51 knew that and still got the consequence wrong.
+
+Somebody taps the Apple button. The server has never seen their Apple id, so it
+answers `needs_profile: true` with their address and the app shows the form. They
+look at it, get interrupted, and close the app. Nothing has been written
+anywhere — no account, no Apple id on record. But Apple has now recorded the
+authorisation, so **the address never comes again**, and every later tap reached a
+409 saying:
+
+> Apple did not send an email address this time, so a new account cannot be made.
+> Open Settings, Apple Account, Sign in with Apple, remove Kaam Ase, then try
+> again.
+
+That reads like an instruction and behaves like a wall. Closing a form is not a
+mistake somebody should be locked out of an account for, and this was one
+interrupted signup away for every iPhone user.
+
+It also surfaced first as a bug report from TestFlight, where a tester had
+authorised during an earlier build and then been permanently unable to sign up.
+There was no bug in the verification at all. The lockout *was* the design.
+
+### What happens now
+
+An empty address is part of the answer instead of a refusal. `/auth/apple`
+returns `needs_profile: true` with `email: ""`, plus `email_needed: true` for
+anything that would rather read a flag than test a string, and the app asks for an
+address in the same form that already asks for district and trade.
+
+`/auth/apple/complete` then takes the typed address and treats it exactly as one
+typed into the ordinary registration form:
+
+- The account is created **unconfirmed**, its profile stays a **draft**.
+- The confirmation email is sent and does its ordinary job. On the token path it
+  is still suppressed, because Apple already proved that address and a mail asking
+  somebody to confirm what was confirmed a second ago is noise.
+- `kaamase_apple_mark_verified()` is called **only** when the address came out of
+  the token.
+
+So an unconfirmed Apple account is the same object as an unconfirmed password
+account, and lands on the `not-confirmed.php` list with a phone number, where
+somebody can ring them. That was already the platform's answer for people who
+never open a link, and it did not need a second one.
+
+### Why a typed address is never trusted
+
+Arriving beside a valid Apple token proves the person holds that **Apple
+account**. It proves nothing whatever about the address they typed next to it.
+Trusting it would be an account takeover: authorise with your own Apple id, type
+somebody else's address, and be handed their account.
+
+Three separate things stop that, and only the first is a check:
+
+1. **`kaamase_apple_signup_errors()`** refuses an address that already belongs to
+   an account, in the same deliberately vague words used by `rest-api.php` and
+   `registration.php` — *"We could not create an account with those details. If
+   you already have one, try signing in."* Vague on purpose: a reply that says
+   plainly whether an address is registered turns the endpoint into a way to find
+   out who is on the platform.
+
+2. **`wp_insert_user()` refuses it too**, whatever the check above concluded, so
+   two requests arriving together still cannot both get through. Its own wording
+   says outright that the address is taken, so it is replaced with the vague one.
+
+3. **The typed address is never written into `$claims`.** This is the one that
+   matters. `$claims` is what the token said, and `kaamase_apple_find_user()`
+   matches an account by the address in it. Keeping the typed address in `$data`
+   means an unproven address cannot reach the code that finds accounts — not
+   because a rule forbids it, but because it is not in the variable that function
+   reads.
+
+`kaamase_apple_attach()` runs on both paths, which is safe because the account is
+new either way: `kaamase_create_account()` has just made it, and refused outright
+if the address belonged to anybody.
+
+### Absent and unusable are different answers
+
+A second, quieter fault in the same file:
+
+```php
+$email = isset( $claims['email'] ) ? sanitize_email( (string) $claims['email'] ) : '';
+
+if ( '' !== $email && ! is_email( $email ) ) {
+	return $fail;
+}
+```
+
+Sanitise first, reject only what survives. So a claim Apple *did* send but
+`sanitize_email()` emptied came out identical to no claim at all, and the caller
+reported it as "Apple sent no email address" — sending somebody off to remove the
+app from their Apple settings to fix a malformed token. A claim that arrived and
+will not parse is a bad token; only a claim that never arrived is missing. Now
+they return different things.
+
+### What the app does
+
+The field appears only when the address is empty, sits under the name, and says
+why:
+
+> Apple only shares your address the first time you sign in, so we need it again
+> here. We will send you a message to confirm it.
+
+That wording is load-bearing. Somebody who has just signed in with Apple and is
+then asked to type an email will otherwise conclude the sign-in failed and start
+over, which is the one thing that cannot help them.
+
+### Still outstanding
+
+Mail to a `privaterelay.appleid.com` address bounces until the sending domain is
+registered under **Apple Developer → Certificates, Identifiers & Profiles → the
+App ID → Sign in with Apple → Configure → Email Communication**. On the token
+path that never mattered, because those accounts are confirmed on the spot and no
+mail is sent. On this path the confirmation email is the whole mechanism, so for
+anybody who chose **Hide My Email** it is now a prerequisite, not a nice to have.
 
 ## Not changed, and why
 
