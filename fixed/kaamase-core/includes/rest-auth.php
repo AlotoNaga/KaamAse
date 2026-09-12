@@ -435,7 +435,293 @@ if ( ! function_exists( 'kaamase_login_succeeded' ) ) {
 
 
 /* ==========================================================================
-   5. HOUSEKEEPING
+   5. THE DEVICES SOMEBODY IS SIGNED IN ON
+
+   An account may hold ten tokens and nothing ever showed them.
+
+   The device label, when it was made and when it was last used have all
+   been stored since the day tokens were added, and none of it was ever
+   put in front of the person it belongs to. So somebody whose phone was
+   stolen, which on this platform is a real event rather than a
+   hypothetical, had no way to sign that phone out. Their only options
+   were to change their password, which revokes every device including
+   the one in their hand, or to do nothing.
+
+   A list and a button each.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_device_id' ) ) {
+	/**
+	 * A short, stable handle for one token.
+	 *
+	 * Derived from the stored hash by hashing it again, so the value
+	 * printed into a page and posted back in a form is not the stored
+	 * credential and cannot be turned back into it.
+	 *
+	 * @since 1.3.4
+	 * @param array $entry Token entry.
+	 * @return string
+	 */
+	function kaamase_device_id( $entry ) {
+
+		if ( empty( $entry['hash'] ) ) {
+			return '';
+		}
+
+		return substr( hash( 'sha256', (string) $entry['hash'] ), 0, 12 );
+	}
+}
+
+if ( ! function_exists( 'kaamase_user_devices' ) ) {
+	/**
+	 * Every device this account is signed in on.
+	 *
+	 * Expired entries are left out rather than shown as dead rows.
+	 * The hash never leaves this function.
+	 *
+	 * @since 1.3.4
+	 * @param int $user_id User ID.
+	 * @return array[] Device rows, most recently used first.
+	 */
+	function kaamase_user_devices( $user_id ) {
+
+		$tokens = kaamase_meta_array( get_user_meta( absint( $user_id ), 'kaamase_tokens', true ) );
+		$now    = time();
+		$out    = array();
+
+		foreach ( $tokens as $entry ) {
+
+			if ( empty( $entry['hash'] ) || absint( $entry['expires'] ) < $now ) {
+				continue;
+			}
+
+			$out[] = array(
+				'id'        => kaamase_device_id( $entry ),
+				'device'    => (string) ( $entry['device'] ?? '' ),
+				'created'   => absint( $entry['created'] ?? 0 ),
+				'last_used' => absint( $entry['last_used'] ?? 0 ),
+				'expires'   => absint( $entry['expires'] ?? 0 ),
+			);
+		}
+
+		usort(
+			$out,
+			static function ( $a, $b ) {
+				return $b['last_used'] <=> $a['last_used'];
+			}
+		);
+
+		return $out;
+	}
+}
+
+if ( ! function_exists( 'kaamase_revoke_device' ) ) {
+	/**
+	 * Sign one device out.
+	 *
+	 * @since 1.3.4
+	 * @param int    $user_id   User ID.
+	 * @param string $device_id Handle from kaamase_device_id().
+	 * @return bool Whether anything was removed.
+	 */
+	function kaamase_revoke_device( $user_id, $device_id ) {
+
+		$user_id   = absint( $user_id );
+		$device_id = sanitize_key( $device_id );
+
+		if ( ! $user_id || '' === $device_id ) {
+			return false;
+		}
+
+		$tokens  = kaamase_meta_array( get_user_meta( $user_id, 'kaamase_tokens', true ) );
+		$kept    = array();
+		$removed = false;
+
+		foreach ( $tokens as $entry ) {
+
+			// hash_equals, because this compares one derived value against another.
+			if ( ! empty( $entry['hash'] ) && hash_equals( kaamase_device_id( $entry ), $device_id ) ) {
+				$removed = true;
+				continue;
+			}
+
+			$kept[] = $entry;
+		}
+
+		if ( $removed ) {
+			update_user_meta( $user_id, 'kaamase_tokens', $kept );
+		}
+
+		return $removed;
+	}
+}
+
+if ( ! function_exists( 'kaamase_device_last_seen' ) ) {
+	/**
+	 * When a device was last used, in words.
+	 *
+	 * @since 1.3.4
+	 * @param int $stamp Timestamp.
+	 * @return string
+	 */
+	function kaamase_device_last_seen( $stamp ) {
+
+		$stamp = absint( $stamp );
+
+		if ( ! $stamp ) {
+			return __( 'Not used yet', 'kaamase-core' );
+		}
+
+		$ago = time() - $stamp;
+
+		if ( $ago < HOUR_IN_SECONDS ) {
+			return __( 'Used in the last hour', 'kaamase-core' );
+		}
+
+		return sprintf(
+			/* translators: %s: human readable time difference, for example 3 days */
+			__( 'Last used %s ago', 'kaamase-core' ),
+			human_time_diff( $stamp, time() )
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_devices_section' ) ) {
+	/**
+	 * The devices panel on the dashboard.
+	 *
+	 * Shown only when there is something to show. An account that has
+	 * never opened the app gets no heading about phones.
+	 *
+	 * @since 1.3.4
+	 * @param int $user_id User ID.
+	 * @return void
+	 */
+	function kaamase_devices_section( $user_id ) {
+
+		$devices = kaamase_user_devices( $user_id );
+
+		if ( empty( $devices ) ) {
+			return;
+		}
+
+		?>
+		<section class="ka-card ka-stack ka-mt-6">
+
+			<h2><?php esc_html_e( 'Phones signed in', 'kaamase-core' ); ?></h2>
+
+			<p class="ka-small ka-soft">
+				<?php esc_html_e( 'These are the phones the Kaam Ase app is signed in on with your account. If you do not recognise one, or a phone was lost or sold, sign it out here.', 'kaamase-core' ); ?>
+			</p>
+
+			<?php foreach ( $devices as $device ) : ?>
+				<div class="ka-stack">
+
+					<p>
+						<strong><?php echo esc_html( '' !== $device['device'] ? $device['device'] : __( 'A phone', 'kaamase-core' ) ); ?></strong><br>
+						<span class="ka-small ka-soft"><?php echo esc_html( kaamase_device_last_seen( $device['last_used'] ) ); ?></span>
+					</p>
+
+					<form method="post" action="">
+						<?php wp_nonce_field( 'kaamase_revoke_device', 'kaamase_device_nonce' ); ?>
+						<input type="hidden" name="action" value="kaamase_revoke_device">
+						<input type="hidden" name="device" value="<?php echo esc_attr( $device['id'] ); ?>">
+						<button type="submit" class="ka-btn ka-btn--outline">
+							<?php esc_html_e( 'Sign this phone out', 'kaamase-core' ); ?>
+						</button>
+					</form>
+				</div>
+			<?php endforeach; ?>
+
+			<?php if ( count( $devices ) > 1 ) : ?>
+				<form method="post" action="">
+					<?php wp_nonce_field( 'kaamase_revoke_device', 'kaamase_device_nonce' ); ?>
+					<input type="hidden" name="action" value="kaamase_revoke_device">
+					<input type="hidden" name="device" value="all">
+					<button type="submit" class="ka-btn ka-btn--outline"
+						data-ka-confirm="<?php esc_attr_e( 'This signs you out of the app on every phone, including this one. Are you sure?', 'kaamase-core' ); ?>">
+						<?php esc_html_e( 'Sign out of every phone', 'kaamase-core' ); ?>
+					</button>
+				</form>
+			<?php endif; ?>
+		</section>
+		<?php
+	}
+}
+add_action( 'kaamase_dashboard_sections', 'kaamase_devices_section', 40 );
+
+if ( ! function_exists( 'kaamase_handle_revoke_device' ) ) {
+	/**
+	 * Sign a device out when the form comes back.
+	 *
+	 * @since 1.3.4
+	 * @return void
+	 */
+	function kaamase_handle_revoke_device() {
+
+		if ( ! is_user_logged_in() || empty( $_POST['action'] ) ) {
+			return;
+		}
+
+		if ( 'kaamase_revoke_device' !== sanitize_key( wp_unslash( $_POST['action'] ) ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['kaamase_device_nonce'] )
+			|| ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['kaamase_device_nonce'] ) ), 'kaamase_revoke_device' ) ) {
+			return;
+		}
+
+		$user_id = get_current_user_id();
+		$device  = isset( $_POST['device'] ) ? sanitize_key( wp_unslash( $_POST['device'] ) ) : '';
+
+		if ( 'all' === $device ) {
+			kaamase_revoke_token( $user_id );
+		} else {
+			kaamase_revoke_device( $user_id, $device );
+		}
+
+		wp_safe_redirect(
+			add_query_arg( 'devices', 'signedout', kaamase_page_url( 'dashboard' ) )
+		);
+		exit;
+	}
+}
+add_action( 'template_redirect', 'kaamase_handle_revoke_device' );
+
+if ( ! function_exists( 'kaamase_devices_notice' ) ) {
+	/**
+	 * Say that it worked.
+	 *
+	 * Signing a phone out produces no visible change on the dashboard
+	 * unless the row happened to be on screen, so without this the
+	 * person presses the button, the page reloads, and they cannot tell
+	 * whether anything happened. On the screen you go to because your
+	 * phone was stolen, that is not good enough.
+	 *
+	 * @since 1.3.4
+	 * @return void
+	 */
+	function kaamase_devices_notice() {
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read only, decides whether to print a confirmation.
+		$state = isset( $_GET['devices'] ) ? sanitize_key( wp_unslash( $_GET['devices'] ) ) : '';
+
+		if ( 'signedout' !== $state ) {
+			return;
+		}
+
+		printf(
+			'<div class="ka-notice ka-notice--ok"><p>%s</p></div>',
+			esc_html__( 'Signed out. That phone will have to sign in again to use the app.', 'kaamase-core' )
+		);
+	}
+}
+add_action( 'kaamase_dashboard_prompts', 'kaamase_devices_notice', 40 );
+
+
+/* ==========================================================================
+   6. HOUSEKEEPING
    ========================================================================== */
 
 /**
@@ -482,3 +768,105 @@ function kaamase_revoke_tokens_on_password_change( $user_id, $old_user_data = nu
 	kaamase_revoke_token( $user_id );
 }
 add_action( 'profile_update', 'kaamase_revoke_tokens_on_password_change', 10, 2 );
+
+
+/* ==========================================================================
+   6. KEEPING PERSONAL ANSWERS OUT OF THE CACHE
+
+   A page cache decides what is "the same request" by the address and the
+   cookies. The app sends no cookies. It signs in with an Authorization
+   header, which the cache does not read and does not know exists.
+
+   So every phone asking GET /wp-json/kaamase/v1/me looks identical to
+   the cache: same address, no cookies. It stores the first answer and
+   hands that same person's name, telephone number and profile to every
+   phone that asks afterwards.
+
+   This is why the website was never affected. A browser carries the
+   WordPress sign in cookie, the cache sees it and steps aside. The app
+   carries nothing the cache understands.
+
+   The theme has the same guard for pages, but it cannot help here:
+   WordPress serves a REST route and stops inside parse_request, which
+   is before send_headers ever runs. An answer to the app therefore
+   passes none of the page protections, and needs its own.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_rest_is_personal' ) ) {
+	/**
+	 * Whether this REST request carries credentials.
+	 *
+	 * Deliberately reads the header and the cookie names only. Working
+	 * out which account it is would resolve the current user earlier
+	 * than the route expects, and the answer to "is this personal" does
+	 * not need a name attached to it.
+	 *
+	 * A stale or invalid credential counts as personal too. The cost of
+	 * being wrong that way is one answer not cached. The cost of being
+	 * wrong the other way is one person's details handed to a stranger.
+	 *
+	 * @since 1.5.0
+	 * @return bool
+	 */
+	function kaamase_rest_is_personal() {
+
+		if ( function_exists( 'kaamase_bearer_token' ) && '' !== kaamase_bearer_token() ) {
+			return true;
+		}
+
+		foreach ( array_keys( (array) $_COOKIE ) as $name ) {
+			if ( 0 === strpos( (string) $name, 'wordpress_logged_in_' ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_no_cache' ) ) {
+	/**
+	 * Forbid storing an answer that was written for one account.
+	 *
+	 * Public answers are left alone on purpose. A trade listing is the
+	 * same for everybody and is worth caching on a village connection.
+	 *
+	 * @since 1.5.0
+	 * @return void
+	 */
+	function kaamase_rest_no_cache() {
+
+		if ( ! kaamase_rest_is_personal() ) {
+			return;
+		}
+
+		/*
+		 * The constant and the switch before the headers_sent check.
+		 * Neither needs headers, and these two are what actually decide
+		 * whether the answer is kept. Response headers alone were not
+		 * enough on this server: the /app page sent them and was served
+		 * from store for hours.
+		 */
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
+		do_action( 'litespeed_control_set_nocache', 'kaamase personal api answer' );
+
+		if ( headers_sent() ) {
+			return;
+		}
+
+		nocache_headers();
+		header( 'Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0' );
+
+		/*
+		 * And for anything between here and the phone that stores
+		 * things anyway: this answer depends on who asked, and who
+		 * asked is in this header. A copy made for one must never be
+		 * handed to another.
+		 */
+		header( 'Vary: Authorization, Cookie', false );
+	}
+}
+add_action( 'rest_api_init', 'kaamase_rest_no_cache', 0 );

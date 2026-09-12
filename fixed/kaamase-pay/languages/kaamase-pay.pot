@@ -1,0 +1,689 @@
+# Copyright (C) Nagaland Me
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kaam Ase Pay\n"
+"Report-Msgid-Bugs-To: https://kaamase.com\n"
+"POT-Creation-Date: 2026-08-28 07:03+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kaamase-pay\n"
+
+#: includes/checkout.php:153
+msgid "%1$d more %2$s"
+msgstr ""
+
+#: includes/plans.php:259
+msgid "A one time pack is the easier sell to somebody who has never paid for anything online. A subscription is worth more to you. Having both is usually right."
+msgstr ""
+
+#: includes/plans.php:206
+msgid "A plan gives somebody extra allowance on top of the free numbers, for a number of days. Change a price here whenever you like. Nothing needs a code change and nobody who has already paid is affected by it."
+msgstr ""
+
+#: includes/settings.php:388
+msgid "A secret is saved. Leave this blank to keep it, or type a new one to replace it."
+msgstr ""
+
+#: includes/plans.php:219
+msgid "Add a plan"
+msgstr ""
+
+#: includes/plans.php:347
+msgid "Add plan"
+msgstr ""
+
+#: includes/settings.php:350
+msgid "Add your Razorpay keys first. A switch turned on with no keys behind it gives somebody a checkout that fails after they have decided to buy, which is worse than never offering."
+msgstr ""
+
+#: includes/account.php:95
+msgid "Adds %s on top of the free amount."
+msgstr ""
+
+#: includes/settings.php:592
+msgid "Amount"
+msgstr ""
+
+#: includes/settings.php:450
+msgid "Android, through Google Play"
+msgstr ""
+
+#: includes/settings.php:410
+msgid "Any string you choose. Put the same one into Razorpay when you create the webhook. Send it to this address:"
+msgstr ""
+
+#: includes/settings.php:474
+msgid "Any string you choose. Put the same one into RevenueCat as the Authorization header on the webhook, and send it here:"
+msgstr ""
+
+#: includes/subscribers.php:290
+msgid "Called, hidden while lapsed"
+msgstr ""
+
+#: includes/settings.php:337
+msgid "Charge people"
+msgstr ""
+
+#: includes/settings.php:532
+msgid "Charge people is not ticked."
+msgstr ""
+
+#: includes/checkout.php:292
+msgid "Choose"
+msgstr ""
+
+#: includes/settings.php:423
+msgid "Currency"
+msgstr ""
+
+#: includes/plans.php:421
+msgid "Edit"
+msgstr ""
+
+#: includes/plans.php:218
+msgid "Edit plan"
+msgstr ""
+
+#: includes/subscribers.php:242
+msgid "Ends"
+msgstr ""
+
+#: includes/subscribers.php:188
+msgid "Everybody who has ever paid, what they hold, and when it ends. The tick column says whether you have made your call yet: no tick means they have paid and are still waiting on the Calls to make screen."
+msgstr ""
+
+#: includes/checkout.php:42
+msgid "Everything on Kaam Ase is free at the moment. There is nothing to buy."
+msgstr ""
+
+#: includes/plans.php:209
+msgid "Existing plans"
+msgstr ""
+
+#: includes/plans.php:376
+msgid "Gives"
+msgstr ""
+
+#: includes/checkout.php:648
+msgid "Go back without paying"
+msgstr ""
+
+#: includes/checkout.php:132
+msgid "It runs until %s. Buying again adds to what you have rather than replacing it."
+msgstr ""
+
+#: includes/account.php:496
+msgid "It will not renew again"
+msgstr ""
+
+#: kaamase-pay.php:136
+msgid "Kaam Ase Payments needs Kaam Ase Core, version 1.2 or newer, and is doing nothing until that is active."
+msgstr ""
+
+#: includes/checkout.php:74
+msgid "Kaam Ase is free for workers and always will be. Making a profile, being found, being called and getting hired all cost nothing, and nobody from Kaam Ase will ever ask you for money. If anyone does, report it."
+msgstr ""
+
+#: includes/checkout.php:306
+msgid "Kaam Ase never charges a worker. Nothing here affects finding work, being found, or being hired. Paying only ever raises limits for an employer who is hiring a lot."
+msgstr ""
+
+#: includes/checkout.php:88
+msgid "Kaam Ase stays free"
+msgstr ""
+
+#: includes/account.php:230
+msgid "Keep it"
+msgstr ""
+
+#: includes/plans.php:249
+msgid "Kind"
+msgstr ""
+
+#: includes/subscribers.php:201
+msgid "Lapsed (%d)"
+msgstr ""
+
+#: includes/plans.php:294
+msgid "Leave a price at zero to not offer that period. Saving a subscription price creates the matching plan at Razorpay automatically, so you never open their dashboard to change a price."
+msgstr ""
+
+#: includes/settings.php:454
+msgid "Leave both off until the products exist in that store and the webhook below is connected. With them off the app shows no way to buy at all, which is the safe direction: an app that takes money it cannot honour is worse than one that sells nothing."
+msgstr ""
+
+#: includes/subscribers.php:137
+msgid "Lifetime"
+msgstr ""
+
+#: includes/plans.php:299
+msgid "Lifetime price"
+msgstr ""
+
+#: includes/settings.php:515
+msgid "Make a page containing the shortcode [kaamase_plans] and publish it. Until then nothing can be bought and Choose has nowhere sensible to return to."
+msgstr ""
+
+#: includes/checkout.php:90
+msgid "Making a profile, being found, calling somebody, posting a job and getting hired all cost nothing, for everybody, always. Nothing below changes that. It is one optional extra for people who post urgent work often and want us to ring them and put a tick on their profile."
+msgstr ""
+
+#: includes/subscribers.php:135
+msgid "Monthly"
+msgstr ""
+
+#: includes/plans.php:276
+msgid "Monthly price"
+msgstr ""
+
+#: includes/account.php:75
+msgid "My plan"
+msgstr ""
+
+#: includes/plans.php:232
+msgid "Name"
+msgstr ""
+
+#: includes/subscribers.php:97
+msgid "Never"
+msgstr ""
+
+#: includes/plans.php:419 includes/subscribers.php:281
+msgid "No"
+msgstr ""
+
+#: includes/settings.php:512
+msgid "No page found."
+msgstr ""
+
+#: includes/settings.php:538
+msgid "No plan is switched on."
+msgstr ""
+
+#: includes/plans.php:366
+msgid "No plans yet. Add one below."
+msgstr ""
+
+#: includes/razorpay.php:290
+msgid "No subscription given."
+msgstr ""
+
+#: includes/subscribers.php:203
+msgid "Nobody has lapsed."
+msgstr ""
+
+#: includes/subscribers.php:196
+msgid "Nobody is on a plan at the moment."
+msgstr ""
+
+#: includes/subscribers.php:292
+msgid "Not called yet"
+msgstr ""
+
+#: includes/checkout.php:446
+msgid "Not set up yet"
+msgstr ""
+
+#: includes/settings.php:548
+msgid "Not yet:"
+msgstr ""
+
+#: includes/checkout.php:889
+msgid "Nothing has been taken from you. If money did leave your account, send us the payment reference and we will sort it out."
+msgstr ""
+
+#: includes/settings.php:326
+msgid "Nothing is being charged for. Plans are hidden and everybody is on the free allowances. You can set all of this up now and switch it on whenever you are ready."
+msgstr ""
+
+#: includes/checkout.php:96
+msgid "Nothing is on offer just now."
+msgstr ""
+
+#: includes/settings.php:583
+msgid "Nothing yet."
+msgstr ""
+
+#: includes/plans.php:340
+msgid "Offer this plan to people"
+msgstr ""
+
+#: includes/plans.php:241
+msgid "One line about it"
+msgstr ""
+
+#: includes/subscribers.php:138
+msgid "One off"
+msgstr ""
+
+#: includes/plans.php:264
+msgid "One time price"
+msgstr ""
+
+#: includes/checkout.php:646
+msgid "Opening the payment window."
+msgstr ""
+
+#: includes/plans.php:253
+msgid "Paid once, lasts a set number of days"
+msgstr ""
+
+#: includes/plans.php:304
+msgid "Paid once, never expires, never renews. Worth thinking about before you offer it: the people who buy it are usually the ones who would have paid every year, and you cannot take it back later without breaking a promise. Leave at zero to not offer it."
+msgstr ""
+
+#: includes/checkout.php:882
+msgid "Paid, and it is on your account already"
+msgstr ""
+
+#: includes/checkout.php:636
+msgid "Paying"
+msgstr ""
+
+#: includes/checkout.php:744
+msgid "Payment"
+msgstr ""
+
+#: includes/settings.php:186 includes/settings.php:187 includes/settings.php:317
+msgid "Payments"
+msgstr ""
+
+#: includes/razorpay.php:43
+msgid "Payments are not set up."
+msgstr ""
+
+#: includes/checkout.php:431
+msgid "Payments are not switched on yet. Add the Razorpay keys on the Payments screen and tick Charge people."
+msgstr ""
+
+#: includes/settings.php:321
+msgid "People are being charged."
+msgstr ""
+
+#: includes/settings.php:590 includes/subscribers.php:239
+msgid "Person"
+msgstr ""
+
+#: includes/plans.php:374 includes/settings.php:591 includes/subscribers.php:241
+msgid "Plan"
+msgstr ""
+
+#: includes/plans.php:203 includes/settings.php:195 includes/settings.php:196
+msgid "Plans and prices"
+msgstr ""
+
+#: includes/settings.php:322
+msgid "Plans are visible and payments are being taken. Switching this off leaves everybody on the free allowances and takes nothing away that they already paid for: paid access keeps working until the date it was bought to."
+msgstr ""
+
+#: includes/settings.php:503
+msgid "Plans page"
+msgstr ""
+
+#: includes/plans.php:375
+msgid "Prices"
+msgstr ""
+
+#: includes/settings.php:358
+msgid "Razorpay Key ID"
+msgstr ""
+
+#: includes/settings.php:374
+msgid "Razorpay Key Secret"
+msgstr ""
+
+#: includes/settings.php:368
+msgid "Razorpay dashboard, Account and Settings, API Keys. Starts rzp_test for testing and rzp_live when you are ready."
+msgstr ""
+
+#: includes/settings.php:528
+msgid "Razorpay keys are missing."
+msgstr ""
+
+#: includes/razorpay.php:72
+msgid "Razorpay refused that."
+msgstr ""
+
+#: includes/settings.php:522
+msgid "Ready to take money"
+msgstr ""
+
+#: includes/account.php:281
+msgid "Receipts come from Razorpay by email. If one is missing, tell us the date and we will find it."
+msgstr ""
+
+#: includes/settings.php:561
+msgid "Recent payments"
+msgstr ""
+
+#: includes/subscribers.php:243
+msgid "Renews"
+msgstr ""
+
+#: includes/access.php:763
+msgid "Renews on %s."
+msgstr ""
+
+#: includes/settings.php:461
+msgid "RevenueCat secret"
+msgstr ""
+
+#: includes/subscribers.php:240
+msgid "Ring"
+msgstr ""
+
+#: includes/subscribers.php:194
+msgid "Running now (%d)"
+msgstr ""
+
+#: includes/access.php:781
+msgid "Runs until %s, then stops on its own. Nothing renews."
+msgstr ""
+
+#: includes/plans.php:347
+msgid "Save plan"
+msgstr ""
+
+#: includes/checkout.php:238
+msgid "Saves %s a year"
+msgstr ""
+
+#: includes/account.php:250
+msgid "See what else is available"
+msgstr ""
+
+#: includes/access.php:435
+msgid "See what is available: %s"
+msgstr ""
+
+#: includes/settings.php:435
+msgid "Sell inside the apps"
+msgstr ""
+
+#: includes/settings.php:245
+msgid "Set in wp-config.php."
+msgstr ""
+
+#: includes/plans.php:336
+msgid "Show it"
+msgstr ""
+
+#: includes/settings.php:345
+msgid "Show plans and take payments"
+msgstr ""
+
+#: includes/subscribers.php:288
+msgid "Showing"
+msgstr ""
+
+#: includes/plans.php:377
+msgid "Shown"
+msgstr ""
+
+#: includes/settings.php:389
+msgid "Shown once by Razorpay when you create the key. Never leaves the server."
+msgstr ""
+
+#: includes/checkout.php:428
+msgid "Sign in first, then choose again."
+msgstr ""
+
+#: includes/checkout.php:258
+msgid "Sign in to choose"
+msgstr ""
+
+#: includes/settings.php:593
+msgid "Status"
+msgstr ""
+
+#: includes/account.php:208
+msgid "Stop it renewing?"
+msgstr ""
+
+#: includes/account.php:187
+msgid "Stop renewing"
+msgstr ""
+
+#: includes/settings.php:416
+msgid "Subscribe it to these events: payment.captured, subscription.charged, subscription.cancelled, subscription.halted. Without the webhook a monthly plan takes the first payment and then quietly stops extending, which nobody notices until somebody complains."
+msgstr ""
+
+#: includes/subscribers.php:41 includes/subscribers.php:42 includes/subscribers.php:185
+msgid "Subscribers"
+msgstr ""
+
+#: includes/plans.php:257
+msgid "Subscription, renews on its own"
+msgstr ""
+
+#: includes/account.php:511 includes/checkout.php:446
+msgid "That did not work"
+msgstr ""
+
+#: includes/checkout.php:433
+msgid "That option has no price set. Open Plans and prices and put a number against it."
+msgstr ""
+
+#: includes/checkout.php:429
+msgid "That page had been open a while and the form had expired. Please choose again."
+msgstr ""
+
+#: includes/checkout.php:888
+msgid "That payment did not go through"
+msgstr ""
+
+#: includes/checkout.php:434
+msgid "That payment did not go through. Nothing has been taken from you."
+msgstr ""
+
+#: includes/checkout.php:432
+msgid "That plan is not switched on. Open Plans and prices and tick Offer this plan to people."
+msgstr ""
+
+#: includes/checkout.php:742
+msgid "The payment could not be started. Nothing has been charged."
+msgstr ""
+
+#: includes/plans.php:563
+msgid "The plan was saved, but Razorpay would not create the subscription plan for it, so that period cannot be sold yet."
+msgstr ""
+
+#: includes/settings.php:542
+msgid "There is no page holding the plans."
+msgstr ""
+
+#: includes/checkout.php:72
+msgid "There is nothing for you to pay"
+msgstr ""
+
+#: includes/access.php:754 includes/access.php:784
+msgid "There is nothing to cancel and nothing more will be charged."
+msgstr ""
+
+#: includes/plans.php:330
+msgid "These are added on top of the free allowance, not instead of it. Somebody who buys this gets the free number plus this number."
+msgstr ""
+
+#: includes/subscribers.php:204
+msgid "These have run out. Somebody who lapsed in the last week or two is worth a call: they already decided it was worth paying for once."
+msgstr ""
+
+#: includes/checkout.php:430
+msgid "This account cannot buy that."
+msgstr ""
+
+#: includes/access.php:746
+msgid "This does not end. You paid once and it stays on your account."
+msgstr ""
+
+#: includes/settings.php:246
+msgid "This field is ignored. Change it in"
+msgstr ""
+
+#: includes/settings.php:508
+msgid "This is where Choose sends people back to. If that is not the page holding the plans, the page it should be on is missing the [kaamase_plans] shortcode."
+msgstr ""
+
+#: includes/webhook.php:405
+msgid "This usually means a card has expired or a bank has stopped the automatic payment. Nothing has been taken from you and nothing has been switched off yet."
+msgstr ""
+
+#: includes/subscribers.php:244
+msgid "Tick"
+msgstr ""
+
+#: includes/settings.php:397
+msgid "Webhook secret"
+msgstr ""
+
+#: includes/account.php:259
+msgid "What I have paid"
+msgstr ""
+
+#: includes/plans.php:310
+msgid "What it gives"
+msgstr ""
+
+#: includes/plans.php:236
+msgid "What the employer sees. Plain words, for example Contractor or Busy month."
+msgstr ""
+
+#: includes/settings.php:487
+msgid "What this is pointed at"
+msgstr ""
+
+#: includes/settings.php:589
+msgid "When"
+msgstr ""
+
+#: includes/subscribers.php:136
+msgid "Yearly"
+msgstr ""
+
+#: includes/plans.php:287
+msgid "Yearly price"
+msgstr ""
+
+#: includes/plans.php:419 includes/subscribers.php:280
+msgid "Yes"
+msgstr ""
+
+#: includes/account.php:234
+msgid "Yes, stop renewing"
+msgstr ""
+
+#: includes/settings.php:546
+msgid "Yes."
+msgstr ""
+
+#: includes/checkout.php:128
+msgid "You are on %s"
+msgstr ""
+
+#: includes/account.php:245
+msgid "You are on the free amount, which is enough for most people."
+msgstr ""
+
+#: includes/access.php:774
+msgid "You bought this in Google Play, so it is stopped there: open the Play Store, tap your picture, then Payments and subscriptions."
+msgstr ""
+
+#: includes/access.php:772
+msgid "You bought this in the App Store, so it is stopped there: open Settings, tap your name, then Subscriptions."
+msgstr ""
+
+#: includes/webhook.php:418
+msgid "You can check or change it here:"
+msgstr ""
+
+#: includes/subscribers.php:153
+msgid "You cannot do that."
+msgstr ""
+
+#: includes/account.php:216
+msgid "You keep everything until %s. After that the extra urgent posts stop and the verified mark comes off your profile. Starting again means paying again."
+msgstr ""
+
+#: includes/account.php:196
+msgid "You keep everything until %s. Nothing is taken away today and there is nothing more to pay."
+msgstr ""
+
+#: includes/account.php:500
+msgid "You keep everything you have until %s, and nothing more will be charged. You can start again any time."
+msgstr ""
+
+#: includes/checkout.php:883
+msgid "Your higher limits are working now. A receipt is on its way from Razorpay."
+msgstr ""
+
+#: includes/webhook.php:425
+msgid "Your payment to %s did not go through"
+msgstr ""
+
+#: includes/webhook.php:401
+msgid "Your payment to %s did not go through."
+msgstr ""
+
+#: includes/webhook.php:412
+msgid "Your plan runs until %s. If the payment is not fixed before then it will simply stop."
+msgstr ""
+
+#: includes/account.php:512
+msgid "Your subscription has not been stopped and you may be charged again. Please tell us and we will stop it by hand."
+msgstr ""
+
+#: includes/plans.php:271
+msgid "days"
+msgstr ""
+
+#: includes/account.php:335
+msgid "did not go through"
+msgstr ""
+
+#: includes/checkout.php:206
+msgid "every month"
+msgstr ""
+
+#: includes/checkout.php:208
+msgid "every year"
+msgstr ""
+
+#: includes/plans.php:321
+msgid "extra %s"
+msgstr ""
+
+#: includes/plans.php:268
+msgid "for"
+msgstr ""
+
+#: includes/checkout.php:214
+msgid "for %d days"
+msgstr ""
+
+#: includes/settings.php:442
+msgid "iPhone, through Apple"
+msgstr ""
+
+#: includes/account.php:334
+msgid "not finished"
+msgstr ""
+
+#: includes/checkout.php:210
+msgid "once, and it never ends"
+msgstr ""
+
+#: includes/account.php:333
+msgid "paid"
+msgstr ""
+
+#: includes/account.php:336
+msgid "stopped renewing"
+msgstr ""
+
+#: includes/account.php:337
+msgid "stopped, payment failed"
+msgstr ""
+

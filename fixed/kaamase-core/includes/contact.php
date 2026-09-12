@@ -99,12 +99,23 @@ if ( ! function_exists( 'kaamase_protected_trades' ) ) {
 		 * unverified stranger can contact somebody who works alone in a
 		 * house, so do not.
 		 *
+		 * Home nurse was added with the trade itself. It sits in Home
+		 * services beside Maid, Cook, Babysitter and Caregiver, all of
+		 * which are already here, and it is the same situation: one
+		 * person, alone, at an address a stranger gave them. A new
+		 * trade of that kind that is not on this list is a hole in the
+		 * gate rather than a decision.
+		 *
+		 * Housekeeping is deliberately not here. It sits under Hotel
+		 * and food and means hotel housekeeping — a workplace with
+		 * colleagues and a manager, which is not what this gate is for.
+		 *
 		 * @since 1.0.0
 		 * @param string[] $trades Trade slugs.
 		 */
 		return (array) apply_filters(
 			'kaamase_protected_trades',
-			array( 'maid', 'house-cleaner', 'cook', 'babysitter', 'caregiver' )
+			array( 'maid', 'house-cleaner', 'cook', 'babysitter', 'caregiver', 'home-nurse' )
 		);
 	}
 }
@@ -318,6 +329,33 @@ if ( ! function_exists( 'kaamase_can_contact' ) ) {
 			}
 		}
 
+		/**
+		 * Filters one last refusal in, after the platform's own rules.
+		 *
+		 * Here rather than at the top so that everything the platform
+		 * itself insists on has already been said. Somebody who has not
+		 * confirmed their email should be told that, not sent down a
+		 * path that ends in the same place.
+		 *
+		 * Before the daily cap on purpose. A refusal from here means no
+		 * number was seen, and charging somebody a lookup for a number
+		 * they were not shown is taking something for nothing.
+		 *
+		 * Return a WP_Error to refuse, carrying a sentence written for
+		 * the person who will read it and a code the app can act on.
+		 * Return null to say nothing.
+		 *
+		 * @since 1.6.0
+		 * @param null|WP_Error $veto    Refusal so far.
+		 * @param int           $post_id Profile or job being asked about.
+		 * @param int           $user_id Who is asking.
+		 */
+		$veto = apply_filters( 'kaamase_contact_veto', null, (int) $post_id, $user_id );
+
+		if ( is_wp_error( $veto ) ) {
+			return $veto;
+		}
+
 		// Daily cap.
 		if ( ! kaamase_contact_quota_left( $user_id ) ) {
 			/*
@@ -381,6 +419,55 @@ if ( ! function_exists( 'kaamase_contact_quota_key' ) ) {
 		 * quota that had reset in the middle of the night.
 		 */
 		return 'kaamase_reveals_' . absint( $user_id ) . '_' . kaamase_rate_day();
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_unmetered' ) ) {
+	/**
+	 * Whether this account has no daily limit at all.
+	 *
+	 * The allowance layer says "not metered" by answering PHP_INT_MAX,
+	 * which is true and also unprintable. Staff and field agents come
+	 * back that way.
+	 *
+	 * The LIMIT is what gets asked about, never what is left. What is
+	 * left has already had today's lookups taken off it, so it stops
+	 * equalling the sentinel the moment somebody uses the page, and a
+	 * test against it would work exactly until it mattered.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return bool
+	 */
+	function kaamase_contact_unmetered( $user_id ) {
+		return kaamase_contact_daily_limit( $user_id ) >= PHP_INT_MAX;
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_quota_wire' ) ) {
+	/**
+	 * The lookups left, as a number that survives the journey.
+	 *
+	 * JSON carries integers, JavaScript reads them as doubles, and
+	 * anything above 9,007,199,254,740,991 loses precision on the way
+	 * in. PHP_INT_MAX minus today's count is well past that, so an
+	 * unmetered account was sending the app a number it could not hold
+	 * and the app was displaying whatever came out of the rounding.
+	 *
+	 * Two things travel now: quota_unlimited, which is the truth, and
+	 * this, which is a figure old builds can still print. A client that
+	 * reads the flag ignores this entirely. One that does not gets a
+	 * large, readable, harmless number instead of arithmetic noise.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return int
+	 */
+	function kaamase_contact_quota_wire( $user_id ) {
+
+		$left = kaamase_contact_quota_left( $user_id );
+
+		return kaamase_contact_unmetered( $user_id ) ? 9999 : (int) $left;
 	}
 }
 
@@ -626,7 +713,29 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 		$channel = kaamase_contact_channel( $post_id );
 		$number  = $channel['number'];
-		$name    = get_the_title( $post_id );
+
+		/*
+		 * The stored name, not the displayed one.
+		 *
+		 * get_the_title() runs the the_title filter, and verified-mark.php
+		 * hooks that to append the tick as markup whenever the title being
+		 * asked for belongs to the profile currently being viewed. This
+		 * block is printed by the_content on that very profile, so every
+		 * condition of that filter is met and the name arrives carrying a
+		 * span and an svg inside it.
+		 *
+		 * Escaping it then does exactly what escaping is for and prints
+		 * the markup as words, which is the tag soup that appeared in the
+		 * heading and in the sentence below. Unescaping it instead would
+		 * be the wrong repair: a name is user supplied, and it would put
+		 * whatever somebody typed into their profile straight into the
+		 * page.
+		 *
+		 * So the raw title is asked for. The tick still renders where it
+		 * is meant to, in the page heading the theme prints, and this
+		 * block gets a plain name it can safely escape.
+		 */
+		$name = (string) get_post_field( 'post_title', $post_id, 'raw' );
 
 		ob_start();
 		?>
@@ -674,13 +783,38 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 			<p class="ka-small ka-mute ka-mt-4">
 				<?php
-				printf(
-					esc_html(
-						/* translators: %s: number of lookups left today */
-						_n( '%s lookup left today.', '%s lookups left today.', kaamase_contact_quota_left( $user_id ), 'kaamase-core' )
-					),
-					esc_html( number_format_i18n( kaamase_contact_quota_left( $user_id ) ) )
-				);
+				/*
+				 * An account that is not metered is told so, rather than
+				 * counted.
+				 *
+				 * Staff and field agents come back from the allowance
+				 * layer as PHP_INT_MAX, which is how that layer says "no
+				 * limit". Subtracting today's lookups from it and running
+				 * the result through number_format_i18n printed
+				 * 9,223,372,036,854,775,806 lookups left today on the
+				 * screen, which is not a number anybody can read and is
+				 * not a promise anybody should make.
+				 *
+				 * Asked through kaamase_contact_unmetered(), which is the
+				 * one place that knows what the sentinel means, and is
+				 * the same test the app is answered with.
+				 */
+				if ( kaamase_contact_unmetered( $user_id ) ) {
+
+					esc_html_e( 'This account has no daily limit.', 'kaamase-core' );
+
+				} else {
+
+					$left = kaamase_contact_quota_left( $user_id );
+
+					printf(
+						esc_html(
+							/* translators: %s: number of lookups left today */
+							_n( '%s lookup left today.', '%s lookups left today.', $left, 'kaamase-core' )
+						),
+						esc_html( number_format_i18n( $left ) )
+					);
+				}
 				?>
 			</p>
 
