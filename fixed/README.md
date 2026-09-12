@@ -72,6 +72,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/saved.php` | `wp-content/plugins/kaamase-core/includes/saved.php` |
 | `fixed/kaamase-core/includes/apple-signin.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/account-password.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/account-providers.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/services.php` | `wp-content/plugins/kaamase-core/includes/services.php` |
 | `fixed/kaamase/single-kaamase_job.php` | `wp-content/themes/kaamase/single-kaamase_job.php` |
 | `fixed/kaamase-core/includes/app-version.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
@@ -2858,14 +2859,139 @@ That wording is load-bearing. Somebody who has just signed in with Apple and is
 then asked to type an email will otherwise conclude the sign-in failed and start
 over, which is the one thing that cannot help them.
 
-### Still outstanding
+### The prerequisite this created, since settled
 
 Mail to a `privaterelay.appleid.com` address bounces until the sending domain is
 registered under **Apple Developer → Certificates, Identifiers & Profiles → the
 App ID → Sign in with Apple → Configure → Email Communication**. On the token
 path that never mattered, because those accounts are confirmed on the spot and no
 mail is sent. On this path the confirmation email is the whole mechanism, so for
-anybody who chose **Hide My Email** it is now a prerequisite, not a nice to have.
+anybody who chose **Hide My Email** it became a prerequisite rather than a nice to
+have. The domain is now registered and SPF verified.
+
+### The four outcomes when Apple sends no address
+
+Worth having in one place, because only two of them were ever obvious.
+
+1. **The Apple id is known.** Matched on `kaamase_apple_sub`, signed in, nothing
+   asked. This is the ordinary case for everybody who has used the app before.
+2. **The Apple id is unknown and the token carries a verified address that
+   matches an account.** Joined to that account by address. Deliberate, and the
+   same rule Google has always followed.
+3. **The Apple id is unknown and the token carries an address nobody holds.** A
+   new account, confirmed on the spot, no mail sent.
+4. **The Apple id is unknown and there is no address at all.** The completion
+   form asks for one. The account is made unconfirmed exactly like a registration,
+   and section 52 above is entirely about this case.
+
+Rows 2 and 4 each had a gap that could not be closed from inside the sign in
+routes, and both are closed by section 53.
+
+## 53. Connecting Apple and Google to an account that already exists
+
+`account-providers.php` is a new file. It adds six routes and changes nothing that
+was already there.
+
+### The two gaps
+
+Both come from one cause: a provider could only ever be joined to an account at
+the moment the account was made.
+
+**Somebody quietly ends up with two accounts.** They register with a password
+using `raj@gmail.com`, then tap Sign in with Google on a new phone. If Google
+hands over the same address the two meet. If it hands over a different one — a
+work address, or nothing at all, which is what Apple does on every authorisation
+after the first — they get a second account with an empty profile and none of
+their saved work, and nobody is told, because from the platform's side nothing
+went wrong.
+
+**Somebody is stuck behind an address they cannot use.** Finishing an Apple sign
+in, they type an address that already belongs to their own older account. They are
+refused, correctly and vaguely, and there is nowhere to go from there.
+
+Connecting answers both, and it is the same act each time: prove you hold the
+provider account while already signed in here, and the two are joined.
+
+### The routes
+
+```
+GET  /me/sign-in              what the account screen draws
+POST /me/apple/connect        { id_token }
+POST /me/apple/disconnect
+POST /me/google/connect       { id_token }
+POST /me/google/disconnect
+POST /me/email                { email }   replace an unconfirmed address
+```
+
+Every one requires a signed-in caller. All five provider routes answer with the
+same `/me/sign-in` body, so the app never has to make a second call to redraw.
+
+`since` is a unix timestamp, matching `expires_at` elsewhere in the API rather
+than introducing a date string that would need a timezone decided for it.
+`available` says whether the provider is switched on for the site at all, so the
+screen knows not to draw a Connect button it cannot honour. `private_email` is
+sent for Apple only, and only while connected — Google has no equivalent, and
+sending `false` there would read as Google having said something it never said.
+
+### Why the token is verified in full
+
+Being signed in proves who is asking. It proves nothing about which Apple account
+they are claiming. So connect runs the identical verification the sign in route
+runs — signature, issuer, audience, expiry — with no shortcut for a caller holding
+a session. A route that took a provider id on trust from a signed-in caller would
+let anybody attach anybody else's identity to their own account and then sign in
+as them.
+
+A provider id already held by a different account is refused with **409**. Already
+held by *this* account is a success, not an error: a second tap, a retry after a
+dropped reply, or two phones at once are none of them mistakes.
+
+### Why nothing here touches the address
+
+Connecting writes one thing: the provider's account id. It never reads the address
+out of the token, never writes it to the account, and never marks the account
+confirmed. Marking an account confirmed because a provider token arrived is
+exactly the hole closed in section 52, and it is not reopened here.
+
+### Why the last way in will not come off
+
+Disconnecting the only thing you can sign in with locks you out, and the app
+cannot know it has happened until the person is already outside. So the count is
+kept on this side — a password the person **chose**, plus every provider currently
+connected — and `kaamase_provider_can_disconnect()` is the one guard all of it
+goes through. Counting across every provider rather than against the password
+alone means the guard still holds the day a third one is added.
+
+Disconnecting deliberately does not require the provider to be switched on.
+Turning Apple off in wp-admin must not trap the accounts already holding it.
+
+### Changing an address that was typed wrong
+
+Only while it is unconfirmed. An account created with a mistyped address is
+invisible and cannot be mended from the app: *send the link again* resends to the
+same wrong address, and connecting a provider does not help. `POST /me/email`
+replaces it and sends a fresh link, which also invalidates any link already sent
+to the wrong address.
+
+The previous address is **not** notified. WordPress does that by default, and it is
+right for an account whose owner proved that address — but this one is unconfirmed,
+was very probably a typing mistake, and may belong to a stranger who should not be
+told anything about an account that is not theirs. `send_email_change_email` is
+filtered off for the one call.
+
+Changing a **confirmed** address is out of scope, and refused with 409.
+
+### Two things the brief got wrong, both harmless
+
+`wp_update_user()` was avoided on the grounds that `profile_update` revokes every
+token. It does not: `kaamase_revoke_tokens_on_password_change()` is the only
+listener in the plugin and it returns early unless `user_pass` actually moved. So
+`/me/email` uses `wp_update_user()`, which gets cache invalidation and the
+authoritative uniqueness check for free. The caution was right; the reason was not.
+
+The taken-address reply reuses the `kaamase_invalid_registration` code so existing
+app handling works, but not the registration wording — *"We could not create an
+account"* is wrong for somebody who plainly has one. It is equally vague.
 
 ## Not changed, and why
 
