@@ -488,6 +488,36 @@ note is there to stop the next person quietly correcting it into something wrong
 `kaamase-core-nag.po` (or your chosen locale code) in the same folder, and Poedit
 writes the `.mo` WordPress actually loads.
 
+### Rebuilt, because the code moved and the template did not
+
+`kaamase-core.pot` was last built on **1 September** and everything added since
+was missing from it — Sign in with Apple, Google sign in, setting a password, and
+connecting providers were all absent, so none of it could have been translated.
+
+Rebuilt from the plugin as it now ships: **1,556 strings**, up from 1,460. The 102
+newly captured strings come from `number-requests.php` (39), `google-signin.php`
+(25), `account-password.php` (15), `apple-signin.php` (15),
+`account-providers.php` (11) and a handful elsewhere.
+
+**Six entries were wrong before and could never have worked.** They are the long
+email bodies written as double-quoted PHP strings, where `\$` escapes the dollar
+so it is not read as a variable. The old template stored the backslash, so the
+msgid read `%1\$s` while WordPress looks up `%1$s` at run time. A translator could
+have translated those six perfectly and not one word would ever have appeared.
+They now match what the code actually asks for. Nothing was lost in the rebuild —
+every one of the six has a corrected entry.
+
+**Translator comments are now carried through**, 101 of them. These are the
+`/* translators: %1$s: district */` notes already written through the codebase,
+and they were absent from the old template. Without them somebody translating
+`%1$s %2$s needed in %3$s` is guessing which placeholder is the trade and which
+is the town, and word order is exactly what changes between English, Nagamese and
+Hindi.
+
+**Keep it in step.** Any change that adds or edits a user-facing string needs this
+file rebuilt, or the new wording silently cannot be translated. It is a generated
+file — never hand-edit it.
+
 ## 15. `kaamase-core/includes/rest-auth.php` — sign a lost phone out
 
 ⚠️ *2nd revision — copy again.*
