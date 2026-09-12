@@ -539,6 +539,37 @@ if ( ! function_exists( 'kaamase_apple_verify' ) ) {
 			);
 		}
 
+		/*
+		 * And how old it is, which is the check that actually bounds this.
+		 *
+		 * Apple sets exp a full day ahead and the app sends no nonce, so
+		 * expiry alone leaves a token good for twenty four hours to
+		 * anybody who obtains one — and a token is a whole session here,
+		 * not a step towards one. iat is when Apple minted it, so bounding
+		 * that gives most of what a nonce would give while needing nothing
+		 * from the app.
+		 *
+		 * Half an hour, rather than the seconds a sign in really takes,
+		 * because the completion form sends this same token back after
+		 * somebody has typed a name, district, trade and phone number on a
+		 * phone, on a connection that may be poor, possibly having been
+		 * interrupted. Refusing that is recoverable — the answer says to
+		 * tap the button again — but it should stay rare.
+		 *
+		 * Checked only when Apple sends it, which it always does. If that
+		 * ever changes this returns quietly to expiry alone instead of
+		 * refusing every sign in on the platform.
+		 */
+		$issued = isset( $claims['iat'] ) ? (int) $claims['iat'] : 0;
+
+		if ( $issued && $issued < ( time() - ( 30 * MINUTE_IN_SECONDS ) ) ) {
+			return new WP_Error(
+				'kaamase_apple_expired',
+				__( 'That sign in took too long. Please tap the Apple button again.', 'kaamase-core' ),
+				array( 'status' => 401 )
+			);
+		}
+
 		if ( empty( $claims['sub'] ) ) {
 			return $fail;
 		}

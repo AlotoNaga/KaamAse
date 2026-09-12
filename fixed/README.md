@@ -2993,6 +2993,38 @@ The taken-address reply reuses the `kaamase_invalid_registration` code so existi
 app handling works, but not the registration wording — *"We could not create an
 account"* is wrong for somebody who plainly has one. It is equally vague.
 
+## 54. How long a stolen Apple token stays useful
+
+One check added to `kaamase_apple_verify()`. Nothing else in that file moved.
+
+Apple sets `exp` a full day ahead — the live logs show `exp_in=86399s` — and the
+app sends no nonce. Expiry alone therefore left an identity token good for
+**twenty four hours** to anybody who obtained one, and a token is a whole session
+here, not a step towards one. Anything that could read one in transit or out of a
+log had a day to use it.
+
+`iat` is when Apple minted the token, so bounding that closes the window without
+needing anything from the app. **Thirty minutes**, rather than the seconds a sign
+in really takes, because `/auth/apple/complete` sends the same token back after
+somebody has typed a name, district, trade and phone number on a phone, on a
+connection that may be poor, possibly having been interrupted. That is the case
+the window is sized for, not the sign in itself.
+
+Being refused is recoverable: the answer is the existing `kaamase_apple_expired`,
+whose message already says to tap the Apple button again, so the app needs no
+change to handle it.
+
+The check runs only when Apple sends `iat`, which it always does. If that ever
+changes this returns quietly to expiry alone rather than refusing every sign in on
+the platform. A **future** `iat` is deliberately not refused either — shared
+hosting clocks drift, the signature is what proves the token genuine, and
+rejecting on a fast server clock would lock people out for a fault that is ours.
+
+Google was left alone. Its tokens expire in an hour rather than a day, twenty four
+times tighter to begin with, and its website flow deliberately holds a token in a
+transient for fifteen minutes between the redirect and the finish, so the same
+bound would need sizing around a different constraint for a much smaller gain.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
