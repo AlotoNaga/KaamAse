@@ -73,6 +73,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/apple-signin.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/account-password.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/account-providers.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/insights.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/services.php` | `wp-content/plugins/kaamase-core/includes/services.php` |
 | `fixed/kaamase/single-kaamase_job.php` | `wp-content/themes/kaamase/single-kaamase_job.php` |
 | `fixed/kaamase-core/includes/app-version.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
@@ -3054,6 +3055,87 @@ Google was left alone. Its tokens expire in an hour rather than a day, twenty fo
 times tighter to begin with, and its website flow deliberately holds a token in a
 transient for fifteen minutes between the redirect and the finish, so the same
 bound would need sizing around a different constraint for a much smaller gain.
+
+## 55. Insights: the shape of the platform, and how to reach anybody on it
+
+`insights.php` is a new file, on the Kaam Ase menu. Nothing existing is edited.
+
+### The gap
+
+Six hundred people had registered and never confirmed. The only screen that
+showed them was `not-confirmed.php`, which has no search, no filter, no date
+range, and no way to get anything out of it. Ringing six hundred people from a
+paginated HTML table is not work anybody can actually do. Neither is answering
+"are we growing, and is it getting better?" by counting rows.
+
+### What it shows
+
+**The numbers.** Accounts, confirmed, not confirmed, the confirmation rate, and
+the split between workers, teams and employers. Plain figures, not charts — a
+total is one value and a chart of one value is decoration.
+
+**How people signed up** — email and password, Google, or Apple. This is the
+number that answers whether the social sign-in work actually fixed the wrong
+address problem, because a Google account is confirmed on the spot and cannot
+mistype anything.
+
+**Who signed up each day for the last 30**, stacked by whether they confirmed. If
+the confirmation rate is improving, this is where it shows. The same figures sit
+in a table underneath the chart, so the chart is never the only way to read them.
+
+**Where they are**, busiest district first, with how many of each confirmed.
+
+### Getting them out
+
+The list filters on search (name, email or phone), confirmed or not, worker or
+employer, district, how they signed up, and a date range. Then:
+
+- **A spreadsheet** of every match, not just the page — name, phone, phone in
+  international form, email, district, confirmed, sign-up method, date.
+- **A box of phone numbers** for the current page, already carrying `+91`, which
+  is the form WhatsApp and every broadcast tool wants. Deliberately the page and
+  not the whole match: pasting six hundred numbers into a broadcast list is not
+  something to do by accident, and the spreadsheet is the right tool when that
+  really is the job.
+
+### Why this screen is locked harder than the rest of the menu
+
+`not-confirmed.php` makes the argument and it holds here: a list of everybody's
+number sitting in wp-admin is a liability. Two rules follow.
+
+Every number is read through `kaamase_field()`, never the raw meta, so the
+privacy rule in `fields.php` stays the only gate there is. If those rights are
+narrowed this screen empties out on its own.
+
+And the capability is **`manage_options`**, not the `edit_others_kaamase_workers`
+the rest of the Kaam Ase menu runs on. Somebody trusted to edit a worker's trade
+is not automatically somebody trusted to export every phone number on the
+platform. The export checks it again on its own and carries a nonce, because a
+menu that hides a link is not a permission check.
+
+### Two details that would otherwise be quietly wrong
+
+**The day is worked out in the site's timezone.** WordPress stores
+`user_registered` in UTC. Grouped by UTC day, everybody who signs up after half
+past five in the evening lands on tomorrow — which makes "how many today" wrong
+by exactly the amount that matters. The offset comes from `wp_timezone()` rather
+than a hardcoded `+05:30`, so it follows the setting rather than assuming it.
+
+**One profile per account.** Somebody holding both a worker and an employer
+profile is one row, not two. Done as a derived table picking the lowest post id
+rather than a `GROUP BY` on the outer query, so it stays correct under
+`ONLY_FULL_GROUP_BY`. An account with no profile at all is left out entirely,
+which keeps staff accounts off the list without this file naming a role.
+
+### The chart's two colours were checked, not chosen
+
+Blue `#2a78d6` and orange `#eb6834`. The whole point of that chart is telling
+confirmed from not confirmed apart, so the pair was run through a contrast and
+colour-blindness check rather than picked by eye: worst-case separation 24.7 for
+the commonest colour blindness and 33.6 for normal vision, both well clear of
+their floors, and both above 3:1 against the background. There is a legend, the
+figures are in a table underneath, and the bars carry hover labels, so the colour
+is never the only thing carrying the meaning.
 
 ## Not changed, and why
 
