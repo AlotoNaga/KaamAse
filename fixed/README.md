@@ -3127,6 +3127,49 @@ rather than a `GROUP BY` on the outer query, so it stays correct under
 `ONLY_FULL_GROUP_BY`. An account with no profile at all is left out entirely,
 which keeps staff accounts off the list without this file naming a role.
 
+### Sending the confirmation email again, in batches
+
+At the bottom of the screen. This is the part that actually clears the backlog,
+and what it does is not what it first looks like.
+
+**It is not a reminder about the old email.** `kaamase_send_verification()` gives
+each link seven days, and most of the six hundred are older than that, so the
+link they were originally sent is dead. A reminder would send them to an expired
+page, which is worse than saying nothing. This calls the same function again:
+a new token is written, the old one is killed, and a fresh link goes out.
+
+**It exists because the self-service route cannot reach these people.** Pressing
+"Send it again" on the dashboard needs an active session. Somebody who registered
+on a borrowed phone a fortnight ago has no session anywhere, and there is no
+signed-out way to ask for a new link. Without this, the only people who could
+rescue those accounts were the people who already could not be reached.
+
+**A batch at a click, on purpose.** Six hundred messages handed to a shared mail
+server in one breath is how a domain's sending reputation gets destroyed, and one
+PHP request could not finish them anyway. The batch size is the rate limit.
+
+**It stops dead on the first refusal.** If the mail server rejects one, the loop
+breaks, that person is *not* marked as done, and the screen says so. The useful
+outcome of a sending limit being hit is finding out after one failure with
+everybody else still queued — not after six hundred silent ones with every
+account marked as handled and nothing actually sent.
+
+Three things stop it mailing the wrong people:
+
+1. **Unconfirmed is forced, not read.** The screen's own state filter cannot widen
+   this. There is no reading of the job in which somebody who already confirmed
+   should be asked to confirm again.
+2. **Seven days between messages to the same person.** Clicking twice, or working
+   through the districts and losing your place, cannot mail anybody twice in a
+   day. Recorded as `kaamase_confirm_nudge_at` on the account.
+3. **The ten minute self-service lock is set too**, the same one `/auth/resend`
+   uses, so somebody who presses "Send it again" just after receiving this does
+   not trigger a second.
+
+The rest of the filter bar still applies, so a batch can be one district at a
+time — which is the sensible way to do it, since it matches how the calls would
+be made anyway.
+
 ### The chart's two colours were checked, not chosen
 
 Blue `#2a78d6` and orange `#eb6834`. The whole point of that chart is telling

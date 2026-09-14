@@ -627,7 +627,304 @@ if ( ! function_exists( 'kaamase_insights_wa' ) ) {
 
 
 /* ==========================================================================
-   6. THE SCREEN
+   6. SENDING THE CONFIRMATION EMAIL AGAIN
+
+   The link somebody never opened is also, by now, very likely expired:
+   kaamase_send_verification() gives each one seven days, and most of
+   these accounts are older than that. So this is not a reminder about
+   the old email. It writes a fresh token, kills the old one, and sends
+   a new link — the same call the person would make themselves by
+   pressing "Send it again" on their own dashboard.
+
+   That is the whole reason this exists rather than a nudge by hand.
+   Pressing that button needs them to be signed in, and somebody who
+   registered on a borrowed phone a fortnight ago is not signed in
+   anywhere. There is no signed-out route to a new link, so without this
+   the only people who can rescue those accounts are the people who
+   already cannot reach them.
+
+   In batches, deliberately
+   ------------------------
+   Six hundred emails in one request would time out, and would hand a
+   shared host six hundred messages in one breath, which is how a
+   domain's sending reputation gets ruined. A batch a click is slower
+   and is also the rate limit.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_insights_nudge_cooldown' ) ) {
+	/**
+	 * How long before the same account may be sent another one.
+	 *
+	 * Long enough that clicking the button twice, or working through the
+	 * districts one at a time and losing your place, cannot mail the same
+	 * person twice in a day.
+	 *
+	 * @since 1.8.0
+	 * @return int Seconds.
+	 */
+	function kaamase_insights_nudge_cooldown() {
+		return 7 * DAY_IN_SECONDS;
+	}
+}
+
+if ( ! function_exists( 'kaamase_insights_nudge_where' ) ) {
+	/**
+	 * The filter bar, narrowed to who may be sent one right now.
+	 *
+	 * Unconfirmed is forced rather than read, whatever the screen's own
+	 * state filter says. There is no reading of this where somebody who
+	 * has already confirmed should be asked to confirm again.
+	 *
+	 * @since 1.8.0
+	 * @param array $f Filters.
+	 * @return string
+	 */
+	function kaamase_insights_nudge_where( $f ) {
+
+		global $wpdb;
+
+		$f['state'] = 'unconfirmed';
+
+		return kaamase_insights_where( $f ) . $wpdb->prepare(
+			' AND NOT EXISTS (
+				SELECT 1 FROM ' . $wpdb->usermeta . ' nm
+				WHERE nm.user_id = u.ID
+				  AND nm.meta_key = %s
+				  AND nm.meta_value > %d
+			)',
+			'kaamase_confirm_nudge_at',
+			time() - kaamase_insights_nudge_cooldown()
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_insights_nudge_waiting' ) ) {
+	/**
+	 * How many match the filters and have not been sent one lately.
+	 *
+	 * @since 1.8.0
+	 * @param array $f Filters.
+	 * @return int
+	 */
+	function kaamase_insights_nudge_waiting( $f ) {
+
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+		return (int) $wpdb->get_var( 'SELECT COUNT(*) ' . kaamase_insights_from_sql() . kaamase_insights_nudge_where( $f ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_insights_nudge_run' ) ) {
+	/**
+	 * Send the next batch.
+	 *
+	 * Stops dead on the first refusal from the mail server rather than
+	 * carrying on. If the host has stopped accepting mail, the useful
+	 * outcome is finding that out after one failure with everybody else
+	 * still queued, not after six hundred silent ones with every account
+	 * marked as done.
+	 *
+	 * @since 1.8.0
+	 * @return void
+	 */
+	function kaamase_insights_nudge_run() {
+
+		if ( ! current_user_can( KAAMASE_INSIGHTS_CAP ) ) {
+			wp_die( esc_html__( 'You cannot do that.', 'kaamase-core' ), '', array( 'response' => 403 ) );
+		}
+
+		check_admin_referer( 'kaamase_insights_nudge' );
+
+		$f     = kaamase_insights_filters();
+		$size  = isset( $_POST['batch'] ) ? absint( wp_unslash( $_POST['batch'] ) ) : 50;
+		$size  = max( 1, min( 100, $size ) );
+		$sent  = 0;
+		$stuck = 0;
+
+		if ( ! function_exists( 'kaamase_send_verification' ) ) {
+			wp_die( esc_html__( 'The registration module is not loaded, so nothing was sent.', 'kaamase-core' ) );
+		}
+
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+		$ids = $wpdb->get_col(
+			'SELECT u.ID ' . kaamase_insights_from_sql() . kaamase_insights_nudge_where( $f )
+			. $wpdb->prepare( ' ORDER BY u.user_registered DESC LIMIT %d', $size )
+		);
+
+		foreach ( (array) $ids as $id ) {
+
+			$id = (int) $id;
+
+			if ( ! kaamase_send_verification( $id ) ) {
+				$stuck = 1;
+				break;
+			}
+
+			/*
+			 * Only once it actually went. Marked before sending, a mail
+			 * server having a bad minute would quietly burn through the
+			 * whole list leaving nobody to retry.
+			 */
+			update_user_meta( $id, 'kaamase_confirm_nudge_at', time() );
+
+			/*
+			 * The same ten minute lock the self service button sets, so
+			 * somebody who presses "Send it again" right after getting
+			 * this one does not set off a second.
+			 */
+			set_transient( 'kaamase_resend_' . $id, 1, 10 * MINUTE_IN_SECONDS );
+
+			$sent++;
+		}
+
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'ka_sent'  => $sent,
+					'ka_stuck' => $stuck,
+				),
+				wp_get_referer() ? wp_get_referer() : admin_url( 'admin.php?page=kaamase-insights' )
+			)
+		);
+		exit;
+	}
+}
+add_action( 'admin_post_kaamase_insights_nudge', 'kaamase_insights_nudge_run' );
+
+if ( ! function_exists( 'kaamase_insights_nudge_box' ) ) {
+	/**
+	 * The button, and what it is about to do.
+	 *
+	 * @since 1.8.0
+	 * @param array $f Filters.
+	 * @return void
+	 */
+	function kaamase_insights_nudge_box( $f ) {
+
+		$waiting = kaamase_insights_nudge_waiting( $f );
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$sent  = isset( $_GET['ka_sent'] ) ? absint( wp_unslash( $_GET['ka_sent'] ) ) : -1;
+		$stuck = ! empty( $_GET['ka_stuck'] );
+		// phpcs:enable
+
+		echo '<h2 id="ka-send">' . esc_html__( 'Send the confirmation email again', 'kaamase-core' ) . '</h2>';
+
+		if ( $sent > -1 ) {
+			printf(
+				'<div class="notice notice-%1$s inline"><p>%2$s</p></div>',
+				$stuck ? 'error' : 'success',
+				esc_html(
+					$stuck
+						? sprintf(
+							/* translators: %s: how many were sent before it stopped */
+							__( 'Stopped after %s. The mail server refused the next one, so nobody else was marked as done. Try again in a few minutes, and if it keeps stopping the sending limit has been reached for now.', 'kaamase-core' ),
+							number_format_i18n( $sent )
+						)
+						: sprintf(
+							/* translators: %s: how many were sent */
+							__( 'Sent %s.', 'kaamase-core' ),
+							number_format_i18n( $sent )
+						)
+				)
+			);
+		}
+
+		?>
+		<div class="ka-ins__send">
+
+			<p>
+				<?php
+				esc_html_e(
+					'This writes a new link for each person and emails it, exactly as pressing "Send it again" on their own dashboard would. It is not a reminder about the old email: those links last seven days, so for most of this list the one they were sent has already expired and a reminder would send them to a dead page.',
+					'kaamase-core'
+				);
+				?>
+			</p>
+
+			<p>
+				<?php
+				printf(
+					/* translators: %s: how many people are waiting */
+					esc_html__( 'Ready to send to: %s', 'kaamase-core' ),
+					'<strong>' . esc_html( number_format_i18n( $waiting ) ) . '</strong>'
+				);
+				?>
+				<br>
+				<span class="description">
+					<?php
+					esc_html_e(
+						'Unconfirmed accounts matching the filters above, minus anybody already sent one in the last seven days. Confirmed accounts are never included, whatever the filters say.',
+						'kaamase-core'
+					);
+					?>
+				</span>
+			</p>
+
+			<?php if ( $waiting < 1 ) : ?>
+				<p><em><?php esc_html_e( 'Nobody is waiting. Either everybody matching has been sent one recently, or the filters match nobody unconfirmed.', 'kaamase-core' ); ?></em></p>
+			<?php else : ?>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"
+					onsubmit="return confirm( this.dataset.warn );"
+					data-warn="<?php esc_attr_e( 'This sends a real email to real people and cannot be taken back. Continue?', 'kaamase-core' ); ?>">
+
+					<?php wp_nonce_field( 'kaamase_insights_nudge' ); ?>
+					<input type="hidden" name="action" value="kaamase_insights_nudge">
+
+					<?php
+					// The filters travel with it, so the batch is the list on screen.
+					foreach ( array(
+						's'        => $f['search'],
+						'kind'     => $f['kind'],
+						'district' => $f['district'],
+						'method'   => $f['method'],
+						'from'     => $f['from'],
+						'to'       => $f['to'],
+					) as $key => $value ) {
+						if ( '' !== $value ) {
+							printf(
+								'<input type="hidden" name="%s" value="%s">',
+								esc_attr( $key ),
+								esc_attr( $value )
+							);
+						}
+					}
+					?>
+
+					<label for="ka-batch"><?php esc_html_e( 'How many this time', 'kaamase-core' ); ?></label>
+					<select name="batch" id="ka-batch">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50" selected>50</option>
+						<option value="100">100</option>
+					</select>
+
+					<button type="submit" class="button button-primary">
+						<?php esc_html_e( 'Send this batch now', 'kaamase-core' ); ?>
+					</button>
+				</form>
+
+				<p class="description">
+					<?php
+					esc_html_e(
+						'A batch at a time on purpose. Six hundred messages handed to a shared mail server in one breath is how a domain stops being trusted, and one request could not finish them anyway. Press it again for the next batch.',
+						'kaamase-core'
+					);
+					?>
+				</p>
+			<?php endif; ?>
+
+		</div>
+		<?php
+	}
+}
+
+
+/* ==========================================================================
+   7. THE SCREEN
    ========================================================================== */
 
 if ( ! function_exists( 'kaamase_insights_page' ) ) {
@@ -698,6 +995,8 @@ if ( ! function_exists( 'kaamase_insights_page' ) ) {
 					?>
 				</div></div>
 			<?php endif; ?>
+
+			<?php kaamase_insights_nudge_box( $f ); ?>
 
 		</div>
 		<?php
@@ -1161,6 +1460,13 @@ if ( ! function_exists( 'kaamase_insights_styles' ) ) {
 
 		.ka-ins__yes { color: var(--ka-yes); font-weight: 600; }
 		.ka-ins__no { color: var(--ka-no); font-weight: 600; }
+
+		.ka-ins__send {
+			background: var(--ka-surface); border: 1px solid var(--ka-line);
+			border-radius: 6px; padding: 12px 16px; max-width: 720px; margin-bottom: 24px;
+		}
+		.ka-ins__send label { margin-right: 6px; }
+		.ka-ins__send select { margin-right: 8px; }
 
 		@media (prefers-color-scheme: dark) {
 			.kaamase-insights {
