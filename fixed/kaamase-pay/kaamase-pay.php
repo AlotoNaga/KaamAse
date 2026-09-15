@@ -91,6 +91,7 @@ function kaamase_pay_boot() {
 		'includes/webhook.php',
 		'includes/store-webhook.php',
 		'includes/subscribers.php',
+		'includes/notices.php',
 	);
 
 	foreach ( $files as $file ) {

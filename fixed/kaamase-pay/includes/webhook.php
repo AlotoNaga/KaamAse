@@ -133,6 +133,21 @@ function kaamase_pay_handle_webhook( $request ) {
 		case 'subscription.pending':
 			kaamase_pay_handle_failure( $payload, $event );
 			break;
+
+		/*
+		 * Money went back, so the time it bought goes back too.
+		 *
+		 * Nothing listened for this before. A refunded customer kept
+		 * every day they had paid for, which is a real hole rather than
+		 * a generous policy: the one person guaranteed to know about it
+		 * is the one who asked for the money back, and nothing stopped
+		 * them from doing it again next month.
+		 */
+		case 'payment.refunded':
+		case 'refund.created':
+		case 'refund.processed':
+			kaamase_pay_handle_refund( $payload );
+			break;
 	}
 
 	/**
@@ -296,7 +311,16 @@ function kaamase_pay_handle_renewal( $payload ) {
 		)
 	);
 
-	kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id );
+	/*
+	 * Razorpay's own end of this cycle, which is the date they will
+	 * charge on next. Preferred over counting a period ourselves because
+	 * it is the only statement of the truth that cannot drift: a month
+	 * counted here is a guess at what their billing calendar is doing,
+	 * and this is that calendar.
+	 */
+	$cycle_end = (int) ( $subscription['current_end'] ?? 0 );
+
+	kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id, 'razorpay', $cycle_end );
 }
 
 /**
@@ -427,6 +451,88 @@ function kaamase_pay_notify_failure( $user_id ) {
 		),
 		implode( "\n", $lines )
 	);
+}
+
+/**
+ * A payment was refunded.
+ *
+ * Razorpay says this three different ways depending on how the refund was
+ * made, and all three carry the payment it belongs to, so all three are
+ * accepted and the event id guard upstream stops the same one counting
+ * twice.
+ *
+ * A part refund takes nothing back. Refunding two hundred of a thousand
+ * is a correction, a goodwill gesture or a dispute over one charge, and
+ * ending somebody's month over it would turn a partial refund into a
+ * total one. It is written into the record and left there.
+ *
+ * @since 1.5.0
+ * @param array $payload Decoded payload.
+ * @return void
+ */
+function kaamase_pay_handle_refund( $payload ) {
+
+	global $wpdb;
+
+	$payment = $payload['payload']['payment']['entity'] ?? array();
+	$refund  = $payload['payload']['refund']['entity'] ?? array();
+
+	$payment_id = (string) ( $payment['id'] ?? ( $refund['payment_id'] ?? '' ) );
+
+	if ( '' === $payment_id ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$row = $wpdb->get_row(
+		$wpdb->prepare(
+			'SELECT * FROM ' . kaamase_pay_table() . ' WHERE payment_id = %s ORDER BY id DESC LIMIT 1',
+			$payment_id
+		)
+	);
+
+	/*
+	 * No row means this is not a payment that ever granted anything here.
+	 * Nothing to take back, and guessing at a user from a refund is how
+	 * the wrong person loses their access.
+	 */
+	if ( ! $row ) {
+		return;
+	}
+
+	if ( 'refunded' === $row->status ) {
+		return;
+	}
+
+	/*
+	 * Whole or part, decided on the amounts rather than the event name.
+	 * The payment entity carries what has been refunded in total, which
+	 * is the number that answers it even when a refund arrives in
+	 * instalments.
+	 */
+	$charged  = (int) ( $payment['amount'] ?? 0 );
+	$returned = (int) ( $payment['amount_refunded'] ?? ( $refund['amount'] ?? 0 ) );
+	$partial  = ( $charged > 0 && $returned > 0 && $returned < $charged );
+
+	if ( $partial ) {
+
+		kaamase_pay_update_by_id(
+			(int) $row->id,
+			array( 'note' => 'part refunded' )
+		);
+
+		return;
+	}
+
+	kaamase_pay_update_by_id(
+		(int) $row->id,
+		array(
+			'status' => 'refunded',
+			'note'   => 'refunded',
+		)
+	);
+
+	kaamase_pay_revoke_period( (int) $row->user_id, (string) $row->plan, (string) $row->period );
 }
 
 /**

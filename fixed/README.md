@@ -31,6 +31,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-pay/includes/access.php` | `wp-content/plugins/kaamase-pay/includes/access.php` |
 | `fixed/kaamase-pay/includes/account.php` | `wp-content/plugins/kaamase-pay/includes/account.php` |
 | `fixed/kaamase-pay/includes/store-webhook.php` | `wp-content/plugins/kaamase-pay/includes/store-webhook.php` |
+| `fixed/kaamase-pay/includes/notices.php` | `wp-content/plugins/kaamase-pay/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/throttle.php` | `wp-content/plugins/kaamase-core/includes/throttle.php` |
 | `fixed/kaamase-core/includes/contact.php` | `wp-content/plugins/kaamase-core/includes/contact.php` |
 | `fixed/kaamase-core/includes/rest-auth.php` | `wp-content/plugins/kaamase-core/includes/rest-auth.php` |
@@ -3179,6 +3180,111 @@ the commonest colour blindness and 33.6 for normal vision, both well clear of
 their floors, and both above 3:1 against the background. There is a legend, the
 figures are in a table underneath, and the bars carry hover labels, so the colour
 is never the only thing carrying the meaning.
+
+## 56. The subscription audit: three things money was getting wrong
+
+Four files in `kaamase-pay`, one of them new. Found by reading the payment
+plugin end to end rather than by anybody reporting it, which is the point: all
+three are the kind that a customer notices before you do.
+
+One finding from the same audit — a failed card being silent — turned out to be
+**already fixed**, so nothing was done to it.
+
+### A paying customer could lose access for a day
+
+`kaamase_pay_days()` handed out a flat **30 days** for monthly and **365** for
+yearly. Razorpay bills on the **calendar month**: the 15th of January, the 15th
+of February, the 15th of March. In a 31 day month the thirty days ran out on the
+14th and the next charge did not arrive until the 15th, so somebody who was
+paying had a day with no allowance. Yearly did the same across a leap year.
+
+It was not only Razorpay. Apple and Google renewals come through the same
+`kaamase_pay_grant()`, and a store subscription is not reliably a month at all —
+it can be a trial, a period the store extended while retrying a card, or an
+upgrade mid-cycle. Thirty days was a guess against every one of those.
+
+Three changes, in order of authority:
+
+1. **The provider's own cycle end is used when it sends one.** Razorpay puts
+   `current_end` on every `subscription.charged`; RevenueCat puts
+   `expiration_at_ms` on every store event. Both were being **thrown away** —
+   neither string appeared anywhere in the plugin. They are the billing
+   calendar rather than a guess at it, so they win.
+2. **Failing that, whole calendar months.** PHP's own month arithmetic could not
+   be used directly: `31 January +1 month` is **3 March**, because February has
+   no 31st, which would have handed out three free days every time a long month
+   rolled into a short one. `kaamase_pay_add_months()` lands on the first of the
+   target month and then clamps the day to that month's length, so 31 January
+   becomes 28 February, and 29 February becomes 28 February a year later.
+3. **Two days of grace on top.** A webhook is not instant and is retried when it
+   fails. With the expiry landing exactly on the charge date, any of that
+   lateness is a window with no access. The grace does not compound into free
+   months, because the next renewal counts from the date already held.
+
+Two guards came with it: a cycle end **in the past** is ignored rather than
+honoured, so a replayed event cannot drag a live subscriber backwards; and the
+new date is never allowed to be **shorter than what is already held**, so
+somebody who bought a year and then renewed a month keeps the year.
+
+### A refund gave the money back and kept the access
+
+`payment.refunded` was not in the webhook's event list at all. Refund somebody
+and they kept every day they had paid for. That is not a generous policy, it is
+a hole: the one person guaranteed to know about it is the one who asked for the
+money back, and nothing stopped them doing it again next month.
+
+Now handled, under all three names Razorpay uses for it, with the existing event
+id guard stopping the same refund counting twice. The row is marked refunded and
+`kaamase_pay_revoke_period()` takes the time back using the same calendar
+arithmetic that granted it — so a refunded month removes a month, and a refund
+straight after a payment lands where it started. It is floored at now, so the
+worst it can do is end access today; it can never invent a debt.
+
+**A part refund takes nothing back.** Refunding two hundred of a thousand is a
+correction or a goodwill gesture, and ending somebody's month over it would turn
+a partial refund into a total one. It is written into the record and left.
+
+### Nobody was ever told anything about money
+
+There was exactly one email in the whole payment plugin — the one that goes out
+when a card is declined, which is good and stays. Nothing else. Somebody paid
+and got a screen: no record of what they bought, no price, no date it runs to,
+and nothing at all before a plan that does not renew stopped working one
+morning.
+
+`notices.php` adds two messages and deliberately only two. Anything more is a
+mailing list, and this platform's promise to the people on it rests on not being
+one.
+
+**A receipt**, on every grant including renewals — a renewal is the charge
+somebody is most likely to have forgotten was coming. The amount is read from the
+row that was just written rather than from the plan's current price, because a
+price that went up last month is not what this person was charged.
+
+**A warning**, three days before access ends. Only for people **nobody is going
+to charge again**: warning somebody that a subscription is ending, when it is
+about to renew instead, invites them to cancel something they meant to keep.
+`kaamase_pay_renews()` is the shared answer to that, covering both a Razorpay
+subscription id and the store's own renewal flag.
+
+The reminder is marked against **the expiry date it was about**, not a yes/no
+flag, so renewing re-arms it with no code needing to remember to clear anything.
+It is marked only when the mail actually went, and the daily run stops on the
+first refusal, so a mail server having a bad morning means people are warned late
+rather than never.
+
+### Access still has no scheduled task
+
+`access.php` is deliberate about this and it is untouched: paid access is a
+**date**, so it lapses correctly on the next request whether or not any cron ran.
+The daily job added here is purely the reminder email. If it never fires, nobody
+is warned and every other part of the system behaves exactly as before.
+
+### One trap worth recording
+
+`kaamase-pay.php` loads its includes from an **explicit list**, not a `glob()`
+like `kaamase-core` does. A new file dropped into `includes/` is silently never
+loaded. `notices.php` is in the list.
 
 ## Not changed, and why
 

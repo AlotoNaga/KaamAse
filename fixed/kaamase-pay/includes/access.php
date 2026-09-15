@@ -97,6 +97,30 @@ function kaamase_pay_is_active( $user_id ) {
 }
 
 /**
+ * Whether something will charge them again on its own.
+ *
+ * A Razorpay subscription leaves its id here. A store subscription
+ * cannot, because that id is a Razorpay one, so the store webhook writes
+ * its own flag instead. Either means the same thing to everything that
+ * asks: nobody needs warning that this is about to run out, because it
+ * is not about to run out.
+ *
+ * @since 1.5.0
+ * @param int $user_id User ID.
+ * @return bool
+ */
+function kaamase_pay_renews( $user_id ) {
+
+	$user_id = (int) $user_id;
+
+	if ( '' !== (string) get_user_meta( $user_id, KAAMASE_PAY_SUB_KEY, true ) ) {
+		return true;
+	}
+
+	return (bool) get_user_meta( $user_id, KAAMASE_PAY_STORE_RENEWS_KEY, true );
+}
+
+/**
  * The plan they are on, if it is still running.
  *
  * @since 1.0.0
@@ -143,6 +167,86 @@ add_filter( 'kaamase_paid_allowance', 'kaamase_pay_allowance', 10, 3 );
    GIVING ACCESS
    ========================================================================== */
 
+if ( ! defined( 'KAAMASE_PAY_GRACE_DAYS' ) ) {
+	/**
+	 * Days of slack added to every paid period.
+	 *
+	 * A webhook is not instant. The charge happens between Razorpay and
+	 * the bank, and the message telling us about it can be minutes or
+	 * hours behind, and is retried if it fails. With the expiry landing
+	 * exactly on the charge date, any of that lateness is a window where
+	 * somebody who has paid has no access.
+	 *
+	 * Two days is far longer than any delivery delay and costs nothing:
+	 * the next renewal counts from the date already held, so the slack
+	 * does not compound into free months.
+	 */
+	define( 'KAAMASE_PAY_GRACE_DAYS', 2 );
+}
+
+/**
+ * Move a timestamp by whole calendar months, without overflowing.
+ *
+ * PHP's own month arithmetic rolls over: the 31st of January plus one
+ * month is the 3rd of March, because February has no 31st. Used on a
+ * subscription that would hand out three free days every time a long
+ * month rolled into a short one.
+ *
+ * Landing on the first of the target month and then clamping the day to
+ * that month's length gives what a person means by "a month later": the
+ * 31st of January becomes the 28th of February, and the 29th of February
+ * becomes the 28th a year later.
+ *
+ * @since 1.5.0
+ * @param int $from   Timestamp to move.
+ * @param int $months Months to add. Negative moves back.
+ * @return int
+ */
+function kaamase_pay_add_months( $from, $months ) {
+
+	$start = ( new DateTimeImmutable( '@' . (int) $from ) )->setTimezone( wp_timezone() );
+	$day   = (int) $start->format( 'j' );
+
+	// "first day of" cannot overflow, so the month lands where intended.
+	$month = $start->modify( 'first day of ' . (int) $months . ' month' );
+	$last  = (int) $month->format( 't' );
+
+	return $month
+		->setDate( (int) $month->format( 'Y' ), (int) $month->format( 'n' ), min( $day, $last ) )
+		->setTime( (int) $start->format( 'G' ), (int) $start->format( 'i' ), (int) $start->format( 's' ) )
+		->getTimestamp();
+}
+
+/**
+ * When a period bought at this moment should run to.
+ *
+ * Calendar months rather than thirty days, because that is what the
+ * customer is charged on. Razorpay bills the 15th of each month, and so
+ * do Apple and Google; thirty days runs out on the 14th in a long month,
+ * which is a day when somebody who is paying has nothing.
+ *
+ * @since 1.5.0
+ * @param int    $from   Timestamp to count from.
+ * @param string $period once, monthly, yearly or lifetime.
+ * @param array  $plan   The plan, for its own day count.
+ * @return int
+ */
+function kaamase_pay_period_end( $from, $period, $plan ) {
+
+	$from = (int) $from;
+
+	if ( 'monthly' === $period ) {
+		return kaamase_pay_add_months( $from, 1 );
+	}
+
+	if ( 'yearly' === $period ) {
+		return kaamase_pay_add_months( $from, 12 );
+	}
+
+	// A fixed span is already a fixed span: a pack of days, or a lifetime.
+	return $from + ( kaamase_pay_days( $plan, $period ) * DAY_IN_SECONDS );
+}
+
 /**
  * Extend somebody's paid access.
  *
@@ -158,9 +262,17 @@ add_filter( 'kaamase_paid_allowance', 'kaamase_pay_allowance', 10, 3 );
  * @param string $plan_id         Plan ID.
  * @param string $period          once, monthly or yearly.
  * @param string $subscription_id Razorpay subscription, when there is one.
+ * @param string $origin          Which route paid.
+ * @param int    $cycle_end       The provider's own end of this cycle, when it
+ *                                sent one. Razorpay calls it current_end and
+ *                                RevenueCat expiration_at_ms. Authoritative
+ *                                where it exists: it is the date they will
+ *                                actually charge on, including trials and
+ *                                anything the store did that no period name
+ *                                describes.
  * @return bool
  */
-function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '', $origin = 'razorpay' ) {
+function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '', $origin = 'razorpay', $cycle_end = 0 ) {
 
 	$user_id = (int) $user_id;
 	$plan    = kaamase_pay_plan( $plan_id );
@@ -169,11 +281,32 @@ function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '', 
 		return false;
 	}
 
-	$days = kaamase_pay_days( $plan, $period );
-	$from = max( time(), kaamase_pay_expires( $user_id ) );
+	$held  = kaamase_pay_expires( $user_id );
+	$from  = max( time(), $held );
+	$grace = KAAMASE_PAY_GRACE_DAYS * DAY_IN_SECONDS;
+
+	$cycle_end = (int) $cycle_end;
+
+	/*
+	 * Their date when they gave one, ours otherwise.
+	 *
+	 * A cycle end in the past is ignored rather than used. Replays and
+	 * historical events do arrive, and honouring one would move a live
+	 * subscriber's expiry backwards on the strength of an old message.
+	 */
+	$until = ( $cycle_end > time() )
+		? $cycle_end + $grace
+		: kaamase_pay_period_end( $from, $period, $plan ) + $grace;
+
+	/*
+	 * Never shorter than what they already hold. An absolute date from
+	 * the provider is about this cycle only, and somebody who bought a
+	 * year and then renewed a month must not lose the year.
+	 */
+	$until = max( $until, $held );
 
 	update_user_meta( $user_id, KAAMASE_PAY_PLAN_KEY, $plan_id );
-	update_user_meta( $user_id, KAAMASE_PAY_EXPIRES_KEY, $from + ( $days * DAY_IN_SECONDS ) );
+	update_user_meta( $user_id, KAAMASE_PAY_EXPIRES_KEY, $until );
 
 	/*
 	 * Where the money came from, recorded at the moment it arrives.
@@ -216,6 +349,64 @@ function kaamase_pay_grant( $user_id, $plan_id, $period, $subscription_id = '', 
 	do_action( 'kaamase_pay_granted', $user_id, $plan_id, $period );
 
 	return true;
+}
+
+/**
+ * Take back the access one payment bought.
+ *
+ * For a refund. The money went back, so the time it bought goes back
+ * with it, and the same calendar arithmetic that granted it is what
+ * removes it — a refunded month takes off a month, not thirty days,
+ * so a refund immediately after a payment lands where it started.
+ *
+ * Floored at now rather than allowed to go negative. Somebody refunded
+ * for last year's payment, who has paid again since, keeps the access
+ * the later payment bought; the floor means the worst this can do is end
+ * access today, never invent a debt.
+ *
+ * @since 1.5.0
+ * @param int    $user_id User ID.
+ * @param string $plan_id Plan the refunded payment was for.
+ * @param string $period  Period the refunded payment bought.
+ * @return void
+ */
+function kaamase_pay_revoke_period( $user_id, $plan_id, $period ) {
+
+	$user_id = (int) $user_id;
+	$held    = kaamase_pay_expires( $user_id );
+
+	if ( ! $user_id || $held <= 0 ) {
+		return;
+	}
+
+	$plan = kaamase_pay_plan( $plan_id );
+
+	if ( ! $plan ) {
+		return;
+	}
+
+	if ( 'monthly' === $period ) {
+		$back = kaamase_pay_add_months( $held, -1 );
+	} elseif ( 'yearly' === $period ) {
+		$back = kaamase_pay_add_months( $held, -12 );
+	} else {
+		$back = $held - ( kaamase_pay_days( $plan, $period ) * DAY_IN_SECONDS );
+	}
+
+	// The grace that was added on the way in comes off on the way out.
+	$back -= KAAMASE_PAY_GRACE_DAYS * DAY_IN_SECONDS;
+
+	update_user_meta( $user_id, KAAMASE_PAY_EXPIRES_KEY, max( time(), $back ) );
+
+	/**
+	 * Fires when access is taken back after a refund.
+	 *
+	 * @since 1.5.0
+	 * @param int    $user_id User ID.
+	 * @param string $plan_id Plan ID.
+	 * @param string $period  Period removed.
+	 */
+	do_action( 'kaamase_pay_revoked', $user_id, $plan_id, $period );
 }
 
 /**
@@ -731,8 +922,7 @@ function kaamase_pay_plan_state( $user_id ) {
 	 * its own and nothing renews, on the morning Apple charged them
 	 * again. The store webhook now writes its own flag.
 	 */
-	$store_renews = (bool) get_user_meta( $user_id, KAAMASE_PAY_STORE_RENEWS_KEY, true );
-	$renews       = ( '' !== $sub_id ) || $store_renews;
+	$renews = kaamase_pay_renews( $user_id );
 
 	$state['name']    = (string) $plan['name'];
 	$state['expires'] = $expires;

@@ -219,7 +219,24 @@ function kaamase_pay_grant_from_store( $user_id, $event, $type = '' ) {
 		? kaamase_pay_normalise_origin( isset( $event['store'] ) ? (string) $event['store'] : '' )
 		: '';
 
-	kaamase_pay_grant( $user_id, $plan_id, $period, '', $origin );
+	/*
+	 * The store's own expiry, in milliseconds, which is the only thing
+	 * that knows what Apple and Google actually did.
+	 *
+	 * A store subscription is not reliably a month. It can be a trial, a
+	 * period the store extended while a card was retried, a plan the
+	 * person upgraded mid-cycle, or a refund window. Counting a month
+	 * here would be a guess against any of those, and the guess is what
+	 * decides whether somebody who has paid can still post.
+	 *
+	 * Absent on a one off purchase, which has no expiry to send, and the
+	 * fixed span for that plan is then the right answer anyway.
+	 */
+	$cycle_end = isset( $event['expiration_at_ms'] )
+		? (int) ( (int) $event['expiration_at_ms'] / 1000 )
+		: 0;
+
+	kaamase_pay_grant( $user_id, $plan_id, $period, '', $origin, $cycle_end );
 
 	/*
 	 * Whether this one renews, recorded separately from the Razorpay
