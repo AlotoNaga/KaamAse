@@ -905,7 +905,6 @@ function kaamase_pay_plan_state( $user_id ) {
 	}
 
 	$expires = (int) kaamase_pay_expires( $user_id );
-	$sub_id  = (string) get_user_meta( $user_id, KAAMASE_PAY_SUB_KEY, true );
 	$endless = kaamase_pay_is_endless( $expires );
 	$format  = get_option( 'date_format' );
 	$origin  = kaamase_pay_user_origin( $user_id );
