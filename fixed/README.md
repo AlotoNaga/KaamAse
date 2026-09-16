@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of forty-three files taken from inside them, twelve brand new
+the patched versions of forty-six files taken from inside them, sixteen brand new
 files, plus three translation templates.
 
 Everything in `fixed/` is meant to be copied up. If a file is in there and not
@@ -82,7 +82,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/hire-claims.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/views-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
-**New folders to create** (they do not exist on your site yet):
+**Translation templates** (create the `languages/` folder if it is not there yet):
 
 | Copy this file | Into this new folder |
 | --- | --- |
@@ -3390,6 +3390,127 @@ message was accepted" and "Google has it on record."
 It reports which of four steps it reached, so "it did not work" is never the
 answer when there are four distinct reasons and three of them are settings in
 somebody else's console.
+
+## 58. Telling somebody their profile passed a round number
+
+Two files: `push.php`, which already existed and is edited rather than replaced,
+and the rebuilt `kaamase-core.pot`. **`views.php` is not touched**, and that is
+deliberate — the counting works and nothing here can put it at risk.
+
+Views have been counted since section 27 and displayed since 32. Almost nobody
+goes and looks at the number. This sends it to them instead, once, when it passes
+a figure — the thing a photo app does at a hundred likes, and it works for the
+same reason: it is news about them rather than about the platform. It is also the
+only notification on the platform that is purely good news, which is worth
+something on its own.
+
+### The figures
+
+10, 50, 100, 160, 200, 300, 400, 500, then every hundred to a thousand, every
+five hundred to five thousand, then every thousand up to fifty thousand.
+
+Close together at the start and further apart later, because that is the only
+shape that works. The first ten opens are what prove to a worker that the
+platform is doing something. By the time somebody is at five thousand, another
+hundred is not news, and a notification about it is noise.
+
+Worker profiles, teams and jobs. **Not employer pages** — telling somebody their
+own company page is popular is flattery rather than information.
+
+Openings only, never showings. The two have been counted separately since
+section 38, and 500 cards scrolled past is not the same claim as 500 people
+opening you.
+
+### Your first upload sends nothing at all
+
+This is the part worth reading twice.
+
+The site has a year of view history. A first run that simply looked at the table
+would push several hundred people at once about figures they passed months ago —
+the worst possible first impression of a notification meant to feel like good
+news, and the fastest way to teach people to turn them off.
+
+So the first run that is able to send anything writes down where everybody
+already is and sends nothing. A worker sitting on 1,000 opens gets their next
+notification at 1,500. Nobody hears about history.
+
+After that, a profile with nothing written down is genuinely new, so its first
+ten opens are a real milestone and do go out. New profiles are not quietly
+skipped by the same mechanism that protects the old ones.
+
+### Read from the table, never hooked onto the counter
+
+Counting a view sits on the critical path of somebody loading a page. Turning
+that into a `SUM` over a year of rows, on shared hosting, to find out whether
+this particular view happened to be the hundredth, would make every profile page
+slower for a notification that fires once in a thousand views.
+
+An hourly task reads the table instead. It asks which profiles and jobs were
+opened in the last two days, totals only those, and compares each against what
+its owner was last told. Two indexed queries, and on most runs nothing crossed
+anything and nothing is written.
+
+The figure is stored **on the post**, not on the account, because one employer
+can have twenty jobs and each passes a hundred on its own day. That store is also
+what survives the yearly prune in `views.php` taking old rows away: a total that
+dips back under a figure and climbs through it again cannot fire twice.
+
+### The highest figure, not every one it went past
+
+A job that goes from nothing to 250 overnight gets one notification saying 200 —
+not four saying 10, 50, 100 and 160. Four notifications in a row for one job is a
+chore, and a chore gets the app muted.
+
+### Never at night, and never in a blast
+
+Quiet hours from nine at night to eight in the morning in site time, which is now
+Asia/Kolkata. Nothing is lost by skipping those runs: the window looks back two
+days, so whatever crossed at one in the morning is still found at eight.
+
+At most 200 in one run. Anything over the cap is **left for the next hour rather
+than thrown away**, and it cannot starve anybody: what was sent is written down
+and drops out of the set, so the queue is 200 shorter every time round.
+
+### Push only, and no phone number
+
+Never email. A view count is a pleasure to see on a phone and an annoyance to
+find in an inbox, and the fallback in `kaamase_notify_user()` would have put it
+there.
+
+No phone number, and nothing about who looked. A count is not a list, and this is
+deliberately not one — section 45 is where asking for somebody's number lives,
+and it stays there.
+
+A closed job, a draft profile and an owner with no app are all written down and
+not sent. Publishing a draft later does not replay its history.
+
+### Nothing for the app to do
+
+The payload carries `type: view_milestone`, the post id and the figure, alongside
+the shapes the app already handles. No app release is needed for this, and none
+is waiting on it.
+
+### Off means off
+
+The whole feature is silent while push is switched off in settings — including
+the writing-down. A site that has never sent a notification should not be
+carrying a record of figures nobody was told, and switching push on later starts
+everybody from where they actually are on that day.
+
+### The language file
+
+`kaamase-core.pot` is rebuilt from the merged source, so it is current again:
+**94 new strings, none removed**. Six of them are these notifications; the other
+88 are the Google indexing screen (section 57) and the Insights resend work
+(section 55), both added after the template was last generated. Ready for
+Nagamese and Hindi without anything being chased down first.
+
+### What it does not do
+
+No digest, no weekly summary, no "you are trending". One sentence, one figure,
+once. The list at the top of `push.php` has one more item on it and no more than
+that, and every item on it still earns its place — which is the whole argument
+that file has been making since it was written.
 
 ## Not changed, and why
 
