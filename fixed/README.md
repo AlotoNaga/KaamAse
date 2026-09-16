@@ -75,6 +75,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/account-password.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/account-providers.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/insights.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/indexing-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/services.php` | `wp-content/plugins/kaamase-core/includes/services.php` |
 | `fixed/kaamase/single-kaamase_job.php` | `wp-content/themes/kaamase/single-kaamase_job.php` |
 | `fixed/kaamase-core/includes/app-version.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
@@ -3285,6 +3286,110 @@ is warned and every other part of the system behaves exactly as before.
 `kaamase-pay.php` loads its includes from an **explicit list**, not a `glob()`
 like `kaamase-core` does. A new file dropped into `includes/` is silently never
 loaded. `notices.php` is in the list.
+
+## 57. Telling Google about a job the minute it is posted
+
+`indexing-api.php` is a new file, on the Kaam Ase menu as **Google indexing**.
+Nothing existing is edited.
+
+### Why this one is worth having
+
+Google's Indexing API works for exactly **two** kinds of page in the world:
+`JobPosting` and `BroadcastEvent`. That restriction is the reason it is worth
+building. Almost every site that would like faster indexing is not allowed to
+use it. A job board is.
+
+Without it a new job waits for a crawler, which on a young site is days or
+weeks. A labour job posted on Monday for work on Wednesday is worthless by the
+time it is found. With it, the URL is handed to Google within minutes.
+
+It is **not** a ranking trick and does not force anything into the jobs box. It
+says "this page changed, come and look." Whether Google then shows it is decided
+on the structured data in `schema.php` and everything else it weighs.
+
+Using it for pages that are not job postings breaks Google's terms and is
+enforced when quota is requested, so this only ever sends a URL whose post type
+is `kaamase_job`. There is deliberately no filter to widen that.
+
+### The details that decide whether it works at all
+
+**The endpoint has a colon, not a slash** —
+`https://indexing.googleapis.com/v3/urlNotifications:publish`. That is how
+Google spells custom methods. The slash form returns a 404 that reads like a
+routing fault on your own site, and is the single easiest way to build this and
+have it silently send nothing.
+
+**`aud` in the signed assertion is the token endpoint, not the API.** A JWT
+naming the Indexing API as its audience is refused, and the message does not say
+why.
+
+**`exp` may be at most one hour after `iat`.** Anything longer is rejected
+outright.
+
+The assertion is RS256, signed with the service account's private key, and
+exchanged at `oauth2.googleapis.com/token` with
+`grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer`. The access token is
+cached until five minutes before it expires, so a run of twenty URLs signs in
+once rather than twenty times.
+
+### Nothing happens while somebody is waiting
+
+Posting a job must not wait on two HTTPS round trips to Google. If Google is
+slow the employer watches a spinner; if Google is down the post fails for a
+reason that has nothing to do with posting. So publishing writes one line into a
+queue and returns, and a five minute schedule empties it. Anything that fails
+stays queued and is tried again.
+
+The run **stops on the first refusal** rather than working through the rest.
+Whatever is wrong — a revoked key, a wrong server clock, the daily allowance —
+is wrong for every entry, and burning the queue against it just loses the URLs.
+
+The same URL twice is one queue entry holding whichever answer is newer. A job
+posted and closed within the hour should tell Google it is gone, not tell it
+twice that it exists and then argue.
+
+### One hook, not several
+
+`transition_post_status` sees every way a job can start or stop being public —
+published, closed, filled, expired, unpublished, binned — so nothing has to be
+chased separately and a route added later cannot be missed. `before_delete_post`
+covers a permanent delete, caught before it goes because the permalink cannot be
+built afterwards.
+
+A draft moving to pending sends nothing. It was never a page Google could have,
+and telling it to drop a URL it has never seen wastes one of two hundred.
+
+### The daily allowance
+
+Google's default is **200 publishes a day**, counted here as well as there.
+Going over returns an error for every remaining call of the day rather than
+queueing, and a queue that empties itself into a wall is worse than one that
+waits.
+
+### The private key
+
+The service account JSON holds an RSA private key. Stored with **autoload off**,
+for the same reason the Razorpay keys are (section 6): an autoloaded option is
+read into memory on every request on the site, including the ones with nothing
+to do with it. It is never printed back to the screen — the settings form shows
+only which account is connected, and an empty key box means "unchanged" rather
+than "delete", so saving the on switch cannot quietly throw the credentials away.
+
+### The test is the point of the screen
+
+Everything in this file can be correct and still send nothing, because the half
+that decides lives in a Google Cloud console and a Search Console property,
+neither of which this code can see.
+
+So the test does the real thing: it publishes your most recent **real** job URL —
+Google refuses any URL with no job posting on it, so a test against the homepage
+would prove nothing — and then calls `urlNotifications/metadata` to ask Google to
+read back what it just received. That read back is the difference between "the
+message was accepted" and "Google has it on record."
+
+It reports which of four steps it reached, so "it did not work" is never the
+answer when there are four distinct reasons and three of them are settings in
+somebody else's console.
 
 ## Not changed, and why
 
