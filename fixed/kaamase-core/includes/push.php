@@ -26,9 +26,14 @@
  *   3. Did you hire them. The question the whole rating system hangs
  *      on, delivered where it will actually be seen.
  *
+ *   4. Your profile, team or job passed a round number of opens. The
+ *      only cheerful item on this list, and the only time anybody hears
+ *      from the platform when nothing has gone wrong. At most one per
+ *      figure per profile, ever, and never at night.
+ *
  * Sent from elsewhere, through this layer:
  *
- *   4. Somebody has asked for your number, and the answer to a request
+ *   5. Somebody has asked for your number, and the answer to a request
  *      you made. Both live in number-requests.php, because the rules
  *      about who may ask belong with the feature rather than here.
  *      They go out through kaamase_notify_user() below.
@@ -50,7 +55,7 @@
  * notification is the most casual channel there is.
  *
  * @package KaamaseCore
- * @version 1.4.0
+ * @version 1.5.0
  * @since   1.3.0
  */
 
@@ -503,9 +508,536 @@ function kaamase_push_hire_questions() {
 }
 add_action( 'kaamase_daily', 'kaamase_push_hire_questions' );
 
+/* ==========================================================================
+   3. MILESTONES
+
+   Number four on the list at the top of this file, and the only one on
+   it that nobody is waiting for. It is here anyway, because a worker who
+   never hears anything assumes nothing is happening, and on this
+   platform something usually is: views are counted quietly in views.php
+   and almost nobody goes looking at the number.
+
+   So the number comes to them, once, when it passes a round figure. It
+   is the same thing a photo app does at a hundred likes and it works for
+   the same reason -- it is news about them rather than about the
+   platform. It is also the only notification here that is purely good
+   news, which is worth something on its own.
+
+   Read from the table, never hooked onto the counter
+   --------------------------------------------------
+   Counting a view sits on the critical path of somebody loading a page.
+   Turning that into a SUM over a year of rows, on shared hosting, to
+   find out whether this particular view was the hundredth, would make
+   every profile page slower for a notification that fires once in a
+   thousand views.
+
+   A schedule reads the table instead. It asks which profiles and jobs
+   were opened in the last couple of days, totals only those, and
+   compares each against what its owner was last told. views.php is not
+   touched at all, which is the point: the counting works, and nothing
+   here can break it.
+
+   Once per figure, ever
+   ---------------------
+   The figure somebody was last told is kept on the profile itself. That
+   is what stops a second notification for the same hundred, and it is
+   also what survives the yearly prune in views.php taking old rows away
+   and the total dipping back under a figure it has already passed.
+
+   The highest figure crossed, not every one of them. A job that goes
+   from nothing to two hundred overnight gets one notification saying
+   two hundred, not four saying ten, fifty, a hundred and a hundred and
+   sixty.
+
+   No phone number here either, and nothing about who looked. A count is
+   not a list, and this notification is deliberately not one.
+   ========================================================================== */
+
+/** How far back a run looks for profiles and jobs that were opened. */
+if ( ! defined( 'KAAMASE_MILESTONE_DAYS' ) ) {
+	define( 'KAAMASE_MILESTONE_DAYS', 2 );
+}
+
+/** Most notifications one run may send, whatever the table says. */
+if ( ! defined( 'KAAMASE_MILESTONE_MAX_SENDS' ) ) {
+	define( 'KAAMASE_MILESTONE_MAX_SENDS', 200 );
+}
+
+if ( ! function_exists( 'kaamase_milestone_meta' ) ) {
+	/**
+	 * Where the last figure somebody was told is kept.
+	 *
+	 * On the profile or job rather than on the account, because one
+	 * employer can have twenty jobs and each of them passes a hundred on
+	 * its own day.
+	 *
+	 * @since 1.10.0
+	 * @return string
+	 */
+	function kaamase_milestone_meta() {
+		return KAAMASE_META_PREFIX . 'views_milestone';
+	}
+}
+
+if ( ! function_exists( 'kaamase_milestone_types' ) ) {
+	/**
+	 * Which kinds of page this is sent about.
+	 *
+	 * Workers, teams and jobs. Not employer profiles: an employer's own
+	 * page being opened is not the same good news, and telling somebody
+	 * their company page is popular is flattery rather than information.
+	 *
+	 * @since 1.10.0
+	 * @return string[]
+	 */
+	function kaamase_milestone_types() {
+
+		return (array) apply_filters(
+			'kaamase_milestone_types',
+			array( 'kaamase_worker', 'kaamase_gang', 'kaamase_job' )
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_milestones' ) ) {
+	/**
+	 * The figures worth telling somebody about.
+	 *
+	 * Close together at the start and further apart later, which is the
+	 * only shape that works. The first ten opens are the ones that prove
+	 * the platform is doing something, so they get their own
+	 * notification; by the time somebody is at five thousand, another
+	 * hundred is not news and a notification about it is noise.
+	 *
+	 * Ten, fifty, a hundred, a hundred and sixty, two hundred, then
+	 * every hundred to a thousand. After that every five hundred to five
+	 * thousand, then every thousand. The top of the ladder is a stop
+	 * rather than a cliff: past it nothing more is sent, which is the
+	 * right behaviour for a number that large.
+	 *
+	 * @since 1.10.0
+	 * @return int[] Ascending.
+	 */
+	function kaamase_milestones() {
+
+		static $steps = null;
+
+		if ( null !== $steps ) {
+			return $steps;
+		}
+
+		$ladder = array( 10, 50, 100, 160, 200, 300, 400, 500, 600, 700, 800, 900, 1000 );
+
+		for ( $figure = 1500; $figure <= 5000; $figure += 500 ) {
+			$ladder[] = $figure;
+		}
+
+		for ( $figure = 6000; $figure <= 50000; $figure += 1000 ) {
+			$ladder[] = $figure;
+		}
+
+		/**
+		 * Filter the figures a milestone notification is sent at.
+		 *
+		 * @since 1.10.0
+		 * @param int[] $ladder Figures, ascending.
+		 */
+		$ladder = array_map( 'absint', (array) apply_filters( 'kaamase_milestones', $ladder ) );
+		$ladder = array_values( array_unique( array_filter( $ladder ) ) );
+
+		/*
+		 * Sorted here rather than trusted. Reading below stops at the
+		 * first figure the total has not reached, which is only correct
+		 * on an ascending list, and a filter has no reason to know that.
+		 */
+		sort( $ladder, SORT_NUMERIC );
+
+		$steps = $ladder;
+
+		return $steps;
+	}
+}
+
+if ( ! function_exists( 'kaamase_milestone_reached' ) ) {
+	/**
+	 * The highest figure a total has passed, or nothing.
+	 *
+	 * @since 1.10.0
+	 * @param int $total How many times it has been opened.
+	 * @return int A figure from the ladder, or 0 below the first one.
+	 */
+	function kaamase_milestone_reached( $total ) {
+
+		$total   = (int) $total;
+		$reached = 0;
+
+		foreach ( kaamase_milestones() as $figure ) {
+
+			if ( $total < $figure ) {
+				break;
+			}
+
+			$reached = $figure;
+		}
+
+		return $reached;
+	}
+}
+
+if ( ! function_exists( 'kaamase_milestone_seed' ) ) {
+	/**
+	 * Write down where everybody already is, and send nothing.
+	 *
+	 * Run once, the first time this feature is able to send anything at
+	 * all. Without it the first run would look at a table holding a year
+	 * of views and tell several hundred people at once that their
+	 * profile has passed a figure it passed months ago. That is the
+	 * worst possible first impression of a notification meant to feel
+	 * like good news, and it would teach people to turn them off.
+	 *
+	 * Afterwards a profile with nothing written down is genuinely new,
+	 * so its first ten opens are a real milestone and are sent.
+	 *
+	 * @since 1.10.0
+	 * @return bool Whether this run did the seeding.
+	 */
+	function kaamase_milestone_seed() {
+
+		global $wpdb;
+
+		if ( get_option( 'kaamase_milestones_seeded' ) ) {
+			return false;
+		}
+
+		$table  = kaamase_views_table();
+		$meta   = kaamase_milestone_meta();
+		$ladder = kaamase_milestones();
+		$first  = empty( $ladder ) ? 0 : (int) $ladder[0];
+
+		if ( ! $first ) {
+			update_option( 'kaamase_milestones_seeded', 1, false );
+			return true;
+		}
+
+		/*
+		 * The whole table, once. HAVING keeps it to the profiles that
+		 * are already past the first figure, which on any real site is a
+		 * small fraction of the rows and the only ones worth a meta
+		 * write.
+		 */
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT subject_id, SUM(hits) AS total
+				 FROM {$table}
+				 WHERE kind = 'open'
+				 GROUP BY subject_id
+				 HAVING total >= %d",
+				$first
+			),
+			ARRAY_A
+		);
+		// phpcs:enable
+
+		foreach ( (array) $rows as $row ) {
+
+			$reached = kaamase_milestone_reached( (int) $row['total'] );
+
+			if ( $reached ) {
+				update_post_meta( (int) $row['subject_id'], $meta, $reached );
+			}
+		}
+
+		/*
+		 * Marked done only after the loop. A run that dies halfway
+		 * leaves the option unset and does the whole thing again next
+		 * hour, which is safe: writing the same figure twice changes
+		 * nothing.
+		 */
+		update_option( 'kaamase_milestones_seeded', 1, false );
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'kaamase_milestone_send' ) ) {
+	/**
+	 * Tell the owner their profile or job passed a figure.
+	 *
+	 * Push only, never email. A view count is the kind of thing that is
+	 * a pleasure to see on a phone and an annoyance to find in an inbox,
+	 * and kaamase_notify_user's fallback would put it there.
+	 *
+	 * @since 1.10.0
+	 * @param int $post_id Profile or job.
+	 * @param int $figure  The figure it passed.
+	 * @return bool Whether anything was sent.
+	 */
+	function kaamase_milestone_send( $post_id, $figure ) {
+
+		$post   = get_post( $post_id );
+		$figure = absint( $figure );
+
+		if ( ! $post || ! $figure ) {
+			return false;
+		}
+
+		/*
+		 * Live pages only. A closed job or a profile still waiting on a
+		 * confirmed email has nothing useful to say to its owner about
+		 * how many people opened it, and a draft is not in front of
+		 * anybody to open.
+		 */
+		if ( 'publish' !== $post->post_status ) {
+			return false;
+		}
+
+		if ( ! in_array( $post->post_type, kaamase_milestone_types(), true ) ) {
+			return false;
+		}
+
+		$owner = (int) $post->post_author;
+
+		if ( ! $owner ) {
+			return false;
+		}
+
+		$count = number_format_i18n( $figure );
+
+		if ( 'kaamase_job' === $post->post_type ) {
+
+			$title = sprintf(
+				/* translators: %s: number of times the job has been opened */
+				__( '%s opens on your job', 'kaamase-core' ),
+				$count
+			);
+
+			$body = sprintf(
+				/* translators: 1: job title, 2: number of times it has been opened */
+				__( '%1$s has been opened %2$s times on Kaam Ase. Workers are looking.', 'kaamase-core' ),
+				get_the_title( $post ),
+				$count
+			);
+
+		} elseif ( 'kaamase_gang' === $post->post_type ) {
+
+			$title = sprintf(
+				/* translators: %s: number of times the team profile has been opened */
+				__( '%s opens on your team', 'kaamase-core' ),
+				$count
+			);
+
+			$body = sprintf(
+				/* translators: %s: number of times the team profile has been opened */
+				__( 'Employers have opened your team %s times on Kaam Ase. Keep it up to date so they can reach you.', 'kaamase-core' ),
+				$count
+			);
+
+		} else {
+
+			$title = sprintf(
+				/* translators: %s: number of times the profile has been opened */
+				__( '%s opens on your profile', 'kaamase-core' ),
+				$count
+			);
+
+			$body = sprintf(
+				/* translators: %s: number of times the profile has been opened */
+				__( 'Employers have opened your profile %s times on Kaam Ase. Set yourself available when you are free for work.', 'kaamase-core' ),
+				$count
+			);
+		}
+
+		/*
+		 * The count travels with it so the app can show the figure
+		 * straight away rather than fetching the profile to find out
+		 * what the notification was about.
+		 */
+		kaamase_push_to_user(
+			$owner,
+			$title,
+			$body,
+			array(
+				'type'  => 'view_milestone',
+				'id'    => (int) $post->ID,
+				'count' => $figure,
+			)
+		);
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'kaamase_milestone_check' ) ) {
+	/**
+	 * Find what crossed a figure, and say so.
+	 *
+	 * Hourly, because a milestone notification arriving the following
+	 * afternoon is not the same thing at all; the whole appeal is that
+	 * it lands while it is still true. Two indexed queries per run, and
+	 * on most runs nothing crossed anything and nothing is written.
+	 *
+	 * @since 1.10.0
+	 * @return void
+	 */
+	function kaamase_milestone_check() {
+
+		global $wpdb;
+
+		/*
+		 * Nothing at all when push is off, including the seeding. A site
+		 * that has never sent a notification should not be carrying
+		 * around a record of figures nobody was told, and when push is
+		 * switched on later the seeding runs then and starts everybody
+		 * from where they actually are.
+		 */
+		if ( ! kaamase_push_enabled() ) {
+			return;
+		}
+
+		if ( ! function_exists( 'kaamase_views_ready' ) || ! kaamase_views_ready() ) {
+			return;
+		}
+
+		/*
+		 * Not in the middle of the night. This is the one notification
+		 * on the list that could have waited until morning, so it does.
+		 * Nothing is lost by skipping a run: the query below looks back
+		 * two days, so whatever crossed at one in the morning is still
+		 * found at eight.
+		 */
+		$hour = (int) current_time( 'G' );
+
+		if ( $hour < 8 || $hour >= 21 ) {
+			return;
+		}
+
+		if ( kaamase_milestone_seed() ) {
+			return;
+		}
+
+		$table = kaamase_views_table();
+		$since = gmdate( 'Y-m-d', time() - ( KAAMASE_MILESTONE_DAYS * DAY_IN_SECONDS ) );
+
+		/*
+		 * Which pages were opened recently, not which pages exist. A row
+		 * is only ever written on the day it was made, so anything that
+		 * moved since the last run is inside this window, and the
+		 * seen_on index makes it a short read however big the table has
+		 * grown.
+		 */
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$subjects = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT subject_id
+				 FROM {$table}
+				 WHERE kind = 'open' AND seen_on >= %s
+				 ORDER BY subject_id ASC
+				 LIMIT 5000",
+				$since
+			)
+		);
+		// phpcs:enable
+
+		$subjects = array_filter( array_map( 'absint', (array) $subjects ) );
+
+		if ( empty( $subjects ) ) {
+			return;
+		}
+
+		$meta = kaamase_milestone_meta();
+		$sent = 0;
+
+		/*
+		 * In chunks, so the totalling query stays a reasonable size
+		 * whatever kind of day the site has had. Every chunk is asked
+		 * for whole totals, not the window above: the figure in the
+		 * notification has to be the figure on the profile.
+		 */
+		foreach ( array_chunk( $subjects, 200 ) as $chunk ) {
+
+			$ids = implode( ',', array_map( 'absint', $chunk ) );
+
+			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$rows = $wpdb->get_results(
+				"SELECT subject_id, SUM(hits) AS total
+				 FROM {$table}
+				 WHERE kind = 'open' AND subject_id IN ({$ids})
+				 GROUP BY subject_id",
+				ARRAY_A
+			);
+			// phpcs:enable
+
+			foreach ( (array) $rows as $row ) {
+
+				$post_id = (int) $row['subject_id'];
+				$reached = kaamase_milestone_reached( (int) $row['total'] );
+
+				if ( ! $reached ) {
+					continue;
+				}
+
+				$told = (int) get_post_meta( $post_id, $meta, true );
+
+				if ( $reached <= $told ) {
+					continue;
+				}
+
+				/*
+				 * Out of budget: left unwritten, deliberately. The cap
+				 * exists to stop a blast, not to throw milestones away,
+				 * and anything skipped here is simply found again next
+				 * hour. It cannot starve either, because everything
+				 * that did get sent is written down and drops out of
+				 * this set, so the queue is two hundred shorter every
+				 * time round and the ones behind move up.
+				 */
+				if ( $sent >= KAAMASE_MILESTONE_MAX_SENDS ) {
+					continue;
+				}
+
+				/*
+				 * Written before the send, and written even when the
+				 * send does nothing -- a closed job, a draft, an owner
+				 * with no app. A figure that was reached is reached;
+				 * holding it back would mean somebody installing the
+				 * app in March being told about a hundred opens from
+				 * January.
+				 */
+				update_post_meta( $post_id, $meta, $reached );
+
+				$sent += kaamase_milestone_send( $post_id, $reached ) ? 1 : 0;
+			}
+		}
+	}
+}
+add_action( 'kaamase_milestones_check', 'kaamase_milestone_check' );
+
+if ( ! function_exists( 'kaamase_milestone_schedule' ) ) {
+	/**
+	 * Book the hourly run.
+	 *
+	 * Checked on every load rather than only on activation, for the same
+	 * reason the daily task is: a cron event that quietly stopped being
+	 * scheduled is invisible until somebody notices that nothing has
+	 * been sent in a month.
+	 *
+	 * @since 1.10.0
+	 * @return void
+	 */
+	function kaamase_milestone_schedule() {
+
+		if ( ! wp_next_scheduled( 'kaamase_milestones_check' ) ) {
+			wp_schedule_event( time() + ( 10 * MINUTE_IN_SECONDS ), 'hourly', 'kaamase_milestones_check' );
+		}
+	}
+}
+add_action( 'init', 'kaamase_milestone_schedule', 30 );
+
+
 
 /* ==========================================================================
-   3. SETTING
+   4. SETTING
    ========================================================================== */
 
 /**

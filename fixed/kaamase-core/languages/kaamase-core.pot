@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-12 19:05+0000\n"
+"POT-Creation-Date: 2026-09-16 18:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,6 +37,11 @@ msgstr ""
 msgid "%1$s from %2$s"
 msgstr ""
 
+#. translators: 1: job title, 2: number of times it has been opened
+#: includes/push.php:817
+msgid "%1$s has been opened %2$s times on Kaam Ase. Workers are looking."
+msgstr ""
+
 #. translators: 1: trade name, 2: district name
 #. translators: 1: what was found, 2: district name
 #: includes/indexes.php:602 includes/queries.php:1087
@@ -67,6 +72,11 @@ msgid_plural "%1$s times, %2$s ago"
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: 1: date, 2: total that day, 3: how many confirmed
+#: includes/insights.php:1104
+msgid "%1$s — %2$s signed up, %3$s confirmed"
+msgstr ""
+
 #. translators: 1: date and time, 2: how many people
 #: includes/job-alerts.php:859
 msgid "%1$s, sent to %2$s"
@@ -95,6 +105,11 @@ msgid_plural "%s accounts have not confirmed."
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: %s: how many accounts matched the filters
+#: includes/insights.php:971
+msgid "%s accounts match."
+msgstr ""
+
 #. translators: %s: what was found
 #: includes/queries.php:1095
 msgid "%s across Nagaland"
@@ -121,6 +136,11 @@ msgstr ""
 #. translators: %s: number of completed hires so far
 #: includes/admin.php:131
 msgid "%s completed hires so far. The target in the plan was 50 in the first 90 days, filled by hand if necessary. Until that number moves, nothing else on this page matters."
+msgstr ""
+
+#. translators: %s: how many of that district's accounts confirmed
+#: includes/insights.php:1173
+msgid "%s confirmed"
 msgstr ""
 
 #. translators: %s: a number of days
@@ -171,7 +191,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: name of the person who looked them up
-#: includes/push.php:339
+#: includes/push.php:344
 msgid "%s looked you up on Kaam Ase. They may call you."
 msgstr ""
 
@@ -190,8 +210,23 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: site name
-#: includes/account-password.php:215 includes/push.php:286 includes/registration.php:696
+#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:696
 msgid "%s never asks a worker for money."
+msgstr ""
+
+#. translators: %s: number of times the job has been opened
+#: includes/push.php:811
+msgid "%s opens on your job"
+msgstr ""
+
+#. translators: %s: number of times the profile has been opened
+#: includes/push.php:840
+msgid "%s opens on your profile"
+msgstr ""
+
+#. translators: %s: number of times the team profile has been opened
+#: includes/push.php:826
+msgid "%s opens on your team"
 msgstr ""
 
 #. translators: %s: number of people
@@ -243,6 +278,10 @@ msgstr ""
 
 #: includes/registration.php:170
 msgid "10 digits. Your number is never shown on the site. Workers reach you through Kaam Ase."
+msgstr ""
+
+#: includes/insights.php:912
+msgid "A batch at a time on purpose. Six hundred messages handed to a shared mail server in one breath is how a domain stops being trusted, and one request could not finish them anyway. Press it again for the next batch."
 msgstr ""
 
 #: includes/past-jobs.php:298
@@ -420,12 +459,20 @@ msgstr ""
 msgid "About: %s"
 msgstr ""
 
+#: includes/indexing-api.php:1188
+msgid "Accepted"
+msgstr ""
+
 #: includes/email-check.php:670
 msgid "Accepted by the server"
 msgstr ""
 
 #: includes/email-check.php:687
 msgid "Accepted means the server took the message. It does not mean anybody received it. The only proof of that is looking in a real inbox."
+msgstr ""
+
+#: includes/indexing-api.php:1244
+msgid "Accepted, but the read back said: %s. On a first send this is normal — it can take a moment before Google will read it back."
 msgstr ""
 
 #: includes/fields.php:341
@@ -442,6 +489,10 @@ msgstr ""
 
 #: includes/more-trades.php:110
 msgid "Accountant, accounts assistant, book keeping, Tally, billing, audit assistant."
+msgstr ""
+
+#: includes/insights.php:1020
+msgid "Accounts"
 msgstr ""
 
 #: includes/hiring-request.php:525
@@ -572,7 +623,7 @@ msgstr ""
 msgid "All Nagaland"
 msgstr ""
 
-#: includes/admin.php:711 includes/install.php:341 includes/taxonomies.php:176
+#: includes/admin.php:711 includes/insights.php:1225 includes/install.php:341 includes/taxonomies.php:176
 msgid "All districts"
 msgstr ""
 
@@ -641,7 +692,7 @@ msgstr ""
 msgid "Amount owed: rupees %s"
 msgstr ""
 
-#: includes/contact.php:1007 includes/push.php:340
+#: includes/contact.php:1007 includes/push.php:345
 msgid "An employer"
 msgstr ""
 
@@ -671,6 +722,10 @@ msgstr ""
 
 #: includes/employer-index.php:324
 msgid "Any kind"
+msgstr ""
+
+#: includes/insights.php:1232
+msgid "Any sign in"
 msgstr ""
 
 #: includes/install.php:722
@@ -725,6 +780,10 @@ msgstr ""
 msgid "App version"
 msgstr ""
 
+#: includes/insights.php:137
+msgid "Apple"
+msgstr ""
+
 #: includes/apple-signin.php:126 includes/apple-signin.php:127 includes/apple-signin.php:180
 msgid "Apple sign in"
 msgstr ""
@@ -735,6 +794,10 @@ msgstr ""
 
 #: includes/apple-signin.php:439
 msgid "Apple sign in is not switched on for this site."
+msgstr ""
+
+#: includes/insights.php:1047
+msgid "Apple:"
 msgstr ""
 
 #: includes/dashboard.php:448
@@ -1028,6 +1091,10 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
+#: includes/indexing-api.php:1127
+msgid "Check it really works"
+msgstr ""
+
 #: includes/app-links.php:562
 msgid "Check that kaamase.com does not redirect to www.kaamase.com or the other way round. Neither Google nor Apple follows a redirect for these files, and a redirect is invisible in a browser because the browser follows it for you."
 msgstr ""
@@ -1085,7 +1152,7 @@ msgstr ""
 msgid "Church elder or pastor"
 msgstr ""
 
-#: includes/queries.php:1017
+#: includes/insights.php:1244 includes/queries.php:1017
 msgid "Clear"
 msgstr ""
 
@@ -1165,8 +1232,22 @@ msgstr ""
 msgid "Confirm your email to see who is hiring. We sent you a link when you registered."
 msgstr ""
 
+#: includes/insights.php:1021 includes/insights.php:1077 includes/insights.php:1122
+#: includes/insights.php:1214 includes/insights.php:1345 includes/insights.php:575
+msgid "Confirmed"
+msgstr ""
+
 #: includes/admin.php:97
 msgid "Confirmed hires, all time."
+msgstr ""
+
+#: includes/insights.php:1212
+msgid "Confirmed or not"
+msgstr ""
+
+#. translators: %s: the service account email address
+#: includes/indexing-api.php:1064
+msgid "Connected as %s"
 msgstr ""
 
 #: includes/install.php:721
@@ -1237,6 +1318,10 @@ msgstr ""
 msgid "Customer service"
 msgstr ""
 
+#: includes/insights.php:1082
+msgid "Daily registrations for the last 30 days, split by whether the account was confirmed. The same figures are in the table below the chart."
+msgstr ""
+
 #: includes/taxonomies.php:364
 msgid "Data entry operator"
 msgstr ""
@@ -1255,6 +1340,10 @@ msgstr ""
 
 #: includes/privacy.php:170
 msgid "Date"
+msgstr ""
+
+#: includes/insights.php:1120
+msgid "Day"
 msgstr ""
 
 #: includes/admin.php:528
@@ -1313,7 +1402,7 @@ msgstr ""
 msgid "Did they turn up on the day?"
 msgstr ""
 
-#: includes/hires.php:298 includes/push.php:472
+#: includes/hires.php:298 includes/push.php:477
 msgid "Did you hire them?"
 msgstr ""
 
@@ -1335,9 +1424,9 @@ msgstr ""
 
 #: includes/admin.php:355 includes/employer-index.php:342 includes/fields.php:230
 #: includes/fields.php:318 includes/fields.php:87 includes/google-signin.php:1769
-#: includes/past-jobs.php:400 includes/post-job.php:310 includes/posted-for.php:303
-#: includes/profile-edit.php:228 includes/queries.php:960 includes/registration.php:177
-#: includes/teams.php:200
+#: includes/insights.php:574 includes/past-jobs.php:400 includes/post-job.php:310
+#: includes/posted-for.php:303 includes/profile-edit.php:228 includes/queries.php:960
+#: includes/registration.php:177 includes/teams.php:200
 msgid "District"
 msgstr ""
 
@@ -1367,6 +1456,10 @@ msgstr ""
 
 #: includes/verify-requests.php:449
 msgid "Done. Their profile has the mark now."
+msgstr ""
+
+#: includes/insights.php:1300
+msgid "Download all matches as a spreadsheet"
 msgstr ""
 
 #: includes/taxonomies.php:293
@@ -1437,7 +1530,8 @@ msgstr ""
 msgid "Electronics technician"
 msgstr ""
 
-#: includes/not-confirmed.php:239 includes/reports.php:909
+#: includes/insights.php:1343 includes/insights.php:573 includes/not-confirmed.php:239
+#: includes/reports.php:909
 msgid "Email"
 msgstr ""
 
@@ -1447,6 +1541,10 @@ msgstr ""
 
 #: includes/gift.php:387
 msgid "Email address, username or user ID"
+msgstr ""
+
+#: includes/insights.php:135
+msgid "Email and password"
 msgstr ""
 
 #: includes/email-check.php:399 includes/email-check.php:400 includes/email-check.php:485
@@ -1465,7 +1563,7 @@ msgstr ""
 msgid "Email them about it"
 msgstr ""
 
-#: includes/not-confirmed.php:199 includes/roles.php:154
+#: includes/insights.php:116 includes/not-confirmed.php:199 includes/roles.php:154
 msgid "Employer"
 msgstr ""
 
@@ -1473,16 +1571,26 @@ msgstr ""
 msgid "Employer profile"
 msgstr ""
 
-#: includes/admin.php:372 includes/post-types.php:182
+#: includes/admin.php:372 includes/insights.php:1025 includes/post-types.php:182
 msgid "Employers"
 msgstr ""
 
-#: includes/push.php:362
+#: includes/push.php:367
 msgid "Employers across Nagaland can find you now. Set yourself available when you are free for work."
 msgstr ""
 
 #: includes/dashboard.php:179
 msgid "Employers filter by rate. With no rate, you are left out of most searches."
+msgstr ""
+
+#. translators: %s: number of times the profile has been opened
+#: includes/push.php:846
+msgid "Employers have opened your profile %s times on Kaam Ase. Set yourself available when you are free for work."
+msgstr ""
+
+#. translators: %s: number of times the team profile has been opened
+#: includes/push.php:832
+msgid "Employers have opened your team %s times on Kaam Ase. Keep it up to date so they can reach you."
 msgstr ""
 
 #: includes/how-seen.php:164
@@ -1529,12 +1637,20 @@ msgstr ""
 msgid "Event staff"
 msgstr ""
 
+#: includes/indexing-api.php:793
+msgid "Every five minutes"
+msgstr ""
+
 #: includes/hiring-request.php:190
 msgid "Every job posted on Kaam Ase is checked. Anything that is not real work is removed and the account is closed."
 msgstr ""
 
 #: includes/indexes.php:142
 msgid "Every kind of work on Kaam Ase. Tap one to see who is available across Nagaland."
+msgstr ""
+
+#: includes/insights.php:1218 includes/insights.php:963
+msgid "Everybody"
 msgstr ""
 
 #: includes/saved.php:613
@@ -1581,6 +1697,10 @@ msgstr ""
 msgid "Field agent"
 msgstr ""
 
+#: includes/insights.php:1243
+msgid "Filter"
+msgstr ""
+
 #: includes/queries.php:927
 msgid "Filter these results"
 msgstr ""
@@ -1591,6 +1711,10 @@ msgstr ""
 
 #: includes/dashboard.php:536 includes/saved.php:756
 msgid "Find workers"
+msgstr ""
+
+#: includes/indexing-api.php:976
+msgid "Finding a job to test with"
 msgstr ""
 
 #: includes/dashboard.php:299
@@ -1645,6 +1769,10 @@ msgstr ""
 msgid "Forever"
 msgstr ""
 
+#: includes/indexing-api.php:1116
+msgid "Forget the stored key and switch this off"
+msgstr ""
+
 #: includes/admin.php:527
 msgid "Free"
 msgstr ""
@@ -1661,7 +1789,7 @@ msgstr ""
 msgid "Free to post. Open for three weeks, then it closes on its own so nobody answers a job that is already filled."
 msgstr ""
 
-#: includes/reports.php:905
+#: includes/insights.php:1238 includes/reports.php:905
 msgid "From"
 msgstr ""
 
@@ -1738,12 +1866,43 @@ msgstr ""
 msgid "Go to my account"
 msgstr ""
 
+#: includes/insights.php:136
+msgid "Google"
+msgstr ""
+
 #: includes/google-signin.php:237
 msgid "Google Cloud Console, under Credentials. Make one OAuth client ID per platform. For the website client, add this exact address to Authorised redirect URIs:"
 msgstr ""
 
+#: includes/indexing-api.php:1242
+msgid "Google confirmed it has this on record, at %s"
+msgstr ""
+
+#. translators: 1: HTTP status, 2: what Google said
+#: includes/indexing-api.php:476
+msgid "Google had nothing to report (%1$d). %2$s"
+msgstr ""
+
+#: includes/indexing-api.php:1046
+msgid "Google has an API that tells it to come and look at a page now, instead of waiting for it to be crawled. It works for exactly two kinds of page, and a job posting is one of them. This is what lets a job posted this morning be findable this afternoon rather than next week."
+msgstr ""
+
 #: includes/google-signin.php:639
 msgid "Google has not confirmed that email address, so it cannot be used to sign in here."
+msgstr ""
+
+#: includes/indexing-api.php:1042 includes/indexing-api.php:826 includes/indexing-api.php:827
+msgid "Google indexing"
+msgstr ""
+
+#. translators: 1: HTTP status, 2: what Google said
+#: includes/indexing-api.php:424
+msgid "Google refused it (%1$d). %2$s"
+msgstr ""
+
+#. translators: 1: HTTP status, 2: what Google said
+#: includes/indexing-api.php:343
+msgid "Google refused the sign in (%1$d). %2$s"
 msgstr ""
 
 #: includes/google-signin.php:144 includes/google-signin.php:145 includes/google-signin.php:205
@@ -1756,6 +1915,10 @@ msgstr ""
 
 #: includes/google-signin.php:521
 msgid "Google sign in is not switched on for this site."
+msgstr ""
+
+#: includes/insights.php:1045
+msgid "Google:"
 msgstr ""
 
 #: includes/taxonomies.php:433
@@ -1969,6 +2132,10 @@ msgstr ""
 msgid "How many pictures one job post can carry. One is enough to make a listing worth looking at, which is why it is the free number. More is a reason to pay rather than something a job needs."
 msgstr ""
 
+#: includes/insights.php:897
+msgid "How many this time"
+msgstr ""
+
 #: includes/admin.php:416
 msgid "How many times"
 msgstr ""
@@ -2134,6 +2301,10 @@ msgstr ""
 msgid "Individual"
 msgstr ""
 
+#: includes/insights.php:72 includes/insights.php:73 includes/insights.php:957
+msgid "Insights"
+msgstr ""
+
 #: includes/dashboard.php:207
 msgid "It helps an employer know you can talk to each other on site."
 msgstr ""
@@ -2156,6 +2327,10 @@ msgstr ""
 
 #: includes/rich-manu.php:860
 msgid "It says we have spoken to them. It is not a promise about the quality of their work, and it does not replace agreeing the rate and the payment day before anybody starts."
+msgstr ""
+
+#: includes/indexing-api.php:1222
+msgid "It works."
 msgstr ""
 
 #: includes/email-check.php:534
@@ -2307,11 +2482,16 @@ msgstr ""
 msgid "Keep your availability up to date and you will show up in more searches."
 msgstr ""
 
+#: includes/indexing-api.php:1099
+msgid "Key file"
+msgstr ""
+
 #: includes/taxonomies.php:656
 msgid "Khiamniungan"
 msgstr ""
 
-#: includes/employer-index.php:354 includes/not-confirmed.php:236
+#: includes/employer-index.php:354 includes/insights.php:1341 includes/insights.php:570
+#: includes/not-confirmed.php:236
 msgid "Kind"
 msgstr ""
 
@@ -2382,6 +2562,10 @@ msgstr ""
 
 #: includes/registration.php:115 includes/reports.php:332
 msgid "Leave this empty"
+msgstr ""
+
+#: includes/indexing-api.php:1106
+msgid "Left empty, whatever is already stored stays. The key is never shown again once saved, and is kept out of the options WordPress loads on every request."
 msgstr ""
 
 #: includes/google-signin.php:213
@@ -2589,12 +2773,16 @@ msgstr ""
 msgid "Nagamese"
 msgstr ""
 
-#: includes/not-confirmed.php:235
+#: includes/insights.php:1340 includes/insights.php:569 includes/not-confirmed.php:235
 msgid "Name"
 msgstr ""
 
 #: includes/email-check.php:575
 msgid "Name people see"
+msgstr ""
+
+#: includes/insights.php:1209
+msgid "Name, email or phone"
 msgstr ""
 
 #: includes/post-job.php:269
@@ -2704,8 +2892,12 @@ msgid "Next run"
 msgstr ""
 
 #: includes/gift.php:512 includes/hires.php:340 includes/hiring-request.php:682
-#: includes/number-requests.php:884
+#: includes/insights.php:1373 includes/insights.php:594 includes/number-requests.php:884
 msgid "No"
+msgstr ""
+
+#: includes/indexing-api.php:158
+msgid "No Google service account has been added yet."
 msgstr ""
 
 #: includes/gift.php:360
@@ -2825,12 +3017,20 @@ msgstr ""
 msgid "Nobody has been rung and nothing has been counted against your lookups for today."
 msgstr ""
 
+#: includes/insights.php:868
+msgid "Nobody is waiting. Either everybody matching has been sent one recently, or the filters match nobody unconfirmed."
+msgstr ""
+
 #: includes/not-confirmed.php:215
 msgid "Nobody is waiting. Every account with a profile has confirmed its email."
 msgstr ""
 
 #: includes/employer-index.php:218
 msgid "Nobody matches that"
+msgstr ""
+
+#: includes/insights.php:1351
+msgid "Nobody matches those filters."
 msgstr ""
 
 #: includes/install.php:664
@@ -2870,7 +3070,7 @@ msgstr ""
 msgid "Nobody yet. Finish your profile and set yourself available, and you will show up in more searches."
 msgstr ""
 
-#: includes/email-check.php:561
+#: includes/email-check.php:561 includes/insights.php:1364
 msgid "None"
 msgstr ""
 
@@ -2890,12 +3090,18 @@ msgstr ""
 msgid "Not called."
 msgstr ""
 
-#: includes/not-confirmed.php:204 includes/not-confirmed.php:65 includes/not-confirmed.php:66
+#: includes/insights.php:1022 includes/insights.php:1078 includes/insights.php:1123
+#: includes/insights.php:1213 includes/not-confirmed.php:204 includes/not-confirmed.php:65
+#: includes/not-confirmed.php:66
 msgid "Not confirmed"
 msgstr ""
 
 #: includes/ratings.php:940 includes/rest-api.php:2391
 msgid "Not enough ratings yet to show a score. We wait until three people have worked with somebody, so that one bad day does not decide everything."
+msgstr ""
+
+#: includes/insights.php:433
+msgid "Not given"
 msgstr ""
 
 #: includes/verify-requests.php:522
@@ -2928,6 +3134,10 @@ msgstr ""
 
 #: includes/admin.php:407
 msgid "Nothing flagged. Nobody has been reported for not paying or not turning up."
+msgstr ""
+
+#: includes/indexing-api.php:1171
+msgid "Nothing has been sent yet."
 msgstr ""
 
 #: includes/exposure.php:520
@@ -3036,6 +3246,10 @@ msgstr ""
 
 #: includes/app-version.php:337
 msgid "Oldest iPhone version"
+msgstr ""
+
+#: includes/indexing-api.php:1093
+msgid "On"
 msgstr ""
 
 #. translators: %s: month and year
@@ -3208,6 +3422,10 @@ msgstr ""
 msgid "Past jobs"
 msgstr ""
 
+#: includes/indexing-api.php:1103
+msgid "Paste the whole JSON key file from Google Cloud here"
+msgstr ""
+
 #: includes/app-links.php:542
 msgid "Paths"
 msgstr ""
@@ -3270,7 +3488,8 @@ msgstr ""
 msgid "Phom"
 msgstr ""
 
-#: includes/not-confirmed.php:237 includes/reports.php:908
+#: includes/insights.php:1342 includes/insights.php:571 includes/not-confirmed.php:237
+#: includes/reports.php:908
 msgid "Phone"
 msgstr ""
 
@@ -3285,6 +3504,11 @@ msgstr ""
 
 #: includes/privacy.php:846
 msgid "Phone numbers are never shown publicly. They are released one at a time to signed in, verified accounts, and every release is recorded and shown to the person it belongs to."
+msgstr ""
+
+#. translators: %s: how many numbers are in the box
+#: includes/insights.php:1311
+msgid "Phone numbers on this page, ready to paste (%s)"
 msgstr ""
 
 #: includes/reports.php:713
@@ -3590,6 +3814,15 @@ msgstr ""
 msgid "Read this before you set a number."
 msgstr ""
 
+#: includes/indexing-api.php:954
+msgid "Reading the key file"
+msgstr ""
+
+#. translators: %s: how many people are waiting
+#: includes/insights.php:852
+msgid "Ready to send to: %s"
+msgstr ""
+
 #: includes/dashboard.php:946
 msgid "Rebuild my profile"
 msgstr ""
@@ -3642,7 +3875,7 @@ msgstr ""
 msgid "Register first, it is free"
 msgstr ""
 
-#: includes/not-confirmed.php:240
+#: includes/insights.php:1347 includes/insights.php:577 includes/not-confirmed.php:240
 msgid "Registered"
 msgstr ""
 
@@ -3702,6 +3935,10 @@ msgstr ""
 msgid "Reports"
 msgstr ""
 
+#: includes/indexing-api.php:1178
+msgid "Result"
+msgstr ""
+
 #: includes/rich-manu.php:84
 msgid "Rich Manu"
 msgstr ""
@@ -3716,6 +3953,10 @@ msgstr ""
 
 #: includes/install.php:748
 msgid "Rules on ratings, and what happens to a disputed one."
+msgstr ""
+
+#: includes/indexing-api.php:1142
+msgid "Run the test"
 msgstr ""
 
 #: includes/gift.php:479
@@ -3772,7 +4013,8 @@ msgstr ""
 msgid "Sangtam"
 msgstr ""
 
-#: includes/app-version.php:370 includes/profile-edit.php:266 includes/saved.php:202
+#: includes/app-version.php:370 includes/indexing-api.php:1124 includes/profile-edit.php:266
+#: includes/saved.php:202
 msgid "Save"
 msgstr ""
 
@@ -3934,6 +4176,10 @@ msgstr ""
 msgid "Send it now"
 msgstr ""
 
+#: includes/indexing-api.php:1089
+msgid "Send jobs to Google"
+msgstr ""
+
 #: includes/email-check.php:589
 msgid "Send one now"
 msgstr ""
@@ -3950,12 +4196,24 @@ msgstr ""
 msgid "Send reports to"
 msgstr ""
 
+#: includes/insights.php:814
+msgid "Send the confirmation email again"
+msgstr ""
+
+#: includes/indexing-api.php:1164
+msgid "Send the queue now"
+msgstr ""
+
 #: includes/job-alerts.php:793
 msgid "Send them"
 msgstr ""
 
 #: includes/reports.php:464
 msgid "Send this"
+msgstr ""
+
+#: includes/insights.php:906
+msgid "Send this batch now"
 msgstr ""
 
 #: includes/email-check.php:624
@@ -3966,6 +4224,15 @@ msgstr ""
 msgid "Sending now counts for today, so anybody reached will not get the scheduled one as well. Use it once to see that it works, not to test repeatedly."
 msgstr ""
 
+#: includes/indexing-api.php:989
+msgid "Sending the URL"
+msgstr ""
+
+#. translators: %s: how many were sent
+#: includes/insights.php:829
+msgid "Sent %s."
+msgstr ""
+
 #. translators: %s: how many people were sent one
 #: includes/job-alerts.php:773
 msgid "Sent to %s person."
@@ -3973,8 +4240,17 @@ msgid_plural "Sent to %s people."
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: 1: how many sent today, 2: the daily allowance, 3: how many are waiting
+#: includes/indexing-api.php:1151
+msgid "Sent today: %1$s of %2$s. Waiting in the queue: %3$s."
+msgstr ""
+
 #: includes/dashboard.php:873
 msgid "Sent. Check your email."
+msgstr ""
+
+#: includes/indexing-api.php:1240
+msgid "Sent: %s"
 msgstr ""
 
 #: includes/email-check.php:546
@@ -4065,6 +4341,10 @@ msgstr ""
 msgid "Show these"
 msgstr ""
 
+#: includes/insights.php:1117
+msgid "Show these numbers as a table"
+msgstr ""
+
 #: includes/app-links.php:480
 msgid "Shown in the Play Console beside the app name."
 msgstr ""
@@ -4147,6 +4427,10 @@ msgstr ""
 msgid "Signboard maker"
 msgstr ""
 
+#: includes/indexing-api.php:1239
+msgid "Signed in as %s"
+msgstr ""
+
 #. translators: %s: the email address Google confirmed
 #: includes/google-signin.php:1713
 msgid "Signed in with Google as %s. Just a few more things and you are done."
@@ -4156,8 +4440,24 @@ msgstr ""
 msgid "Signed out. That phone will have to sign in again to use the app."
 msgstr ""
 
+#: includes/insights.php:1121
+msgid "Signed up"
+msgstr ""
+
+#: includes/insights.php:1346 includes/insights.php:576
+msgid "Signed up with"
+msgstr ""
+
+#: includes/insights.php:1043
+msgid "Signed up with email and password:"
+msgstr ""
+
 #: includes/app-links.php:487
 msgid "Signing fingerprints"
+msgstr ""
+
+#: includes/indexing-api.php:965
+msgid "Signing in to Google"
 msgstr ""
 
 #: includes/media.php:285
@@ -4208,7 +4508,7 @@ msgstr ""
 msgid "Somebody from Kaam Ase telephoned this person and confirmed they are who they say they are."
 msgstr ""
 
-#: includes/push.php:336
+#: includes/push.php:341
 msgid "Somebody has your number"
 msgstr ""
 
@@ -4320,6 +4620,16 @@ msgstr ""
 msgid "Stop telling me about new work"
 msgstr ""
 
+#. translators: %s: how many were sent before it stopped
+#: includes/insights.php:824
+msgid "Stopped after %s. The mail server refused the next one, so nobody else was marked as done. Try again in a few minutes, and if it keeps stopping the sending limit has been reached for now."
+msgstr ""
+
+#. translators: 1: which step, 2: the error
+#: includes/indexing-api.php:1231
+msgid "Stopped at: %1$s — %2$s"
+msgstr ""
+
 #: includes/app-version.php:295
 msgid "Stops an old version of the app being used. Somebody on a version below the one you set is shown an Update button and cannot go further until they update. Leave both boxes empty and nobody is stopped."
 msgstr ""
@@ -4404,7 +4714,7 @@ msgstr ""
 msgid "Teaching and childcare"
 msgstr ""
 
-#: includes/not-confirmed.php:198
+#: includes/insights.php:115 includes/not-confirmed.php:198
 msgid "Team"
 msgstr ""
 
@@ -4424,7 +4734,7 @@ msgstr ""
 msgid "Team saved."
 msgstr ""
 
-#: includes/post-types.php:132
+#: includes/insights.php:1024 includes/post-types.php:132
 msgid "Teams"
 msgstr ""
 
@@ -4504,8 +4814,17 @@ msgstr ""
 msgid "That account no longer exists."
 msgstr ""
 
+#. translators: %s: the service account email address
+#: includes/indexing-api.php:1073
+msgid "That address must also be added as an owner of the site in Google Search Console. Without it Google accepts the sign in and then refuses every URL, which reads like a broken key but is not one."
+msgstr ""
+
 #: includes/hiring-request.php:893 includes/working-request.php:297
 msgid "That did not work. Please try again."
+msgstr ""
+
+#: includes/indexing-api.php:167
+msgid "That does not look like the JSON key file Google gives you."
 msgstr ""
 
 #: includes/rest-api.php:762
@@ -4694,6 +5013,11 @@ msgstr ""
 msgid "The job is up."
 msgstr ""
 
+#. translators: %s: the name of a missing field
+#: includes/indexing-api.php:177
+msgid "The key file has no %s in it. Download it again from Google Cloud."
+msgstr ""
+
 #: includes/email-check.php:499
 msgid "The mailbox mail goes out through"
 msgstr ""
@@ -4722,12 +5046,28 @@ msgstr ""
 msgid "The person or firm hiring"
 msgstr ""
 
+#: includes/indexing-api.php:274
+msgid "The private key in that file could not be used to sign. It may be damaged, or pasted with something missing."
+msgstr ""
+
+#: includes/insights.php:746
+msgid "The registration module is not loaded, so nothing was sent."
+msgstr ""
+
 #: includes/email-check.php:489
 msgid "The server accepted it. That means it left here. Go and look in the inbox now, and in Spam and Promotions as well. If it is not in any of them within a few minutes, it is being dropped after it leaves."
 msgstr ""
 
 #: includes/email-check.php:493
 msgid "The server refused to send it."
+msgstr ""
+
+#: includes/indexing-api.php:1057
+msgid "The service account"
+msgstr ""
+
+#: includes/indexing-api.php:1221
+msgid "The test did not get through."
 msgstr ""
 
 #: includes/gift.php:430
@@ -4772,6 +5112,10 @@ msgstr ""
 
 #: includes/gift.php:370
 msgid "There are no plans set up yet. Make one on the Plans screen first, otherwise the app will not show the plan as running."
+msgstr ""
+
+#: includes/indexing-api.php:977
+msgid "There are no published jobs on the site yet. Post one and run this again — Google refuses any URL that has no job posting on it, so there is nothing valid to send until then."
 msgstr ""
 
 #. translators: %s: how many closed jobs there are
@@ -4983,6 +5327,18 @@ msgstr ""
 msgid "This removes your profile, your photo and your details from Kaam Ase. It cannot be undone and you would have to start again."
 msgstr ""
 
+#: includes/insights.php:872
+msgid "This sends a real email to real people and cannot be taken back. Continue?"
+msgstr ""
+
+#: includes/indexing-api.php:1131
+msgid "This sends your most recent published job to Google for real, then asks Google to read back what it just received. It uses one of the two hundred a day."
+msgstr ""
+
+#: includes/indexing-api.php:245
+msgid "This server cannot sign the request, because OpenSSL is not available in PHP."
+msgstr ""
+
 #: includes/google-signin.php:224
 msgid "This server has no OpenSSL support in PHP, so a Google token cannot be checked here. Google sign in stays off until your host enables it."
 msgstr ""
@@ -4997,6 +5353,10 @@ msgstr ""
 
 #: includes/rest-auth.php:642
 msgid "This signs you out of the app on every phone, including this one. Are you sure?"
+msgstr ""
+
+#: includes/insights.php:841
+msgid "This writes a new link for each person and emails it, exactly as pressing \"Send it again\" on their own dashboard would. It is not a reminder about the old email: those links last seven days, so for most of this list the one they were sent has already expired and a reminder would send them to a dead page."
 msgstr ""
 
 #: includes/gift.php:88
@@ -5051,8 +5411,16 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: includes/email-check.php:655
+#: includes/email-check.php:655 includes/insights.php:1240
 msgid "To"
+msgstr ""
+
+#: includes/indexing-api.php:1145
+msgid "Today"
+msgstr ""
+
+#: includes/indexing-api.php:1177
+msgid "Told Google"
 msgstr ""
 
 #: includes/registration.php:384 includes/rest-api.php:625
@@ -5190,8 +5558,16 @@ msgstr ""
 msgid "URGENT: "
 msgstr ""
 
+#: includes/indexing-api.php:1176
+msgid "URL"
+msgstr ""
+
 #: includes/contact.php:1027
 msgid "Unblock"
+msgstr ""
+
+#: includes/insights.php:859
+msgid "Unconfirmed accounts matching the filters above, minus anybody already sent one in the last seven days. Confirmed accounts are never included, whatever the filters say."
 msgstr ""
 
 #. translators: %s: how many pictures may be added
@@ -5519,6 +5895,10 @@ msgstr ""
 msgid "What happened"
 msgstr ""
 
+#: includes/indexing-api.php:1168
+msgid "What happened recently"
+msgstr ""
+
 #: includes/install.php:746
 msgid "What happens in a wage dispute, and what the platform will and will not do."
 msgstr ""
@@ -5603,7 +5983,7 @@ msgstr ""
 msgid "What you have built, what tools you have, anything an employer should know."
 msgstr ""
 
-#: includes/contact.php:768
+#: includes/contact.php:768 includes/insights.php:572
 msgid "WhatsApp"
 msgstr ""
 
@@ -5611,7 +5991,8 @@ msgstr ""
 msgid "WhatsApp number"
 msgstr ""
 
-#: includes/email-check.php:654 includes/privacy.php:205 includes/reports.php:913
+#: includes/email-check.php:654 includes/indexing-api.php:1175 includes/privacy.php:205
+#: includes/reports.php:913
 msgid "When"
 msgstr ""
 
@@ -5631,7 +6012,7 @@ msgstr ""
 msgid "When you see a job worth coming back to, open it and tap Save this job."
 msgstr ""
 
-#: includes/admin.php:526 includes/admin.php:623 includes/not-confirmed.php:238
+#: includes/admin.php:526 includes/admin.php:623 includes/insights.php:1344 includes/not-confirmed.php:238
 msgid "Where"
 msgstr ""
 
@@ -5645,6 +6026,10 @@ msgstr ""
 
 #: includes/google-signin.php:235
 msgid "Where these come from"
+msgstr ""
+
+#: includes/insights.php:1161
+msgid "Where they are"
 msgstr ""
 
 #: includes/posted-for.php:71
@@ -5716,6 +6101,10 @@ msgstr ""
 msgid "Who should they ask for"
 msgstr ""
 
+#: includes/insights.php:1074
+msgid "Who signed up, last 30 days"
+msgstr ""
+
 #: includes/install.php:720
 msgid "Who to contact about a data problem, with a name and a real address."
 msgstr ""
@@ -5734,6 +6123,10 @@ msgstr ""
 
 #: includes/fields.php:124
 msgid "Willing to travel"
+msgstr ""
+
+#: includes/insights.php:1317
+msgid "With the country code, which is what WhatsApp and most message tools want. Select all and copy."
 msgstr ""
 
 #: includes/reports.php:144
@@ -5765,7 +6158,7 @@ msgstr ""
 msgid "Worked together %s ago"
 msgstr ""
 
-#: includes/not-confirmed.php:197 includes/roles.php:132
+#: includes/insights.php:114 includes/not-confirmed.php:197 includes/roles.php:132
 msgid "Worker"
 msgstr ""
 
@@ -5777,8 +6170,8 @@ msgstr ""
 msgid "Worker profiles"
 msgstr ""
 
-#: includes/admin.php:356 includes/admin.php:374 includes/dashboard.php:1094 includes/post-job.php:686
-#: includes/post-types.php:82
+#: includes/admin.php:356 includes/admin.php:374 includes/dashboard.php:1094 includes/insights.php:1023
+#: includes/post-job.php:686 includes/post-types.php:82
 msgid "Workers"
 msgstr ""
 
@@ -5876,6 +6269,7 @@ msgid "Years of experience"
 msgstr ""
 
 #: includes/admin.php:564 includes/gift.php:512 includes/hiring-request.php:681
+#: includes/insights.php:1371 includes/insights.php:594
 msgid "Yes"
 msgstr ""
 
@@ -5967,16 +6361,21 @@ msgstr ""
 
 #: includes/app-version.php:278 includes/apple-signin.php:172 includes/email-check.php:705
 #: includes/email-check.php:761 includes/gift.php:547 includes/gift.php:587 includes/google-signin.php:196
-#: includes/hiring-request.php:513 includes/job-alerts.php:896 includes/posted-for.php:456
-#: includes/rich-manu.php:434 includes/verify-requests.php:554
+#: includes/hiring-request.php:513 includes/indexing-api.php:873 includes/insights.php:734
+#: includes/job-alerts.php:896 includes/posted-for.php:456 includes/rich-manu.php:434
+#: includes/verify-requests.php:554
 msgid "You cannot do that."
+msgstr ""
+
+#: includes/insights.php:549
+msgid "You cannot export this."
 msgstr ""
 
 #: includes/ratings.php:358
 msgid "You cannot rate yourself."
 msgstr ""
 
-#: includes/not-confirmed.php:187
+#: includes/indexing-api.php:1026 includes/insights.php:940 includes/not-confirmed.php:187
 msgid "You cannot see this page."
 msgstr ""
 
@@ -6058,7 +6457,7 @@ msgid "You looked them up %s ago"
 msgstr ""
 
 #. translators: %s: worker name
-#: includes/push.php:475
+#: includes/push.php:480
 msgid "You looked up %s recently. Telling us what happened lets you both rate each other."
 msgstr ""
 
@@ -6187,7 +6586,7 @@ msgstr ""
 msgid "Your profile is hidden until you confirm your email"
 msgstr ""
 
-#: includes/push.php:361
+#: includes/push.php:366
 msgid "Your profile is live"
 msgstr ""
 
@@ -6262,6 +6661,14 @@ msgstr ""
 #. translators: 1: iPhone version or a dash, 2: Android version or a dash.
 #: includes/app-version.php:309
 msgid "iPhone: %1$s. Android: %2$s. Anybody below those is being stopped."
+msgstr ""
+
+#: includes/indexing-api.php:1185
+msgid "it changed"
+msgstr ""
+
+#: includes/indexing-api.php:1185
+msgid "it is gone"
 msgstr ""
 
 #: includes/past-jobs.php:296
