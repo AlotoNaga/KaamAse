@@ -55,7 +55,7 @@
  * notification is the most casual channel there is.
  *
  * @package KaamaseCore
- * @version 1.5.0
+ * @version 1.6.0
  * @since   1.3.0
  */
 
@@ -336,19 +336,41 @@ function kaamase_push_contact_revealed( $post_id, $user_id ) {
 
 	$who = get_userdata( $user_id );
 
-	kaamase_push_to_user(
-		$owner,
-		__( 'Somebody has your number', 'kaamase-core' ),
-		sprintf(
-			/* translators: %s: name of the person who looked them up */
-			__( '%s looked you up on Kaam Ase. They may call you.', 'kaamase-core' ),
-			$who ? $who->display_name : __( 'An employer', 'kaamase-core' )
-		),
-		array(
-			'type' => 'contact_revealed',
-			'id'   => (int) $post_id,
-		)
-	);
+	/*
+	 * Written in the owner's language, not the looker's.
+	 *
+	 * The request running here belongs to whoever looked the number up,
+	 * so without this the sentence is built in that person's language
+	 * and then sent to somebody else. The one person it is for is the
+	 * only one whose language was not consulted.
+	 */
+	$send = function () use ( $owner, $who, $post_id ) {
+
+		kaamase_push_to_user(
+				$owner,
+				__( 'Somebody has your number', 'kaamase-core' ),
+				sprintf(
+					/* translators: %s: name of the person who looked them up */
+					__( '%s looked you up on Kaam Ase. They may call you.', 'kaamase-core' ),
+					$who ? $who->display_name : __( 'An employer', 'kaamase-core' )
+				),
+			array(
+				'type' => 'contact_revealed',
+				'id'   => (int) $post_id,
+			)
+		);
+	};
+
+	/*
+	 * Guarded, because a notification going out in the wrong language
+	 * is a disappointment and a fatal on a live page is not. Every
+	 * cross file call on this platform is written this way.
+	 */
+	if ( function_exists( 'kaamase_locale_write_to' ) ) {
+		kaamase_locale_write_to( $owner, $send );
+	} else {
+		$send();
+	}
 }
 add_action( 'kaamase_contact_revealed', 'kaamase_push_contact_revealed', 10, 2 );
 
@@ -361,12 +383,30 @@ add_action( 'kaamase_contact_revealed', 'kaamase_push_contact_revealed', 10, 2 )
  */
 function kaamase_push_verified( $user_id ) {
 
-	kaamase_push_to_user(
-		$user_id,
-		__( 'Your profile is live', 'kaamase-core' ),
-		__( 'Employers across Nagaland can find you now. Set yourself available when you are free for work.', 'kaamase-core' ),
-		array( 'type' => 'verified' )
-	);
+	/*
+	 * Somebody on the staff approved this, from the admin, in English.
+	 * The person being congratulated is not in that request at all.
+	 */
+	$send = function () use ( $user_id ) {
+
+		kaamase_push_to_user(
+			$user_id,
+			__( 'Your profile is live', 'kaamase-core' ),
+			__( 'Employers across Nagaland can find you now. Set yourself available when you are free for work.', 'kaamase-core' ),
+			array( 'type' => 'verified' )
+		);
+	};
+
+	/*
+	 * Guarded, because a notification going out in the wrong language
+	 * is a disappointment and a fatal on a live page is not. Every
+	 * cross file call on this platform is written this way.
+	 */
+	if ( function_exists( 'kaamase_locale_write_to' ) ) {
+		kaamase_locale_write_to( $user_id, $send );
+	} else {
+		$send();
+	}
 }
 add_action( 'kaamase_user_verified', 'kaamase_push_verified' );
 
@@ -472,20 +512,34 @@ function kaamase_push_hire_questions() {
 		 *
 		 * Still no phone number, here or in any other notification.
 		 */
-		kaamase_push_to_user(
-			$row->ID,
-			__( 'Did you hire them?', 'kaamase-core' ),
-			sprintf(
-				/* translators: %s: worker name */
-				__( 'You looked up %s recently. Telling us what happened lets you both rate each other.', 'kaamase-core' ),
-				$name
-			),
-			array(
-				'type' => 'hire_question',
-				'id'   => (int) $first['post_id'],
-				'name' => (string) $name,
-			)
-		);
+		/*
+		 * This one runs on the nightly task, where there is no person
+		 * and therefore no language anywhere in the request. Everybody
+		 * asked would get English unless their account is read.
+		 */
+		$send = function () use ( $row, $name, $first ) {
+
+			kaamase_push_to_user(
+				$row->ID,
+				__( 'Did you hire them?', 'kaamase-core' ),
+				sprintf(
+					/* translators: %s: worker name */
+					__( 'You looked up %s recently. Telling us what happened lets you both rate each other.', 'kaamase-core' ),
+					$name
+				),
+				array(
+					'type' => 'hire_question',
+					'id'   => (int) $first['post_id'],
+					'name' => (string) $name,
+				)
+			);
+		};
+
+		if ( function_exists( 'kaamase_locale_write_to' ) ) {
+			kaamase_locale_write_to( $row->ID, $send );
+		} else {
+			$send();
+		}
 
 		/*
 		 * Only the one that was asked is marked as asked.
@@ -802,6 +856,19 @@ if ( ! function_exists( 'kaamase_milestone_send' ) ) {
 			return false;
 		}
 
+		/*
+		 * The pair rather than a closure here, because what follows is
+		 * three branches and a send and wrapping it would bury the
+		 * wording. There is no return between here and the restore
+		 * below, which is the condition for using the pair at all.
+		 *
+		 * Hourly task, so again there is no person in the request. And
+		 * number_format_i18n is inside the switch on purpose: which
+		 * digits a figure is written in is part of the language too.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $owner );
+
 		$count = number_format_i18n( $figure );
 
 		if ( 'kaamase_job' === $post->post_type ) {
@@ -863,6 +930,10 @@ if ( ! function_exists( 'kaamase_milestone_send' ) ) {
 				'count' => $figure,
 			)
 		);
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
 
 		return true;
 	}

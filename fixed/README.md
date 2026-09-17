@@ -4152,6 +4152,200 @@ written standard, and it is normally written in Roman letters here rather than i
 a script. Somebody who speaks it will need to read what is produced before it
 goes anywhere near the site.
 
+## 66. Nagamese
+
+The same job as Hindi, in the language two Nagas from different villages
+actually use to talk to each other. Same coverage, same count, same checks.
+
+| Copy this file | Into this folder |
+| --- | --- |
+| `fixed/kaamase/languages/nag.mo` and `.po` | `wp-content/themes/kaamase/languages/` |
+| `fixed/kaamase-pay/languages/kaamase-pay-nag.mo` and `.po` | `wp-content/plugins/kaamase-pay/languages/` |
+| `fixed/kaamase-core/languages/kaamase-core-nag.mo` and `.po` | `wp-content/plugins/kaamase-core/languages/` |
+
+### `nag`, and why WordPress will never offer it
+
+`nag` is ISO 639-3 for Naga Pidgin, which is what Nagamese is called in the
+standards. It is not a locale WordPress ships, so **it does not appear in
+Settings → Site Language and never will.** That is not a fault to be worked
+around; section 67 simply stops asking WordPress which language to serve.
+
+### Written the way it is written here
+
+Roman letters, not a script, because that is how Nagamese is written in
+Nagaland — on shop boards, in WhatsApp, in the newspaper. The grammar follows a
+real Nagamese news article rather than a grammar book: `pra` marks who did it,
+`ke` who it was done to, `te` where, `laka` whose, `khan` makes a plural, `-shey`
+puts it in the past.
+
+**English words stay English.** *Profile*, *district*, *password*, *employer*,
+*register* are the words people actually use in a Nagamese sentence, and
+inventing replacements would produce something nobody says.
+
+> `Kaam Ase te employer khan pra apni laka profile 100 bar khulishey.`
+
+That is a real string out of the compiled file — the milestone notification at
+100 opens.
+
+### The same checks as Hindi
+
+**1,228 strings**, same three files, **zero placeholder mismatches**, every `.mo`
+parsed back the way gettext reads it. The 923 owner-only strings are left in
+English for the same reason as before.
+
+### It needs a Nagamese reader
+
+Nagamese has no settled written standard, and this was built by following one
+sample closely rather than by speaking it. The wording will need going over by
+somebody who does. The `.po` files are plain text and each string sits next to
+its English, so correcting one is editing one line — and `translations/nag-*.json`
+is where a correction should go so it survives the next rebuild.
+
+## 67. Letting people choose the language, and the notifications that exposed
+
+Sections 64 to 66 put 2,456 translated strings on the server. Nobody had seen a
+single one of them, because there was no way to ask for a language.
+
+This is that way, plus a fault it uncovered that had been there since the first
+notification was ever sent.
+
+Section 65 called this "the next piece of work, and it is small next to this
+one". The switcher itself was. What it turned over was not, and that half is
+below first because it is the half that reaches people who never open the
+website.
+
+### The fault first, because it is the bigger half
+
+**Nothing on this platform had ever switched language per person.**
+`switch_to_locale()` appeared nowhere in the theme, the core plugin or the
+payment plugin. Every email and every push went out in whatever language the
+request that triggered it happened to be in.
+
+That sounds harmless while everybody is in English. It is not, and the shape of
+the bug is worth stating plainly, because it is the kind that survives testing:
+
+> An employer reading in Hindi looks up a worker's number. `push.php` writes
+> *"Somebody has your number"* and sends it to the worker. The sentence is built
+> in the **employer's** language. The one person who will read it is the only
+> one whose language was never consulted.
+
+Same for anything sent from a scheduled task, where there is no person in the
+request at all, and anything the owner triggers from the admin, where the
+request is in English by definition. That covers: the number request and its
+answer, the profile-live notice, the hire question, the milestone notice, the
+promotion notices, the retention notice, the job-went-live email, the hiring
+approval, both Rich Manu emails, the payment receipt, the expiry warning and the
+failed-payment notice.
+
+Sixteen send sites across ten files, all now built inside
+`kaamase_locale_write_to()` or between a `kaamase_locale_switch_to_user()` and
+its restore.
+
+**A reader who has never chosen gets the SITE's language, never the language of
+whoever triggered it.** This was found by a test, and it matters: standing down
+and using the request's language means the same worker gets Hindi on Monday and
+Nagamese on Tuesday depending on who looked them up, which reads as a broken
+platform rather than a multilingual one.
+
+`date_i18n()` and `number_format_i18n()` sit inside the switch with the words.
+Which digits a figure is written in, and how a date is spelled, are part of a
+language too — and the promotion notice's end date is the fact somebody who has
+paid will hold us to.
+
+### `includes/locale.php`
+
+One new file, eight sections, no new plugin. The whole decision is a
+`determine_locale` filter, in this order:
+
+| | What | Why it wins |
+| --- | --- | --- |
+| 1 | `?kaamase_lang=` in the address | Somebody just clicked |
+| 2 | `X-Kaamase-Locale` header | What is on that phone's screen right now |
+| 3 | The account | Follows them between devices, and an email can read it |
+| 4 | The cookie | This browser, signed out |
+| 5 | The site's language | Nobody has chosen |
+
+It stands down in two places on purpose: **admin screens**, because the owner
+reads English and the admin strings were deliberately never translated, and
+**during a `switch_to_locale()`**, because that is somebody writing to one named
+person and overriding it would quietly undo the whole repair above.
+
+### Three traps, and what was done about each
+
+**The page cache would have broken it silently.** LiteSpeed answers without
+starting PHP, so the first visitor to a page decides what everybody else gets.
+One person reading in Hindi and the front page is Hindi for the whole state.
+Nothing in the error log, and invisible to the owner, who is signed in and never
+served from store. Two answers, both used: the `litespeed_vary_cookies` filter
+so LiteSpeed keeps one copy per language, and — because that filter works by
+writing rewrite rules and can fail silently — **a translated page is not stored
+at all**. English readers, who are nearly everybody, keep a fully cached site.
+Once the vary is confirmed working live, `kaamase_locale_cache_translated` turns
+the second one off and the speed comes back.
+
+**No language in the address.** No `/hi/`, no `hreflang`, one address per job for
+ever. Google is explicit that translating only the template is legitimate and
+wants `hreflang` for it — and it is still wrong here. Google decides a page's
+language by reading it, and the readable part of a job page is the employer's own
+words, so a Hindi address would hold an English job and be judged an English page
+anyway. What it would certainly do is turn every job into three addresses, and
+section 57 has two hundred submissions a day to spend. Sixty-six jobs a day
+instead of two hundred, to buy nothing.
+
+**The switcher links carry `rel="nofollow"` and redirect back to a clean
+address.** Without the redirect, the first person to paste a Hindi link into a
+WhatsApp group sets the language for everybody who taps it.
+
+### Where somebody finds it
+
+Top right of the header on a wide screen, as a globe and two letters. In the menu
+drawer on a phone, spelled out, because the header control is hidden below the
+large breakpoint and the drawer is where most of this platform actually is. In
+the footer. And on the dashboard, where there is room to say the thing nobody
+would guess — that it changes what we write to you, not only what you read.
+
+No JavaScript in any of them. A `<details>` element and three links.
+
+**The language names are never translated.** English, हिन्दी, Nagamese, each in
+its own script with its own `lang` attribute, in every one of the three
+languages. Somebody who reads only Hindi is looking at a page of English; the
+word they can find is हिन्दी. A language menu is the only menu on a website that
+must not be translated.
+
+### What the app gets
+
+`GET /kaamase/v1/locale` — open to anybody, so the app can draw a language
+screen before somebody has an account. `POST /kaamase/v1/locale` — signed in,
+saves the choice to the account. And `locale` plus `locales` on `/me`, so the
+language screen costs no extra request on a cold start.
+
+**`Accept-Language` is deliberately ignored.** The app has its own language menu
+and its own translated screens; if the server read the phone's system language
+while the app read its own setting, somebody who set the app to English on a
+Hindi phone would get English screens with Hindi sentences inside them. One of
+the two has to be in charge and it has to be the one the person chose. The same
+reasoning is why a Hindi phone does not silently get a Hindi website.
+
+### The app's screens are not translated by any of this
+
+Worth saying loudly. A `.mo` file is read by PHP on this server and the phone
+never sees one. The 2,456 strings cover the website and everything the server
+*writes* — notifications, emails, the text it hands over ready to display. Every
+button, tab and error message inside the app is a string in the app's own code
+and needs its own Hindi and Nagamese there.
+
+### Tested
+
+83 assertions across twenty scenarios, each in its own process because the
+resolver caches its answer in a static and `DONOTCACHEPAGE` is a constant — two
+scenarios in one process would be a lie. The real `.mo` files are loaded, so the
+tests prove sentences come out in Nagamese rather than that a flag was set.
+
+The one that matters is end to end: a Hindi employer looks up a Nagamese worker,
+the real `kaamase_push_contact_revealed()` runs, and what the phone is handed is
+`Kunba logote apni laka number ase` — while the employer's own request is still
+Hindi afterwards and nothing is left switched.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

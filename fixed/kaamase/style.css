@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.5.0
+Version: 1.6.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -2293,6 +2293,155 @@ body.has-tabbar .ka-actionbar {
 /* The offer at the foot of the page. Amber, because it is the only
    thing here asking for anything, and it should look like it. */
 .ka-looked__more { border-left: 3px solid var(--ka-amber-500); }
+
+
+/* ==========================================================================
+   LANGUAGE
+
+   The one control on a website that must never be translated. Somebody
+   looking for it cannot read the page it is on, so the words in it are
+   always English, हिन्दी and Nagamese, each in its own script, whatever
+   language the rest of the page is currently in.
+
+   Two shapes. A dropdown at the top of the page where there is no room,
+   and a plain row of links in the drawer, the footer and the dashboard
+   where there is. No script in either: a details element opens on its
+   own, and links are links.
+   ========================================================================== */
+
+.ka-lang { min-width: 0; }
+
+/* --------------------------------------------------------------------------
+   The dropdown, for the header
+   -------------------------------------------------------------------------- */
+
+.ka-lang--menu { position: relative; }
+
+.ka-lang--menu > summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ka-1);
+  min-height: var(--ka-tap);
+  padding-inline: var(--ka-3);
+  border: 1px solid var(--ka-border-firm);
+  border-radius: var(--ka-radius);
+  background: var(--ka-surface);
+  color: var(--ka-text-soft);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  line-height: 1;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ka-lang--menu > summary::-webkit-details-marker { display: none; }
+.ka-lang--menu > summary::marker { content: ""; }
+
+.ka-lang--menu[open] > summary { border-color: var(--ka-green-600); color: var(--ka-text); }
+
+.ka-lang__globe { flex: none; }
+
+/* The current language as two or three characters. EN, हि, NAG. Enough
+   to tell somebody which one they are in without spending a word of
+   header on it. */
+.ka-lang__now { white-space: nowrap; }
+
+.ka-lang--menu .ka-lang__list {
+  position: absolute;
+  z-index: var(--ka-z-toast);
+  top: calc(100% + var(--ka-2));
+  right: 0;
+  width: max-content;
+  min-width: 10rem;
+  margin: 0;
+  padding: var(--ka-2);
+  list-style: none;
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius);
+  box-shadow: var(--ka-shadow-lg);
+}
+
+.ka-lang--menu .ka-lang__link {
+  display: block;
+  min-height: var(--ka-tap);
+  padding: var(--ka-3);
+  border-radius: var(--ka-radius-sm);
+  color: var(--ka-text);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.ka-lang--menu .ka-lang__link:hover { background: var(--ka-ink-100); }
+
+/* The one they are already reading, marked with weight and a tick of
+   green rather than by removing it. Taking the current language out of
+   the list is how somebody loses their place: the menu they opened has
+   different contents every time. */
+.ka-lang--menu .ka-lang__link.is-current {
+  font-weight: var(--ka-weight-bold);
+  box-shadow: inset 3px 0 0 var(--ka-green-600);
+}
+
+/* --------------------------------------------------------------------------
+   The row, for the drawer, the footer and the dashboard
+   -------------------------------------------------------------------------- */
+
+.ka-lang--list .ka-lang__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ka-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ka-lang--list .ka-lang__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ka-tap);
+  padding-inline: var(--ka-4);
+  border: 1px solid var(--ka-border-firm);
+  border-radius: var(--ka-radius-pill);
+  color: var(--ka-text-soft);
+  text-decoration: none;
+  font-size: var(--ka-text-sm);
+  line-height: 1;
+}
+
+.ka-lang--list .ka-lang__link.is-current {
+  background: var(--ka-green-700);
+  border-color: var(--ka-green-700);
+  color: var(--ka-text-invert);
+  font-weight: var(--ka-weight-medium);
+}
+
+/* In the footer the ground is dark green, so the same row needs the
+   opposite end of the scale to stay readable. */
+.ka-lang--footer .ka-lang__link {
+  border-color: rgba(255, 255, 255, 0.28);
+  color: var(--ka-ink-200);
+}
+
+.ka-lang--footer .ka-lang__link.is-current {
+  background: var(--ka-white);
+  border-color: var(--ka-white);
+  color: var(--ka-green-900);
+}
+
+/* Full width rows in the drawer. A thumb reaching across a phone should
+   not have to find a pill. */
+@media (max-width: 720px) {
+  .ka-lang--drawer .ka-lang__list { display: grid; grid-template-columns: 1fr; }
+  .ka-lang--drawer .ka-lang__link { justify-content: center; border-radius: var(--ka-radius); }
+}
+
+/* Nothing to switch to on paper. */
+@media print {
+  .ka-lang { display: none !important; }
+}
 
 
 /* End of Kaam Ase design system v1.0.0 */

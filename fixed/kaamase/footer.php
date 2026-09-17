@@ -19,7 +19,7 @@
  * the subject of a Facebook post.
  *
  * @package Kaamase
- * @version 1.0.2
+ * @version 1.1.0
  * @since   1.0.0
  */
 
@@ -166,6 +166,27 @@ do_action( 'kaamase_after_main' );
 		 * -------------------------------------------------------------- */
 		?>
 		<div class="ka-footer__legal">
+
+			<?php
+			/*
+			 * The footer is the second place people look for this, after
+			 * the top of the page, and the first place they look when
+			 * the top of the page did not have it.
+			 *
+			 * It is above the legal block rather than inside it on
+			 * purpose. Somebody who cannot read the page is not going to
+			 * find a language control by reading past three paragraphs
+			 * about GST registration.
+			 */
+			if ( function_exists( 'kaamase_locale_picker' ) ) {
+				echo kaamase_locale_picker( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					array(
+						'style' => 'list',
+						'class' => 'ka-lang--footer ka-mb-4',
+					)
+				);
+			}
+			?>
 
 			<?php if ( has_nav_menu( 'legal' ) ) : ?>
 				<nav class="ka-cluster ka-mb-4" aria-label="<?php esc_attr_e( 'Legal', 'kaamase' ); ?>">

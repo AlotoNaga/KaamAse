@@ -32,7 +32,7 @@
  * stays.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 
@@ -660,6 +660,18 @@ if ( ! function_exists( 'kaamase_send_retention_notice' ) ) {
 			return;
 		}
 
+		/*
+		 * Written on a scheduled task, months after this person last
+		 * opened anything, with no request of theirs anywhere near it.
+		 * Their account is the only record of what they read.
+		 *
+		 * The switch is held until after wp_mail rather than dropped
+		 * once the words are built, because the headers wp_mail puts on
+		 * a message are built inside it and are part of the message.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $user_id );
+
 		$site = get_bloginfo( 'name', 'display' );
 
 		if ( 'unpublished' === $stage ) {
@@ -708,6 +720,10 @@ if ( ! function_exists( 'kaamase_send_retention_notice' ) ) {
 		}
 
 		wp_mail( $user->user_email, $subject, $body );
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
 	}
 }
 

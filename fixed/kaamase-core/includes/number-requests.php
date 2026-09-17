@@ -46,7 +46,7 @@
  * wrong.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.6.0
  */
 
@@ -598,22 +598,43 @@ if ( ! function_exists( 'kaamase_number_tell_owner' ) ) {
 			return;
 		}
 
-		$who = kaamase_number_describe( $asker );
+		$owner = (int) $post->post_author;
 
-		kaamase_number_tell(
-			(int) $post->post_author,
-			__( 'Somebody wants your number', 'kaamase-core' ),
-			sprintf(
-				/* translators: %s: who is asking, with their district when known */
-				__( '%s has asked for your phone number. They may want to hire you. Open Kaam Ase to say yes or no.', 'kaamase-core' ),
-				$who
-			),
-			array(
-				'type'    => 'number_request',
-				'profile' => (int) $post_id,
-			),
-			kaamase_page_url( 'dashboard' )
-		);
+		/*
+		 * The worker's language, not the asker's. This is the asker's
+		 * request; the worker is somewhere else entirely.
+		 *
+		 * kaamase_number_describe() is inside the switch and has to be.
+		 * It builds a sentence of its own about who is asking and where
+		 * from, and a Nagamese notification carrying an English clause
+		 * in the middle of it is worse than an English one.
+		 */
+		$send = function () use ( $owner, $asker, $post_id ) {
+
+			$who = kaamase_number_describe( $asker );
+
+			kaamase_number_tell(
+				$owner,
+				__( 'Somebody wants your number', 'kaamase-core' ),
+				sprintf(
+					/* translators: %s: who is asking, with their district when known */
+					__( '%s has asked for your phone number. They may want to hire you. Open Kaam Ase to say yes or no.', 'kaamase-core' ),
+					$who
+				),
+				array(
+					'type'    => 'number_request',
+					'profile' => (int) $post_id,
+				),
+				kaamase_page_url( 'dashboard' )
+			);
+		};
+
+		// Guarded like every other cross file call here.
+		if ( function_exists( 'kaamase_locale_write_to' ) ) {
+			kaamase_locale_write_to( $owner, $send );
+		} else {
+			$send();
+		}
 	}
 }
 
@@ -638,41 +659,57 @@ if ( ! function_exists( 'kaamase_number_tell_asker' ) ) {
 			return;
 		}
 
-		$name = get_the_title( $post_id );
+		/*
+		 * And here the other way round: the worker decided, the asker
+		 * reads it. A closure rather than the switch and restore pair
+		 * because this branches and returns early, and an early return
+		 * between a switch and its restore leaves the whole rest of the
+		 * request writing in somebody else's language.
+		 */
+		$send = function () use ( $asker, $post_id, $decision ) {
 
-		if ( 'approved' === $decision ) {
+			$name = get_the_title( $post_id );
+
+			if ( 'approved' === $decision ) {
+
+				kaamase_number_tell(
+					$asker,
+					__( 'You can see the number now', 'kaamase-core' ),
+					sprintf(
+						/* translators: %s: the worker's name */
+						__( '%s has shared their phone number with you. Open their profile to see it.', 'kaamase-core' ),
+						$name
+					),
+					array(
+						'type'    => 'number_approved',
+						'profile' => (int) $post_id,
+					),
+					(string) get_permalink( $post_id )
+				);
+
+				return;
+			}
 
 			kaamase_number_tell(
 				$asker,
-				__( 'You can see the number now', 'kaamase-core' ),
+				__( 'Your request was turned down', 'kaamase-core' ),
 				sprintf(
 					/* translators: %s: the worker's name */
-					__( '%s has shared their phone number with you. Open their profile to see it.', 'kaamase-core' ),
+					__( '%s has decided not to share their phone number.', 'kaamase-core' ),
 					$name
 				),
 				array(
-					'type'    => 'number_approved',
+					'type'    => 'number_rejected',
 					'profile' => (int) $post_id,
-				),
-				(string) get_permalink( $post_id )
+				)
 			);
+		};
 
-			return;
+		if ( function_exists( 'kaamase_locale_write_to' ) ) {
+			kaamase_locale_write_to( $asker, $send );
+		} else {
+			$send();
 		}
-
-		kaamase_number_tell(
-			$asker,
-			__( 'Your request was turned down', 'kaamase-core' ),
-			sprintf(
-				/* translators: %s: the worker's name */
-				__( '%s has decided not to share their phone number.', 'kaamase-core' ),
-				$name
-			),
-			array(
-				'type'    => 'number_rejected',
-				'profile' => (int) $post_id,
-			)
-		);
 	}
 }
 

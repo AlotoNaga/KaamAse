@@ -32,7 +32,7 @@
  * else still behaves exactly as it did.
  *
  * @package KaamasePay
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.5.0
  */
 
@@ -105,6 +105,24 @@ if ( ! function_exists( 'kaamase_pay_send_receipt' ) ) {
 			return;
 		}
 
+		/*
+		 * A receipt is written by the payment gateway's own call to this
+		 * server, minutes later, with nobody signed in. The person who
+		 * paid has no request here for their language to be read from.
+		 *
+		 * This is also the message most worth getting right. Somebody
+		 * has just handed over money and this is the platform's one
+		 * written acknowledgement of it.
+		 */
+		/*
+		 * Guarded rather than called plainly, because this is a separate
+		 * plugin from the one that holds the language layer and a
+		 * receipt must still go out when that plugin is off. False when
+		 * it is missing, so nothing is restored that was never switched.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $user_id );
+
 		$site    = get_bloginfo( 'name' );
 		$expires = kaamase_pay_expires( $user_id );
 		$endless = function_exists( 'kaamase_pay_is_endless' ) && kaamase_pay_is_endless( $expires );
@@ -171,6 +189,10 @@ if ( ! function_exists( 'kaamase_pay_send_receipt' ) ) {
 			),
 			implode( "\n", $lines )
 		);
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
 	}
 }
 add_action( 'kaamase_pay_granted', 'kaamase_pay_send_receipt', 10, 3 );
@@ -286,6 +308,20 @@ if ( ! function_exists( 'kaamase_pay_send_warning' ) ) {
 			return false;
 		}
 
+		/*
+		 * And this one runs on a daily task, so there is no request at
+		 * all. date_i18n sits inside the switch with the rest: the date
+		 * a plan ends is the fact this whole message exists to carry.
+		 */
+		/*
+		 * Guarded rather than called plainly, because this is a separate
+		 * plugin from the one that holds the language layer and a
+		 * receipt must still go out when that plugin is off. False when
+		 * it is missing, so nothing is restored that was never switched.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $user_id );
+
 		$expires = kaamase_pay_expires( $user_id );
 		$plan    = kaamase_pay_plan( (string) get_user_meta( $user_id, KAAMASE_PAY_PLAN_KEY, true ) );
 		$site    = get_bloginfo( 'name' );
@@ -339,6 +375,10 @@ if ( ! function_exists( 'kaamase_pay_send_warning' ) ) {
 		 * it up again, and a renewal moves the date so the next ending
 		 * gets its own warning.
 		 */
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
+
 		if ( $sent ) {
 			update_user_meta( $user_id, KAAMASE_PAY_REMINDED_KEY, $expires );
 		}

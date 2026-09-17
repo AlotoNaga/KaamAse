@@ -62,7 +62,7 @@
  * should be right and running before the first person sees a mark.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.10.0
  */
 
@@ -926,6 +926,19 @@ if ( ! function_exists( 'kaamase_promo_tell' ) ) {
 			return;
 		}
 
+		/*
+		 * In the advertiser's language.
+		 *
+		 * Everything that calls this is somebody else's request: the
+		 * owner starting a run from the admin, or the daily sweep with
+		 * nobody in it at all. This is also the one notification on the
+		 * platform that goes to a person who has paid money, and the
+		 * date in it is the thing they will hold us to, so date_i18n
+		 * belongs inside the switch as much as the wording does.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $owner );
+
 		$name = (string) get_the_title( $post );
 		$url  = function_exists( 'kaamase_page_url' ) ? (string) kaamase_page_url( 'dashboard' ) : '';
 
@@ -981,6 +994,10 @@ if ( ! function_exists( 'kaamase_promo_tell' ) ) {
 			),
 			$url
 		);
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
 	}
 }
 

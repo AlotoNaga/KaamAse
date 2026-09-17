@@ -25,7 +25,7 @@
  * month for one payment.
  *
  * @package KaamasePay
- * @version 1.0.1
+ * @version 1.1.0
  * @since   1.0.0
  */
 
@@ -417,6 +417,13 @@ function kaamase_pay_notify_failure( $user_id ) {
 
 	update_user_meta( $user_id, 'kaamase_pay_failure_notified', time() );
 
+	/*
+	 * Straight off a gateway callback, same as the receipt. Guarded the
+	 * same way and for the same reason.
+	 */
+	$switched = function_exists( 'kaamase_locale_switch_to_user' )
+		&& kaamase_locale_switch_to_user( $user_id );
+
 	$expires = (int) get_user_meta( $user_id, KAAMASE_PAY_EXPIRES_KEY, true );
 
 	$lines = array(
@@ -451,6 +458,10 @@ function kaamase_pay_notify_failure( $user_id ) {
 		),
 		implode( "\n", $lines )
 	);
+
+	if ( $switched ) {
+		kaamase_locale_restore();
+	}
 }
 
 /**

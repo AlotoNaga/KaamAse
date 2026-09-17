@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kaam Ase Payments
  * Description: Razorpay payments for Kaam Ase. One time packs, monthly and yearly subscriptions, priced from the admin screen. Deactivating this plugin returns every account to the free allowances in Kaam Ase Core, without locking anybody out.
- * Version:     1.4.2
+ * Version:     1.5.0
  * Requires PHP: 8.0
  * Author:      Nagaland Me
  * Text Domain: kaamase-pay

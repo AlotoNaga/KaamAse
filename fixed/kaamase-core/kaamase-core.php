@@ -3,7 +3,7 @@
  * Plugin Name:       Kaam Ase Core
  * Plugin URI:        https://kaamase.com
  * Description:       The data layer for Kaam Ase. Workers, teams, employers, jobs, trades, districts, roles and registration. This plugin owns everything that must survive a theme change.
- * Version:           1.4.2
+ * Version:           1.5.0
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            Nagaland Me

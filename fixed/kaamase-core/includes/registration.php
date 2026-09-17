@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.0.1
+ * @version 1.1.0
  * @since   1.0.0
  *
  * Changelog
@@ -672,6 +672,18 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 			home_url( '/' )
 		);
 
+		/*
+		 * Usually this IS their own request, and their language is
+		 * already loaded. Not always: insights.php sends this again to
+		 * accounts that never confirmed, from the owner's screen, and
+		 * rest-api.php sends it for the app. The switch costs nothing
+		 * when it is already the right language and is the difference
+		 * between a confirmation somebody can read and one they cannot
+		 * the rest of the time.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $user_id );
+
 		$site = get_bloginfo( 'name', 'display' );
 
 		$subject = sprintf(
@@ -699,7 +711,13 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 			)
 		);
 
-		return wp_mail( $user->user_email, $subject, $body );
+		$sent = wp_mail( $user->user_email, $subject, $body );
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
+
+		return $sent;
 	}
 }
 
