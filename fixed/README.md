@@ -3755,6 +3755,76 @@ export was tested with notices switched on to prove the output is clean.
 
 ⚠️ **Copy `insights.php` again.** This is its third revision.
 
+## 61. The app's half of the promotions — phase 3, server side
+
+One file, `promote.php` again. The app release is a separate piece of work in the
+app's own repository; this is everything the server owes it, and it is safe to
+upload before the app is ready.
+
+**Nothing here changes what an app that has not been updated sees.** Both
+additions are additive: an older build ignores a key it does not know, and it
+never calls a route it has never heard of.
+
+### The mark, in the listings the app already reads
+
+- **Worker and team:** `badges.promoted`, a boolean, beside `vouched` and
+  `verified` — a third key in an object the app is already reading.
+- **Job:** `promoted`, a boolean, at the top level beside `urgent`.
+
+The two shapes keep their flags in different places and that difference is older
+than this feature. Matching each one is less surprising to somebody who already
+knows these payloads than inventing a third arrangement for the sake of symmetry.
+
+Both are always present, never absent, and always a real boolean.
+
+### `GET /kaamase/v1/promoted`
+
+```
+GET /wp-json/kaamase/v1/promoted?kind=worker|job&district=<slug>
+→ { "item": { …a list-shaped card… } }   or   { "item": null }
+```
+
+A route of its own rather than another key on the listing responses, for three
+reasons. The list envelope in `rest-api.php` is shared by every list on the
+platform, and adding to it would touch screens that have nothing to do with
+advertising. An app that has not been updated never calls this, so nothing
+changes for it. And a slot that is slow or failing must never be able to stop a
+worker seeing a list of jobs, which is exactly what it could do if it travelled
+with them.
+
+Open to anybody, signed in or not. An advertisement shown only to signed-in
+people is one the buyer is not getting what they paid for, and there is nothing
+in the answer a listing page does not already show.
+
+`item` is `null` rather than missing when there is nothing to show. A key that
+comes and goes is a key somebody forgets to check for.
+
+The card is shaped by the same function the lists use, so the app draws it with
+the component it already has.
+
+### What the app has to do that the server cannot
+
+**Not show it twice.** The server does not know what is on the phone's screen. If
+the id in `item` is already in the list the app just fetched, the app skips the
+slot — the card carries its own mark where it stands, and two copies of one card
+on one screen reads as a fault rather than an advertisement.
+
+**Count it.** The slot card should be reported to the views endpoint as `shown`,
+exactly like any other card. That is what turns a week in the slot into a number
+the advertiser can be told on the next call.
+
+### Rotation is exact here
+
+The website sits behind a page cache, so its slot rotates coarsely (section 60).
+The app does not, so a phone asking at eleven and again at twelve gets two
+different advertisers when two have bought the same district. Since the app is
+most of the traffic, this is where the fairness actually lands.
+
+### Asking, from the app
+
+`POST /kaamase/v1/promote` and the `promote` block on `/me` have been there since
+phase 1 (section 59) and are unchanged.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

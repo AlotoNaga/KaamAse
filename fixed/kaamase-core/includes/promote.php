@@ -2219,3 +2219,195 @@ if ( ! function_exists( 'kaamase_promo_slot' ) ) {
 	}
 }
 add_action( 'loop_start', 'kaamase_promo_slot' );
+
+
+/* ==========================================================================
+   10. THE APP'S MARK, AND THE APP'S SLOT
+
+   Phase three's half of the work that belongs on this server. The app
+   release is separate; nothing here waits on it and nothing here breaks
+   an app that has not had it.
+
+   Both additions are additive. An older build reads a listing it does
+   not recognise a key in and carries on, and it simply never calls the
+   slot route, so a phone that has not updated sees the platform exactly
+   as it saw it yesterday.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_promo_shape_worker' ) ) {
+	/**
+	 * Put the mark on a worker or team, for the app.
+	 *
+	 * Inside badges, beside vouched and verified, because that is where
+	 * this shape already keeps its marks. It is a third key in an object
+	 * the app is already reading rather than a new place to look.
+	 *
+	 * @since 1.10.0
+	 * @param array   $out  The shaped listing.
+	 * @param WP_Post $post The listing.
+	 * @return array
+	 */
+	function kaamase_promo_shape_worker( $out, $post ) {
+
+		if ( ! isset( $out['badges'] ) || ! is_array( $out['badges'] ) ) {
+			$out['badges'] = array();
+		}
+
+		$out['badges']['promoted'] = kaamase_promo_is_live( is_object( $post ) ? $post->ID : $post );
+
+		return $out;
+	}
+}
+add_filter( 'kaamase_shape_worker', 'kaamase_promo_shape_worker', 20, 2 );
+
+if ( ! function_exists( 'kaamase_promo_shape_job' ) ) {
+	/**
+	 * Put the mark on a job, for the app.
+	 *
+	 * At the top level next to urgent, because that is where this shape
+	 * keeps its flags. The two shapes differ here and the difference is
+	 * older than this feature; matching each one is less surprising than
+	 * inventing a third arrangement for the sake of symmetry.
+	 *
+	 * @since 1.10.0
+	 * @param array   $out  The shaped listing.
+	 * @param WP_Post $post The listing.
+	 * @return array
+	 */
+	function kaamase_promo_shape_job( $out, $post ) {
+
+		$out['promoted'] = kaamase_promo_is_live( is_object( $post ) ? $post->ID : $post );
+
+		return $out;
+	}
+}
+add_filter( 'kaamase_shape_job', 'kaamase_promo_shape_job', 20, 2 );
+
+if ( ! function_exists( 'kaamase_promo_slot_pick' ) ) {
+	/**
+	 * Which listing takes the slot on a list of a given kind.
+	 *
+	 * The same rules the website's slot follows, with the page's own
+	 * results taken out of it: the app says what it is showing and where,
+	 * and this says what to put above it.
+	 *
+	 * @since 1.10.0
+	 * @param string $kind     worker or job.
+	 * @param string $district District slug, or an empty string for everywhere.
+	 * @return int Listing ID, or 0.
+	 */
+	function kaamase_promo_slot_pick( $kind, $district = '' ) {
+
+		$kind     = 'job' === $kind ? 'job' : 'worker';
+		$district = sanitize_title( (string) $district );
+		$wanted   = array();
+
+		foreach ( kaamase_promo_find( 'live', 100 ) as $post_id ) {
+
+			if ( ! kaamase_promo_is_live( $post_id ) ) {
+				continue;
+			}
+
+			$is_job = 'kaamase_job' === get_post_type( $post_id );
+
+			if ( ( 'job' === $kind ) !== $is_job ) {
+				continue;
+			}
+
+			if ( '' !== $district && kaamase_promo_district( $post_id ) !== $district ) {
+				continue;
+			}
+
+			$wanted[] = (int) $post_id;
+		}
+
+		return kaamase_promo_pick( $wanted );
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot_route' ) ) {
+	/**
+	 * A route of its own, rather than a key on the listing responses.
+	 *
+	 * Three reasons. The listing envelope in rest-api.php is shared by
+	 * every list on the platform and adding to it would touch screens
+	 * that have nothing to do with advertising. An app that has not been
+	 * updated never calls this, so nothing changes for it. And a slot
+	 * that fails or is slow must not be able to stop a worker seeing a
+	 * list of jobs, which is what it would do if it travelled with them.
+	 *
+	 * Open to anybody. An advertisement shown only to signed-in people
+	 * is an advertisement the buyer is not getting what they paid for,
+	 * and there is nothing in the answer that a listing page does not
+	 * already show.
+	 *
+	 * @since 1.10.0
+	 * @return void
+	 */
+	function kaamase_promo_slot_route() {
+
+		if ( ! defined( 'KAAMASE_REST_NS' ) ) {
+			return;
+		}
+
+		register_rest_route(
+			KAAMASE_REST_NS,
+			'/promoted',
+			array(
+				'methods'             => 'GET',
+				'callback'            => 'kaamase_promo_slot_rest',
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'kind'     => array(
+						'type'    => 'string',
+						'enum'    => array( 'worker', 'job' ),
+						'default' => 'worker',
+					),
+					'district' => array(
+						'type'    => 'string',
+						'default' => '',
+					),
+				),
+			)
+		);
+	}
+}
+add_action( 'rest_api_init', 'kaamase_promo_slot_route' );
+
+if ( ! function_exists( 'kaamase_promo_slot_rest' ) ) {
+	/**
+	 * Hand the app the card for the slot, or nothing.
+	 *
+	 * Shaped by the same function the lists use, so the app can draw it
+	 * with the component it already has. item is null rather than absent
+	 * when there is nothing to show, because a key that comes and goes is
+	 * a key somebody forgets to check for.
+	 *
+	 * @since 1.10.0
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	function kaamase_promo_slot_rest( $request ) {
+
+		$kind     = (string) $request->get_param( 'kind' );
+		$district = (string) $request->get_param( 'district' );
+
+		$post_id = kaamase_promo_slot_pick( $kind, $district );
+
+		if ( ! $post_id ) {
+			return rest_ensure_response( array( 'item' => null ) );
+		}
+
+		$post = get_post( $post_id );
+
+		if ( ! $post ) {
+			return rest_ensure_response( array( 'item' => null ) );
+		}
+
+		$item = 'kaamase_job' === $post->post_type
+			? kaamase_shape_job( $post, false )
+			: kaamase_shape_worker( $post, false );
+
+		return rest_ensure_response( array( 'item' => $item ) );
+	}
+}
