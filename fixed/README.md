@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of forty-six files taken from inside them, sixteen brand new
+the patched versions of forty-six files taken from inside them, seventeen brand new
 files, plus three translation templates.
 
 Everything in `fixed/` is meant to be copied up. If a file is in there and not
@@ -81,6 +81,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/app-version.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/hire-claims.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/views-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/promote.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -3511,6 +3512,131 @@ No digest, no weekly summary, no "you are trending". One sentence, one figure,
 once. The list at the top of `push.php` has one more item on it and no more than
 that, and every item on it still earns its place — which is the whole argument
 that file has been making since it was written.
+
+## 59. Promoted listings — phase 1 of 3, and nothing shows yet
+
+One new file, `promote.php`. Nothing existing is edited. After copying it up
+there is a new screen at **Kaam Ase → Promotions**, and a new card on the
+dashboard for anybody with a live profile or an open job.
+
+**Nothing appears on any listing yet, by design.** This phase is the machinery:
+the request, the queue, the call, the button, the expiry and the book. The Ad
+badge comes next on the website, then in the app. `views.php` was built in three
+phases for the same reason — the counting should be right and running before the
+first person sees a number.
+
+### What is being sold, and what is not
+
+A slot. Not a position. `exposure.php` has said this since it was written:
+
+> *"It is not ranking. Nobody is ranked above anybody on merit here, and nothing
+> about paying moves a profile up. A hiring platform that sells position tells an
+> employer that the worker who paid is the better worker, and the employer finds
+> out on the site that this is false."*
+
+So a promotion will never reorder a list. Phase 2 puts one marked card **above**
+the list; the queue underneath stays exactly as `exposure.php` decided it.
+Nobody loses a place because somebody else paid.
+
+That is also what makes it sellable to several agencies at once, which is the
+whole point of building it. Nobody can buy the top of Kaam Ase, because the top
+of Kaam Ase is not for sale. What is for sale is a marked slot, shared between
+whoever bought it.
+
+### The money does not come through the site
+
+Deliberately. Somebody asks, you telephone them, they pay you on Google Pay, and
+you start it by hand. There is no checkout, no gateway, and **no price anywhere
+in the code** — the price is settled on the call, where an agency and a worker
+can be quoted differently without either reading the other's number off a page.
+
+The call is not an inconvenience, it is the product. It is what stops a placement
+racket buying a promoted slot with a card at two in the morning. `job-screening.php`
+opens by naming trafficking as a live risk in this region, and **taking money to
+promote a job is a louder act than hosting one**. The screen says so above the
+first table, with the four things to ask.
+
+### What to do on the screen
+
+1. **Waiting to be rung** — who asked, what for, their number, and when they said
+   to ring. You ring them.
+2. Enter **days**, **₹**, and the **Google Pay reference**, then Start it.
+3. **Running now** shows what is live and how long is left, with **Stop now** on
+   every row.
+4. **Just finished** is the renewal list. Somebody whose week ended yesterday is
+   the easiest call of the day.
+
+### Three things that would otherwise go wrong
+
+**It stops on its day whether or not anything ran.** `kaamase_promo_is_live()`
+reads the clock, not the stored word. The daily sweep only tidies state up and
+sends the message, so a night the task failed costs a notification rather than a
+week of free advertising. This is the same lesson as section 56: the date is
+authoritative, the bookkeeping follows it.
+
+**Days are whole days, in Nagaland's clock.** A week bought at nine at night runs
+to the last second of the seventh day here, not to nine at night. That is what
+anybody would mean saying it out loud, and the only version that survives being
+explained on the phone.
+
+**A job that closes halfway through stops being advertised immediately**, and the
+run is left standing and flagged in red on your screen rather than silently
+cancelled — because the employer has paid for days they are no longer getting,
+and that is a conversation, not a database change.
+
+### The Google Pay reference is not decoration
+
+Every payment on this platform happens between two phones. Without the
+transaction number there is nothing to point at, and *"but I paid you"* becomes
+an argument with no facts in it. The box is on the Start form for that reason.
+
+### The book
+
+Every run ever started is written to one option, with the date, what was sold, to
+whom, for how many days, for how much, and the reference. **Download the book**
+gives you it as a spreadsheet.
+
+It is written from the ledger rather than from the listings on purpose: a job
+binned in May was still paid for in April, and the line has to survive the
+listing being deleted.
+
+The heading counts **from 1 April**, because that is the year an accountant asks
+about. Worth knowing before it arrives: Nagaland is a special category state, so
+a business there must register for GST once service turnover passes **ten lakh**
+in a year — not the twenty lakh that most Indian guidance, written for elsewhere,
+will tell you. Advertising is a service. Ask an accountant before you are near
+that line rather than after.
+
+### Not promoted
+
+**Employer pages.** Nobody is searching for employers, and a promoted slot
+pointing at a company profile is an advertisement for a company rather than a
+job — which is the one thing Google's job posting rules say a listing must never
+be. Workers, teams and jobs only.
+
+### Nothing here touches Google
+
+`schema.php` is not edited and must not be. Google's job content policy prohibits
+ads disguised as job listings and promotional content marked up as `JobPosting`,
+and Google for Jobs has no paid placement at all. The Ad badge and the slot live
+only in your own screens, and a promotion may only ever boost **a real job that
+already exists** — never become a way to buy a listing that is not a job. That
+is what keeps section 57 safe.
+
+### Nothing here touches the tick either
+
+`verify-requests.php` is emphatic that the mark means a telephone call happened.
+An advertisement must never grant or imply it. Different word, different badge,
+no overlap, ever.
+
+### One thing found while building this
+
+`insights.php` calls `fputcsv()` without the escape argument, which PHP 8.4
+deprecates. On a host with `display_errors` on, that notice is printed **into the
+download**, so the spreadsheet arrives with a line of PHP at the top and will not
+open. `promote.php` passes all the arguments and its export was tested with
+notices switched on to prove it. The same one-line fix is worth making in
+`insights.php` — say the word and it will be in the next upload.
 
 ## Not changed, and why
 

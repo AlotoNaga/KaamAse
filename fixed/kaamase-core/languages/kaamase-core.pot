@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-16 18:45+0000\n"
+"POT-Creation-Date: 2026-09-17 07:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -46,6 +46,11 @@ msgstr ""
 #. translators: 1: what was found, 2: district name
 #: includes/indexes.php:602 includes/queries.php:1087
 msgid "%1$s in %2$s"
+msgstr ""
+
+#. translators: 1: job or profile name, 2: the date it ends
+#: includes/promote.php:920
+msgid "%1$s is being promoted on Kaam Ase until %2$s."
 msgstr ""
 
 #. translators: 1: how many jobs, 2: trade, 3: district
@@ -117,7 +122,8 @@ msgstr ""
 
 #. translators: %s: how long ago
 #. translators: %s: human readable time difference
-#: includes/contact.php:1012 includes/hiring-request.php:573
+#. translators: %s: length of time, e.g. "2 days"
+#: includes/contact.php:1012 includes/hiring-request.php:573 includes/promote.php:1538
 msgid "%s ago"
 msgstr ""
 
@@ -190,6 +196,11 @@ msgid_plural "%s jobs open"
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: %s: length of time, e.g. "3 days"
+#: includes/promote.php:1642
+msgid "%s left"
+msgstr ""
+
 #. translators: %s: name of the person who looked them up
 #: includes/push.php:344
 msgid "%s looked you up on Kaam Ase. They may call you."
@@ -240,6 +251,13 @@ msgstr[1] ""
 #: includes/admin.php:813
 msgid "%s profile updated."
 msgid_plural "%s profiles updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of promotions
+#: includes/promote.php:1472
+msgid "%s promotion"
+msgid_plural "%s promotions"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -571,6 +589,10 @@ msgstr ""
 msgid "Add your phone number"
 msgstr ""
 
+#: includes/promote.php:452
+msgid "Add your phone number to your profile. We arrange this over the telephone, so we cannot start without one."
+msgstr ""
+
 #: includes/verify-requests.php:114
 msgid "Add your phone number to your profile. We cannot ring you without one."
 msgstr ""
@@ -748,6 +770,10 @@ msgstr ""
 msgid "Anything to add?"
 msgstr ""
 
+#: includes/promote.php:1027
+msgid "Anything we should know"
+msgstr ""
+
 #: includes/rich-manu.php:517
 msgid "Anything worth remembering"
 msgstr ""
@@ -809,6 +835,10 @@ msgstr ""
 msgid "Are you still looking for work on %s?"
 msgstr ""
 
+#: includes/promote.php:1019
+msgid "Ask about promoting this"
+msgstr ""
+
 #: includes/number-requests.php:76
 msgid "Ask before showing my number"
 msgstr ""
@@ -833,8 +863,13 @@ msgstr ""
 msgid "Ask your host to block PHP execution inside wp-content/uploads. Until that is done, an upload hole becomes a compromised server."
 msgstr ""
 
-#: includes/verify-requests.php:472
+#: includes/promote.php:1500 includes/verify-requests.php:472
 msgid "Asked"
+msgstr ""
+
+#. translators: %s: length they asked for
+#: includes/promote.php:1549
+msgid "Asked for: %s"
 msgstr ""
 
 #: includes/verify-requests.php:403 includes/verify-requests.php:414 includes/verify-requests.php:445
@@ -950,6 +985,10 @@ msgstr ""
 msgid "Beautician"
 msgstr ""
 
+#: includes/promote.php:1022
+msgid "Before we can arrange this:"
+msgstr ""
+
 #: includes/verify-requests.php:266
 msgid "Before we can ring you:"
 msgstr ""
@@ -966,6 +1005,10 @@ msgstr ""
 msgid "Before you start work"
 msgstr ""
 
+#: includes/promote.php:1459
+msgid "Before you take money for a job:"
+msgstr ""
+
 #: includes/dashboard.php:686
 msgid "Being checked"
 msgstr ""
@@ -980,6 +1023,10 @@ msgstr ""
 
 #: includes/employer-index.php:333 includes/queries.php:302
 msgid "Best rated"
+msgstr ""
+
+#: includes/promote.php:1026
+msgid "Best time to ring you"
 msgstr ""
 
 #: includes/taxonomies.php:320
@@ -1175,6 +1222,10 @@ msgstr[1] ""
 msgid "Closed jobs stay on the site and stay readable. This screen decides where people can browse them and how long they stay in search results."
 msgstr ""
 
+#: includes/promote.php:1630
+msgid "Closed or unpublished — this is not being shown. They have paid for days they are not getting."
+msgstr ""
+
 #: includes/fields.php:361
 msgid "Closes on"
 msgstr ""
@@ -1302,6 +1353,10 @@ msgstr ""
 msgid "Counted among the workers who have been seen before. It should stay small. If it climbs week after week, there are more workers than the listings can cycle through and the trade and district filters are doing the real work."
 msgstr ""
 
+#: includes/promote.php:1484
+msgid "Counted from 1 April. Worth watching: once a business in Nagaland passes ten lakh of service turnover in a year it has to register for GST, and advertising is a service. Ask an accountant before you get near it, not after."
+msgstr ""
+
 #: includes/taxonomies.php:449
 msgid "Craft and making"
 msgstr ""
@@ -1338,7 +1393,7 @@ msgstr ""
 msgid "Data removal switched off. Your data is safe if the plugin is deleted."
 msgstr ""
 
-#: includes/privacy.php:170
+#: includes/privacy.php:170 includes/promote.php:1818
 msgid "Date"
 msgstr ""
 
@@ -1356,6 +1411,10 @@ msgstr ""
 
 #: includes/profile-edit.php:349
 msgid "Day rate you expect"
+msgstr ""
+
+#: includes/promote.php:1564 includes/promote.php:1822
+msgid "Days"
 msgstr ""
 
 #: includes/reports.php:914
@@ -1460,6 +1519,10 @@ msgstr ""
 
 #: includes/insights.php:1300
 msgid "Download all matches as a spreadsheet"
+msgstr ""
+
+#: includes/promote.php:1479
+msgid "Download the book"
 msgstr ""
 
 #: includes/taxonomies.php:293
@@ -1619,6 +1682,14 @@ msgstr ""
 
 #: includes/email-check.php:680
 msgid "Empty this list"
+msgstr ""
+
+#: includes/promote.php:1681
+msgid "Ended"
+msgstr ""
+
+#: includes/promote.php:1825
+msgid "Ends"
 msgstr ""
 
 #: includes/taxonomies.php:642
@@ -1874,6 +1945,10 @@ msgstr ""
 msgid "Google Cloud Console, under Credentials. Make one OAuth client ID per platform. For the website client, add this exact address to Authorised redirect URIs:"
 msgstr ""
 
+#: includes/promote.php:1573 includes/promote.php:1824
+msgid "Google Pay reference"
+msgstr ""
+
 #: includes/indexing-api.php:1242
 msgid "Google confirmed it has this on record, at %s"
 msgstr ""
@@ -2112,6 +2187,10 @@ msgstr ""
 msgid "How long the work lasts: %s"
 msgstr ""
 
+#: includes/promote.php:1025
+msgid "How long?"
+msgstr ""
+
 #: includes/reports.php:403
 msgid "How many days did you work"
 msgstr ""
@@ -2341,6 +2420,10 @@ msgstr ""
 msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
 msgstr ""
 
+#: includes/promote.php:1518 includes/promote.php:1841
+msgid "Job"
+msgstr ""
+
 #: includes/job-alerts.php:732 includes/job-alerts.php:733 includes/job-alerts.php:764
 msgid "Job alerts"
 msgstr ""
@@ -2391,6 +2474,10 @@ msgstr ""
 
 #: includes/admin.php:534
 msgid "Joined"
+msgstr ""
+
+#: includes/promote.php:1674
+msgid "Just finished — worth a ring"
 msgstr ""
 
 #: includes/admin.php:44 includes/admin.php:45 includes/admin.php:69
@@ -2491,7 +2578,7 @@ msgid "Khiamniungan"
 msgstr ""
 
 #: includes/employer-index.php:354 includes/insights.php:1341 includes/insights.php:570
-#: includes/not-confirmed.php:236
+#: includes/not-confirmed.php:236 includes/promote.php:1820
 msgid "Kind"
 msgstr ""
 
@@ -3054,7 +3141,7 @@ msgstr ""
 msgid "Nobody this week"
 msgstr ""
 
-#: includes/rich-manu.php:457 includes/verify-requests.php:463
+#: includes/promote.php:1491 includes/rich-manu.php:457 includes/verify-requests.php:463
 msgid "Nobody waiting."
 msgstr ""
 
@@ -3104,6 +3191,10 @@ msgstr ""
 msgid "Not given"
 msgstr ""
 
+#: includes/promote.php:1521
+msgid "Not live at the moment."
+msgstr ""
+
 #: includes/verify-requests.php:522
 msgid "Not now"
 msgstr ""
@@ -3114,6 +3205,10 @@ msgstr ""
 
 #: includes/admin.php:575 includes/past-jobs.php:277
 msgid "Not set"
+msgstr ""
+
+#: includes/promote.php:1582
+msgid "Not this one"
 msgstr ""
 
 #: includes/rest-auth.php:572
@@ -3158,6 +3253,10 @@ msgstr ""
 
 #: includes/email-check.php:647
 msgid "Nothing recorded yet. Send a test above, or wait for the next person to sign up."
+msgstr ""
+
+#: includes/promote.php:1607
+msgid "Nothing running."
 msgstr ""
 
 #: includes/saved.php:751
@@ -3273,7 +3372,7 @@ msgstr ""
 msgid "Once a day, one message with any new work in your trade and district. This does not affect messages about you, like somebody looking up your number."
 msgstr ""
 
-#: includes/gift.php:84
+#: includes/gift.php:84 includes/promote.php:126
 msgid "One month"
 msgstr ""
 
@@ -3295,6 +3394,10 @@ msgstr ""
 
 #: includes/app-links.php:548
 msgid "One per line. These must match what the app itself claims, and only affects iPhone: Android hands the app every link on the domain once the domain is verified."
+msgstr ""
+
+#: includes/promote.php:122
+msgid "One week"
 msgstr ""
 
 #: includes/gift.php:92
@@ -3395,6 +3498,10 @@ msgstr ""
 
 #: includes/employer-index.php:420
 msgid "Pages"
+msgstr ""
+
+#: includes/promote.php:1617
+msgid "Paid"
 msgstr ""
 
 #: includes/job-photos.php:577
@@ -3715,12 +3822,24 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
+#: includes/promote.php:1518 includes/promote.php:1841
+msgid "Profile"
+msgstr ""
+
 #: includes/post-types.php:83
 msgid "Profile photo"
 msgstr ""
 
 #: includes/dashboard.php:880
 msgid "Profile saved."
+msgstr ""
+
+#: includes/promote.php:1016
+msgid "Promote a job or your profile"
+msgstr ""
+
+#: includes/promote.php:1351 includes/promote.php:1367 includes/promote.php:1438
+msgid "Promotions"
 msgstr ""
 
 #: includes/job-screening.php:859
@@ -3829,6 +3948,10 @@ msgstr ""
 
 #: includes/email-check.php:643
 msgid "Recent messages"
+msgstr ""
+
+#: includes/promote.php:1703
+msgid "Recently"
 msgstr ""
 
 #: includes/taxonomies.php:362
@@ -3959,11 +4082,20 @@ msgstr ""
 msgid "Run the test"
 msgstr ""
 
+#. translators: %s: how many promotions are running
+#: includes/promote.php:1599
+msgid "Running now (%s)"
+msgstr ""
+
+#: includes/promote.php:1442
+msgid "Running. It stops on its own and they have been told the date."
+msgstr ""
+
 #: includes/gift.php:479
 msgid "Runs until"
 msgstr ""
 
-#: includes/posted-for.php:330
+#: includes/posted-for.php:330 includes/promote.php:1823
 msgid "Rupees"
 msgstr ""
 
@@ -4367,7 +4499,7 @@ msgstr ""
 msgid "Sign in first, so the person you are asking can see who is asking."
 msgstr ""
 
-#: includes/job-alerts.php:621 includes/verify-requests.php:372
+#: includes/job-alerts.php:621 includes/promote.php:1181 includes/verify-requests.php:372
 msgid "Sign in first."
 msgstr ""
 
@@ -4500,6 +4632,10 @@ msgstr ""
 msgid "Somebody asked a worker for money to get a job"
 msgstr ""
 
+#: includes/promote.php:1455
+msgid "Somebody asks here, you ring them, they pay you on Google Pay, and then you start it below. Nothing is charged by the website. Whatever you start stops on its own, so there is nothing to remember to switch off."
+msgstr ""
+
 #: includes/reports.php:221
 msgid "Somebody behaved badly, threatened or harassed"
 msgstr ""
@@ -4600,6 +4736,10 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
+#: includes/promote.php:1501 includes/promote.php:1579
+msgid "Start it"
+msgstr ""
+
 #: includes/admin.php:625
 msgid "State"
 msgstr ""
@@ -4616,6 +4756,10 @@ msgstr ""
 msgid "Steel fixer"
 msgstr ""
 
+#: includes/promote.php:1661
+msgid "Stop now"
+msgstr ""
+
 #: includes/job-alerts.php:594
 msgid "Stop telling me about new work"
 msgstr ""
@@ -4628,6 +4772,10 @@ msgstr ""
 #. translators: 1: which step, 2: the error
 #: includes/indexing-api.php:1231
 msgid "Stopped at: %1$s — %2$s"
+msgstr ""
+
+#: includes/promote.php:1446
+msgid "Stopped. It is off the site now."
 msgstr ""
 
 #: includes/app-version.php:295
@@ -4692,6 +4840,15 @@ msgstr ""
 
 #: includes/verify-requests.php:453
 msgid "Taken off the list. They can ask again in a month."
+msgstr ""
+
+#: includes/promote.php:1450
+msgid "Taken off the list. They can ask again in a month. Nothing was sent to them."
+msgstr ""
+
+#. translators: 1: rupee total, 2: number of promotions
+#: includes/promote.php:1467
+msgid "Taken this financial year: ₹%1$s across %2$s"
 msgstr ""
 
 #: includes/registration.php:691
@@ -4764,6 +4921,10 @@ msgstr ""
 
 #: includes/indexes.php:206
 msgid "Tell us what you do and we will add it. This list is meant to cover the work people actually do in Nagaland, not a list somebody wrote in an office."
+msgstr ""
+
+#: includes/promote.php:1018
+msgid "Tell us which one and we will ring you to arrange it. Nothing is charged here."
 msgstr ""
 
 #: includes/job-alerts.php:569
@@ -4879,6 +5040,10 @@ msgstr ""
 msgid "That is not your profile."
 msgstr ""
 
+#: includes/promote.php:1302 includes/promote.php:433
+msgid "That is not yours to promote."
+msgstr ""
+
 #: includes/hire-claims.php:170 includes/hire-claims.php:176 includes/number-requests.php:354
 msgid "That is your own profile."
 msgstr ""
@@ -4901,6 +5066,10 @@ msgstr ""
 
 #: includes/rest-api.php:1921
 msgid "That link does not lead anywhere any more."
+msgstr ""
+
+#: includes/promote.php:438
+msgid "That listing is not live at the moment, so there would be nothing to show."
 msgstr ""
 
 #: includes/rest-api.php:2114 includes/rest-api.php:2182
@@ -5048,6 +5217,16 @@ msgstr ""
 
 #: includes/indexing-api.php:274
 msgid "The private key in that file could not be used to sign. It may be damaged, or pasted with something missing."
+msgstr ""
+
+#. translators: %s: job or profile name
+#: includes/promote.php:930
+msgid "The promotion on %s has been stopped. Ring us if you were not expecting this."
+msgstr ""
+
+#. translators: %s: job or profile name
+#: includes/promote.php:939
+msgid "The promotion on %s has run its time. Tell us if you would like another."
 msgstr ""
 
 #: includes/insights.php:746
@@ -5223,6 +5402,10 @@ msgstr ""
 
 #: includes/reports.php:170
 msgid "This is a website. Nobody reads it at night. Call one of these instead."
+msgstr ""
+
+#: includes/promote.php:1021
+msgid "This is being promoted now."
 msgstr ""
 
 #: includes/ratings.php:909
@@ -5570,6 +5753,14 @@ msgstr ""
 msgid "Unconfirmed accounts matching the filters above, minus anybody already sent one in the last seven days. Confirmed accounts are never included, whatever the filters say."
 msgstr ""
 
+#: includes/promote.php:1403
+msgid "Unknown"
+msgstr ""
+
+#: includes/promote.php:1616
+msgid "Until"
+msgstr ""
+
 #. translators: %s: how many pictures may be added
 #: includes/posted-for.php:385
 msgid "Up to %s. A screenshot of the original post is not a picture of the work, so use a photo of the site or the shop where you can get one."
@@ -5719,6 +5910,10 @@ msgstr ""
 msgid "Waiting for you to confirm your email"
 msgstr ""
 
+#: includes/promote.php:1487
+msgid "Waiting to be rung"
+msgstr ""
+
 #: includes/taxonomies.php:425
 msgid "Warehouse worker"
 msgstr ""
@@ -5733,6 +5928,10 @@ msgstr ""
 
 #: includes/reports.php:772
 msgid "We are a listing platform, not a court and not the police. We cannot make anybody pay you. What we can do is look into it, keep a record, and remove people who cheat."
+msgstr ""
+
+#: includes/promote.php:1017
+msgid "We can put one of your listings in a marked slot at the top of the list for a week or a month. It is shown with an Ad label, and nothing else on the list moves for it."
 msgstr ""
 
 #: includes/verify-requests.php:268
@@ -5765,8 +5964,16 @@ msgstr ""
 msgid "We have told %s that you looked up their number. Agree the rate before work starts."
 msgstr ""
 
+#: includes/promote.php:1020
+msgid "We have your request and will ring you. There is nothing to pay until we have spoken."
+msgstr ""
+
 #: includes/dashboard.php:874 includes/rest-api.php:875
 msgid "We just sent one. Please wait a few minutes before asking again."
+msgstr ""
+
+#: includes/promote.php:1028
+msgid "We never ask for money to apply for a job, and we never promote a job that asks a worker to pay."
 msgstr ""
 
 #: includes/reports.php:468
@@ -5847,7 +6054,8 @@ msgstr ""
 msgid "Were you treated properly?"
 msgstr ""
 
-#: includes/admin.php:415
+#: includes/admin.php:415 includes/promote.php:1498 includes/promote.php:1614 includes/promote.php:1679
+#: includes/promote.php:1819
 msgid "What"
 msgstr ""
 
@@ -6056,11 +6264,16 @@ msgstr ""
 msgid "Which links open the app"
 msgstr ""
 
+#: includes/promote.php:1024
+msgid "Which one?"
+msgstr ""
+
 #: includes/gift.php:405
 msgid "Which plan their account will say they are on. Nothing is charged."
 msgstr ""
 
 #: includes/admin.php:414 includes/gift.php:383 includes/gift.php:477 includes/privacy.php:201
+#: includes/promote.php:1615 includes/promote.php:1680 includes/promote.php:1821
 #: includes/verify-requests.php:470
 msgid "Who"
 msgstr ""
@@ -6107,6 +6320,10 @@ msgstr ""
 
 #: includes/install.php:720
 msgid "Who to contact about a data problem, with a name and a real address."
+msgstr ""
+
+#: includes/promote.php:1499
+msgid "Who to ring"
 msgstr ""
 
 #: includes/reports.php:371
@@ -6319,6 +6536,10 @@ msgstr ""
 msgid "You are signed in as %s, so we already have your details. They are not shared with the person you are reporting."
 msgstr ""
 
+#: includes/promote.php:1023
+msgid "You asked about this one recently. Ring us if you have not heard back."
+msgstr ""
+
 #. translators: %s: how many more pictures may be added
 #: includes/job-photos.php:554
 msgid "You can add %s picture to this job."
@@ -6362,8 +6583,8 @@ msgstr ""
 #: includes/app-version.php:278 includes/apple-signin.php:172 includes/email-check.php:705
 #: includes/email-check.php:761 includes/gift.php:547 includes/gift.php:587 includes/google-signin.php:196
 #: includes/hiring-request.php:513 includes/indexing-api.php:873 includes/insights.php:734
-#: includes/job-alerts.php:896 includes/posted-for.php:456 includes/rich-manu.php:434
-#: includes/verify-requests.php:554
+#: includes/job-alerts.php:896 includes/posted-for.php:456 includes/promote.php:1729
+#: includes/promote.php:1793 includes/rich-manu.php:434 includes/verify-requests.php:554
 msgid "You cannot do that."
 msgstr ""
 
@@ -6463,6 +6684,10 @@ msgstr ""
 
 #: includes/hires.php:301
 msgid "You looked up these numbers recently. Telling us what happened is what lets you and them rate each other, and it is the only reason the ratings on this site mean anything."
+msgstr ""
+
+#: includes/promote.php:428
+msgid "You need a live profile or an open job before anything can be promoted."
 msgstr ""
 
 #: includes/hire-claims.php:215
@@ -6606,6 +6831,18 @@ msgstr ""
 msgid "Your profile needs to be finished and live first."
 msgstr ""
 
+#: includes/promote.php:927
+msgid "Your promotion has been stopped"
+msgstr ""
+
+#: includes/promote.php:936
+msgid "Your promotion has finished"
+msgstr ""
+
+#: includes/promote.php:917
+msgid "Your promotion is running"
+msgstr ""
+
 #: includes/reports.php:754
 msgid "Your reference number is"
 msgstr ""
@@ -6638,12 +6875,20 @@ msgstr ""
 msgid "Zeliang"
 msgstr ""
 
+#: includes/promote.php:1569
+msgid "amount"
+msgstr ""
+
 #: includes/google-signin.php:246
 msgid "and add your site address to Authorised JavaScript origins."
 msgstr ""
 
 #: includes/reports.php:704
 msgid "anonymous"
+msgstr ""
+
+#: includes/promote.php:1460
+msgid "ask for the company name and GST number, an address, and who pays for travel. If a worker is asked to pay anything at any stage, say no. Promoting a job is a stronger thing than hosting one."
 msgstr ""
 
 #: includes/post-job.php:293 includes/posted-for.php:334
@@ -6711,6 +6956,11 @@ msgstr ""
 msgid "privacy notice"
 msgstr ""
 
+#. translators: %s: the date the promotion ends
+#: includes/promote.php:1084
+msgid "promoted until %s."
+msgstr ""
+
 #: includes/dashboard.php:57
 msgid "register free"
 msgstr ""
@@ -6741,6 +6991,10 @@ msgstr ""
 
 #: includes/who-looked.php:172
 msgid "your team"
+msgstr ""
+
+#: includes/promote.php:1568
+msgid "₹"
 msgstr ""
 
 #: includes/settings.php:286 includes/settings.php:339
