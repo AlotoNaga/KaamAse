@@ -4349,7 +4349,7 @@ and needs its own Hindi and Nagamese there.
 
 ### Tested
 
-104 assertions across twenty-four scenarios, each in its own process because the
+125 assertions across twenty-seven scenarios, each in its own process because the
 resolver caches its answer in a static and `DONOTCACHEPAGE` is a constant — two
 scenarios in one process would be a lie. The real `.mo` files are loaded, so the
 tests prove sentences come out in Nagamese rather than that a flag was set.
@@ -4358,6 +4358,45 @@ The one that matters is end to end: a Hindi employer looks up a Nagamese worker,
 the real `kaamase_push_contact_revealed()` runs, and what the phone is handed is
 `Kunba logote apni laka number ase` — while the employer's own request is still
 Hindi afterwards and nothing is left switched.
+
+### The one string a .po file could never reach
+
+Found by the app side after the first upload: `/reference` was returning
+`update_message` in Nagamese whatever language the request asked for.
+
+Their diagnosis was right, and the reason is worth writing down because it is
+the boundary of everything sections 64 to 67 built. `update_message` is not a
+string in the source code. It is a sentence the owner types into an admin box at
+runtime, so there is no `msgid` for a translation to attach to. **Text a person
+enters can only be translated by a person.** No amount of `.po` work reaches it.
+One box, typed once, sent to everybody — so whichever language it happened to be
+written in was the language every user read it in.
+
+It is also the worst string on the platform to get wrong. It is drawn on a
+screen somebody is stuck behind with no way past it.
+
+So `app-version.php` now asks for it **once per language**, and underneath the
+three boxes sits a built-in sentence that *is* in the source, and therefore is in
+the `.po` files like everything else. A box left empty falls through to that,
+translated, rather than falling back to another language: nothing in Nagamese is
+better than something in Nagamese for somebody reading English, which was the
+whole fault.
+
+The message from before is not sent to anybody any more, and nothing deletes it.
+It is shown on the screen, once, until one of the boxes has something in it, so
+it gets moved rather than lost.
+
+Two smaller things came out of the same change. `mb_substr` now names UTF-8
+explicitly, because a Devanagari character cut in half at 200 bytes is not a
+shorter sentence but a broken one. And `kaamase_app_update_message( $locale )`
+takes a language, so the built-in fallback is read *in that language* rather
+than in whatever language the request happens to be running in — otherwise the
+argument would have been a lie, and the admin screen would have shown the
+English hint under all three boxes.
+
+`kaamase_app_update_message` is the only owner-typed prose that reaches the app.
+The only other free text box on the platform is the extra emergency numbers on
+the safety page, which is place names and telephone numbers on the website.
 
 ### Three things the first version got wrong
 

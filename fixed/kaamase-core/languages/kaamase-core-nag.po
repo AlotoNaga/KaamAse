@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-17 17:35+0000\n"
-"PO-Revision-Date: 2026-09-17 17:35+0000\n"
+"POT-Creation-Date: 2026-09-17 18:31+0000\n"
+"PO-Revision-Date: 2026-09-17 18:31+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -804,7 +804,7 @@ msgstr "App bundle ID"
 msgid "App links"
 msgstr ""
 
-#: includes/app-version.php:210 includes/app-version.php:211 includes/app-version.php:287
+#: includes/app-version.php:344 includes/app-version.php:345 includes/app-version.php:448
 msgid "App version"
 msgstr ""
 
@@ -1682,7 +1682,7 @@ msgstr "Adha khali thaka profile khan employer pra chari kene age te jai. Etu kh
 msgid "Employers who came back"
 msgstr ""
 
-#: includes/app-version.php:342 includes/app-version.php:352
+#: includes/app-version.php:518 includes/app-version.php:528
 msgid "Empty means nobody is stopped"
 msgstr ""
 
@@ -2412,6 +2412,10 @@ msgstr "Etu laka mane Kaam Ase laka kunba pra etu manu ke call kuri kotha kurish
 
 #: includes/rich-manu.php:883
 msgid "It says we have spoken to them. It is not a promise about the quality of their work, and it does not replace agreeing the rate and the payment day before anybody starts."
+msgstr ""
+
+#: includes/app-version.php:496
+msgid "It was one box for everybody, so whichever language you wrote it in went to every user, including the ones who do not read that language. Copy it into the right box below and save."
 msgstr ""
 
 #: includes/indexing-api.php:1222
@@ -3353,11 +3357,11 @@ msgstr ""
 msgid "Older"
 msgstr "Purana"
 
-#: includes/app-version.php:347
+#: includes/app-version.php:523
 msgid "Oldest Android version"
 msgstr ""
 
-#: includes/app-version.php:337
+#: includes/app-version.php:513
 msgid "Oldest iPhone version"
 msgstr ""
 
@@ -3480,6 +3484,10 @@ msgstr ""
 msgid "Opening the app every day."
 msgstr "Hor din app khula."
 
+#: includes/app-version.php:560
+msgid "Optional, and each one is only shown to somebody reading that language. Leave a box empty and they get the sentence in the box as grey text, which is already translated."
+msgstr ""
+
 #: includes/ratings.php:908
 msgid "Optional. Keep it about the work."
 msgstr "Mon hoile dibi. Etu kaam laka bare te he rakhibi."
@@ -3487,10 +3495,6 @@ msgstr "Mon hoile dibi. Etu kaam laka bare te he rakhibi."
 #: includes/profile-edit.php:653
 msgid "Optional. Registered businesses get taken more seriously by workers."
 msgstr "Mon hoile dibi. Registered business khan ke worker khan pra bisi dorkar bhabe."
-
-#: includes/app-version.php:364
-msgid "Optional. Shown above the Update button."
-msgstr ""
 
 #: includes/past-jobs.php:705
 msgid "Other past jobs like this"
@@ -3736,9 +3740,9 @@ msgstr "Apni laka naam lagai dibi."
 msgid "Please tell us a bit more about what happened, so we know where to start."
 msgstr "Ki hoishey etu laka bare te amikhan ke olop aru kobi, titia amikhan kate pra suru koribo etu janibo."
 
-#: includes/app-version.php:362
+#: includes/app-version.php:165
 msgid "Please update Kaam Ase to carry on."
-msgstr ""
+msgstr "Cholai thakibole Kaam Ase ke update koribi."
 
 #: includes/working-request.php:375
 msgid "Plenty of people here hire for one job and work on another. Add a worker profile to this same account and employers can find you too. It is free, and your login and your job posts stay exactly as they are."
@@ -3948,7 +3952,7 @@ msgstr ""
 msgid "Read the whole thing"
 msgstr "Pura porhibo"
 
-#: includes/app-version.php:320
+#: includes/app-version.php:481
 msgid "Read this before you set a number."
 msgstr ""
 
@@ -4164,7 +4168,7 @@ msgstr ""
 msgid "Sangtam"
 msgstr ""
 
-#: includes/app-version.php:370 includes/indexing-api.php:1124 includes/profile-edit.php:266
+#: includes/app-version.php:573 includes/indexing-api.php:1124 includes/profile-edit.php:266
 #: includes/saved.php:202
 msgid "Save"
 msgstr "Save koribo"
@@ -4198,7 +4202,7 @@ msgstr "Save kora kaam khan"
 msgid "Saved workers"
 msgstr "Save kora worker khan"
 
-#: includes/app-version.php:264 includes/apple-signin.php:158 includes/google-signin.php:182
+#: includes/app-version.php:407 includes/apple-signin.php:158 includes/google-signin.php:182
 msgid "Saved."
 msgstr "Save hoishey."
 
@@ -4797,7 +4801,7 @@ msgstr ""
 msgid "Stopped. It is off the site now."
 msgstr ""
 
-#: includes/app-version.php:295
+#: includes/app-version.php:456
 msgid "Stops an old version of the app being used. Somebody on a version below the one you set is shown an Update button and cannot go further until they update. Leave both boxes empty and nobody is stopped."
 msgstr ""
 
@@ -5043,7 +5047,7 @@ msgstr ""
 msgid "That is not a push token we recognise."
 msgstr "Etu amikhan jana push token hoina."
 
-#: includes/app-version.php:261
+#: includes/app-version.php:404
 msgid "That is not a version number, so nothing was set. Use digits and dots only, like 2.0.7."
 msgstr ""
 
@@ -5181,11 +5185,11 @@ msgstr ""
 msgid "The employer has closed this job."
 msgstr "Employer pra etu kaam bondh kuri dishey."
 
-#: includes/app-version.php:246
+#: includes/app-version.php:380
 msgid "The gate is off. Every version can sign in again."
 msgstr ""
 
-#: includes/app-version.php:305
+#: includes/app-version.php:466
 msgid "The gate is on right now."
 msgstr ""
 
@@ -5694,7 +5698,7 @@ msgstr ""
 msgid "Try a different district, or clear the filters to see everybody."
 msgstr ""
 
-#: includes/app-version.php:375
+#: includes/app-version.php:578
 msgid "Turn the gate off"
 msgstr ""
 
@@ -5744,7 +5748,7 @@ msgstr ""
 msgid "Type DELETE to confirm you want to remove your account."
 msgstr "Apni laka account uthai dibo mon ase etu confirm koribole DELETE likhibi."
 
-#: includes/app-version.php:322
+#: includes/app-version.php:483
 msgid "Type a version that is already live in the App Store and on Google Play. If you type one that has not been released yet, every single user is locked out with no way back in until you come here and turn it off, and the stores have nothing for them to update to."
 msgstr ""
 
@@ -6186,7 +6190,7 @@ msgstr "Kaam ki ase, apni laka nije laka kotha te."
 msgid "What time"
 msgstr "Ki somoi"
 
-#: includes/app-version.php:357
+#: includes/app-version.php:545
 msgid "What to tell them"
 msgstr ""
 
@@ -6607,7 +6611,7 @@ msgstr ""
 msgid "You cannot contact this person."
 msgstr "Apni etu manu logote contact koribo napare."
 
-#: includes/app-version.php:278 includes/apple-signin.php:172 includes/email-check.php:705
+#: includes/app-version.php:421 includes/apple-signin.php:172 includes/email-check.php:705
 #: includes/email-check.php:761 includes/gift.php:547 includes/gift.php:587 includes/google-signin.php:196
 #: includes/hiring-request.php:524 includes/indexing-api.php:873 includes/insights.php:750
 #: includes/job-alerts.php:896 includes/posted-for.php:456 includes/promote.php:1775
@@ -6813,6 +6817,10 @@ msgstr "Apni laka number aru dikhi ase."
 msgid "Your number is shown to signed in people who look you up, which is how work reaches you."
 msgstr "Apni ke sabole aha sign in thaka manu khan ke apni laka number dikhe, aro etu pra he kaam apni tak ahe."
 
+#: includes/app-version.php:494
+msgid "Your old message is no longer being sent."
+msgstr ""
+
 #: includes/teams.php:150
 msgid "Your own name works perfectly well. Contractors remember people, not brands."
 msgstr "Apni laka nije laka naam bhal kene kaam kore. Contractor khan manu ke mon te rakhe, brand ke nohoi."
@@ -6931,7 +6939,7 @@ msgid "iPhone client ID"
 msgstr "iPhone client ID"
 
 #. translators: 1: iPhone version or a dash, 2: Android version or a dash.
-#: includes/app-version.php:309
+#: includes/app-version.php:470
 msgid "iPhone: %1$s. Android: %2$s. Anybody below those is being stopped."
 msgstr ""
 

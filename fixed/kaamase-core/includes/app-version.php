@@ -24,7 +24,7 @@
  * rather than empty. The app lets everybody in when they are missing.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.5.0
  */
 
@@ -85,24 +85,152 @@ if ( ! function_exists( 'kaamase_app_minimum_versions' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kaamase_app_update_message' ) ) {
+if ( ! function_exists( 'kaamase_app_update_message_languages' ) ) {
 	/**
-	 * What to say on the screen that stops them.
+	 * The languages to ask the owner for a message in.
 	 *
-	 * @since 1.5.0
+	 * Taken from locale.php so the two can never drift: add a fourth
+	 * language there and a fourth box appears here on its own.
+	 *
+	 * Guarded, because this screen has to keep working if that file is
+	 * ever missing. One box in the site language is a worse screen than
+	 * three, and it is still a working one.
+	 *
+	 * @since 1.11.0
+	 * @return array<string,string> Locale code => label in its own script.
+	 */
+	function kaamase_app_update_message_languages() {
+
+		if ( ! function_exists( 'kaamase_locales' ) ) {
+			return array( get_locale() => get_locale() );
+		}
+
+		$out = array();
+
+		foreach ( kaamase_locales() as $code => $language ) {
+			$out[ $code ] = (string) $language['label'];
+		}
+
+		return $out;
+	}
+}
+
+if ( ! function_exists( 'kaamase_app_update_message_key' ) ) {
+	/**
+	 * Where the message for one language is kept.
+	 *
+	 * The locale is scrubbed to letters, digits and underscores before
+	 * it becomes part of an option name. It arrives from a request
+	 * header, and a header is somebody else's typing.
+	 *
+	 * @since 1.11.0
+	 * @param string $locale Locale code.
+	 * @return string Option name.
+	 */
+	function kaamase_app_update_message_key( $locale ) {
+
+		$locale = (string) preg_replace( '/[^A-Za-z0-9_]/', '', (string) $locale );
+
+		return 'kaamase_app_update_message_' . $locale;
+	}
+}
+
+if ( ! function_exists( 'kaamase_app_update_message_default' ) ) {
+	/**
+	 * The built in sentence, in a named language.
+	 *
+	 * Not simply __() at the call site, and the difference matters twice.
+	 *
+	 * The admin screen draws all three boxes in one request, and that
+	 * request is in English, so a plain __() would print the English
+	 * sentence as the hint under the Hindi box and under the Nagamese
+	 * one. The owner would have no way to see what somebody reading
+	 * Hindi is actually going to be shown.
+	 *
+	 * And kaamase_app_update_message() takes a locale, so it has to be
+	 * able to answer for a language that is not the one this request is
+	 * running in. Reading it off the request would quietly make that
+	 * argument a lie.
+	 *
+	 * @since 1.11.0
+	 * @param string $locale Locale code.
 	 * @return string
 	 */
-	function kaamase_app_update_message() {
+	function kaamase_app_update_message_default( $locale ) {
 
-		$message = trim( (string) get_option( 'kaamase_app_update_message', '' ) );
+		$switched = function_exists( 'kaamase_locale_known' )
+			&& kaamase_locale_known( $locale )
+			&& switch_to_locale( $locale );
+
+		$text = __( 'Please update Kaam Ase to carry on.', 'kaamase-core' );
+
+		if ( $switched ) {
+			restore_previous_locale();
+		}
+
+		return $text;
+	}
+}
+
+if ( ! function_exists( 'kaamase_app_update_message' ) ) {
+	/**
+	 * What to say on the screen that stops them, in their language.
+	 *
+	 * This used to be one box. One box on an admin screen, typed once,
+	 * sent to everybody — so whatever language the owner happened to
+	 * write it in was the language every single user read it in. The app
+	 * side found it: an English request to /reference came back with a
+	 * Nagamese sentence in it.
+	 *
+	 * It is worth being clear about why that could not be fixed by
+	 * translating it. A .po file translates strings that exist in the
+	 * source code, and this one does not exist until somebody types it
+	 * into a form. There is no msgid to attach a translation to. Text a
+	 * person enters at runtime can only be translated by a person, which
+	 * means asking for it once per language.
+	 *
+	 * So: one box per language, and a built in sentence underneath them
+	 * all. The built in one IS in the source, so it is in the .po files
+	 * like everything else, and it means the screen is never wordless
+	 * and never in the wrong language even when the owner has written
+	 * nothing at all.
+	 *
+	 * This is the screen somebody is stuck behind with no way past it.
+	 * Of all the text on this platform it is the worst one to be unable
+	 * to read.
+	 *
+	 * @since 1.5.0
+	 * @param string $locale Locale to answer in. Defaults to this request.
+	 * @return string Never empty.
+	 */
+	function kaamase_app_update_message( $locale = '' ) {
+
+		if ( '' === $locale ) {
+			$locale = function_exists( 'kaamase_locale_now' )
+				? kaamase_locale_now()
+				: get_locale();
+		}
+
+		$written = trim( (string) get_option( kaamase_app_update_message_key( $locale ), '' ) );
+
+		/*
+		 * No fall back to another language, deliberately. Nothing
+		 * written in Nagamese is better than something written in
+		 * Nagamese for somebody reading English, which is the whole
+		 * fault this replaced.
+		 */
+		$message = '' !== $written
+			? $written
+			: kaamase_app_update_message_default( $locale );
 
 		/**
 		 * Filter the message shown when an app is too old.
 		 *
 		 * @since 1.5.0
 		 * @param string $message Message.
+		 * @param string $locale  Locale it was chosen for.
 		 */
-		return (string) apply_filters( 'kaamase_app_update_message', $message );
+		return (string) apply_filters( 'kaamase_app_update_message', $message, $locale );
 	}
 }
 
@@ -182,7 +310,13 @@ if ( ! function_exists( 'kaamase_app_version_in_reference' ) ) {
 		 * wall with no way past it.
 		 */
 		if ( '' !== $message ) {
-			$data['update_message'] = mb_substr( wp_strip_all_tags( $message ), 0, 200 );
+			/*
+			 * UTF-8 named rather than left to the internal encoding.
+			 * This string can now be Devanagari, and a multi byte
+			 * character cut in half at 200 does not come out as a
+			 * shorter sentence, it comes out as a broken one.
+			 */
+			$data['update_message'] = mb_substr( wp_strip_all_tags( $message ), 0, 200, 'UTF-8' );
 		}
 
 		$response->set_data( $data );
@@ -248,11 +382,20 @@ if ( ! function_exists( 'kaamase_app_version_save' ) ) {
 
 		$ios     = kaamase_app_version_clean( wp_unslash( $_POST['kaamase_app_min_ios'] ?? '' ) );
 		$android = kaamase_app_version_clean( wp_unslash( $_POST['kaamase_app_min_android'] ?? '' ) );
-		$message = sanitize_text_field( wp_unslash( $_POST['kaamase_app_update_message'] ?? '' ) );
 
 		update_option( 'kaamase_app_min_ios', $ios );
 		update_option( 'kaamase_app_min_android', $android );
-		update_option( 'kaamase_app_update_message', $message );
+
+		// One box per language, each kept under its own name.
+		foreach ( kaamase_app_update_message_languages() as $code => $label ) {
+
+			$key = kaamase_app_update_message_key( $code );
+
+			update_option(
+				$key,
+				sanitize_text_field( wp_unslash( $_POST[ $key ] ?? '' ) )
+			);
+		}
 
 		$typed = trim( (string) wp_unslash( $_POST['kaamase_app_min_ios'] ?? '' ) )
 			. trim( (string) wp_unslash( $_POST['kaamase_app_min_android'] ?? '' ) );
@@ -278,10 +421,28 @@ if ( ! function_exists( 'kaamase_app_version_page' ) ) {
 			wp_die( esc_html__( 'You cannot do that.', 'kaamase-core' ) );
 		}
 
-		$notice   = kaamase_app_version_save();
-		$versions = kaamase_app_minimum_versions();
-		$message  = kaamase_app_update_message();
-		$on       = ! empty( $versions['ios'] ) || ! empty( $versions['android'] );
+		$notice    = kaamase_app_version_save();
+		$versions  = kaamase_app_minimum_versions();
+		$languages = kaamase_app_update_message_languages();
+		$on        = ! empty( $versions['ios'] ) || ! empty( $versions['android'] );
+
+		$written = array();
+
+		foreach ( $languages as $code => $label ) {
+			$written[ $code ] = (string) get_option( kaamase_app_update_message_key( $code ), '' );
+		}
+
+		/*
+		 * The message from before this screen had languages. It is not
+		 * sent any more, because there is no way to know which language
+		 * it is in and sending it to everybody is the fault this
+		 * replaced. It is shown here, once, until something is written
+		 * in one of the boxes below, so that it is moved rather than
+		 * lost. Nothing deletes it.
+		 */
+		$old_message = '' === implode( '', $written )
+			? trim( (string) get_option( 'kaamase_app_update_message', '' ) )
+			: '';
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'App version', 'kaamase-core' ); ?></h1>
@@ -327,6 +488,21 @@ if ( ! function_exists( 'kaamase_app_version_page' ) ) {
 				</p>
 			</div>
 
+			<?php if ( '' !== $old_message ) : ?>
+				<div class="notice notice-warning inline">
+					<p>
+						<strong><?php esc_html_e( 'Your old message is no longer being sent.', 'kaamase-core' ); ?></strong>
+						<?php
+						esc_html_e(
+							'It was one box for everybody, so whichever language you wrote it in went to every user, including the ones who do not read that language. Copy it into the right box below and save.',
+							'kaamase-core'
+						);
+						?>
+					</p>
+					<p><code><?php echo esc_html( $old_message ); ?></code></p>
+				</div>
+			<?php endif; ?>
+
 			<form method="post">
 				<?php wp_nonce_field( 'kaamase_app_version' ); ?>
 				<input type="hidden" name="kaamase_app_version" value="1">
@@ -352,19 +528,46 @@ if ( ! function_exists( 'kaamase_app_version_page' ) ) {
 								placeholder="<?php esc_attr_e( 'Empty means nobody is stopped', 'kaamase-core' ); ?>">
 						</td>
 					</tr>
-					<tr>
-						<th scope="row">
-							<label for="kaamase_app_update_message"><?php esc_html_e( 'What to tell them', 'kaamase-core' ); ?></label>
-						</th>
-						<td>
-							<input name="kaamase_app_update_message" id="kaamase_app_update_message" type="text"
-								class="large-text" value="<?php echo esc_attr( $message ); ?>"
-								placeholder="<?php esc_attr_e( 'Please update Kaam Ase to carry on.', 'kaamase-core' ); ?>">
-							<p class="description">
-								<?php esc_html_e( 'Optional. Shown above the Update button.', 'kaamase-core' ); ?>
-							</p>
-						</td>
-					</tr>
+					<?php
+					/*
+					 * One row per language. Each label is printed in its
+					 * own script, exactly as locale.php stores it and
+					 * never translated, for the same reason the language
+					 * switcher on the website is not translated.
+					 */
+					$first = true;
+					?>
+					<?php foreach ( $languages as $code => $label ) : ?>
+						<tr>
+							<th scope="row">
+								<label for="<?php echo esc_attr( kaamase_app_update_message_key( $code ) ); ?>">
+									<?php if ( $first ) : ?>
+										<?php esc_html_e( 'What to tell them', 'kaamase-core' ); ?><br>
+									<?php endif; ?>
+									<span lang="<?php echo esc_attr( $code ); ?>"><?php echo esc_html( $label ); ?></span>
+								</label>
+							</th>
+							<td>
+								<input name="<?php echo esc_attr( kaamase_app_update_message_key( $code ) ); ?>"
+									id="<?php echo esc_attr( kaamase_app_update_message_key( $code ) ); ?>"
+									type="text" class="large-text"
+									value="<?php echo esc_attr( $written[ $code ] ); ?>"
+									lang="<?php echo esc_attr( $code ); ?>"
+									placeholder="<?php echo esc_attr( kaamase_app_update_message_default( $code ) ); ?>">
+								<?php if ( $first ) : ?>
+									<p class="description">
+										<?php
+										esc_html_e(
+											'Optional, and each one is only shown to somebody reading that language. Leave a box empty and they get the sentence in the box as grey text, which is already translated.',
+											'kaamase-core'
+										);
+										?>
+									</p>
+								<?php endif; ?>
+							</td>
+						</tr>
+						<?php $first = false; ?>
+					<?php endforeach; ?>
 				</table>
 
 				<?php submit_button( __( 'Save', 'kaamase-core' ), 'primary', 'submit', false ); ?>
