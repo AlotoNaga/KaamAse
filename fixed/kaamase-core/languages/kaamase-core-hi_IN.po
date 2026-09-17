@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-17 12:47+0000\n"
-"PO-Revision-Date: 2026-09-17 12:47+0000\n"
+"POT-Creation-Date: 2026-09-17 13:01+0000\n"
+"PO-Revision-Date: 2026-09-17 13:01+0000\n"
 "Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,12 +27,12 @@ msgstr ""
 #. translators: 1: number of workers, 2: trade name
 #: includes/post-job.php:702
 msgid "%1$s %2$s needed"
-msgstr ""
+msgstr "%1$s %2$s चाहिए"
 
 #. translators: 1: number of workers, 2: trade name, 3: district
 #: includes/post-job.php:693
 msgid "%1$s %2$s needed in %3$s"
-msgstr ""
+msgstr "%3$s में %1$s %2$s चाहिए"
 
 #. translators: 1: person's name, 2: district
 #: includes/number-requests.php:720
@@ -98,7 +98,7 @@ msgstr[1] "%d लोग आपका नंबर चाहते हैं"
 #. translators: %d: percentage complete
 #: includes/dashboard.php:304
 msgid "%d%% done"
-msgstr ""
+msgstr "%d%% पूरा"
 
 #. translators: %s: human readable time difference
 #: includes/rich-manu.php:501
@@ -189,7 +189,7 @@ msgstr ""
 #. translators: %s: the employer's name
 #: includes/posted-for.php:133
 msgid "%s is hiring, not us. The number on this job is theirs, so you speak to them directly."
-msgstr ""
+msgstr "काम %s दे रहे हैं, हम नहीं। इस काम पर दिया नंबर उन्हीं का है, इसलिए आप सीधे उनसे बात करें।"
 
 #. translators: %s: number of open jobs
 #: includes/indexes.php:189 includes/indexes.php:304
@@ -219,8 +219,8 @@ msgstr[1] "आज %s लुकअप बाकी हैं।"
 #: includes/dashboard.php:341
 msgid "%s more thing after these."
 msgid_plural "%s more things after these."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "इनके बाद %s चीज़ और।"
+msgstr[1] "इनके बाद %s चीज़ें और।"
 
 #. translators: %s: site name
 #: includes/account-password.php:215 includes/push.php:291 includes/registration.php:696
@@ -286,7 +286,7 @@ msgstr[1] ""
 
 #: includes/posted-for.php:262
 msgid "10 digits"
-msgstr ""
+msgstr "10 अंक"
 
 #: includes/registration.php:169
 msgid "10 digits. Your number is never shown on the site. Employers reach you through Kaam Ase."
@@ -310,11 +310,11 @@ msgstr ""
 
 #: includes/dashboard.php:186
 msgid "A colony council member, GB, church elder or a past employer. This is the strongest thing on your profile."
-msgstr ""
+msgstr "कॉलोनी काउंसिल सदस्य, GB, चर्च के बुज़ुर्ग या पहले का कोई मालिक। आपकी प्रोफ़ाइल पर यह सबसे मज़बूत चीज़ है।"
 
 #: includes/profile-edit.php:622
 msgid "A contractor"
-msgstr ""
+msgstr "ठेकेदार"
 
 #: includes/how-seen.php:189
 msgid "A correct phone number."
@@ -355,12 +355,12 @@ msgstr ""
 #. translators: 1: comma separated list of categories, 2: edit URL
 #: includes/job-screening.php:709
 msgid "A job post has been held before going live.\n\nIt matched: %1$s\n\nIt is not visible to anybody. Read it here:\n%2$s\n\nIf it is what it looks like, do not simply delete it. Keep the account and the post, and report it.\n"
-msgstr ""
+msgstr "एक काम की पोस्ट चालू होने से पहले रोक दी गई है।\n\nयह इससे मेल खाई: %1$s\n\nयह किसी को नहीं दिख रही। इसे यहाँ पढ़ें:\n%2$s\n\nअगर यह वही है जो दिख रही है, तो इसे बस मिटाएँ नहीं। खाता और पोस्ट रहने दें, और इसकी सूचना दें।\n"
 
 #. translators: %s: site name
 #: includes/job-screening.php:703
 msgid "A job post on %s needs looking at now"
-msgstr ""
+msgstr "%s पर एक काम की पोस्ट अभी देखनी है"
 
 #: includes/install.php:742
 msgid "A lawyer needs to write this. The points below are the ones that will actually be argued about."
@@ -388,7 +388,7 @@ msgstr "आपके Kaam Ase खाते पर पासवर्ड लग�
 
 #: includes/dashboard.php:613
 msgid "A person reads the first job from every new employer before workers see it. It is usually done within a few hours, and you will get an email when it goes live. Nothing more is needed from you. After this one, your jobs go live straight away."
-msgstr ""
+msgstr "हर नए मालिक का पहला काम मज़दूरों को दिखने से पहले एक व्यक्ति पढ़ता है। यह आमतौर पर कुछ घंटों में हो जाता है, और चालू होने पर आपको ईमेल मिलेगा। आपको और कुछ नहीं करना। इसके बाद आपके काम सीधे चालू हो जाएँगे।"
 
 #: includes/rest-auth.php:621
 msgid "A phone"
@@ -400,11 +400,11 @@ msgstr ""
 
 #: includes/job-photos.php:564
 msgid "A photo of the site or the shop gets a job far more answers than words alone, and it shows the work is real."
-msgstr ""
+msgstr "साइट या दुकान की फ़ोटो से काम को सिर्फ़ शब्दों के मुक़ाबले कहीं ज़्यादा जवाब मिलते हैं, और इससे पता चलता है कि काम असली है।"
 
 #: includes/teams.php:264
 msgid "A photo of the team"
-msgstr ""
+msgstr "टीम की फ़ोटो"
 
 #: includes/how-seen.php:177
 msgid "A photograph."
@@ -412,7 +412,7 @@ msgstr ""
 
 #: includes/teams.php:280
 msgid "A picture of the team on a site is worth more than anything you can write. We remove the hidden location information phones save inside photos."
-msgstr ""
+msgstr "साइट पर टीम की एक तस्वीर आपके लिखे किसी भी शब्द से ज़्यादा काम की है। फ़ोन जो छिपी हुई जगह की जानकारी फ़ोटो के अंदर सहेजते हैं, वह हम हटा देते हैं।"
 
 #: includes/schema.php:205
 msgid "A place to stay is provided."
@@ -420,7 +420,7 @@ msgstr ""
 
 #: includes/profile-edit.php:188
 msgid "A plain photo of your face is enough. Profiles with a photo get called far more often."
-msgstr ""
+msgstr "आपके चेहरे की सीधी-सादी फ़ोटो काफ़ी है। फ़ोटो वाली प्रोफ़ाइलों पर कहीं ज़्यादा कॉल आती हैं।"
 
 #: includes/how-seen.php:178
 msgid "A profile with a face gets tapped far more than one without. It does not have to be a good photograph. It has to be you."
@@ -428,7 +428,7 @@ msgstr ""
 
 #: includes/dashboard.php:172
 msgid "A profile with a photo gets called far more often. A plain head and shoulders picture is enough."
-msgstr ""
+msgstr "फ़ोटो वाली प्रोफ़ाइल पर कहीं ज़्यादा कॉल आती हैं। सिर और कंधों की सीधी-सादी तस्वीर काफ़ी है।"
 
 #: includes/email-check.php:528
 msgid "A real mailbox you have created on your own domain. Everything will be sent from this address, so it should be one people could reply to or one that says plainly it is not read."
@@ -440,7 +440,7 @@ msgstr ""
 
 #: includes/profile-edit.php:623
 msgid "A registered company"
-msgstr ""
+msgstr "रजिस्टर्ड कंपनी"
 
 #: includes/how-seen.php:207
 msgid "A second profile."
@@ -472,7 +472,7 @@ msgstr ""
 
 #: includes/profile-edit.php:659
 msgid "About your work"
-msgstr ""
+msgstr "आपके काम के बारे में"
 
 #. translators: %s: who the report is about
 #: includes/reports.php:697
@@ -497,11 +497,11 @@ msgstr ""
 
 #: includes/fields.php:341
 msgid "Accommodation provided"
-msgstr ""
+msgstr "रहने की जगह मिलेगी"
 
 #: includes/dashboard.php:894
 msgid "Account created"
-msgstr ""
+msgstr "खाता बन गया"
 
 #: includes/taxonomies.php:366
 msgid "Accountant"
@@ -517,7 +517,7 @@ msgstr ""
 
 #: includes/hiring-request.php:525
 msgid "Accounts that are a worker and an employer at the same time. Anybody can add hiring to their own account, so nothing here is waiting on you. Removing hiring takes away job posting and leaves the worker profile, the ratings and the login untouched."
-msgstr ""
+msgstr "वे खाते जो एक साथ मज़दूर भी हैं और मालिक भी। कोई भी अपने खाते में काम देने की सुविधा जोड़ सकता है, इसलिए यहाँ कुछ आप पर अटका नहीं है। यह सुविधा हटाने से काम डालना बंद हो जाता है, पर मज़दूर प्रोफ़ाइल, रेटिंग और लॉगिन जस के तस रहते हैं।"
 
 #: includes/privacy.php:848
 msgid "Accounts that go unused are warned by email at around eighteen months, hidden from searches at twenty months, and have their personal details removed at two years. Signing in at any point stops this and restores the profile."
@@ -529,15 +529,15 @@ msgstr ""
 
 #: includes/hiring-request.php:540
 msgid "Action"
-msgstr ""
+msgstr "कार्रवाई"
 
 #: includes/dashboard.php:328
 msgid "Add"
-msgstr ""
+msgstr "जोड़ें"
 
 #: includes/dashboard.php:171
 msgid "Add a photo of yourself"
-msgstr ""
+msgstr "अपनी फ़ोटो जोड़ें"
 
 #: includes/how-seen.php:232
 msgid "Add a photograph and say what you actually do. That is what decides whether somebody calls."
@@ -557,11 +557,11 @@ msgstr ""
 
 #: includes/hiring-request.php:184
 msgid "Add hiring to my account"
-msgstr ""
+msgstr "मेरे खाते में काम देने की सुविधा जोड़ें"
 
 #: includes/hiring-request.php:695
 msgid "Add job posting to this account"
-msgstr ""
+msgstr "इस खाते में काम डालने की सुविधा जोड़ें"
 
 #: includes/taxonomies.php:226
 msgid "Add language"
@@ -589,7 +589,7 @@ msgstr ""
 
 #: includes/dashboard.php:145
 msgid "Add your phone number"
-msgstr ""
+msgstr "अपना फ़ोन नंबर डालें"
 
 #: includes/promote.php:471
 msgid "Add your phone number to your profile. We arrange this over the telephone, so we cannot start without one."
@@ -601,19 +601,19 @@ msgstr ""
 
 #: includes/dashboard.php:159
 msgid "Add your town"
-msgstr ""
+msgstr "अपना शहर डालें"
 
 #: includes/dashboard.php:199
 msgid "Add your town or village"
-msgstr ""
+msgstr "अपना शहर या गाँव डालें"
 
 #: includes/dashboard.php:192
 msgid "Add your years of experience"
-msgstr ""
+msgstr "अपने अनुभव के साल डालें"
 
 #: includes/hiring-request.php:539
 msgid "Added"
-msgstr ""
+msgstr "जुड़ गया"
 
 #: includes/gift.php:424
 msgid "Added on top of anything already running on their account."
@@ -706,7 +706,7 @@ msgstr ""
 
 #: includes/post-job.php:288 includes/reports.php:390
 msgid "Amount in rupees"
-msgstr ""
+msgstr "रकम रुपयों में"
 
 #: includes/reports.php:910
 msgid "Amount owed"
@@ -722,7 +722,7 @@ msgstr "एक मालिक"
 
 #: includes/profile-edit.php:621
 msgid "An individual, building or fixing something"
-msgstr ""
+msgstr "एक व्यक्ति, जो कुछ बनवा या ठीक करवा रहा है"
 
 #: includes/app-links.php:426 includes/app-links.php:466
 msgid "Android"
@@ -762,11 +762,11 @@ msgstr ""
 
 #: includes/profile-edit.php:496
 msgid "Anything else about your work"
-msgstr ""
+msgstr "आपके काम के बारे में और कुछ"
 
 #: includes/post-job.php:395
 msgid "Anything else they should know"
-msgstr ""
+msgstr "और कुछ जो उन्हें पता होना चाहिए"
 
 #: includes/ratings.php:906
 msgid "Anything to add?"
@@ -782,15 +782,15 @@ msgstr ""
 
 #: includes/employer-index.php:344 includes/profile-edit.php:386 includes/teams.php:238
 msgid "Anywhere in Nagaland"
-msgstr ""
+msgstr "नागालैंड में कहीं भी"
 
 #: includes/profile-edit.php:385
 msgid "Anywhere in my district"
-msgstr ""
+msgstr "मेरे ज़िले में कहीं भी"
 
 #: includes/teams.php:237
 msgid "Anywhere in our district"
-msgstr ""
+msgstr "हमारे ज़िले में कहीं भी"
 
 #: includes/taxonomies.php:644
 msgid "Ao"
@@ -830,7 +830,7 @@ msgstr ""
 
 #: includes/dashboard.php:448
 msgid "Are you free for work?"
-msgstr ""
+msgstr "क्या आप काम के लिए खाली हैं?"
 
 #. translators: %s: site name
 #: includes/privacy.php:691
@@ -892,7 +892,7 @@ msgstr ""
 
 #: includes/job-screening.php:798
 msgid "Asks the worker for money"
-msgstr ""
+msgstr "मज़दूर से पैसे मांगता है"
 
 #: includes/taxonomies.php:659
 msgid "Assamese"
@@ -917,11 +917,11 @@ msgstr ""
 
 #: includes/fields.php:117
 msgid "Availability"
-msgstr ""
+msgstr "उपलब्धता"
 
 #: includes/dashboard.php:878
 msgid "Availability updated."
-msgstr ""
+msgstr "उपलब्धता बदल दी गई।"
 
 #: includes/how-seen.php:145
 msgid "Available comes first."
@@ -929,11 +929,11 @@ msgstr ""
 
 #: includes/dashboard.php:440 includes/queries.php:301
 msgid "Available now"
-msgstr ""
+msgstr "अभी उपलब्ध"
 
 #: includes/fields.php:166 includes/fields.php:249
 msgid "Average rating"
-msgstr ""
+msgstr "औसत रेटिंग"
 
 #: includes/taxonomies.php:303
 msgid "Babysitter"
@@ -945,7 +945,7 @@ msgstr ""
 
 #: includes/profile-edit.php:139
 msgid "Back to my account"
-msgstr ""
+msgstr "मेरे खाते पर वापस"
 
 #: includes/taxonomies.php:139
 msgid "Back to trades"
@@ -1013,7 +1013,7 @@ msgstr ""
 
 #: includes/dashboard.php:686
 msgid "Being checked"
-msgstr ""
+msgstr "जाँच हो रही है"
 
 #: includes/app-links.php:431 includes/app-links.php:446
 msgid "Being served"
@@ -1053,7 +1053,7 @@ msgstr "घर बनवा रहे हैं, साइट चला रह�
 
 #: includes/teams.php:287
 msgid "Buildings you have worked on, how long you have worked together, tools you bring."
-msgstr ""
+msgstr "कौन-सी इमारतों पर काम किया है, कितने समय से साथ काम कर रहे हैं, कौन-से औज़ार लाते हैं।"
 
 #: includes/app-links.php:525
 msgid "Bundle identifier"
@@ -1065,7 +1065,7 @@ msgstr ""
 
 #: includes/profile-edit.php:206
 msgid "Business or your name"
-msgstr ""
+msgstr "कारोबार या आपका नाम"
 
 #: includes/settings.php:254
 msgid "By default, deleting this plugin leaves every worker profile, job, rating and report in the database. Reinstalling brings it all back. That is on purpose: a plugin gets deleted for many reasons, and most of them are not a decision to destroy several hundred people's listings."
@@ -1102,7 +1102,7 @@ msgstr ""
 
 #: includes/hiring-request.php:675
 msgid "Can post jobs"
-msgstr ""
+msgstr "काम डाल सकते हैं"
 
 #: includes/taxonomies.php:319
 msgid "Car mechanic"
@@ -1138,7 +1138,7 @@ msgstr ""
 
 #: includes/dashboard.php:1039
 msgid "Change password"
-msgstr ""
+msgstr "पासवर्ड बदलें"
 
 #: includes/indexing-api.php:1127
 msgid "Check it really works"
@@ -1158,11 +1158,11 @@ msgstr "पासवर्ड चुनें"
 
 #: includes/profile-edit.php:457 includes/reports.php:359
 msgid "Choose one"
-msgstr ""
+msgstr "एक चुनें"
 
 #: includes/post-job.php:314 includes/posted-for.php:307
 msgid "Choose the district"
-msgstr ""
+msgstr "ज़िला चुनें"
 
 #: includes/services.php:66
 msgid "Choose the district."
@@ -1170,7 +1170,7 @@ msgstr ""
 
 #: includes/post-job.php:247 includes/posted-for.php:289
 msgid "Choose the trade"
-msgstr ""
+msgstr "काम चुनें"
 
 #: includes/reports.php:556 includes/services.php:651
 msgid "Choose what the report is about."
@@ -1199,7 +1199,7 @@ msgstr "अपना काम चुनें"
 
 #: includes/profile-edit.php:464 includes/rest-shape.php:319
 msgid "Church elder or pastor"
-msgstr ""
+msgstr "चर्च के बुज़ुर्ग या पादरी"
 
 #: includes/insights.php:1260 includes/queries.php:1017
 msgid "Clear"
@@ -1207,7 +1207,7 @@ msgstr ""
 
 #: includes/admin.php:681 includes/dashboard.php:692
 msgid "Closed"
-msgstr ""
+msgstr "बंद"
 
 #. translators: %s: a date
 #: includes/past-jobs.php:445
@@ -1230,11 +1230,11 @@ msgstr ""
 
 #: includes/fields.php:361
 msgid "Closes on"
-msgstr ""
+msgstr "बंद होगा"
 
 #: includes/profile-edit.php:462 includes/rest-shape.php:317
 msgid "Colony council member"
-msgstr ""
+msgstr "कॉलोनी काउंसिल सदस्य"
 
 #: includes/employer-index.php:327
 msgid "Company"
@@ -1279,7 +1279,7 @@ msgstr "%s के लिए अपना ईमेल पक्का करे�
 
 #: includes/post-job.php:216
 msgid "Confirm your email to make jobs visible"
-msgstr ""
+msgstr "काम दिखाने के लिए अपना ईमेल पक्का करें"
 
 #: includes/rest-api.php:92
 msgid "Confirm your email to see who is hiring. We sent you a link when you registered."
@@ -1325,15 +1325,15 @@ msgstr ""
 
 #: includes/fields.php:284
 msgid "Contact number"
-msgstr ""
+msgstr "संपर्क नंबर"
 
 #: includes/fields.php:207
 msgid "Contact person"
-msgstr ""
+msgstr "संपर्क व्यक्ति"
 
 #: includes/hiring-request.php:161
 msgid "Contact us"
-msgstr ""
+msgstr "हमसे संपर्क करें"
 
 #: includes/taxonomies.php:440
 msgid "Content creator"
@@ -1409,11 +1409,11 @@ msgstr ""
 
 #: includes/teams.php:221
 msgid "Day rate for the team"
-msgstr ""
+msgstr "टीम का दिन का रेट"
 
 #: includes/profile-edit.php:349
 msgid "Day rate you expect"
-msgstr ""
+msgstr "आप दिन का कितना रेट चाहते हैं"
 
 #: includes/promote.php:1593 includes/promote.php:1851
 msgid "Days"
@@ -1425,11 +1425,11 @@ msgstr ""
 
 #: includes/profile-edit.php:871
 msgid "Delete my account"
-msgstr ""
+msgstr "मेरा खाता हटाएँ"
 
 #: includes/profile-edit.php:903
 msgid "Delete my account for good"
-msgstr ""
+msgstr "मेरा खाता हमेशा के लिए हटाएँ"
 
 #: includes/settings.php:250
 msgid "Deleting the plugin"
@@ -1449,7 +1449,7 @@ msgstr ""
 
 #: includes/posted-for.php:364
 msgid "Details"
-msgstr ""
+msgstr "विवरण"
 
 #: includes/settings.php:178
 msgid "Dial every number you put here before you save it."
@@ -1497,11 +1497,11 @@ msgstr ""
 
 #: includes/teams.php:627
 msgid "Do you bring other workers?"
-msgstr ""
+msgstr "क्या आप और मज़दूर लाते हैं?"
 
 #: includes/working-request.php:374
 msgid "Do you take work yourself?"
-msgstr ""
+msgstr "क्या आप खुद भी काम लेते हैं?"
 
 #: includes/gstin.php:385
 msgid "Does not check out"
@@ -1509,7 +1509,7 @@ msgstr ""
 
 #: includes/dashboard.php:881
 msgid "Done. That person can no longer see your number."
-msgstr ""
+msgstr "हो गया। अब वह व्यक्ति आपका नंबर नहीं देख सकता।"
 
 #: includes/gift.php:350
 msgid "Done. Their account has it now."
@@ -1561,15 +1561,15 @@ msgstr ""
 
 #: includes/dashboard.php:537
 msgid "Edit my details"
-msgstr ""
+msgstr "अपनी जानकारी बदलें"
 
 #: includes/dashboard.php:545
 msgid "Edit my profile"
-msgstr ""
+msgstr "अपनी प्रोफ़ाइल बदलें"
 
 #: includes/teams.php:642
 msgid "Edit my team"
-msgstr ""
+msgstr "अपनी टीम बदलें"
 
 #: includes/post-types.php:125
 msgid "Edit team"
@@ -1577,7 +1577,7 @@ msgstr ""
 
 #: includes/post-job.php:231
 msgid "Edit this job"
-msgstr ""
+msgstr "यह काम बदलें"
 
 #: includes/taxonomies.php:133
 msgid "Edit trade"
@@ -1618,7 +1618,7 @@ msgstr ""
 
 #: includes/dashboard.php:871
 msgid "Email confirmed. Your profile is live."
-msgstr ""
+msgstr "ईमेल पक्का हो गया। आपकी प्रोफ़ाइल चालू है।"
 
 #: includes/settings.php:208
 msgid "Email me when somebody collects three flags"
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: includes/fields.php:278
 msgid "Employer profile"
-msgstr ""
+msgstr "मालिक प्रोफ़ाइल"
 
 #: includes/admin.php:372 includes/insights.php:1041 includes/post-types.php:182
 msgid "Employers"
@@ -1646,7 +1646,7 @@ msgstr "अब पूरे नागालैंड के मालिक आ�
 
 #: includes/dashboard.php:179
 msgid "Employers filter by rate. With no rate, you are left out of most searches."
-msgstr ""
+msgstr "मालिक रेट से छाँटते हैं। रेट न हो तो आप ज़्यादातर खोजों से बाहर रह जाते हैं।"
 
 #. translators: %s: number of times the profile has been opened
 #: includes/push.php:846
@@ -1664,15 +1664,15 @@ msgstr ""
 
 #: includes/profile-edit.php:248
 msgid "Employers look for people near the work."
-msgstr ""
+msgstr "मालिक काम के पास रहने वाले लोगों को ढूँढते हैं।"
 
 #: includes/dashboard.php:200
 msgid "Employers look for workers near the site."
-msgstr ""
+msgstr "मालिक साइट के पास रहने वाले मज़दूरों को ढूँढते हैं।"
 
 #: includes/dashboard.php:314
 msgid "Employers skip past profiles that are half empty. These are the ones that matter most."
-msgstr ""
+msgstr "आधी-अधूरी प्रोफ़ाइलों को मालिक छोड़कर आगे बढ़ जाते हैं। सबसे ज़्यादा मायने ये ही रखती हैं।"
 
 #: includes/admin.php:90
 msgid "Employers who came back"
@@ -1716,7 +1716,7 @@ msgstr ""
 
 #: includes/hiring-request.php:190
 msgid "Every job posted on Kaam Ase is checked. Anything that is not real work is removed and the account is closed."
-msgstr ""
+msgstr "Kaam Ase पर डाला गया हर काम जाँचा जाता है। जो असली काम नहीं है उसे हटा दिया जाता है और खाता बंद कर दिया जाता है।"
 
 #: includes/indexes.php:142
 msgid "Every kind of work on Kaam Ase. Tap one to see who is available across Nagaland."
@@ -1740,15 +1740,15 @@ msgstr ""
 
 #: includes/job-screening.php:799
 msgid "Excludes people by tribe, religion or origin"
-msgstr ""
+msgstr "जाति, धर्म या मूल के आधार पर लोगों को बाहर रखता है"
 
 #: includes/fields.php:104
 msgid "Expected day rate"
-msgstr ""
+msgstr "अपेक्षित दिन का रेट"
 
 #: includes/fields.php:110
 msgid "Expected monthly pay"
-msgstr ""
+msgstr "अपेक्षित महीने की मज़दूरी"
 
 #: includes/settings.php:170
 msgid "Extra emergency numbers"
@@ -1756,7 +1756,7 @@ msgstr ""
 
 #: includes/posted-for.php:415
 msgid "Extras"
-msgstr ""
+msgstr "अतिरिक्त सुविधाएँ"
 
 #: includes/taxonomies.php:336
 msgid "Farm labour"
@@ -1780,11 +1780,11 @@ msgstr ""
 
 #: includes/dashboard.php:1114 includes/dashboard.php:544 includes/saved.php:757
 msgid "Find work"
-msgstr ""
+msgstr "काम ढूँढें"
 
 #: includes/dashboard.php:536 includes/saved.php:756
 msgid "Find workers"
-msgstr ""
+msgstr "मज़दूर ढूँढें"
 
 #: includes/indexing-api.php:976
 msgid "Finding a job to test with"
@@ -1792,11 +1792,11 @@ msgstr ""
 
 #: includes/dashboard.php:299
 msgid "Finish your profile"
-msgstr ""
+msgstr "अपनी प्रोफ़ाइल पूरी करें"
 
 #: includes/job-screening.php:801
 msgid "First post from this employer"
-msgstr ""
+msgstr "इस मालिक की पहली पोस्ट"
 
 #: includes/taxonomies.php:341
 msgid "Fish farm worker"
@@ -1812,7 +1812,7 @@ msgstr ""
 
 #: includes/post-job.php:370
 msgid "Food"
-msgstr ""
+msgstr "खाना"
 
 #: includes/schema.php:201
 msgid "Food is provided."
@@ -1820,15 +1820,15 @@ msgstr ""
 
 #: includes/fields.php:335 includes/posted-for.php:418
 msgid "Food provided"
-msgstr ""
+msgstr "खाना मिलेगा"
 
 #: includes/teams.php:148
 msgid "For example: Imliakum mason team"
-msgstr ""
+msgstr "जैसे: इम्लियाकुम राजमिस्त्री टीम"
 
 #: includes/posted-for.php:233
 msgid "For jobs you have seen elsewhere and checked yourself. The job goes up under Kaam Ase with the employer's name on it, and workers get the employer's number, never yours. Ring the employer first and make sure the job is real and that they are happy to be listed."
-msgstr ""
+msgstr "उन कामों के लिए जो आपने कहीं और देखे और खुद जाँचे हैं। काम Kaam Ase पर मालिक के नाम से लगता है, और मज़दूरों को मालिक का नंबर मिलता है, आपका कभी नहीं। पहले मालिक को फ़ोन करके पक्का कर लें कि काम असली है और वे लिस्ट होने से खुश हैं।"
 
 #: includes/install.php:668
 msgid "For maid, cook, babysitter and caregiver work, only verified employers can make contact. Tell someone you trust where you are going and who you are working for. If a place or a person does not feel right, leave. You do not need a reason and you do not need permission."
@@ -1836,7 +1836,7 @@ msgstr ""
 
 #: includes/post-job.php:384
 msgid "For work away from home these matter as much as the rate. Say so if you provide them."
-msgstr ""
+msgstr "घर से दूर के काम में ये रेट जितने ही मायने रखते हैं। अगर आप देते हैं तो बता दें।"
 
 #: includes/gift.php:96
 msgid "Forever"
@@ -1860,7 +1860,7 @@ msgstr ""
 
 #: includes/post-job.php:461
 msgid "Free to post. Open for three weeks, then it closes on its own so nobody answers a job that is already filled."
-msgstr ""
+msgstr "डालना मुफ़्त। तीन हफ़्ते खुला रहता है, फिर अपने आप बंद हो जाता है ताकि भरे हुए काम पर कोई जवाब न दे।"
 
 #: includes/insights.php:1254 includes/reports.php:905
 msgid "From"
@@ -1881,7 +1881,7 @@ msgstr ""
 
 #: includes/fields.php:225 includes/profile-edit.php:648
 msgid "GST number"
-msgstr ""
+msgstr "GST नंबर"
 
 #: includes/gstin.php:239
 msgid "GST on file"
@@ -1889,7 +1889,7 @@ msgstr ""
 
 #: includes/profile-edit.php:461 includes/rest-shape.php:316
 msgid "Gaon Bura"
-msgstr ""
+msgstr "गाँव बुरा"
 
 #: includes/taxonomies.php:306
 msgid "Gardener"
@@ -1897,7 +1897,7 @@ msgstr ""
 
 #: includes/dashboard.php:185
 msgid "Get someone to vouch for you"
-msgstr ""
+msgstr "किसी से अपनी ज़मानत दिलवाएँ"
 
 #: includes/how-seen.php:231
 msgid "Get your trade and district right. That is what decides which lists you turn up in."
@@ -1909,7 +1909,7 @@ msgstr ""
 
 #: includes/post-job.php:403
 msgid "Give it a title"
-msgstr ""
+msgstr "इसे एक शीर्षक दें"
 
 #: includes/gift.php:314 includes/gift.php:315 includes/gift.php:346
 msgid "Give the plan"
@@ -2012,7 +2012,7 @@ msgstr ""
 
 #: includes/posted-for.php:273
 msgid "Group name, link, or who told you. Only you see this."
-msgstr ""
+msgstr "ग्रुप का नाम, लिंक, या किसने बताया। यह सिर्फ़ आप देखते हैं।"
 
 #: includes/taxonomies.php:338
 msgid "Harvest worker"
@@ -2039,17 +2039,17 @@ msgstr ""
 
 #: includes/job-screening.php:736
 msgid "Held because"
-msgstr ""
+msgstr "रोका गया क्योंकि"
 
 #. translators: 1: display name, 2: job title, 3: job URL
 #: includes/job-screening.php:653
 msgid "Hello %1$s,\n\n\"%2$s\" is live. Workers in your district can see it now, and it stays open for three weeks.\n\n%3$s\n\nShare that link on WhatsApp if you want it seen faster. Your next jobs go live straight away.\n"
-msgstr ""
+msgstr "नमस्ते %1$s,\n\n\"%2$s\" चालू हो गया है। आपके ज़िले के मज़दूर इसे अब देख सकते हैं, और यह तीन हफ़्ते खुला रहेगा।\n\n%3$s\n\nजल्दी दिखाना हो तो यह लिंक WhatsApp पर भेजें। आपके अगले काम सीधे चालू हो जाएँगे।\n"
 
 #. translators: 1: display name, 2: post a job URL
 #: includes/hiring-request.php:461
 msgid "Hello %1$s,\n\nHiring has been added to your account. You can post jobs now, using the same login you already have. Your worker profile and your ratings are unchanged.\n\nPost a job here: %2$s\n"
-msgstr ""
+msgstr "नमस्ते %1$s,\n\nआपके खाते में काम देने की सुविधा जोड़ दी गई है। अब आप उसी लॉगिन से काम डाल सकते हैं जो पहले से आपके पास है। आपकी मज़दूर प्रोफ़ाइल और आपकी रेटिंग जस की तस हैं।\n\nयहाँ काम डालें: %2$s\n"
 
 #. translators: 1: display name, 2: the label shown on the mark
 #: includes/rich-manu.php:349
@@ -2064,12 +2064,12 @@ msgstr ""
 #. translators: 1: display name, 2: job title, 3: dashboard URL
 #: includes/job-screening.php:602
 msgid "Hello %1$s,\n\nYour job \"%2$s\" has been saved and is being checked before workers see it. A person reads the first job from every new employer. It is usually done within a few hours and you will get another email when it goes live.\n\nNothing more is needed from you. After this one, your jobs go live straight away.\n\nYou can see it here: %3$s\n"
-msgstr ""
+msgstr "नमस्ते %1$s,\n\nआपका काम \"%2$s\" सहेज लिया गया है और मज़दूरों को दिखने से पहले जाँचा जा रहा है। हर नए मालिक का पहला काम एक व्यक्ति पढ़ता है। यह आमतौर पर कुछ घंटों में हो जाता है और चालू होने पर आपको एक और ईमेल मिलेगा।\n\nआपको और कुछ नहीं करना। इसके बाद आपके काम सीधे चालू हो जाएँगे।\n\nआप इसे यहाँ देख सकते हैं: %3$s\n"
 
 #. translators: %s: person's name
 #: includes/dashboard.php:393
 msgid "Hello %s"
-msgstr ""
+msgstr "नमस्ते %s"
 
 #. translators: %s: person's name
 #: includes/privacy.php:678 includes/privacy.php:700 includes/profile-edit.php:977
@@ -2103,19 +2103,19 @@ msgstr ""
 
 #: includes/fields.php:271
 msgid "Hiring as"
-msgstr ""
+msgstr "किस रूप में काम दे रहे हैं"
 
 #: includes/hiring-request.php:635
 msgid "Hiring removed. Their worker account is untouched."
-msgstr ""
+msgstr "काम देने की सुविधा हटा दी गई। उनका मज़दूर खाता जस का तस है।"
 
 #: includes/hiring-request.php:158
 msgid "Hiring was not added to this account"
-msgstr ""
+msgstr "इस खाते में काम देने की सुविधा नहीं जोड़ी गई"
 
 #: includes/hiring-request.php:881
 msgid "Hiring was removed from this account. Get in touch if that was a mistake."
-msgstr ""
+msgstr "इस खाते से काम देने की सुविधा हटा दी गई। अगर यह गलती से हुआ है तो हमसे संपर्क करें।"
 
 #: includes/taxonomies.php:307
 msgid "Home nurse or attendant"
@@ -2155,11 +2155,11 @@ msgstr ""
 
 #: includes/teams.php:232
 msgid "How far will the team travel"
-msgstr ""
+msgstr "टीम कितनी दूर जाएगी"
 
 #: includes/profile-edit.php:378
 msgid "How far will you travel"
-msgstr ""
+msgstr "आप कितनी दूर जाएँगे"
 
 #: includes/job-alerts.php:831
 msgid "How it stands"
@@ -2179,11 +2179,11 @@ msgstr ""
 
 #: includes/post-job.php:348
 msgid "How long is the work"
-msgstr ""
+msgstr "काम कितने समय का है"
 
 #: includes/fields.php:313 includes/posted-for.php:406
 msgid "How long the work lasts"
-msgstr ""
+msgstr "काम कितने समय चलेगा"
 
 #: includes/schema.php:197
 msgid "How long the work lasts: %s"
@@ -2211,7 +2211,7 @@ msgstr ""
 
 #: includes/job-photos.php:74
 msgid "How many pictures one job post can carry. One is enough to make a listing worth looking at, which is why it is the free number. More is a reason to pay rather than something a job needs."
-msgstr ""
+msgstr "एक काम की पोस्ट पर कितनी तस्वीरें लग सकती हैं। लिस्टिंग को देखने लायक बनाने के लिए एक ही काफ़ी है, इसीलिए मुफ़्त में इतनी ही है। इससे ज़्यादा पैसे देने की वजह है, काम की ज़रूरत नहीं।"
 
 #: includes/insights.php:913
 msgid "How many this time"
@@ -2223,11 +2223,11 @@ msgstr ""
 
 #: includes/post-job.php:262 includes/posted-for.php:345
 msgid "How many workers"
-msgstr ""
+msgstr "कितने मज़दूर"
 
 #: includes/teams.php:156
 msgid "How many workers, including you"
-msgstr ""
+msgstr "कितने मज़दूर, आपको मिलाकर"
 
 #: includes/reports.php:386
 msgid "How much are you owed"
@@ -2256,7 +2256,7 @@ msgstr "मैं %1$s और %2$s से सहमत हूँ।"
 
 #: includes/working-request.php:378
 msgid "I also look for work"
-msgstr ""
+msgstr "मैं काम भी ढूँढता हूँ"
 
 #: includes/google-signin.php:1735 includes/registration.php:287
 msgid "I am looking for work"
@@ -2280,7 +2280,7 @@ msgstr ""
 
 #: includes/post-job.php:422
 msgid "I need somebody today or tomorrow"
-msgstr ""
+msgstr "मुझे आज या कल कोई चाहिए"
 
 #: includes/app-links.php:558
 msgid "If it still fails"
@@ -2304,7 +2304,7 @@ msgstr "अगर यह आपने किया है तो कुछ क�
 
 #: includes/posted-for.php:338
 msgid "If the original says negotiable, ask the employer for a figure when you ring. A job with no rate gets almost no answers."
-msgstr ""
+msgstr "अगर मूल पोस्ट में बातचीत से तय होना लिखा है, तो फ़ोन करते समय मालिक से कोई रकम पूछ लें। बिना रेट वाले काम को लगभग कोई जवाब नहीं मिलता।"
 
 #: includes/email-check.php:627
 msgid "If this is not an address at your own domain, Gmail has good reason to treat it as forged."
@@ -2336,7 +2336,7 @@ msgstr ""
 
 #: includes/teams.php:137
 msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
-msgstr ""
+msgstr "अगर आप अपने साथ और मज़दूर लाते हैं, तो अपने अलावा टीम भी लिस्ट करें। जब ठेकेदारों को पूरा काम कराना होता है तो वे टीम ढूँढते हैं, और उनके लिए पाँच लोगों को पाँच फ़ोन करने से आपको एक फ़ोन करना आसान है।"
 
 #: includes/registration.php:693
 msgid "If you did not create this account, ignore this message and nothing will happen."
@@ -2352,7 +2352,7 @@ msgstr ""
 
 #: includes/profile-edit.php:981
 msgid "If you ever want to come back, you are welcome to register again."
-msgstr ""
+msgstr "अगर आप कभी वापस आना चाहें, तो दोबारा रजिस्टर करने का स्वागत है।"
 
 #: includes/ratings.php:832
 msgid "If you have worked for them, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
@@ -2364,7 +2364,7 @@ msgstr ""
 
 #: includes/hiring-request.php:159
 msgid "If you think this is a mistake, get in touch and tell us about the work you hire for."
-msgstr ""
+msgstr "अगर आपको लगता है यह गलती है, तो हमसे संपर्क करें और बताएँ कि आप किस काम के लिए लोग रखते हैं।"
 
 #: includes/reports.php:347
 msgid "If you were not paid, or paid less than agreed, tell us here. We will look into it and speak to the other side. What you write is private."
@@ -2372,7 +2372,7 @@ msgstr ""
 
 #: includes/teams.php:635
 msgid "If you work with a group, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and that is work you will not see otherwise."
-msgstr ""
+msgstr "अगर आप ग्रुप में काम करते हैं, तो अपने अलावा टीम भी लिस्ट करें। जब ठेकेदारों को पूरा काम कराना होता है तो वे टीम ढूँढते हैं, और वह काम वरना आपको दिखेगा ही नहीं।"
 
 #: includes/how-seen.php:146
 msgid "If your profile says you are available for work, you are shown ahead of everybody marked busy. This is the single biggest thing you control and it is one tap. Turn it off when you are working. An employer who rings three busy people stops ringing anybody."
@@ -2388,7 +2388,7 @@ msgstr ""
 
 #: includes/dashboard.php:207
 msgid "It helps an employer know you can talk to each other on site."
-msgstr ""
+msgstr "इससे मालिक को पता चलता है कि साइट पर आप आपस में बात कर सकते हैं।"
 
 #: includes/closed-jobs.php:313
 msgid "It is kept here so the record stays, but the work has gone."
@@ -2396,7 +2396,7 @@ msgstr ""
 
 #: includes/dashboard.php:193
 msgid "It is the second thing an employer looks at, after the trade."
-msgstr ""
+msgstr "काम के बाद मालिक दूसरी चीज़ यही देखता है।"
 
 #: includes/verify-requests.php:263
 msgid "It means somebody at Kaam Ase telephoned that person and spoke to them. It is not sold and it does not move anybody up a list. It only tells a stranger they are real, which is the one thing a stranger cannot tell on their own."
@@ -2420,7 +2420,7 @@ msgstr ""
 
 #: includes/job-photos.php:582
 msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
-msgstr ""
+msgstr "JPG, PNG या WEBP। फ़ोन जो छिपी हुई जगह की जानकारी फ़ोटो के अंदर सहेजते हैं, वह किसी के देखने से पहले हम हटा देते हैं।"
 
 #: includes/promote.php:1547 includes/promote.php:1870
 msgid "Job"
@@ -2432,7 +2432,7 @@ msgstr ""
 
 #: includes/dashboard.php:882
 msgid "Job closed. Workers will stop calling about it."
-msgstr ""
+msgstr "काम बंद कर दिया गया। मज़दूर इसके बारे में फ़ोन करना बंद कर देंगे।"
 
 #: includes/post-types.php:234
 msgid "Job photo"
@@ -2440,7 +2440,7 @@ msgstr ""
 
 #: includes/dashboard.php:879
 msgid "Job posted again. It is open for three weeks."
-msgstr ""
+msgstr "काम दोबारा डाल दिया गया। यह तीन हफ़्ते खुला रहेगा।"
 
 #: includes/post-types.php:233
 msgid "Jobs"
@@ -2448,11 +2448,11 @@ msgstr ""
 
 #: includes/profile-edit.php:881
 msgid "Jobs and ratings involving other people are kept without your name, because they are part of somebody else's record too."
-msgstr ""
+msgstr "जिन कामों और रेटिंग में दूसरे लोग शामिल हैं वे आपके नाम के बिना रखे जाते हैं, क्योंकि वे किसी और के रिकॉर्ड का भी हिस्सा हैं।"
 
 #: includes/admin.php:95 includes/fields.php:180
 msgid "Jobs completed"
-msgstr ""
+msgstr "पूरे किए गए काम"
 
 #: includes/admin.php:80
 msgid "Jobs filled"
@@ -2460,7 +2460,7 @@ msgstr ""
 
 #: includes/hiring-request.php:538
 msgid "Jobs posted"
-msgstr ""
+msgstr "डाले गए काम"
 
 #: includes/entitlements.php:74
 msgid "Jobs posted a day"
@@ -2468,7 +2468,7 @@ msgstr ""
 
 #: includes/post-job.php:299
 msgid "Jobs without a rate get almost no answers. Put a real number even if it is negotiable."
-msgstr ""
+msgstr "बिना रेट वाले कामों को लगभग कोई जवाब नहीं मिलता। बातचीत से तय होना हो तब भी कोई असली रकम डालें।"
 
 #: includes/privacy.php:357
 msgid "Jobs you posted were kept but your name and number were removed, because workers who did those jobs have ratings attached to them."
@@ -2500,7 +2500,7 @@ msgstr ""
 
 #: includes/hiring-request.php:671
 msgid "Kaam Ase hiring"
-msgstr ""
+msgstr "Kaam Ase काम देना"
 
 #: includes/install.php:713
 msgid "Kaam Ase holds names, photographs, villages and phone numbers of real people. Under the Digital Personal Data Protection Act a privacy notice is a legal requirement, not a formality. Have a lawyer write this. Below is what they need to cover."
@@ -2565,11 +2565,11 @@ msgstr ""
 
 #: includes/teams.php:634
 msgid "Keep the headcount right. It is the first thing a contractor looks at."
-msgstr ""
+msgstr "लोगों की संख्या सही रखें। ठेकेदार सबसे पहले यही देखता है।"
 
 #: includes/dashboard.php:288
 msgid "Keep your availability up to date and you will show up in more searches."
-msgstr ""
+msgstr "अपनी उपलब्धता अपडेट रखें और आप और खोजों में दिखेंगे।"
 
 #: includes/indexing-api.php:1099
 msgid "Key file"
@@ -2610,7 +2610,7 @@ msgstr ""
 
 #: includes/profile-edit.php:404
 msgid "Languages you speak"
-msgstr ""
+msgstr "आप कौन-सी भाषाएँ बोलते हैं"
 
 #: includes/job-alerts.php:852
 msgid "Last run"
@@ -2627,19 +2627,19 @@ msgstr ""
 
 #: includes/posted-for.php:358
 msgid "Leave blank and one is written for you"
-msgstr ""
+msgstr "खाली छोड़ दें, आपके लिए एक लिख दिया जाएगा"
 
 #: includes/post-job.php:407
 msgid "Leave blank and we will write one"
-msgstr ""
+msgstr "खाली छोड़ दें, हम एक लिख देंगे"
 
 #: includes/teams.php:173
 msgid "Leave blank if it is you"
-msgstr ""
+msgstr "अगर यह आप ही हैं तो खाली छोड़ दें"
 
 #: includes/post-job.php:446
 msgid "Leave blank to use your account number"
-msgstr ""
+msgstr "अपने खाते का नंबर इस्तेमाल करने के लिए खाली छोड़ दें"
 
 #: includes/reports.php:378
 msgid "Leave empty if it is not about a person."
@@ -2671,15 +2671,15 @@ msgstr ""
 
 #: includes/teams.php:294 includes/teams.php:643
 msgid "List my team"
-msgstr ""
+msgstr "मेरी टीम लिस्ट करें"
 
 #: includes/teams.php:131
 msgid "List your team"
-msgstr ""
+msgstr "अपनी टीम लिस्ट करें"
 
 #: includes/teams.php:72
 msgid "Listing a team takes a couple of minutes once you have a worker account."
-msgstr ""
+msgstr "मज़दूर खाता बन जाने के बाद टीम लिस्ट करने में दो मिनट लगते हैं।"
 
 #: includes/taxonomies.php:340
 msgid "Livestock worker"
@@ -2699,7 +2699,7 @@ msgstr ""
 
 #: includes/profile-edit.php:166
 msgid "Logo or photo"
-msgstr ""
+msgstr "लोगो या फ़ोटो"
 
 #: includes/exposure.php:498
 msgid "Longest anybody has waited"
@@ -2731,7 +2731,7 @@ msgstr ""
 
 #: includes/teams.php:74
 msgid "Make a free worker profile"
-msgstr ""
+msgstr "मुफ़्त मज़दूर प्रोफ़ाइल बनाएँ"
 
 #: includes/registration.php:291
 msgid "Make a worker profile"
@@ -2755,7 +2755,7 @@ msgstr ""
 
 #: includes/dashboard.php:735
 msgid "Mark as filled"
-msgstr ""
+msgstr "भर गया के रूप में चिह्नित करें"
 
 #: includes/admin.php:741
 msgid "Mark verified"
@@ -2779,11 +2779,11 @@ msgstr "राजमिस्त्री, बढ़ई, बिजली मि�
 
 #: includes/job-screening.php:800
 msgid "May not be a job"
-msgstr ""
+msgstr "शायद यह काम नहीं है"
 
 #: includes/dashboard.php:1104 includes/dashboard.php:1124
 msgid "Me"
-msgstr ""
+msgstr "मैं"
 
 #: includes/taxonomies.php:323
 msgid "Mechanic (general)"
@@ -2803,7 +2803,7 @@ msgstr ""
 
 #: includes/profile-edit.php:366
 msgid "Monthly pay you expect"
-msgstr ""
+msgstr "आप महीने की कितनी मज़दूरी चाहते हैं"
 
 #: includes/plan-pitch.php:314
 msgid "More pictures on a job."
@@ -2812,7 +2812,7 @@ msgstr ""
 #. translators: 1: trade name, 2: district, 3: median day rate
 #: includes/profile-edit.php:583
 msgid "Most %1$s in %2$s ask around rupees %3$s a day. Yours is yours to decide."
-msgstr ""
+msgstr "%2$s में ज़्यादातर %1$s दिन के करीब %3$s रुपये मांगते हैं। आपका रेट आपको तय करना है।"
 
 #: includes/queries.php:303
 msgid "Most experienced"
@@ -2840,19 +2840,19 @@ msgstr ""
 
 #: includes/profile-edit.php:152
 msgid "My details"
-msgstr ""
+msgstr "मेरी जानकारी"
 
 #: includes/dashboard.php:656
 msgid "My jobs"
-msgstr ""
+msgstr "मेरे काम"
 
 #: includes/dashboard.php:997 includes/profile-edit.php:153
 msgid "My profile"
-msgstr ""
+msgstr "मेरी प्रोफ़ाइल"
 
 #: includes/install.php:329 includes/teams.php:130 includes/teams.php:626
 msgid "My team"
-msgstr ""
+msgstr "मेरी टीम"
 
 #: includes/gstin.php:176
 msgid "Nagaland"
@@ -2876,7 +2876,7 @@ msgstr ""
 
 #: includes/post-job.php:269
 msgid "Need a whole team? Put the number and we will show your job to team leaders too."
-msgstr ""
+msgstr "पूरी टीम चाहिए? संख्या डालें और हम आपका काम टीम लीडरों को भी दिखाएँगे।"
 
 #: includes/admin.php:404
 msgid "Needs your attention"
@@ -2892,19 +2892,19 @@ msgstr ""
 
 #: includes/teams.php:259
 msgid "Never shown on the site. Contractors reach you through Kaam Ase and you can see who asked."
-msgstr ""
+msgstr "साइट पर कभी नहीं दिखता। ठेकेदार आप तक Kaam Ase से पहुँचते हैं और आप देख सकते हैं किसने पूछा।"
 
 #: includes/profile-edit.php:261
 msgid "Never shown on the site. People reach you through Kaam Ase, and you can see who asked."
-msgstr ""
+msgstr "साइट पर कभी नहीं दिखता। लोग आप तक Kaam Ase से पहुँचते हैं, और आप देख सकते हैं किसने पूछा।"
 
 #: includes/post-job.php:448
 msgid "Never shown on the site. Workers reach you through Kaam Ase."
-msgstr ""
+msgstr "साइट पर कभी नहीं दिखता। मज़दूर आप तक Kaam Ase से पहुँचते हैं।"
 
 #: includes/profile-edit.php:485
 msgid "Never shown publicly. Only we see it, and only to check if there is a problem. Ask them before you put their number here."
-msgstr ""
+msgstr "सार्वजनिक रूप से कभी नहीं दिखता। सिर्फ़ हम देखते हैं, और तभी जब कोई दिक्कत हो। उनका नंबर यहाँ डालने से पहले उनसे पूछ लें।"
 
 #: includes/exposure.php:489
 msgid "Never yet reached one"
@@ -3051,11 +3051,11 @@ msgstr "कोई फ़ोटो नहीं आई। दोबारा क�
 
 #: includes/job-photos.php:255
 msgid "No picture arrived."
-msgstr ""
+msgstr "कोई तस्वीर नहीं आई।"
 
 #: includes/job-photos.php:915
 msgid "No picture arrived. Please try again."
-msgstr ""
+msgstr "कोई तस्वीर नहीं आई। दोबारा कोशिश करें।"
 
 #: includes/email-check.php:494
 msgid "No reason given."
@@ -3153,7 +3153,7 @@ msgstr ""
 
 #: includes/gift.php:470 includes/hiring-request.php:530
 msgid "Nobody yet."
-msgstr ""
+msgstr "अभी कोई नहीं।"
 
 #: includes/contact.php:985
 msgid "Nobody yet. Finish your profile and set yourself available, and you will show up in more searches."
@@ -3203,7 +3203,7 @@ msgstr ""
 
 #: includes/hiring-request.php:642
 msgid "Not removed. That account has no other role, so it would be left unable to sign in."
-msgstr ""
+msgstr "नहीं हटाया गया। उस खाते की कोई और भूमिका नहीं है, इसलिए वह साइन इन ही नहीं कर पाएगा।"
 
 #: includes/admin.php:575 includes/past-jobs.php:277
 msgid "Not set"
@@ -3227,7 +3227,7 @@ msgstr ""
 
 #: includes/dashboard.php:884
 msgid "Noted. We will not ask about that one again."
-msgstr ""
+msgstr "नोट कर लिया। हम उसके बारे में दोबारा नहीं पूछेंगे।"
 
 #: includes/admin.php:407
 msgid "Nothing flagged. Nobody has been reported for not paying or not turning up."
@@ -3283,19 +3283,19 @@ msgstr ""
 
 #: includes/teams.php:252
 msgid "Number for the team"
-msgstr ""
+msgstr "टीम का नंबर"
 
 #: includes/post-job.php:441
 msgid "Number for this job"
-msgstr ""
+msgstr "इस काम का नंबर"
 
 #: includes/fields.php:173 includes/fields.php:256
 msgid "Number of ratings"
-msgstr ""
+msgstr "रेटिंग की संख्या"
 
 #: includes/fields.php:198
 msgid "Number of workers"
-msgstr ""
+msgstr "मज़दूरों की संख्या"
 
 #: includes/plan-pitch.php:284
 msgid "Numbers whenever you need them."
@@ -3360,7 +3360,7 @@ msgstr ""
 
 #: includes/admin.php:566 includes/dashboard.php:442
 msgid "On leave"
-msgstr ""
+msgstr "छुट्टी पर"
 
 #: includes/job-alerts.php:783
 msgid "Once a day, every worker who has new work posted in their trade and their district gets one message about all of it. Never more than one a day each, whatever gets posted. Nobody chooses a trade or a district for this: it uses what is already on their profile."
@@ -3380,7 +3380,7 @@ msgstr ""
 
 #: includes/dashboard.php:895
 msgid "One more step below, then people can find you."
-msgstr ""
+msgstr "नीचे एक और कदम, फिर लोग आपको ढूँढ सकेंगे।"
 
 #: includes/app-links.php:457
 msgid "One of the fingerprints is not the expected shape. Google wants SHA-256, which is 32 pairs of characters joined by colons. SHA-1 is half that length and is the usual mistake. It has been kept exactly as you typed it in case it is right and this check is wrong."
@@ -3388,7 +3388,7 @@ msgstr ""
 
 #: includes/job-screening.php:864
 msgid "One of these is serious. If the post is what it appears to be, do not just delete it. Keep the post and the account, and report it to the police."
-msgstr ""
+msgstr "इनमें से एक गंभीर है। अगर पोस्ट वही है जो दिख रही है, तो उसे बस मिटाएँ नहीं। पोस्ट और खाता रहने दें, और पुलिस को इसकी सूचना दें।"
 
 #: includes/settings.php:175
 msgid "One per line, as label then a comma then the number. For example: Dimapur police station, 03862123456"
@@ -3410,20 +3410,20 @@ msgstr ""
 #: includes/job-photos.php:427
 msgid "Only %s picture was kept. That is what this account can put on a job."
 msgid_plural "Only %s pictures were kept. That is what this account can put on a job."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "सिर्फ़ %s तस्वीर रखी गई। इस खाते से एक काम पर इतनी ही लग सकती है।"
+msgstr[1] "सिर्फ़ %s तस्वीरें रखी गईं। इस खाते से एक काम पर इतनी ही लग सकती हैं।"
 
 #: includes/profile-edit.php:384
 msgid "Only around my town"
-msgstr ""
+msgstr "सिर्फ़ मेरे शहर के आस-पास"
 
 #: includes/teams.php:236
 msgid "Only around our town"
-msgstr ""
+msgstr "सिर्फ़ हमारे शहर के आस-पास"
 
 #: includes/profile-edit.php:372
 msgid "Only if you want steady monthly work. Leave empty otherwise."
-msgstr ""
+msgstr "सिर्फ़ तब जब आपको पक्का महीने का काम चाहिए। वरना खाली छोड़ दें।"
 
 #: includes/apple-signin.php:235
 msgid "Only needed if Sign in with Apple is ever added to the website. Leave empty otherwise."
@@ -3439,7 +3439,7 @@ msgstr ""
 
 #: includes/admin.php:428 includes/admin.php:666 includes/dashboard.php:691
 msgid "Open"
-msgstr ""
+msgstr "खुला"
 
 #: includes/reports.php:100
 msgid "Open <span class=\"count\">(%s)</span>"
@@ -3449,7 +3449,7 @@ msgstr[1] ""
 
 #: includes/posted-for.php:218
 msgid "Open it"
-msgstr ""
+msgstr "इसे खोलें"
 
 #: includes/admin.php:357
 msgid "Open jobs"
@@ -3474,7 +3474,7 @@ msgstr ""
 
 #: includes/profile-edit.php:653
 msgid "Optional. Registered businesses get taken more seriously by workers."
-msgstr ""
+msgstr "वैकल्पिक। रजिस्टर्ड कारोबारों को मज़दूर ज़्यादा गंभीरता से लेते हैं।"
 
 #: includes/app-version.php:364
 msgid "Optional. Shown above the Update button."
@@ -3508,7 +3508,7 @@ msgstr ""
 
 #: includes/job-photos.php:577
 msgid "Paid accounts can put more than one picture on a job."
-msgstr ""
+msgstr "पेड खाते एक काम पर एक से ज़्यादा तस्वीरें लगा सकते हैं।"
 
 #: includes/rich-manu.php:676
 msgid "Paid and waiting to be rung."
@@ -3551,11 +3551,11 @@ msgstr ""
 
 #: includes/admin.php:624 includes/fields.php:290 includes/posted-for.php:326
 msgid "Pay"
-msgstr ""
+msgstr "मज़दूरी"
 
 #: includes/fields.php:297 includes/post-job.php:290
 msgid "Pay period"
-msgstr ""
+msgstr "मज़दूरी की अवधि"
 
 #: includes/how-seen.php:199
 msgid "Paying. There is nothing to buy."
@@ -3584,11 +3584,11 @@ msgstr ""
 
 #: includes/teams.php:227
 msgid "Per worker per day is the usual way to quote it. Say so in the description if you mean something else."
-msgstr ""
+msgstr "आमतौर पर प्रति मज़दूर प्रति दिन के हिसाब से बताया जाता है। कुछ और मतलब हो तो विवरण में लिख दें।"
 
 #: includes/hiring-request.php:537 includes/rich-manu.php:464
 msgid "Person"
-msgstr ""
+msgstr "व्यक्ति"
 
 #: includes/taxonomies.php:398
 msgid "Pharmacist"
@@ -3635,7 +3635,7 @@ msgstr "साइन इन फ़ोन"
 
 #: includes/profile-edit.php:167
 msgid "Photo of yourself"
-msgstr ""
+msgstr "अपनी फ़ोटो"
 
 #: includes/taxonomies.php:465
 msgid "Photographer"
@@ -3647,7 +3647,7 @@ msgstr "फ़ोटो JPG, PNG या WEBP होनी चाहिए।"
 
 #: includes/job-photos.php:73
 msgid "Photos on a job"
-msgstr ""
+msgstr "एक काम पर फ़ोटो"
 
 #: includes/media.php:333
 msgid "Photos uploaded by workers and employers are hidden here so this stays a library of the site's own images. Use the dropdown above to see them."
@@ -3659,7 +3659,7 @@ msgstr ""
 
 #: includes/job-photos.php:515 includes/posted-for.php:375
 msgid "Pictures"
-msgstr ""
+msgstr "तस्वीरें"
 
 #: includes/gift.php:394
 msgid "Plan to record"
@@ -3730,7 +3730,7 @@ msgstr ""
 
 #: includes/working-request.php:375
 msgid "Plenty of people here hire for one job and work on another. Add a worker profile to this same account and employers can find you too. It is free, and your login and your job posts stay exactly as they are."
-msgstr ""
+msgstr "यहाँ बहुत से लोग एक काम के लिए लोग रखते हैं और दूसरे पर खुद काम करते हैं। इसी खाते में मज़दूर प्रोफ़ाइल जोड़ें और मालिक आपको भी ढूँढ सकेंगे। यह मुफ़्त है, और आपका लॉगिन तथा आपके डाले काम जस के तस रहते हैं।"
 
 #: includes/taxonomies.php:285
 msgid "Plumber"
@@ -3754,28 +3754,28 @@ msgstr ""
 
 #: includes/job-screening.php:797
 msgid "Possible sexual services"
-msgstr ""
+msgstr "संभवतः यौन सेवाएँ"
 
 #: includes/job-screening.php:795
 msgid "Possible trafficking or bonded labour"
-msgstr ""
+msgstr "संभवतः मानव तस्करी या बंधुआ मज़दूरी"
 
 #: includes/job-screening.php:796
 msgid "Possibly involves someone under 18"
-msgstr ""
+msgstr "संभवतः 18 साल से कम उम्र का कोई शामिल है"
 
 #: includes/dashboard.php:535 includes/install.php:306 includes/post-job.php:232
 #: includes/post-types.php:224 includes/post-types.php:225
 msgid "Post a job"
-msgstr ""
+msgstr "काम डालें"
 
 #: includes/posted-for.php:179 includes/posted-for.php:211
 msgid "Post a job for somebody"
-msgstr ""
+msgstr "किसी और के लिए काम डालें"
 
 #: includes/dashboard.php:714
 msgid "Post again"
-msgstr ""
+msgstr "दोबारा डालें"
 
 #: includes/plan-pitch.php:304
 msgid "Post as much work as you have."
@@ -3783,11 +3783,11 @@ msgstr ""
 
 #: includes/posted-for.php:180
 msgid "Post for somebody"
-msgstr ""
+msgstr "किसी और के लिए डालें"
 
 #: includes/dashboard.php:1089
 msgid "Post job"
-msgstr ""
+msgstr "काम डालें"
 
 #: includes/install.php:637
 msgid "Post the job with the rate, how many workers you need and when you need them."
@@ -3795,15 +3795,15 @@ msgstr ""
 
 #: includes/post-job.php:456
 msgid "Post this job"
-msgstr ""
+msgstr "यह काम डालें"
 
 #: includes/dashboard.php:665
 msgid "Post your first job"
-msgstr ""
+msgstr "अपना पहला काम डालें"
 
 #: includes/posted-for.php:65
 msgid "Posted for an outside employer"
-msgstr ""
+msgstr "बाहरी मालिक के लिए डाला गया"
 
 #: includes/admin.php:92
 msgid "Posted more than once. The clearest sign it works."
@@ -3811,7 +3811,7 @@ msgstr ""
 
 #: includes/post-job.php:158
 msgid "Posting a job takes two minutes once you have an account."
-msgstr ""
+msgstr "खाता बन जाने के बाद काम डालने में दो मिनट लगते हैं।"
 
 #: includes/taxonomies.php:339
 msgid "Poultry worker"
@@ -3839,7 +3839,7 @@ msgstr ""
 
 #: includes/dashboard.php:880
 msgid "Profile saved."
-msgstr ""
+msgstr "प्रोफ़ाइल सहेज ली गई।"
 
 #: includes/promote.php:1045
 msgid "Promote a job or your profile"
@@ -3851,7 +3851,7 @@ msgstr ""
 
 #: includes/job-screening.php:859
 msgid "Publishing it from here clears it, and this employer's later jobs will go live on their own."
-msgstr ""
+msgstr "यहाँ से प्रकाशित करने पर यह मंज़ूर हो जाता है, और इस मालिक के आगे के काम अपने आप चालू होंगे।"
 
 #: includes/services.php:490
 msgid "Put a phone number for the team. It should be 10 digits starting with 6, 7, 8 or 9."
@@ -3859,7 +3859,7 @@ msgstr ""
 
 #: includes/posted-for.php:491
 msgid "Put the name of the person or firm hiring."
-msgstr ""
+msgstr "जो व्यक्ति या फ़र्म काम दे रही है उसका नाम डालें।"
 
 #: includes/services.php:76
 msgid "Put the rate you are paying. Jobs with no rate get almost no answers."
@@ -3871,15 +3871,15 @@ msgstr ""
 
 #: includes/posted-for.php:495
 msgid "Put their number. Ten digits starting with 6, 7, 8 or 9. Without it this job is no use to anybody."
-msgstr ""
+msgstr "उनका नंबर डालें। 6, 7, 8 या 9 से शुरू होने वाले दस अंक। इसके बिना यह काम किसी के लिए बेकार है।"
 
 #: includes/posted-for.php:426
 msgid "Put this job up"
-msgstr ""
+msgstr "यह काम लगाएँ"
 
 #: includes/profile-edit.php:359
 msgid "Put what you normally ask for. Employers filter by rate, so leaving it empty keeps you out of most searches."
-msgstr ""
+msgstr "जो आप आमतौर पर मांगते हैं वह डालें। मालिक रेट से छाँटते हैं, इसलिए खाली छोड़ने पर आप ज़्यादातर खोजों से बाहर रह जाते हैं।"
 
 #: includes/install.php:630
 msgid "Put your trade, your district and the day rate you expect."
@@ -3951,7 +3951,7 @@ msgstr ""
 
 #: includes/dashboard.php:946
 msgid "Rebuild my profile"
-msgstr ""
+msgstr "मेरी प्रोफ़ाइल दोबारा बनाएँ"
 
 #: includes/email-check.php:643
 msgid "Recent messages"
@@ -4003,7 +4003,7 @@ msgstr "मालिक के रूप में रजिस्टर कर�
 
 #: includes/post-job.php:157 includes/teams.php:71
 msgid "Register first, it is free"
-msgstr ""
+msgstr "पहले रजिस्टर करें, यह मुफ़्त है"
 
 #: includes/insights.php:1363 includes/insights.php:587 includes/not-confirmed.php:240
 msgid "Registered"
@@ -4011,15 +4011,15 @@ msgstr ""
 
 #: includes/job-photos.php:536 includes/saved.php:572 includes/saved.php:840
 msgid "Remove"
-msgstr ""
+msgstr "हटाएँ"
 
 #: includes/hiring-request.php:587
 msgid "Remove hiring"
-msgstr ""
+msgstr "काम देने की सुविधा हटाएँ"
 
 #: includes/hiring-request.php:694
 msgid "Remove job posting from this account"
-msgstr ""
+msgstr "इस खाते से काम डालने की सुविधा हटाएँ"
 
 #: includes/post-types.php:85
 msgid "Remove profile photo"
@@ -4031,7 +4031,7 @@ msgstr ""
 
 #: includes/profile-edit.php:176 includes/teams.php:271
 msgid "Remove this photo"
-msgstr ""
+msgstr "यह फ़ोटो हटाएँ"
 
 #: includes/admin.php:742
 msgid "Remove verified"
@@ -4055,7 +4055,7 @@ msgstr ""
 
 #: includes/dashboard.php:1029 includes/install.php:368 includes/reports.php:340
 msgid "Report a problem"
-msgstr ""
+msgstr "शिकायत करें"
 
 #: includes/reports.php:882
 msgid "Report details"
@@ -4104,7 +4104,7 @@ msgstr ""
 
 #: includes/posted-for.php:330 includes/promote.php:1852
 msgid "Rupees"
-msgstr ""
+msgstr "रुपये"
 
 #. translators: 1: amount offered, 2: statutory minimum
 #: includes/services.php:84
@@ -4155,15 +4155,15 @@ msgstr ""
 #: includes/app-version.php:370 includes/indexing-api.php:1124 includes/profile-edit.php:266
 #: includes/saved.php:202
 msgid "Save"
-msgstr ""
+msgstr "सहेजें"
 
 #: includes/post-job.php:455
 msgid "Save changes"
-msgstr ""
+msgstr "बदलाव सहेजें"
 
 #: includes/teams.php:293
 msgid "Save my team"
-msgstr ""
+msgstr "मेरी टीम सहेजें"
 
 #: includes/email-check.php:585
 msgid "Save the mailbox"
@@ -4176,15 +4176,15 @@ msgstr ""
 #: includes/dashboard.php:1099 includes/dashboard.php:1119 includes/install.php:318
 #: includes/saved.php:198 includes/saved.php:744
 msgid "Saved"
-msgstr ""
+msgstr "सहेजे गए"
 
 #: includes/dashboard.php:546
 msgid "Saved jobs"
-msgstr ""
+msgstr "सहेजे गए काम"
 
 #: includes/dashboard.php:538
 msgid "Saved workers"
-msgstr ""
+msgstr "सहेजे गए मज़दूर"
 
 #: includes/app-version.php:264 includes/apple-signin.php:158 includes/google-signin.php:182
 msgid "Saved."
@@ -4200,7 +4200,7 @@ msgstr ""
 
 #: includes/dashboard.php:152
 msgid "Say what kind of employer you are"
-msgstr ""
+msgstr "बताएँ आप किस तरह के मालिक हैं"
 
 #: includes/how-seen.php:181
 msgid "Say what you actually do."
@@ -4212,7 +4212,7 @@ msgstr ""
 
 #: includes/dashboard.php:206
 msgid "Say which languages you speak"
-msgstr ""
+msgstr "बताएँ आप कौन-सी भाषाएँ बोलते हैं"
 
 #: includes/rest-api.php:1670
 msgid "Say which phone to sign out."
@@ -4276,11 +4276,11 @@ msgstr ""
 
 #: includes/teams.php:116
 msgid "See how a contractor sees it"
-msgstr ""
+msgstr "देखें ठेकेदार को यह कैसा दिखता है"
 
 #: includes/dashboard.php:402
 msgid "See how others see your profile"
-msgstr ""
+msgstr "देखें दूसरों को आपकी प्रोफ़ाइल कैसी दिखती है"
 
 #: includes/verify-requests.php:490
 msgid "See their profile"
@@ -4288,7 +4288,7 @@ msgstr ""
 
 #: includes/hiring-request.php:560
 msgid "See their worker profile"
-msgstr ""
+msgstr "उनकी मज़दूर प्रोफ़ाइल देखें"
 
 #. translators: %s: the plan name
 #: includes/plan-pitch.php:164
@@ -4309,7 +4309,7 @@ msgstr ""
 
 #: includes/dashboard.php:845
 msgid "Send it again"
-msgstr ""
+msgstr "दोबारा भेजें"
 
 #: includes/job-alerts.php:873
 msgid "Send it now"
@@ -4386,7 +4386,7 @@ msgstr ""
 
 #: includes/dashboard.php:873
 msgid "Sent. Check your email."
-msgstr ""
+msgstr "भेज दिया गया। अपना ईमेल देखें।"
 
 #: includes/indexing-api.php:1240
 msgid "Sent: %s"
@@ -4418,7 +4418,7 @@ msgstr ""
 
 #: includes/dashboard.php:178
 msgid "Set your day rate"
-msgstr ""
+msgstr "अपना दिन का रेट तय करें"
 
 #: includes/install.php:632
 msgid "Set yourself available when you are free and busy when you are not."
@@ -4426,7 +4426,7 @@ msgstr ""
 
 #: includes/dashboard.php:465
 msgid "Set yourself working when you take a job. It stops employers calling you for nothing, and it keeps your rating clean."
-msgstr ""
+msgstr "काम लेते ही खुद को काम पर लगा हुआ कर दें। इससे मालिक बेवजह फ़ोन नहीं करते, और आपकी रेटिंग साफ़ रहती है।"
 
 #: includes/settings.php:47 includes/settings.php:48 kaamase-core.php:329
 msgid "Settings"
@@ -4442,7 +4442,7 @@ msgstr "मेरा नंबर दें"
 
 #: includes/posted-for.php:128
 msgid "Shared by Kaam Ase."
-msgstr ""
+msgstr "Kaam Ase द्वारा साझा किया गया।"
 
 #: includes/number-requests.php:1039
 msgid "Shared. They can see your number now."
@@ -4520,7 +4520,7 @@ msgstr "यह करने के लिए साइन इन करें।
 
 #: includes/profile-edit.php:88
 msgid "Sign in to edit your profile"
-msgstr ""
+msgstr "अपनी प्रोफ़ाइल बदलने के लिए साइन इन करें"
 
 #: includes/ratings.php:348 includes/services.php:566
 msgid "Sign in to leave a rating."
@@ -4548,11 +4548,11 @@ msgstr ""
 
 #: includes/dashboard.php:52
 msgid "Sign in to see your account."
-msgstr ""
+msgstr "अपना खाता देखने के लिए साइन इन करें।"
 
 #: includes/dashboard.php:1044
 msgid "Sign out"
-msgstr ""
+msgstr "साइन आउट"
 
 #: includes/rest-auth.php:643
 msgid "Sign out of every phone"
@@ -4609,7 +4609,7 @@ msgstr ""
 
 #: includes/profile-edit.php:407
 msgid "So an employer knows you can understand each other on site."
-msgstr ""
+msgstr "ताकि मालिक को पता चले कि साइट पर आप एक-दूसरे को समझ सकते हैं।"
 
 #: includes/taxonomies.php:436
 msgid "Social media manager"
@@ -4657,11 +4657,11 @@ msgstr "किसी के पास आपका नंबर है"
 
 #: includes/post-job.php:897
 msgid "Somebody is reading it before it goes out to workers. This is usually done within a few hours, and every job on Kaam Ase gets the same check. Nothing more is needed from you."
-msgstr ""
+msgstr "मज़दूरों तक जाने से पहले कोई इसे पढ़ रहा है। यह आमतौर पर कुछ घंटों में हो जाता है, और Kaam Ase पर हर काम की यही जाँच होती है। आपको और कुछ नहीं करना।"
 
 #: includes/profile-edit.php:445
 msgid "Somebody local who knows you and will say so. A colony council member, a GB, a church elder, a student union officer, or somebody you worked for before. This carries more weight with employers than anything else on your profile."
-msgstr ""
+msgstr "कोई स्थानीय व्यक्ति जो आपको जानता हो और कहने को तैयार हो। कॉलोनी काउंसिल सदस्य, GB, चर्च के बुज़ुर्ग, छात्र संघ का पदाधिकारी, या कोई जिसके यहाँ आपने पहले काम किया हो। मालिकों की नज़र में यह आपकी प्रोफ़ाइल की किसी भी और चीज़ से ज़्यादा वज़न रखता है।"
 
 #: includes/hire-claims.php:608
 msgid "Somebody on Kaam Ase"
@@ -4681,11 +4681,11 @@ msgstr ""
 
 #: includes/profile-edit.php:466
 msgid "Someone I worked for"
-msgstr ""
+msgstr "कोई जिसके यहाँ मैंने काम किया"
 
 #: includes/profile-edit.php:467
 msgid "Someone else who knows me"
-msgstr ""
+msgstr "कोई और जो मुझे जानता है"
 
 #: includes/rest-shape.php:321
 msgid "Someone they worked for"
@@ -4717,7 +4717,7 @@ msgstr ""
 
 #: includes/dashboard.php:938
 msgid "Something went wrong when your account was made. Tap below and we will build it again. Nothing else about your account changes."
-msgstr ""
+msgstr "आपका खाता बनाते समय कुछ गड़बड़ हो गई थी। नीचे टैप करें, हम इसे दोबारा बना देंगे। आपके खाते की और कोई चीज़ नहीं बदलेगी।"
 
 #: includes/registration.php:365
 msgid "Something went wrong. Please try again."
@@ -4725,7 +4725,7 @@ msgstr "कुछ गड़बड़ हो गई। दोबारा को�
 
 #: includes/post-job.php:375
 msgid "Somewhere to stay"
-msgstr ""
+msgstr "रहने की जगह"
 
 #: includes/rich-manu.php:522
 msgid "Spoken to them"
@@ -4741,7 +4741,7 @@ msgstr ""
 
 #: includes/fields.php:308 includes/posted-for.php:397
 msgid "Start date"
-msgstr ""
+msgstr "शुरू होने की तारीख़"
 
 #: includes/promote.php:1530 includes/promote.php:1608
 msgid "Start it"
@@ -4753,11 +4753,11 @@ msgstr ""
 
 #: includes/fields.php:354
 msgid "Status"
-msgstr ""
+msgstr "स्थिति"
 
 #: includes/posted-for.php:419
 msgid "Stay provided"
-msgstr ""
+msgstr "रहना मिलेगा"
 
 #: includes/taxonomies.php:289
 msgid "Steel fixer"
@@ -4795,7 +4795,7 @@ msgstr ""
 
 #: includes/profile-edit.php:465 includes/rest-shape.php:320
 msgid "Student or workers union officer"
-msgstr ""
+msgstr "छात्र या मज़दूर संघ का पदाधिकारी"
 
 #: includes/taxonomies.php:646
 msgid "Sumi"
@@ -4835,11 +4835,11 @@ msgstr ""
 
 #: includes/teams.php:306
 msgid "Take my team listing down"
-msgstr ""
+msgstr "मेरी टीम की लिस्टिंग हटाएँ"
 
 #: includes/teams.php:305
 msgid "Take the team listing down? Your own worker profile stays."
-msgstr ""
+msgstr "टीम की लिस्टिंग हटा दें? आपकी अपनी मज़दूर प्रोफ़ाइल बनी रहेगी।"
 
 #: includes/gift.php:354
 msgid "Taken back."
@@ -4864,7 +4864,7 @@ msgstr "अपना ईमेल पता पक्का करने के 
 
 #: includes/post-job.php:900
 msgid "Tap the link in your email and it goes live straight away."
-msgstr ""
+msgstr "अपने ईमेल में दिए लिंक पर टैप करें और यह तुरंत चालू हो जाएगा।"
 
 #: includes/taxonomies.php:421
 msgid "Taxi driver"
@@ -4888,7 +4888,7 @@ msgstr ""
 
 #: includes/fields.php:193
 msgid "Team leader"
-msgstr ""
+msgstr "टीम लीडर"
 
 #: includes/post-types.php:133
 msgid "Team photo"
@@ -4896,7 +4896,7 @@ msgstr ""
 
 #: includes/dashboard.php:885
 msgid "Team saved."
-msgstr ""
+msgstr "टीम सहेज ली गई।"
 
 #: includes/insights.php:1040 includes/post-types.php:132
 msgid "Teams"
@@ -4904,7 +4904,7 @@ msgstr ""
 
 #: includes/teams.php:82
 msgid "Teams are listed by the worker who leads them. If you hire teams rather than lead one, post a job instead and say how many workers you need."
-msgstr ""
+msgstr "टीमें उस मज़दूर के नाम से लिस्ट होती हैं जो उन्हें लीड करता है। अगर आप टीम लीड करने के बजाय टीम रखते हैं, तो काम डालें और बताएँ कितने मज़दूर चाहिए।"
 
 #: includes/indexes.php:628
 msgid "Teams for hire"
@@ -4956,7 +4956,7 @@ msgstr "धन्यवाद। दूसरा पक्ष अपनी ल�
 
 #: includes/dashboard.php:883
 msgid "Thank you. You can rate each other now, and it helps the next person."
-msgstr ""
+msgstr "धन्यवाद। अब आप एक-दूसरे को रेटिंग दे सकते हैं, और इससे अगले व्यक्ति को मदद मिलती है।"
 
 #: includes/apple-signin.php:422
 msgid "That Apple sign in could not be confirmed. Please try again."
@@ -4989,7 +4989,7 @@ msgstr ""
 
 #: includes/hiring-request.php:893 includes/working-request.php:297
 msgid "That did not work. Please try again."
-msgstr ""
+msgstr "यह नहीं हो पाया। दोबारा कोशिश करें।"
 
 #: includes/indexing-api.php:167
 msgid "That does not look like the JSON key file Google gives you."
@@ -5009,11 +5009,11 @@ msgstr "वह मालिक अब मौजूद नहीं है।"
 
 #: includes/job-photos.php:273
 msgid "That file is not a picture. Only JPG, PNG and WEBP photos can go on a job."
-msgstr ""
+msgstr "वह फ़ाइल तस्वीर नहीं है। काम पर सिर्फ़ JPG, PNG और WEBP फ़ोटो लग सकती हैं।"
 
 #: includes/fields.php:885
 msgid "That filter is not available."
-msgstr ""
+msgstr "वह फ़िल्टर उपलब्ध नहीं है।"
 
 #: includes/registration.php:353
 msgid "That form expired. Please try again."
@@ -5069,7 +5069,7 @@ msgstr "वह काम अब मौजूद नहीं है।"
 
 #: includes/dashboard.php:872
 msgid "That link did not work. It may have expired. Send a new one below."
-msgstr ""
+msgstr "वह लिंक काम नहीं आया। शायद उसकी मियाद खत्म हो गई। नीचे से नया भेजें।"
 
 #: includes/rest-api.php:1921
 msgid "That link does not lead anywhere any more."
@@ -5094,11 +5094,11 @@ msgstr "वह फ़ोन नंबर ठीक नहीं लग रहा
 
 #: includes/job-photos.php:266
 msgid "That picture did not upload. Please try again."
-msgstr ""
+msgstr "वह तस्वीर अपलोड नहीं हुई। दोबारा कोशिश करें।"
 
 #: includes/job-photos.php:265
 msgid "That picture was too big for the server to take. Photos straight from a phone are often very large. Try one taken at a smaller size."
-msgstr ""
+msgstr "वह तस्वीर सर्वर के लेने के लिए बहुत बड़ी थी। सीधे फ़ोन से ली गई फ़ोटो अक्सर बहुत बड़ी होती हैं। छोटे आकार में ली गई कोई तस्वीर आज़माएँ।"
 
 #: includes/rest-api.php:1827
 msgid "That profile is not available."
@@ -5183,11 +5183,11 @@ msgstr "iPhone ऐप का बंडल आइडेंटिफ़ायर, 
 
 #: includes/posted-for.php:279
 msgid "The job"
-msgstr ""
+msgstr "काम"
 
 #: includes/posted-for.php:216
 msgid "The job is up."
-msgstr ""
+msgstr "काम लग गया।"
 
 #. translators: %s: the name of a missing field
 #: includes/indexing-api.php:177
@@ -5204,7 +5204,7 @@ msgstr ""
 
 #: includes/posted-for.php:136
 msgid "The number on this job belongs to the employer, not to us. You speak to them directly."
-msgstr ""
+msgstr "इस काम पर दिया नंबर मालिक का है, हमारा नहीं। आप सीधे उनसे बात करें।"
 
 #: includes/past-jobs.php:268
 msgid "The page"
@@ -5220,7 +5220,7 @@ msgstr ""
 
 #: includes/posted-for.php:251
 msgid "The person or firm hiring"
-msgstr ""
+msgstr "जो व्यक्ति या फ़र्म काम दे रही है"
 
 #: includes/indexing-api.php:274
 msgid "The private key in that file could not be used to sign. It may be damaged, or pasted with something missing."
@@ -5270,7 +5270,7 @@ msgstr ""
 
 #: includes/posted-for.php:247 includes/profile-edit.php:449
 msgid "Their name"
-msgstr ""
+msgstr "उनका नाम"
 
 #: includes/reports.php:376
 msgid "Their name, or the link to their profile"
@@ -5282,15 +5282,15 @@ msgstr ""
 
 #: includes/posted-for.php:258
 msgid "Their number"
-msgstr ""
+msgstr "उनका नंबर"
 
 #: includes/profile-edit.php:480
 msgid "Their phone number"
-msgstr ""
+msgstr "उनका फ़ोन नंबर"
 
 #: includes/fields.php:145
 msgid "Their position"
-msgstr ""
+msgstr "उनका पद"
 
 #: includes/how-seen.php:233
 msgid "Then wait. The order is turn taking, so everybody reaches the top. Nobody can pay to get there sooner."
@@ -5381,7 +5381,7 @@ msgstr ""
 
 #: includes/teams.php:81
 msgid "This account cannot list a team"
-msgstr ""
+msgstr "यह खाता टीम लिस्ट नहीं कर सकता"
 
 #: includes/services.php:451
 msgid "This account cannot list a team."
@@ -5389,11 +5389,11 @@ msgstr ""
 
 #: includes/post-job.php:183
 msgid "This account cannot post jobs"
-msgstr ""
+msgstr "यह खाता काम नहीं डाल सकता"
 
 #: includes/hiring-request.php:171
 msgid "This account cannot post jobs yet"
-msgstr ""
+msgstr "यह खाता अभी काम नहीं डाल सकता"
 
 #: includes/services.php:151
 msgid "This account cannot post jobs."
@@ -5405,7 +5405,7 @@ msgstr "इस खाते पर कोई दैनिक सीमा नह
 
 #: includes/hiring-request.php:702
 msgid "This adds or removes the employer role only. Everything else about the account is left alone."
-msgstr ""
+msgstr "इससे सिर्फ़ मालिक की भूमिका जुड़ती या हटती है। खाते की बाकी हर चीज़ जस की तस रहती है।"
 
 #: includes/reports.php:170
 msgid "This is a website. Nobody reads it at night. Call one of these instead."
@@ -5425,7 +5425,7 @@ msgstr ""
 
 #: includes/teams.php:163
 msgid "This is the first thing a contractor looks at. Put the number that actually turns up."
-msgstr ""
+msgstr "ठेकेदार सबसे पहले यही देखता है। वह संख्या डालें जो सच में पहुँचती है।"
 
 #: includes/email-check.php:620
 msgid "This is the number that matters. Somebody who joined an hour ago has not failed to confirm yet."
@@ -5437,7 +5437,7 @@ msgstr "साइन इन का आपके पास बस यही त�
 
 #: includes/job-photos.php:907
 msgid "This job already has all the pictures this account can add."
-msgstr ""
+msgstr "इस काम पर पहले से उतनी तस्वीरें हैं जितनी यह खाता जोड़ सकता है।"
 
 #: includes/plan-pitch.php:83
 msgid "This job has all the pictures one job can carry. Remove one to put a different one up."
@@ -5445,7 +5445,7 @@ msgstr ""
 
 #: includes/job-photos.php:570
 msgid "This job has all the pictures this account can add. Remove one to put a different one up."
-msgstr ""
+msgstr "इस काम पर उतनी तस्वीरें हैं जितनी यह खाता जोड़ सकता है। दूसरी लगाने के लिए एक हटाएँ।"
 
 #: includes/closed-jobs.php:187
 msgid "This job has been filled."
@@ -5465,7 +5465,7 @@ msgstr ""
 
 #: includes/job-screening.php:837
 msgid "This job is held and is not visible to anybody."
-msgstr ""
+msgstr "यह काम रोका गया है और किसी को नहीं दिख रहा।"
 
 #. translators: %s: the date the job ran out
 #: includes/closed-jobs.php:199
@@ -5515,7 +5515,7 @@ msgstr ""
 
 #: includes/profile-edit.php:877
 msgid "This removes your profile, your photo and your details from Kaam Ase. It cannot be undone and you would have to start again."
-msgstr ""
+msgstr "इससे आपकी प्रोफ़ाइल, आपकी फ़ोटो और आपकी जानकारी Kaam Ase से हट जाएगी। इसे वापस नहीं किया जा सकता और आपको फिर से शुरू करना पड़ेगा।"
 
 #: includes/insights.php:888
 msgid "This sends a real email to real people and cannot be taken back. Continue?"
@@ -5539,7 +5539,7 @@ msgstr "इस सर्वर के PHP में OpenSSL नहीं है,
 
 #: includes/posted-for.php:252
 msgid "This shows on the job as who is hiring."
-msgstr ""
+msgstr "काम पर यही दिखेगा कि कौन काम दे रहा है।"
 
 #: includes/rest-auth.php:642
 msgid "This signs you out of the app on every phone, including this one. Are you sure?"
@@ -5587,11 +5587,11 @@ msgstr ""
 
 #: includes/teams.php:183
 msgid "Tick everything the team can cover between them."
-msgstr ""
+msgstr "टीम आपस में जो-जो कर सकती है सब पर टिक करें।"
 
 #: includes/profile-edit.php:318
 msgid "Tick everything you can do. More trades means more searches you appear in."
-msgstr ""
+msgstr "जो-जो आप कर सकते हैं सब पर टिक करें। जितने ज़्यादा काम, उतनी ज़्यादा खोजों में आप दिखेंगे।"
 
 #: includes/taxonomies.php:288
 msgid "Tile worker"
@@ -5599,7 +5599,7 @@ msgstr ""
 
 #: includes/posted-for.php:354 includes/privacy.php:110
 msgid "Title"
-msgstr ""
+msgstr "शीर्षक"
 
 #: includes/email-check.php:655 includes/insights.php:1256
 msgid "To"
@@ -5627,12 +5627,12 @@ msgstr "साइन इन की बहुत ज़्यादा कोश�
 
 #: includes/fields.php:235
 msgid "Town"
-msgstr ""
+msgstr "शहर"
 
 #: includes/fields.php:323 includes/fields.php:92 includes/post-job.php:325 includes/posted-for.php:317
 #: includes/profile-edit.php:243 includes/teams.php:214
 msgid "Town or village"
-msgstr ""
+msgstr "शहर या गाँव"
 
 #: includes/taxonomies.php:337
 msgid "Tractor driver"
@@ -5640,7 +5640,7 @@ msgstr ""
 
 #: includes/past-jobs.php:386 includes/posted-for.php:285 includes/queries.php:944
 msgid "Trade"
-msgstr ""
+msgstr "काम"
 
 #: includes/taxonomies.php:131
 msgid "Trade category"
@@ -5656,11 +5656,11 @@ msgstr ""
 
 #: includes/fields.php:347 includes/posted-for.php:420
 msgid "Transport provided"
-msgstr ""
+msgstr "आने-जाने की सुविधा मिलेगी"
 
 #: includes/post-job.php:380
 msgid "Transport to the site"
-msgstr ""
+msgstr "साइट तक आने-जाने की सुविधा"
 
 #: includes/taxonomies.php:422
 msgid "Truck driver"
@@ -5704,20 +5704,20 @@ msgstr ""
 
 #: includes/posted-for.php:410
 msgid "Two weeks, one month, ongoing"
-msgstr ""
+msgstr "दो हफ़्ते, एक महीना, लगातार"
 
 #: includes/post-job.php:352
 msgid "Two weeks, three months, ongoing"
-msgstr ""
+msgstr "दो हफ़्ते, तीन महीने, लगातार"
 
 #: includes/fields.php:220
 msgid "Type"
-msgstr ""
+msgstr "किस तरह"
 
 #. translators: %s: the word the person must type
 #: includes/profile-edit.php:893
 msgid "Type %s to confirm"
-msgstr ""
+msgstr "पुष्टि के लिए %s लिखें"
 
 #. translators: %s: the word that must be typed
 #: includes/settings.php:285
@@ -5738,7 +5738,7 @@ msgstr ""
 
 #: includes/profile-edit.php:944
 msgid "Type the word exactly to confirm you want to delete your account."
-msgstr ""
+msgstr "खाता हटाने की पुष्टि के लिए शब्द बिल्कुल वैसा ही लिखें।"
 
 #: includes/google-signin.php:268
 msgid "Type: Web application. Empty means no button on the website."
@@ -5771,7 +5771,7 @@ msgstr ""
 #. translators: %s: how many pictures may be added
 #: includes/posted-for.php:385
 msgid "Up to %s. A screenshot of the original post is not a picture of the work, so use a photo of the site or the shop where you can get one."
-msgstr ""
+msgstr "%s तक। मूल पोस्ट का स्क्रीनशॉट काम की तस्वीर नहीं है, इसलिए जहाँ मिल सके वहाँ साइट या दुकान की फ़ोटो लगाएँ।"
 
 #: includes/taxonomies.php:178
 msgid "Update district"
@@ -5791,7 +5791,7 @@ msgstr ""
 
 #: includes/fields.php:329
 msgid "Urgent hiring"
-msgstr ""
+msgstr "ज़रूरी भर्ती"
 
 #: includes/entitlements.php:67
 msgid "Urgent jobs at once"
@@ -5799,7 +5799,7 @@ msgstr ""
 
 #: includes/post-job.php:429
 msgid "Urgent jobs go to the top and close after three days. One at a time."
-msgstr ""
+msgstr "ज़रूरी काम ऊपर जाते हैं और तीन दिन बाद बंद हो जाते हैं। एक बार में एक।"
 
 #: includes/queries.php:988
 msgid "Urgent only"
@@ -5807,7 +5807,7 @@ msgstr ""
 
 #: includes/posted-for.php:417
 msgid "Urgent, needed today or tomorrow"
-msgstr ""
+msgstr "ज़रूरी, आज या कल चाहिए"
 
 #: includes/email-check.php:603
 msgid "Use an address on Gmail, because that is what most people here use and it is the strictest. If this says refused, the problem is the server. If it says accepted and nothing arrives, the problem is that Gmail is throwing it away, which is a different fix."
@@ -5831,7 +5831,7 @@ msgstr ""
 
 #: includes/admin.php:586 includes/fields.php:159 includes/fields.php:242 includes/rich-manu.php:171
 msgid "Verified"
-msgstr ""
+msgstr "सत्यापित"
 
 #: includes/employer-index.php:334
 msgid "Verified only"
@@ -5863,7 +5863,7 @@ msgstr ""
 
 #: includes/profile-edit.php:463 includes/rest-shape.php:318
 msgid "Village council member"
-msgstr ""
+msgstr "गाँव काउंसिल सदस्य"
 
 #: includes/admin.php:582
 msgid "Vouched"
@@ -5871,7 +5871,7 @@ msgstr ""
 
 #: includes/fields.php:139
 msgid "Vouched by"
-msgstr ""
+msgstr "ज़मानत दी"
 
 #: includes/queries.php:1004
 msgid "Vouched only"
@@ -5879,11 +5879,11 @@ msgstr ""
 
 #: includes/fields.php:151
 msgid "Voucher phone number"
-msgstr ""
+msgstr "ज़मानत देने वाले का फ़ोन नंबर"
 
 #: includes/dashboard.php:1034
 msgid "Wage complaint"
-msgstr ""
+msgstr "मज़दूरी की शिकायत"
 
 #: includes/reports.php:595 includes/services.php:669
 msgid "Wage complaint %s"
@@ -5915,7 +5915,7 @@ msgstr ""
 
 #: includes/dashboard.php:688
 msgid "Waiting for you to confirm your email"
-msgstr ""
+msgstr "आपके ईमेल की पुष्टि का इंतज़ार है"
 
 #: includes/promote.php:1516
 msgid "Waiting to be rung"
@@ -5989,7 +5989,7 @@ msgstr ""
 
 #: includes/profile-edit.php:193
 msgid "We remove the hidden location information that phones save inside photos, so uploading a picture taken at home does not tell anybody where you live."
-msgstr ""
+msgstr "फ़ोन जो छिपी हुई जगह की जानकारी फ़ोटो के अंदर सहेजते हैं वह हम हटा देते हैं, इसलिए घर पर ली गई तस्वीर अपलोड करने से किसी को पता नहीं चलता कि आप कहाँ रहते हैं।"
 
 #: includes/plan-pitch.php:243
 msgid "We ring you and speak to you. Once we have, the mark goes on your profile and stays there. A worker looking at an unknown number can see that somebody at Kaam Ase has checked who you are, which is the difference between a call answered and a call ignored."
@@ -6002,7 +6002,7 @@ msgstr "यह पता आपका है इसकी पुष्टि क
 #. translators: %s: email address
 #: includes/dashboard.php:834
 msgid "We sent a link to %s. Tap it and your profile goes live straight away."
-msgstr ""
+msgstr "हमने %s पर एक लिंक भेजा है। उस पर टैप करें और आपकी प्रोफ़ाइल तुरंत चालू हो जाएगी।"
 
 #: includes/employer-index.php:197
 msgid "We sent you a link when you registered. Open it and this list is yours. It is held back from unconfirmed accounts because an employer directory is worth harvesting."
@@ -6068,15 +6068,15 @@ msgstr ""
 
 #: includes/posted-for.php:263
 msgid "What a worker gets when they ask for contact details. Never shown openly on the page."
-msgstr ""
+msgstr "मज़दूर जब संपर्क की जानकारी मांगता है तो उसे यही मिलता है। पेज पर खुले तौर पर कभी नहीं दिखता।"
 
 #: includes/profile-edit.php:455
 msgid "What are they"
-msgstr ""
+msgstr "वे क्या हैं"
 
 #: includes/post-job.php:280
 msgid "What are you paying"
-msgstr ""
+msgstr "आप कितना दे रहे हैं"
 
 #: includes/google-signin.php:1729
 msgid "What brings you here"
@@ -6096,7 +6096,7 @@ msgstr ""
 
 #: includes/post-job.php:366
 msgid "What do you provide"
-msgstr ""
+msgstr "आप क्या देते हैं"
 
 #: includes/how-seen.php:196
 msgid "What does not work"
@@ -6140,7 +6140,7 @@ msgstr ""
 
 #: includes/teams.php:143
 msgid "What is the team called"
-msgstr ""
+msgstr "टीम का नाम क्या है"
 
 #: includes/admin.php:358
 msgid "What it needs"
@@ -6148,19 +6148,19 @@ msgstr ""
 
 #: includes/profile-edit.php:615
 msgid "What kind of employer are you"
-msgstr ""
+msgstr "आप किस तरह के मालिक हैं"
 
 #: includes/teams.php:285
 msgid "What the team has built"
-msgstr ""
+msgstr "टीम ने क्या-क्या बनाया है"
 
 #: includes/post-job.php:398
 msgid "What the work involves, what tools they need, who to ask for on the day."
-msgstr ""
+msgstr "काम में क्या-क्या है, कौन-से औज़ार चाहिए, उस दिन किससे मिलना है।"
 
 #: includes/posted-for.php:368
 msgid "What the work is, in your own words."
-msgstr ""
+msgstr "काम क्या है, अपने शब्दों में।"
 
 #: includes/job-alerts.php:809
 msgid "What time"
@@ -6180,15 +6180,15 @@ msgstr "आप क्या काम करते हैं"
 
 #: includes/post-job.php:243
 msgid "What work do you need done"
-msgstr ""
+msgstr "आपको कौन सा काम कराना है"
 
 #: includes/teams.php:178
 msgid "What work does the team do"
-msgstr ""
+msgstr "टीम कौन सा काम करती है"
 
 #: includes/profile-edit.php:662
 msgid "What you build, how you pay, anything a worker should know before taking a job with you."
-msgstr ""
+msgstr "आप क्या बनाते हैं, कैसे पैसे देते हैं, और कुछ भी जो मज़दूर को आपके यहाँ काम लेने से पहले पता होना चाहिए।"
 
 #: includes/plan-pitch.php:390
 msgid "What you get"
@@ -6196,7 +6196,7 @@ msgstr ""
 
 #: includes/profile-edit.php:498
 msgid "What you have built, what tools you have, anything an employer should know."
-msgstr ""
+msgstr "आपने क्या-क्या बनाया है, आपके पास कौन-से औज़ार हैं, और कुछ भी जो मालिक को पता होना चाहिए।"
 
 #: includes/contact.php:768 includes/insights.php:582
 msgid "WhatsApp"
@@ -6204,7 +6204,7 @@ msgstr "WhatsApp"
 
 #: includes/fields.php:82
 msgid "WhatsApp number"
-msgstr ""
+msgstr "WhatsApp नंबर"
 
 #: includes/email-check.php:654 includes/indexing-api.php:1175 includes/privacy.php:205
 #: includes/reports.php:913
@@ -6217,7 +6217,7 @@ msgstr ""
 
 #: includes/post-job.php:339
 msgid "When does it start"
-msgstr ""
+msgstr "यह कब शुरू होगा"
 
 #: includes/saved.php:753
 msgid "When you find a worker you might use later, open their profile and tap Save. Saving is free and it does not use a contact lookup."
@@ -6237,7 +6237,7 @@ msgstr ""
 
 #: includes/post-job.php:329
 msgid "Where the work actually is"
-msgstr ""
+msgstr "काम असल में कहाँ है"
 
 #: includes/google-signin.php:235
 msgid "Where these come from"
@@ -6249,7 +6249,7 @@ msgstr ""
 
 #: includes/posted-for.php:71
 msgid "Where this job came from"
-msgstr ""
+msgstr "यह काम कहाँ से आया"
 
 #: includes/settings.php:150
 msgid "Where wage complaints and safety reports are emailed. Use an address a person actually opens, not a general company inbox nobody reads on a Saturday."
@@ -6257,7 +6257,7 @@ msgstr ""
 
 #: includes/posted-for.php:269
 msgid "Where you saw it"
-msgstr ""
+msgstr "आपने इसे कहाँ देखा"
 
 #: includes/install.php:750
 msgid "Which courts have jurisdiction."
@@ -6287,7 +6287,7 @@ msgstr ""
 
 #: includes/profile-edit.php:442
 msgid "Who can vouch for you"
-msgstr ""
+msgstr "आपकी ज़मानत कौन दे सकता है"
 
 #: includes/exposure.php:445 includes/exposure.php:446 includes/exposure.php:472
 msgid "Who is being seen"
@@ -6295,7 +6295,7 @@ msgstr ""
 
 #: includes/install.php:352 includes/posted-for.php:241
 msgid "Who is hiring"
-msgstr ""
+msgstr "कौन काम दे रहा है"
 
 #: includes/reports.php:372
 msgid "Who is this about"
@@ -6303,11 +6303,11 @@ msgstr ""
 
 #: includes/teams.php:169
 msgid "Who leads it"
-msgstr ""
+msgstr "इसे कौन लीड करता है"
 
 #: includes/dashboard.php:570 includes/install.php:362
 msgid "Who looked at you"
-msgstr ""
+msgstr "किसने आपको देखा"
 
 #: includes/contact.php:984 includes/contact.php:995
 msgid "Who looked you up"
@@ -6319,7 +6319,7 @@ msgstr ""
 
 #: includes/profile-edit.php:640
 msgid "Who should they ask for"
-msgstr ""
+msgstr "उन्हें किससे मिलना है"
 
 #: includes/insights.php:1090
 msgid "Who signed up, last 30 days"
@@ -6347,7 +6347,7 @@ msgstr ""
 
 #: includes/fields.php:124
 msgid "Willing to travel"
-msgstr ""
+msgstr "जाने को तैयार"
 
 #: includes/insights.php:1333
 msgid "With the country code, which is what WhatsApp and most message tools want. Select all and copy."
@@ -6397,7 +6397,7 @@ msgstr ""
 #: includes/admin.php:356 includes/admin.php:374 includes/dashboard.php:1094 includes/insights.php:1039
 #: includes/post-job.php:686 includes/post-types.php:82
 msgid "Workers"
-msgstr ""
+msgstr "मज़दूर"
 
 #: includes/indexes.php:624
 msgid "Workers across Nagaland"
@@ -6410,23 +6410,23 @@ msgstr ""
 
 #: includes/dashboard.php:146
 msgid "Workers cannot be introduced to you without it."
-msgstr ""
+msgstr "इसके बिना मज़दूरों से आपका परिचय नहीं कराया जा सकता।"
 
 #: includes/dashboard.php:315
 msgid "Workers decide whether to answer based on what your profile shows."
-msgstr ""
+msgstr "आपकी प्रोफ़ाइल में जो दिखता है उसी से मज़दूर तय करते हैं कि जवाब दें या नहीं।"
 
 #: includes/fields.php:263
 msgid "Workers hired"
-msgstr ""
+msgstr "रखे गए मज़दूर"
 
 #: includes/fields.php:368
 msgid "Workers hired so far"
-msgstr ""
+msgstr "अब तक रखे गए मज़दूर"
 
 #: includes/post-job.php:869
 msgid "Workers in this district can see it now. It stays open for three weeks, then closes on its own. Share the link on WhatsApp if you want it seen faster."
-msgstr ""
+msgstr "इस ज़िले के मज़दूर इसे अब देख सकते हैं। यह तीन हफ़्ते खुला रहेगा, फिर अपने आप बंद हो जाएगा। जल्दी दिखाना हो तो लिंक WhatsApp पर भेजें।"
 
 #: includes/admin.php:102
 msgid "Workers marked available today."
@@ -6434,27 +6434,27 @@ msgstr ""
 
 #: includes/dashboard.php:160
 msgid "Workers nearby will see your jobs first."
-msgstr ""
+msgstr "आस-पास के मज़दूर आपके काम सबसे पहले देखेंगे।"
 
 #: includes/fields.php:303
 msgid "Workers needed"
-msgstr ""
+msgstr "मज़दूर चाहिए"
 
 #: includes/profile-edit.php:634
 msgid "Workers treat an individual building a house differently from a contractor running four sites. Both are fine, they just want to know."
-msgstr ""
+msgstr "घर बनवाने वाले एक व्यक्ति और चार साइट चलाने वाले ठेकेदार को मज़दूर अलग-अलग तरह से देखते हैं। दोनों ठीक हैं, वे बस जानना चाहते हैं।"
 
 #: includes/dashboard.php:153
 msgid "Workers treat an individual building a house differently from a contractor."
-msgstr ""
+msgstr "घर बनवाने वाले एक व्यक्ति और ठेकेदार को मज़दूर अलग-अलग तरह से देखते हैं।"
 
 #: includes/profile-edit.php:187
 msgid "Workers trust a job more when they can see who is behind it."
-msgstr ""
+msgstr "जब मज़दूर देख पाते हैं कि काम के पीछे कौन है तो वे उस पर ज़्यादा भरोसा करते हैं।"
 
 #: includes/hiring-request.php:493 includes/hiring-request.php:494 includes/hiring-request.php:522
 msgid "Workers who hire"
-msgstr ""
+msgstr "वे मज़दूर जो काम भी देते हैं"
 
 #: includes/saved.php:604
 msgid "Workers you have hired before"
@@ -6462,7 +6462,7 @@ msgstr ""
 
 #: includes/admin.php:565 includes/dashboard.php:441
 msgid "Working"
-msgstr ""
+msgstr "काम पर"
 
 #: includes/ratings.php:126
 msgid "Would you hire them again?"
@@ -6486,16 +6486,16 @@ msgstr ""
 
 #: includes/profile-edit.php:335
 msgid "Years doing this work"
-msgstr ""
+msgstr "यह काम करते हुए कितने साल"
 
 #: includes/fields.php:98
 msgid "Years of experience"
-msgstr ""
+msgstr "अनुभव के साल"
 
 #: includes/admin.php:564 includes/gift.php:512 includes/hiring-request.php:681
 #: includes/insights.php:1387 includes/insights.php:607
 msgid "Yes"
-msgstr ""
+msgstr "हाँ"
 
 #: includes/hires.php:335
 msgid "Yes, I hired them"
@@ -6524,7 +6524,7 @@ msgstr ""
 
 #: includes/post-job.php:428
 msgid "You already have one urgent job running. Close it first, or leave this one normal. One urgent job at a time keeps the tag worth something."
-msgstr ""
+msgstr "आपका पहले से एक ज़रूरी काम चल रहा है। पहले उसे बंद करें, या इसे सामान्य ही रहने दें। एक बार में एक ज़रूरी काम रखने से यह टैग कुछ मायने रखता है।"
 
 #: includes/hire-claims.php:255 includes/hire-claims.php:500
 msgid "You are already able to rate each other."
@@ -6551,8 +6551,8 @@ msgstr ""
 #: includes/job-photos.php:554
 msgid "You can add %s picture to this job."
 msgid_plural "You can add up to %s pictures to this job."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "आप इस काम पर %s तस्वीर जोड़ सकते हैं।"
+msgstr[1] "आप इस काम पर %s तक तस्वीरें जोड़ सकते हैं।"
 
 #: includes/registration.php:211
 msgid "You can add more trades to your profile afterwards."
@@ -6569,7 +6569,7 @@ msgstr ""
 #. translators: %s: site name
 #: includes/hiring-request.php:455
 msgid "You can now post jobs on %s"
-msgstr ""
+msgstr "अब आप %s पर काम डाल सकते हैं"
 
 #: includes/number-requests.php:647
 msgid "You can see the number now"
@@ -6577,7 +6577,7 @@ msgstr "अब आप नंबर देख सकते हैं"
 
 #: includes/post-job.php:217
 msgid "You can write the job now. It goes live the moment you tap the link in your email."
-msgstr ""
+msgstr "आप काम अभी लिख सकते हैं। अपने ईमेल में दिए लिंक पर टैप करते ही यह चालू हो जाएगा।"
 
 #: includes/roles.php:497
 msgid "You cannot change your own account type. Contact Kaam Ase if you need to."
@@ -6641,7 +6641,7 @@ msgstr "आपने आज बहुत सारे नंबर देख ल
 
 #: includes/dashboard.php:663
 msgid "You have not posted a job yet."
-msgstr ""
+msgstr "आपने अभी कोई काम नहीं डाला है।"
 
 #: includes/privacy.php:681
 msgid "You have not used your account for a long time, so we have hidden your profile from searches. Nothing is deleted."
@@ -6703,11 +6703,11 @@ msgstr ""
 
 #: includes/hiring-request.php:175
 msgid "You registered as a worker. If you also hire people, add hiring to this same account. It happens straight away. You keep your profile, your ratings and your login exactly as they are."
-msgstr ""
+msgstr "आपने मज़दूर के रूप में रजिस्टर किया था। अगर आप लोगों को काम भी देते हैं, तो इसी खाते में काम देने की सुविधा जोड़ लें। यह तुरंत हो जाता है। आपकी प्रोफ़ाइल, आपकी रेटिंग और आपका लॉगिन जस के तस रहते हैं।"
 
 #: includes/post-job.php:184
 msgid "You registered as a worker. If you also hire people, get in touch and we will add hiring to your account."
-msgstr ""
+msgstr "आपने मज़दूर के रूप में रजिस्टर किया था। अगर आप लोगों को काम भी देते हैं, तो हमसे संपर्क करें, हम आपके खाते में यह सुविधा जोड़ देंगे।"
 
 #: includes/account-password.php:374
 msgid "You signed up without one, so at the moment you can only get in the way you joined. Set a password and you can also sign in with your email address, on this website and on any phone."
@@ -6720,7 +6720,7 @@ msgstr ""
 #. translators: %s: site name
 #: includes/profile-edit.php:969
 msgid "Your %s account is closed"
-msgstr ""
+msgstr "आपका %s खाता बंद कर दिया गया है"
 
 #. translators: %s: site name
 #: includes/privacy.php:669
@@ -6729,7 +6729,7 @@ msgstr ""
 
 #: includes/profile-edit.php:980
 msgid "Your account and your profile have been removed. Nothing of yours is left on the site."
-msgstr ""
+msgstr "आपका खाता और आपकी प्रोफ़ाइल हटा दी गई है। साइट पर आपका कुछ नहीं बचा है।"
 
 #: includes/privacy.php:174
 msgid "Your comment"
@@ -6745,7 +6745,7 @@ msgstr "आपका ईमेल पता पहले ही पक्का 
 
 #: includes/dashboard.php:701
 msgid "Your first job is read by a person before workers see it. Usually done within a few hours. Nothing more is needed from you."
-msgstr ""
+msgstr "मज़दूरों को दिखने से पहले आपका पहला काम एक व्यक्ति पढ़ता है। आमतौर पर कुछ घंटों में हो जाता है। आपको और कुछ नहीं करना।"
 
 #: includes/registration.php:138
 msgid "Your full name"
@@ -6753,25 +6753,25 @@ msgstr "आपका पूरा नाम"
 
 #: includes/post-job.php:866
 msgid "Your job is live"
-msgstr ""
+msgstr "आपका काम चालू है"
 
 #. translators: %s: site name
 #: includes/job-screening.php:647
 msgid "Your job is live on %s"
-msgstr ""
+msgstr "%s पर आपका काम चालू है"
 
 #: includes/dashboard.php:612
 msgid "Your job is saved and is being checked"
-msgstr ""
+msgstr "आपका काम सहेज लिया गया है और जाँचा जा रहा है"
 
 #: includes/post-job.php:867
 msgid "Your job is saved but not live yet"
-msgstr ""
+msgstr "आपका काम सहेज लिया गया है पर अभी चालू नहीं है"
 
 #. translators: %s: site name
 #: includes/job-screening.php:596
 msgid "Your job on %s is being checked"
-msgstr ""
+msgstr "%s पर आपके काम की जाँच हो रही है"
 
 #: includes/google-signin.php:1746 includes/profile-edit.php:207 includes/reports.php:446
 msgid "Your name"
@@ -6795,7 +6795,7 @@ msgstr "आपका नंबर उन साइन इन लोगों क
 
 #: includes/teams.php:150
 msgid "Your own name works perfectly well. Contractors remember people, not brands."
-msgstr ""
+msgstr "आपका अपना नाम बिल्कुल ठीक चलता है। ठेकेदार लोगों को याद रखते हैं, ब्रांड को नहीं।"
 
 #. translators: %d: the smallest number of characters allowed
 #: includes/account-password.php:131
@@ -6812,11 +6812,11 @@ msgstr "आपका फ़ोन नंबर"
 
 #: includes/dashboard.php:287
 msgid "Your profile is complete"
-msgstr ""
+msgstr "आपकी प्रोफ़ाइल पूरी है"
 
 #: includes/dashboard.php:829
 msgid "Your profile is hidden until you confirm your email"
-msgstr ""
+msgstr "जब तक आप अपना ईमेल पक्का नहीं करते आपकी प्रोफ़ाइल छिपी रहेगी"
 
 #: includes/push.php:366
 msgid "Your profile is live"
@@ -6824,7 +6824,7 @@ msgstr "आपकी प्रोफ़ाइल चालू है"
 
 #: includes/dashboard.php:936
 msgid "Your profile is missing"
-msgstr ""
+msgstr "आपकी प्रोफ़ाइल नहीं मिल रही"
 
 #: includes/rest-api.php:933
 msgid "Your profile is missing. Open the app again and we will rebuild it."
@@ -6832,7 +6832,7 @@ msgstr "आपकी प्रोफ़ाइल नहीं मिल रह�
 
 #: includes/dashboard.php:407
 msgid "Your profile is not live yet. Confirm your email to publish it."
-msgstr ""
+msgstr "आपकी प्रोफ़ाइल अभी चालू नहीं है। इसे प्रकाशित करने के लिए अपना ईमेल पक्का करें।"
 
 #: includes/verify-requests.php:106
 msgid "Your profile needs to be finished and live first."
@@ -6860,11 +6860,11 @@ msgstr "आपका अनुरोध ठुकरा दिया गया"
 
 #: includes/teams.php:114
 msgid "Your team is listed"
-msgstr ""
+msgstr "आपकी टीम लिस्ट हो गई है"
 
 #: includes/dashboard.php:886
 msgid "Your team listing is down. Your own profile is untouched."
-msgstr ""
+msgstr "आपकी टीम की लिस्टिंग हटा दी गई है। आपकी अपनी प्रोफ़ाइल जस की तस है।"
 
 #: includes/rich-manu.php:345
 msgid "Your tick is on your account"
@@ -6900,7 +6900,7 @@ msgstr ""
 
 #: includes/post-job.php:293 includes/posted-for.php:334
 msgid "for the whole job"
-msgstr ""
+msgstr "पूरे काम के लिए"
 
 #: includes/app-links.php:441 includes/app-links.php:504
 msgid "iPhone"
@@ -6949,15 +6949,15 @@ msgstr ""
 
 #: includes/post-job.php:291 includes/posted-for.php:332
 msgid "per day"
-msgstr ""
+msgstr "प्रति दिन"
 
 #: includes/post-job.php:294 includes/posted-for.php:335
 msgid "per hour"
-msgstr ""
+msgstr "प्रति घंटा"
 
 #: includes/post-job.php:292 includes/posted-for.php:333
 msgid "per month"
-msgstr ""
+msgstr "प्रति माह"
 
 #: includes/google-signin.php:1822 includes/registration.php:235
 msgid "privacy notice"
@@ -6970,7 +6970,7 @@ msgstr ""
 
 #: includes/dashboard.php:57
 msgid "register free"
-msgstr ""
+msgstr "मुफ़्त रजिस्टर करें"
 
 #: includes/google-signin.php:1821 includes/registration.php:234
 msgid "terms"
@@ -6978,7 +6978,7 @@ msgstr "शर्तें"
 
 #: includes/profile-edit.php:579
 msgid "workers"
-msgstr ""
+msgstr "मज़दूर"
 
 #: includes/who-looked.php:265
 msgid "year"
@@ -7012,12 +7012,12 @@ msgstr ""
 #: includes/profile-edit.php:894 includes/profile-edit.php:941
 msgctxt "confirmation word, keep it short and in capitals"
 msgid "DELETE"
-msgstr ""
+msgstr "DELETE"
 
 #: includes/post-types.php:285
 msgctxt "job status"
 msgid "Closed"
-msgstr ""
+msgstr "बंद"
 
 #. translators: the mark shown on a paid listing. Kept to two or three letters.
 #: includes/promote.php:1946
@@ -7048,7 +7048,7 @@ msgstr ""
 #: includes/post-types.php:71
 msgctxt "post type general name"
 msgid "Workers"
-msgstr ""
+msgstr "मज़दूर"
 
 #: includes/post-types.php:172
 msgctxt "post type singular name"
@@ -7078,7 +7078,7 @@ msgstr ""
 #: includes/reports.php:93
 msgctxt "report status"
 msgid "Open"
-msgstr ""
+msgstr "खुला"
 
 #: includes/taxonomies.php:173
 msgctxt "taxonomy general name"
@@ -7108,4 +7108,4 @@ msgstr ""
 #: includes/taxonomies.php:128
 msgctxt "taxonomy singular name"
 msgid "Trade"
-msgstr ""
+msgstr "काम"
