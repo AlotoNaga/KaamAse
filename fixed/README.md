@@ -3958,6 +3958,51 @@ It keeps one entry per list instead and shows a cached answer only if it was
 saved inside the current window. Same guarantee, no leak. Worth recording
 because the mistake was in the advice, not in the app.
 
+## 63. The other two translation templates, brought up to date
+
+`kaamase.pot` and `kaamase-pay.pot`. **No PHP in the theme or the payment plugin
+was touched** — only the two templates, rebuilt from the code as it stands.
+
+### The payment one was missing fourteen strings
+
+All fourteen are from `includes/notices.php` — the receipt and the expiry warning
+added in section 56. That file was new and its strings never reached the
+template, so every word of the two emails a paying customer receives was
+untranslatable. That is the worst place on the platform to have a gap: they are
+the only messages about money anybody gets.
+
+Among them: *"Your payment to %s"*, *"Your plan on %s is ending"*, *"It renews on
+its own, so you do not need to do anything."* and *"Nothing will be charged. When
+it ends your account stays exactly as it is."*
+
+### The theme one had every string, and the wrong line numbers
+
+Nothing missing and nothing stale — the words were all there. But **171 reference
+lines were pointing at the wrong place**, because the template was last built on
+1 September and the theme has moved since. A reference is how a translator finds
+the sentence in context; one that is off by forty lines sends them to somebody
+else's code.
+
+### Both gained translator comments
+
+The old templates had **none at all**, in either file. The new ones carry 16 and
+24.
+
+This matters more than it sounds. A translator handed `"%1$s %2$s"` with no note
+has no way to know which is the number and which is the trade, and in a language
+that orders them differently they have to guess. Every one of those is now
+labelled.
+
+### How they were built
+
+The same generator that builds the core template, with the domain and project
+name passed in rather than fixed. Before using it on anything, it was run against
+the core plugin and its output compared to the core template already shipped:
+identical. So the two files below were produced by a tool proven not to change
+anything on a package it had already done correctly.
+
+⚠️ **Copy both again.** No code change accompanies them.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

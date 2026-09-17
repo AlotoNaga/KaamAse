@@ -4,58 +4,65 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-01 16:52+0000\n"
+"POT-Creation-Date: 2026-09-17 12:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: kaamase\n"
 
-#: inc/template-tags.php:468
+#: inc/template-tags.php:627
 msgid "%s ago"
 msgstr ""
 
-#: single-kaamase_job.php:173
+#. translators: %s: number of days
+#: single-kaamase_job.php:195
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: %s: number of times opened
 #: inc/template-tags.php:340
 msgid "%s opened"
 msgstr ""
 
+#. translators: %s: number of results
 #: index.php:119
 msgid "%s result"
 msgid_plural "%s results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/template-tags.php:691
+#. translators: %s: number of workers hired
+#: inc/template-tags.php:858
 msgid "%s worker hired through Kaam Ase"
 msgid_plural "%s workers hired through Kaam Ase"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/template-tags.php:886
+#. translators: %s: number of workers wanted
+#: inc/template-tags.php:1142
 msgid "%s worker wanted"
 msgid_plural "%s workers wanted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: single-kaamase_gang.php:139 single-kaamase_worker.php:177
+#. translators: %s: number of years
+#: single-kaamase_gang.php:159 single-kaamase_worker.php:197
 msgid "%s year"
 msgid_plural "%s years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/template-tags.php:590
+#. translators: %s: number of years
+#: inc/template-tags.php:753
 msgid "%s year of experience"
 msgid_plural "%s years of experience"
 msgstr[0] ""
 msgstr[1] ""
 
-#: front-page.php:425
+#: front-page.php:448
 msgid "A Nagaland company"
 msgstr ""
 
@@ -79,7 +86,7 @@ msgstr ""
 msgid "About us"
 msgstr ""
 
-#: single-kaamase_job.php:243
+#: single-kaamase_job.php:265
 msgid "Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it."
 msgstr ""
 
@@ -123,15 +130,15 @@ msgstr ""
 msgid "Available now"
 msgstr ""
 
-#: inc/template-tags.php:988
+#: inc/template-tags.php:1244
 msgid "Back"
 msgstr ""
 
-#: single-kaamase_job.php:242
+#: single-kaamase_job.php:264
 msgid "Before you agree"
 msgstr ""
 
-#: front-page.php:418
+#: front-page.php:441
 msgid "Both sides rate"
 msgstr ""
 
@@ -143,7 +150,7 @@ msgstr ""
 msgid "Browse all trades"
 msgstr ""
 
-#: inc/template-tags.php:501
+#: inc/template-tags.php:660
 msgid "Call"
 msgstr ""
 
@@ -155,7 +162,7 @@ msgstr ""
 msgid "Close menu"
 msgstr ""
 
-#: single-kaamase_job.php:167
+#: single-kaamase_job.php:189
 msgid "Closes in"
 msgstr ""
 
@@ -163,7 +170,7 @@ msgstr ""
 msgid "Colony council member"
 msgstr ""
 
-#: inc/template-tags.php:647
+#: inc/template-tags.php:813
 msgid "Company"
 msgstr ""
 
@@ -171,7 +178,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: inc/template-tags.php:646
+#: inc/template-tags.php:812
 msgid "Contractor"
 msgstr ""
 
@@ -179,11 +186,12 @@ msgstr ""
 msgid "Copied"
 msgstr ""
 
+#. translators: 1: current year, 2: site name
 #: footer.php:186
 msgid "Copyright %1$s %2$s"
 msgstr ""
 
-#: single-kaamase_gang.php:125 single-kaamase_worker.php:154
+#: single-kaamase_gang.php:145 single-kaamase_worker.php:174
 msgid "Day rate"
 msgstr ""
 
@@ -211,7 +219,7 @@ msgstr ""
 msgid "Edit this job"
 msgstr ""
 
-#: single-kaamase_gang.php:133 single-kaamase_worker.php:170
+#: single-kaamase_gang.php:153 single-kaamase_worker.php:190
 msgid "Experience"
 msgstr ""
 
@@ -243,7 +251,7 @@ msgstr ""
 msgid "Find workers"
 msgstr ""
 
-#: inc/template-tags.php:895 single-kaamase_job.php:113
+#: inc/template-tags.php:1151 single-kaamase_job.php:135
 msgid "Food provided"
 msgstr ""
 
@@ -263,16 +271,8 @@ msgstr ""
 msgid "Free to post, any district"
 msgstr ""
 
-#: front-page.php:404
+#: front-page.php:427
 msgid "Free to use"
-msgstr ""
-
-#: inc/app-banner.php:391
-msgid "Get the Kaam Ase app"
-msgstr ""
-
-#: inc/app-banner.php:380
-msgid "Google Play"
 msgstr ""
 
 #: single-kaamase_employer.php:111
@@ -287,7 +287,7 @@ msgstr ""
 msgid "Gaon Bura"
 msgstr ""
 
-#: single-kaamase_gang.php:197 single-kaamase_job.php:267 single-kaamase_worker.php:283
+#: single-kaamase_gang.php:217 single-kaamase_job.php:289 single-kaamase_worker.php:303
 msgid "Get contact details"
 msgstr ""
 
@@ -295,8 +295,16 @@ msgstr ""
 msgid "Get it"
 msgstr ""
 
+#: inc/app-banner.php:391
+msgid "Get the Kaam Ase app"
+msgstr ""
+
 #: index.php:266
 msgid "Go to home"
+msgstr ""
+
+#: inc/app-banner.php:380
+msgid "Google Play"
 msgstr ""
 
 #: inc/page-display.php:215
@@ -323,7 +331,7 @@ msgstr ""
 msgid "Hire a team"
 msgstr ""
 
-#: single-kaamase_job.php:191
+#: single-kaamase_job.php:213
 msgid "Hiring"
 msgstr ""
 
@@ -335,27 +343,23 @@ msgstr ""
 msgid "How it works"
 msgstr ""
 
-#: single-kaamase_job.php:160
+#: single-kaamase_job.php:182
 msgid "How long"
 msgstr ""
 
-#: inc/template-tags.php:645
+#: inc/template-tags.php:811
 msgid "Individual"
-msgstr ""
-
-#: inc/app-banner.php:374
-msgid "iPhone"
 msgstr ""
 
 #: 404.php:73
 msgid "It has probably been filled, or the employer closed it. Links shared in WhatsApp keep working for days after a job is taken."
 msgstr ""
 
-#: inc/template-tags.php:1036
+#: inc/template-tags.php:1292
 msgid "Jobs"
 msgstr ""
 
-#: single-kaamase_worker.php:190
+#: single-kaamase_worker.php:210
 msgid "Jobs done here"
 msgstr ""
 
@@ -363,7 +367,7 @@ msgstr ""
 msgid "Jobs posted across Nagaland"
 msgstr ""
 
-#: inc/template-tags.php:465
+#: inc/template-tags.php:624
 msgid "Just posted"
 msgstr ""
 
@@ -423,11 +427,12 @@ msgstr ""
 msgid "Latest"
 msgstr ""
 
-#: single-kaamase_gang.php:119
+#: single-kaamase_gang.php:139
 msgid "Led by"
 msgstr ""
 
-#: inc/template-tags.php:785
+#. translators: %s: name of the team leader
+#: inc/template-tags.php:981
 msgid "Led by %s"
 msgstr ""
 
@@ -439,7 +444,7 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: front-page.php:353
+#: front-page.php:376
 msgid "Looking for work"
 msgstr ""
 
@@ -447,11 +452,11 @@ msgstr ""
 msgid "Looking for work instead?"
 msgstr ""
 
-#: front-page.php:370
+#: front-page.php:393
 msgid "Looking for workers"
 msgstr ""
 
-#: inc/template-tags.php:1075
+#: inc/template-tags.php:1331
 msgid "Main"
 msgstr ""
 
@@ -459,11 +464,11 @@ msgstr ""
 msgid "Main menu"
 msgstr ""
 
-#: front-page.php:357
+#: front-page.php:380
 msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
 msgstr ""
 
-#: front-page.php:365
+#: front-page.php:388
 msgid "Make my free profile"
 msgstr ""
 
@@ -475,7 +480,7 @@ msgstr ""
 msgid "Mason, electrician, driver, cook"
 msgstr ""
 
-#: inc/template-tags.php:1051
+#: inc/template-tags.php:1307
 msgid "Me"
 msgstr ""
 
@@ -491,7 +496,7 @@ msgstr ""
 msgid "Mobile menu, slide out drawer"
 msgstr ""
 
-#: single-kaamase_worker.php:162
+#: single-kaamase_worker.php:182
 msgid "Monthly"
 msgstr ""
 
@@ -511,15 +516,15 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: inc/template-tags.php:702
+#: inc/template-tags.php:869
 msgid "New here, nobody hired yet"
 msgstr ""
 
-#: inc/template-tags.php:989 single.php:91
+#: inc/template-tags.php:1245 single.php:91
 msgid "Next"
 msgstr ""
 
-#: front-page.php:406
+#: front-page.php:429
 msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
 msgstr ""
 
@@ -535,7 +540,7 @@ msgstr ""
 msgid "Nobody has posted work in this trade or district yet. Check another district, or tell an employer you know about Kaam Ase."
 msgstr ""
 
-#: single-kaamase_worker.php:182
+#: single-kaamase_worker.php:202
 msgid "Not given"
 msgstr ""
 
@@ -547,7 +552,7 @@ msgstr ""
 msgid "Nothing found. Try a different district or trade."
 msgstr ""
 
-#: inc/template-tags.php:944 index.php:264
+#: inc/template-tags.php:1200 index.php:264
 msgid "Nothing here yet"
 msgstr ""
 
@@ -563,12 +568,6 @@ msgstr ""
 msgid "Open menu"
 msgstr ""
 
-#: inc/template-tags.php:359
-msgid "opened %s time"
-msgid_plural "opened %s times"
-msgstr[0] ""
-msgstr[1] ""
-
 #: inc/template-tags.php:313
 msgid "Opened %s time"
 msgid_plural "Opened %s times"
@@ -583,7 +582,7 @@ msgstr ""
 msgid "Page heading"
 msgstr ""
 
-#: inc/template-tags.php:998
+#: inc/template-tags.php:1254
 msgid "Page navigation"
 msgstr ""
 
@@ -595,7 +594,7 @@ msgstr ""
 msgid "Past Job"
 msgstr ""
 
-#: single-kaamase_job.php:104
+#: single-kaamase_job.php:126
 msgid "Pay"
 msgstr ""
 
@@ -603,16 +602,15 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
-#: 404.php:170 header.php:118 header.php:128
-#: header.php:162 inc/setup.php:394
+#: 404.php:170 header.php:118 header.php:128 header.php:162 inc/setup.php:394
 msgid "Post a job"
 msgstr ""
 
-#: front-page.php:382 index.php:255
+#: front-page.php:405 index.php:255
 msgid "Post a job free"
 msgstr ""
 
-#: front-page.php:374
+#: front-page.php:397
 msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
 msgstr ""
 
@@ -628,14 +626,15 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: front-page.php:413
+#: front-page.php:436
 msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
 msgstr ""
 
-#: inc/template-tags.php:268
+#: inc/template-tags.php:404
 msgid "Rate on asking"
 msgstr ""
 
+#. translators: 1: rating out of five, 2: number of reviews
 #: inc/template-tags.php:243
 msgid "Rated %1$s out of 5 from %2$s job"
 msgid_plural "Rated %1$s out of 5 from %2$s jobs"
@@ -646,14 +645,15 @@ msgstr[1] ""
 msgid "Register free"
 msgstr ""
 
-#: front-page.php:427
+#: front-page.php:450
 msgid "Registered and run from Dimapur. Not an outside app that has never been here."
 msgstr ""
 
-#: footer.php:133 single-kaamase_job.php:246
+#: footer.php:133 single-kaamase_job.php:268
 msgid "Report a problem"
 msgstr ""
 
+#. translators: %s: search term
 #: index.php:53
 msgid "Results for %s"
 msgstr ""
@@ -666,7 +666,7 @@ msgstr ""
 msgid "Safety policy"
 msgstr ""
 
-#: inc/template-tags.php:1046
+#: inc/template-tags.php:1302
 msgid "Saved"
 msgstr ""
 
@@ -698,18 +698,15 @@ msgstr ""
 msgid "See jobs open now"
 msgstr ""
 
-#: inc/template-tags.php:710
+#: inc/template-tags.php:877
 msgid "See this employer"
-msgstr ""
-
-#: inc/template-tags.php:334
-msgid "seen"
 msgstr ""
 
 #: inc/setup.php:450
 msgid "Set up menu"
 msgstr ""
 
+#. translators: %s: parent menu item title
 #: inc/nav-walker.php:230
 msgid "Show items under %s"
 msgstr ""
@@ -718,6 +715,7 @@ msgstr ""
 msgid "Shown"
 msgstr ""
 
+#. translators: %s: number of times shown in a list
 #: inc/template-tags.php:352
 msgid "Shown %s time"
 msgid_plural "Shown %s times"
@@ -728,7 +726,7 @@ msgstr[1] ""
 msgid "Sign in"
 msgstr ""
 
-#: inc/template-tags.php:516
+#: inc/template-tags.php:675
 msgid "Sign in to contact"
 msgstr ""
 
@@ -740,7 +738,7 @@ msgstr ""
 msgid "Skip to content"
 msgstr ""
 
-#: single-kaamase_worker.php:141
+#: single-kaamase_worker.php:161
 msgid "Somebody local who knows this person and will say so. We hold their number and check it if there is ever a problem."
 msgstr ""
 
@@ -756,11 +754,11 @@ msgstr ""
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: single-kaamase_job.php:117
+#: single-kaamase_job.php:139
 msgid "Somewhere to stay"
 msgstr ""
 
-#: single-kaamase_worker.php:217
+#: single-kaamase_worker.php:237
 msgid "Speaks"
 msgstr ""
 
@@ -768,11 +766,11 @@ msgstr ""
 msgid "Start again from the beginning"
 msgstr ""
 
-#: single-kaamase_job.php:144
+#: single-kaamase_job.php:166
 msgid "Starts"
 msgstr ""
 
-#: inc/template-tags.php:899
+#: inc/template-tags.php:1155
 msgid "Stay provided"
 msgstr ""
 
@@ -780,13 +778,14 @@ msgstr ""
 msgid "Student or workers union officer"
 msgstr ""
 
-#: inc/template-tags.php:763
+#. translators: %s: number of workers in the team
+#: inc/template-tags.php:931
 msgid "Team of %s worker"
 msgid_plural "Team of %s workers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: single-kaamase_gang.php:96
+#: single-kaamase_gang.php:116
 msgid "Team size"
 msgstr ""
 
@@ -818,7 +817,7 @@ msgstr ""
 msgid "These module files have not been uploaded yet. The site will work, but the features in them are not active."
 msgstr ""
 
-#: single-kaamase_gang.php:110
+#: single-kaamase_gang.php:130
 msgid "They come as a group. One call and the whole team arrives."
 msgstr ""
 
@@ -858,7 +857,7 @@ msgstr ""
 msgid "This is your team"
 msgstr ""
 
-#: single-kaamase_job.php:260
+#: single-kaamase_job.php:282
 msgid "This job"
 msgstr ""
 
@@ -870,7 +869,7 @@ msgstr ""
 msgid "This page is not here"
 msgstr ""
 
-#: inc/security.php:525
+#: inc/security.php:548
 msgid "This photo could not be processed, so it has not been saved. Please try a different photo, or save it as a JPEG and upload it again."
 msgstr ""
 
@@ -878,6 +877,7 @@ msgstr ""
 msgid "This profile is not available"
 msgstr ""
 
+#. translators: 1: required PHP version, 2: current PHP version, 3: required WordPress version, 4: current WordPress version
 #: functions.php:69
 msgid "This theme needs PHP %1$s or newer (running %2$s) and WordPress %3$s or newer (running %4$s). Ask your host to upgrade PHP."
 msgstr ""
@@ -890,11 +890,11 @@ msgstr ""
 msgid "Trades"
 msgstr ""
 
-#: single-kaamase_job.php:121
+#: single-kaamase_job.php:143
 msgid "Transport to site"
 msgstr ""
 
-#: inc/template-tags.php:945
+#: inc/template-tags.php:1201
 msgid "Try a different district or trade."
 msgstr ""
 
@@ -906,7 +906,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: inc/template-tags.php:835 single-kaamase_job.php:82
+#: inc/template-tags.php:1051 single-kaamase_job.php:82
 msgid "Urgent"
 msgstr ""
 
@@ -918,17 +918,11 @@ msgstr ""
 msgid "Useful links"
 msgstr ""
 
-#: inc/template-tags.php:383
+#: inc/template-tags.php:542
 msgid "Verified"
 msgstr ""
 
-#: inc/template-tags.php:317
-msgid "view"
-msgid_plural "views"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/template-tags.php:912
+#: inc/template-tags.php:1168
 msgid "View job"
 msgstr ""
 
@@ -936,15 +930,15 @@ msgstr ""
 msgid "Village council member"
 msgstr ""
 
-#: inc/template-tags.php:376
+#: inc/template-tags.php:535
 msgid "Vouched"
 msgstr ""
 
-#: single-kaamase_gang.php:152 single-kaamase_worker.php:132
+#: single-kaamase_gang.php:172 single-kaamase_worker.php:152
 msgid "Vouched for by"
 msgstr ""
 
-#: front-page.php:411
+#: front-page.php:434
 msgid "Vouched locally"
 msgstr ""
 
@@ -980,7 +974,7 @@ msgstr ""
 msgid "Work they are hiring for"
 msgstr ""
 
-#: inc/template-tags.php:1041
+#: inc/template-tags.php:1297
 msgid "Workers"
 msgstr ""
 
@@ -988,15 +982,15 @@ msgstr ""
 msgid "Workers hired here"
 msgstr ""
 
-#: front-page.php:420
+#: front-page.php:443
 msgid "Workers rate employers too. Ratings come only from jobs that were actually done."
 msgstr ""
 
-#: single-kaamase_job.php:137
+#: single-kaamase_job.php:159
 msgid "Workers wanted"
 msgstr ""
 
-#: single-kaamase_job.php:215
+#: single-kaamase_job.php:237
 msgid "Workers who have done a job for them rate them too. Open their page to see what they said."
 msgstr ""
 
@@ -1020,25 +1014,45 @@ msgstr ""
 msgid "You are offline. Check your connection."
 msgstr ""
 
-#: inc/template-tags.php:275
+#: inc/template-tags.php:411
 msgid "for the job"
 msgstr ""
 
-#: inc/template-tags.php:273
+#: inc/app-banner.php:374
+msgid "iPhone"
+msgstr ""
+
+#. translators: %s: number of times opened
+#: inc/template-tags.php:359
+msgid "opened %s time"
+msgid_plural "opened %s times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/template-tags.php:409
 msgid "per day"
 msgstr ""
 
-#: inc/template-tags.php:276
+#: inc/template-tags.php:412
 msgid "per hour"
 msgstr ""
 
-#: inc/template-tags.php:274
+#: inc/template-tags.php:410
 msgid "per month"
 msgstr ""
 
-#: single-kaamase_gang.php:103
+#: inc/template-tags.php:334
+msgid "seen"
+msgstr ""
+
+#: inc/template-tags.php:317
+msgid "view"
+msgid_plural "views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: single-kaamase_gang.php:123
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] ""
 msgstr[1] ""
-
