@@ -4336,7 +4336,7 @@ and needs its own Hindi and Nagamese there.
 
 ### Tested
 
-83 assertions across twenty scenarios, each in its own process because the
+97 assertions across twenty-two scenarios, each in its own process because the
 resolver caches its answer in a static and `DONOTCACHEPAGE` is a constant — two
 scenarios in one process would be a lie. The real `.mo` files are loaded, so the
 tests prove sentences come out in Nagamese rather than that a flag was set.
@@ -4345,6 +4345,55 @@ The one that matters is end to end: a Hindi employer looks up a Nagamese worker,
 the real `kaamase_push_contact_revealed()` runs, and what the phone is handed is
 `Kunba logote apni laka number ase` — while the employer's own request is still
 Hindi afterwards and nothing is left switched.
+
+### Three things the first version got wrong
+
+Written down because two of them are traps anybody adding a `determine_locale`
+filter to any WordPress site will walk into, and the first one is a white screen.
+
+**A fatal on every page.** The filter opened with `is_locale_switched()`, which
+is correct-looking and reads well. It is also a method call on a global object:
+
+```php
+function is_locale_switched() {
+	global $wp_locale_switcher;
+	return $wp_locale_switcher->is_switched();   // core, verbatim
+}
+```
+
+In `wp-settings.php`, `load_default_textdomain()` — the first thing that ever
+asks for a locale — is **line 581**. `$wp_locale_switcher` is created on **line
+605**. For those twenty-four lines the object is `null`, so the very first call
+to the filter would have been
+`Call to a member function is_switched() on null`. Every page, every request,
+from the moment the file was uploaded. It is now behind an `isset`.
+
+It got that far because the test double for `is_locale_switched()` answered from
+an array instead of dereferencing an object — a stub kinder than the thing it
+stood in for, which is the one way a stub can hide a crash rather than reveal
+one. The stub is now faithful, and there is a test that walks the real boot
+order with the switcher deliberately absent.
+
+**Resolving the reader too early.** The filter asked `get_current_user_id()`.
+WordPress works out who the caller is lazily, the first time anything asks, by
+running `determine_current_user` — which on this platform is
+`rest-auth.php:363`, where the app's bearer token is checked. Asking at line 581
+would have made the language layer the thing that triggered app authentication,
+before the theme had loaded, with the answer cached for the rest of the request.
+It now uses the answer only if WordPress already has one and otherwise reads the
+sign-in cookie directly, which is what core does for a browser and has no side
+effects. There is a re-entrancy guard around it as well, covering the meta read
+too: either step can run a filter, any filter can translate a word, and
+translating a word comes straight back here.
+
+**The first email somebody ever gets.** Making an unchosen reader fall back to
+the site's language is right for notifications and wrong for exactly one
+message. Somebody reads the site in Hindi for a week and then registers; the
+confirmation email is written inside their own request, and the account is
+seconds old so it has no language saved. The fix put that one email back into
+English. `kaamase_locale_switch_to_user()` now takes `'request'` for that single
+case: use what they have saved if they have saved anything, otherwise leave the
+request in the language it is already in.
 
 ## Not changed, and why
 

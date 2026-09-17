@@ -673,16 +673,23 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 		);
 
 		/*
-		 * Usually this IS their own request, and their language is
-		 * already loaded. Not always: insights.php sends this again to
-		 * accounts that never confirmed, from the owner's screen, and
-		 * rest-api.php sends it for the app. The switch costs nothing
-		 * when it is already the right language and is the difference
-		 * between a confirmation somebody can read and one they cannot
-		 * the rest of the time.
+		 * 'request', and this is the only send on the platform that
+		 * wants it.
+		 *
+		 * Usually this IS their own request: somebody registering, in
+		 * the language they have been reading the site in. They have no
+		 * account language yet because the account is seconds old, so
+		 * falling back to the site's would send the very first thing we
+		 * ever write to them in a language they did not pick.
+		 *
+		 * The other two callers are not their request — insights.php
+		 * sends it again to accounts that never confirmed, and
+		 * rest-api.php sends it for the app — and both are covered,
+		 * because a person who HAS chosen a language is switched to it
+		 * either way.
 		 */
 		$switched = function_exists( 'kaamase_locale_switch_to_user' )
-			&& kaamase_locale_switch_to_user( $user_id );
+			&& kaamase_locale_switch_to_user( $user_id, 'request' );
 
 		$site = get_bloginfo( 'name', 'display' );
 

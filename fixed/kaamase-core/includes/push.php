@@ -347,13 +347,13 @@ function kaamase_push_contact_revealed( $post_id, $user_id ) {
 	$send = function () use ( $owner, $who, $post_id ) {
 
 		kaamase_push_to_user(
-				$owner,
-				__( 'Somebody has your number', 'kaamase-core' ),
-				sprintf(
-					/* translators: %s: name of the person who looked them up */
-					__( '%s looked you up on Kaam Ase. They may call you.', 'kaamase-core' ),
-					$who ? $who->display_name : __( 'An employer', 'kaamase-core' )
-				),
+			$owner,
+			__( 'Somebody has your number', 'kaamase-core' ),
+			sprintf(
+				/* translators: %s: name of the person who looked them up */
+				__( '%s looked you up on Kaam Ase. They may call you.', 'kaamase-core' ),
+				$who ? $who->display_name : __( 'An employer', 'kaamase-core' )
+			),
 			array(
 				'type' => 'contact_revealed',
 				'id'   => (int) $post_id,

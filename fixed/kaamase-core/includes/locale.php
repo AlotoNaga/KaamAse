@@ -358,6 +358,49 @@ if ( ! function_exists( 'kaamase_locale_asked_for' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_locale_reader_id' ) ) {
+	/**
+	 * Who is reading, without making WordPress decide before it is ready.
+	 *
+	 * get_current_user_id() looks like the obvious call here and it is a
+	 * trap. WordPress works out who the caller is lazily, the first time
+	 * anything asks, by running the determine_current_user filter — and
+	 * on this platform that filter is where rest-auth.php checks the
+	 * app's bearer token. Asking here would make THIS the thing that
+	 * triggers it, at line 581 of wp-settings.php, before the theme has
+	 * even loaded. Whatever came back would be cached for the rest of
+	 * the request, and anything inside that filter that translated a
+	 * single word would re-enter this file with the answer half made.
+	 *
+	 * So: use the answer if WordPress already has one, and otherwise
+	 * read the sign in cookie directly, which is what core itself does
+	 * for a browser and has no side effects at all.
+	 *
+	 * The app is not covered by the cookie, and does not need to be. It
+	 * sends its language in a header, which is read before this.
+	 *
+	 * @since 1.11.0
+	 * @return int User ID, or 0.
+	 */
+	function kaamase_locale_reader_id() {
+
+		if ( ! empty( $GLOBALS['current_user'] ) && $GLOBALS['current_user'] instanceof WP_User ) {
+			return (int) $GLOBALS['current_user']->ID;
+		}
+
+		// Nearly every visitor is signed out. This is where they leave.
+		if ( ! defined( 'LOGGED_IN_COOKIE' ) || empty( $_COOKIE[ LOGGED_IN_COOKIE ] ) ) {
+			return 0;
+		}
+
+		if ( ! function_exists( 'wp_validate_auth_cookie' ) ) {
+			return 0;
+		}
+
+		return (int) wp_validate_auth_cookie( '', 'logged_in' );
+	}
+}
+
 if ( ! function_exists( 'kaamase_locale_now' ) ) {
 	/**
 	 * The language for this request, decided once.
@@ -381,6 +424,7 @@ if ( ! function_exists( 'kaamase_locale_now' ) ) {
 	function kaamase_locale_now() {
 
 		static $decided = null;
+		static $busy    = false;
 
 		if ( null !== $decided ) {
 			return $decided;
@@ -403,24 +447,38 @@ if ( ! function_exists( 'kaamase_locale_now' ) ) {
 			}
 		}
 
+		$cookie = kaamase_locale_from_cookie();
+
 		/*
-		 * get_current_user_id() rather than is_user_logged_in() so this
-		 * costs nothing on the pages most people see. A signed out
-		 * visitor never reaches the user meta lookup.
+		 * Re-entered while working out who is reading.
+		 *
+		 * Answer from what is already in hand and do NOT remember it.
+		 * The outer call is still running and it is the one entitled to
+		 * decide; caching a half answer here would freeze the request
+		 * into the wrong language for good.
+		 *
+		 * Both the reader lookup and the meta read are inside the guard.
+		 * Either can run a filter, any filter can translate a word, and
+		 * translating a word comes back here. Guarding only the first of
+		 * them closes the door and leaves the window open.
 		 */
-		$user_id = get_current_user_id();
-
-		if ( $user_id ) {
-
-			$mine = kaamase_locale_of_user( $user_id );
-
-			if ( '' !== $mine ) {
-				$decided = $mine;
-				return $decided;
-			}
+		if ( $busy ) {
+			return '' !== $cookie ? $cookie : kaamase_locale_default();
 		}
 
-		$cookie = kaamase_locale_from_cookie();
+		$busy = true;
+
+		try {
+			$user_id = kaamase_locale_reader_id();
+			$mine    = $user_id ? kaamase_locale_of_user( $user_id ) : '';
+		} finally {
+			$busy = false;
+		}
+
+		if ( '' !== $mine ) {
+			$decided = $mine;
+			return $decided;
+		}
 
 		$decided = '' !== $cookie ? $cookie : kaamase_locale_default();
 
@@ -452,7 +510,17 @@ if ( ! function_exists( 'kaamase_locale_determine' ) ) {
 	 */
 	function kaamase_locale_determine( $locale ) {
 
-		if ( is_locale_switched() ) {
+		/*
+		 * isset before the call, and it is not defensive habit.
+		 *
+		 * The first thing that asks for a locale is
+		 * load_default_textdomain() on line 581 of wp-settings.php. The
+		 * locale switcher object is created on line 605. For those
+		 * twenty-four lines is_locale_switched() is a method call on
+		 * null, which is a fatal error on every page of the site, and
+		 * the only way to see it is to call it that early.
+		 */
+		if ( isset( $GLOBALS['wp_locale_switcher'] ) && is_locale_switched() ) {
 			return $locale;
 		}
 
@@ -797,6 +865,18 @@ if ( ! function_exists( 'kaamase_locale_cache_rule' ) ) {
 		}
 
 		do_action( 'litespeed_control_set_nocache', 'kaamase translated page' );
+
+		/*
+		 * And in HTTP, for anything between here and the phone that has
+		 * never heard of DONOTCACHEPAGE. That constant is understood by
+		 * WordPress aware caches and by nothing else, so a proxy or a
+		 * CDN in front would happily keep this page and hand it to the
+		 * next person. rest-auth.php sends the same headers for the
+		 * same reason on answers written for one account.
+		 */
+		if ( ! headers_sent() ) {
+			nocache_headers();
+		}
 	}
 }
 add_action( 'template_redirect', 'kaamase_locale_cache_rule', 1 );
@@ -887,16 +967,41 @@ if ( ! function_exists( 'kaamase_locale_switch_to_user' ) ) {
 	 * when it is already that language, which on an ordinary English
 	 * request is every time, so this costs nothing in the common case.
 	 *
+	 * The one exception is $unknown, and it exists for a single shape of
+	 * message: the ones sent TO the person who is doing the thing, in
+	 * their own request, before they have an account to have chosen on.
+	 *
+	 * Somebody reads the site in Hindi for a week and then registers.
+	 * The confirmation email is written during their own request, and
+	 * the brand new account has no language on it yet, so falling back
+	 * to the site's would send that one email in English — the first
+	 * thing the platform ever writes to them, and the only one where the
+	 * request language was right all along. Passing 'request' there
+	 * means: use what they have saved if they have saved anything, and
+	 * otherwise leave this request in the language it is already in.
+	 *
+	 * Everything else wants 'site'. A notification is written about
+	 * somebody, by somebody else, and that other person's language says
+	 * nothing at all about the reader.
+	 *
 	 * @since 1.11.0
-	 * @param int $user_id Who is going to read it.
+	 * @param int    $user_id Who is going to read it.
+	 * @param string $unknown What to do when they have never chosen.
+	 *                        'site' for the site language, 'request' to
+	 *                        leave this request's language alone.
 	 * @return bool Whether a switch happened, and therefore whether the
 	 *              caller owes a kaamase_locale_restore().
 	 */
-	function kaamase_locale_switch_to_user( $user_id ) {
+	function kaamase_locale_switch_to_user( $user_id, $unknown = 'site' ) {
 
 		$want = kaamase_locale_of_user( $user_id );
 
 		if ( '' === $want ) {
+
+			if ( 'request' === $unknown ) {
+				return false;
+			}
+
 			$want = kaamase_locale_default();
 		}
 
