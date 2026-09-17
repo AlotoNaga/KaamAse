@@ -3638,6 +3638,123 @@ open. `promote.php` passes all the arguments and its export was tested with
 notices switched on to prove it. The same one-line fix is worth making in
 `insights.php` — say the word and it will be in the next upload.
 
+## 60. The Ad mark, and the slot — phase 2 of 3
+
+Four files. `promote.php` again, the theme's `template-tags.php` and `style.css`,
+and a one-line fault in `insights.php` that is described at the end.
+
+**This is the phase where something appears.** After copying these up, a
+promotion bought on the Promotions screen is visible on the website.
+
+### The mark
+
+The word **Ad**. Short because a worker's name is already being cut off on a
+narrow phone, and because India's advertising code names it as an acceptable
+label — the shortest true word available happens to be the approved one.
+
+**On a job card** it sits on the top row, right-aligned, beside Urgent. Not after
+the title: a job title wraps to two lines as often as not, and a mark tacked onto
+the end of one lands somewhere different on every card. That row is one line on
+every job there is.
+
+**On a worker or team card** it goes first in the badge row, where Vouched and
+Verified already are. It cannot go beside the name — `verified-mark.php` claims
+that spot by an explicit decision, and there is no room next to a name that
+truncates. First in the row, because a disclosure printed after two awards has
+already been read as a third award.
+
+### Why it is drawn quietly
+
+Every other badge on the site is a block of colour. This one is a grey outline.
+
+Vouched and Verified were **earned**. Ad was **bought**. An advertisement dressed
+as an achievement is the thing an advertising code exists to prevent, and here it
+would cost more than a rebuke: an employer who works out that the bright badge is
+for sale stops believing the other two as well.
+
+Quiet is not faint. The text sits at about 9:1 against the card, because a
+disclosure nobody can read is not a disclosure. It is also square-cornered and
+badge-sized so it cannot be mistaken for a trade chip, which is a pill and is
+also an outline — on a job card the two share a row, and a disclosure that reads
+as a trade name is worse than none.
+
+### The slot
+
+One promoted card at the top of a listing. Which one rotates by the hour, so five
+advertisers in one district get a fifth of it each rather than the first one
+getting all of it. That rotation is the thing that lets the slot be sold to
+several agencies at once, which was the whole reason for building this.
+
+**Nothing is reordered to make room.** No filter here touches `posts_orderby` or
+`the_posts`, nothing is removed from the results, and no page count changes. One
+card is drawn at the top of the grid and the grid is exactly what `exposure.php`
+decided. Everybody keeps their place. The tests check this by comparing the
+query's results before and after.
+
+Rules it follows:
+
+- **First page only.** An advertisement on page four is one nobody sees, and a
+  copy on every page is why people mute a site.
+- **Never twice in a request**, even if a template runs the loop twice.
+- **A worker list advertises workers**, a job list jobs. A team belongs on the
+  worker list.
+- **A district bought is a district shown.** Somebody who bought Dimapur does not
+  appear on the Mon list.
+- **Nothing that is already on the page.** A promoted listing sitting in the
+  results carries its own mark where it stands; a second copy of one card on one
+  screen reads as a fault, not an advertisement.
+- **Listings only.** Not the front page, not a single profile, not the blog, not
+  a feed, not a secondary query.
+
+The promoted card is the ordinary card with no wrapper around it. The listing
+grid styles its own children, and slipping an extra element between the two would
+be a layout change made for the sake of an advertisement, which is the wrong way
+round.
+
+### The advertiser gets a real number
+
+The slot card is drawn by the same function as every other card, so it carries
+`data-ka-seen` and is counted by the same beacon. A week in the slot produces a
+figure you can quote on the next call — measured, not estimated. Very little else
+being sold locally can prove that.
+
+### One thing to know about the page cache
+
+The website sits behind a page cache (sections 29 and 30). A cached listing holds
+whoever was chosen when it was built until it is rebuilt, so the rotation on the
+website is coarser than hourly. Across a day it still comes out even, and the app
+— which is most of the traffic and is not cached — will rotate exactly when phase
+3 ships.
+
+### The off switch
+
+`kaamase_promo_slot_enabled` turns the slot off without editing a file. The mark
+still shows where a promoted listing stands, runs still end on their day, and the
+takings are unaffected. Only the extra card at the top stops.
+
+### The theme still works without the plugin
+
+Both calls are guarded with `function_exists`. With `kaamase-core` switched off
+the cards render exactly as they did before, no mark and no fatal. There is a
+test that loads the theme in a process with no plugin in it and checks precisely
+that.
+
+### `insights.php` — a download that would not open
+
+Found while building the promotions export, and fixed here.
+
+`fputcsv()` was being called without its escape argument, which PHP 8.4
+deprecates. On a host with `display_errors` on, that notice is printed **into the
+download**, so the spreadsheet arrives with a line of PHP above the header row
+and will not open in Excel.
+
+Both calls now pass the separator, the enclosure and the escape. An empty escape
+is the value PHP is moving to and the one the CSV standard describes. Nothing
+else in the file is touched — same columns, same rows, same order. The promotions
+export was tested with notices switched on to prove the output is clean.
+
+⚠️ **Copy `insights.php` again.** This is its third revision.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

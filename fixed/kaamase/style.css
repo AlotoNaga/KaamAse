@@ -692,6 +692,35 @@ table { border-collapse: collapse; width: 100%; }
 .ka-badge--new      { background: var(--ka-amber-100); color: var(--ka-amber-700); }
 .ka-badge--neutral  { background: var(--ka-ink-100);   color: var(--ka-ink-700); }
 
+/*
+ * Ad. The one badge on this platform that was bought rather than earned,
+ * and it is drawn to say so.
+ *
+ * Outlined instead of filled. Every other badge here is a block of
+ * colour, and colour is what the eye goes to first, so an outline sits
+ * below them in the reading order without being hidden. An advertisement
+ * dressed as an achievement is the thing an advertising code exists to
+ * prevent, and on this site it would cost more than that: an employer
+ * who works out that the bright badge is for sale stops believing
+ * Vouched and Verified too.
+ *
+ * Quiet is not faint. The text is --ka-ink-700 on the card, which is
+ * around 9:1, because a disclosure nobody can read is not a disclosure.
+ * The colour carries no meaning on its own either -- it is the word that
+ * does the work, which is the rule at the top of this section.
+ *
+ * Square corners and the badge size keep it apart from .ka-chip, which
+ * is a pill and is also an outline. On a job card the two sit on the
+ * same row, and a disclosure that reads as a trade name is worse than no
+ * disclosure at all.
+ */
+.ka-badge--ad {
+  background: var(--ka-surface);
+  color: var(--ka-ink-700);
+  border: 1px solid var(--ka-ink-300);
+  letter-spacing: 0.04em;
+}
+
 /* Availability. Dot plus word. */
 .ka-status {
   display: inline-flex;

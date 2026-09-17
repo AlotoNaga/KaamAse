@@ -1856,3 +1856,366 @@ if ( ! function_exists( 'kaamase_promo_csv' ) ) {
 	}
 }
 add_action( 'admin_post_kaamase_promo_csv', 'kaamase_promo_csv' );
+
+
+/* ==========================================================================
+   9. THE MARK, AND THE SLOT
+
+   Phase two. The word Ad on a promoted listing, and one promoted card at
+   the top of a list that would not otherwise have shown it.
+
+   Why the word rather than a colour
+   ---------------------------------
+   Because a disclosure has to be read, not decoded, and because India's
+   advertising code names "Ad" as an acceptable label. It is also the
+   shortest true word available, which matters on a card where a worker's
+   name is already being cut off.
+
+   Why it does not look like New or Vouched
+   ----------------------------------------
+   Those two are earned. This one is bought. A grey outline rather than a
+   filled colour, deliberately quieter than the badges around it, because
+   an advertisement dressed as an achievement is the exact thing an
+   advertising standard exists to prevent -- and because an employer who
+   works out that the shiny badge is for sale stops believing the other
+   two as well.
+
+   Why nothing is reordered
+   -----------------------
+   The list is not touched at all. No filter here sits on posts_orderby,
+   nothing is removed from the results, and no page count changes. One
+   card is drawn above the grid and the grid is exactly what
+   exposure.php decided it should be. Everybody keeps their place.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_promo_badge' ) ) {
+	/**
+	 * The mark, for a listing that is being promoted.
+	 *
+	 * Lives here rather than in the theme so the website, the fallback
+	 * cards in compat.php and anything added later all say the same word
+	 * and can be changed in one place.
+	 *
+	 * Returns nothing at all for a listing that is not promoted, so a
+	 * caller can print it unconditionally.
+	 *
+	 * @since 1.10.0
+	 * @param int $post_id Listing.
+	 * @return string Markup, or an empty string.
+	 */
+	function kaamase_promo_badge( $post_id ) {
+
+		if ( ! kaamase_promo_is_live( $post_id ) ) {
+			return '';
+		}
+
+		return sprintf(
+			'<span class="ka-badge ka-badge--ad" title="%1$s">%2$s</span>',
+			/* translators: the tooltip on the Ad mark */
+			esc_attr__( 'Paid for by the person who posted it. Nothing else on this list has moved for it.', 'kaamase-core' ),
+			/* translators: the mark shown on a paid listing. Kept to two or three letters. */
+			esc_html_x( 'Ad', 'mark on a paid listing', 'kaamase-core' )
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_district' ) ) {
+	/**
+	 * Which district a listing is in.
+	 *
+	 * @since 1.10.0
+	 * @param int $post_id Listing.
+	 * @return string Term slug, or an empty string.
+	 */
+	function kaamase_promo_district( $post_id ) {
+
+		$terms = get_the_terms( absint( $post_id ), 'kaamase_district' );
+
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
+			return '';
+		}
+
+		$first = reset( $terms );
+
+		return isset( $first->slug ) ? (string) $first->slug : '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_query_district' ) ) {
+	/**
+	 * Which district a listing page is showing, if it is showing one.
+	 *
+	 * Somebody who bought a week in Dimapur bought a week in Dimapur. A
+	 * promoted card must not appear on the Mon list because the Mon list
+	 * happened to be the one being looked at.
+	 *
+	 * @since 1.10.0
+	 * @param WP_Query $query The listing.
+	 * @return string Term slug, or an empty string for an unfiltered list.
+	 */
+	function kaamase_promo_query_district( $query ) {
+
+		$wanted = $query->get( 'kaamase_district' );
+
+		if ( is_string( $wanted ) && '' !== $wanted ) {
+			return sanitize_title( $wanted );
+		}
+
+		if ( $query->is_tax( 'kaamase_district' ) ) {
+
+			$term = $query->get_queried_object();
+
+			if ( $term && isset( $term->slug ) ) {
+				return (string) $term->slug;
+			}
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_pick' ) ) {
+	/**
+	 * Choose one from however many bought the same slot.
+	 *
+	 * This is the fairness, and it is the reason the slot can be sold to
+	 * more than one agency at a time. Five advertisers in one district
+	 * get a fifth of it each rather than the first one getting all of it.
+	 *
+	 * Rotated by the hour rather than at random, for three reasons. It
+	 * shares out evenly across a day instead of merely on average. Two
+	 * people looking at the same page at the same time see the same
+	 * thing, which is what anybody would expect. And it does not write
+	 * anything, so a listing page stays a read.
+	 *
+	 * The website is behind a page cache, so a cached page holds whoever
+	 * was chosen when it was built until it is rebuilt. Over a day that
+	 * still comes out even, and the app -- which is most of the traffic
+	 * and is not cached -- rotates exactly.
+	 *
+	 * Sorted first so the choice is the same on every server and every
+	 * request within the hour.
+	 *
+	 * @since 1.10.0
+	 * @param int[] $ids Listings that could take the slot.
+	 * @return int One of them, or 0.
+	 */
+	function kaamase_promo_pick( $ids ) {
+
+		$ids = array_values( array_unique( array_map( 'absint', (array) $ids ) ) );
+
+		sort( $ids, SORT_NUMERIC );
+
+		if ( empty( $ids ) ) {
+			return 0;
+		}
+
+		$slice = (int) floor( time() / HOUR_IN_SECONDS );
+
+		return (int) $ids[ $slice % count( $ids ) ];
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot_for' ) ) {
+	/**
+	 * Which listing, if any, should take the slot above this page.
+	 *
+	 * @since 1.10.0
+	 * @param WP_Query $query The listing being drawn.
+	 * @return int Listing ID, or 0 for no advertisement.
+	 */
+	function kaamase_promo_slot_for( $query ) {
+
+		if ( empty( $query->posts ) ) {
+			return 0;
+		}
+
+		/*
+		 * The kind of thing this page is showing, taken from what it is
+		 * actually showing rather than from the query vars. A district
+		 * archive, a trade archive and a search all arrive here with
+		 * different vars set and the same answer in their results.
+		 */
+		$first = reset( $query->posts );
+		$kind  = is_object( $first ) ? (string) $first->post_type : '';
+
+		if ( ! in_array( $kind, kaamase_promo_types(), true ) ) {
+			return 0;
+		}
+
+		$on_page = array();
+
+		foreach ( $query->posts as $post ) {
+			if ( is_object( $post ) ) {
+				$on_page[] = (int) $post->ID;
+			}
+		}
+
+		$district = kaamase_promo_query_district( $query );
+		$wanted   = array();
+
+		foreach ( kaamase_promo_find( 'live', 100 ) as $post_id ) {
+
+			if ( ! kaamase_promo_is_live( $post_id ) ) {
+				continue;
+			}
+
+			/*
+			 * A worker list advertises workers. A team is a worker
+			 * profile and belongs on the same list; a job does not.
+			 */
+			if ( 'kaamase_job' === $kind ) {
+				if ( 'kaamase_job' !== get_post_type( $post_id ) ) {
+					continue;
+				}
+			} elseif ( 'kaamase_job' === get_post_type( $post_id ) ) {
+				continue;
+			}
+
+			/*
+			 * Already on the page, so there is nothing to advertise. It
+			 * carries its own mark where it stands, and a second copy of
+			 * one card on one screen reads as a fault rather than as an
+			 * advertisement.
+			 */
+			if ( in_array( (int) $post_id, $on_page, true ) ) {
+				continue;
+			}
+
+			if ( '' !== $district && kaamase_promo_district( $post_id ) !== $district ) {
+				continue;
+			}
+
+			$wanted[] = (int) $post_id;
+		}
+
+		return kaamase_promo_pick( $wanted );
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot_drawn' ) ) {
+	/**
+	 * Whether this request has already drawn an advertisement.
+	 *
+	 * Held in a function rather than in a static inside the drawing one,
+	 * the same way kaamase_views_primed() does it, so it can be read and
+	 * set from outside. A static that nothing can reach is a static that
+	 * nothing can test.
+	 *
+	 * @since 1.10.0
+	 * @param bool|null $put true to mark it drawn, false to forget.
+	 * @return bool
+	 */
+	function kaamase_promo_slot_drawn( $put = null ) {
+
+		static $drawn = false;
+
+		if ( is_bool( $put ) ) {
+			$drawn = $put;
+		}
+
+		return $drawn;
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot' ) ) {
+	/**
+	 * Draw the promoted card at the top of a listing.
+	 *
+	 * On loop_start, which fires once at the top of the loop the template
+	 * is about to run. Nothing about the query is changed by being here:
+	 * the results, their order, the number found and the paging are all
+	 * exactly what they were.
+	 *
+	 * First page only. An advertisement on page four is an advertisement
+	 * nobody sees, and a second copy of it on every page is the reason
+	 * people mute a site.
+	 *
+	 * @since 1.10.0
+	 * @param WP_Query $query The listing.
+	 * @return void
+	 */
+	function kaamase_promo_slot( $query ) {
+
+		if ( is_admin() || ! ( $query instanceof WP_Query ) ) {
+			return;
+		}
+
+		/**
+		 * Filter whether the promoted slot is drawn at all.
+		 *
+		 * The off switch, without editing a file. Everything else about a
+		 * promotion carries on: the mark still shows where the listing
+		 * stands, the run still ends on its day, and the takings are
+		 * unaffected.
+		 *
+		 * @since 1.10.0
+		 * @param bool     $on    Whether to draw it.
+		 * @param WP_Query $query The listing.
+		 */
+		if ( ! apply_filters( 'kaamase_promo_slot_enabled', true, $query ) ) {
+			return;
+		}
+
+		if ( ! $query->is_main_query() || $query->is_singular() ) {
+			return;
+		}
+
+		// Listings only. Not the blog, not a feed, not the front page.
+		if ( ! $query->is_post_type_archive() && ! $query->is_tax() && ! $query->is_search() ) {
+			return;
+		}
+
+		if ( is_feed() || $query->is_paged() ) {
+			return;
+		}
+
+		/*
+		 * Once per request, whatever else runs a loop. A template that
+		 * runs the main loop twice on one page -- a count in the header
+		 * and then the grid, or a rewind_posts -- must not produce two
+		 * advertisements.
+		 */
+		if ( kaamase_promo_slot_drawn() ) {
+			return;
+		}
+
+		$post_id = kaamase_promo_slot_for( $query );
+
+		if ( ! $post_id ) {
+			return;
+		}
+
+		kaamase_promo_slot_drawn( true );
+
+		/*
+		 * Drawn with the ordinary card renderer, and with no wrapper
+		 * around it. The grid on the listing page styles its own
+		 * children, so an extra element between the two would be a
+		 * layout change made for the sake of an advertisement, which is
+		 * the wrong way round. The card carries the mark, which is the
+		 * disclosure.
+		 */
+		switch ( get_post_type( $post_id ) ) {
+
+			case 'kaamase_job':
+				if ( function_exists( 'kaamase_job_card' ) ) {
+					kaamase_job_card( $post_id );
+				}
+				break;
+
+			case 'kaamase_gang':
+				if ( function_exists( 'kaamase_gang_card' ) ) {
+					kaamase_gang_card( $post_id );
+				}
+				break;
+
+			default:
+				if ( function_exists( 'kaamase_worker_card' ) ) {
+					kaamase_worker_card( $post_id );
+				}
+				break;
+		}
+	}
+}
+add_action( 'loop_start', 'kaamase_promo_slot' );

@@ -506,6 +506,29 @@ if ( ! function_exists( 'kaamase_badges' ) ) {
 
 		$out = '';
 
+		/*
+		 * The Ad mark goes first, and it is the only one here that was
+		 * bought rather than earned.
+		 *
+		 * First because a disclosure that comes after two awards has
+		 * already been read as a third award. Quieter than both, because
+		 * an advertisement dressed up as an achievement is what an
+		 * advertising standard exists to stop, and because an employer
+		 * who works out that the shiny badge is for sale stops believing
+		 * Vouched and Verified as well.
+		 *
+		 * In the row rather than beside the name: the name line is
+		 * spoken for. The tick sits there by a decision in
+		 * verified-mark.php, and a worker's name is already being cut
+		 * off on a narrow phone before anything is added to it.
+		 *
+		 * Guarded, because the theme has to keep working with the plugin
+		 * switched off. No plugin, no promotions, no mark.
+		 */
+		if ( function_exists( 'kaamase_promo_badge' ) ) {
+			$out .= kaamase_promo_badge( $post_id );
+		}
+
 		if ( kaamase_field( $post_id, 'vouched_by' ) ) {
 			$out .= sprintf(
 				'<span class="ka-badge ka-badge--vouched">%s</span>',
@@ -1006,11 +1029,28 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 		<?php $GLOBALS['kaamase_cards_drawn'] = true; ?>
 		<article class="ka-card ka-card--link ka-job-card" data-ka-seen="<?php echo (int) $post_id; ?>">
 
+			<?php
+			/*
+			 * The trade on the left, the marks on the right.
+			 *
+			 * The Ad mark goes on this row rather than after the title,
+			 * because a job title wraps to two lines as often as not and
+			 * a mark tacked onto the end of it lands somewhere different
+			 * on every card. This row is one line on every job there is.
+			 */
+			?>
 			<div class="ka-cluster ka-cluster--between">
 				<?php echo kaamase_trades( $post_id, 2 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<?php if ( $urgent ) : ?>
-					<span class="ka-badge ka-badge--new"><?php esc_html_e( 'Urgent', 'kaamase' ); ?></span>
-				<?php endif; ?>
+				<span class="ka-cluster">
+					<?php
+					if ( function_exists( 'kaamase_promo_badge' ) ) {
+						echo kaamase_promo_badge( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
+					?>
+					<?php if ( $urgent ) : ?>
+						<span class="ka-badge ka-badge--new"><?php esc_html_e( 'Urgent', 'kaamase' ); ?></span>
+					<?php endif; ?>
+				</span>
 			</div>
 
 			<div class="ka-card__head ka-mt-4">

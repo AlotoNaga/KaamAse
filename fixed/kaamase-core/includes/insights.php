@@ -563,6 +563,16 @@ if ( ! function_exists( 'kaamase_insights_export' ) ) {
 		// So Excel opens the file as UTF-8 rather than mangling the names.
 		fwrite( $out, "\xEF\xBB\xBF" );
 
+		/*
+		 * Separator, enclosure and escape all given.
+		 *
+		 * PHP 8.4 deprecates calling this without the last one. On a host
+		 * with display_errors on, that notice is printed into the
+		 * download itself, so the file arrives with a line of PHP above
+		 * the header row and the spreadsheet will not open. An empty
+		 * escape is also the value PHP is moving to and the one the CSV
+		 * standard describes.
+		 */
 		fputcsv(
 			$out,
 			array(
@@ -575,7 +585,10 @@ if ( ! function_exists( 'kaamase_insights_export' ) ) {
 				__( 'Confirmed', 'kaamase-core' ),
 				__( 'Signed up with', 'kaamase-core' ),
 				__( 'Registered', 'kaamase-core' ),
-			)
+			),
+			',',
+			'"',
+			''
 		);
 
 		$kinds   = kaamase_insights_kinds();
@@ -594,7 +607,10 @@ if ( ! function_exists( 'kaamase_insights_export' ) ) {
 					$row['confirmed'] ? __( 'Yes', 'kaamase-core' ) : __( 'No', 'kaamase-core' ),
 					isset( $methods[ $row['method'] ] ) ? $methods[ $row['method'] ] : $row['method'],
 					$row['registered'],
-				)
+				),
+				',',
+				'"',
+				''
 			);
 		}
 
