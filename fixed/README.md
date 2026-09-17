@@ -4073,6 +4073,85 @@ these translations sit unused.
 Deciding how the site chooses a language is its own piece of work and is not
 started here.
 
+## 65. Hindi, finished
+
+Every string on Kaam Ase that a worker or an employer can see is now in Hindi.
+
+| Copy this file | Into this folder |
+| --- | --- |
+| `fixed/kaamase/languages/hi_IN.mo` and `.po` | `wp-content/themes/kaamase/languages/` |
+| `fixed/kaamase-pay/languages/kaamase-pay-hi_IN.mo` and `.po` | `wp-content/plugins/kaamase-pay/languages/` |
+| `fixed/kaamase-core/languages/kaamase-core-hi_IN.mo` and `.po` | `wp-content/plugins/kaamase-core/languages/` |
+
+### The count
+
+| | Translated | Deliberately left |
+| --- | --- | --- |
+| Theme, the website's own text | 251 of 251 | — |
+| Payment plugin | 121 | 62 owner-only |
+| Core plugin | 851 of 851 that reach a person | 861 owner-only |
+
+**1,223 strings.** The 923 left are the Insights, Promotions, Google indexing,
+Limits and registry screens, which only the owner opens and which he reads in
+English. Translating them would be effort with no reader, and it is a decision
+rather than an omission.
+
+### What was checked on every batch
+
+**Placeholders.** A translation that loses a `%s` prints a blank where a number
+belongs; a `%1$s` mistyped as `%s` is a PHP warning on a live page. Every
+translated string was compared against its English placeholders across all three
+files: **no mismatches**.
+
+Hindi reorders sentences, so `Your %1$s plan on %2$s ends on %3$s` becomes
+`%2$s पर आपका %1$s प्लान %3$s को खत्म हो रहा है`. That is what numbered
+placeholders exist for, and the checker compares the set rather than the
+sequence, which is why a correct reordering passes and a dropped argument does
+not.
+
+**The files themselves.** There is no `msgfmt` on the build machine, so the
+compiler was written by hand and every output parsed back the way gettext reads
+it: magic number, keys sorted for the binary search, header entry carrying the
+plural rule, plurals joined with a null byte, valid UTF-8 throughout. All three
+clean.
+
+**Newlines in the emails.** Several job emails are multi-line. The template
+writes them escaped and gettext stores them raw, which is easy to get wrong.
+Read back out of the compiled file: five newlines in the English, five in the
+Hindi, in the same places.
+
+### The Hindi itself
+
+Plain spoken Hindi, the kind a mason from Bihar working in Dimapur uses, not the
+formal register. *मज़दूर* rather than *श्रमिक*. *काम डालें* rather than
+*कार्य प्रकाशित करें*.
+
+**Kaam Ase stays Kaam Ase**, and so does **Rich Manu**. Both are names.
+
+**DELETE stays DELETE.** It is what somebody types to confirm their account is
+going, and it has to be typed exactly. A Devanagari word there is a trap on a
+phone keyboard set to English.
+
+### It still does not switch the site to Hindi
+
+Said in section 64 and worth repeating now the work is done. These files make
+Hindi **available**. WordPress serves the site language to everybody unless a
+signed-in account has its own language set, so until there is a switcher, or the
+app asks for a locale, almost nobody will see any of it.
+
+That is the next piece of work, and it is small next to this one.
+
+### Nagamese next
+
+The tooling is built and the method is proven, so Nagamese is the same shape of
+job without the groundwork. `translations/` holds the JSON each language is built
+from, the `.po` and `.mo` writer, and the placeholder checker.
+
+One thing will be different and should be decided first: Nagamese has no settled
+written standard, and it is normally written in Roman letters here rather than in
+a script. Somebody who speaks it will need to read what is produced before it
+goes anywhere near the site.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
