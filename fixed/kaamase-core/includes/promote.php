@@ -941,6 +941,15 @@ if ( ! function_exists( 'kaamase_promo_tell' ) ) {
 			);
 		}
 
+		/*
+		 * kind travels with it so a tap can open the right screen.
+		 *
+		 * The id on its own does not say whether it points at a profile
+		 * or at a job, and the app cannot tell from the number. Without
+		 * this the best a notification can do is open the promotions
+		 * screen and hope the person works out which of their listings
+		 * it meant -- which is what the first app build had to do.
+		 */
 		kaamase_notify_user(
 			$owner,
 			$title,
@@ -948,6 +957,7 @@ if ( ! function_exists( 'kaamase_promo_tell' ) ) {
 			array(
 				'type' => 'promotion',
 				'id'   => (int) $post->ID,
+				'kind' => 'kaamase_job' === $post->post_type ? 'job' : 'profile',
 				'what' => (string) $what,
 			),
 			$url

@@ -3825,6 +3825,29 @@ most of the traffic, this is where the fairness actually lands.
 `POST /kaamase/v1/promote` and the `promote` block on `/me` have been there since
 phase 1 (section 59) and are unchanged.
 
+### The promotion notification says which kind of listing it means
+
+Added after the app side reported the gap. The push now carries:
+
+```json
+{ "type": "promotion", "id": 601, "kind": "job" | "profile", "what": "started" | "ended" | "stopped" }
+```
+
+The id alone never said whether it pointed at a profile or a job, and the app
+cannot tell from the number, so the first build had to open the promotions screen
+and let the person work out which listing was meant. With `kind` a tap can open
+the listing itself. Additive: a build that ignores it behaves exactly as before.
+
+### A note on the wording, for whoever builds the screen
+
+`copy.live` is **"This is being promoted now."** — there is no placeholder in it
+for a date. The end date is `ends` on each row of `promote.mine`, a unix
+timestamp in seconds, and it belongs on its own line.
+
+That split is deliberate rather than an omission. A date formatted on the server
+is formatted in the site's locale; the same timestamp formatted on the phone is
+formatted in the reader's. The phone should win.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
