@@ -2079,11 +2079,17 @@ if ( ! function_exists( 'kaamase_promo_slot_wanted' ) ) {
 	/**
 	 * Whether this query is a listing that may carry an advertisement.
 	 *
+	 * Asked two slightly different questions. Drawing an advertisement is
+	 * first page only; taking the paid listing out of the results is every
+	 * page, because it is drawn once at the top and must not turn up again
+	 * four screens down wearing the same mark.
+	 *
 	 * @since 1.10.0
-	 * @param WP_Query $query The query.
+	 * @param WP_Query $query       The query.
+	 * @param bool     $allow_paged Whether page two and beyond count.
 	 * @return bool
 	 */
-	function kaamase_promo_slot_wanted( $query ) {
+	function kaamase_promo_slot_wanted( $query, $allow_paged = false ) {
 
 		if ( is_admin() || ! ( $query instanceof WP_Query ) ) {
 			return false;
@@ -2114,7 +2120,11 @@ if ( ! function_exists( 'kaamase_promo_slot_wanted' ) ) {
 			return false;
 		}
 
-		if ( $query->is_feed() || $query->is_paged() ) {
+		if ( $query->is_feed() ) {
+			return false;
+		}
+
+		if ( ! $allow_paged && $query->is_paged() ) {
 			return false;
 		}
 
@@ -2144,6 +2154,17 @@ if ( ! function_exists( 'kaamase_promo_slot_choose' ) ) {
 	 * Taken out rather than left in because the same card twice on one
 	 * screen reads as a fault rather than as an advertisement.
 	 *
+	 * And taken out of every page, not only the first. The advertisement
+	 * is drawn once, at the top; a buyer whose listing sits at number
+	 * thirty-five organically would otherwise be at the top of page one
+	 * and again halfway down page two, which is the same duplicate moved
+	 * one page along rather than fixed. The app does this too, so both
+	 * behave the same.
+	 *
+	 * Only the first page draws one. Removing on a later page and drawing
+	 * nothing is correct: the card was already shown at the top, and the
+	 * reader has passed it.
+	 *
 	 * @since 1.10.0
 	 * @param WP_Post[] $posts The results.
 	 * @param WP_Query  $query The query.
@@ -2151,7 +2172,7 @@ if ( ! function_exists( 'kaamase_promo_slot_choose' ) ) {
 	 */
 	function kaamase_promo_slot_choose( $posts, $query = null ) {
 
-		if ( empty( $posts ) || ! is_array( $posts ) || ! kaamase_promo_slot_wanted( $query ) ) {
+		if ( empty( $posts ) || ! is_array( $posts ) || ! kaamase_promo_slot_wanted( $query, true ) ) {
 			return $posts;
 		}
 

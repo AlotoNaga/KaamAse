@@ -3922,20 +3922,41 @@ worth charging more.
 
 `KAAMASE_PROMO_ROTATE` is the constant if it ever needs changing.
 
-### What this means for the app
+### Taken out of every page, not only the first
 
-The rotation lives on the server, so the app gets it with no release. **The other
-two do not.**
+The advertisement is drawn once, at the top of page one. The paid listing is
+removed from **every** page it would otherwise appear on.
 
-- The app decides the slot's position itself, and today it *skips* the slot when
-  the listing is already in the list — the same fault fixed above. It has to
-  hoist instead.
-- The app caches the advertisement for up to fifteen minutes, which was sensible
-  against an hourly rotation and now swallows two rotations out of three. That
-  cache has to come down below five minutes.
+Removing it only from page one would have moved the duplicate rather than fixed
+it: a buyer sitting at number thirty-five organically would be at the top of page
+one and again halfway down page two, wearing the same mark both times. Removing
+on a later page and drawing nothing there is the right pair — the card was
+already shown at the top and the reader has passed it.
 
-Both are app-side. The server is ready for them and neither is urgent enough to
-pull a release forward on its own.
+The one exception is unchanged: when the paid listing is the only thing on the
+page, it is left alone, because taking it out would leave an empty page.
+
+This came from the app side, which had reached the same conclusion
+independently. Both now behave identically.
+
+### The app and the server agree on which five minutes it is
+
+Both floor an absolute clock rather than counting from whenever they started:
+`floor( time() / 300 )` here, `Math.floor(Date.now() / 300000)` there. Those are
+the same number. So at any given moment a phone and the website pick the same
+advertiser, and a buyer's turn starts and ends on both at once. A rotation
+counted from first fetch would have drifted apart within the hour.
+
+### What the app did differently, and was right to
+
+The per-window cache key suggested from here would have leaked storage. The
+app's cache only evicts an entry when it is read again, so a key containing the
+window number creates an entry that nothing ever reads — on Android, where the
+store is capped, that grows without bound.
+
+It keeps one entry per list instead and shows a cached answer only if it was
+saved inside the current window. Same guarantee, no leak. Worth recording
+because the mistake was in the advice, not in the app.
 
 ## Not changed, and why
 
