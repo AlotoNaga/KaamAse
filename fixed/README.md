@@ -4003,6 +4003,76 @@ anything on a package it had already done correctly.
 
 ⚠️ **Copy both again.** No code change accompanies them.
 
+## 64. Hindi — the theme, and how the files have to be named
+
+The website's own text, all 251 strings, in Hindi. **No code changed anywhere.**
+
+### Two files
+
+| Copy this file | Into this folder |
+| --- | --- |
+| `fixed/kaamase/languages/hi_IN.mo` | `wp-content/themes/kaamase/languages/` |
+| `fixed/kaamase/languages/hi_IN.po` | `wp-content/themes/kaamase/languages/` |
+
+The `.mo` is the one WordPress reads. The `.po` is the readable source, kept
+beside it so the next person can correct a word without starting again.
+
+### The name is not a detail
+
+A theme and a plugin look for translations under **different names**, and getting
+it wrong fails silently — no error, no warning, just English.
+
+```
+load_theme_textdomain( 'kaamase', … )   ->  languages/hi_IN.mo
+load_plugin_textdomain( 'kaamase-core' ) ->  languages/kaamase-core-hi_IN.mo
+```
+
+`inc/setup.php` uses the theme form, so the file is `hi_IN.mo`, not
+`kaamase-hi_IN.mo`. The plugins, when their turn comes, take the longer name.
+
+### What sort of Hindi
+
+Plain spoken Hindi, the kind a mason from Bihar working in Dimapur actually uses.
+Not the formal register. *मज़दूर* rather than *श्रमिक*; *काम डालें* rather than
+*कार्य प्रकाशित करें*.
+
+The audience is real and visible in the job listings already on the platform:
+recruitment for Gujarat, Rajasthan and "Pan India", and the migrant workers those
+posts are aimed at. Most Nagas do not speak Hindi first — Nagamese does that job,
+and it comes next.
+
+**Kaam Ase stays Kaam Ase.** It is the name of the business and it is already
+Nagamese, so translating it would be translating a name.
+
+### What was checked, and how
+
+**Every placeholder survives.** A translated sentence that loses a `%s` prints a
+blank where a number should be, and a `%1$s` mistyped as `%s` is a PHP warning on
+a live page. 264 translated strings (plurals counted separately) were compared
+against their English placeholders: **0 mismatches**.
+
+**The `.mo` is a real `.mo`.** There is no `msgfmt` on the build machine, so the
+compiler was written by hand and the output parsed back the way gettext reads it:
+magic number correct, 252 entries, **keys sorted** (gettext binary-searches them,
+so an unsorted file half works and is horrible to diagnose), header entry present
+carrying the plural rule, plurals joined with a null byte, every entry valid
+UTF-8.
+
+### Hindi plurals are English plurals, here
+
+`nplurals=2; plural=(n != 1);` — the same rule. So *%s दिन* covers one day and
+five days, which is also how the language behaves.
+
+### This does not switch the site to Hindi on its own
+
+Worth being plain about. The file makes Hindi **available**; something still has
+to decide to use it. WordPress serves the site language to everybody unless a
+logged-in account has its own language set, or a switcher is added. Until then
+these translations sit unused.
+
+Deciding how the site chooses a language is its own piece of work and is not
+started here.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
