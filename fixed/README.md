@@ -4319,6 +4319,19 @@ screen before somebody has an account. `POST /kaamase/v1/locale` — signed in,
 saves the choice to the account. And `locale` plus `locales` on `/me`, so the
 language screen costs no extra request on a cold start.
 
+**Without that header there is no fallback, and that is deliberate.** A signed-in
+app request carries a bearer token, not a cookie, and the language layer
+specifically does not resolve that token — resolving it at line 581 is the
+second fault listed further down. So an app request with no `X-Kaamase-Locale`
+answers in the site's language even when that account has Nagamese saved.
+Notifications to that same person are still Nagamese, because they read the
+account directly and never go near the request.
+
+One useful consequence: because the registration email is the one send that
+keeps the request's language, an app that sends the header on the *registration*
+call gets the confirmation email in the right language, before there is an
+account for anybody to have chosen on.
+
 **`Accept-Language` is deliberately ignored.** The app has its own language menu
 and its own translated screens; if the server read the phone's system language
 while the app read its own setting, somebody who set the app to English on a
@@ -4336,7 +4349,7 @@ and needs its own Hindi and Nagamese there.
 
 ### Tested
 
-97 assertions across twenty-two scenarios, each in its own process because the
+104 assertions across twenty-four scenarios, each in its own process because the
 resolver caches its answer in a static and `DONOTCACHEPAGE` is a constant — two
 scenarios in one process would be a lie. The real `.mo` files are loaded, so the
 tests prove sentences come out in Nagamese rather than that a flag was set.
