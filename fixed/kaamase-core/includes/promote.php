@@ -97,6 +97,25 @@ if ( ! defined( 'KAAMASE_PROMO_LOG_KEEP' ) ) {
 	define( 'KAAMASE_PROMO_LOG_KEEP', 20 );
 }
 
+/**
+ * How long one advertiser holds the slot before the next one takes it.
+ *
+ * Five minutes. Short enough that somebody opening the app twice in an
+ * afternoon sees two different advertisers, which is what makes the share
+ * real rather than nominal, and short enough that nobody's turn lands
+ * entirely in the quiet part of the day: an hour each means the same
+ * advertiser gets nine in the morning every single day, and nine in the
+ * morning is not worth the same as six in the evening.
+ *
+ * With one advertiser it does nothing at all. One candidate is chosen
+ * every time whatever the clock says, so a sole buyer holds the slot
+ * without a break until their run ends, which is what they are paying
+ * for.
+ */
+if ( ! defined( 'KAAMASE_PROMO_ROTATE' ) ) {
+	define( 'KAAMASE_PROMO_ROTATE', 5 * MINUTE_IN_SECONDS );
+}
+
 
 /* ==========================================================================
    1. WHAT A PROMOTION IS
@@ -1992,16 +2011,20 @@ if ( ! function_exists( 'kaamase_promo_pick' ) ) {
 	 * more than one agency at a time. Five advertisers in one district
 	 * get a fifth of it each rather than the first one getting all of it.
 	 *
-	 * Rotated by the hour rather than at random, for three reasons. It
+	 * Rotated on a clock rather than at random, for three reasons. It
 	 * shares out evenly across a day instead of merely on average. Two
-	 * people looking at the same page at the same time see the same
+	 * people looking at the same page at the same moment see the same
 	 * thing, which is what anybody would expect. And it does not write
 	 * anything, so a listing page stays a read.
+	 *
+	 * One advertiser is a special case that needs no special code: with
+	 * a single candidate the same one is chosen every time whatever the
+	 * clock says, so a sole buyer holds the slot without a break.
 	 *
 	 * The website is behind a page cache, so a cached page holds whoever
 	 * was chosen when it was built until it is rebuilt. Over a day that
 	 * still comes out even, and the app -- which is most of the traffic
-	 * and is not cached -- rotates exactly.
+	 * and is not cached -- rotates on the dot.
 	 *
 	 * Sorted first so the choice is the same on every server and every
 	 * request within the hour.
@@ -2020,88 +2043,171 @@ if ( ! function_exists( 'kaamase_promo_pick' ) ) {
 			return 0;
 		}
 
-		$slice = (int) floor( time() / HOUR_IN_SECONDS );
+		$slice = (int) floor( time() / max( 1, KAAMASE_PROMO_ROTATE ) );
 
 		return (int) $ids[ $slice % count( $ids ) ];
 	}
 }
 
-if ( ! function_exists( 'kaamase_promo_slot_for' ) ) {
+if ( ! function_exists( 'kaamase_promo_slot_choice' ) ) {
 	/**
-	 * Which listing, if any, should take the slot above this page.
+	 * The listing this request is advertising, decided once.
+	 *
+	 * Two hooks need the same answer: the one that takes it out of the
+	 * results, and the one that draws it above them. Deciding twice
+	 * would let the clock tick between them and hand the page an
+	 * advertisement for one listing with a different one missing from
+	 * the list.
 	 *
 	 * @since 1.10.0
-	 * @param WP_Query $query The listing being drawn.
-	 * @return int Listing ID, or 0 for no advertisement.
+	 * @param int|null $put The chosen listing, 0 for none, null to read.
+	 * @return int Listing ID, or 0.
 	 */
-	function kaamase_promo_slot_for( $query ) {
+	function kaamase_promo_slot_choice( $put = null ) {
 
-		if ( empty( $query->posts ) ) {
-			return 0;
+		static $chosen = 0;
+
+		if ( null !== $put ) {
+			$chosen = absint( $put );
+		}
+
+		return $chosen;
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot_wanted' ) ) {
+	/**
+	 * Whether this query is a listing that may carry an advertisement.
+	 *
+	 * @since 1.10.0
+	 * @param WP_Query $query The query.
+	 * @return bool
+	 */
+	function kaamase_promo_slot_wanted( $query ) {
+
+		if ( is_admin() || ! ( $query instanceof WP_Query ) ) {
+			return false;
+		}
+
+		/**
+		 * Filter whether the promoted slot is used at all.
+		 *
+		 * The off switch, without editing a file. Everything else about
+		 * a promotion carries on: the mark still shows where the listing
+		 * stands, the run still ends on its day, and the takings are
+		 * unaffected.
+		 *
+		 * @since 1.10.0
+		 * @param bool     $on    Whether to use it.
+		 * @param WP_Query $query The listing.
+		 */
+		if ( ! apply_filters( 'kaamase_promo_slot_enabled', true, $query ) ) {
+			return false;
+		}
+
+		if ( ! $query->is_main_query() || $query->is_singular() ) {
+			return false;
+		}
+
+		// Listings only. Not the blog, not a feed, not the front page.
+		if ( ! $query->is_post_type_archive() && ! $query->is_tax() && ! $query->is_search() ) {
+			return false;
+		}
+
+		if ( $query->is_feed() || $query->is_paged() ) {
+			return false;
+		}
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot_choose' ) ) {
+	/**
+	 * Decide what goes in the slot, and take it out of the list.
+	 *
+	 * The advertiser is paying for the top. Before this, a promoted
+	 * listing that happened to be on page one already was left exactly
+	 * where the queue had put it -- third one day, fortieth the next,
+	 * because exposure.php rotates -- and the slot was simply not drawn.
+	 * So what was bought was "the top, unless you were doing well
+	 * anyway, in which case somewhere", which is not a thing anybody can
+	 * sell or a buyer can check.
+	 *
+	 * Now it is hoisted. One card comes out of the page and is drawn
+	 * above it instead. That is the whole change, and it is worth being
+	 * precise about what it does and does not do: it does not reorder
+	 * the list. Everybody below keeps the order exposure.php gave them
+	 * and keeps it relative to each other. One marked card moved; nobody
+	 * was shuffled.
+	 *
+	 * Taken out rather than left in because the same card twice on one
+	 * screen reads as a fault rather than as an advertisement.
+	 *
+	 * @since 1.10.0
+	 * @param WP_Post[] $posts The results.
+	 * @param WP_Query  $query The query.
+	 * @return WP_Post[] The results, at most one shorter.
+	 */
+	function kaamase_promo_slot_choose( $posts, $query = null ) {
+
+		if ( empty( $posts ) || ! is_array( $posts ) || ! kaamase_promo_slot_wanted( $query ) ) {
+			return $posts;
+		}
+
+		// Decided once per request, whatever else runs a query.
+		if ( kaamase_promo_slot_choice() ) {
+			return $posts;
+		}
+
+		$first = reset( $posts );
+
+		if ( ! ( $first instanceof WP_Post ) ) {
+			return $posts;
+		}
+
+		$kind = 'kaamase_job' === $first->post_type ? 'job' : 'worker';
+
+		if ( ! in_array( $first->post_type, kaamase_promo_types(), true ) ) {
+			return $posts;
+		}
+
+		$post_id = kaamase_promo_slot_pick( $kind, kaamase_promo_query_district( $query ) );
+
+		if ( ! $post_id ) {
+			return $posts;
+		}
+
+		$kept  = array();
+		$found = false;
+
+		foreach ( $posts as $post ) {
+
+			if ( $post instanceof WP_Post && (int) $post->ID === $post_id ) {
+				$found = true;
+				continue;
+			}
+
+			$kept[] = $post;
 		}
 
 		/*
-		 * The kind of thing this page is showing, taken from what it is
-		 * actually showing rather than from the query vars. A district
-		 * archive, a trade archive and a search all arrive here with
-		 * different vars set and the same answer in their results.
+		 * The only result on the page, so there is nothing to hoist it
+		 * above and nothing left if it goes. It is already at the top
+		 * and already carries its mark; taking it out would empty the
+		 * page, and an empty page draws no loop at all, so the
+		 * advertisement would vanish with it.
 		 */
-		$first = reset( $query->posts );
-		$kind  = is_object( $first ) ? (string) $first->post_type : '';
-
-		if ( ! in_array( $kind, kaamase_promo_types(), true ) ) {
-			return 0;
+		if ( $found && empty( $kept ) ) {
+			return $posts;
 		}
 
-		$on_page = array();
+		kaamase_promo_slot_choice( $post_id );
 
-		foreach ( $query->posts as $post ) {
-			if ( is_object( $post ) ) {
-				$on_page[] = (int) $post->ID;
-			}
-		}
-
-		$district = kaamase_promo_query_district( $query );
-		$wanted   = array();
-
-		foreach ( kaamase_promo_find( 'live', 100 ) as $post_id ) {
-
-			if ( ! kaamase_promo_is_live( $post_id ) ) {
-				continue;
-			}
-
-			/*
-			 * A worker list advertises workers. A team is a worker
-			 * profile and belongs on the same list; a job does not.
-			 */
-			if ( 'kaamase_job' === $kind ) {
-				if ( 'kaamase_job' !== get_post_type( $post_id ) ) {
-					continue;
-				}
-			} elseif ( 'kaamase_job' === get_post_type( $post_id ) ) {
-				continue;
-			}
-
-			/*
-			 * Already on the page, so there is nothing to advertise. It
-			 * carries its own mark where it stands, and a second copy of
-			 * one card on one screen reads as a fault rather than as an
-			 * advertisement.
-			 */
-			if ( in_array( (int) $post_id, $on_page, true ) ) {
-				continue;
-			}
-
-			if ( '' !== $district && kaamase_promo_district( $post_id ) !== $district ) {
-				continue;
-			}
-
-			$wanted[] = (int) $post_id;
-		}
-
-		return kaamase_promo_pick( $wanted );
+		return $found ? $kept : $posts;
 	}
 }
+add_filter( 'the_posts', 'kaamase_promo_slot_choose', 20, 2 );
 
 if ( ! function_exists( 'kaamase_promo_slot_drawn' ) ) {
 	/**
@@ -2133,13 +2239,11 @@ if ( ! function_exists( 'kaamase_promo_slot' ) ) {
 	 * Draw the promoted card at the top of a listing.
 	 *
 	 * On loop_start, which fires once at the top of the loop the template
-	 * is about to run. Nothing about the query is changed by being here:
-	 * the results, their order, the number found and the paging are all
-	 * exactly what they were.
+	 * is about to run, so the card lands as the first thing in the grid
+	 * without any template needing to know about it.
 	 *
-	 * First page only. An advertisement on page four is an advertisement
-	 * nobody sees, and a second copy of it on every page is the reason
-	 * people mute a site.
+	 * First page only. An advertisement on page four is one nobody sees,
+	 * and a copy on every page is why people mute a site.
 	 *
 	 * @since 1.10.0
 	 * @param WP_Query $query The listing.
@@ -2147,36 +2251,7 @@ if ( ! function_exists( 'kaamase_promo_slot' ) ) {
 	 */
 	function kaamase_promo_slot( $query ) {
 
-		if ( is_admin() || ! ( $query instanceof WP_Query ) ) {
-			return;
-		}
-
-		/**
-		 * Filter whether the promoted slot is drawn at all.
-		 *
-		 * The off switch, without editing a file. Everything else about a
-		 * promotion carries on: the mark still shows where the listing
-		 * stands, the run still ends on its day, and the takings are
-		 * unaffected.
-		 *
-		 * @since 1.10.0
-		 * @param bool     $on    Whether to draw it.
-		 * @param WP_Query $query The listing.
-		 */
-		if ( ! apply_filters( 'kaamase_promo_slot_enabled', true, $query ) ) {
-			return;
-		}
-
-		if ( ! $query->is_main_query() || $query->is_singular() ) {
-			return;
-		}
-
-		// Listings only. Not the blog, not a feed, not the front page.
-		if ( ! $query->is_post_type_archive() && ! $query->is_tax() && ! $query->is_search() ) {
-			return;
-		}
-
-		if ( is_feed() || $query->is_paged() ) {
+		if ( ! kaamase_promo_slot_wanted( $query ) ) {
 			return;
 		}
 
@@ -2190,7 +2265,7 @@ if ( ! function_exists( 'kaamase_promo_slot' ) ) {
 			return;
 		}
 
-		$post_id = kaamase_promo_slot_for( $query );
+		$post_id = kaamase_promo_slot_choice();
 
 		if ( ! $post_id ) {
 			return;

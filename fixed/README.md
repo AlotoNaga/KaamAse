@@ -5,7 +5,7 @@ Tier 1 security items. Each file below is complete — open it, select all, and
 paste over the matching file on your site. Nothing else was touched.
 
 The `.zip` files in the repository root are still the original upload. These are
-the patched versions of forty-six files taken from inside them, seventeen brand new
+the patched versions of forty-seven files taken from inside them, seventeen brand new
 files, plus three translation templates.
 
 Everything in `fixed/` is meant to be copied up. If a file is in there and not
@@ -82,6 +82,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/hire-claims.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/views-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/promote.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -3847,6 +3848,94 @@ timestamp in seconds, and it belongs on its own line.
 That split is deliberate rather than an omission. A date formatted on the server
 is formatted in the site's locale; the same timestamp formatted on the phone is
 formatted in the reader's. The phone should win.
+
+## 62. Two faults found by testing, and the slot made sellable
+
+Two files: `promote.php`, and `verified-mark.php` — which has not been touched
+before, so what you are uploading is the original with one block added.
+
+⚠️ **`verified-mark.php` is new to this list.** It was never in `fixed/` before.
+
+### The Ad mark never showed on website worker cards
+
+Section 60 put the mark in the theme's `kaamase_badges()`. **That function never
+runs on this site.**
+
+`verified-mark.php` says so itself, at the top of its second section:
+
+> *"Defining it here first puts the mark in all of them at once: plugins load
+> before themes, and the theme's copy is wrapped in a check for whether the name
+> is already taken."*
+
+So the plugin takes the name and the theme's copy is dead. The job card was fine
+because `kaamase_job_card()` really is the theme's; the badge row never was.
+
+The result was the worst possible shape of this bug: a promoted worker showed
+**Ad** in the app and nothing at all on the website — so the person who had just
+paid could see it working everywhere except the place they were most likely to
+look.
+
+The mark now goes in the plugin's copy, first in the row, same wording and same
+quiet outline. The theme's copy keeps its version, which is harmless: with the
+plugin off there are no promotions either, and the guard returns nothing.
+
+A test loads the plugin and then the theme, in that order, and checks the Ad mark
+survives **alongside the call mark** — which only the plugin's copy draws, and so
+proves which function answered.
+
+### A paid listing now goes to the top, always
+
+Before this, the slot was only drawn when the promoted listing was **not** on
+page one. If it was already there it stayed where the queue had put it, wearing
+an Ad mark, and no slot was drawn at all.
+
+That was wrong, and testing showed it plainly: on the Workers tab the advertiser
+was first, and on the Jobs tab at the same moment the advertiser was third. Since
+`exposure.php` rotates daily, the same buyer would be third today and fortieth
+tomorrow. What was being sold was "the top, unless you happened to be doing well
+anyway, in which case somewhere" — which nobody can sell and no buyer can check.
+
+It is hoisted now. The card is lifted out of the page and drawn above it.
+
+**This still does not reorder the list.** Everybody below keeps the order
+`exposure.php` gave them and keeps it relative to each other. One marked card
+moved; nobody was shuffled. `posts_orderby` is untouched, and so are `posts_where`
+and `posts_join` — there is a test for each. The one filter now used is
+`the_posts`, and only to lift the one paid card out so it is not shown twice.
+
+One case is left alone: when the promoted listing is the **only** result. Taking
+it out would empty the page, and an empty page runs no loop, so the advertisement
+would vanish along with the result. It is already at the top and already marked.
+
+### The slot turns over every five minutes
+
+Was an hour. Five minutes is better for the same reason it sounds better: an hour
+each means the same advertiser gets nine in the morning every single day, and
+nine in the morning is not worth the same as six in the evening. At five minutes
+everybody gets a share of every part of the day.
+
+With **one** advertiser nothing rotates at all — a single candidate is chosen
+every time whatever the clock says, so a sole buyer holds the slot without a
+break until their run ends. That needs no special case in the code and it is
+worth saying out loud on the telephone, because it is what makes a sole buyer
+worth charging more.
+
+`KAAMASE_PROMO_ROTATE` is the constant if it ever needs changing.
+
+### What this means for the app
+
+The rotation lives on the server, so the app gets it with no release. **The other
+two do not.**
+
+- The app decides the slot's position itself, and today it *skips* the slot when
+  the listing is already in the list — the same fault fixed above. It has to
+  hoist instead.
+- The app caches the advertisement for up to fifteen minutes, which was sensible
+  against an hourly rotation and now swallows two rotations out of three. That
+  cache has to come down below five minutes.
+
+Both are app-side. The server is ready for them and neither is urgent enough to
+pull a release forward on its own.
 
 ## Not changed, and why
 
