@@ -4481,6 +4481,42 @@ carries `is_mine` and `saved`, and `rest-auth.php` refuses to store anything
 written for one account. That is correct and it stays. It just means the render
 is the whole cost, which is why the render is what got cheaper.
 
+### What it came to, measured from the app
+
+Five profiles, eight runs each, connection time separated from server
+processing, on the four most-viewed profiles plus the one measured before so
+the comparison is like for like.
+
+| | Before | After |
+| --- | --- | --- |
+| Worker profile | 200–400 ms | **132–148 ms**, median 142 |
+| Workers list | ~270 ms | 138 ms |
+| Jobs list | ~270 ms | 174 ms |
+| Reference | ~270 ms | 170 ms |
+
+The number that says it is really the index is not the median. It is the
+spread: repeat requests used to bounce between 200 and 400 ms and now sit
+between 132 and 148. A payload problem or a slow network does not tighten like
+that. A query that stopped walking rows it did not need does.
+
+### The one in twenty that still takes a second and a half
+
+Left in the open deliberately, because it is not fixed and it is the kind of
+thing that gets reported later as "sometimes it hangs".
+
+Occasional responses of ~1.4 s against a flat ~140 s either side. The shape —
+rare, enormous, unrelated to which profile — does not look like a query. It
+looks like a request that had to wait for a PHP worker, and this site has an
+obvious candidate for taking one: **WP-Cron is spawned by whichever visitor
+request happens to arrive when a job is due.** There are three scheduled hooks,
+and the daily one submits to the Google Indexing API over **blocking HTTP with a
+fifteen second timeout**. On shared hosting with a handful of PHP workers, one
+of those is enough to make everything behind it queue.
+
+The fix is configuration rather than code: `DISABLE_WP_CRON` in `wp-config.php`
+and a real cron job at the host calling `wp-cron.php`. Nothing scheduled
+changes, it simply stops being paid for by a visitor.
+
 ### The cached answer that had the same fault as the update message
 
 Found while looking for the slowness, and worth its own paragraph because it is
