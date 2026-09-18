@@ -53,7 +53,7 @@
  * exception and section 8 says why.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.11.0
  */
 
@@ -234,26 +234,49 @@ if ( ! function_exists( 'kaamase_locale_is_api' ) ) {
 	 */
 	function kaamase_locale_is_api() {
 
+		static $answer = null;
+
+		if ( null !== $answer ) {
+			return $answer;
+		}
+
+		/*
+		 * Held, because this is asked far more often than it looks.
+		 * determine_locale() runs the filter above on every textdomain
+		 * load and on every just-in-time load after that, which is a
+		 * dozen or more times on an ordinary page, and each one of them
+		 * was parsing a URL and running a filter to answer a question
+		 * whose answer cannot change during a request.
+		 *
+		 * REST_REQUEST is checked before the cache is consulted the
+		 * first time only; once it is true it stays true.
+		 */
 		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-			return true;
+			$answer = true;
+			return $answer;
 		}
 
 		// Plain permalinks put the route in a query argument instead.
 		if ( isset( $_GET['rest_route'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return true;
+			$answer = true;
+			return $answer;
 		}
 
 		if ( empty( $_SERVER['REQUEST_URI'] ) ) {
-			return false;
+			$answer = false;
+			return $answer;
 		}
 
 		$path = wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ), PHP_URL_PATH );
 
 		if ( ! is_string( $path ) || '' === $path ) {
-			return false;
+			$answer = false;
+			return $answer;
 		}
 
-		return str_contains( $path, '/' . rest_get_url_prefix() . '/' );
+		$answer = str_contains( $path, '/' . rest_get_url_prefix() . '/' );
+
+		return $answer;
 	}
 }
 
@@ -777,86 +800,123 @@ add_action( 'wp_login', 'kaamase_locale_adopt_on_login', 10, 2 );
  * the site still shows the wrong language, because the first visitor to
  * a page decides what every later visitor gets. One person reading in
  * Hindi, and the front page is Hindi for the whole state until the cache
- * turns over. Nothing in the error log. Nothing wrong in the code. It
- * would look, from the inside, like the switcher works, because the
- * owner is signed in and signed in pages are never stored.
+ * turns over.
  *
- * Two answers, and this file uses both, on purpose.
+ * What the first version of this file did about it, and why it was wrong
+ * ---------------------------------------------------------------------
+ * It refused to let a translated page be stored at all. Correct, and far
+ * too expensive: it meant that the moment somebody chose Hindi or
+ * Nagamese, every page and every API answer they ever asked for was a
+ * full PHP render. The people we had just built this for were the only
+ * people on the platform with no cache. It was reported as the site
+ * feeling slow, and it was.
+ *
+ * What it does now
+ * ----------------
+ * Tells LiteSpeed that the language is part of what makes a page
+ * different, and lets it store one copy per language.
+ *
+ * The filter for that is litespeed_vary, not litespeed_vary_cookies.
+ * They are not the same thing and the difference is the whole reason
+ * this works. litespeed_vary_cookies names a cookie for the server to
+ * watch, which LiteSpeed implements by WRITING REWRITE RULES, so it
+ * does nothing at all until .htaccess is regenerated — and it fails
+ * silently when it is not, which is the one way a cache bug is
+ * invisible. litespeed_vary adds a value to LiteSpeed's own
+ * _lscache_vary cookie, and the server treats any cookie whose name
+ * starts with _lscache_vary as part of the cache key on its own, with
+ * nothing to configure.
+ *
+ * Nothing is added for the site's own language, on purpose. An empty
+ * vary means LiteSpeed sets no cookie at all for a guest, so the English
+ * pages — which is nearly all the traffic — are cached exactly as they
+ * were before any of this existed.
  */
 
-if ( ! function_exists( 'kaamase_locale_vary_cookie' ) ) {
+if ( ! function_exists( 'kaamase_locale_vary' ) ) {
 	/**
-	 * Tell LiteSpeed the language cookie changes the page.
-	 *
-	 * The right answer. LiteSpeed keeps one stored copy per value of
-	 * this cookie, so Hindi readers get a cached Hindi page and English
-	 * readers get a cached English one, and nobody waits.
-	 *
-	 * It is not a complete answer on its own, because it works by
-	 * writing rewrite rules and those depend on the server being able to
-	 * write them. When that has not happened the filter fails silently,
-	 * which is the one way a cache bug can be invisible.
+	 * Make the language part of the cache key.
 	 *
 	 * @since 1.11.0
-	 * @param array $list Cookie names LiteSpeed already varies on.
+	 * @param array $vary What LiteSpeed already varies on.
 	 * @return array
 	 */
-	function kaamase_locale_vary_cookie( $list ) {
+	function kaamase_locale_vary( $vary ) {
 
-		$list   = (array) $list;
-		$list[] = KAAMASE_LOCALE_COOKIE;
+		$now = kaamase_locale_now();
 
-		return array_values( array_unique( $list ) );
+		/*
+		 * Only when it is not the site's own language. Adding a key for
+		 * everybody would give every guest a vary cookie and split the
+		 * cache for no reason.
+		 */
+		if ( $now !== kaamase_locale_default() ) {
+			$vary['kaamase_lang'] = $now;
+		}
+
+		return (array) $vary;
 	}
 }
-add_filter( 'litespeed_vary_cookies', 'kaamase_locale_vary_cookie' );
+add_filter( 'litespeed_vary', 'kaamase_locale_vary' );
+
+if ( ! function_exists( 'kaamase_locale_cache_varies' ) ) {
+	/**
+	 * Whether something in front is keeping the languages apart for us.
+	 *
+	 * Two things have to be true. LiteSpeed has to be there at all, and
+	 * Guest Mode has to be off — Guest Mode serves every logged out
+	 * visitor one prebuilt page and skips vary entirely, which is
+	 * exactly the case a translated page must not be stored in.
+	 *
+	 * @since 1.11.0
+	 * @return bool
+	 */
+	function kaamase_locale_cache_varies() {
+
+		$varies = defined( 'LSCWP_V' )
+			&& ! ( defined( 'LITESPEED_GUEST' ) && LITESPEED_GUEST );
+
+		/**
+		 * Filter whether the cache in front is keeping languages apart.
+		 *
+		 * Set this to false if a translated page is ever served to
+		 * somebody who did not ask for one. It costs those readers their
+		 * cache and costs nobody else anything.
+		 *
+		 * @since 1.11.0
+		 * @param bool $varies Whether to trust the cache to vary.
+		 */
+		return (bool) apply_filters( 'kaamase_locale_cache_varies', $varies );
+	}
+}
 
 if ( ! function_exists( 'kaamase_locale_cache_rule' ) ) {
 	/**
-	 * And the answer that cannot fail quietly.
-	 *
-	 * When somebody is reading in a language that is not the site's own,
-	 * the page they are looking at is not the page everybody else should
-	 * get, so it is not stored. English readers, who are nearly
-	 * everybody, are untouched and keep a fully cached site.
-	 *
-	 * This costs a little speed for Hindi and Nagamese readers, and buys
-	 * the guarantee that nobody is ever served a language they did not
-	 * ask for. Until the vary above is confirmed working on the live
-	 * server, that is the right way round. Afterwards it can be turned
-	 * off with the filter and the speed comes back.
+	 * Keep a page in one language out of everybody else's cache.
 	 *
 	 * @since 1.11.0
 	 * @return void
 	 */
 	function kaamase_locale_cache_rule() {
 
-		$now = kaamase_locale_now();
+		if ( kaamase_locale_now() === kaamase_locale_default() ) {
+			return;
+		}
 
 		/*
-		 * Say the page depends on the cookie regardless. This one is for
-		 * everything between here and the phone that is not LiteSpeed.
+		 * Said only on the answers it is true of.
+		 *
+		 * This header on every page, which is what this used to do, is
+		 * how you switch a CDN off by accident: nearly every visitor
+		 * carries some cookie, so Vary: Cookie on a page everybody gets
+		 * means nobody gets it from cache. Here it only goes on a page
+		 * that really does depend on a cookie.
 		 */
 		if ( ! headers_sent() ) {
 			header( 'Vary: Cookie', false );
 		}
 
-		if ( $now === kaamase_locale_default() ) {
-			return;
-		}
-
-		/**
-		 * Filter whether a translated page may be stored by the cache.
-		 *
-		 * Turn this on only once the vary cookie above is confirmed
-		 * working on the live server. Getting it wrong shows the wrong
-		 * language to people who never asked for one.
-		 *
-		 * @since 1.11.0
-		 * @param bool   $allowed Whether to allow storing. Default false.
-		 * @param string $now     The locale in use.
-		 */
-		if ( apply_filters( 'kaamase_locale_cache_translated', false, $now ) ) {
+		if ( kaamase_locale_cache_varies() ) {
 			return;
 		}
 
@@ -869,10 +929,7 @@ if ( ! function_exists( 'kaamase_locale_cache_rule' ) ) {
 		/*
 		 * And in HTTP, for anything between here and the phone that has
 		 * never heard of DONOTCACHEPAGE. That constant is understood by
-		 * WordPress aware caches and by nothing else, so a proxy or a
-		 * CDN in front would happily keep this page and hand it to the
-		 * next person. rest-auth.php sends the same headers for the
-		 * same reason on answers written for one account.
+		 * WordPress aware caches and by nothing else.
 		 */
 		if ( ! headers_sent() ) {
 			nocache_headers();
@@ -883,7 +940,7 @@ add_action( 'template_redirect', 'kaamase_locale_cache_rule', 1 );
 
 if ( ! function_exists( 'kaamase_locale_api_vary' ) ) {
 	/**
-	 * The same problem, one layer down, with a different cause.
+	 * The same, one layer down, with a different cause.
 	 *
 	 * The app does not send a cookie. It sends a header, so a stored
 	 * answer has to depend on the header instead. rest-auth.php already
@@ -900,9 +957,13 @@ if ( ! function_exists( 'kaamase_locale_api_vary' ) ) {
 			return;
 		}
 
+		if ( kaamase_locale_now() === kaamase_locale_default() ) {
+			return;
+		}
+
 		header( 'Vary: X-Kaamase-Locale', false );
 
-		if ( kaamase_locale_now() === kaamase_locale_default() ) {
+		if ( kaamase_locale_cache_varies() ) {
 			return;
 		}
 

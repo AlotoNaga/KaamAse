@@ -4276,12 +4276,11 @@ person and overriding it would quietly undo the whole repair above.
 starting PHP, so the first visitor to a page decides what everybody else gets.
 One person reading in Hindi and the front page is Hindi for the whole state.
 Nothing in the error log, and invisible to the owner, who is signed in and never
-served from store. Two answers, both used: the `litespeed_vary_cookies` filter
-so LiteSpeed keeps one copy per language, and — because that filter works by
-writing rewrite rules and can fail silently — **a translated page is not stored
-at all**. English readers, who are nearly everybody, keep a fully cached site.
-Once the vary is confirmed working live, `kaamase_locale_cache_translated` turns
-the second one off and the speed comes back.
+served from store.
+
+The first version refused to let a translated page be stored at all. Correct,
+and far too expensive — see "What the slowness was" below, which is what it cost
+and how it is done now.
 
 **No language in the address.** No `/hi/`, no `hreflang`, one address per job for
 ever. Google is explicit that translating only the template is legitimate and
@@ -4349,7 +4348,7 @@ and needs its own Hindi and Nagamese there.
 
 ### Tested
 
-125 assertions across twenty-seven scenarios, each in its own process because the
+148 assertions across thirty-two scenarios, each in its own process because the
 resolver caches its answer in a static and `DONOTCACHEPAGE` is a constant — two
 scenarios in one process would be a lie. The real `.mo` files are loaded, so the
 tests prove sentences come out in Nagamese rather than that a flag was set.
@@ -4397,6 +4396,63 @@ English hint under all three boxes.
 `kaamase_app_update_message` is the only owner-typed prose that reaches the app.
 The only other free text box on the platform is the extra emergency numbers on
 the safety page, which is place names and telephone numbers on the website.
+
+### What the slowness was
+
+Reported a day after upload: everything slow to open for the first time, and the
+app saying "no connection" on a good wifi. Measured rather than guessed, because
+the obvious suspect was wrong.
+
+**It was not the translation files.** Loading all three `.mo` files costs **0.64 ms**
+for a Nagamese reader and **0.69 ms** for Hindi, and nothing at all for English,
+where no `.mo` exists. That is not what anybody was feeling, and knowing it
+stopped a pointless afternoon generating faster translation formats.
+
+**It was the cache, and it was this file's own doing.** Refusing to store a
+translated page meant that the moment somebody chose Hindi or Nagamese, every
+page and every API answer they asked for was a full PHP render, for ever. The
+people this whole feature was built for were the only people on the platform
+with no cache. A cached page is tens of milliseconds and an uncached one is
+hundreds; on a village connection with an app timeout on the other end, that is
+the difference between a screen and "no connection".
+
+The fix is to let it be cached under its own key, and the mechanism matters:
+
+| | `litespeed_vary_cookies` | `litespeed_vary` |
+| --- | --- | --- |
+| What it does | names a cookie for the server to watch | adds a value to LiteSpeed's own `_lscache_vary` |
+| How it takes effect | **by writing rewrite rules** | the server varies on that cookie already, with nothing to configure |
+| When it does nothing | until `.htaccess` is regenerated, silently | — |
+
+The first version used the first one. It now uses the second, and a translated
+page is cached normally. Nothing is added to the vary for the site's own
+language, so an empty vary means LiteSpeed sets no cookie at all for a guest and
+the English pages — nearly all the traffic — are cached exactly as they were
+before any of this existed.
+
+`DONOTCACHEPAGE` is still there for the two cases where that vary cannot be
+trusted: no LiteSpeed at all, and LiteSpeed Guest Mode, which hands every logged
+out visitor one prebuilt page and skips vary entirely.
+
+**And `Vary: Cookie` came off every page.** It was being sent on all of them as
+belt and braces. Nearly every visitor carries some cookie, so that header on a
+page everybody gets is how a CDN is switched off by accident. It now goes only
+on the answers that really do depend on a cookie.
+
+### The cached answer that had the same fault as the update message
+
+Found while looking for the slowness, and worth its own paragraph because it is
+the third time this shape of bug has appeared.
+
+`/reference` is held in a transient for six hours under **one key**. Almost
+everything in it comes out of the database and is the same in every language —
+trades, districts, wage floors. `kaamase_emergency_numbers()` is not. Its labels
+are translated strings: *Police and emergency*, *Women helpline*.
+
+So the first person to warm that cache after it expired chose what language the
+emergency labels were in, for every user of the platform, for six hours. On the
+emergency numbers, of all the things to get wrong. The transient is now kept per
+language, and clearing it clears all of them.
 
 ### Three things the first version got wrong
 

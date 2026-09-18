@@ -29,7 +29,7 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.4.0
+ * @version 1.5.0
  * @since   1.3.0
  */
 
@@ -1119,9 +1119,42 @@ if ( ! function_exists( 'kaamase_rest_reference' ) ) {
 	 * @since 1.3.0
 	 * @return WP_REST_Response
 	 */
+	function kaamase_rest_reference_key( $locale = '' ) {
+
+		if ( '' === $locale ) {
+			$locale = function_exists( 'kaamase_locale_now' )
+				? kaamase_locale_now()
+				: get_locale();
+		}
+
+		return 'kaamase_rest_reference_' . preg_replace( '/[^A-Za-z0-9_]/', '', (string) $locale );
+	}
+}
+
+if ( ! function_exists( 'kaamase_rest_reference' ) ) {
+	/**
+	 * The lists the app needs, in the language it asked for.
+	 *
+	 * @since 1.3.0
+	 * @return WP_REST_Response
+	 */
 	function kaamase_rest_reference() {
 
-		$cached = get_transient( 'kaamase_rest_reference' );
+		/*
+		 * Kept per language, and it has to be.
+		 *
+		 * Almost everything in this answer comes out of the database and
+		 * is the same in every language: trades, districts, spoken
+		 * languages, wage floors. kaamase_emergency_numbers() is not.
+		 * Its labels are real translated strings — "Police and
+		 * emergency", "Women helpline" — so under one shared key the
+		 * first person to warm this cache decided what language those
+		 * labels were in for everybody else, for six hours.
+		 *
+		 * On the emergency numbers, of all the things to get wrong.
+		 */
+		$key    = kaamase_rest_reference_key();
+		$cached = get_transient( $key );
 
 		if ( is_array( $cached ) ) {
 			return new WP_REST_Response( $cached, 200 );
@@ -1185,7 +1218,7 @@ if ( ! function_exists( 'kaamase_rest_reference' ) ) {
 			'help_phone'  => (string) get_option( 'kaamase_help_phone', '' ),
 		);
 
-		set_transient( 'kaamase_rest_reference', $data, 6 * HOUR_IN_SECONDS );
+		set_transient( $key, $data, 6 * HOUR_IN_SECONDS );
 
 		return new WP_REST_Response( $data, 200 );
 	}
@@ -1198,7 +1231,17 @@ if ( ! function_exists( 'kaamase_rest_reference' ) ) {
  * @return void
  */
 function kaamase_clear_reference_cache() {
+
+	// Every language, plus the single key this used to be kept under.
 	delete_transient( 'kaamase_rest_reference' );
+
+	if ( ! function_exists( 'kaamase_locales' ) ) {
+		return;
+	}
+
+	foreach ( array_keys( kaamase_locales() ) as $locale ) {
+		delete_transient( kaamase_rest_reference_key( $locale ) );
+	}
 }
 add_action( 'created_term', 'kaamase_clear_reference_cache' );
 add_action( 'edited_term', 'kaamase_clear_reference_cache' );
