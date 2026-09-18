@@ -88,9 +88,21 @@ if ( ! function_exists( 'kaamase_mark_profile_types' ) ) {
 	/**
 	 * The profiles a tick can appear on.
 	 *
-	 * Employers as well as workers, and for the same reason. An employer
-	 * with a tick and a false name is the more dangerous of the two: a
-	 * worker reads that mark before deciding whether to travel to a job.
+	 * All three, and the list is taken from where the mark is actually
+	 * drawn rather than from what seems obvious.
+	 *
+	 * Employers for the same reason as workers, and more urgently: a
+	 * worker reads an employer's mark before deciding whether to travel
+	 * to a job.
+	 *
+	 * Teams because they carry it too, which is easy to miss.
+	 * kaamase_mark_in_title() puts the tick beside a kaamase_gang title
+	 * on the website, and the app shapes teams through
+	 * kaamase_shape_worker(), so the mark reaches a team profile by both
+	 * routes. A team has its own name, its own number and its own
+	 * photograph, so leaving it out would have left the whole hole open
+	 * one post type along: rename the team rather than yourself and the
+	 * tick stays.
 	 *
 	 * @since 1.12.0
 	 * @return string[]
@@ -98,7 +110,7 @@ if ( ! function_exists( 'kaamase_mark_profile_types' ) ) {
 	function kaamase_mark_profile_types() {
 		return (array) apply_filters(
 			'kaamase_mark_profile_types',
-			array( 'kaamase_worker', 'kaamase_employer' )
+			array( 'kaamase_worker', 'kaamase_employer', 'kaamase_gang' )
 		);
 	}
 }
@@ -592,6 +604,24 @@ if ( ! function_exists( 'kaamase_mark_send_word' ) ) {
 				kaamase_mark_tell_person( (int) $user_id, $what );
 				kaamase_mark_tell_owner( (int) $user_id, $what );
 			}
+		} catch ( Throwable $e ) {
+
+			/*
+			 * Caught rather than allowed to rise, and only here.
+			 *
+			 * The buffer above stops anything PRINTED from landing on
+			 * the end of an answer that has already gone out. A thrown
+			 * error would get past it: the buffer is discarded on the
+			 * way out and the fatal then prints unbuffered, straight
+			 * into the JSON this was protecting.
+			 *
+			 * Nothing is hidden by doing so. The response is sent, the
+			 * mark is already off, and the only thing left to lose is
+			 * the message -- so it goes to the error log, where a
+			 * failure at this point could be read anyway.
+			 */
+			error_log( 'kaamase: could not send word about a dropped mark: ' . $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+
 		} finally {
 			ob_end_clean();
 		}

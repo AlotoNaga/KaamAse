@@ -4608,6 +4608,20 @@ the most important decision in the file:
 | Phone number | **comes off** | the call was made *to* this number |
 | Photograph | **comes off** | the reported abuse |
 | Day rate, about, trades, district, town, experience, travel radius | stays | the call never vouched for any of it |
+| A job posting's title | stays | a job is not an identity, and its title changes all the time |
+
+On three post types, not two. **Teams carry the mark as well**, which is easy to
+miss: `kaamase_mark_in_title()` puts the tick beside a `kaamase_gang` title on
+the website, and the app shapes teams through `kaamase_shape_worker()`. A team
+has its own name, its own number and its own photograph, so leaving it out would
+have left the whole hole open one post type along — rename the team instead of
+yourself, and the tick stays. Found on a review pass after the first build, not
+by the tests.
+
+`contact_name` on an employer and `leader_name` on a team are deliberately *not*
+watched. They are second names rather than the one the tick sits beside, and
+they change for ordinary reasons — staff leave. `kaamase_mark_watches` is a
+filter if that judgement ever needs reversing.
 
 Taking somebody's tick away for correcting their day rate would teach everybody
 that the mark is arbitrary, and that costs more trust than the abuse it was
@@ -4689,7 +4703,7 @@ test exists, and it would not have been found by testing the three separately.
 
 ### Tested
 
-58 assertions, thirteen scenarios, each in its own process because the guard
+64 assertions, sixteen scenarios, each in its own process because the guard
 remembers what it has dropped in a request.
 
 The negatives carry as much weight as the positives: the rate, experience, town,
