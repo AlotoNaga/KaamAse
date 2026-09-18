@@ -44,7 +44,7 @@
  * again. Anything missing here is simply made.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.4.3
  */
 
@@ -152,6 +152,7 @@ if ( ! function_exists( 'kaamase_views_install' ) ) {
 				PRIMARY KEY  (id),
 				UNIQUE KEY seen (subject_id,viewer_id,visitor_key,seen_on,kind),
 				KEY subject (subject_id,seen_on),
+				KEY kindly (subject_id,kind,seen_on),
 				KEY viewer (viewer_id,seen_on),
 				KEY tidy (seen_on)
 			) {$collate};"
@@ -190,6 +191,71 @@ if ( ! function_exists( 'kaamase_views_install' ) ) {
 		return true;
 	}
 }
+
+if ( ! function_exists( 'kaamase_views_add_kind_index' ) ) {
+	/**
+	 * Add the index the counting statements actually want.
+	 *
+	 * Both counts ask the same shape of question:
+	 *
+	 *     WHERE subject_id = ? AND kind = ?
+	 *
+	 * and until this existed there was no key with kind in it that
+	 * could be sought on. The subject key stops at (subject_id,seen_on),
+	 * so the database narrowed to the profile and then walked every row
+	 * it had, of BOTH kinds, checking each one. That is fine for a
+	 * profile nobody has opened and it is not fine for a busy one: a
+	 * showing is recorded every time a card comes onto somebody's
+	 * screen, so the rows it walks past to count openings are mostly
+	 * showings, and there are far more of those.
+	 *
+	 * It is also what the batch above groups by, so the listing query
+	 * stops sorting a temporary table to do its GROUP BY.
+	 *
+	 * Added on its own rather than by raising the schema number,
+	 * deliberately. Raising it would make kaamase_views_ready() answer
+	 * false until somebody opened an admin page, and nothing would be
+	 * counted in between. An index is worth having; it is not worth a
+	 * day of missing views to get.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	function kaamase_views_add_kind_index() {
+
+		global $wpdb;
+
+		if ( get_option( 'kaamase_views_kind_index', 0 ) ) {
+			return;
+		}
+
+		// No table yet means the CREATE above will include it anyway.
+		if ( ! kaamase_views_ready() ) {
+			return;
+		}
+
+		$table = kaamase_views_table();
+
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$have = $wpdb->get_results( "SHOW INDEX FROM {$table} WHERE Key_name = 'kindly'" );
+
+		if ( empty( $have ) ) {
+			$wpdb->query( "ALTER TABLE {$table} ADD KEY kindly (subject_id,kind,seen_on)" );
+			$have = $wpdb->get_results( "SHOW INDEX FROM {$table} WHERE Key_name = 'kindly'" );
+		}
+		// phpcs:enable
+
+		/*
+		 * Only marked done when the index is really there. A host that
+		 * refused the ALTER should be asked again next time rather than
+		 * remembered as finished.
+		 */
+		if ( ! empty( $have ) ) {
+			update_option( 'kaamase_views_kind_index', 1, false );
+		}
+	}
+}
+add_action( 'admin_init', 'kaamase_views_add_kind_index', 20 );
 
 if ( ! function_exists( 'kaamase_views_key_has_kind' ) ) {
 	/**

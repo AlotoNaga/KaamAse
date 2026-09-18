@@ -29,7 +29,7 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.5.0
+ * @version 1.6.0
  * @since   1.3.0
  */
 
@@ -1522,6 +1522,19 @@ if ( ! function_exists( 'kaamase_rest_job' ) ) {
 			);
 		}
 
+		/*
+		 * Fetch every taxonomy on this record in one go.
+		 *
+		 * A listing gets this for free: WP_Query primes the term cache
+		 * for the whole page before anything is drawn, and the slug
+		 * route below goes through get_posts() so it is covered too.
+		 * This route is a single get_post(), so each get_the_terms()
+		 * inside the shaper went to the database on its own. One call
+		 * primes them together, and skips whatever is already cached,
+		 * so it costs nothing where something else has already asked.
+		 */
+		update_object_term_cache( array( $id ), $post->post_type );
+
 		return new WP_REST_Response( kaamase_shape_job( $post, true ), 200 );
 	}
 }
@@ -1870,6 +1883,19 @@ if ( ! function_exists( 'kaamase_rest_worker' ) ) {
 				new WP_Error( 'kaamase_not_found', __( 'That profile is not available.', 'kaamase-core' ), array( 'status' => 404 ) )
 			);
 		}
+
+		/*
+		 * Fetch every taxonomy on this record in one go.
+		 *
+		 * A listing gets this for free: WP_Query primes the term cache
+		 * for the whole page before anything is drawn, and the slug
+		 * route below goes through get_posts() so it is covered too.
+		 * This route is a single get_post(), so each get_the_terms()
+		 * inside the shaper went to the database on its own. One call
+		 * primes them together, and skips whatever is already cached,
+		 * so it costs nothing where something else has already asked.
+		 */
+		update_object_term_cache( array( $id ), $post->post_type );
 
 		return new WP_REST_Response( kaamase_shape_worker( $post, true ), 200 );
 	}

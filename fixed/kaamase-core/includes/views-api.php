@@ -15,7 +15,7 @@
  * and dropping another, and five callers went on calling it.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.5.0
  */
 
@@ -53,6 +53,23 @@ if ( ! function_exists( 'kaamase_views_shape' ) ) {
 		}
 
 		$post_id = absint( $post_id );
+
+		/*
+		 * One query for both numbers, even when nothing primed them.
+		 *
+		 * A listing is already covered: the_posts hands every id on the
+		 * page to kaamase_views_prime() in one go. A single profile has
+		 * no listing, so it fell through and asked twice, once for
+		 * openings and once for showings, on the one request where
+		 * somebody is sitting watching a blank screen.
+		 *
+		 * kaamase_views_prime() fetches both kinds together and skips
+		 * anything it has already answered, so this costs nothing in a
+		 * list and halves the queries on a profile.
+		 */
+		if ( function_exists( 'kaamase_views_prime' ) ) {
+			kaamase_views_prime( array( $post_id ) );
+		}
 
 		$views = kaamase_views_count( $post_id );
 		$shown = kaamase_views_count( $post_id, 0, 'shown' );

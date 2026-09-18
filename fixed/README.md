@@ -4348,7 +4348,7 @@ and needs its own Hindi and Nagamese there.
 
 ### Tested
 
-148 assertions across thirty-two scenarios, each in its own process because the
+156 assertions across thirty-three scenarios, each in its own process because the
 resolver caches its answer in a static and `DONOTCACHEPAGE` is a constant — two
 scenarios in one process would be a lie. The real `.mo` files are loaded, so the
 tests prove sentences come out in Nagamese rather than that a flag was set.
@@ -4438,6 +4438,48 @@ out visitor one prebuilt page and skips vary entirely.
 belt and braces. Nearly every visitor carries some cookie, so that header on a
 page everybody gets is how a CDN is switched off by accident. It now goes only
 on the answers that really do depend on a cookie.
+
+### Why one worker profile took 200 to 400 milliseconds
+
+The app side measured it and handed over the number that made it findable:
+**629 bytes, 200–400 ms.** Six hundred bytes cannot take that long to send, so
+none of it was the network.
+
+Three things, all in the same place.
+
+**No index the counting could use.** Both view counts ask
+`WHERE subject_id = ? AND kind = ?`, and there was no key with `kind` in it. The
+`subject` key stops at `(subject_id,seen_on)`, so the database narrowed to the
+profile and then walked every row it had — of *both* kinds — checking each one.
+That is nothing for a profile nobody has opened. It is not nothing for a busy
+one: a *showing* is recorded every time a card comes onto somebody's screen, so
+the rows being walked past to count openings are mostly showings, and there are
+far more of those. There is now a `kindly (subject_id,kind,seen_on)` key, which
+also lets the listing query do its `GROUP BY` without sorting a temporary table.
+
+It is added on its own rather than by raising the schema number. Raising it
+would make `kaamase_views_ready()` answer false until somebody opened an admin
+page, and nothing would be counted in between. An index is worth having; it is
+not worth a day of missing views to get.
+
+**The single profile route never primed anything.** `the_posts` hands a whole
+listing to `kaamase_views_prime()` in one query, and `/workers/{id}` has no
+listing — it is one `get_post()`. So it fell through and asked twice, once for
+openings and once for showings, on the one request where somebody is watching a
+blank screen. Measured against the previous version: **2 queries, now 1**, and
+shaping the same profile a second time in one request went from 2 more queries
+to none.
+
+**And its terms.** Same cause. A listing primes the term cache for the page
+before anything is drawn, and the slug route goes through `get_posts()` so it is
+covered too, but `/workers/{id}` and `/jobs/{id}` are single `get_post()` calls,
+so the trade lookup and the language lookup each went to the database alone.
+One `update_object_term_cache()` does both.
+
+What is *not* fixable here is that the answer cannot be cached at all: it
+carries `is_mine` and `saved`, and `rest-auth.php` refuses to store anything
+written for one account. That is correct and it stays. It just means the render
+is the whole cost, which is why the render is what got cheaper.
 
 ### The cached answer that had the same fault as the update message
 
