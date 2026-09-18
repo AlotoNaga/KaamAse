@@ -1,0 +1,1060 @@
+# Kaam Ase — hi_IN
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kaam Ase\n"
+"Report-Msgid-Bugs-To: https://kaamase.com\n"
+"POT-Creation-Date: 2026-09-17 12:25+0000\n"
+"PO-Revision-Date: 2026-09-17 12:25+0000\n"
+"Language: hi_IN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kaamase\n"
+
+#: inc/template-tags.php:627
+msgid "%s ago"
+msgstr "%s पहले"
+
+#. translators: %s: number of days
+#: single-kaamase_job.php:195
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s दिन"
+msgstr[1] "%s दिन"
+
+#. translators: %s: number of times opened
+#: inc/template-tags.php:340
+msgid "%s opened"
+msgstr "%s बार खोला गया"
+
+#. translators: %s: number of results
+#: index.php:119
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] "%s नतीजा"
+msgstr[1] "%s नतीजे"
+
+#. translators: %s: number of workers hired
+#: inc/template-tags.php:858
+msgid "%s worker hired through Kaam Ase"
+msgid_plural "%s workers hired through Kaam Ase"
+msgstr[0] "Kaam Ase से %s मज़दूर को काम मिला"
+msgstr[1] "Kaam Ase से %s मज़दूरों को काम मिला"
+
+#. translators: %s: number of workers wanted
+#: inc/template-tags.php:1142
+msgid "%s worker wanted"
+msgid_plural "%s workers wanted"
+msgstr[0] "%s मज़दूर चाहिए"
+msgstr[1] "%s मज़दूर चाहिए"
+
+#. translators: %s: number of years
+#: single-kaamase_gang.php:159 single-kaamase_worker.php:197
+msgid "%s year"
+msgid_plural "%s years"
+msgstr[0] "%s साल"
+msgstr[1] "%s साल"
+
+#. translators: %s: number of years
+#: inc/template-tags.php:753
+msgid "%s year of experience"
+msgid_plural "%s years of experience"
+msgstr[0] "%s साल का अनुभव"
+msgstr[1] "%s साल का अनुभव"
+
+#: front-page.php:448
+msgid "A Nagaland company"
+msgstr "नागालैंड की कंपनी"
+
+#: single-kaamase_employer.php:40
+msgid "A contractor"
+msgstr "ठेकेदार"
+
+#: single-kaamase_employer.php:41
+msgid "A registered company"
+msgstr "रजिस्टर्ड कंपनी"
+
+#: footer.php:194
+msgid "A venture of Nagaland Me"
+msgstr "Nagaland Me का उपक्रम"
+
+#: footer.php:104
+msgid "About"
+msgstr "हमारे बारे में"
+
+#: footer.php:109
+msgid "About us"
+msgstr "हमारे बारे में"
+
+#: single-kaamase_job.php:265
+msgid "Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it."
+msgstr "काम शुरू करने से पहले ही रेट और पैसे मिलने का दिन साफ़-साफ़ तय कर लें, बाद में नहीं। Kaam Ase पर कोई भी आपसे काम दिलाने के बदले पैसे नहीं मांग सकता। कोई मांगे तो शिकायत करें।"
+
+#: front-page.php:122
+msgid "All Nagaland"
+msgstr "पूरा नागालैंड"
+
+#: footer.php:90
+msgid "All districts"
+msgstr "सभी ज़िले"
+
+#: footer.php:89 front-page.php:195
+msgid "All trades"
+msgstr "सभी काम"
+
+#: single-kaamase_employer.php:39
+msgid "An individual, building or fixing something"
+msgstr "एक व्यक्ति, जो कुछ बनवा या ठीक करवा रहा है"
+
+#: inc/app-banner.php:375
+msgid "Android"
+msgstr "Android"
+
+#: front-page.php:96
+msgid "Any trade"
+msgstr "कोई भी काम"
+
+#: inc/app-banner.php:379
+msgid "App Store"
+msgstr "App Store"
+
+#: inc/enqueue.php:150
+msgid "Are you sure?"
+msgstr "क्या आप पक्का चाहते हैं?"
+
+#: single-kaamase_employer.php:97
+msgid "Ask for"
+msgstr "रेट"
+
+#: front-page.php:310 inc/template-tags.php:189
+msgid "Available now"
+msgstr "अभी उपलब्ध"
+
+#: inc/template-tags.php:1244
+msgid "Back"
+msgstr "वापस"
+
+#: single-kaamase_job.php:264
+msgid "Before you agree"
+msgstr "हाँ कहने से पहले"
+
+#: front-page.php:441
+msgid "Both sides rate"
+msgstr "दोनों तरफ़ से रेटिंग"
+
+#: footer.php:74 footer.php:77
+msgid "Browse"
+msgstr "देखें"
+
+#: index.php:226
+msgid "Browse all trades"
+msgstr "सभी काम देखें"
+
+#: inc/template-tags.php:660
+msgid "Call"
+msgstr "कॉल करें"
+
+#: single-kaamase_worker.php:62
+msgid "Church elder or pastor"
+msgstr "चर्च के बुज़ुर्ग या पादरी"
+
+#: inc/enqueue.php:145
+msgid "Close menu"
+msgstr "मेन्यू बंद करें"
+
+#: single-kaamase_job.php:189
+msgid "Closes in"
+msgstr "बंद होने में"
+
+#: single-kaamase_worker.php:60
+msgid "Colony council member"
+msgstr "कॉलोनी काउंसिल सदस्य"
+
+#: inc/template-tags.php:813
+msgid "Company"
+msgstr "कंपनी"
+
+#: footer.php:112
+msgid "Contact"
+msgstr "संपर्क"
+
+#: inc/template-tags.php:812
+msgid "Contractor"
+msgstr "ठेकेदार"
+
+#: inc/enqueue.php:149
+msgid "Copied"
+msgstr "कॉपी हो गया"
+
+#. translators: 1: current year, 2: site name
+#: footer.php:186
+msgid "Copyright %1$s %2$s"
+msgstr "कॉपीराइट %1$s %2$s"
+
+#: single-kaamase_gang.php:145 single-kaamase_worker.php:174
+msgid "Day rate"
+msgstr "दिन का रेट"
+
+#: front-page.php:131
+msgid "Dimapur, Kohima, Mokokchung"
+msgstr "दीमापुर, कोहिमा, मोकोकचुंग"
+
+#: footer.php:198
+msgid "Dimapur, Nagaland, India"
+msgstr "दीमापुर, नागालैंड, भारत"
+
+#: single-kaamase_employer.php:54
+msgid "Edit my details"
+msgstr "अपनी जानकारी बदलें"
+
+#: single-kaamase_worker.php:78
+msgid "Edit my profile"
+msgstr "अपनी प्रोफ़ाइल बदलें"
+
+#: single-kaamase_gang.php:52
+msgid "Edit my team"
+msgstr "अपनी टीम बदलें"
+
+#: single-kaamase_job.php:63
+msgid "Edit this job"
+msgstr "यह काम बदलें"
+
+#: single-kaamase_gang.php:153 single-kaamase_worker.php:190
+msgid "Experience"
+msgstr "अनुभव"
+
+#: inc/app-banner.php:393
+msgid "Faster on your phone, and it tells you the moment work appears."
+msgstr "फ़ोन पर ज़्यादा तेज़, और काम आते ही आपको बता देता है।"
+
+#: inc/app-banner.php:183
+msgid "Faster, and it tells you when work appears"
+msgstr "ज़्यादा तेज़, और काम आने पर बता देता है"
+
+#: front-page.php:57
+msgid "Find a mason, electrician, plumber, driver or helper near you. Anywhere in Nagaland."
+msgstr "अपने पास राजमिस्त्री, बिजली मिस्त्री, प्लंबर, ड्राइवर या हेल्पर ढूँढें। नागालैंड में कहीं भी।"
+
+#: 404.php:102
+msgid "Find other workers"
+msgstr "और मज़दूर ढूँढें"
+
+#: 404.php:152 footer.php:83 inc/setup.php:393
+msgid "Find work"
+msgstr "काम ढूँढें"
+
+#: footer.php:55
+msgid "Find work and find workers across Nagaland. Free for every worker, always."
+msgstr "पूरे नागालैंड में काम और मज़दूर ढूँढें। हर मज़दूर के लिए मुफ़्त, हमेशा।"
+
+#: 404.php:161 footer.php:82 inc/setup.php:392
+msgid "Find workers"
+msgstr "मज़दूर ढूँढें"
+
+#: inc/template-tags.php:1151 single-kaamase_job.php:135
+msgid "Food provided"
+msgstr "खाना मिलेगा"
+
+#: inc/setup.php:110
+msgid "Footer, about Kaam Ase"
+msgstr "फ़ुटर, Kaam Ase के बारे में"
+
+#: inc/setup.php:109
+msgid "Footer, browse and discover"
+msgstr "फ़ुटर, देखें और खोजें"
+
+#: inc/setup.php:111
+msgid "Footer, legal and policy"
+msgstr "फ़ुटर, कानूनी और नीति"
+
+#: 404.php:173
+msgid "Free to post, any district"
+msgstr "काम डालना मुफ़्त, किसी भी ज़िले में"
+
+#: front-page.php:427
+msgid "Free to use"
+msgstr "इस्तेमाल मुफ़्त"
+
+#: single-kaamase_employer.php:111
+msgid "GST"
+msgstr "GST"
+
+#: footer.php:196
+msgid "GST: 13DIHPA5679B1ZK"
+msgstr "GST: 13DIHPA5679B1ZK"
+
+#: single-kaamase_worker.php:59
+msgid "Gaon Bura"
+msgstr "गाँव बुरा"
+
+#: single-kaamase_gang.php:217 single-kaamase_job.php:289 single-kaamase_worker.php:303
+msgid "Get contact details"
+msgstr "संपर्क नंबर लें"
+
+#: inc/app-banner.php:187
+msgid "Get it"
+msgstr "पाएँ"
+
+#: inc/app-banner.php:391
+msgid "Get the Kaam Ase app"
+msgstr "Kaam Ase ऐप पाएँ"
+
+#: index.php:266
+msgid "Go to home"
+msgstr "होम पर जाएँ"
+
+#: inc/app-banner.php:380
+msgid "Google Play"
+msgstr "Google Play"
+
+#: inc/page-display.php:215
+msgid "Heading"
+msgstr "शीर्षक"
+
+#: footer.php:128
+msgid "Help"
+msgstr "मदद"
+
+#: footer.php:143
+msgid "Help centre"
+msgstr "मदद केंद्र"
+
+#: inc/page-display.php:239
+msgid "Hidden"
+msgstr "छिपा हुआ"
+
+#: inc/page-display.php:107
+msgid "Hide the title and photo on this page"
+msgstr "इस पेज पर शीर्षक और फ़ोटो छिपाएँ"
+
+#: footer.php:84
+msgid "Hire a team"
+msgstr "पूरी टीम रखें"
+
+#: single-kaamase_job.php:213
+msgid "Hiring"
+msgstr "काम दे रहे हैं"
+
+#: 404.php:179
+msgid "Home"
+msgstr "होम"
+
+#: footer.php:110
+msgid "How it works"
+msgstr "यह कैसे काम करता है"
+
+#: single-kaamase_job.php:182
+msgid "How long"
+msgstr "कितने समय के लिए"
+
+#: inc/template-tags.php:811
+msgid "Individual"
+msgstr "एक व्यक्ति"
+
+#: 404.php:73
+msgid "It has probably been filled, or the employer closed it. Links shared in WhatsApp keep working for days after a job is taken."
+msgstr "शायद काम भर गया है, या मालिक ने बंद कर दिया है। WhatsApp पर भेजे गए लिंक काम मिल जाने के बाद भी कई दिन खुलते रहते हैं।"
+
+#: inc/template-tags.php:1292
+msgid "Jobs"
+msgstr "काम"
+
+#: single-kaamase_worker.php:210
+msgid "Jobs done here"
+msgstr "यहाँ हुए काम"
+
+#: 404.php:155
+msgid "Jobs posted across Nagaland"
+msgstr "पूरे नागालैंड में डाले गए काम"
+
+#: inc/template-tags.php:624
+msgid "Just posted"
+msgstr "अभी डाला गया"
+
+#: footer.php:101
+msgid "Kaam Ase"
+msgstr "Kaam Ase"
+
+#: functions.php:298
+msgid "Kaam Ase Core is not active."
+msgstr "Kaam Ase Core चालू नहीं है।"
+
+#: inc/app-banner.php:182
+msgid "Kaam Ase app"
+msgstr "Kaam Ase ऐप"
+
+#: inc/setup.php:221
+msgid "Kaam Ase avatar, large"
+msgstr "Kaam Ase अवतार, बड़ा"
+
+#: inc/setup.php:220
+msgid "Kaam Ase avatar, small"
+msgstr "Kaam Ase अवतार, छोटा"
+
+#: inc/setup.php:222
+msgid "Kaam Ase card"
+msgstr "Kaam Ase कार्ड"
+
+#: footer.php:203
+msgid "Kaam Ase is a listing platform. We connect workers and employers. We are not the employer and we do not pay wages."
+msgstr "Kaam Ase एक लिस्टिंग प्लेटफ़ॉर्म है। हम मज़दूरों और मालिकों को मिलाते हैं। हम मालिक नहीं हैं और न ही मज़दूरी देते हैं।"
+
+#: index.php:254
+msgid "Kaam Ase is new and this district is still filling up. Post your job and workers nearby will see it."
+msgstr "Kaam Ase नया है और यह ज़िला अभी भर रहा है। अपना काम डालें, आस-पास के मज़दूर उसे देखेंगे।"
+
+#: footer.php:150
+msgid "Kaam Ase never asks a worker for money to get a job. If anyone asks, report it."
+msgstr "Kaam Ase किसी मज़दूर से काम दिलाने के बदले कभी पैसे नहीं मांगता। कोई मांगे तो शिकायत करें।"
+
+#: functions.php:66
+msgid "Kaam Ase theme is not running."
+msgstr "Kaam Ase थीम चल नहीं रही है।"
+
+#: functions.php:258
+msgid "Kaam Ase theme is running with missing files."
+msgstr "Kaam Ase थीम चल रही है पर कुछ फ़ाइलें नहीं हैं।"
+
+#: inc/setup.php:223
+msgid "Kaam Ase wide"
+msgstr "Kaam Ase चौड़ा"
+
+#: front-page.php:52
+msgid "Kaam ase."
+msgstr "Kaam ase."
+
+#: index.php:67
+msgid "Latest"
+msgstr "नए"
+
+#: single-kaamase_gang.php:139
+msgid "Led by"
+msgstr "मुखिया"
+
+#. translators: %s: name of the team leader
+#: inc/template-tags.php:981
+msgid "Led by %s"
+msgstr "मुखिया %s"
+
+#: footer.php:171
+msgid "Legal"
+msgstr "कानूनी"
+
+#: inc/enqueue.php:146
+msgid "Loading"
+msgstr "लोड हो रहा है"
+
+#: front-page.php:376
+msgid "Looking for work"
+msgstr "काम की तलाश में"
+
+#: front-page.php:144
+msgid "Looking for work instead?"
+msgstr "काम ढूँढ रहे हैं?"
+
+#: front-page.php:393
+msgid "Looking for workers"
+msgstr "मज़दूर की तलाश में"
+
+#: inc/template-tags.php:1331
+msgid "Main"
+msgstr "मुख्य"
+
+#: header.php:95
+msgid "Main menu"
+msgstr "मुख्य मेन्यू"
+
+#: front-page.php:380
+msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
+msgstr "मुफ़्त प्रोफ़ाइल बनाएँ। पूरे नागालैंड के मालिक आपको आपके काम और ज़िले से ढूँढ सकते हैं। Kaam Ase मज़दूरों के लिए मुफ़्त है और हमेशा रहेगा।"
+
+#: front-page.php:388
+msgid "Make my free profile"
+msgstr "मेरी मुफ़्त प्रोफ़ाइल बनाएँ"
+
+#: front-page.php:105
+msgid "Mason, electrician, driver"
+msgstr "राजमिस्त्री, बिजली मिस्त्री, ड्राइवर"
+
+#: searchform.php:54
+msgid "Mason, electrician, driver, cook"
+msgstr "राजमिस्त्री, बिजली मिस्त्री, ड्राइवर, रसोइया"
+
+#: inc/template-tags.php:1307
+msgid "Me"
+msgstr "मैं"
+
+#: header.php:144
+msgid "Menu"
+msgstr "मेन्यू"
+
+#: header.php:154
+msgid "Mobile menu"
+msgstr "मोबाइल मेन्यू"
+
+#: inc/setup.php:108
+msgid "Mobile menu, slide out drawer"
+msgstr "मोबाइल मेन्यू, बगल से खुलने वाला"
+
+#: single-kaamase_worker.php:182
+msgid "Monthly"
+msgstr "महीने का"
+
+#: single.php:80
+msgid "More posts"
+msgstr "और पोस्ट"
+
+#: header.php:114 header.php:166
+msgid "My account"
+msgstr "मेरा खाता"
+
+#: single-kaamase_job.php:67
+msgid "My jobs"
+msgstr "मेरे काम"
+
+#: inc/template-tags.php:230
+msgid "New"
+msgstr "नया"
+
+#: inc/template-tags.php:869
+msgid "New here, nobody hired yet"
+msgstr "यहाँ नया, अभी किसी ने काम नहीं दिया"
+
+#: inc/template-tags.php:1245 single.php:91
+msgid "Next"
+msgstr "आगे"
+
+#: front-page.php:429
+msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
+msgstr "प्रोफ़ाइल बनाने, काम डालने या काम पाने का कोई शुल्क नहीं। मज़दूर कभी पैसे नहीं देते।"
+
+#: index.php:235
+msgid "No jobs here yet"
+msgstr "यहाँ अभी कोई काम नहीं"
+
+#: index.php:253
+msgid "No workers listed here yet"
+msgstr "यहाँ अभी कोई मज़दूर नहीं"
+
+#: index.php:236
+msgid "Nobody has posted work in this trade or district yet. Check another district, or tell an employer you know about Kaam Ase."
+msgstr "इस काम या ज़िले में अभी किसी ने कुछ नहीं डाला है। दूसरा ज़िला देखें, या किसी मालिक को Kaam Ase के बारे में बताएँ।"
+
+#: single-kaamase_worker.php:202
+msgid "Not given"
+msgstr "नहीं बताया"
+
+#: inc/app-banner.php:191
+msgid "Not now"
+msgstr "अभी नहीं"
+
+#: inc/enqueue.php:151
+msgid "Nothing found. Try a different district or trade."
+msgstr "कुछ नहीं मिला। दूसरा ज़िला या काम आज़माएँ।"
+
+#: inc/template-tags.php:1200 index.php:264
+msgid "Nothing here yet"
+msgstr "यहाँ अभी कुछ नहीं"
+
+#: index.php:224
+msgid "Nothing matched that search"
+msgstr "उस खोज से कुछ नहीं मिला"
+
+#: inc/template-tags.php:191
+msgid "On leave"
+msgstr "छुट्टी पर"
+
+#: inc/enqueue.php:144
+msgid "Open menu"
+msgstr "मेन्यू खोलें"
+
+#: inc/template-tags.php:313
+msgid "Opened %s time"
+msgid_plural "Opened %s times"
+msgstr[0] "%s बार खोला गया"
+msgstr[1] "%s बार खोला गया"
+
+#: 404.php:146
+msgid "Or go to"
+msgstr "या यहाँ जाएँ"
+
+#: inc/page-display.php:75
+msgid "Page heading"
+msgstr "पेज शीर्षक"
+
+#: inc/template-tags.php:1254
+msgid "Page navigation"
+msgstr "पेज नेविगेशन"
+
+#: page.php:136 single.php:60
+msgid "Page sections"
+msgstr "पेज के हिस्से"
+
+#: footer.php:113
+msgid "Past Job"
+msgstr "पिछला काम"
+
+#: single-kaamase_job.php:126
+msgid "Pay"
+msgstr "मज़दूरी"
+
+#: inc/setup.php:430
+msgid "Plans"
+msgstr "प्लान"
+
+#: 404.php:170 header.php:118 header.php:128 header.php:162 inc/setup.php:394
+msgid "Post a job"
+msgstr "काम डालें"
+
+#: front-page.php:405 index.php:255
+msgid "Post a job free"
+msgstr "मुफ़्त में काम डालें"
+
+#: front-page.php:397
+msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
+msgstr "अपना रेट, कितने मज़दूर चाहिए और कब चाहिए — यह लिखकर काम डालें। एक व्यक्ति रखें या पूरी टीम।"
+
+#: single.php:84
+msgid "Previous"
+msgstr "पीछे"
+
+#: inc/setup.php:107
+msgid "Primary menu, desktop header"
+msgstr "मुख्य मेन्यू, डेस्कटॉप हेडर"
+
+#: footer.php:176
+msgid "Privacy"
+msgstr "निजता"
+
+#: front-page.php:436
+msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
+msgstr "प्रोफ़ाइल पर कॉलोनी या गाँव के किसी ज़िम्मेदार व्यक्ति की ज़मानत हो सकती है, जो उस आदमी को जानता हो।"
+
+#: inc/template-tags.php:404
+msgid "Rate on asking"
+msgstr "रेट पूछने पर"
+
+#. translators: 1: rating out of five, 2: number of reviews
+#: inc/template-tags.php:243
+msgid "Rated %1$s out of 5 from %2$s job"
+msgid_plural "Rated %1$s out of 5 from %2$s jobs"
+msgstr[0] "%2$s काम से 5 में से %1$s रेटिंग"
+msgstr[1] "%2$s कामों से 5 में से %1$s रेटिंग"
+
+#: header.php:176
+msgid "Register free"
+msgstr "मुफ़्त रजिस्टर करें"
+
+#: front-page.php:450
+msgid "Registered and run from Dimapur. Not an outside app that has never been here."
+msgstr "दीमापुर में रजिस्टर्ड और यहीं से चलाया जाता है। कोई बाहरी ऐप नहीं जो कभी यहाँ आया ही न हो।"
+
+#: footer.php:133 single-kaamase_job.php:268
+msgid "Report a problem"
+msgstr "शिकायत करें"
+
+#. translators: %s: search term
+#: index.php:53
+msgid "Results for %s"
+msgstr "%s के नतीजे"
+
+#: footer.php:111
+msgid "Safety"
+msgstr "सुरक्षा"
+
+#: footer.php:178
+msgid "Safety policy"
+msgstr "सुरक्षा नीति"
+
+#: inc/template-tags.php:1302
+msgid "Saved"
+msgstr "सहेजे गए"
+
+#: front-page.php:137 searchform.php:53 searchform.php:55
+msgid "Search"
+msgstr "खोजें"
+
+#: 404.php:132
+msgid "Search Kaam Ase"
+msgstr "Kaam Ase में खोजें"
+
+#: 404.php:164
+msgid "Search by trade and district"
+msgstr "काम और ज़िले से खोजें"
+
+#: front-page.php:260 index.php:237
+msgid "See all jobs"
+msgstr "सारे काम देखें"
+
+#: front-page.php:325
+msgid "See all workers"
+msgstr "सारे मज़दूर देखें"
+
+#: front-page.php:146
+msgid "See jobs near you"
+msgstr "अपने पास के काम देखें"
+
+#: 404.php:85
+msgid "See jobs open now"
+msgstr "अभी खुले काम देखें"
+
+#: inc/template-tags.php:877
+msgid "See this employer"
+msgstr "यह मालिक देखें"
+
+#: inc/setup.php:450
+msgid "Set up menu"
+msgstr "मेन्यू सेट करें"
+
+#. translators: %s: parent menu item title
+#: inc/nav-walker.php:230
+msgid "Show items under %s"
+msgstr "%s के नीचे की चीज़ें दिखाएँ"
+
+#: inc/page-display.php:240
+msgid "Shown"
+msgstr "दिखाया गया"
+
+#. translators: %s: number of times shown in a list
+#: inc/template-tags.php:352
+msgid "Shown %s time"
+msgid_plural "Shown %s times"
+msgstr[0] "%s बार दिखाया गया"
+msgstr[1] "%s बार दिखाया गया"
+
+#: header.php:124 header.php:180
+msgid "Sign in"
+msgstr "साइन इन"
+
+#: inc/template-tags.php:675
+msgid "Sign in to contact"
+msgstr "संपर्क के लिए साइन इन करें"
+
+#: header.php:170
+msgid "Sign out"
+msgstr "साइन आउट"
+
+#: header.php:66
+msgid "Skip to content"
+msgstr "सीधे सामग्री पर जाएँ"
+
+#: single-kaamase_worker.php:161
+msgid "Somebody local who knows this person and will say so. We hold their number and check it if there is ever a problem."
+msgstr "कोई स्थानीय व्यक्ति जो इसे जानता है और कहने को तैयार है। उनका नंबर हमारे पास रहता है और दिक्कत होने पर हम जाँच करते हैं।"
+
+#: single-kaamase_worker.php:64
+msgid "Someone they worked for"
+msgstr "कोई जिसके यहाँ इन्होंने काम किया"
+
+#: single-kaamase_worker.php:65
+msgid "Someone who knows them"
+msgstr "कोई जो इन्हें जानता है"
+
+#: inc/enqueue.php:147
+msgid "Something went wrong. Please try again."
+msgstr "कुछ गड़बड़ हो गई। दोबारा कोशिश करें।"
+
+#: single-kaamase_job.php:139
+msgid "Somewhere to stay"
+msgstr "रहने की जगह"
+
+#: single-kaamase_worker.php:237
+msgid "Speaks"
+msgstr "बोलते हैं"
+
+#: 404.php:182
+msgid "Start again from the beginning"
+msgstr "शुरू से दोबारा करें"
+
+#: single-kaamase_job.php:166
+msgid "Starts"
+msgstr "शुरू"
+
+#: inc/template-tags.php:1155
+msgid "Stay provided"
+msgstr "रहना मिलेगा"
+
+#: single-kaamase_worker.php:63
+msgid "Student or workers union officer"
+msgstr "छात्र या मज़दूर संघ का पदाधिकारी"
+
+#. translators: %s: number of workers in the team
+#: inc/template-tags.php:931
+msgid "Team of %s worker"
+msgid_plural "Team of %s workers"
+msgstr[0] "%s मज़दूर की टीम"
+msgstr[1] "%s मज़दूरों की टीम"
+
+#: single-kaamase_gang.php:116
+msgid "Team size"
+msgstr "टीम में कितने"
+
+#: 404.php:201
+msgid "Tell us"
+msgstr "हमें बताएँ"
+
+#: footer.php:177
+msgid "Terms"
+msgstr "शर्तें"
+
+#: 404.php:111
+msgid "The link may be old, or it may have been typed wrong. Try searching instead."
+msgstr "लिंक पुराना हो सकता है, या गलत टाइप हुआ हो। खोजकर देखें।"
+
+#: 404.php:94
+msgid "The person may have removed their profile, or the link is out of date."
+msgstr "हो सकता है उस व्यक्ति ने अपनी प्रोफ़ाइल हटा दी हो, या लिंक पुराना हो।"
+
+#: index.php:265
+msgid "There is nothing on this page at the moment."
+msgstr "इस पेज पर अभी कुछ नहीं है।"
+
+#: 404.php:81
+msgid "There is other work posted right now."
+msgstr "अभी और भी काम डाले हुए हैं।"
+
+#: functions.php:259
+msgid "These module files have not been uploaded yet. The site will work, but the features in them are not active."
+msgstr "ये मॉड्यूल फ़ाइलें अभी अपलोड नहीं हुई हैं। साइट चलेगी, पर इनकी सुविधाएँ चालू नहीं होंगी।"
+
+#: single-kaamase_gang.php:130
+msgid "They come as a group. One call and the whole team arrives."
+msgstr "ये पूरे ग्रुप में आते हैं। एक कॉल और पूरी टीम पहुँच जाती है।"
+
+#: 404.php:199
+msgid "Think this is a mistake on our side?"
+msgstr "लगता है गलती हमारी तरफ़ से है?"
+
+#: single-kaamase_worker.php:75
+msgid "This is exactly what an employer sees when they open it."
+msgstr "मालिक खोलने पर बिल्कुल यही देखता है।"
+
+#: single-kaamase_gang.php:49
+msgid "This is what a contractor sees when they open it."
+msgstr "ठेकेदार खोलने पर यही देखता है।"
+
+#: single-kaamase_employer.php:51
+msgid "This is what a worker sees before deciding whether to answer your job."
+msgstr "आपके काम का जवाब देने से पहले मज़दूर यही देखता है।"
+
+#: single-kaamase_job.php:58
+msgid "This is what a worker sees. Share the link on WhatsApp if you want it seen faster."
+msgstr "मज़दूर यही देखता है। जल्दी दिखाना हो तो लिंक WhatsApp पर भेजें।"
+
+#: single-kaamase_job.php:57
+msgid "This is your job post"
+msgstr "यह आपका डाला हुआ काम है"
+
+#: single-kaamase_employer.php:50
+msgid "This is your page"
+msgstr "यह आपका पेज है"
+
+#: single-kaamase_worker.php:74
+msgid "This is your profile"
+msgstr "यह आपकी प्रोफ़ाइल है"
+
+#: single-kaamase_gang.php:48
+msgid "This is your team"
+msgstr "यह आपकी टीम है"
+
+#: single-kaamase_job.php:282
+msgid "This job"
+msgstr "यह काम"
+
+#: 404.php:69
+msgid "This job is no longer open"
+msgstr "यह काम अब खुला नहीं है"
+
+#: 404.php:107
+msgid "This page is not here"
+msgstr "यह पेज यहाँ नहीं है"
+
+#: inc/security.php:548
+msgid "This photo could not be processed, so it has not been saved. Please try a different photo, or save it as a JPEG and upload it again."
+msgstr "यह फ़ोटो प्रोसेस नहीं हो सकी, इसलिए सहेजी नहीं गई। दूसरी फ़ोटो आज़माएँ, या इसे JPEG में सहेजकर दोबारा अपलोड करें।"
+
+#: 404.php:90
+msgid "This profile is not available"
+msgstr "यह प्रोफ़ाइल उपलब्ध नहीं है"
+
+#. translators: 1: required PHP version, 2: current PHP version, 3: required WordPress version, 4: current WordPress version
+#: functions.php:69
+msgid "This theme needs PHP %1$s or newer (running %2$s) and WordPress %3$s or newer (running %4$s). Ask your host to upgrade PHP."
+msgstr "इस थीम को PHP %1$s या नया चाहिए (अभी %2$s चल रहा है) और WordPress %3$s या नया (अभी %4$s)। अपने होस्ट से PHP अपग्रेड करने को कहें।"
+
+#: inc/security.php:280
+msgid "Those details are not correct. Please check and try again."
+msgstr "यह जानकारी सही नहीं है। जाँचकर दोबारा कोशिश करें।"
+
+#: front-page.php:182
+msgid "Trades"
+msgstr "काम"
+
+#: single-kaamase_job.php:143
+msgid "Transport to site"
+msgstr "साइट तक आने-जाने की सुविधा"
+
+#: inc/template-tags.php:1201
+msgid "Try a different district or trade."
+msgstr "दूसरा ज़िला या काम आज़माएँ।"
+
+#: index.php:225
+msgid "Try a trade name like mason or electrician, or search by district instead."
+msgstr "राजमिस्त्री या बिजली मिस्त्री जैसा कोई काम लिखें, या ज़िले से खोजें।"
+
+#: single-kaamase_employer.php:90
+msgid "Type"
+msgstr "किस तरह"
+
+#: inc/template-tags.php:1051 single-kaamase_job.php:82
+msgid "Urgent"
+msgstr "ज़रूरी"
+
+#: inc/page-display.php:112
+msgid "Use this when the page writes its own heading. The title stays in the page code for search engines and screen readers, it is only hidden from view. The featured image is still used for search results and link previews."
+msgstr "जब पेज खुद अपना शीर्षक लिखता हो तब इसे इस्तेमाल करें। शीर्षक सर्च इंजन और स्क्रीन रीडर के लिए पेज कोड में रहता है, बस दिखता नहीं। फ़ीचर्ड इमेज सर्च नतीजों और लिंक प्रीव्यू में फिर भी इस्तेमाल होती है।"
+
+#: 404.php:144
+msgid "Useful links"
+msgstr "काम के लिंक"
+
+#: inc/template-tags.php:542
+msgid "Verified"
+msgstr "सत्यापित"
+
+#: inc/template-tags.php:1168
+msgid "View job"
+msgstr "काम देखें"
+
+#: single-kaamase_worker.php:61
+msgid "Village council member"
+msgstr "गाँव काउंसिल सदस्य"
+
+#: inc/template-tags.php:535
+msgid "Vouched"
+msgstr "ज़मानत"
+
+#: single-kaamase_gang.php:172 single-kaamase_worker.php:152
+msgid "Vouched for by"
+msgstr "ज़मानत दी"
+
+#: front-page.php:434
+msgid "Vouched locally"
+msgstr "स्थानीय ज़मानत"
+
+#: footer.php:138
+msgid "Wage or job complaint"
+msgstr "मज़दूरी या काम की शिकायत"
+
+#: front-page.php:85
+msgid "What work"
+msgstr "कौन सा काम"
+
+#: front-page.php:111
+msgid "Which district"
+msgstr "कौन सा ज़िला"
+
+#: footer.php:87 inc/setup.php:377 inc/setup.php:406
+msgid "Who is hiring"
+msgstr "कौन काम दे रहा है"
+
+#: single-kaamase_gang.php:39 single-kaamase_worker.php:55
+msgid "Will travel anywhere in Nagaland"
+msgstr "नागालैंड में कहीं भी जाएँगे"
+
+#: single-kaamase_gang.php:38 single-kaamase_worker.php:54
+msgid "Will travel anywhere in their district"
+msgstr "अपने ज़िले में कहीं भी जाएँगे"
+
+#: front-page.php:232
+msgid "Work posted recently"
+msgstr "हाल में डाले गए काम"
+
+#: single-kaamase_employer.php:142
+msgid "Work they are hiring for"
+msgstr "जिस काम के लिए मज़दूर चाहिए"
+
+#: inc/template-tags.php:1297
+msgid "Workers"
+msgstr "मज़दूर"
+
+#: single-kaamase_employer.php:104
+msgid "Workers hired here"
+msgstr "यहाँ से रखे गए मज़दूर"
+
+#: front-page.php:443
+msgid "Workers rate employers too. Ratings come only from jobs that were actually done."
+msgstr "मज़दूर भी मालिकों को रेटिंग देते हैं। रेटिंग सिर्फ़ उन्हीं कामों से आती है जो सच में हुए।"
+
+#: single-kaamase_job.php:159
+msgid "Workers wanted"
+msgstr "मज़दूर चाहिए"
+
+#: single-kaamase_job.php:237
+msgid "Workers who have done a job for them rate them too. Open their page to see what they said."
+msgstr "जिन मज़दूरों ने इनके यहाँ काम किया है वे भी इन्हें रेटिंग देते हैं। उनका पेज खोलकर देखें उन्होंने क्या कहा।"
+
+#: functions.php:299
+msgid "Workers, gangs, employers and jobs are stored by the Kaam Ase Core plugin. Until it is installed and activated, this theme will display ordinary pages and posts only."
+msgstr "मज़दूर, टीमें, मालिक और काम Kaam Ase Core प्लगइन में सहेजे जाते हैं। जब तक वह इंस्टॉल और चालू नहीं होता, यह थीम सिर्फ़ सामान्य पेज और पोस्ट दिखाएगी।"
+
+#: inc/template-tags.php:190
+msgid "Working"
+msgstr "काम पर"
+
+#: single-kaamase_gang.php:37 single-kaamase_worker.php:53
+msgid "Works around their own town"
+msgstr "अपने शहर के आस-पास काम करते हैं"
+
+#: inc/security.php:235
+msgid "You are not allowed to view this."
+msgstr "आपको यह देखने की अनुमति नहीं है।"
+
+#: inc/enqueue.php:148
+msgid "You are offline. Check your connection."
+msgstr "आप ऑफ़लाइन हैं। अपना कनेक्शन जाँचें।"
+
+#: inc/template-tags.php:411
+msgid "for the job"
+msgstr "काम के लिए"
+
+#: inc/app-banner.php:374
+msgid "iPhone"
+msgstr "iPhone"
+
+#. translators: %s: number of times opened
+#: inc/template-tags.php:359
+msgid "opened %s time"
+msgid_plural "opened %s times"
+msgstr[0] "%s बार खोला गया"
+msgstr[1] "%s बार खोला गया"
+
+#: inc/template-tags.php:409
+msgid "per day"
+msgstr "प्रति दिन"
+
+#: inc/template-tags.php:412
+msgid "per hour"
+msgstr "प्रति घंटा"
+
+#: inc/template-tags.php:410
+msgid "per month"
+msgstr "प्रति माह"
+
+#: inc/template-tags.php:334
+msgid "seen"
+msgstr "देखा गया"
+
+#: inc/template-tags.php:317
+msgid "view"
+msgid_plural "views"
+msgstr[0] "व्यू"
+msgstr[1] "व्यू"
+
+#: single-kaamase_gang.php:123
+msgid "worker"
+msgid_plural "workers"
+msgstr[0] "मज़दूर"
+msgstr[1] "मज़दूर"

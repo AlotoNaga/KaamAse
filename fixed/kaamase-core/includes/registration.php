@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.0.1
+ * @version 1.1.0
  * @since   1.0.0
  *
  * Changelog
@@ -282,25 +282,40 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 
 			<div class="ka-grid ka-grid--2">
 
-				<a class="ka-card ka-card--link ka-card--pad-lg"
+				<a class="ka-card ka-card--link ka-card--pad-lg ka-choice ka-choice--worker"
 					href="<?php echo esc_url( add_query_arg( 'type', 'worker', kaamase_page_url( 'register' ) ) ); ?>">
-					<h3><?php esc_html_e( 'I am looking for work', 'kaamase-core' ); ?></h3>
-					<p class="ka-soft ka-mt-4">
+					<h3 class="ka-choice__title"><?php esc_html_e( 'I am looking for work', 'kaamase-core' ); ?></h3>
+					<p class="ka-choice__body">
 						<?php esc_html_e( 'Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always.', 'kaamase-core' ); ?>
 					</p>
-					<span class="ka-btn ka-btn--primary ka-mt-6"><?php esc_html_e( 'Make a worker profile', 'kaamase-core' ); ?></span>
+					<span class="ka-btn ka-btn--primary ka-btn--block"><?php esc_html_e( 'Make a worker profile', 'kaamase-core' ); ?></span>
 				</a>
 
-				<a class="ka-card ka-card--link ka-card--pad-lg"
+				<a class="ka-card ka-card--link ka-card--pad-lg ka-choice ka-choice--employer"
 					href="<?php echo esc_url( add_query_arg( 'type', 'employer', kaamase_page_url( 'register' ) ) ); ?>">
-					<h3><?php esc_html_e( 'I am looking for workers', 'kaamase-core' ); ?></h3>
-					<p class="ka-soft ka-mt-4">
+					<h3 class="ka-choice__title"><?php esc_html_e( 'I am looking for workers', 'kaamase-core' ); ?></h3>
+					<p class="ka-choice__body">
 						<?php esc_html_e( 'Building a house, running a site, or hiring for a business. Post jobs free.', 'kaamase-core' ); ?>
 					</p>
-					<span class="ka-btn ka-btn--action ka-mt-6"><?php esc_html_e( 'Register as employer', 'kaamase-core' ); ?></span>
+					<span class="ka-btn ka-btn--action ka-btn--block"><?php esc_html_e( 'Register as employer', 'kaamase-core' ); ?></span>
 				</a>
 
 			</div>
+
+			<?php
+			/*
+			 * The way out for somebody who is already registered.
+			 *
+			 * The form on the next screen has offered this since the
+			 * beginning; this screen never did, so anybody who arrived
+			 * here by mistake had to choose a side they did not want in
+			 * order to find a sign in link.
+			 */
+			?>
+			<p class="ka-choice-foot">
+				<?php esc_html_e( 'Already registered?', 'kaamase-core' ); ?>
+				<a href="<?php echo esc_url( wp_login_url() ); ?>"><?php esc_html_e( 'Sign in', 'kaamase-core' ); ?></a>
+			</p>
 
 		</div>
 		<?php
@@ -657,6 +672,25 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 			home_url( '/' )
 		);
 
+		/*
+		 * 'request', and this is the only send on the platform that
+		 * wants it.
+		 *
+		 * Usually this IS their own request: somebody registering, in
+		 * the language they have been reading the site in. They have no
+		 * account language yet because the account is seconds old, so
+		 * falling back to the site's would send the very first thing we
+		 * ever write to them in a language they did not pick.
+		 *
+		 * The other two callers are not their request — insights.php
+		 * sends it again to accounts that never confirmed, and
+		 * rest-api.php sends it for the app — and both are covered,
+		 * because a person who HAS chosen a language is switched to it
+		 * either way.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $user_id, 'request' );
+
 		$site = get_bloginfo( 'name', 'display' );
 
 		$subject = sprintf(
@@ -684,7 +718,13 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 			)
 		);
 
-		return wp_mail( $user->user_email, $subject, $body );
+		$sent = wp_mail( $user->user_email, $subject, $body );
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
+
+		return $sent;
 	}
 }
 

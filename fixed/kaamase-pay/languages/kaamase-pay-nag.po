@@ -1,0 +1,770 @@
+# Kaam Ase — nag
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kaam Ase Pay\n"
+"Report-Msgid-Bugs-To: https://kaamase.com\n"
+"POT-Creation-Date: 2026-09-17 13:43+0000\n"
+"PO-Revision-Date: 2026-09-17 13:43+0000\n"
+"Language: nag\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kaamase-pay\n"
+
+#. translators: 1: how many more, 2: what of
+#: includes/checkout.php:153
+msgid "%1$d more %2$s"
+msgstr "%1$d aru %2$s"
+
+#: includes/plans.php:259
+msgid "A one time pack is the easier sell to somebody who has never paid for anything online. A subscription is worth more to you. Having both is usually right."
+msgstr "Jun manu kitia b online pisa diya nai, tai ke ek bar laka pack bikri koribole aru sohoj ase. Subscription apni karne aru bhal ase. Duita rakhile he bisi somoi thik hoi."
+
+#: includes/plans.php:206
+msgid "A plan gives somebody extra allowance on top of the free numbers, for a number of days. Change a price here whenever you like. Nothing needs a code change and nobody who has already paid is affected by it."
+msgstr "Plan pra kunba ke free number khan laka upor te kunba din laka karne extra allowance diye. Yate price jitia mon hoi titia bodli koribi. Kuno code bodlibole nalage aro jun pra age te pisa dishey tai laka upor te kuno asar nai."
+
+#: includes/settings.php:388
+msgid "A secret is saved. Leave this blank to keep it, or type a new one to replace it."
+msgstr ""
+
+#: includes/plans.php:219
+msgid "Add a plan"
+msgstr "Ekta plan add koribo"
+
+#: includes/plans.php:347
+msgid "Add plan"
+msgstr "Plan add koribo"
+
+#: includes/settings.php:350
+msgid "Add your Razorpay keys first. A switch turned on with no keys behind it gives somebody a checkout that fails after they have decided to buy, which is worse than never offering."
+msgstr ""
+
+#. translators: %s: what the plan adds
+#: includes/account.php:95
+msgid "Adds %s on top of the free amount."
+msgstr "Free amount laka upor te %s add kore."
+
+#: includes/settings.php:592
+msgid "Amount"
+msgstr ""
+
+#. translators: 1: currency, 2: amount
+#: includes/notices.php:139
+msgid "Amount: %1$s %2$s"
+msgstr "Amount: %1$s %2$s"
+
+#: includes/settings.php:450
+msgid "Android, through Google Play"
+msgstr ""
+
+#: includes/settings.php:410
+msgid "Any string you choose. Put the same one into Razorpay when you create the webhook. Send it to this address:"
+msgstr ""
+
+#: includes/settings.php:474
+msgid "Any string you choose. Put the same one into RevenueCat as the Authorization header on the webhook, and send it here:"
+msgstr ""
+
+#: includes/subscribers.php:290
+msgid "Called, hidden while lapsed"
+msgstr ""
+
+#: includes/settings.php:337
+msgid "Charge people"
+msgstr ""
+
+#: includes/settings.php:532
+msgid "Charge people is not ticked."
+msgstr ""
+
+#: includes/checkout.php:292
+msgid "Choose"
+msgstr "Basi lobo"
+
+#: includes/settings.php:423
+msgid "Currency"
+msgstr ""
+
+#: includes/plans.php:421
+msgid "Edit"
+msgstr "Thik koribo"
+
+#: includes/plans.php:218
+msgid "Edit plan"
+msgstr "Plan thik koribo"
+
+#: includes/subscribers.php:242
+msgid "Ends"
+msgstr ""
+
+#: includes/subscribers.php:188
+msgid "Everybody who has ever paid, what they hold, and when it ends. The tick column says whether you have made your call yet: no tick means they have paid and are still waiting on the Calls to make screen."
+msgstr ""
+
+#: includes/checkout.php:42
+msgid "Everything on Kaam Ase is free at the moment. There is nothing to buy."
+msgstr "Etiya Kaam Ase te sob free ase. Kinibole eku nai."
+
+#: includes/plans.php:209
+msgid "Existing plans"
+msgstr "Etiya thaka plan khan"
+
+#: includes/plans.php:376
+msgid "Gives"
+msgstr "Diye"
+
+#: includes/checkout.php:648
+msgid "Go back without paying"
+msgstr "Pisa nadi pichete jabo"
+
+#. translators: %s: person's name
+#: includes/notices.php:115 includes/notices.php:296
+msgid "Hello %s,"
+msgstr "Namaskar %s,"
+
+#: includes/notices.php:322
+msgid "If you want to carry on, you can renew here:"
+msgstr "Age te chalai thakibo mon hoile, yate pra renew koribo pare:"
+
+#: includes/notices.php:158
+msgid "It does not renew on its own. Nothing further will be charged."
+msgstr "Etu nije pra renew nohoi. Age te aru kuno pisa kata nohobo."
+
+#: includes/notices.php:157
+msgid "It renews on its own, so you do not need to do anything."
+msgstr "Etu nije pra renew hoi, etu karne apni ke eku koribole nalage."
+
+#. translators: %s: date
+#: includes/notices.php:152
+msgid "It runs until %s."
+msgstr "Etu %s tak chalibo."
+
+#. translators: %s: date
+#: includes/checkout.php:132
+msgid "It runs until %s. Buying again adds to what you have rather than replacing it."
+msgstr "Etu %s tak chalibo. Aru ekbar kinile apni logote thaka laka logote jog hoi, tar jagate nohoi."
+
+#: includes/account.php:496
+msgid "It will not renew again"
+msgstr "Etu aru renew nohobo"
+
+#: kaamase-pay.php:137
+msgid "Kaam Ase Payments needs Kaam Ase Core, version 1.2 or newer, and is doing nothing until that is active."
+msgstr "Kaam Ase Payments ke Kaam Ase Core, version 1.2 nohoile tar pichete laka lage, aro etu chalu nohua tak etu eku koribo nai."
+
+#: includes/checkout.php:74
+msgid "Kaam Ase is free for workers and always will be. Making a profile, being found, being called and getting hired all cost nothing, and nobody from Kaam Ase will ever ask you for money. If anyone does, report it."
+msgstr "Kaam Ase worker khan karne free ase aro hodai free thakibo. Profile banabo, bisari pabo, call pabo aro kaam pabo — sob free ase, aro Kaam Ase pra kunba kitia b apni ke pisa mangibo nai. Kunba mangile, report koribi."
+
+#: includes/checkout.php:306
+msgid "Kaam Ase never charges a worker. Nothing here affects finding work, being found, or being hired. Paying only ever raises limits for an employer who is hiring a lot."
+msgstr "Kaam Ase kitia b worker pra pisa loi nai. Yate laka eku pra kaam bisaribo, bisari pabo, nohoile kaam pabo te asar nai. Pisa diya pra khali bisi manu ke kaam diya employer laka limit he baraye."
+
+#: includes/checkout.php:88
+msgid "Kaam Ase stays free"
+msgstr "Kaam Ase free he thakibo"
+
+#: includes/account.php:230
+msgid "Keep it"
+msgstr "Etu rakhi dibo"
+
+#: includes/plans.php:249
+msgid "Kind"
+msgstr "Kuneka"
+
+#: includes/subscribers.php:201
+msgid "Lapsed (%d)"
+msgstr ""
+
+#: includes/plans.php:294
+msgid "Leave a price at zero to not offer that period. Saving a subscription price creates the matching plan at Razorpay automatically, so you never open their dashboard to change a price."
+msgstr "Kuno period nadibo mon hoile tar price zero te chari dibi. Subscription laka price save kurile Razorpay te tar plan nije pra bonai jai, etu karne price bodlibole apni kitia b tai khan laka dashboard khulibo nalage."
+
+#: includes/settings.php:454
+msgid "Leave both off until the products exist in that store and the webhook below is connected. With them off the app shows no way to buy at all, which is the safe direction: an app that takes money it cannot honour is worse than one that sells nothing."
+msgstr ""
+
+#: includes/subscribers.php:137
+msgid "Lifetime"
+msgstr ""
+
+#: includes/plans.php:299
+msgid "Lifetime price"
+msgstr "Lifetime laka price"
+
+#: includes/settings.php:515
+msgid "Make a page containing the shortcode [kaamase_plans] and publish it. Until then nothing can be bought and Choose has nowhere sensible to return to."
+msgstr ""
+
+#: includes/checkout.php:90
+msgid "Making a profile, being found, calling somebody, posting a job and getting hired all cost nothing, for everybody, always. Nothing below changes that. It is one optional extra for people who post urgent work often and want us to ring them and put a tick on their profile."
+msgstr "Profile banabo, bisari pabo, kunba ke call koribo, kaam post koribo aro kaam pabo — sob manu karne, hodai free ase. Nichete laka eku pra etu bodli nohoi. Etu khali un manu khan karne ekta extra ase jun khan bisi bar joldi laka kaam post kore aro amikhan pra call pabo aro tai laka profile te tick lagabo mon kore."
+
+#: includes/subscribers.php:135
+msgid "Monthly"
+msgstr ""
+
+#: includes/plans.php:276
+msgid "Monthly price"
+msgstr "Ek mahina laka price"
+
+#: includes/account.php:75
+msgid "My plan"
+msgstr "Moi laka plan"
+
+#: includes/plans.php:232
+msgid "Name"
+msgstr "Naam"
+
+#: includes/subscribers.php:97
+msgid "Never"
+msgstr ""
+
+#: includes/plans.php:419 includes/subscribers.php:281
+msgid "No"
+msgstr "Nai"
+
+#: includes/settings.php:512
+msgid "No page found."
+msgstr ""
+
+#: includes/settings.php:538
+msgid "No plan is switched on."
+msgstr ""
+
+#: includes/plans.php:366
+msgid "No plans yet. Add one below."
+msgstr "Etiya tak kuno plan nai. Nichete ekta add koribi."
+
+#: includes/razorpay.php:290
+msgid "No subscription given."
+msgstr "Kuno subscription diya nai."
+
+#: includes/subscribers.php:203
+msgid "Nobody has lapsed."
+msgstr ""
+
+#: includes/subscribers.php:196
+msgid "Nobody is on a plan at the moment."
+msgstr ""
+
+#: includes/subscribers.php:292
+msgid "Not called yet"
+msgstr ""
+
+#: includes/checkout.php:446
+msgid "Not set up yet"
+msgstr "Etiya tak set kora nai"
+
+#: includes/settings.php:548
+msgid "Not yet:"
+msgstr ""
+
+#: includes/checkout.php:889
+msgid "Nothing has been taken from you. If money did leave your account, send us the payment reference and we will sort it out."
+msgstr "Apni pra eku loa nai. Jodi apni laka account pra pisa ulai jaishey, amikhan ke payment reference pathai dibi aro amikhan thik kuri dibo."
+
+#: includes/settings.php:326
+msgid "Nothing is being charged for. Plans are hidden and everybody is on the free allowances. You can set all of this up now and switch it on whenever you are ready."
+msgstr ""
+
+#: includes/checkout.php:96
+msgid "Nothing is on offer just now."
+msgstr "Etiya eku offer te nai."
+
+#: includes/notices.php:320
+msgid "Nothing will be charged. When it ends your account stays exactly as it is, and the extra allowance the plan gave you stops."
+msgstr "Kuno pisa kata nohobo. Etu khotom hole apni laka account thik jiman ase iman he thakibo, khali plan pra diya extra allowance bondh hobo."
+
+#: includes/settings.php:583
+msgid "Nothing yet."
+msgstr ""
+
+#: includes/plans.php:340
+msgid "Offer this plan to people"
+msgstr "Etu plan manu khan ke dibo"
+
+#: includes/plans.php:241
+msgid "One line about it"
+msgstr "Etu laka bare te ek line"
+
+#: includes/subscribers.php:138
+msgid "One off"
+msgstr ""
+
+#: includes/plans.php:264
+msgid "One time price"
+msgstr "Ek bar laka price"
+
+#: includes/checkout.php:646
+msgid "Opening the payment window."
+msgstr "Payment window khuli ase."
+
+#: includes/plans.php:253
+msgid "Paid once, lasts a set number of days"
+msgstr "Ek bar pisa, thik kora din tak chale"
+
+#: includes/plans.php:304
+msgid "Paid once, never expires, never renews. Worth thinking about before you offer it: the people who buy it are usually the ones who would have paid every year, and you cannot take it back later without breaking a promise. Leave at zero to not offer it."
+msgstr "Ek bar pisa, kitia b khotom nohoi, kitia b renew nohoi. Dibo laka age te bhabi lobi: jun khan etu kine tai khan bisi somoi un he ase jun khan hor bosor pisa dibole thakishey, aro pichete kotha bhangi nakori apni etu wapas lobo napare. Nadibo mon hoile zero te chari dibi."
+
+#: includes/checkout.php:882
+msgid "Paid, and it is on your account already"
+msgstr "Pisa pai jaishey, aro etu apni laka account te lagi jaishey"
+
+#: includes/checkout.php:636
+msgid "Paying"
+msgstr "Pisa di ase"
+
+#: includes/checkout.php:744
+msgid "Payment"
+msgstr "Payment"
+
+#: includes/settings.php:186 includes/settings.php:187 includes/settings.php:317
+msgid "Payments"
+msgstr ""
+
+#: includes/razorpay.php:43
+msgid "Payments are not set up."
+msgstr "Payment set kora nai."
+
+#: includes/checkout.php:431
+msgid "Payments are not switched on yet. Add the Razorpay keys on the Payments screen and tick Charge people."
+msgstr "Payment etiya tak chalu kora nai. Payments screen te Razorpay laka key khan add koribi aro Charge people te tick koribi."
+
+#: includes/settings.php:321
+msgid "People are being charged."
+msgstr ""
+
+#: includes/settings.php:590 includes/subscribers.php:239
+msgid "Person"
+msgstr ""
+
+#: includes/plans.php:374 includes/settings.php:591 includes/subscribers.php:241
+msgid "Plan"
+msgstr "Plan"
+
+#: includes/plans.php:203 includes/settings.php:195 includes/settings.php:196
+msgid "Plans and prices"
+msgstr "Plan aro price khan"
+
+#: includes/settings.php:322
+msgid "Plans are visible and payments are being taken. Switching this off leaves everybody on the free allowances and takes nothing away that they already paid for: paid access keeps working until the date it was bought to."
+msgstr ""
+
+#: includes/settings.php:503
+msgid "Plans page"
+msgstr ""
+
+#: includes/plans.php:375
+msgid "Prices"
+msgstr "Price khan"
+
+#: includes/settings.php:358
+msgid "Razorpay Key ID"
+msgstr ""
+
+#: includes/settings.php:374
+msgid "Razorpay Key Secret"
+msgstr ""
+
+#: includes/settings.php:368
+msgid "Razorpay dashboard, Account and Settings, API Keys. Starts rzp_test for testing and rzp_live when you are ready."
+msgstr ""
+
+#: includes/settings.php:528
+msgid "Razorpay keys are missing."
+msgstr ""
+
+#: includes/razorpay.php:72
+msgid "Razorpay refused that."
+msgstr "Razorpay pra etu mana kuri shey."
+
+#: includes/settings.php:522
+msgid "Ready to take money"
+msgstr ""
+
+#: includes/account.php:281
+msgid "Receipts come from Razorpay by email. If one is missing, tell us the date and we will find it."
+msgstr "Receipt khan Razorpay pra email te ahe. Kunba nahile, amikhan ke date kobi aro amikhan bisari dibo."
+
+#: includes/settings.php:561
+msgid "Recent payments"
+msgstr ""
+
+#: includes/subscribers.php:243
+msgid "Renews"
+msgstr ""
+
+#. translators: %s: date
+#: includes/access.php:952
+msgid "Renews on %s."
+msgstr "%s te renew hobo."
+
+#: includes/settings.php:461
+msgid "RevenueCat secret"
+msgstr ""
+
+#: includes/subscribers.php:240
+msgid "Ring"
+msgstr ""
+
+#: includes/subscribers.php:194
+msgid "Running now (%d)"
+msgstr ""
+
+#. translators: %s: date
+#: includes/access.php:970
+msgid "Runs until %s, then stops on its own. Nothing renews."
+msgstr "%s tak chalibo, tar pichete nije pra bondh hobo. Eku renew nohoi."
+
+#: includes/plans.php:347
+msgid "Save plan"
+msgstr "Plan save koribo"
+
+#. translators: %s: amount saved
+#: includes/checkout.php:238
+msgid "Saves %s a year"
+msgstr "Ek bosor te %s bachai"
+
+#: includes/account.php:250
+msgid "See what else is available"
+msgstr "Aru ki available ase sabo"
+
+#. translators: %s: link to the plans page
+#: includes/access.php:626
+msgid "See what is available: %s"
+msgstr "Ki available ase sabi: %s"
+
+#: includes/settings.php:435
+msgid "Sell inside the apps"
+msgstr ""
+
+#: includes/settings.php:245
+msgid "Set in wp-config.php."
+msgstr ""
+
+#: includes/plans.php:336
+msgid "Show it"
+msgstr "Dikhabo"
+
+#: includes/settings.php:345
+msgid "Show plans and take payments"
+msgstr ""
+
+#: includes/subscribers.php:288
+msgid "Showing"
+msgstr ""
+
+#: includes/plans.php:377
+msgid "Shown"
+msgstr "Dikhaishey"
+
+#: includes/settings.php:389
+msgid "Shown once by Razorpay when you create the key. Never leaves the server."
+msgstr ""
+
+#: includes/checkout.php:428
+msgid "Sign in first, then choose again."
+msgstr "Poila sign in koribi, tar pichete aru basi lobi."
+
+#: includes/checkout.php:258
+msgid "Sign in to choose"
+msgstr "Basi lobole sign in koribi"
+
+#: includes/settings.php:593
+msgid "Status"
+msgstr ""
+
+#: includes/account.php:208
+msgid "Stop it renewing?"
+msgstr "Etu renew hua bondh koribo na?"
+
+#: includes/account.php:187
+msgid "Stop renewing"
+msgstr "Renew hua bondh koribo"
+
+#: includes/settings.php:416
+msgid "Subscribe it to these events: payment.captured, subscription.charged, subscription.cancelled, subscription.halted. Without the webhook a monthly plan takes the first payment and then quietly stops extending, which nobody notices until somebody complains."
+msgstr ""
+
+#: includes/subscribers.php:185 includes/subscribers.php:41 includes/subscribers.php:42
+msgid "Subscribers"
+msgstr ""
+
+#: includes/plans.php:257
+msgid "Subscription, renews on its own"
+msgstr "Subscription, nije pra renew hoi"
+
+#: includes/account.php:511 includes/checkout.php:446
+msgid "That did not work"
+msgstr "Etu kaam kora nai"
+
+#: includes/checkout.php:433
+msgid "That option has no price set. Open Plans and prices and put a number against it."
+msgstr "Etu option laka kuno price thik kora nai. Plans and prices khuli tar usor te ekta number lagai dibi."
+
+#: includes/checkout.php:429
+msgid "That page had been open a while and the form had expired. Please choose again."
+msgstr "Etu page bisi somoi khuli thakishey aro form laka somoi khotom hoi jaishey. Aru ekbar basi lobi."
+
+#: includes/checkout.php:888
+msgid "That payment did not go through"
+msgstr "Etu payment jua nai"
+
+#: includes/checkout.php:434
+msgid "That payment did not go through. Nothing has been taken from you."
+msgstr "Etu payment jua nai. Apni pra eku loa nai."
+
+#: includes/checkout.php:432
+msgid "That plan is not switched on. Open Plans and prices and tick Offer this plan to people."
+msgstr "Etu plan chalu kora nai. Plans and prices khuli Offer this plan to people te tick koribi."
+
+#: includes/checkout.php:742
+msgid "The payment could not be started. Nothing has been charged."
+msgstr "Payment suru koribo para nai. Kuno pisa kata nai."
+
+#: includes/plans.php:563
+msgid "The plan was saved, but Razorpay would not create the subscription plan for it, so that period cannot be sold yet."
+msgstr "Plan save hoishey, hoileh Razorpay pra tar karne subscription plan bonua nai, etu karne etu period etiya tak bikri koribo napare."
+
+#: includes/settings.php:542
+msgid "There is no page holding the plans."
+msgstr ""
+
+#: includes/checkout.php:72
+msgid "There is nothing for you to pay"
+msgstr "Apni ke dibole eku nai"
+
+#: includes/access.php:943 includes/access.php:973
+msgid "There is nothing to cancel and nothing more will be charged."
+msgstr "Cancel koribole eku nai aro age te aru kuno pisa kata nohobo."
+
+#: includes/plans.php:330
+msgid "These are added on top of the free allowance, not instead of it. Somebody who buys this gets the free number plus this number."
+msgstr "Etu khan free allowance laka upor te jog hoi, tar jagate nohoi. Jun etu kine tai free number aro etu number, duita he pai."
+
+#: includes/subscribers.php:204
+msgid "These have run out. Somebody who lapsed in the last week or two is worth a call: they already decided it was worth paying for once."
+msgstr ""
+
+#: includes/checkout.php:430
+msgid "This account cannot buy that."
+msgstr "Etu account pra etu kinibo napare."
+
+#: includes/notices.php:148
+msgid "This does not end. Nothing more will be charged."
+msgstr "Etu khotom nohoi. Age te aru kuno pisa kata nohobo."
+
+#: includes/access.php:935
+msgid "This does not end. You paid once and it stays on your account."
+msgstr "Etu khotom nohoi. Apni ek bar pisa dishey aro etu apni laka account te thaki jabo."
+
+#: includes/settings.php:246
+msgid "This field is ignored. Change it in"
+msgstr ""
+
+#: includes/settings.php:508
+msgid "This is where Choose sends people back to. If that is not the page holding the plans, the page it should be on is missing the [kaamase_plans] shortcode."
+msgstr ""
+
+#: includes/webhook.php:429
+msgid "This usually means a card has expired or a bank has stopped the automatic payment. Nothing has been taken from you and nothing has been switched off yet."
+msgstr "Etu laka mane bisi somoi card laka somoi khotom hoishey nohoile bank pra nije laka payment bondh kuri dishey. Apni pra eku loa nai aro etiya tak eku bondh kora nai."
+
+#: includes/subscribers.php:244
+msgid "Tick"
+msgstr ""
+
+#: includes/settings.php:397
+msgid "Webhook secret"
+msgstr ""
+
+#: includes/account.php:259
+msgid "What I have paid"
+msgstr "Moi ki ki pisa dishey"
+
+#: includes/plans.php:310
+msgid "What it gives"
+msgstr "Etu pra ki diye"
+
+#: includes/plans.php:236
+msgid "What the employer sees. Plain words, for example Contractor or Busy month."
+msgstr "Employer pra ki dikhe. Sidha kotha, jineka Contractor nohoile Busy month."
+
+#: includes/settings.php:487
+msgid "What this is pointed at"
+msgstr ""
+
+#: includes/settings.php:589
+msgid "When"
+msgstr ""
+
+#: includes/subscribers.php:136
+msgid "Yearly"
+msgstr ""
+
+#: includes/plans.php:287
+msgid "Yearly price"
+msgstr "Ek bosor laka price"
+
+#: includes/plans.php:419 includes/subscribers.php:280
+msgid "Yes"
+msgstr "Hoi"
+
+#: includes/account.php:234
+msgid "Yes, stop renewing"
+msgstr "Hoi, renew hua bondh koribo"
+
+#: includes/settings.php:546
+msgid "Yes."
+msgstr ""
+
+#. translators: %s: plan name
+#: includes/checkout.php:128
+msgid "You are on %s"
+msgstr "Apni %s te ase"
+
+#: includes/account.php:245
+msgid "You are on the free amount, which is enough for most people."
+msgstr "Apni free amount te ase, etu bisi manu karne kafi ase."
+
+#: includes/access.php:963
+msgid "You bought this in Google Play, so it is stopped there: open the Play Store, tap your picture, then Payments and subscriptions."
+msgstr "Apni etu Google Play pra kinishey, etu karne ta te pra he bondh hobo: Play Store khulibi, apni laka photo te tap koribi, tar pichete Payments and subscriptions."
+
+#: includes/access.php:961
+msgid "You bought this in the App Store, so it is stopped there: open Settings, tap your name, then Subscriptions."
+msgstr "Apni etu App Store pra kinishey, etu karne ta te pra he bondh hobo: Settings khulibi, apni laka naam te tap koribi, tar pichete Subscriptions."
+
+#: includes/webhook.php:442
+msgid "You can check or change it here:"
+msgstr "Apni etu yate sabo nohoile bodlibo pare:"
+
+#: includes/notices.php:162
+msgid "You can see this on your account here:"
+msgstr "Apni etu apni laka account te yate sabo pare:"
+
+#: includes/subscribers.php:153
+msgid "You cannot do that."
+msgstr ""
+
+#. translators: %s: date
+#: includes/account.php:216
+msgid "You keep everything until %s. After that the extra urgent posts stop and the verified mark comes off your profile. Starting again means paying again."
+msgstr "%s tak apni logote sob thakibo. Tar pichete extra joldi laka post khan bondh hobo aro verified mark apni laka profile pra uthi jabo. Aru suru koribole aru pisa dibo lagibo."
+
+#. translators: %s: date
+#: includes/account.php:196
+msgid "You keep everything until %s. Nothing is taken away today and there is nothing more to pay."
+msgstr "%s tak apni logote sob thakibo. Aji eku uthai loa nai aro age te aru dibole eku nai."
+
+#. translators: %s: date
+#: includes/account.php:500
+msgid "You keep everything you have until %s, and nothing more will be charged. You can start again any time."
+msgstr "%s tak apni logote ja ase sob thakibo, aro age te aru kuno pisa kata nohobo. Apni jitia mon hoi titia aru suru koribo pare."
+
+#. translators: 1: plan name, 2: site name, 3: date
+#: includes/notices.php:303
+msgid "Your %1$s plan on %2$s ends on %3$s."
+msgstr "%2$s te apni laka %1$s plan %3$s te khotom hoi ase."
+
+#: includes/checkout.php:883
+msgid "Your higher limits are working now. A receipt is on its way from Razorpay."
+msgstr "Apni laka bara limit khan etiya chali ase. Razorpay pra ekta receipt ahi ase."
+
+#. translators: 1: site name, 2: date
+#: includes/notices.php:310
+msgid "Your paid plan on %1$s ends on %2$s."
+msgstr "%1$s te apni laka paid plan %2$s te khotom hoi ase."
+
+#. translators: 1: site name, 2: plan name
+#: includes/notices.php:121
+msgid "Your payment to %1$s for %2$s has gone through. Thank you."
+msgstr "%2$s karne %1$s ke diya apni laka payment hoi jaishey. Dhanyabad."
+
+#. translators: %s: site name
+#: includes/notices.php:169
+msgid "Your payment to %s"
+msgstr "%s ke diya apni laka payment"
+
+#. translators: %s: site name
+#: includes/webhook.php:449
+msgid "Your payment to %s did not go through"
+msgstr "%s ke diya apni laka payment jua nai"
+
+#. translators: %s: site name
+#: includes/webhook.php:425
+msgid "Your payment to %s did not go through."
+msgstr "%s ke diya apni laka payment jua nai."
+
+#. translators: %s: site name
+#: includes/notices.php:330
+msgid "Your plan on %s is ending"
+msgstr "%s te apni laka plan khotom hoi ase"
+
+#. translators: %s: date
+#: includes/webhook.php:436
+msgid "Your plan runs until %s. If the payment is not fixed before then it will simply stop."
+msgstr "Apni laka plan %s tak chalibo. Tar age te payment thik nohoile etu bondh hoi jabo."
+
+#: includes/account.php:512
+msgid "Your subscription has not been stopped and you may be charged again. Please tell us and we will stop it by hand."
+msgstr "Apni laka subscription bondh hua nai aro aru ekbar pisa kati bo pare. Amikhan ke kobi aro amikhan hath pra bondh kuri dibo."
+
+#: includes/plans.php:271
+msgid "days"
+msgstr "din"
+
+#: includes/account.php:335
+msgid "did not go through"
+msgstr "jua nai"
+
+#: includes/checkout.php:206
+msgid "every month"
+msgstr "hor mahina"
+
+#: includes/checkout.php:208
+msgid "every year"
+msgstr "hor bosor"
+
+#. translators: %s: meter label
+#: includes/plans.php:321
+msgid "extra %s"
+msgstr "extra %s"
+
+#: includes/plans.php:268
+msgid "for"
+msgstr "karne"
+
+#. translators: %d: number of days
+#: includes/checkout.php:214
+msgid "for %d days"
+msgstr "%d din karne"
+
+#: includes/settings.php:442
+msgid "iPhone, through Apple"
+msgstr ""
+
+#: includes/account.php:334
+msgid "not finished"
+msgstr "khotom hua nai"
+
+#: includes/checkout.php:210
+msgid "once, and it never ends"
+msgstr "ek bar, aro etu kitia b khotom nohoi"
+
+#: includes/account.php:333
+msgid "paid"
+msgstr "pisa dishey"
+
+#: includes/account.php:336
+msgid "stopped renewing"
+msgstr "renew hua bondh"
+
+#: includes/account.php:337
+msgid "stopped, payment failed"
+msgstr "bondh, payment fail hoishey"
