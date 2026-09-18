@@ -38,7 +38,7 @@
  * the hire count, which are free, earned, and cannot be bought at all.
  *
  * @package KaamaseCore
- * @version 1.3.0
+ * @version 1.4.0
  * @since   1.3.0
  */
 
@@ -501,6 +501,30 @@ if ( ! function_exists( 'kaamase_calls_page' ) ) {
 							<td>
 								<strong><?php echo esc_html( $user->display_name ); ?></strong><br>
 								<span class="description"><?php echo esc_html( $user->user_email ); ?></span>
+
+								<?php
+								/*
+								 * What they changed, if anything, since
+								 * that decides what kind of call this is.
+								 * Somebody who went from Imliakum to
+								 * Imliakum Jamir needs thirty seconds;
+								 * somebody who went to the name of a
+								 * company that exists needs a different
+								 * conversation entirely.
+								 */
+								$changes = function_exists( 'kaamase_mark_log_summary' )
+									? kaamase_mark_log_summary( $user->ID )
+									: array();
+								?>
+
+								<?php if ( ! empty( $changes ) ) : ?>
+									<p style="margin:6px 0 0;padding:6px 8px;background:#fcf3d9;border-left:3px solid #b7791f;">
+										<strong><?php esc_html_e( 'Changed since the call', 'kaamase-core' ); ?></strong><br>
+										<?php foreach ( $changes as $line ) : ?>
+											<span class="description"><?php echo esc_html( $line ); ?></span><br>
+										<?php endforeach; ?>
+									</p>
+								<?php endif; ?>
 							</td>
 
 							<td>

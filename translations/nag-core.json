@@ -897,5 +897,14 @@
 "This changes the website, and it changes the language we write to you in when we send you something.": "Etu pra website bodli hobo, aro amikhan apni ke kiba pathai diya somoi te ki bhasa te likhe etu bhi bodli hobo.",
 "Jobs and profiles stay in the words the person who wrote them used. We do not translate what other people have written.": "Kaam aro profile khan likha manu pra bebohar kora kotha te thakibo. Dusra manu khan pra ki likhishey etu amikhan translate nakure.",
 "We do not have that language.": "Amikhan logote etu bhasa nai.",
-"Please update Kaam Ase to carry on.": "Cholai thakibole Kaam Ase ke update koribi."
+"Please update Kaam Ase to carry on.": "Cholai thakibole Kaam Ase ke update koribi.",
+"%1$s and %2$s": "%1$s aro %2$s",
+", ": ", ",
+"name": "naam",
+"phone number": "phone number",
+"photograph": "photo",
+"You have a tick": "Apni logote tick ase",
+"Your tick has come off for now": "Apni laka tick etiya karne uthai dishey",
+"Changing your %s will take your tick off until somebody can ring you again. Your plan is not affected.": "Apni laka %s bodli korile, kunba pra apni ke aru ekbar phone nakora tak apni laka tick uthai dibo. Apni laka plan te eku asor nai.",
+"You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you.": "Apni pra apni laka %s bodli kuri shey, etu karne Kaam Ase pra kunba apni ke aru ekbar phone nakora tak tick uthai dishey. Apni laka plan te eku asor nai aro eku pisa kata nai. Amikhan apni ke phone koribo."
 }

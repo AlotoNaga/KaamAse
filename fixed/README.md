@@ -4581,6 +4581,128 @@ English. `kaamase_locale_switch_to_user()` now takes `'request'` for that single
 case: use what they have saved if they have saved anything, otherwise leave the
 request in the language it is already in.
 
+## 68. Keeping the tick true
+
+Reported from the live site: accounts that had paid, been telephoned and been
+given the tick were afterwards changing to a false name and a stranger's
+photograph, and keeping the mark.
+
+That is worse than having no mark. An unmarked platform asks people to use their
+own judgement. A platform whose mark can be quietly falsified spends its own
+credibility vouching for whoever is willing to abuse it, and the person who
+finds out is a worker who travelled to a job that was not real.
+
+### What the call actually established
+
+`verified-mark.php` is careful about the claim: **we telephoned this person.**
+Not that their work is good, not that they are recommended. So what that call
+established was three facts and only three — **this name, this number, this
+face** — and when one of them changes the mark has stopped being true.
+
+Which is why the list of watched fields is short, and why keeping it short is
+the most important decision in the file:
+
+| Changing this | Tick | Because |
+| --- | --- | --- |
+| Name | **comes off** | the call verified this name |
+| Phone number | **comes off** | the call was made *to* this number |
+| Photograph | **comes off** | the reported abuse |
+| Day rate, about, trades, district, town, experience, travel radius | stays | the call never vouched for any of it |
+
+Taking somebody's tick away for correcting their day rate would teach everybody
+that the mark is arbitrary, and that costs more trust than the abuse it was
+meant to stop.
+
+### Why not lock the fields
+
+It was the first idea and it is the wrong one.
+
+Locking makes the owner the bottleneck for every honest correction: a misspelled
+name, a marriage, a better photograph. Worse, somebody whose number really had
+changed could not fix it, so employers would ring a dead number and conclude the
+platform is full of ghosts — a bigger reputation problem than the one being
+solved, and one that grows with every person who gets the tick.
+
+Letting them edit and taking the mark off puts the cost where it belongs. Nobody
+who paid for a tick swaps to a false name on a whim if it costs them the tick,
+and nobody honest is stopped from fixing their own details.
+
+### The subscription is never touched
+
+Stated plainly because it was the first thing asked about. `rich-manu.php` keeps
+the paid plan and the tick as two separate things on purpose — paying buys a
+place in the queue and never the mark — and that separation is exactly what
+makes this safe to do automatically. The tick goes; every day of the plan stays.
+The test asserts it by snapshotting the whole account and checking that nothing
+except the two tick keys moved.
+
+### Watching the post, not the save function
+
+`kaamase_save_profile()` is the front door for the website and the app both, and
+it is not the only door: the photograph is written by `set_post_thumbnail()`
+from two different places. So the guard hooks `post_updated` for the name and
+the meta actions for the number and the photograph, which catches every route
+into those three fields by construction, including routes that do not exist yet.
+
+WordPress only fires the meta action when a value genuinely changes, so
+re-saving a form without touching anything costs nobody their mark.
+
+**It only counts when the owner does it.** The platform owner fixing a
+misspelling from the admin has falsified nothing, and a change with nobody
+signed in — an import, a scheduled task — has no author to hold responsible.
+
+### Said beforehand, and answered afterwards
+
+Nobody should lose the mark by surprise: told in advance it is a choice they
+made, found out afterwards it is a platform that took something off them, and
+that is how a fair rule becomes a grievance. The website prints a notice above
+the edit form, and `/me` carries `mark_warning` — **the finished sentence, in
+the language that person reads**, rather than a flag — so the app shows exactly
+what the website shows and the two cannot drift apart.
+
+Afterwards: the person is told once, in their own language, naming everything
+that changed and saying the plan is safe, because that is the first thing
+anybody who paid will worry about. They go straight back on the call list
+without paying again — but **not** through `kaamase_join_call_queue()`, which
+sends the message somebody gets when they have just paid, and "Thank you, the
+plan is on your account" would be a strange thing to read for having corrected
+your own telephone number.
+
+The owner gets an email the same day, in English, with the old value beside the
+new one. And the call list now shows what changed since the call, because that
+decides what kind of call this is: somebody who went from Imliakum to Imliakum
+Jamir needs thirty seconds, and somebody who went to the name of a company that
+exists needs a different conversation.
+
+### The bug the tests found
+
+The first version recorded **one** change when three had happened.
+
+After the first change took the tick off, the second and third looked at an
+account with no tick, decided there was nothing to lose, and were never written
+down. A worker who changed their name, number and photograph in one save would
+have appeared on the call list as having changed their name.
+
+The guard now remembers what it has already taken off in the current request, so
+the rest of that same save is still recorded. It is why the "all three at once"
+test exists, and it would not have been found by testing the three separately.
+
+### Tested
+
+58 assertions, thirteen scenarios, each in its own process because the guard
+remembers what it has dropped in a request.
+
+The negatives carry as much weight as the positives: the rate, experience, town,
+travel radius and description all keep the tick; the owner editing from the
+admin does not cost anybody theirs; a change with nobody signed in does not
+count; somebody with no tick is not watched at all; and re-saving a form without
+changing anything records nothing.
+
+The one that matters most is end to end with the real `.mo` files: a worker who
+reads Nagamese changes their name, and what reaches their phone is
+`Apni pra apni laka naam bodli kuri shey...` while the owner's copy of the same
+event stays in English.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
