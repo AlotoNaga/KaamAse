@@ -26,7 +26,7 @@
  * because a promise nobody knows about is not reassuring anybody.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.0.0
  */
 
@@ -204,6 +204,12 @@ if ( ! function_exists( 'kaamase_profile_form' ) ) {
 				<p class="ka-hint">
 					<?php esc_html_e( 'We remove the hidden location information that phones save inside photos, so uploading a picture taken at home does not tell anybody where you live.', 'kaamase-core' ); ?>
 				</p>
+
+				<?php
+				if ( function_exists( 'kaamase_mark_field_hint' ) ) {
+					echo kaamase_mark_field_hint(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
+				?>
 			</div>
 
 			<?php
@@ -222,6 +228,12 @@ if ( ! function_exists( 'kaamase_profile_form' ) ) {
 				</label>
 				<input class="ka-input" type="text" id="ka-profile-name" name="kaamase_name" required maxlength="90"
 					value="<?php echo esc_attr( get_the_title( $post_id ) ); ?>">
+
+				<?php
+				if ( function_exists( 'kaamase_mark_field_hint' ) ) {
+					echo kaamase_mark_field_hint(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
+				?>
 			</div>
 
 			<?php if ( $employer ) : ?>
@@ -272,6 +284,12 @@ if ( ! function_exists( 'kaamase_profile_form' ) ) {
 				<p class="ka-hint">
 					<?php esc_html_e( 'Never shown on the site. People reach you through Kaam Ase, and you can see who asked.', 'kaamase-core' ); ?>
 				</p>
+
+				<?php
+				if ( function_exists( 'kaamase_mark_field_hint' ) ) {
+					echo kaamase_mark_field_hint(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
+				?>
 			</div>
 
 			<button class="ka-btn ka-btn--action ka-btn--lg ka-btn--block" type="submit">

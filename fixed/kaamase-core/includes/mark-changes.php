@@ -62,7 +62,7 @@
  * name loses the tick and keeps every day of the plan they paid for.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.12.0
  */
 
@@ -1043,6 +1043,41 @@ if ( ! function_exists( 'kaamase_mark_warning_notice' ) ) {
 		return '<div class="ka-notice ka-notice--info"><div><span class="ka-notice__title">'
 			. esc_html__( 'You have a tick', 'kaamase-core' )
 			. '</span><p>' . esc_html( $warning ) . '</p></div></div>';
+	}
+}
+
+if ( ! function_exists( 'kaamase_mark_field_hint' ) ) {
+	/**
+	 * The short version, to sit under the field itself.
+	 *
+	 * One notice at the top of the form is not enough on its own, and
+	 * the reason is the shape of the page rather than the wording. The
+	 * edit form is long: photograph, name, trades, rates, experience,
+	 * district, town, telephone. Somebody who opens it to change their
+	 * photograph scrolls straight past the top, and somebody changing
+	 * their number is a long way below anything they read on the way in.
+	 *
+	 * So the notice at the top explains the rule once, and this repeats
+	 * it at the three places where it is about to apply -- which is the
+	 * moment somebody is actually deciding.
+	 *
+	 * @since 1.12.0
+	 * @param int $user_id Account. Defaults to whoever is signed in.
+	 * @return string Markup, or nothing.
+	 */
+	function kaamase_mark_field_hint( $user_id = 0 ) {
+
+		$user_id = $user_id ? (int) $user_id : get_current_user_id();
+
+		if ( ! $user_id || ! kaamase_mark_has_record( $user_id ) ) {
+			return '';
+		}
+
+		return '<p class="ka-hint ka-mark-hint"><strong>'
+			. esc_html__( 'Changing this takes your tick off', 'kaamase-core' )
+			. '</strong> '
+			. esc_html__( 'until somebody can ring you again. Your plan is not affected.', 'kaamase-core' )
+			. '</p>';
 	}
 }
 

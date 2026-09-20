@@ -906,5 +906,7 @@
 "You have a tick": "Apni logote tick ase",
 "Your tick has come off for now": "Apni laka tick etiya karne uthai dishey",
 "Changing your %s will take your tick off until somebody can ring you again. Your plan is not affected.": "Apni laka %s bodli korile, kunba pra apni ke aru ekbar phone nakora tak apni laka tick uthai dibo. Apni laka plan te eku asor nai.",
-"You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you.": "Apni pra apni laka %s bodli kuri shey, etu karne Kaam Ase pra kunba apni ke aru ekbar phone nakora tak tick uthai dishey. Apni laka plan te eku asor nai aro eku pisa kata nai. Amikhan apni ke phone koribo."
+"You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you.": "Apni pra apni laka %s bodli kuri shey, etu karne Kaam Ase pra kunba apni ke aru ekbar phone nakora tak tick uthai dishey. Apni laka plan te eku asor nai aro eku pisa kata nai. Amikhan apni ke phone koribo.",
+"Changing this takes your tick off": "Etu bodli korile apni laka tick uthai dibo",
+"until somebody can ring you again. Your plan is not affected.": "kunba pra apni ke aru ekbar phone nakora tak. Apni laka plan te eku asor nai."
 }

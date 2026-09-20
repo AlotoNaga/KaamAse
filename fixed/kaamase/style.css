@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.6.0
+Version: 1.7.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -481,6 +481,26 @@ table { border-collapse: collapse; width: 100%; }
 
 .ka-hint { margin-top: var(--ka-2); font-size: var(--ka-text-sm); color: var(--ka-text-mute); }
 .ka-error { margin-top: var(--ka-2); font-size: var(--ka-text-sm); color: var(--ka-busy); font-weight: var(--ka-weight-medium); }
+
+/* The line under the three fields a tick depends on: name, photograph and
+   telephone number.
+
+   It is a hint by shape and a warning by colour, which is the right way
+   round. Somebody with a tick is not doing anything wrong by editing
+   their own details and should not be shouted at; they do need to know
+   before they tap, not after they save, because the form is long enough
+   that the notice at the top has scrolled away by the time they reach
+   the number. Amber is the same colour used for a plan about to end. */
+.ka-mark-hint {
+  margin-top: var(--ka-2);
+  padding: var(--ka-2) var(--ka-3);
+  border-left: 3px solid var(--ka-leave);
+  background: var(--ka-leave-bg);
+  color: var(--ka-ink-800);
+  border-radius: 0 var(--ka-radius-sm) var(--ka-radius-sm) 0;
+}
+
+.ka-mark-hint strong { color: var(--ka-amber-700); }
 
 /* Checkbox and radio rows. The whole row is the target, not the box. */
 .ka-check {

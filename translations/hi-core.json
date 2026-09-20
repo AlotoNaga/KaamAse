@@ -906,5 +906,7 @@
 "You have a tick": "आपके पास टिक है",
 "Your tick has come off for now": "आपका टिक अभी के लिए हट गया है",
 "Changing your %s will take your tick off until somebody can ring you again. Your plan is not affected.": "अपना %s बदलने पर आपका टिक हट जाएगा, जब तक कोई आपको दोबारा फ़ोन न कर ले। आपके प्लान पर कोई असर नहीं पड़ता।",
-"You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you.": "आपने अपना %s बदला है, इसलिए टिक हट गया है। Kaam Ase से कोई आपको दोबारा फ़ोन करेगा, तब तक के लिए। आपके प्लान पर कोई असर नहीं है और कोई पैसा नहीं कटा है। हम आपको फ़ोन करेंगे।"
+"You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you.": "आपने अपना %s बदला है, इसलिए टिक हट गया है। Kaam Ase से कोई आपको दोबारा फ़ोन करेगा, तब तक के लिए। आपके प्लान पर कोई असर नहीं है और कोई पैसा नहीं कटा है। हम आपको फ़ोन करेंगे।",
+"Changing this takes your tick off": "इसे बदलने पर आपका टिक हट जाएगा",
+"until somebody can ring you again. Your plan is not affected.": "जब तक कोई आपको दोबारा फ़ोन न कर ले। आपके प्लान पर कोई असर नहीं पड़ता।"
 }

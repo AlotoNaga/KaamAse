@@ -4669,10 +4669,20 @@ signed in — an import, a scheduled task — has no author to hold responsible.
 
 Nobody should lose the mark by surprise: told in advance it is a choice they
 made, found out afterwards it is a platform that took something off them, and
-that is how a fair rule becomes a grievance. The website prints a notice above
-the edit form, and `/me` carries `mark_warning` — **the finished sentence, in
-the language that person reads**, rather than a flag — so the app shows exactly
-what the website shows and the two cannot drift apart.
+that is how a fair rule becomes a grievance.
+
+**In two places on the website, and the second is not redundant.** A notice at
+the top of the form explains the rule once. A short amber line then sits under
+each of the three fields it applies to, because the form is long — photograph,
+name, trades, rates, experience, district, town, telephone — and somebody who
+opens it to change their photograph scrolls straight past the top, while
+somebody changing their number is a long way below anything they read on the
+way in. The notice explains; the field line catches them at the moment they are
+actually deciding.
+
+`/me` carries `mark_warning` for the app — **the finished sentence, in the
+language that person reads**, rather than a flag — so the app shows exactly what
+the website shows and the two cannot drift apart.
 
 Afterwards: the person is told once, in their own language, naming everything
 that changed and saying the plan is safe, because that is the first thing
@@ -4741,7 +4751,7 @@ test exists, and it would not have been found by testing the three separately.
 
 ### Tested
 
-76 assertions, twenty scenarios, each in its own process because the guard
+80 assertions, twenty scenarios, each in its own process because the guard
 remembers what it has dropped in a request.
 
 The negatives carry as much weight as the positives: the rate, experience, town,

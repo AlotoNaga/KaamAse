@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-18 16:22+0000\n"
+"POT-Creation-Date: 2026-09-20 05:19+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,17 +33,17 @@ msgid "%1$s %2$s needed in %3$s"
 msgstr ""
 
 #. translators: 1: a comma separated list, 2: the last item. Example: "name, phone number and photograph"
-#: includes/mark-changes.php:624
+#: includes/mark-changes.php:712
 msgid "%1$s and %2$s"
 msgstr ""
 
 #. translators: 1: person's name, 2: what they changed
-#: includes/mark-changes.php:724
+#: includes/mark-changes.php:812
 msgid "%1$s changed their %2$s, so their tick has come off and they are back on the call list."
 msgstr ""
 
 #. translators: 1: what changed, 2: how long ago
-#: includes/mark-changes.php:868
+#: includes/mark-changes.php:956
 msgid "%1$s changed, %2$s"
 msgstr ""
 
@@ -103,12 +103,12 @@ msgid "%1$s, sent to %2$s"
 msgstr ""
 
 #. translators: 1: what changed, 2: old value, 3: new value, 4: how long ago
-#: includes/mark-changes.php:881
+#: includes/mark-changes.php:969
 msgid "%1$s: \"%2$s\" to \"%3$s\", %4$s"
 msgstr ""
 
 #. translators: 1: what changed, 2: the old value, 3: the new value
-#: includes/mark-changes.php:746
+#: includes/mark-changes.php:834
 msgid "%1$s: was \"%2$s\", now \"%3$s\""
 msgstr ""
 
@@ -149,7 +149,7 @@ msgstr ""
 #. translators: %s: human readable time difference
 #. translators: %s: human readable time difference, for example "2 days"
 #. translators: %s: length of time, e.g. "2 days"
-#: includes/contact.php:1012 includes/hiring-request.php:584 includes/mark-changes.php:858
+#: includes/contact.php:1012 includes/hiring-request.php:584 includes/mark-changes.php:946
 #: includes/promote.php:1584
 msgid "%s ago"
 msgstr ""
@@ -302,7 +302,7 @@ msgid_plural "%s workers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/mark-changes.php:625
+#: includes/mark-changes.php:713
 msgid ", "
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 msgid "A colony council member, GB, church elder or a past employer. This is the strongest thing on your profile."
 msgstr ""
 
-#: includes/profile-edit.php:634
+#: includes/profile-edit.php:652
 msgid "A contractor"
 msgstr ""
 
@@ -467,7 +467,7 @@ msgstr ""
 msgid "A real person rings the number on your profile. It takes a few minutes. We do not ask for money and we will never ask you for a code or a password on that call."
 msgstr ""
 
-#: includes/profile-edit.php:635
+#: includes/profile-edit.php:653
 msgid "A registered company"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgstr ""
 msgid "About who is hiring"
 msgstr ""
 
-#: includes/profile-edit.php:671
+#: includes/profile-edit.php:689
 msgid "About your work"
 msgstr ""
 
@@ -533,7 +533,7 @@ msgid "Account created"
 msgstr ""
 
 #. translators: %s: email address
-#: includes/mark-changes.php:731
+#: includes/mark-changes.php:819
 msgid "Account: %s"
 msgstr ""
 
@@ -754,7 +754,7 @@ msgstr ""
 msgid "An employer"
 msgstr ""
 
-#: includes/profile-edit.php:633
+#: includes/profile-edit.php:651
 msgid "An individual, building or fixing something"
 msgstr ""
 
@@ -794,7 +794,7 @@ msgstr ""
 msgid "Any trade"
 msgstr ""
 
-#: includes/profile-edit.php:508
+#: includes/profile-edit.php:526
 msgid "Anything else about your work"
 msgstr ""
 
@@ -814,11 +814,11 @@ msgstr ""
 msgid "Anything worth remembering"
 msgstr ""
 
-#: includes/employer-index.php:344 includes/profile-edit.php:398 includes/teams.php:238
+#: includes/employer-index.php:344 includes/profile-edit.php:416 includes/teams.php:238
 msgid "Anywhere in Nagaland"
 msgstr ""
 
-#: includes/profile-edit.php:397
+#: includes/profile-edit.php:415
 msgid "Anywhere in my district"
 msgstr ""
 
@@ -1097,7 +1097,7 @@ msgstr ""
 msgid "Bus driver"
 msgstr ""
 
-#: includes/profile-edit.php:218
+#: includes/profile-edit.php:224
 msgid "Business or your name"
 msgstr ""
 
@@ -1178,8 +1178,12 @@ msgstr ""
 msgid "Changed since the call"
 msgstr ""
 
+#: includes/mark-changes.php:1077
+msgid "Changing this takes your tick off"
+msgstr ""
+
 #. translators: %s: the details that are checked, for example "name, phone number, photograph"
-#: includes/mark-changes.php:931
+#: includes/mark-changes.php:1021
 msgid "Changing your %s will take your tick off until somebody can ring you again. Your plan is not affected."
 msgstr ""
 
@@ -1203,7 +1207,7 @@ msgstr ""
 msgid "Choose a password"
 msgstr ""
 
-#: includes/profile-edit.php:469 includes/reports.php:359
+#: includes/profile-edit.php:487 includes/reports.php:359
 msgid "Choose one"
 msgstr ""
 
@@ -1244,7 +1248,7 @@ msgstr ""
 msgid "Choose your trade"
 msgstr ""
 
-#: includes/profile-edit.php:476 includes/rest-shape.php:319
+#: includes/profile-edit.php:494 includes/rest-shape.php:319
 msgid "Church elder or pastor"
 msgstr ""
 
@@ -1279,7 +1283,7 @@ msgstr ""
 msgid "Closes on"
 msgstr ""
 
-#: includes/profile-edit.php:474 includes/rest-shape.php:317
+#: includes/profile-edit.php:492 includes/rest-shape.php:317
 msgid "Colony council member"
 msgstr ""
 
@@ -1458,7 +1462,7 @@ msgstr ""
 msgid "Day rate for the team"
 msgstr ""
 
-#: includes/profile-edit.php:361
+#: includes/profile-edit.php:379
 msgid "Day rate you expect"
 msgstr ""
 
@@ -1470,11 +1474,11 @@ msgstr ""
 msgid "Days worked"
 msgstr ""
 
-#: includes/profile-edit.php:883
+#: includes/profile-edit.php:901
 msgid "Delete my account"
 msgstr ""
 
-#: includes/profile-edit.php:915
+#: includes/profile-edit.php:933
 msgid "Delete my account for good"
 msgstr ""
 
@@ -1533,7 +1537,7 @@ msgstr ""
 #: includes/admin.php:355 includes/employer-index.php:342 includes/fields.php:230
 #: includes/fields.php:318 includes/fields.php:87 includes/google-signin.php:1769
 #: includes/insights.php:584 includes/past-jobs.php:400 includes/post-job.php:310
-#: includes/posted-for.php:303 includes/profile-edit.php:240 includes/queries.php:960
+#: includes/posted-for.php:303 includes/profile-edit.php:252 includes/queries.php:960
 #: includes/registration.php:177 includes/teams.php:200
 msgid "District"
 msgstr ""
@@ -1709,7 +1713,7 @@ msgstr ""
 msgid "Employers look for a mason, a driver, a carpenter. If your trade is missing or wrong you are not in that list at any position. Pick the one you actually do most."
 msgstr ""
 
-#: includes/profile-edit.php:260
+#: includes/profile-edit.php:272
 msgid "Employers look for people near the work."
 msgstr ""
 
@@ -1926,7 +1930,7 @@ msgstr ""
 msgid "GST"
 msgstr ""
 
-#: includes/fields.php:225 includes/profile-edit.php:660
+#: includes/fields.php:225 includes/profile-edit.php:678
 msgid "GST number"
 msgstr ""
 
@@ -1934,7 +1938,7 @@ msgstr ""
 msgid "GST on file"
 msgstr ""
 
-#: includes/profile-edit.php:473 includes/rest-shape.php:316
+#: includes/profile-edit.php:491 includes/rest-shape.php:316
 msgid "Gaon Bura"
 msgstr ""
 
@@ -2119,7 +2123,7 @@ msgid "Hello %s"
 msgstr ""
 
 #. translators: %s: person's name
-#: includes/privacy.php:690 includes/privacy.php:712 includes/profile-edit.php:989
+#: includes/privacy.php:690 includes/privacy.php:712 includes/profile-edit.php:1007
 #: includes/registration.php:707
 msgid "Hello %s,"
 msgstr ""
@@ -2204,7 +2208,7 @@ msgstr ""
 msgid "How far will the team travel"
 msgstr ""
 
-#: includes/profile-edit.php:390
+#: includes/profile-edit.php:408
 msgid "How far will you travel"
 msgstr ""
 
@@ -2397,7 +2401,7 @@ msgstr ""
 msgid "If you ever see something on Kaam Ase that looks like it contradicts this page, tell us. This page describes how the site is built, and if the two disagree then one of them is wrong and we want to know which."
 msgstr ""
 
-#: includes/profile-edit.php:993
+#: includes/profile-edit.php:1011
 msgid "If you ever want to come back, you are welcome to register again."
 msgstr ""
 
@@ -2501,7 +2505,7 @@ msgstr ""
 msgid "Jobs and profiles stay in the words the person who wrote them used. We do not translate what other people have written."
 msgstr ""
 
-#: includes/profile-edit.php:893
+#: includes/profile-edit.php:911
 msgid "Jobs and ratings involving other people are kept without your name, because they are part of somebody else's record too."
 msgstr ""
 
@@ -2667,7 +2671,7 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: includes/profile-edit.php:416
+#: includes/profile-edit.php:434
 msgid "Languages you speak"
 msgstr ""
 
@@ -2860,7 +2864,7 @@ msgstr ""
 msgid "Mobile repair"
 msgstr ""
 
-#: includes/profile-edit.php:378
+#: includes/profile-edit.php:396
 msgid "Monthly pay you expect"
 msgstr ""
 
@@ -2869,7 +2873,7 @@ msgid "More pictures on a job."
 msgstr ""
 
 #. translators: 1: trade name, 2: district, 3: median day rate
-#: includes/profile-edit.php:595
+#: includes/profile-edit.php:613
 msgid "Most %1$s in %2$s ask around rupees %3$s a day. Yours is yours to decide."
 msgstr ""
 
@@ -2953,7 +2957,7 @@ msgstr ""
 msgid "Never shown on the site. Contractors reach you through Kaam Ase and you can see who asked."
 msgstr ""
 
-#: includes/profile-edit.php:273
+#: includes/profile-edit.php:285
 msgid "Never shown on the site. People reach you through Kaam Ase, and you can see who asked."
 msgstr ""
 
@@ -2961,7 +2965,7 @@ msgstr ""
 msgid "Never shown on the site. Workers reach you through Kaam Ase."
 msgstr ""
 
-#: includes/profile-edit.php:497
+#: includes/profile-edit.php:515
 msgid "Never shown publicly. Only we see it, and only to check if there is a problem. Ask them before you put their number here."
 msgstr ""
 
@@ -3472,7 +3476,7 @@ msgid_plural "Only %s pictures were kept. That is what this account can put on a
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/profile-edit.php:396
+#: includes/profile-edit.php:414
 msgid "Only around my town"
 msgstr ""
 
@@ -3480,7 +3484,7 @@ msgstr ""
 msgid "Only around our town"
 msgstr ""
 
-#: includes/profile-edit.php:384
+#: includes/profile-edit.php:402
 msgid "Only if you want steady monthly work. Leave empty otherwise."
 msgstr ""
 
@@ -3535,7 +3539,7 @@ msgstr ""
 msgid "Optional. Keep it about the work."
 msgstr ""
 
-#: includes/profile-edit.php:665
+#: includes/profile-edit.php:683
 msgid "Optional. Registered businesses get taken more seriously by workers."
 msgstr ""
 
@@ -3671,7 +3675,7 @@ msgid "Phone app notifications"
 msgstr ""
 
 #: includes/fields.php:213 includes/fields.php:76 includes/google-signin.php:1755
-#: includes/profile-edit.php:266 includes/registration.php:159
+#: includes/profile-edit.php:278 includes/registration.php:159
 msgid "Phone number"
 msgstr ""
 
@@ -3936,7 +3940,7 @@ msgstr ""
 msgid "Put this job up"
 msgstr ""
 
-#: includes/profile-edit.php:371
+#: includes/profile-edit.php:389
 msgid "Put what you normally ask for. Employers filter by rate, so leaving it empty keeps you out of most searches."
 msgstr ""
 
@@ -4211,7 +4215,7 @@ msgstr ""
 msgid "Sangtam"
 msgstr ""
 
-#: includes/app-version.php:573 includes/indexing-api.php:1124 includes/profile-edit.php:278
+#: includes/app-version.php:573 includes/indexing-api.php:1124 includes/profile-edit.php:296
 #: includes/saved.php:202
 msgid "Save"
 msgstr ""
@@ -4666,7 +4670,7 @@ msgstr ""
 msgid "Site time. Early morning works best: somebody deciding whether to look for work today decides it before they leave the house."
 msgstr ""
 
-#: includes/profile-edit.php:419
+#: includes/profile-edit.php:437
 msgid "So an employer knows you can understand each other on site."
 msgstr ""
 
@@ -4718,7 +4722,7 @@ msgstr ""
 msgid "Somebody is reading it before it goes out to workers. This is usually done within a few hours, and every job on Kaam Ase gets the same check. Nothing more is needed from you."
 msgstr ""
 
-#: includes/profile-edit.php:457
+#: includes/profile-edit.php:475
 msgid "Somebody local who knows you and will say so. A colony council member, a GB, a church elder, a student union officer, or somebody you worked for before. This carries more weight with employers than anything else on your profile."
 msgstr ""
 
@@ -4738,11 +4742,11 @@ msgstr ""
 msgid "Somebody who joined this morning has waited longer than everybody, as far as the list is concerned, so they are seen on their first day rather than waiting weeks for a turn."
 msgstr ""
 
-#: includes/profile-edit.php:478
+#: includes/profile-edit.php:496
 msgid "Someone I worked for"
 msgstr ""
 
-#: includes/profile-edit.php:479
+#: includes/profile-edit.php:497
 msgid "Someone else who knows me"
 msgstr ""
 
@@ -4852,7 +4856,7 @@ msgstr ""
 msgid "Store keeper"
 msgstr ""
 
-#: includes/profile-edit.php:477 includes/rest-shape.php:320
+#: includes/profile-edit.php:495 includes/rest-shape.php:320
 msgid "Student or workers union officer"
 msgstr ""
 
@@ -5327,7 +5331,7 @@ msgstr ""
 msgid "The tick on a profile"
 msgstr ""
 
-#: includes/posted-for.php:247 includes/profile-edit.php:461
+#: includes/posted-for.php:247 includes/profile-edit.php:479
 msgid "Their name"
 msgstr ""
 
@@ -5343,11 +5347,11 @@ msgstr ""
 msgid "Their number"
 msgstr ""
 
-#: includes/profile-edit.php:492
+#: includes/profile-edit.php:510
 msgid "Their phone number"
 msgstr ""
 
-#: includes/mark-changes.php:754
+#: includes/mark-changes.php:842
 msgid "Their plan has not been touched."
 msgstr ""
 
@@ -5580,7 +5584,7 @@ msgstr ""
 msgid "This profile is not available"
 msgstr ""
 
-#: includes/profile-edit.php:889
+#: includes/profile-edit.php:907
 msgid "This removes your profile, your photo and your details from Kaam Ase. It cannot be undone and you would have to start again."
 msgstr ""
 
@@ -5653,7 +5657,7 @@ msgid "Tick at least one kind of work you do."
 msgstr ""
 
 #. translators: %s: person's name
-#: includes/mark-changes.php:760
+#: includes/mark-changes.php:848
 msgid "Tick came off: %s"
 msgstr ""
 
@@ -5661,7 +5665,7 @@ msgstr ""
 msgid "Tick everything the team can cover between them."
 msgstr ""
 
-#: includes/profile-edit.php:330
+#: includes/profile-edit.php:348
 msgid "Tick everything you can do. More trades means more searches you appear in."
 msgstr ""
 
@@ -5702,7 +5706,7 @@ msgid "Town"
 msgstr ""
 
 #: includes/fields.php:323 includes/fields.php:92 includes/post-job.php:325 includes/posted-for.php:317
-#: includes/profile-edit.php:255 includes/teams.php:214
+#: includes/profile-edit.php:267 includes/teams.php:214
 msgid "Town or village"
 msgstr ""
 
@@ -5787,7 +5791,7 @@ msgid "Type"
 msgstr ""
 
 #. translators: %s: the word the person must type
-#: includes/profile-edit.php:905
+#: includes/profile-edit.php:923
 msgid "Type %s to confirm"
 msgstr ""
 
@@ -5808,7 +5812,7 @@ msgstr ""
 msgid "Type the phrase exactly. Nothing has been changed."
 msgstr ""
 
-#: includes/profile-edit.php:956
+#: includes/profile-edit.php:974
 msgid "Type the word exactly to confirm you want to delete your account."
 msgstr ""
 
@@ -5933,7 +5937,7 @@ msgstr ""
 msgid "View team"
 msgstr ""
 
-#: includes/profile-edit.php:475 includes/rest-shape.php:318
+#: includes/profile-edit.php:493 includes/rest-shape.php:318
 msgid "Village council member"
 msgstr ""
 
@@ -6146,7 +6150,7 @@ msgstr ""
 msgid "What a worker gets when they ask for contact details. Never shown openly on the page."
 msgstr ""
 
-#: includes/profile-edit.php:467
+#: includes/profile-edit.php:485
 msgid "What are they"
 msgstr ""
 
@@ -6222,7 +6226,7 @@ msgstr ""
 msgid "What it needs"
 msgstr ""
 
-#: includes/profile-edit.php:627
+#: includes/profile-edit.php:645
 msgid "What kind of employer are you"
 msgstr ""
 
@@ -6250,7 +6254,7 @@ msgstr ""
 msgid "What we are and are not"
 msgstr ""
 
-#: includes/google-signin.php:1793 includes/profile-edit.php:325 includes/registration.php:194
+#: includes/google-signin.php:1793 includes/profile-edit.php:343 includes/registration.php:194
 msgid "What work do you do"
 msgstr ""
 
@@ -6262,7 +6266,7 @@ msgstr ""
 msgid "What work does the team do"
 msgstr ""
 
-#: includes/profile-edit.php:674
+#: includes/profile-edit.php:692
 msgid "What you build, how you pay, anything a worker should know before taking a job with you."
 msgstr ""
 
@@ -6270,7 +6274,7 @@ msgstr ""
 msgid "What you get"
 msgstr ""
 
-#: includes/profile-edit.php:510
+#: includes/profile-edit.php:528
 msgid "What you have built, what tools you have, anything an employer should know."
 msgstr ""
 
@@ -6361,7 +6365,7 @@ msgstr ""
 msgid "Who"
 msgstr ""
 
-#: includes/profile-edit.php:454
+#: includes/profile-edit.php:472
 msgid "Who can vouch for you"
 msgstr ""
 
@@ -6393,7 +6397,7 @@ msgstr ""
 msgid "Who owns the photographs a worker uploads."
 msgstr ""
 
-#: includes/profile-edit.php:652
+#: includes/profile-edit.php:670
 msgid "Who should they ask for"
 msgstr ""
 
@@ -6516,7 +6520,7 @@ msgstr ""
 msgid "Workers needed"
 msgstr ""
 
-#: includes/profile-edit.php:646
+#: includes/profile-edit.php:664
 msgid "Workers treat an individual building a house differently from a contractor running four sites. Both are fine, they just want to know."
 msgstr ""
 
@@ -6560,7 +6564,7 @@ msgstr ""
 msgid "Write the Privacy and Terms pages. They are placeholders and both say so in public."
 msgstr ""
 
-#: includes/profile-edit.php:347
+#: includes/profile-edit.php:365
 msgid "Years doing this work"
 msgstr ""
 
@@ -6684,7 +6688,7 @@ msgid "You cannot see this page."
 msgstr ""
 
 #. translators: %s: the details that changed, for example "name, phone number"
-#: includes/mark-changes.php:659
+#: includes/mark-changes.php:747
 msgid "You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you."
 msgstr ""
 
@@ -6692,7 +6696,7 @@ msgstr ""
 msgid "You did work for these people. A few yes or no questions each, including whether you were paid what was agreed. Neither side sees the other's answers until you have both written one."
 msgstr ""
 
-#: includes/mark-changes.php:954
+#: includes/mark-changes.php:1044
 msgid "You have a tick"
 msgstr ""
 
@@ -6803,7 +6807,7 @@ msgid "You worked with these people. A few yes or no questions each. Neither of 
 msgstr ""
 
 #. translators: %s: site name
-#: includes/profile-edit.php:981
+#: includes/profile-edit.php:999
 msgid "Your %s account is closed"
 msgstr ""
 
@@ -6812,7 +6816,7 @@ msgstr ""
 msgid "Your %s profile is hidden for now"
 msgstr ""
 
-#: includes/profile-edit.php:992
+#: includes/profile-edit.php:1010
 msgid "Your account and your profile have been removed. Nothing of yours is left on the site."
 msgstr ""
 
@@ -6858,7 +6862,7 @@ msgstr ""
 msgid "Your job on %s is being checked"
 msgstr ""
 
-#: includes/google-signin.php:1746 includes/profile-edit.php:219 includes/reports.php:446
+#: includes/google-signin.php:1746 includes/profile-edit.php:225 includes/reports.php:446
 msgid "Your name"
 msgstr ""
 
@@ -6955,7 +6959,7 @@ msgstr ""
 msgid "Your team listing is down. Your own profile is untouched."
 msgstr ""
 
-#: includes/mark-changes.php:656
+#: includes/mark-changes.php:744
 msgid "Your tick has come off for now"
 msgstr ""
 
@@ -7020,7 +7024,7 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: includes/mark-changes.php:122
+#: includes/mark-changes.php:134
 msgid "name"
 msgstr ""
 
@@ -7056,11 +7060,11 @@ msgstr ""
 msgid "per month"
 msgstr ""
 
-#: includes/mark-changes.php:123
+#: includes/mark-changes.php:135
 msgid "phone number"
 msgstr ""
 
-#: includes/mark-changes.php:124
+#: includes/mark-changes.php:136
 msgid "photograph"
 msgstr ""
 
@@ -7081,7 +7085,11 @@ msgstr ""
 msgid "terms"
 msgstr ""
 
-#: includes/profile-edit.php:591
+#: includes/mark-changes.php:1079
+msgid "until somebody can ring you again. Your plan is not affected."
+msgstr ""
+
+#: includes/profile-edit.php:609
 msgid "workers"
 msgstr ""
 
@@ -7114,7 +7122,7 @@ msgctxt "confirmation phrase for wiping all platform data"
 msgid "DELETE EVERYTHING"
 msgstr ""
 
-#: includes/profile-edit.php:906 includes/profile-edit.php:953
+#: includes/profile-edit.php:924 includes/profile-edit.php:971
 msgctxt "confirmation word, keep it short and in capitals"
 msgid "DELETE"
 msgstr ""
