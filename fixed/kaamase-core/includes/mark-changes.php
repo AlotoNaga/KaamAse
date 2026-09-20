@@ -62,7 +62,7 @@
  * name loses the tick and keeps every day of the plan they paid for.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.12.0
  */
 
@@ -1067,17 +1067,60 @@ if ( ! function_exists( 'kaamase_mark_field_hint' ) ) {
 	 */
 	function kaamase_mark_field_hint( $user_id = 0 ) {
 
-		$user_id = $user_id ? (int) $user_id : get_current_user_id();
+		$note = kaamase_mark_field_words( $user_id );
 
-		if ( ! $user_id || ! kaamase_mark_has_record( $user_id ) ) {
+		if ( empty( $note ) ) {
 			return '';
 		}
 
 		return '<p class="ka-hint ka-mark-hint"><strong>'
-			. esc_html__( 'Changing this takes your tick off', 'kaamase-core' )
+			. esc_html( $note['lead'] )
 			. '</strong> '
-			. esc_html__( 'until somebody can ring you again. Your plan is not affected.', 'kaamase-core' )
+			. esc_html( $note['rest'] )
 			. '</p>';
+	}
+}
+
+if ( ! function_exists( 'kaamase_mark_field_words' ) ) {
+	/**
+	 * The two halves of that line, or nothing.
+	 *
+	 * Split because the website bolds the first half and the app cannot
+	 * be handed markup. Kept in one place so neither surface can end up
+	 * saying something the other does not.
+	 *
+	 * @since 1.12.0
+	 * @param int $user_id Account. Defaults to whoever is signed in.
+	 * @return array lead and rest, or empty.
+	 */
+	function kaamase_mark_field_words( $user_id = 0 ) {
+
+		$user_id = $user_id ? (int) $user_id : get_current_user_id();
+
+		if ( ! $user_id || ! kaamase_mark_has_record( $user_id ) ) {
+			return array();
+		}
+
+		return array(
+			'lead' => __( 'Changing this takes your tick off', 'kaamase-core' ),
+			'rest' => __( 'until somebody can ring you again. Your plan is not affected.', 'kaamase-core' ),
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_mark_field_note' ) ) {
+	/**
+	 * The same line as one plain sentence, for the app.
+	 *
+	 * @since 1.12.0
+	 * @param int $user_id Account.
+	 * @return string
+	 */
+	function kaamase_mark_field_note( $user_id = 0 ) {
+
+		$note = kaamase_mark_field_words( $user_id );
+
+		return empty( $note ) ? '' : $note['lead'] . ' ' . $note['rest'];
 	}
 }
 
@@ -1097,7 +1140,21 @@ if ( ! function_exists( 'kaamase_mark_shape_me' ) ) {
 	 */
 	function kaamase_mark_shape_me( $me, $user_id ) {
 
-		$me['mark_warning'] = kaamase_mark_warning( $user_id );
+		/*
+		 * Two sentences, for the two places the website says it.
+		 *
+		 * mark_warning is the one that explains the rule, and belongs at
+		 * the top of an edit screen. mark_field_note is the short one
+		 * that belongs under each of the three fields it applies to,
+		 * which matters more on a phone than it does on a desktop: the
+		 * screen is smaller and the form is just as long, so the notice
+		 * at the top is gone before somebody reaches their number.
+		 *
+		 * Both are empty for anybody without a call on record, so the
+		 * app can print them without asking any further questions.
+		 */
+		$me['mark_warning']    = kaamase_mark_warning( $user_id );
+		$me['mark_field_note'] = kaamase_mark_field_note( $user_id );
 
 		return $me;
 	}

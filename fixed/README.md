@@ -4680,9 +4680,15 @@ somebody changing their number is a long way below anything they read on the
 way in. The notice explains; the field line catches them at the moment they are
 actually deciding.
 
-`/me` carries `mark_warning` for the app — **the finished sentence, in the
-language that person reads**, rather than a flag — so the app shows exactly what
-the website shows and the two cannot drift apart.
+`/me` carries both of them for the app — `mark_warning` and
+`mark_field_note`, **finished sentences in the language that person reads**
+rather than flags — so the app shows exactly what the website shows and the two
+cannot drift apart. Both are empty for anybody without a call on record, so the
+app prints them without asking any further question.
+
+The short one matters more on a phone than on a desktop, not less: the screen is
+smaller and the form is just as long, so a notice at the top is gone before
+somebody reaches their number.
 
 Afterwards: the person is told once, in their own language, naming everything
 that changed and saying the plan is safe, because that is the first thing
@@ -4751,7 +4757,7 @@ test exists, and it would not have been found by testing the three separately.
 
 ### Tested
 
-80 assertions, twenty scenarios, each in its own process because the guard
+85 assertions, twenty scenarios, each in its own process because the guard
 remembers what it has dropped in a request.
 
 The negatives carry as much weight as the positives: the rate, experience, town,
