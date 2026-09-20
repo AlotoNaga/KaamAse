@@ -4688,6 +4688,44 @@ decides what kind of call this is: somebody who went from Imliakum to Imliakum
 Jamir needs thirty seconds, and somebody who went to the name of a company that
 exists needs a different conversation.
 
+### The hole a lapsed plan left
+
+Found when the owner asked why no warning appeared, which turned out to be two
+different things at once.
+
+`kaamase_has_been_called()` answers "is the tick showing", and that requires the
+plan to still be running. rich-manu.php is explicit about what happens when it
+is not: *"Nothing is deleted when a plan lapses. The record of the call stays,
+so renewing brings the mark straight back with no second phone call."*
+
+Which made the whole rule avoidable by the easiest route there is:
+
+1. let the plan lapse, and the tick goes quiet on its own
+2. change to a false name while nothing is watching, because there is no tick
+   to lose
+3. renew — and the mark comes straight back, onto the new name, with nobody
+   having ever rung it
+
+The guard now asks `kaamase_mark_has_record()` instead: is there a call on
+record that this change would make untrue. A lapsed plan does not make the call
+less true and must not make the change less consequential. The warning follows
+the same rule, so somebody whose plan has lapsed is told before they edit —
+they have the most to lose, since their mark is coming back on renewal and this
+is what stops it.
+
+### Both sides of one account
+
+Asked directly, and the answer is yes. An account can hold a worker profile and
+an employer profile — on this platform many do, the same people in different
+weeks — and both carry the same tick because the tick is on the account.
+
+Nothing special was needed. The guard compares the signed-in person against
+`$post->post_author`, which is the same account for both profiles, so changing
+either costs the same mark. Both website edit routes go through
+`kaamase_profile_form()` as well: the dedicated page for the profile somebody
+registered with, and `?edit=` on the dashboard for the other one. Tested from
+both sides.
+
 ### The bug the tests found
 
 The first version recorded **one** change when three had happened.
@@ -4703,7 +4741,7 @@ test exists, and it would not have been found by testing the three separately.
 
 ### Tested
 
-64 assertions, sixteen scenarios, each in its own process because the guard
+76 assertions, twenty scenarios, each in its own process because the guard
 remembers what it has dropped in a request.
 
 The negatives carry as much weight as the positives: the rate, experience, town,

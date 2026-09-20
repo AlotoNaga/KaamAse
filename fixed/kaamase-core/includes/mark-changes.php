@@ -166,6 +166,47 @@ if ( ! function_exists( 'kaamase_mark_phone_key' ) ) {
    2. WHOSE CHANGE IT IS
    ========================================================================== */
 
+if ( ! function_exists( 'kaamase_mark_has_record' ) ) {
+	/**
+	 * Whether a call is on record for this account.
+	 *
+	 * Deliberately NOT kaamase_has_been_called(), and the difference is
+	 * a hole rather than a detail.
+	 *
+	 * That function answers "is the tick showing", which also requires
+	 * the plan to be running. rich-manu.php says why, and says plainly
+	 * what happens when it is not: "Nothing is deleted when a plan
+	 * lapses. The record of the call stays, so renewing brings the mark
+	 * straight back with no second phone call."
+	 *
+	 * Which means asking whether the tick is showing would leave the
+	 * whole rule avoidable, by the easiest route there is:
+	 *
+	 *   1. let the plan lapse, and the tick goes quiet on its own
+	 *   2. change to a false name while nothing is watching, because
+	 *      there is no tick to lose
+	 *   3. renew -- and the mark comes straight back, onto the new name,
+	 *      with nobody ever having rung it
+	 *
+	 * So this asks the question that actually matters: is there a call
+	 * on record that a change would make untrue. A lapsed plan does not
+	 * make the call less true, and it must not make the change less
+	 * consequential.
+	 *
+	 * @since 1.12.0
+	 * @param int $user_id Account.
+	 * @return bool
+	 */
+	function kaamase_mark_has_record( $user_id ) {
+
+		if ( ! defined( 'KAAMASE_CALLED_AT_KEY' ) ) {
+			return false;
+		}
+
+		return (int) get_user_meta( (int) $user_id, KAAMASE_CALLED_AT_KEY, true ) > 0;
+	}
+}
+
 if ( ! function_exists( 'kaamase_mark_dropped_here' ) ) {
 	/**
 	 * Whose mark this request has already taken off.
@@ -255,7 +296,7 @@ if ( ! function_exists( 'kaamase_mark_change_counts' ) ) {
 		 */
 		if ( ! kaamase_mark_dropped_here( $actor ) ) {
 
-			if ( ! function_exists( 'kaamase_has_been_called' ) || ! kaamase_has_been_called( $actor ) ) {
+			if ( ! kaamase_mark_has_record( $actor ) ) {
 				return false;
 			}
 		}
@@ -965,11 +1006,13 @@ if ( ! function_exists( 'kaamase_mark_warning' ) ) {
 
 		$user_id = $user_id ? (int) $user_id : get_current_user_id();
 
-		if ( ! $user_id || ! function_exists( 'kaamase_has_been_called' ) ) {
-			return '';
-		}
-
-		if ( ! kaamase_has_been_called( $user_id ) ) {
+		/*
+		 * Warned on the record, not on the tick being visible, so that
+		 * somebody whose plan has lapsed is told before they change
+		 * something. They have the most to lose: their mark is coming
+		 * back on renewal and this is what stops it.
+		 */
+		if ( ! $user_id || ! kaamase_mark_has_record( $user_id ) ) {
 			return '';
 		}
 
