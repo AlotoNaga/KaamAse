@@ -60,7 +60,7 @@
  * exactly as it did before this file existed.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.7.0
  */
 
@@ -801,6 +801,9 @@ if ( ! function_exists( 'kaamase_apple_signup_errors' ) ) {
 
 			if ( '' === $data['email_in'] ) {
 				$errors[] = __( 'Please enter your email address.', 'kaamase-core' );
+			} elseif ( ! empty( $data['email_problem'] ) ) {
+				// A mistyped address, found by kaamase_email_problem(). See email-typos.php.
+				$errors[] = $data['email_problem'];
 			} elseif ( ! is_email( $data['email'] ) ) {
 				$errors[] = __( 'Please enter a working email address.', 'kaamase-core' );
 			} elseif ( email_exists( $data['email'] ) ) {
@@ -1133,17 +1136,43 @@ if ( ! function_exists( 'kaamase_rest_apple_complete' ) ) {
 		 * back to. The form asks for it, so an empty one is a plain
 		 * validation error rather than a silent blank.
 		 */
-		$errors = kaamase_apple_signup_errors( $data, '' === $claims['email'] );
+		$needs_email = ( '' === $claims['email'] );
+
+		/*
+		 * The typed address is checked for typos exactly as the ordinary
+		 * registration form is. This is the one address on the platform
+		 * that nobody copied from anywhere, typed on a phone at the end of
+		 * a sign up, so it is where a slip is most likely. An address
+		 * Apple supplied is proven and never questioned.
+		 *
+		 * email_as_typed is the way through for an address that really is
+		 * right, as on /auth/register. Without it a suggestion would be a
+		 * locked door for anybody whose unusual address is genuine.
+		 */
+		$email_problem = ( $needs_email && '' !== $email_in && function_exists( 'kaamase_email_problem' ) )
+			? kaamase_email_problem( $email_in, rest_sanitize_boolean( $request->get_param( 'email_as_typed' ) ) )
+			: null;
+
+		$data['email_problem'] = $email_problem ? $email_problem['message'] : '';
+
+		$errors = kaamase_apple_signup_errors( $data, $needs_email );
 
 		if ( ! empty( $errors ) ) {
+
+			$error_data = array(
+				'messages' => $errors,
+				'status'   => 400,
+			);
+
+			if ( $email_problem && '' !== $email_problem['suggestion'] ) {
+				$error_data['email_suggestion'] = $email_problem['suggestion'];
+			}
+
 			return kaamase_rest_error(
 				new WP_Error(
 					'kaamase_invalid_registration',
 					$errors[0],
-					array(
-						'messages' => $errors,
-						'status'   => 400,
-					)
+					$error_data
 				)
 			);
 		}

@@ -4895,8 +4895,9 @@ better with two small additions, in the message for the app side:
 
 Until the app adds those, an app user who really does have an unusual address
 can still register on the website. Both apply to app registration and to
-correcting an unconfirmed address from the app. Google and Apple sign in are not
-checked: those addresses come from the provider and are already proven.
+correcting an unconfirmed address from the app, and, since fix 72, to the address
+typed on the Apple finish screen. An address that Google or Apple itself supplies
+is never checked: that one is proven.
 
 ### Tested
 
@@ -5013,6 +5014,42 @@ Everything else passed on the real site:
 - **Promote card:** signed in as an employer at phone width with the long
   nursing title in the list, the page is exactly 390 wide, and sending the form
   records the request with the chosen length and time.
+
+## 72. The address typed on the Apple finish screen
+
+Reported by the app side, and it corrects a line in fix 70, which said Apple and
+Google sign ups need no typo check because the provider supplies the address.
+That is not true when **Apple withholds the address**. The person then types one
+by hand on the finish screen, it goes to `/auth/apple/complete`, and that route
+never reached the check. It is the address where a slip is most likely, because
+nobody copied it from anywhere.
+
+**One file:** `fixed/kaamase-core/includes/apple-signin.php` (1.1.0). No new
+words, so no language files.
+
+- The typed address now gets exactly the same check as `/auth/register`: the
+  same translated message, `email_suggestion` in the reply, and `email_as_typed:
+  true` as the way through for an unusual address that really is right.
+- An address **Apple supplied** is never questioned, and the typed box is still
+  ignored when Apple sent one, as before.
+- A returning Apple id is still signed straight in with no address involved.
+
+**Google needs nothing.** `/auth/google/complete` has no email field at all: the
+address always comes from Google's own token, so there is nothing typed to check.
+If the app's finish screen shows an email box for Google, whatever is typed there
+is ignored by the server.
+
+### Tested on the real WordPress site
+
+Apple's signature check needs a token Apple signed, so on the test site only, a
+must-use plugin stood in for `kaamase_apple_verify()` (a token `test|id|email`);
+everything after the token check was the plugin's real code. 15 checks over HTTP:
+the typo caught with `email_suggestion`, accepted with `email_as_typed`, the text
+"false" not taken as yes, a right address through, an impossible Gmail name,
+Nagamese and Hindi, the name error listed alongside, the old messages for an
+empty box and for nonsense, Apple's own address untouched, and a returning id
+signed in. The database then showed the insisted typo saved exactly as typed and
+no account made for the refused one. Nothing in `debug.log`.
 
 ## Not changed, and why
 
