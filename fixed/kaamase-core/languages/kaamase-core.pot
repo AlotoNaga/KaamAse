@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-23 16:23+0000\n"
+"POT-Creation-Date: 2026-09-23 16:28+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4187,23 +4187,23 @@ msgstr ""
 msgid "Rupees %1$s is below the legal minimum wage of rupees %2$s. Check the amount, or change the pay period if you picked the wrong one."
 msgstr ""
 
-#: includes/sharing.php:207
+#: includes/sharing.php:255
 msgid "Rupees %s"
 msgstr ""
 
-#: includes/sharing.php:200
+#: includes/sharing.php:248
 msgid "Rupees %s a day"
 msgstr ""
 
-#: includes/sharing.php:201
+#: includes/sharing.php:249
 msgid "Rupees %s a month"
 msgstr ""
 
-#: includes/sharing.php:202
+#: includes/sharing.php:250
 msgid "Rupees %s an hour"
 msgstr ""
 
-#: includes/sharing.php:203
+#: includes/sharing.php:251
 msgid "Rupees %s for the job"
 msgstr ""
 
@@ -4514,6 +4514,10 @@ msgstr ""
 
 #: includes/number-requests.php:917
 msgid "Share my number"
+msgstr ""
+
+#: includes/sharing.php:489
+msgid "Share on WhatsApp"
 msgstr ""
 
 #: includes/posted-for.php:128

@@ -83,6 +83,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/views-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/promote.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/email-typos.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/sharing.php` | `wp-content/plugins/kaamase-core/includes/sharing.php` |
 | `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
@@ -4906,6 +4907,77 @@ same typo insisted on, a different typo the second time, an impossible Gmail
 name, a double dot insisted on, the app's reply shape, `email_as_typed` sent as
 the text "false", and every other error reply unchanged. The Hindi and
 Nagamese lines were read back out of the compiled `.mo` files.
+
+## 71. Share on WhatsApp, with the post's own photo in the chat
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/sharing.php` | 1.1.0, replaces the live one |
+| `fixed/kaamase-core/languages/kaamase-core.pot` | one new line |
+| `fixed/kaamase-core/languages/kaamase-core-hi_IN.po` and `.mo` | Hindi |
+| `fixed/kaamase-core/languages/kaamase-core-nag.po` and `.mo` | Nagamese |
+
+The language files already include fix 70's lines, so upload these once for
+both. After uploading, **LiteSpeed Cache → Toolbox → Purge All**, so cached job
+and profile pages pick up the button and the corrected share picture.
+
+### The button
+
+**Share on WhatsApp** now sits under Save on every open job, published worker
+profile, team and employer page. It is shown to everybody, owners included:
+the person most likely to share a job is whoever posted it, into the groups
+where the workers already are. It is not shown on a closed job (it would send
+people to work that has gone) or on a profile still waiting for its email to be
+confirmed (nobody else can open it yet).
+
+One tap opens WhatsApp, on a phone or on a computer through WhatsApp Web, with
+the message already written: the job or person's name, and the link. Nothing
+else is written into the message, because WhatsApp builds the preview itself
+from the link.
+
+In Hindi it reads **WhatsApp पर भेजें** and in Nagamese **WhatsApp te pathai
+dibi**, the wording the site already uses for sending a link on WhatsApp. It
+matches the theme's own outline button, with WhatsApp's mark in its green; no
+theme file changed.
+
+### The photo in the preview
+
+The picture in a WhatsApp preview comes from the page's share tags, which
+already used a job's first photo. What was wrong was profiles.
+
+A profile photo is square, so the site never makes the 960 by 540 wide copy
+that the share card asked for. WordPress does not refuse a size that was never
+made: it quietly hands back the full original, up to 1600 pixels, and a file
+that heavy is often not shown by WhatsApp at all. So a shared profile could
+arrive with no picture, or with the logo.
+
+Now each kind of page asks for a size it really has:
+
+| Page | Picture in the chat |
+| --- | --- |
+| Job with photos | its first photo, 960 by 540, the large picture across the top |
+| Worker, team, employer with a photo | their own 320 square, the small picture beside the name |
+| Older photo with no square | the 300 medium copy |
+| Very small upload | the upload itself, which is small too |
+| Nothing usable | the Kaam Ase logo, as before |
+
+Only a copy that really exists as its own file is used, never the original
+dressed up with a smaller size's name.
+
+WhatsApp remembers a link's preview for a while, so a link shared before this
+change may keep its old preview for some days. New shares get the new one.
+
+### Tested
+
+22 assertions: each row of the table above, with `wp_get_attachment_image_src()`
+behaving as core's `image_downsize()` does for a size that was never made; the
+message written into the link (a job name with `&` and an apostrophe arrives as
+real characters, not `&#038;`); no button on a closed job, a draft profile or an
+ordinary page; and the button appended only to the page's own content, not to a
+list or an excerpt. The button was rendered with the theme's stylesheet at phone
+width: 48 pixels tall, and the page stays phone width.
 
 ## Not changed, and why
 
