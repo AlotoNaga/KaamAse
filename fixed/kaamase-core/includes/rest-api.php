@@ -29,7 +29,7 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.7.0
+ * @version 1.8.0
  * @since   1.3.0
  */
 
@@ -2592,13 +2592,29 @@ if ( ! function_exists( 'kaamase_rest_report' ) ) {
 	 */
 	function kaamase_rest_report( $request ) {
 
-		if ( ! kaamase_report_rate_ok() ) {
+		$params = (array) $request->get_json_params();
+
+		/*
+		 * Wording fixes count against their own allowance, not the one for
+		 * reports. Otherwise somebody who had just sent five corrections to
+		 * the Nagamese would be told to wait an hour before they could report
+		 * a job asking for money. Still capped, so the route cannot be used
+		 * to flood the Reports list.
+		 */
+		$wording = isset( $params['kind'] ) && 'wording' === sanitize_key( (string) $params['kind'] )
+			&& ! ( isset( $params['mode'] ) && 'grievance' === $params['mode'] );
+
+		$allowed = $wording
+			? kaamase_rate_bump( kaamase_report_key() . '_wording_rate', HOUR_IN_SECONDS ) <= 20
+			: kaamase_report_rate_ok();
+
+		if ( ! $allowed ) {
 			return kaamase_rest_error(
 				new WP_Error( 'kaamase_rate_limited', __( 'You have sent several already. If it is urgent, call us instead.', 'kaamase-core' ), array( 'status' => 429 ) )
 			);
 		}
 
-		$result = kaamase_submit_report( (array) $request->get_json_params(), get_current_user_id() );
+		$result = kaamase_submit_report( $params, get_current_user_id() );
 
 		if ( is_wp_error( $result ) ) {
 			return kaamase_rest_error( $result );

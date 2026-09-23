@@ -32,7 +32,7 @@
  *    platform that publishes allegations becomes a weapon.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 
@@ -100,6 +100,33 @@ if ( ! function_exists( 'kaamase_register_report_type' ) ) {
 				'label_count'               => _n_noop(
 					'Open <span class="count">(%s)</span>',
 					'Open <span class="count">(%s)</span>',
+					'kaamase-core'
+				),
+			)
+		);
+
+		/*
+		 * Wording fixes sent from the app: a word in Hindi or Nagamese that
+		 * reads wrong, with what it should say.
+		 *
+		 * Their own status rather than a filter over Open, so they never sit
+		 * among reports of harassment and fake jobs. Kept out of All, given
+		 * their own link at the top of the Reports list, and every count
+		 * stays right because WordPress keeps it per status.
+		 */
+		register_post_status(
+			'kaamase_wording',
+			array(
+				'label'                     => _x( 'Wording fixes', 'report status', 'kaamase-core' ),
+				'public'                    => false,
+				'internal'                  => false,
+				'protected'                 => true,
+				'show_in_admin_all_list'    => false,
+				'show_in_admin_status_list' => true,
+				/* translators: %s: number of wording fixes */
+				'label_count'               => _n_noop(
+					'Wording fixes <span class="count">(%s)</span>',
+					'Wording fixes <span class="count">(%s)</span>',
 					'kaamase-core'
 				),
 			)
@@ -899,8 +926,16 @@ function kaamase_render_report_meta( $post ) {
 
 	$prefix = KAAMASE_META_PREFIX . 'r_';
 
+	// What kind of report it is, including kinds the website form does not offer, such as a wording fix from the app.
+	$kind  = (string) get_post_meta( $post->ID, $prefix . 'kind', true );
+	$kinds = kaamase_report_kinds();
+	$type  = 'wording' === $kind
+		? __( 'Wording fix from the app', 'kaamase-core' )
+		: ( isset( $kinds[ $kind ] ) ? $kinds[ $kind ]['label'] : $kind );
+
 	$rows = array(
 		__( 'Reference', 'kaamase-core' )   => get_post_meta( $post->ID, $prefix . 'reference', true ),
+		__( 'Type', 'kaamase-core' )        => $type,
 		__( 'About', 'kaamase-core' )       => get_post_meta( $post->ID, $prefix . 'about_who', true ),
 		__( 'From', 'kaamase-core' )        => get_post_meta( $post->ID, $prefix . 'anonymous', true )
 			? __( 'Anonymous', 'kaamase-core' )

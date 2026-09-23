@@ -33,7 +33,7 @@
  * sending JSON. Each front end keeps its own.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.3.0
  */
 
@@ -662,24 +662,48 @@ if ( ! function_exists( 'kaamase_submit_report' ) ) {
 		$kinds  = kaamase_report_kinds();
 		$urgent = $wage || ( isset( $kinds[ $kind ] ) && $kinds[ $kind ]['urgent'] );
 
+		/*
+		 * A wording fix from the app: Language, Key, English, Now and Should
+		 * be, one per line. Not a case against anybody, so it is filed under
+		 * its own status (see reports.php) and never among the open reports.
+		 * Any other kind the website form does not list is still accepted,
+		 * as it always was, and filed as an ordinary report.
+		 */
+		$wording = ! $wage && 'wording' === $kind;
+
 		$reference = strtoupper( wp_generate_password( 6, false, false ) );
 
-		$title = $wage
-			/* translators: %s: reference code */
-			? sprintf( __( 'Wage complaint %s', 'kaamase-core' ), $reference )
-			: sprintf(
-				/* translators: 1: kind of report, 2: reference code */
-				__( '%1$s %2$s', 'kaamase-core' ),
-				isset( $kinds[ $kind ] ) ? $kinds[ $kind ]['label'] : __( 'Report', 'kaamase-core' ),
-				$reference
-			);
+		if ( $wording ) {
+
+			$language = preg_match( '/^\s*Language:\s*(.+)$/mi', $details, $found )
+				? mb_substr( trim( $found[1] ), 0, 20 )
+				: '';
+
+			$title = '' !== $language
+				/* translators: 1: reference code, 2: language code such as nag */
+				? sprintf( __( 'Wording fix %1$s (%2$s)', 'kaamase-core' ), $reference, $language )
+				/* translators: %s: reference code */
+				: sprintf( __( 'Wording fix %s', 'kaamase-core' ), $reference );
+
+		} else {
+
+			$title = $wage
+				/* translators: %s: reference code */
+				? sprintf( __( 'Wage complaint %s', 'kaamase-core' ), $reference )
+				: sprintf(
+					/* translators: 1: kind of report, 2: reference code */
+					__( '%1$s %2$s', 'kaamase-core' ),
+					isset( $kinds[ $kind ] ) ? $kinds[ $kind ]['label'] : __( 'Report', 'kaamase-core' ),
+					$reference
+				);
+		}
 
 		$report_id = wp_insert_post(
 			array(
 				'post_type'    => 'kaamase_report',
 				'post_title'   => $title,
 				'post_content' => $details,
-				'post_status'  => 'kaamase_open_case',
+				'post_status'  => $wording ? 'kaamase_wording' : 'kaamase_open_case',
 				'post_author'  => 0,
 			),
 			true

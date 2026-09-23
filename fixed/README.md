@@ -5051,6 +5051,60 @@ empty box and for nonsense, Apple's own address untouched, and a returning id
 signed in. The database then showed the insisted typo saved exactly as typed and
 no account made for the refused one. Nothing in `debug.log`.
 
+## 73. Wording fixes from the app, kept apart from reports
+
+The app now sends translation corrections to `POST /reports` with `mode:
+"report"`, `kind: "wording"`, and `details` as five lines: Language, Key,
+English, Now, Should be. Anonymous, like any report.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/reports.php` | 1.1.0 |
+| `fixed/kaamase-core/includes/services.php` | 1.3.0 |
+| `fixed/kaamase-core/includes/rest-api.php` | 1.8.0 (includes fix 70) |
+
+The new words are on admin screens only, which stay in English, so the language
+files do not need uploading for this one.
+
+### An unknown kind was never refused
+
+Checked before changing anything: `kaamase_submit_report()` refuses only an
+empty kind and details under 20 characters. A kind the website form does not
+list was always accepted and filed as an ordinary open report titled
+"Report" and its reference. It still is. So the app's corrections were already
+arriving; they were simply landing among the abuse reports.
+
+### What changed
+
+- **Their own place.** A wording fix is filed under a new status, **Wording
+  fixes**, not Open. WordPress then keeps it out of *All*, gives it its own
+  link at the top of *Kaam Ase → Reports*, and keeps every count right, because
+  it counts per status.
+- **A title you can read at a glance:** `Wording fix ABC123 (nag)`, with the
+  language taken from the first of the five lines.
+- **Opening one** shows *Type: Wording fix from the app* in the details box.
+  Every report now shows its type there.
+- **Its own allowance.** Reports were limited to 5 an hour per connection,
+  shared by every kind. Somebody who had just sent five corrections to the
+  Nagamese would have been told to wait an hour before they could report a job
+  asking for money. Wording fixes now have their own limit of 20 an hour, and the
+  5 for real reports is untouched.
+- The email to you still goes out for each one, with the same readable title in
+  the subject, so it never looks like an abuse report.
+
+### Tested on the real WordPress site
+
+16 checks over HTTP and in the admin: the five lines accepted anonymously and
+kept exactly, line breaks included; filed under Wording fixes, not urgent, titled
+with reference and language; an unknown kind still accepted as an open report
+and an empty kind still refused; seven fixes in a row accepted and a real report
+from the same phone straight after still going through; wording capped at 20; and
+in the owner's Reports list, the Wording fixes link present, none of them in the
+main list, *All* counting exactly what it shows, and the details box reading
+*Wording fix from the app*. Nothing from these files in `debug.log`.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
