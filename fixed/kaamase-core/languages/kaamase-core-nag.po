@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-20 05:19+0000\n"
-"PO-Revision-Date: 2026-09-20 05:19+0000\n"
+"POT-Creation-Date: 2026-09-23 16:23+0000\n"
+"PO-Revision-Date: 2026-09-23 16:23+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -152,7 +152,7 @@ msgstr "Pura Nagaland te %s"
 #. translators: %s: human readable time difference, for example "2 days"
 #. translators: %s: length of time, e.g. "2 days"
 #: includes/contact.php:1012 includes/hiring-request.php:584 includes/mark-changes.php:946
-#: includes/promote.php:1584
+#: includes/promote.php:1602
 msgid "%s ago"
 msgstr "%s age"
 
@@ -226,7 +226,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: length of time, e.g. "3 days"
-#: includes/promote.php:1688
+#: includes/promote.php:1706
 msgid "%s left"
 msgstr ""
 
@@ -250,7 +250,7 @@ msgstr[0] "Etu khan laka pichete %s jinis aru."
 msgstr[1] "Etu khan laka pichete %s jinis aru."
 
 #. translators: %s: site name
-#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:715
+#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:760
 msgid "%s never asks a worker for money."
 msgstr "%s kitia b worker pra pisa mangi nai."
 
@@ -284,7 +284,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of promotions
-#: includes/promote.php:1518
+#: includes/promote.php:1536
 msgid "%s promotion"
 msgid_plural "%s promotions"
 msgstr[0] ""
@@ -655,7 +655,7 @@ msgstr "Add hoishey"
 msgid "Added on top of anything already running on their account."
 msgstr ""
 
-#: includes/account-providers.php:676
+#: includes/account-providers.php:698
 msgid "Address changed. Tap the link in the email we have just sent to finish."
 msgstr "Address bodli hoishey. Khotom koribole amikhan etiya pathai diya email laka link te tap koribi."
 
@@ -901,12 +901,12 @@ msgstr ""
 msgid "Ask your host to block PHP execution inside wp-content/uploads. Until that is done, an upload hole becomes a compromised server."
 msgstr ""
 
-#: includes/promote.php:1546 includes/verify-requests.php:472
+#: includes/promote.php:1564 includes/verify-requests.php:472
 msgid "Asked"
 msgstr ""
 
 #. translators: %s: length they asked for
-#: includes/promote.php:1595
+#: includes/promote.php:1613
 msgid "Asked for: %s"
 msgstr ""
 
@@ -1043,7 +1043,7 @@ msgstr "Etu number sabo laka age te apni laka employer profile khotom koribi: ap
 msgid "Before you start work"
 msgstr ""
 
-#: includes/promote.php:1505
+#: includes/promote.php:1523
 msgid "Before you take money for a job:"
 msgstr ""
 
@@ -1180,7 +1180,7 @@ msgstr "Password bodlibo"
 msgid "Changed since the call"
 msgstr ""
 
-#: includes/mark-changes.php:1077
+#: includes/mark-changes.php:1105
 msgid "Changing this takes your tick off"
 msgstr "Etu bodli korile apni laka tick uthai dibo"
 
@@ -1196,6 +1196,15 @@ msgstr ""
 #: includes/app-links.php:562
 msgid "Check that kaamase.com does not redirect to www.kaamase.com or the other way round. Neither Google nor Apple follows a redirect for these files, and a redirect is invisible in a browser because the browser follows it for you."
 msgstr ""
+
+#: includes/email-typos.php:462
+msgid "Check your email address. A Gmail address has at least 6 letters or numbers before the @, and never a dash or an underscore."
+msgstr "Apni laka email address check koribi. Gmail address te @ age te kam pra kam 6 ta letter nohoile number thake, aru dash (-) nohoile underscore (_) kitia bhi nathake."
+
+#. translators: %s: the email address we think they meant
+#: includes/email-typos.php:453
+msgid "Check your email address. Did you mean %s?"
+msgstr "Apni laka email address check koribi. %s hobo lage naki?"
 
 #: includes/taxonomies.php:410
 msgid "Chef"
@@ -1233,8 +1242,8 @@ msgstr "Report ki laka bare te ase etu basi lobi."
 msgid "Choose what work you need done."
 msgstr "Apni ki kaam karabo mange etu basi lobi."
 
-#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:417
-#: includes/rest-api.php:642
+#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:432
+#: includes/rest-api.php:647
 msgid "Choose whether you are looking for work or looking for workers."
 msgstr "Apni kaam bisari ase na worker bisari ase, etu basi lobi."
 
@@ -1277,7 +1286,7 @@ msgstr[1] ""
 msgid "Closed jobs stay on the site and stay readable. This screen decides where people can browse them and how long they stay in search results."
 msgstr "Bondh kaam khan site te thake aro porhibo pare. Manu khan etu kate sabo pare aro search result te kiman din thakibo, etu screen pra thik kore."
 
-#: includes/promote.php:1676
+#: includes/promote.php:1694
 msgid "Closed or unpublished — this is not being shown. They have paid for days they are not getting."
 msgstr ""
 
@@ -1326,7 +1335,7 @@ msgid "Confirm your email first. We keep unconfirmed accounts away from other pe
 msgstr "Poila apni laka email confirm koribi. Confirm nakora account khan ke amikhan dusra manu laka number pra dur rakhe."
 
 #. translators: %s: site name
-#: includes/registration.php:698
+#: includes/registration.php:743
 msgid "Confirm your email for %s"
 msgstr "%s karne apni laka email confirm koribi"
 
@@ -1408,7 +1417,7 @@ msgstr ""
 msgid "Counted among the workers who have been seen before. It should stay small. If it climbs week after week, there are more workers than the listings can cycle through and the trade and district filters are doing the real work."
 msgstr ""
 
-#: includes/promote.php:1530
+#: includes/promote.php:1548
 msgid "Counted from 1 April. Worth watching: once a business in Nagaland passes ten lakh of service turnover in a year it has to register for GST, and advertising is a service. Ask an accountant before you get near it, not after."
 msgstr ""
 
@@ -1448,7 +1457,7 @@ msgstr ""
 msgid "Data removal switched off. Your data is safe if the plugin is deleted."
 msgstr ""
 
-#: includes/privacy.php:170 includes/promote.php:1864
+#: includes/privacy.php:170 includes/promote.php:1882
 msgid "Date"
 msgstr ""
 
@@ -1468,7 +1477,7 @@ msgstr "Team laka ek din laka rate"
 msgid "Day rate you expect"
 msgstr "Apni ek din laka kiman rate mange"
 
-#: includes/promote.php:1610 includes/promote.php:1868
+#: includes/promote.php:1628 includes/promote.php:1886
 msgid "Days"
 msgstr ""
 
@@ -1576,7 +1585,7 @@ msgstr ""
 msgid "Download all matches as a spreadsheet"
 msgstr ""
 
-#: includes/promote.php:1525
+#: includes/promote.php:1543
 msgid "Download the book"
 msgstr ""
 
@@ -1739,11 +1748,11 @@ msgstr ""
 msgid "Empty this list"
 msgstr ""
 
-#: includes/promote.php:1727
+#: includes/promote.php:1745
 msgid "Ended"
 msgstr ""
 
-#: includes/promote.php:1871
+#: includes/promote.php:1889
 msgid "Ends"
 msgstr ""
 
@@ -2000,7 +2009,7 @@ msgstr ""
 msgid "Google Cloud Console, under Credentials. Make one OAuth client ID per platform. For the website client, add this exact address to Authorised redirect URIs:"
 msgstr "Google Cloud Console, Credentials laka nichete. Hor platform karne ekta OAuth client ID banabi. Website client karne, thik etu address Authorised redirect URIs te add koribi:"
 
-#: includes/promote.php:1619 includes/promote.php:1870
+#: includes/promote.php:1637 includes/promote.php:1888
 msgid "Google Pay reference"
 msgstr ""
 
@@ -2126,7 +2135,7 @@ msgstr "Namaskar %s"
 
 #. translators: %s: person's name
 #: includes/privacy.php:690 includes/privacy.php:712 includes/profile-edit.php:1007
-#: includes/registration.php:707
+#: includes/registration.php:752
 msgid "Hello %s,"
 msgstr "Namaskar %s,"
 
@@ -2347,7 +2356,7 @@ msgstr "Etu apni nohoile, sign in screen te thaka forgotten password laka link p
 msgid "If somebody has done something serious, their account goes."
 msgstr ""
 
-#: includes/rest-api.php:839 includes/rest-api.php:854
+#: includes/rest-api.php:868 includes/rest-api.php:883
 msgid "If that address has an account, we have sent it a link to set a new password."
 msgstr "Etu address te account thakile, amikhan notun password lagabole ekta link pathai dishey."
 
@@ -2371,6 +2380,10 @@ msgstr ""
 msgid "If we can reach you, we call and ask what we need to know."
 msgstr ""
 
+#: includes/registration.php:464
+msgid "If what you typed is right, type it again exactly and we will use it."
+msgstr "Apni likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo."
+
 #: includes/reports.php:166
 msgid "If you are in danger right now, do not use this form"
 msgstr ""
@@ -2391,7 +2404,7 @@ msgstr ""
 msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
 msgstr "Apni logote dusra worker khan anile, nije laka logote team b list koribi. Contractor khan pura kaam koribole lagile team bisare, aro tai khan karne pachjon manu ke pach call kora pra apni ke ek call kora sohoj ase."
 
-#: includes/registration.php:712
+#: includes/registration.php:757
 msgid "If you did not create this account, ignore this message and nothing will happen."
 msgstr "Etu account apni bonua nai koile, etu message chari dibi aro eku nohobo."
 
@@ -2479,7 +2492,7 @@ msgstr ""
 msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
 msgstr "JPG, PNG nohoile WEBP. Phone khan pra photo bhitor te lukai rakha jaga laka information kunba sabo laka age te amikhan uthai diye."
 
-#: includes/promote.php:1564 includes/promote.php:1887
+#: includes/promote.php:1582 includes/promote.php:1905
 msgid "Job"
 msgstr ""
 
@@ -2539,7 +2552,7 @@ msgstr ""
 msgid "Joined"
 msgstr ""
 
-#: includes/promote.php:1720
+#: includes/promote.php:1738
 msgid "Just finished — worth a ring"
 msgstr ""
 
@@ -2641,7 +2654,7 @@ msgid "Khiamniungan"
 msgstr ""
 
 #: includes/employer-index.php:354 includes/insights.php:1357 includes/insights.php:580
-#: includes/not-confirmed.php:236 includes/promote.php:1866
+#: includes/not-confirmed.php:236 includes/promote.php:1884
 msgid "Kind"
 msgstr ""
 
@@ -3110,7 +3123,7 @@ msgstr ""
 msgid "No page is set yet. Make a page called Past jobs, put the shortcode below in it, then choose it here."
 msgstr "Etiya tak kuno page thik kora nai. Past jobs koi ekta page banabi, tar bhitor te nichete laka shortcode lagai dibi, tar pichete yate etu basi lobi."
 
-#: includes/rest-api.php:1035
+#: includes/rest-api.php:1064
 msgid "No photo arrived. Please try again."
 msgstr "Kuno photo aha nai. Aru ekbar kuri sabi."
 
@@ -3208,7 +3221,7 @@ msgstr "Hesh %s te kuno sign in thaka manu pra apni laka profile khula nai. Kunb
 msgid "Nobody this week"
 msgstr "Etu hafta kunba nai"
 
-#: includes/promote.php:1537 includes/rich-manu.php:480 includes/verify-requests.php:463
+#: includes/promote.php:1555 includes/rich-manu.php:480 includes/verify-requests.php:463
 msgid "Nobody waiting."
 msgstr ""
 
@@ -3250,7 +3263,7 @@ msgstr ""
 msgid "Not confirmed"
 msgstr ""
 
-#: includes/ratings.php:940 includes/rest-api.php:2460
+#: includes/ratings.php:940 includes/rest-api.php:2489
 msgid "Not enough ratings yet to show a score. We wait until three people have worked with somebody, so that one bad day does not decide everything."
 msgstr "Score dikhabole etiya tak kafi rating nai. Kunba logote tinjon manu kaam nakora tak amikhan rukhe, titia ekta biya din pra sob thik nohoi."
 
@@ -3258,7 +3271,7 @@ msgstr "Score dikhabole etiya tak kafi rating nai. Kunba logote tinjon manu kaam
 msgid "Not given"
 msgstr ""
 
-#: includes/promote.php:1567
+#: includes/promote.php:1585
 msgid "Not live at the moment."
 msgstr ""
 
@@ -3274,7 +3287,7 @@ msgstr "Uthai dia nai. Etu account laka dusra kuno role nai, etu karne tai sign 
 msgid "Not set"
 msgstr "Thik kora nai"
 
-#: includes/promote.php:1628
+#: includes/promote.php:1646
 msgid "Not this one"
 msgstr ""
 
@@ -3322,7 +3335,7 @@ msgstr ""
 msgid "Nothing recorded yet. Send a test above, or wait for the next person to sign up."
 msgstr ""
 
-#: includes/promote.php:1653
+#: includes/promote.php:1671
 msgid "Nothing running."
 msgstr ""
 
@@ -3567,7 +3580,7 @@ msgstr "Page %1$s, %2$s majot te"
 msgid "Pages"
 msgstr ""
 
-#: includes/promote.php:1663
+#: includes/promote.php:1681
 msgid "Paid"
 msgstr ""
 
@@ -3580,7 +3593,7 @@ msgid "Paid and waiting to be rung."
 msgstr ""
 
 #. translators: the tooltip on the Ad mark
-#: includes/promote.php:1961
+#: includes/promote.php:1979
 msgid "Paid for by the person who posted it. Nothing else on this list has moved for it."
 msgstr ""
 
@@ -3706,7 +3719,7 @@ msgstr "Apni laka photo"
 msgid "Photographer"
 msgstr ""
 
-#: includes/rest-api.php:1044
+#: includes/rest-api.php:1073
 msgid "Photos need to be a JPG, PNG or WEBP."
 msgstr "Photo khan JPG, PNG nohoile WEBP hobo lage."
 
@@ -3738,37 +3751,37 @@ msgstr "Plaster, shuttering, tile laka kaam, rati laka shift, nije laka tool. Du
 msgid "Play Console, Test and release, App signing. Copy the SHA-256 certificate fingerprint from the app signing key. One per line if you have more than one."
 msgstr ""
 
-#: includes/apple-signin.php:827 includes/google-signin.php:815 includes/registration.php:441
-#: includes/rest-api.php:666
+#: includes/apple-signin.php:827 includes/google-signin.php:815 includes/registration.php:486
+#: includes/rest-api.php:685
 msgid "Please agree to the terms and the privacy notice."
 msgstr "Terms aro privacy notice logote raji hobi."
 
-#: includes/apple-signin.php:817 includes/google-signin.php:805 includes/registration.php:433
-#: includes/rest-api.php:658
+#: includes/apple-signin.php:817 includes/google-signin.php:805 includes/registration.php:478
+#: includes/rest-api.php:677
 msgid "Please choose the work you do."
 msgstr "Apni ki kaam kore etu basi lobi."
 
-#: includes/apple-signin.php:813 includes/google-signin.php:801 includes/registration.php:429
-#: includes/rest-api.php:654 includes/services.php:338
+#: includes/apple-signin.php:813 includes/google-signin.php:801 includes/registration.php:474
+#: includes/rest-api.php:673 includes/services.php:338
 msgid "Please choose your district."
 msgstr "Apni laka district basi lobi."
 
-#: includes/account-providers.php:576 includes/apple-signin.php:805 includes/registration.php:425
-#: includes/rest-api.php:650
+#: includes/account-providers.php:594 includes/apple-signin.php:805 includes/registration.php:470
+#: includes/rest-api.php:669
 msgid "Please enter a working email address."
 msgstr "Chali thaka ekta email address likhibi."
 
-#: includes/account-providers.php:568 includes/apple-signin.php:803
+#: includes/account-providers.php:569 includes/apple-signin.php:803
 msgid "Please enter your email address."
 msgstr "Apni laka email address likhibi."
 
-#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:421
-#: includes/rest-api.php:646
+#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:436
+#: includes/rest-api.php:651
 msgid "Please enter your name."
 msgstr "Apni laka naam likhibi."
 
-#: includes/apple-signin.php:821 includes/google-signin.php:809 includes/registration.php:457
-#: includes/rest-api.php:670
+#: includes/apple-signin.php:821 includes/google-signin.php:809 includes/registration.php:502
+#: includes/rest-api.php:689
 msgid "Please enter your phone number."
 msgstr "Apni laka phone number likhibi."
 
@@ -3894,7 +3907,7 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: includes/promote.php:1564 includes/promote.php:1887
+#: includes/promote.php:1582 includes/promote.php:1905
 msgid "Profile"
 msgstr ""
 
@@ -3910,7 +3923,7 @@ msgstr "Profile save hoishey."
 msgid "Promote a job or your profile"
 msgstr ""
 
-#: includes/promote.php:1397 includes/promote.php:1413 includes/promote.php:1484
+#: includes/promote.php:1415 includes/promote.php:1431 includes/promote.php:1502
 msgid "Promotions"
 msgstr ""
 
@@ -4022,7 +4035,7 @@ msgstr "Moi laka profile aru banabo"
 msgid "Recent messages"
 msgstr ""
 
-#: includes/promote.php:1749
+#: includes/promote.php:1767
 msgid "Recently"
 msgstr ""
 
@@ -4155,11 +4168,11 @@ msgid "Run the test"
 msgstr ""
 
 #. translators: %s: how many promotions are running
-#: includes/promote.php:1645
+#: includes/promote.php:1663
 msgid "Running now (%s)"
 msgstr ""
 
-#: includes/promote.php:1488
+#: includes/promote.php:1506
 msgid "Running. It stops on its own and they have been told the date."
 msgstr ""
 
@@ -4167,7 +4180,7 @@ msgstr ""
 msgid "Runs until"
 msgstr ""
 
-#: includes/posted-for.php:330 includes/promote.php:1869
+#: includes/posted-for.php:330 includes/promote.php:1887
 msgid "Rupees"
 msgstr "Taka"
 
@@ -4279,7 +4292,7 @@ msgstr ""
 msgid "Say which languages you speak"
 msgstr "Apni ki bhasa koi etu kobi"
 
-#: includes/rest-api.php:1726
+#: includes/rest-api.php:1755
 msgid "Say which phone to sign out."
 msgstr "Kun phone sign out koribo etu kobi."
 
@@ -4571,7 +4584,7 @@ msgstr ""
 msgid "Sign in first, so the person you are asking can see who is asking."
 msgstr "Poila sign in koribi, titia jun ke apni hudi ase tai sabo pare kun hudi ase."
 
-#: includes/job-alerts.php:621 includes/promote.php:1227 includes/verify-requests.php:372
+#: includes/job-alerts.php:621 includes/promote.php:1245 includes/verify-requests.php:372
 msgid "Sign in first."
 msgstr "Poila sign in koribi."
 
@@ -4704,7 +4717,7 @@ msgstr ""
 msgid "Somebody asked a worker for money to get a job"
 msgstr ""
 
-#: includes/promote.php:1501
+#: includes/promote.php:1519
 msgid "Somebody asks here, you ring them, they pay you on Google Pay, and then you start it below. Nothing is charged by the website. Whatever you start stops on its own, so there is nothing to remember to switch off."
 msgstr ""
 
@@ -4808,7 +4821,7 @@ msgstr ""
 msgid "Start date"
 msgstr "Suru hobo laka din"
 
-#: includes/promote.php:1547 includes/promote.php:1625
+#: includes/promote.php:1565 includes/promote.php:1643
 msgid "Start it"
 msgstr ""
 
@@ -4828,7 +4841,7 @@ msgstr "Thakibole jaga pabo"
 msgid "Steel fixer"
 msgstr ""
 
-#: includes/promote.php:1707
+#: includes/promote.php:1725
 msgid "Stop now"
 msgstr ""
 
@@ -4846,7 +4859,7 @@ msgstr ""
 msgid "Stopped at: %1$s — %2$s"
 msgstr ""
 
-#: includes/promote.php:1492
+#: includes/promote.php:1510
 msgid "Stopped. It is off the site now."
 msgstr ""
 
@@ -4914,16 +4927,16 @@ msgstr ""
 msgid "Taken off the list. They can ask again in a month."
 msgstr ""
 
-#: includes/promote.php:1496
+#: includes/promote.php:1514
 msgid "Taken off the list. They can ask again in a month. Nothing was sent to them."
 msgstr ""
 
 #. translators: 1: rupee total, 2: number of promotions
-#: includes/promote.php:1513
+#: includes/promote.php:1531
 msgid "Taken this financial year: ₹%1$s across %2$s"
 msgstr ""
 
-#: includes/registration.php:710
+#: includes/registration.php:755
 msgid "Tap the link below to confirm your email address. Your profile goes live as soon as you do."
 msgstr "Apni laka email address confirm koribole nichete laka link te tap koribi. Etu kurile logot te apni laka profile live hoi jai."
 
@@ -5015,7 +5028,7 @@ msgstr ""
 msgid "Thank you, your rating is saved. It appears once the other side has written theirs."
 msgstr "Dhanyabad, apni laka rating save hoishey. Dusra phale pra tai laka likhile etu dikhibo."
 
-#: includes/rest-api.php:2509
+#: includes/rest-api.php:2538
 msgid "Thank you. It appears once the other side has written theirs."
 msgstr "Dhanyabad. Dusra phale pra tai laka likhile etu dikhibo."
 
@@ -5043,7 +5056,7 @@ msgstr "Etu Google sign in jua nai. Aru ekbar kuri sabi, nohoile apni laka passw
 msgid "That account is already connected to a different Kaam Ase account. Sign in with it instead, or disconnect it there first."
 msgstr "Etu account age te pra dusra Kaam Ase account logote lagi ase. Tar bodli etu pra he sign in koribi, nohoile poila ta te pra khuli dibi."
 
-#: includes/account-password.php:121 includes/account-providers.php:549
+#: includes/account-password.php:121 includes/account-providers.php:550
 msgid "That account no longer exists."
 msgstr "Etu account aru nai."
 
@@ -5060,15 +5073,15 @@ msgstr "Etu kaam kora nai. Aru ekbar kuri sabi."
 msgid "That does not look like the JSON key file Google gives you."
 msgstr ""
 
-#: includes/rest-api.php:762
+#: includes/rest-api.php:791
 msgid "That email address and password do not match. Check both and try again."
 msgstr "Etu email address aro password mila nai. Duita check kuri aru ekbar kuri sabi."
 
-#: includes/rest-api.php:1854
+#: includes/rest-api.php:1883
 msgid "That employer is not available."
 msgstr "Etu employer available nai."
 
-#: includes/rest-api.php:1848
+#: includes/rest-api.php:1877
 msgid "That employer no longer exists."
 msgstr "Etu employer aru nai."
 
@@ -5084,7 +5097,7 @@ msgstr "Etu filter available nai."
 msgid "That form expired. Please try again."
 msgstr "Etu form laka somoi khotom hoishey. Aru ekbar kuri sabi."
 
-#: includes/rest-api.php:1738
+#: includes/rest-api.php:1767
 msgid "That is a lot of sign outs at once. Try again in an hour, or use the website."
 msgstr "Ekbar te bisi sign out hoi ase. Ek ghanta pichete kuri sabi, nohoile website cholabi."
 
@@ -5092,7 +5105,7 @@ msgstr "Ekbar te bisi sign out hoi ase. Ek ghanta pichete kuri sabi, nohoile web
 msgid "That is enough hires to confirm for one day. Try again tomorrow."
 msgstr ""
 
-#: includes/rest-api.php:2608
+#: includes/rest-api.php:2637
 msgid "That is not a push token we recognise."
 msgstr "Etu amikhan jana push token hoina."
 
@@ -5100,7 +5113,7 @@ msgstr "Etu amikhan jana push token hoina."
 msgid "That is not a version number, so nothing was set. Use digits and dots only, like 2.0.7."
 msgstr ""
 
-#: includes/rest-api.php:967
+#: includes/rest-api.php:996
 msgid "That is not an availability we know about."
 msgstr "Etu amikhan jana availability hoina."
 
@@ -5112,7 +5125,7 @@ msgstr "Etu apni laka etiya laka password hoina."
 msgid "That is not your profile."
 msgstr "Etu apni laka profile hoina."
 
-#: includes/promote.php:1348 includes/promote.php:452
+#: includes/promote.php:1366 includes/promote.php:452
 msgid "That is not yours to promote."
 msgstr ""
 
@@ -5124,11 +5137,11 @@ msgstr "Etu apni laka nije laka profile ase."
 msgid "That job is not yours to edit."
 msgstr "Etu kaam thik kora laka hok apni laka nohoi."
 
-#: includes/job-photos.php:894 includes/rest-api.php:1580
+#: includes/job-photos.php:894 includes/rest-api.php:1609
 msgid "That job is not yours."
 msgstr "Etu kaam apni laka hoina."
 
-#: includes/rest-api.php:1510
+#: includes/rest-api.php:1539
 msgid "That job no longer exists."
 msgstr "Etu kaam aru nai."
 
@@ -5136,7 +5149,7 @@ msgstr "Etu kaam aru nai."
 msgid "That link did not work. It may have expired. Send a new one below."
 msgstr "Etu link kaam kora nai. Etu laka somoi khotom hoishey hobo pare. Nichete pra notun ekta pathai dibi."
 
-#: includes/rest-api.php:1990
+#: includes/rest-api.php:2019
 msgid "That link does not lead anywhere any more."
 msgstr "Etu link aru kate b loi najai."
 
@@ -5144,7 +5157,7 @@ msgstr "Etu link aru kate b loi najai."
 msgid "That listing is not live at the moment, so there would be nothing to show."
 msgstr ""
 
-#: includes/rest-api.php:2183 includes/rest-api.php:2251
+#: includes/rest-api.php:2212 includes/rest-api.php:2280
 msgid "That no longer exists."
 msgstr "Etu aru nai."
 
@@ -5152,8 +5165,8 @@ msgstr "Etu aru nai."
 msgid "That number is not hidden, so there is nothing to ask for."
 msgstr "Etu number lukua nai, etu karne mangibole eku nai."
 
-#: includes/apple-signin.php:823 includes/google-signin.php:811 includes/registration.php:459
-#: includes/rest-api.php:672 includes/services.php:99
+#: includes/apple-signin.php:823 includes/google-signin.php:811 includes/registration.php:504
+#: includes/rest-api.php:691 includes/services.php:99
 msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
 msgstr "Etu phone number thik dikha nai. Etu 6, 7, 8 nohoile 9 pra suru hua 10 digit hobo lage."
 
@@ -5165,7 +5178,7 @@ msgstr "Etu photo upload hua nai. Aru ekbar kuri sabi."
 msgid "That picture was too big for the server to take. Photos straight from a phone are often very large. Try one taken at a smaller size."
 msgstr "Etu photo server pra lobole bisi dangor ase. Phone pra sidha loa photo khan bisi somoi bisi dangor hoi. Chutu size te loa ekta kuri sabi."
 
-#: includes/rest-api.php:1883
+#: includes/rest-api.php:1912
 msgid "That profile is not available."
 msgstr "Etu profile available nai."
 
@@ -5173,12 +5186,12 @@ msgstr "Etu profile available nai."
 msgid "That profile is not yours to edit."
 msgstr "Etu profile thik kora laka hok apni laka nohoi."
 
-#: includes/rest-api.php:1029 includes/rest-api.php:973
+#: includes/rest-api.php:1002 includes/rest-api.php:1058
 msgid "That profile is not yours."
 msgstr "Etu profile apni laka hoina."
 
 #: includes/contact.php:269 includes/hire-claims.php:166 includes/ratings.php:354
-#: includes/rest-api.php:1877 includes/services.php:317
+#: includes/rest-api.php:1906 includes/services.php:317
 msgid "That profile no longer exists."
 msgstr "Etu profile aru nai."
 
@@ -5380,7 +5393,7 @@ msgid_plural "There are %s closed jobs."
 msgstr[0] "%s bondh kaam ase."
 msgstr[1] "%s bondh kaam khan ase."
 
-#: includes/rest-api.php:2381
+#: includes/rest-api.php:2410
 msgid "There is no open question about that person."
 msgstr "Etu manu laka bare te kuno khula question nai."
 
@@ -5524,7 +5537,7 @@ msgstr "Etu kaam te etu account pra add koribo para sob photo lagi ase. Dusra ek
 msgid "This job has been filled."
 msgstr "Etu kaam bhorti hoi jaishey."
 
-#: includes/rest-api.php:1521 includes/rest-api.php:2000
+#: includes/rest-api.php:1550 includes/rest-api.php:2029
 msgid "This job has closed. It was probably filled."
 msgstr "Etu kaam bondh hoi jaishey. Bhorti hoi jaishey hobo pare."
 
@@ -5691,7 +5704,7 @@ msgstr ""
 msgid "Told Google"
 msgstr ""
 
-#: includes/registration.php:384 includes/rest-api.php:625
+#: includes/registration.php:384 includes/rest-api.php:629
 msgid "Too many attempts from this connection. Please try again later."
 msgstr "Etu connection pra bisi bar kuri sailishey. Pichete aru kuri sabi."
 
@@ -5699,7 +5712,7 @@ msgstr "Etu connection pra bisi bar kuri sailishey. Pichete aru kuri sabi."
 msgid "Too many attempts from this connection. Please wait a while and try again."
 msgstr ""
 
-#: includes/apple-signin.php:989 includes/google-signin.php:944 includes/rest-api.php:740
+#: includes/apple-signin.php:989 includes/google-signin.php:944 includes/rest-api.php:769
 msgid "Too many sign in attempts. Please wait a few minutes and try again."
 msgstr "Bisi bar sign in kuri sailishey. Olop minute rukhi aru ekbar kuri sabi."
 
@@ -5802,7 +5815,7 @@ msgstr "Confirm koribole %s likhibi"
 msgid "Type %s to switch it on"
 msgstr ""
 
-#: includes/rest-api.php:1091
+#: includes/rest-api.php:1120
 msgid "Type DELETE to confirm you want to remove your account."
 msgstr "Apni laka account uthai dibo mon ase etu confirm koribole DELETE likhibi."
 
@@ -5838,11 +5851,11 @@ msgstr "Unblock koribo"
 msgid "Unconfirmed accounts matching the filters above, minus anybody already sent one in the last seven days. Confirmed accounts are never included, whatever the filters say."
 msgstr ""
 
-#: includes/promote.php:1449
+#: includes/promote.php:1467
 msgid "Unknown"
 msgstr ""
 
-#: includes/promote.php:1662
+#: includes/promote.php:1680
 msgid "Until"
 msgstr ""
 
@@ -5995,7 +6008,7 @@ msgstr ""
 msgid "Waiting for you to confirm your email"
 msgstr "Apni laka email confirm kora laka rukhi ase"
 
-#: includes/promote.php:1533
+#: includes/promote.php:1551
 msgid "Waiting to be rung"
 msgstr ""
 
@@ -6023,12 +6036,12 @@ msgstr ""
 msgid "We cannot take a new request on this account at the moment. Try again in a few weeks."
 msgstr ""
 
-#: includes/account-providers.php:592 includes/account-providers.php:626
+#: includes/account-providers.php:610 includes/account-providers.php:644
 msgid "We could not change your address to that one. If it is already yours, sign in with it instead."
 msgstr "Apni laka address etu te bodli koribo para nai. Etu age te pra apni laka hoile, tar bodli etu pra he sign in koribi."
 
-#: includes/apple-signin.php:808 includes/apple-signin.php:904 includes/registration.php:468
-#: includes/rest-api.php:677
+#: includes/apple-signin.php:808 includes/apple-signin.php:904 includes/registration.php:513
+#: includes/rest-api.php:696
 msgid "We could not create an account with those details. If you already have one, try signing in."
 msgstr "Etu details pra account banabo para nai. Apni logote age te pra thakile, sign in kuri sabi."
 
@@ -6040,13 +6053,17 @@ msgstr "Amikhan logote etu bhasa nai."
 msgid "We have it"
 msgstr ""
 
-#: includes/rest-api.php:2581
+#: includes/rest-api.php:2610
 msgid "We have it. Somebody reads it within two working days."
 msgstr "Amikhan pai gaishey. Duita kaam laka din bhitor te kunba etu porhibo."
 
 #: includes/privacy.php:715
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
 msgstr ""
+
+#: includes/registration.php:462
+msgid "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it."
+msgstr "Amikhan etu address apni karne box te likhi dise. Apni age likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo."
 
 #. translators: %s: the person's name
 #: includes/contact.php:776
@@ -6057,7 +6074,7 @@ msgstr "Apni tai laka number saishey koi amikhan %s ke koi dishey. Kaam suru hob
 msgid "We have your request and will ring you. There is nothing to pay until we have spoken."
 msgstr ""
 
-#: includes/dashboard.php:874 includes/rest-api.php:875
+#: includes/dashboard.php:874 includes/rest-api.php:904
 msgid "We just sent one. Please wait a few minutes before asking again."
 msgstr "Amikhan etiya he ekta pathai dishey. Aru mangibo laka age te olop minute rukhibi."
 
@@ -6143,8 +6160,8 @@ msgstr "Tai khan kua somoi te apni ke pisa dishey na?"
 msgid "Were you treated properly?"
 msgstr "Apni logote thik kene beybohar kurishey na?"
 
-#: includes/admin.php:415 includes/promote.php:1544 includes/promote.php:1660 includes/promote.php:1725
-#: includes/promote.php:1865
+#: includes/admin.php:415 includes/promote.php:1562 includes/promote.php:1678 includes/promote.php:1743
+#: includes/promote.php:1883
 msgid "What"
 msgstr ""
 
@@ -6362,7 +6379,7 @@ msgid "Which plan their account will say they are on. Nothing is charged."
 msgstr ""
 
 #: includes/admin.php:414 includes/gift.php:383 includes/gift.php:477 includes/privacy.php:201
-#: includes/promote.php:1661 includes/promote.php:1726 includes/promote.php:1867
+#: includes/promote.php:1679 includes/promote.php:1744 includes/promote.php:1885
 #: includes/verify-requests.php:470
 msgid "Who"
 msgstr ""
@@ -6411,7 +6428,7 @@ msgstr ""
 msgid "Who to contact about a data problem, with a name and a real address."
 msgstr ""
 
-#: includes/promote.php:1545
+#: includes/promote.php:1563
 msgid "Who to ring"
 msgstr ""
 
@@ -6672,8 +6689,8 @@ msgstr "Apni etu manu logote contact koribo napare."
 #: includes/app-version.php:421 includes/apple-signin.php:172 includes/email-check.php:705
 #: includes/email-check.php:761 includes/gift.php:547 includes/gift.php:587 includes/google-signin.php:196
 #: includes/hiring-request.php:524 includes/indexing-api.php:873 includes/insights.php:750
-#: includes/job-alerts.php:896 includes/posted-for.php:456 includes/promote.php:1775
-#: includes/promote.php:1839 includes/rich-manu.php:457 includes/verify-requests.php:554
+#: includes/job-alerts.php:896 includes/posted-for.php:456 includes/promote.php:1793
+#: includes/promote.php:1857 includes/rich-manu.php:457 includes/verify-requests.php:554
 msgid "You cannot do that."
 msgstr "Apni etu koribo napare."
 
@@ -6754,7 +6771,7 @@ msgstr "Etu account aji jiman kaam post koribo pare, apni sob post kuri dishey. 
 msgid "You have said you worked together. It opens as soon as they agree."
 msgstr ""
 
-#: includes/reports.php:531 includes/rest-api.php:2568
+#: includes/reports.php:531 includes/rest-api.php:2597
 msgid "You have sent several already. If it is urgent, call us instead."
 msgstr "Apni age te pra bisi pathai dishey. Joldi lage koile, tar bodli amikhan ke call koribi."
 
@@ -6830,7 +6847,7 @@ msgstr ""
 msgid "Your district."
 msgstr "Apni laka district."
 
-#: includes/account-providers.php:557
+#: includes/account-providers.php:558
 msgid "Your email address is already confirmed and cannot be changed here yet."
 msgstr "Apni laka email address age te pra confirm hoi jaishey aro etiya yate pra bodlibo napare."
 
@@ -6897,7 +6914,7 @@ msgstr "Apni laka nije laka naam bhal kene kaam kore. Contractor khan manu ke mo
 msgid "Your password needs at least %d characters."
 msgstr "Apni laka password te kom pora kom %d character lage."
 
-#: includes/registration.php:437 includes/rest-api.php:662
+#: includes/registration.php:482 includes/rest-api.php:681
 msgid "Your password needs at least 8 characters."
 msgstr "Apni laka password te kom pora kom 8 character lage."
 
@@ -6921,7 +6938,7 @@ msgstr "Apni laka profile live ase"
 msgid "Your profile is missing"
 msgstr "Apni laka profile pua nai"
 
-#: includes/rest-api.php:933
+#: includes/rest-api.php:962
 msgid "Your profile is missing. Open the app again and we will rebuild it."
 msgstr "Apni laka profile pua nai. App aru ekbar khulibi aro amikhan etu aru banai dibo."
 
@@ -6981,7 +6998,7 @@ msgstr "Apni laka kaam."
 msgid "Zeliang"
 msgstr ""
 
-#: includes/promote.php:1615
+#: includes/promote.php:1633
 msgid "amount"
 msgstr ""
 
@@ -6993,7 +7010,7 @@ msgstr "aro apni laka site laka address Authorised JavaScript origins te add kor
 msgid "anonymous"
 msgstr ""
 
-#: includes/promote.php:1506
+#: includes/promote.php:1524
 msgid "ask for the company name and GST number, an address, and who pays for travel. If a worker is asked to pay anything at any stage, say no. Promoting a job is a stronger thing than hosting one."
 msgstr ""
 
@@ -7087,7 +7104,7 @@ msgstr "free te register koribo"
 msgid "terms"
 msgstr "terms"
 
-#: includes/mark-changes.php:1079
+#: includes/mark-changes.php:1106
 msgid "until somebody can ring you again. Your plan is not affected."
 msgstr "kunba pra apni ke aru ekbar phone nakora tak. Apni laka plan te eku asor nai."
 
@@ -7115,7 +7132,7 @@ msgstr "apni laka profile"
 msgid "your team"
 msgstr "apni laka team"
 
-#: includes/promote.php:1614
+#: includes/promote.php:1632
 msgid "₹"
 msgstr ""
 
@@ -7135,7 +7152,7 @@ msgid "Closed"
 msgstr "Bondh"
 
 #. translators: the mark shown on a paid listing. Kept to two or three letters.
-#: includes/promote.php:1963
+#: includes/promote.php:1981
 msgctxt "mark on a paid listing"
 msgid "Ad"
 msgstr ""

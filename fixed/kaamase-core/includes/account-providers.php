@@ -63,7 +63,7 @@
  * should not be told about a stranger's account.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.8.0
  */
 
@@ -534,11 +534,12 @@ if ( ! function_exists( 'kaamase_email_change' ) ) {
 	 * Replace an unconfirmed address and send the link again.
 	 *
 	 * @since 1.8.0
-	 * @param int    $user_id User ID.
-	 * @param string $raw     The address as typed.
+	 * @param int    $user_id  User ID.
+	 * @param string $raw      The address as typed.
+	 * @param bool   $insisted They have said a questioned address is right.
 	 * @return true|WP_Error
 	 */
-	function kaamase_email_change( $user_id, $raw ) {
+	function kaamase_email_change( $user_id, $raw, $insisted = false ) {
 
 		$user_id = (int) $user_id;
 		$user    = get_userdata( $user_id );
@@ -567,6 +568,23 @@ if ( ! function_exists( 'kaamase_email_change' ) ) {
 				'kaamase_invalid_registration',
 				__( 'Please enter your email address.', 'kaamase-core' ),
 				array( 'status' => 400 )
+			);
+		}
+
+		/*
+		 * The mistake that brought them here, made a second time, would
+		 * leave them exactly as stuck as before. See email-typos.php.
+		 */
+		$problem = function_exists( 'kaamase_email_problem' ) ? kaamase_email_problem( $raw, $insisted ) : null;
+
+		if ( $problem ) {
+			return new WP_Error(
+				'kaamase_invalid_registration',
+				$problem['message'],
+				array(
+					'status'           => 400,
+					'email_suggestion' => $problem['suggestion'],
+				)
 			);
 		}
 
@@ -661,7 +679,11 @@ if ( ! function_exists( 'kaamase_rest_email_change' ) ) {
 		}
 
 		$user_id = get_current_user_id();
-		$done    = kaamase_email_change( $user_id, (string) $request->get_param( 'email' ) );
+		$done    = kaamase_email_change(
+			$user_id,
+			(string) $request->get_param( 'email' ),
+			rest_sanitize_boolean( $request->get_param( 'email_as_typed' ) )
+		);
 
 		if ( is_wp_error( $done ) ) {
 			return kaamase_rest_error( $done );

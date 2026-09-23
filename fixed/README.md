@@ -82,6 +82,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/hire-claims.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/views-api.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/promote.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/email-typos.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
@@ -4824,6 +4825,87 @@ The existing promotion suite, 139 assertions, passes unchanged. (Its WordPress
 stand-in gained `checked()`, which real WordPress always has.) The card was
 rendered through the real `kaamase_promo_card()` for one listing and for several,
 and measured at 390px and 360px, with the longest title selected.
+
+## 70. Catching a mistyped email address before the account is made
+
+Reported from the live site: many people were registering with a misspelt Gmail
+address and then never receiving the confirmation link. The mail itself is
+arriving (in Inbox, even under Important); the addresses were simply wrong.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/email-typos.php` | **new** |
+| `fixed/kaamase-core/includes/registration.php` | 1.2.0 |
+| `fixed/kaamase-core/includes/rest-api.php` | 1.7.0 |
+| `fixed/kaamase-core/includes/account-providers.php` | 1.1.0 |
+| `fixed/kaamase-core/languages/kaamase-core.pot` | four new lines |
+| `fixed/kaamase-core/languages/kaamase-core-hi_IN.po` and `.mo` | Hindi |
+| `fixed/kaamase-core/languages/kaamase-core-nag.po` and `.mo` | Nagamese |
+
+Nothing needs switching on. The plugin loads every file in `includes/` by itself.
+
+### What is caught
+
+**1. The provider spelt wrong.** The reply names the address they meant.
+
+| Typed | Suggested |
+| --- | --- |
+| gmial.com, gamil.com, gmai.com, gmaill.com, gnail.com, gmal.com | gmail.com |
+| gmail.co, gmail.cm, gmail.con, gmail.in, gmail.co.in, gmail.com.com | gmail.com |
+| gmail..com, gmail,com, just `gmail` with no ending | gmail.com |
+| yaho.com, yahooo.com, yahoo.co / yahoo.com.in | yahoo.com / yahoo.co.in |
+| hotmial.com, outlok.com, redifmail.com, iclod.com | the real one |
+| anything ending `.con`, `.cmo`, `.comm` | the same with `.com` |
+
+**2. An address that cannot be Gmail.** Gmail names are 6 to 30 letters,
+numbers and dots, so `raju@gmail.com` (4) or `raju_k@gmail.com` (underscore)
+cannot receive anything.
+
+**Left alone:** every real address that happens to look close. mail.com,
+email.com, ymail.com, rediff.com, yahoo.co.in, yahoo.ca, hotmail.co.uk,
+outlook.in, nic.in, gov.in and college addresses, company addresses. Forty of
+these are in the test, and none is questioned.
+
+### What the person sees
+
+On the **website**, the form comes back with:
+
+> Check your email address. Did you mean raju.kumar@gmail.com?
+> We have put that address in the box for you. If what you typed was right,
+> type it again exactly and we will use it.
+
+and the corrected address is already in the email box. Everything else they
+typed is kept; only the password has to be typed again, as with any error.
+
+**Never a locked door.** A list like this will one day meet a real address it
+thinks is wrong. So the same address typed a second time, exactly, is accepted.
+Insisting cannot push something that is not an address at all through: that
+still gets the old "Please enter a working email address."
+
+In the **app**, the same message arrives as the error (in the person's
+language), because the server now checks what the app sends. The app can do
+better with two small additions, in the message for the app side:
+
+- the reply carries `email_suggestion` with the corrected address, for a
+  one-tap "Use raju.kumar@gmail.com" button;
+- sending `email_as_typed: true` means "yes, what I typed is right".
+
+Until the app adds those, an app user who really does have an unusual address
+can still register on the website. Both apply to app registration and to
+correcting an unconfirmed address from the app. Google and Apple sign in are not
+checked: those addresses come from the provider and are already proven.
+
+### Tested
+
+110 cases against the detector (46 typos with the exact suggestion expected,
+40 real addresses that must pass untouched, 10 on Gmail's own rules), and 37 through
+the real handlers lifted out of the plugin files: a typo then the suggestion, the
+same typo insisted on, a different typo the second time, an impossible Gmail
+name, a double dot insisted on, the app's reply shape, `email_as_typed` sent as
+the text "false", and every other error reply unchanged. The Hindi and
+Nagamese lines were read back out of the compiled `.mo` files.
 
 ## Not changed, and why
 

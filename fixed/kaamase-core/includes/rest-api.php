@@ -29,7 +29,7 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.6.0
+ * @version 1.7.0
  * @since   1.3.0
  */
 
@@ -116,14 +116,18 @@ if ( ! function_exists( 'kaamase_rest_error' ) ) {
 		$data   = $error->get_error_data();
 		$status = isset( $data['status'] ) ? absint( $data['status'] ) : 400;
 
-		return new WP_REST_Response(
-			array(
-				'code'     => $error->get_error_code(),
-				'message'  => $error->get_error_message(),
-				'messages' => isset( $data['messages'] ) ? array_values( (array) $data['messages'] ) : array( $error->get_error_message() ),
-			),
-			$status
+		$body = array(
+			'code'     => $error->get_error_code(),
+			'message'  => $error->get_error_message(),
+			'messages' => isset( $data['messages'] ) ? array_values( (array) $data['messages'] ) : array( $error->get_error_message() ),
 		);
+
+		// The address somebody probably meant, when they mistyped one. See email-typos.php.
+		if ( ! empty( $data['email_suggestion'] ) ) {
+			$body['email_suggestion'] = (string) $data['email_suggestion'];
+		}
+
+		return new WP_REST_Response( $body, $status );
 	}
 }
 
@@ -628,7 +632,8 @@ if ( ! function_exists( 'kaamase_rest_register' ) ) {
 
 		$type     = sanitize_key( (string) $request->get_param( 'type' ) );
 		$name     = sanitize_text_field( (string) $request->get_param( 'name' ) );
-		$email    = sanitize_email( (string) $request->get_param( 'email' ) );
+		$email_raw = (string) $request->get_param( 'email' );
+		$email    = sanitize_email( $email_raw );
 		$phone_in = sanitize_text_field( (string) $request->get_param( 'phone' ) );
 		$district = kaamase_match_district( (string) $request->get_param( 'district' ) );
 		$trade    = kaamase_match_trade( (string) $request->get_param( 'trade' ) );
@@ -646,7 +651,21 @@ if ( ! function_exists( 'kaamase_rest_register' ) ) {
 			$errors[] = __( 'Please enter your name.', 'kaamase-core' );
 		}
 
-		if ( ! is_email( $email ) ) {
+		/*
+		 * A mistyped address. See email-typos.php.
+		 *
+		 * The address they meant goes back as email_suggestion, so the app
+		 * can offer it with one tap. If the person says what they typed is
+		 * right, the app sends it again with email_as_typed and it is
+		 * accepted.
+		 */
+		$email_problem = function_exists( 'kaamase_email_problem' )
+			? kaamase_email_problem( $email_raw, rest_sanitize_boolean( $request->get_param( 'email_as_typed' ) ) )
+			: null;
+
+		if ( $email_problem ) {
+			$errors[] = $email_problem['message'];
+		} elseif ( ! is_email( $email ) ) {
 			$errors[] = __( 'Please enter a working email address.', 'kaamase-core' );
 		}
 
@@ -678,9 +697,19 @@ if ( ! function_exists( 'kaamase_rest_register' ) ) {
 		}
 
 		if ( ! empty( $errors ) ) {
+
+			$data = array(
+				'messages' => $errors,
+				'status'   => 400,
+			);
+
+			if ( $email_problem && '' !== $email_problem['suggestion'] ) {
+				$data['email_suggestion'] = $email_problem['suggestion'];
+			}
+
 			kaamase_login_failed();
 			return kaamase_rest_error(
-				new WP_Error( 'kaamase_invalid_registration', $errors[0], array( 'messages' => $errors, 'status' => 400 ) )
+				new WP_Error( 'kaamase_invalid_registration', $errors[0], $data )
 			);
 		}
 

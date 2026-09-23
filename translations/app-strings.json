@@ -699,6 +699,14 @@
   "hi_IN": "पासवर्ड बदलें",
   "nag": "Password bodlibo"
  },
+ "Check your email address. A Gmail address has at least 6 letters or numbers before the @, and never a dash or an underscore.": {
+  "hi_IN": "अपना ईमेल पता जाँच लें। Gmail पते में @ से पहले कम से कम 6 अक्षर या अंक होते हैं, और उसमें कभी डैश (-) या अंडरस्कोर (_) नहीं होता।",
+  "nag": "Apni laka email address check koribi. Gmail address te @ age te kam pra kam 6 ta letter nohoile number thake, aru dash (-) nohoile underscore (_) kitia bhi nathake."
+ },
+ "Check your email address. Did you mean %s?": {
+  "hi_IN": "अपना ईमेल पता जाँच लें। क्या आपका मतलब %s था?",
+  "nag": "Apni laka email address check koribi. %s hobo lage naki?"
+ },
  "Choose": {
   "hi_IN": "चुनें",
   "nag": "Basi lobo"
@@ -1400,6 +1408,10 @@
  "If the original says negotiable, ask the employer for a figure when you ring. A job with no rate gets almost no answers.": {
   "hi_IN": "अगर मूल पोस्ट में बातचीत से तय होना लिखा है, तो फ़ोन करते समय मालिक से कोई रकम पूछ लें। बिना रेट वाले काम को लगभग कोई जवाब नहीं मिलता।",
   "nag": "Asol post te kotha pra thik hobo koi likhile, call kora somoi te employer ke ekta amount hudibi. Rate nathaka kaam ke prai kuno jowab nahi."
+ },
+ "If what you typed is right, type it again exactly and we will use it.": {
+  "hi_IN": "अगर आपने जो लिखा है वही सही है, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।",
+  "nag": "Apni likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo."
  },
  "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people.": {
   "hi_IN": "अगर आप अपने साथ और मज़दूर लाते हैं, तो अपने अलावा टीम भी लिस्ट करें। जब ठेकेदारों को पूरा काम कराना होता है तो वे टीम ढूँढते हैं, और उनके लिए पाँच लोगों को पाँच फ़ोन करने से आपको एक फ़ोन करना आसान है।",
@@ -3976,6 +3988,10 @@
  "We have it. Somebody reads it within two working days.": {
   "hi_IN": "हमें मिल गया। दो कामकाजी दिनों के भीतर कोई इसे पढ़ेगा।",
   "nag": "Amikhan pai gaishey. Duita kaam laka din bhitor te kunba etu porhibo."
+ },
+ "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it.": {
+  "hi_IN": "हमने वह पता आपके लिए बॉक्स में भर दिया है। अगर आपने जो लिखा था वही सही था, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।",
+  "nag": "Amikhan etu address apni karne box te likhi dise. Apni age likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo."
  },
  "We have told %s that you looked up their number. Agree the rate before work starts.": {
   "hi_IN": "हमने %s को बता दिया है कि आपने उनका नंबर देखा। काम शुरू होने से पहले रेट तय कर लें।",

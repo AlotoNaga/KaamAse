@@ -908,5 +908,9 @@
 "Changing your %s will take your tick off until somebody can ring you again. Your plan is not affected.": "अपना %s बदलने पर आपका टिक हट जाएगा, जब तक कोई आपको दोबारा फ़ोन न कर ले। आपके प्लान पर कोई असर नहीं पड़ता।",
 "You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you.": "आपने अपना %s बदला है, इसलिए टिक हट गया है। Kaam Ase से कोई आपको दोबारा फ़ोन करेगा, तब तक के लिए। आपके प्लान पर कोई असर नहीं है और कोई पैसा नहीं कटा है। हम आपको फ़ोन करेंगे।",
 "Changing this takes your tick off": "इसे बदलने पर आपका टिक हट जाएगा",
-"until somebody can ring you again. Your plan is not affected.": "जब तक कोई आपको दोबारा फ़ोन न कर ले। आपके प्लान पर कोई असर नहीं पड़ता।"
+"until somebody can ring you again. Your plan is not affected.": "जब तक कोई आपको दोबारा फ़ोन न कर ले। आपके प्लान पर कोई असर नहीं पड़ता।",
+"Check your email address. Did you mean %s?": "अपना ईमेल पता जाँच लें। क्या आपका मतलब %s था?",
+"Check your email address. A Gmail address has at least 6 letters or numbers before the @, and never a dash or an underscore.": "अपना ईमेल पता जाँच लें। Gmail पते में @ से पहले कम से कम 6 अक्षर या अंक होते हैं, और उसमें कभी डैश (-) या अंडरस्कोर (_) नहीं होता।",
+"We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it.": "हमने वह पता आपके लिए बॉक्स में भर दिया है। अगर आपने जो लिखा था वही सही था, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।",
+"If what you typed is right, type it again exactly and we will use it.": "अगर आपने जो लिखा है वही सही है, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।"
 }

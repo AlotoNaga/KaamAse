@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.0.0
  *
  * Changelog
@@ -399,6 +399,21 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 
 		$phone = kaamase_sanitize_phone( $phone_in );
 
+		/*
+		 * The address exactly as typed, for the typo check. sanitize_email()
+		 * throws away the very mistakes it looks for: gmail..com comes back
+		 * empty, and there would be nothing left to suggest a fix for.
+		 */
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$email_raw = isset( $_POST['kaamase_email'] ) ? (string) wp_unslash( $_POST['kaamase_email'] ) : '';
+
+		/*
+		 * What the last attempt was warned about. Read before this
+		 * attempt's values are stored over it, so the same address typed
+		 * again on purpose can be recognised and accepted.
+		 */
+		$before = kaamase_registration_input();
+
 		kaamase_registration_input(
 			array(
 				'name'     => $name,
@@ -421,7 +436,37 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 			$errors[] = __( 'Please enter your name.', 'kaamase-core' );
 		}
 
-		if ( ! is_email( $email ) ) {
+		/*
+		 * A mistyped address. See email-typos.php.
+		 *
+		 * The address they meant is put in the box for them, and the one
+		 * they typed is remembered, so typing it again exactly is taken as
+		 * "yes, this really is my address" and it goes through.
+		 */
+		$email_problem = null;
+
+		if ( function_exists( 'kaamase_email_problem' ) ) {
+			$insisted      = ! empty( $before['email_warned'] ) && kaamase_email_normal( $email_raw ) === $before['email_warned'];
+			$email_problem = kaamase_email_problem( $email_raw, $insisted );
+		}
+
+		if ( $email_problem ) {
+
+			$errors[] = $email_problem['message'];
+
+			$kept                 = kaamase_registration_input();
+			$kept['email_warned'] = kaamase_email_normal( $email_raw );
+
+			if ( '' !== $email_problem['suggestion'] ) {
+				$kept['email'] = $email_problem['suggestion'];
+				$errors[]      = __( 'We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it.', 'kaamase-core' );
+			} else {
+				$errors[] = __( 'If what you typed is right, type it again exactly and we will use it.', 'kaamase-core' );
+			}
+
+			kaamase_registration_input( $kept );
+
+		} elseif ( ! is_email( $email ) ) {
 			$errors[] = __( 'Please enter a working email address.', 'kaamase-core' );
 		}
 
