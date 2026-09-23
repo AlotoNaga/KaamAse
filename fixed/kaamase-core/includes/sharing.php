@@ -479,13 +479,23 @@ if ( ! function_exists( 'kaamase_whatsapp_share_button' ) ) {
 			return '';
 		}
 
+		/*
+		 * esc_attr(), not esc_url(). esc_url() deletes an encoded line break
+		 * (%0A) wherever it finds one, which is right for a link that could
+		 * end up in a header and wrong here: it glued the name onto the link,
+		 * "...GNMhttps://kaamase.com/...", and WhatsApp does not recognise a
+		 * link with a word stuck to its front. The address is a fixed
+		 * https://wa.me/ prefix followed by rawurlencode() output, which is
+		 * only letters, digits, - _ . ~ and %, so there is nothing in it for
+		 * an attribute to need escaping from.
+		 */
 		return sprintf(
 			'<a class="ka-btn ka-btn--outline ka-share-wa" href="%1$s" target="_blank" rel="noopener">'
 				. '<svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24">'
 				. '<path fill="#25D366" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/>'
 				. '<path fill="#fff" d="M17.3 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/>'
 				. '</svg><span>%2$s</span></a>',
-			esc_url( kaamase_whatsapp_share_url( $post_id ) ),
+			esc_attr( kaamase_whatsapp_share_url( $post_id ) ),
 			esc_html__( 'Share on WhatsApp', 'kaamase-core' )
 		);
 	}

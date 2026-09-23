@@ -4979,6 +4979,41 @@ ordinary page; and the button appended only to the page's own content, not to a
 list or an excerpt. The button was rendered with the theme's stylesheet at phone
 width: 48 pixels tall, and the page stays phone width.
 
+### Checked on a real WordPress before upload
+
+Fixes 69, 70 and 71 were then run on a real WordPress 6.5 site (SQLite, PHP
+8.4) with this theme and both plugins exactly as they will be after upload: the
+original ZIPs with every file in `fixed/` copied over.
+
+That run found one real fault, now fixed. WordPress's `esc_url()` deletes an
+encoded line break, so the WhatsApp message arrived as
+`...GNMhttps://kaamase.com/job/...`, the name glued to the link, which WhatsApp
+does not recognise as a link. The stand-in `esc_url()` in the first test did not
+do that, which is why it passed; it does now, and fails on the old code. The
+button now escapes the address with `esc_attr()`, and the message on the real
+site reads the name, a line break, then the link.
+
+Everything else passed on the real site:
+
+- **Pages:** 19 pages and routes in English, Hindi and Nagamese, signed in and
+  out, 114 requests, with not one PHP warning, notice or error in `debug.log`.
+  The button reads *Share on WhatsApp*, *WhatsApp पर भेजें* and *WhatsApp te
+  pathai dibi* in the three languages, and older translations are unchanged.
+- **Share pictures:** WordPress really made a 960x540 copy of the job photo and
+  a 320 square, and no wide copy, of the profile photo, and the pages carry
+  exactly those in `og:image`. No button on the closed job.
+- **Website registration (18 checks):** a typo comes back with the suggestion
+  in the box and the name kept; the same typo typed again makes the account as
+  typed; the suggestion accepted makes it at the corrected address; an
+  impossible Gmail name; the message in Nagamese; a right address and nonsense
+  behave as before.
+- **App routes (15 checks):** `/auth/register` and `/me/email` over HTTP, with
+  `email_suggestion`, `email_as_typed`, Hindi and Nagamese via
+  `X-Kaamase-Locale`, and the old reply shape on every other error.
+- **Promote card:** signed in as an employer at phone width with the long
+  nursing title in the list, the page is exactly 390 wide, and sending the form
+  records the request with the chosen length and time.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
