@@ -62,7 +62,7 @@
  * should be right and running before the first person sees a mark.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.10.0
  */
 
@@ -1161,44 +1161,62 @@ if ( ! function_exists( 'kaamase_promo_card' ) ) {
 
 				<p class="ka-small ka-soft ka-mt-4"><?php echo esc_html( $copy['how'] ); ?></p>
 
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="ka-mt-4">
+				<?php
+				/*
+				 * The theme's own field classes, not bare controls.
+				 *
+				 * A bare select is as wide as its longest option, and a job
+				 * title is often a whole sentence. On a phone that one control
+				 * made the page wider than the screen, so the whole dashboard
+				 * slid sideways and could be zoomed out. .ka-select is width
+				 * 100% of the card and the browser shortens the title inside
+				 * it instead.
+				 */
+				?>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="ka-form ka-mt-4">
 
 					<input type="hidden" name="action" value="kaamase_promo_ask">
 					<?php wp_nonce_field( 'kaamase_promo_ask' ); ?>
 
-					<p>
-						<label for="ka-promo-post"><?php echo esc_html( $copy['which'] ); ?></label><br>
-						<select name="post" id="ka-promo-post" required>
-							<?php foreach ( $can as $post_id ) : ?>
-								<option value="<?php echo esc_attr( (string) $post_id ); ?>">
-									<?php echo esc_html( get_the_title( $post_id ) ); ?>
-								</option>
-							<?php endforeach; ?>
-						</select>
-					</p>
+					<div class="ka-field">
+						<?php if ( 1 === count( $can ) ) : ?>
+							<?php // One listing is not a choice. Show it, do not ask for it. ?>
+							<span class="ka-label"><?php echo esc_html( $copy['which'] ); ?></span>
+							<div class="ka-input"><strong><?php echo esc_html( get_the_title( $can[0] ) ); ?></strong></div>
+							<input type="hidden" name="post" value="<?php echo esc_attr( (string) $can[0] ); ?>">
+						<?php else : ?>
+							<label class="ka-label" for="ka-promo-post"><?php echo esc_html( $copy['which'] ); ?></label>
+							<select class="ka-select" name="post" id="ka-promo-post" required>
+								<?php foreach ( $can as $post_id ) : ?>
+									<option value="<?php echo esc_attr( (string) $post_id ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></option>
+								<?php endforeach; ?>
+							</select>
+						<?php endif; ?>
+					</div>
 
-					<p>
-						<label for="ka-promo-want"><?php echo esc_html( $copy['length'] ); ?></label><br>
-						<select name="want" id="ka-promo-want">
-							<?php foreach ( kaamase_promo_lengths() as $slug => $length ) : ?>
-								<option value="<?php echo esc_attr( $slug ); ?>">
-									<?php echo esc_html( $length['label'] ); ?>
-								</option>
-							<?php endforeach; ?>
-						</select>
-					</p>
+					<fieldset class="ka-field">
+						<legend class="ka-label"><?php echo esc_html( $copy['length'] ); ?></legend>
+						<?php $first = true; ?>
+						<?php foreach ( kaamase_promo_lengths() as $slug => $length ) : ?>
+							<label class="ka-check">
+								<input type="radio" name="want" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $first ); ?>>
+								<span><?php echo esc_html( $length['label'] ); ?></span>
+							</label>
+							<?php $first = false; ?>
+						<?php endforeach; ?>
+					</fieldset>
 
-					<p>
-						<label for="ka-promo-when"><?php echo esc_html( $copy['when'] ); ?></label><br>
-						<input type="text" name="when" id="ka-promo-when" maxlength="60" autocomplete="off">
-					</p>
+					<div class="ka-field">
+						<label class="ka-label" for="ka-promo-when"><?php echo esc_html( $copy['when'] ); ?></label>
+						<input class="ka-input" type="text" name="when" id="ka-promo-when" maxlength="60" autocomplete="off">
+					</div>
 
-					<p>
-						<label for="ka-promo-note"><?php echo esc_html( $copy['note'] ); ?></label><br>
-						<textarea name="note" id="ka-promo-note" rows="2" maxlength="300"></textarea>
-					</p>
+					<div class="ka-field">
+						<label class="ka-label" for="ka-promo-note"><?php echo esc_html( $copy['note'] ); ?></label>
+						<textarea class="ka-textarea" name="note" id="ka-promo-note" rows="3" maxlength="300"></textarea>
+					</div>
 
-					<button class="ka-btn ka-btn--outline" type="submit">
+					<button class="ka-btn ka-btn--primary ka-btn--block ka-mt-6" type="submit">
 						<?php echo esc_html( $copy['button'] ); ?>
 					</button>
 

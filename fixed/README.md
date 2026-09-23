@@ -4771,6 +4771,60 @@ reads Nagamese changes their name, and what reaches their phone is
 `Apni pra apni laka naam bodli kuri shey...` while the owner's copy of the same
 event stays in English.
 
+## 69. The promote card that widened the whole page
+
+Reported from a phone: on the dashboard, below **The tick on a profile**, the
+page could be zoomed out and slid sideways, with every card squeezed into the
+left half of the screen.
+
+**One file:** `fixed/kaamase-core/includes/promote.php` (1.2.0). Nothing in the
+theme changed, and no words changed, so no translation files need copying.
+
+### The cause
+
+The **Promote a job or your profile** form was the only form on the public site
+built from bare browser controls rather than the theme's field classes. A bare
+`<select>` is as wide as its longest option, and a job title is often a whole
+sentence: *Quickserv is Hiring Nursing Assistants/ General Duty Assistants and
+Staff Nurses / GNM*. That one control was wider than the phone, so the phone
+laid the whole page out wider to fit it, which is the zoomed-out, sliding page.
+
+Measured in Chromium at phone size with the theme's real stylesheet: a 390px
+phone was laying the dashboard out **689px** wide. After the fix it is 390px,
+and 360px on a small Android phone.
+
+### What the form is now
+
+It uses the same pieces as every other form on the site, so it looks like it
+belongs:
+
+| Field | Before | Now |
+| --- | --- | --- |
+| Which one? | bare dropdown, as wide as the longest title | `.ka-select`, the width of the card; a long title is shortened inside the box. With **one** listing there is nothing to choose, so its name is shown in full instead |
+| How long? | a dropdown of two | two tap targets, **One week** already chosen |
+| Best time to ring you | narrow bare box | full-width `.ka-input` |
+| Anything we should know | narrow bare box | full-width `.ka-textarea` |
+| Button | outline | the green primary button, full width |
+
+The form still sends exactly the same four fields (`post`, `want`, `when`,
+`note`) to the same handler, so nothing on the receiving side changed and the
+phone app is not affected.
+
+### Checked across the rest of the site
+
+Every other bare dropdown or text box in the plugins and theme is on an
+**admin** screen (posted-for, gift, job alert hour, verification length, SMTP,
+media), which is only ever opened on a computer. The public site already wraps
+long words (`overflow-wrap: break-word` on the page), and nothing else in the
+theme has a fixed width wider than a phone.
+
+### Tested
+
+The existing promotion suite, 139 assertions, passes unchanged. (Its WordPress
+stand-in gained `checked()`, which real WordPress always has.) The card was
+rendered through the real `kaamase_promo_card()` for one listing and for several,
+and measured at 390px and 360px, with the longest title selected.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
