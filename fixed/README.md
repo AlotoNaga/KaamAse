@@ -5506,6 +5506,64 @@ the 960 by 540 crop, which is what a preview wants.
   label read out as *पूरी तस्वीर देखें* and *Pura photo sabo*, and nothing from
   these files in `debug.log`. Language files: 0 placeholder problems.
 
+## 78. The nightly "Did you hire them?" arriving at 2 a.m.
+
+The app was sending its *Did you hire them?* notification in the middle of the
+night. It should come in the morning.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/post-types.php` | 1.1.0 |
+
+No cache purge needed; nothing about a page changed.
+
+### What was wrong
+
+Two different notifications, scheduled two different ways.
+
+The *opened X times* milestone runs on an **hourly** check that only sends
+between 8 a.m. and 9 p.m., so it never wakes anyone. But *Did you hire them?*
+rides on the once-a-day maintenance task, and that task was booked for **an hour
+after the plugin was first switched on** — no particular time of day, and on
+this site it settled at about 2 a.m. The hire question has no daytime guard, so
+it went out whenever the task ran.
+
+So there was never a 6:30 in the code; the morning timing anyone remembered was
+luck, and the 2 a.m. sends are the task simply running when it was booked.
+
+### The fix
+
+The daily task is now booked for **6:30 in the morning, site time**. The
+maintenance it also does (closing expired jobs, tidying old rows) does not care
+what hour it runs, so the whole task moves together.
+
+- The hour reads from the site's timezone, like the rest of the plugin. A site
+  left on WordPress's default of UTC is read as Kolkata, since this platform is
+  only ever Nagaland, so 6:30 is 6:30 IST either way. Setting **Settings →
+  General → Timezone** to Kolkata is still worth doing (the dashboard and other
+  dates use it), but the notification no longer depends on it.
+- Changing the code cannot move a task WordPress has already booked, so a
+  one-time step clears the old 2 a.m. booking on the first load after upload and
+  re-books the morning slot. It runs once and never fights a time set on purpose
+  later.
+- `6:30` can be changed without editing code, through the `kaamase_daily_hour`
+  and `kaamase_daily_minute` filters.
+
+Like any WordPress schedule, it fires on the first visit after 6:30 rather than
+to the second; on a site with steady traffic that is a few minutes past 6:30.
+
+### Tested on the real WordPress site
+
+On the real WordPress copy, against WordPress's own scheduler: an existing 2:03
+a.m. booking moved to 6:30 IST on the next load and stayed there over repeated
+loads; a fresh install booked 6:30 IST; a site set to Kolkata and a site left on
+UTC both gave 6:30 IST; the `kaamase_daily_hour`/`minute` filters moved it (7:00
+tested); the next run is always in the future; and the hire-question sender is
+still attached to the task. Pages load with nothing from this file in
+`debug.log`.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
