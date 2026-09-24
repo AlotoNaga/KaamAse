@@ -31,6 +31,10 @@
   "hi_IN": "%2$s में %1$s: मज़दूर और काम",
   "nag": "%2$s te %1$s: worker aro kaam khan"
  },
+ "%1$s jobs and workers in %2$s": {
+  "hi_IN": "%2$s में %1$s की नौकरी और लोग",
+  "nag": "%2$s te %1$s laka kaam aro worker khan"
+ },
  "%1$s jobs in %2$s": {
   "hi_IN": "%2$s में %1$s का काम",
   "nag": "%2$s te %1$s laka kaam khan"
@@ -114,6 +118,16 @@
  "%s is hiring, not us. The number on this job is theirs, so you speak to them directly.": {
   "hi_IN": "काम %s दे रहे हैं, हम नहीं। इस काम पर दिया नंबर उन्हीं का है, इसलिए आप सीधे उनसे बात करें।",
   "nag": "Kaam %s pra di ase, amikhan nohoi. Etu kaam laka number tai khan laka ase, etu karne apni tai khan logote sidha kotha koribi."
+ },
+ "%s kind of work": {
+  "hi_IN": [
+   "%s तरह का काम",
+   "%s तरह के काम"
+  ],
+  "nag": [
+   "%s kisim laka kaam",
+   "%s kisim laka kaam"
+  ]
  },
  "%s looked you up on Kaam Ase. They may call you.": {
   "hi_IN": "%s ने Kaam Ase पर आपको देखा है। वे आपको कॉल कर सकते हैं।",
@@ -493,9 +507,17 @@
   "hi_IN": "पूरा नागालैंड",
   "nag": "Pura Nagaland"
  },
+ "All categories": {
+  "hi_IN": "सभी तरह के काम",
+  "nag": "Sob kisim laka kaam"
+ },
  "All districts": {
   "hi_IN": "सभी ज़िले",
   "nag": "Sob district khan"
+ },
+ "All kinds of work": {
+  "hi_IN": "हर तरह का काम",
+  "nag": "Sob kisim laka kaam"
  },
  "All open jobs": {
   "hi_IN": "सारे खुले काम",
@@ -596,6 +618,10 @@
  "Apple sign in is not switched on for this site.": {
   "hi_IN": "इस साइट के लिए Apple से साइन इन चालू नहीं है।",
   "nag": "Etu site karne Apple pra sign in chalu kora nai."
+ },
+ "Are there government jobs on Kaam Ase?": {
+  "hi_IN": "क्या Kaam Ase पर सरकारी नौकरियाँ हैं?",
+  "nag": "Kaam Ase te government kaam ase na?"
  },
  "Are you free for work?": {
   "hi_IN": "क्या आप काम के लिए खाली हैं?",
@@ -1057,6 +1083,10 @@
   "hi_IN": "Kaam Ase पर डाला गया हर काम जाँचा जाता है। जो असली काम नहीं है उसे हटा दिया जाता है और खाता बंद कर दिया जाता है।",
   "nag": "Kaam Ase te post kora hor kaam check kore. Hosa kaam nohua jinis uthai diye aro account bondh kuri diye."
  },
+ "Every kind of job, government and private, from teaching and office work to driving and building, in every district.": {
+  "hi_IN": "हर तरह की नौकरी, सरकारी और प्राइवेट, पढ़ाने और दफ़्तर के काम से लेकर ड्राइविंग और निर्माण के काम तक, हर ज़िले में।",
+  "nag": "Sob kisim laka kaam, government aro private, teaching aro office kaam pra driving aro construction kaam tak, sob district te."
+ },
  "Everybody you have done a job for through Kaam Ase.": {
   "hi_IN": "वे सब जिनके लिए आपने Kaam Ase से काम किया है।",
   "nag": "Kaam Ase pra apni jun khan laka karne kaam kurishey, sob."
@@ -1177,6 +1207,10 @@
   "hi_IN": "घर से दूर के काम में ये रेट जितने ही मायने रखते हैं। अगर आप देते हैं तो बता दें।",
   "nag": "Ghor pra dur laka kaam te etu khan rate iman he dorkar ase. Apni dile koi dibi."
  },
+ "Free for job seekers, always": {
+  "hi_IN": "नौकरी ढूँढने वालों के लिए मुफ़्त, हमेशा",
+  "nag": "Kaam bisari thaka khan karne free, hodai"
+ },
  "Free for work now": {
   "hi_IN": "अभी काम के लिए खाली",
   "nag": "Etiya kaam karne khali"
@@ -1284,6 +1318,10 @@
  "Google sign in is not switched on for this site.": {
   "hi_IN": "इस साइट के लिए Google से साइन इन चालू नहीं है।",
   "nag": "Etu site karne Google pra sign in chalu kora nai."
+ },
+ "Government and private jobs from across the state. Job seekers never pay to apply.": {
+  "hi_IN": "पूरे राज्य से सरकारी और प्राइवेट नौकरियाँ। नौकरी ढूँढने वाले आवेदन के लिए कभी पैसे नहीं देते।",
+  "nag": "Pura state pra government aro private kaam khan. Kaam bisari thaka khan apply koribole kitia b pisa nadiye."
  },
  "Group name, link, or who told you. Only you see this.": {
   "hi_IN": "ग्रुप का नाम, लिंक, या किसने बताया। यह सिर्फ़ आप देखते हैं।",
@@ -1734,6 +1772,10 @@
  "Kaam Ase wide": {
   "hi_IN": "Kaam Ase चौड़ा",
   "nag": "Kaam Ase chaura"
+ },
+ "Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland, for every kind of job: government and private, teaching, office, health and sales work, driving, skilled trades and daily work. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me.": {
+  "hi_IN": "Kaam Ase, जिसका नागामीज़ में मतलब है \"काम है\", नागालैंड के लिए बना एक मुफ़्त जॉब प्लेटफ़ॉर्म है, हर तरह की नौकरी के लिए: सरकारी और प्राइवेट, पढ़ाना, दफ़्तर, स्वास्थ्य और बिक्री का काम, ड्राइविंग, हुनर वाला काम और दिहाड़ी का काम। यह काम ढूँढने वालों को काम देने वालों से जोड़ता है, वेबसाइट पर और Android और iPhone ऐप पर। इसे दीमापुर से Nagaland Me चलाता है।",
+  "nag": "Kaam Ase, Nagamese te \"kaam ase\" koi mane, Nagaland karne bonua ekta free job platform ase, sob kisim laka kaam karne: government aro private, teaching, office, health aro sales laka kaam, driving, skilled kaam aro hazira kaam. Etu kaam bisari thaka manu khan ke kaam dibole manu bisari thaka khan logote milai diye, website te aro Android aro iPhone app te. Etu Dimapur pra Nagaland Me pra chalai ase."
  },
  "Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me.": {
   "hi_IN": "Kaam Ase, जिसका नागामीज़ में मतलब है \"काम है\", नागालैंड के लिए बना एक मुफ़्त जॉब प्लेटफ़ॉर्म है। यह काम ढूँढने वालों को काम देने वालों से जोड़ता है, वेबसाइट पर और Android और iPhone ऐप पर। इसे दीमापुर से Nagaland Me चलाता है।",
@@ -2287,6 +2329,10 @@
   "hi_IN": "%s से Kaam Ase पर",
   "nag": "%s pra Kaam Ase te"
  },
+ "On Kaam Ase. Search by district for teachers, nurses, accountants, office staff, drivers, electricians, masons, cooks and many other kinds of work, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let people come to you.": {
+  "hi_IN": "Kaam Ase पर। ज़िले के हिसाब से शिक्षक, नर्स, अकाउंटेंट, दफ़्तर के कर्मचारी, ड्राइवर, बिजली मिस्त्री, राजमिस्त्री, रसोइया और कई दूसरे काम करने वाले खोजें, देखें कि अभी कौन उपलब्ध है, उनकी रेटिंग और उनकी ज़मानत कौन देता है, फिर Kaam Ase से उनका नंबर लें। आप मुफ़्त में काम डालकर लोगों को खुद अपने पास आने भी दे सकते हैं।",
+  "nag": "Kaam Ase te. District hisab te teacher, nurse, accountant, office staff, driver, electrician, mason, cook aro bisi dusra kaam laka manu khan bisaribi, etiya kun available ase, tai khan laka rating aro tai khan karne kun vouch kore etu sabi, tar pichete Kaam Ase pra tai laka number lobi. Apni free te kaam post kuri kene manu khan ke apni logote ahibole b dibo pare."
+ },
  "On Kaam Ase. Search for masons, electricians, plumbers, carpenters, drivers, cooks, helpers and many other trades by district, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let workers come to you.": {
   "hi_IN": "Kaam Ase पर। ज़िले के हिसाब से राजमिस्त्री, बिजली मिस्त्री, प्लंबर, बढ़ई, ड्राइवर, रसोइया, हेल्पर और कई दूसरे काम करने वाले खोजें, देखें कि अभी कौन उपलब्ध है, उनकी रेटिंग और उनकी ज़मानत कौन देता है, फिर Kaam Ase से उनका नंबर लें। आप मुफ़्त में काम डालकर मज़दूरों को खुद अपने पास आने भी दे सकते हैं।",
   "nag": "Kaam Ase te. District hisab te mason, electrician, plumber, carpenter, driver, cook, helper aro bisi dusra kaam laka manu khan bisaribi, etiya kun available ase, tai khan laka rating aro tai khan karne kun vouch kore etu sabi, tar pichete Kaam Ase pra tai laka number lobi. Apni free te kaam post kuri kene worker khan ke apni logote ahibole b dibo pare."
@@ -2591,6 +2637,10 @@
   "hi_IN": "यहाँ बहुत से लोग एक काम के लिए लोग रखते हैं और दूसरे पर खुद काम करते हैं। इसी खाते में मज़दूर प्रोफ़ाइल जोड़ें और मालिक आपको भी ढूँढ सकेंगे। यह मुफ़्त है, और आपका लॉगिन तथा आपके डाले काम जस के तस रहते हैं।",
   "nag": "Yate bisi manu ekta kaam karne manu loi aro dusra kaam te nije kaam kore. Etu he account te ekta worker profile add koribi aro employer khan apni ke b bisaribo pare. Etu free ase, aro apni laka login aro apni laka kaam post khan thik iman he thake."
  },
+ "Popular categories": {
+  "hi_IN": "लोकप्रिय काम",
+  "nag": "Popular kaam khan"
+ },
  "Popular trades": {
   "hi_IN": "लोकप्रिय काम",
   "nag": "Popular kaam khan"
@@ -2786,6 +2836,10 @@
  "Register free": {
   "hi_IN": "मुफ़्त रजिस्टर करें",
   "nag": "Free te register koribo"
+ },
+ "Register free on Kaam Ase with your name, district, the kind of work you do and your phone number. Browse the jobs posted in your district, government and private, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your field and district. Kaam Ase never asks a job seeker for money to get a job.": {
+  "hi_IN": "अपने नाम, ज़िले, अपने काम और फ़ोन नंबर के साथ Kaam Ase पर मुफ़्त रजिस्टर करें। अपने ज़िले में डाले गए सरकारी और प्राइवेट काम देखें, और मालिक आपकी प्रोफ़ाइल ढूँढकर आपसे संपर्क कर सकते हैं। ऐप से आपको अपने काम और ज़िले में नए काम की दिन में एक सूचना भी मिलती है। Kaam Ase नौकरी दिलाने के लिए नौकरी ढूँढने वाले से कभी पैसे नहीं मांगता।",
+  "nag": "Apni laka naam, district, apni ki kaam kore aro phone number loi kene Kaam Ase te free te register koribi. Apni laka district te post kora government aro private kaam khan sabi, aro employer khan apni laka profile bisari kene apni logote contact koribo pare. App te apni laka kaam aro district te notun kaam karne din te ekta alert b pabo. Kaam Ase kitia b kaam dibole kaam bisari thaka manu pra pisa mangi nai."
  },
  "Register free on Kaam Ase with your name, district, trade and phone number. Browse the jobs posted in your district, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your trade and district. Kaam Ase never asks a worker for money to get a job.": {
   "hi_IN": "अपने नाम, ज़िले, काम और फ़ोन नंबर के साथ Kaam Ase पर मुफ़्त रजिस्टर करें। अपने ज़िले में डाले गए काम देखें, और मालिक आपकी प्रोफ़ाइल ढूँढकर आपसे संपर्क कर सकते हैं। ऐप से आपको अपने काम और ज़िले में नए काम की दिन में एक सूचना भी मिलती है। Kaam Ase काम दिलाने के लिए किसी मज़दूर से कभी पैसे नहीं मांगता।",
@@ -2986,6 +3040,10 @@
  "See what is available: %s": {
   "hi_IN": "क्या उपलब्ध है देखें: %s",
   "nag": "Ki available ase sabi: %s"
+ },
+ "See what they do, where they are, their ratings and who vouches for them.": {
+  "hi_IN": "देखें वे क्या काम करते हैं, कहाँ रहते हैं, उनकी रेटिंग और उनकी ज़मानत कौन देता है।",
+  "nag": "Tai khan ki kaam kore, kote thake, tai khan laka rating aro tai khan karne kun vouch kore, etu sabo."
  },
  "See what you get": {
   "hi_IN": "आपको क्या मिलता है, देखें",
@@ -4534,6 +4592,10 @@
  "Yes, stop renewing": {
   "hi_IN": "हाँ, दोबारा शुरू होना बंद करें",
   "nag": "Hoi, renew hua bondh koribo"
+ },
+ "Yes. Government job adverts for Nagaland are posted here alongside private jobs, free to read. Apply the way each advert says, through the official process it gives. Nobody can get you a government job for money; if anyone asks, report it.": {
+  "hi_IN": "हाँ। नागालैंड की सरकारी नौकरियों के विज्ञापन यहाँ प्राइवेट नौकरियों के साथ डाले जाते हैं, और उन्हें पढ़ना मुफ़्त है। हर विज्ञापन में बताए गए आधिकारिक तरीके से ही आवेदन करें। पैसे देकर किसी को सरकारी नौकरी नहीं मिलती; अगर कोई पैसे मांगे, तो रिपोर्ट करें।",
+  "nag": "Hoi. Nagaland laka government kaam laka advert khan yate private kaam khan logote post kore, aro etu porhibole free ase. Advert te ki koise, etu official tarika pra he apply koribi. Pisa dikene kunba b government kaam napai; kunba pisa mangile, report koribi."
  },
  "Yes. Registering, looking for work and being hired is free for workers, and always will be. Employers can post jobs free too. An optional paid plan adds extras such as more urgent posts, but it never changes what a worker pays, which is nothing.": {
   "hi_IN": "हाँ। मज़दूरों के लिए रजिस्टर करना, काम ढूँढना और काम पाना मुफ़्त है, और हमेशा रहेगा। मालिक भी मुफ़्त में काम डाल सकते हैं। एक वैकल्पिक पेड प्लान कुछ अतिरिक्त सुविधाएँ देता है, जैसे ज़्यादा ज़रूरी काम, लेकिन इससे यह कभी नहीं बदलता कि मज़दूर कितना देता है, यानी कुछ भी नहीं।",

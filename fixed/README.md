@@ -5251,6 +5251,73 @@ extra on a slow connection.
 - Nothing from these files in `debug.log`. Language files: 0 placeholder
   problems.
 
+## 75. Every kind of job, not only daily work
+
+Kaam Ase is for every job: teachers, nurses, office staff and government
+adverts as well as masons and drivers. Fix 74's words leaned on the trades
+("hire a mason, electrician, plumber, driver or helper", "118 trades"), which
+tells a teacher the site is not for them. Only wording changed; nothing about
+how the site works.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase/front-page.php` | 1.3.0 |
+| `fixed/kaamase-core/includes/seo.php` | 1.1.0 |
+| `fixed/kaamase/languages/kaamase.pot`, `hi_IN.po` and `.mo`, `nag.po` and `.mo` | |
+| `fixed/kaamase-core/languages/kaamase-core.pot`, `kaamase-core-hi_IN.po` and `.mo`, `kaamase-core-nag.po` and `.mo` | |
+
+Then **LiteSpeed Cache → Toolbox → Purge All**. `style.css` did not change.
+
+### What reads differently
+
+| Where | Before | Now |
+| --- | --- | --- |
+| Line under the heading | Find work near you, or hire a mason, electrician, plumber, driver or helper in any district… | Every kind of job, government and private, from teaching and office work to driving and building, in every district. |
+| First box | Any trade | All kinds of work |
+| Ticks | Free for workers, always · 118 trades | Free for job seekers, always · 118 kinds of work |
+| Chips | Popular trades · All trades | Popular categories · All categories |
+| Latest jobs | Posted by employers across the state. Workers never pay to apply. | Government and private jobs from across the state. Job seekers never pay to apply. |
+| Available workers | See their trade, district, ratings… | See what they do, where they are, their ratings… |
+
+In Hindi and Nagamese too. The heading, the buttons and everything else on the
+page are as they were.
+
+**For search engines and AI assistants:** the homepage, job list, worker list
+and district descriptions now name government and private jobs, teachers,
+nurses and office staff, not only trades. A trade page's title is now
+*Teacher jobs and workers in Nagaland* (it was *Teacher in Nagaland: workers and
+jobs*), matching what people type. `/llms.txt` and the organisation description
+say every kind of job, government and private.
+
+**A new question on the homepage:** *Are there government jobs on Kaam Ase?*,
+answered yes, free to read, apply the way each advert says, and nobody can get
+you a government job for money. **It is written as fact, so post a few
+government adverts when you upload this.** If you would rather wait, say so and
+the question comes out until you do.
+
+**No Engineer category.** The words name teachers, nurses, accountants and
+office staff because those categories exist. There is no *Engineer*, so an
+engineer cannot pick one at sign up. Add it under *Trades* when you want
+engineers, and it appears in the search box and the chips on its own.
+
+### Found while testing, fixed
+
+A worker list filtered to a trade (`/workers/?kaamase_trade=teacher`) got the
+trade page's description, because WordPress marks a filtered list as a trade
+page too. The list is now checked first.
+
+### Tested on the real WordPress site
+
+Homepage in three languages at 320, 360, 390 and 1280 pixels: no sideways
+scroll, the line under the heading three lines at 390 in every language, both
+buttons carrying trade and district. The nine questions match the FAQ data word
+for word in each language. Titles and descriptions checked on the job, worker,
+team, trade (Teacher and AC repair), filtered and district pages; the longest
+description, Chumoukedima, is 160 characters. Nothing in `debug.log`; language
+files 0 placeholder problems.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

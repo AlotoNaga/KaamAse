@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 03:39+0000\n"
+"POT-Creation-Date: 2026-09-24 06:34+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -59,16 +59,12 @@ msgstr ""
 
 #. translators: 1: trade name, 2: district name
 #. translators: 1: what was found, 2: district name
-#: includes/indexes.php:602 includes/queries.php:1087 includes/seo.php:521 includes/seo.php:543
+#: includes/indexes.php:602 includes/queries.php:1087 includes/seo.php:525 includes/seo.php:547
 msgid "%1$s in %2$s"
 msgstr ""
 
-#: includes/seo.php:631
+#: includes/seo.php:643
 msgid "%1$s in %2$s, Nagaland"
-msgstr ""
-
-#: includes/seo.php:528
-msgid "%1$s in %2$s: workers and jobs"
 msgstr ""
 
 #. translators: 1: job or profile name, 2: the date it ends
@@ -76,7 +72,15 @@ msgstr ""
 msgid "%1$s is being promoted on Kaam Ase until %2$s."
 msgstr ""
 
-#: includes/seo.php:508
+#: includes/seo.php:621
+msgid "%1$s jobs and people to hire in %2$s. See the latest jobs, who is available now, their ratings and local vouches. Free on Kaam Ase."
+msgstr ""
+
+#: includes/seo.php:532
+msgid "%1$s jobs and workers in %2$s"
+msgstr ""
+
+#: includes/seo.php:512
 msgid "%1$s jobs in %2$s"
 msgstr ""
 
@@ -117,6 +121,10 @@ msgstr ""
 #. translators: 1: what changed, 2: old value, 3: new value, 4: how long ago
 #: includes/mark-changes.php:969
 msgid "%1$s: \"%2$s\" to \"%3$s\", %4$s"
+msgstr ""
+
+#: includes/seo.php:612
+msgid "%1$s: people to hire in %2$s on Kaam Ase. See who is available now, their ratings and local vouches, then get in touch. Free to search."
 msgstr ""
 
 #. translators: 1: what changed, 2: the old value, 3: the new value
@@ -694,7 +702,7 @@ msgid "Agriculture"
 msgstr ""
 
 #. translators: 1: number of districts, 2: their names separated by commas
-#: includes/seo.php:439
+#: includes/seo.php:443
 msgid "All %1$d district: %2$s."
 msgid_plural "All %1$d districts: %2$s."
 msgstr[0] ""
@@ -883,6 +891,10 @@ msgstr ""
 
 #: includes/insights.php:1063
 msgid "Apple:"
+msgstr ""
+
+#: includes/seo.php:425
+msgid "Are there government jobs on Kaam Ase?"
 msgstr ""
 
 #: includes/dashboard.php:448
@@ -1781,7 +1793,7 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: includes/seo.php:458
+#: includes/seo.php:462
 msgid "English, Hindi and Nagamese. You can change the language at any time, from the top of the website or in the app."
 msgstr ""
 
@@ -1865,12 +1877,8 @@ msgstr ""
 msgid "Filter these results"
 msgstr ""
 
-#: includes/seo.php:607
-msgid "Find %1$s workers for hire in %2$s on Kaam Ase. See who is available now, their ratings and local vouches, then get in touch. Free to search."
-msgstr ""
-
-#: includes/seo.php:587
-msgid "Find jobs and hire workers in Nagaland: masons, electricians, plumbers, drivers, cooks and helpers in every district, from Dimapur to Mon. Free for workers."
+#: includes/seo.php:614
+msgid "Find people to hire in %s: teachers, nurses, office staff, drivers, electricians and more. See who is available now, their ratings and vouches."
 msgstr ""
 
 #: includes/dashboard.php:1114 includes/dashboard.php:544 includes/saved.php:757
@@ -1879,10 +1887,6 @@ msgstr ""
 
 #: includes/dashboard.php:536 includes/saved.php:756
 msgid "Find workers"
-msgstr ""
-
-#: includes/seo.php:609
-msgid "Find workers for hire in %s: masons, electricians, plumbers, drivers and helpers. See who is available now, their ratings and local vouches."
 msgstr ""
 
 #: includes/indexing-api.php:976
@@ -2095,6 +2099,10 @@ msgstr ""
 
 #: includes/insights.php:1061
 msgid "Google:"
+msgstr ""
+
+#: includes/seo.php:591
+msgid "Government and private jobs in Nagaland, and people to hire: teachers, nurses, office staff, drivers, electricians and more, in every district. Free to use."
 msgstr ""
 
 #: includes/taxonomies.php:433
@@ -2493,15 +2501,15 @@ msgstr ""
 msgid "Insights"
 msgstr ""
 
-#: includes/seo.php:429
+#: includes/seo.php:433
 msgid "Is Kaam Ase free?"
 msgstr ""
 
-#: includes/seo.php:447
+#: includes/seo.php:451
 msgid "Is my phone number shown publicly?"
 msgstr ""
 
-#: includes/seo.php:452
+#: includes/seo.php:456
 msgid "Is there a Kaam Ase app?"
 msgstr ""
 
@@ -2577,15 +2585,15 @@ msgstr ""
 msgid "Jobs and ratings involving other people are kept without your name, because they are part of somebody else's record too."
 msgstr ""
 
-#: includes/seo.php:614
-msgid "Jobs and workers in %1$s, Nagaland. Find work near you, or hire a mason, electrician, plumber, driver or helper in %2$s on Kaam Ase. Free for workers."
-msgstr ""
-
-#: includes/seo.php:533
+#: includes/seo.php:537
 msgid "Jobs and workers in %s"
 msgstr ""
 
-#: includes/seo.php:494 includes/seo.php:797
+#: includes/seo.php:626
+msgid "Jobs and workers in %s, Nagaland: government and private jobs, from teaching and office work to driving and building, and people to hire. Free to use."
+msgstr ""
+
+#: includes/seo.php:498 includes/seo.php:809
 msgid "Jobs and workers in Nagaland"
 msgstr ""
 
@@ -2597,7 +2605,7 @@ msgstr ""
 msgid "Jobs filled"
 msgstr ""
 
-#: includes/seo.php:510
+#: includes/seo.php:514
 msgid "Jobs in %s"
 msgstr ""
 
@@ -2649,8 +2657,8 @@ msgstr ""
 msgid "Kaam Ase holds names, photographs, villages and phone numbers of real people. Under the Digital Personal Data Protection Act a privacy notice is a legal requirement, not a formality. Have a lawyer write this. Below is what they need to cover."
 msgstr ""
 
-#: includes/seo.php:742
-msgid "Kaam Ase is a free job platform for Nagaland. People looking for work find jobs, and employers find and hire local workers, in every district of Nagaland."
+#: includes/seo.php:754
+msgid "Kaam Ase is a free job platform for Nagaland, for every kind of job, government and private. People looking for work find jobs, and employers find and hire local people, in every district of Nagaland."
 msgstr ""
 
 #: includes/install.php:744
@@ -2711,7 +2719,7 @@ msgid "Kaam Ase verification"
 msgstr ""
 
 #: includes/seo.php:418
-msgid "Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me."
+msgid "Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland, for every kind of job: government and private, teaching, office, health and sales work, driving, skilled trades and daily work. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me."
 msgstr ""
 
 #: includes/teams.php:634
@@ -2780,12 +2788,12 @@ msgstr ""
 msgid "Last week, three days in March, and so on"
 msgstr ""
 
-#: includes/seo.php:598
+#: includes/seo.php:602
 msgid "Latest %1$s jobs in %2$s, posted by employers on Kaam Ase. See the pay and the place, and get in touch free. Workers never pay to apply."
 msgstr ""
 
-#: includes/seo.php:600
-msgid "Latest jobs in %s: daily wage, monthly and contract work posted by employers. See the pay and the place, and get in touch free. Workers never pay."
+#: includes/seo.php:604
+msgid "Latest jobs in %s, government and private: teaching, office, health, driving and skilled work. See the pay and the place, and apply free."
 msgstr ""
 
 #: includes/posted-for.php:358
@@ -3252,7 +3260,7 @@ msgstr ""
 msgid "No workers in trash."
 msgstr ""
 
-#: includes/seo.php:448
+#: includes/seo.php:452
 msgid "No. Nobody's number is printed on a public page. An employer has to look it up through Kaam Ase, lookups are limited and recorded, and you can choose to approve every request yourself before your number is shared."
 msgstr ""
 
@@ -3525,12 +3533,12 @@ msgstr ""
 msgid "On Kaam Ase since %s"
 msgstr ""
 
-#: includes/seo.php:642
+#: includes/seo.php:654
 msgid "On Kaam Ase."
 msgstr ""
 
-#: includes/seo.php:426
-msgid "On Kaam Ase. Search for masons, electricians, plumbers, carpenters, drivers, cooks, helpers and many other trades by district, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let workers come to you."
+#: includes/seo.php:430
+msgid "On Kaam Ase. Search by district for teachers, nurses, accountants, office staff, drivers, electricians, masons, cooks and many other kinds of work, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let people come to you."
 msgstr ""
 
 #: includes/admin.php:566 includes/dashboard.php:442
@@ -4181,7 +4189,7 @@ msgid "Register first, it is free"
 msgstr ""
 
 #: includes/seo.php:422
-msgid "Register free on Kaam Ase with your name, district, trade and phone number. Browse the jobs posted in your district, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your trade and district. Kaam Ase never asks a worker for money to get a job."
+msgid "Register free on Kaam Ase with your name, district, the kind of work you do and your phone number. Browse the jobs posted in your district, government and private, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your field and district. Kaam Ase never asks a job seeker for money to get a job."
 msgstr ""
 
 #: includes/insights.php:1363 includes/insights.php:587 includes/not-confirmed.php:240
@@ -5093,7 +5101,7 @@ msgstr ""
 msgid "Teams for hire"
 msgstr ""
 
-#: includes/seo.php:515
+#: includes/seo.php:519
 msgid "Teams for hire in %s"
 msgstr ""
 
@@ -6443,7 +6451,7 @@ msgstr ""
 msgid "Where"
 msgstr ""
 
-#: includes/seo.php:425
+#: includes/seo.php:429
 msgid "Where can I find workers in Nagaland?"
 msgstr ""
 
@@ -6479,7 +6487,7 @@ msgstr ""
 msgid "Which courts have jurisdiction."
 msgstr ""
 
-#: includes/seo.php:436
+#: includes/seo.php:440
 msgid "Which districts of Nagaland does Kaam Ase cover?"
 msgstr ""
 
@@ -6487,7 +6495,7 @@ msgstr ""
 msgid "Which images to show"
 msgstr ""
 
-#: includes/seo.php:457
+#: includes/seo.php:461
 msgid "Which languages can I use Kaam Ase in?"
 msgstr ""
 
@@ -6666,7 +6674,7 @@ msgstr ""
 msgid "Workers hired so far"
 msgstr ""
 
-#: includes/seo.php:523
+#: includes/seo.php:527
 msgid "Workers in %s"
 msgstr ""
 
@@ -6747,7 +6755,7 @@ msgstr ""
 msgid "Yes, I hired them"
 msgstr ""
 
-#: includes/seo.php:453
+#: includes/seo.php:457
 msgid "Yes, free for Android and iPhone. Open kaamase.com/app on your phone and it takes you to the right store."
 msgstr ""
 
@@ -6759,7 +6767,11 @@ msgstr ""
 msgid "Yes, we did"
 msgstr ""
 
-#: includes/seo.php:430
+#: includes/seo.php:426
+msgid "Yes. Government job adverts for Nagaland are posted here alongside private jobs, free to read. Apply the way each advert says, through the official process it gives. Nobody can get you a government job for money; if anyone asks, report it."
+msgstr ""
+
+#: includes/seo.php:434
 msgid "Yes. Registering, looking for work and being hired is free for workers, and always will be. Employers can post jobs free too. An optional paid plan adds extras such as more urgent posts, but it never changes what a worker pays, which is nothing."
 msgstr ""
 

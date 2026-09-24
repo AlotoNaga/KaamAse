@@ -31,8 +31,16 @@
  * also gives the same answers to search engines as structured data.
  * Written once, so the two can never disagree.
  *
+ * Every kind of job
+ * -----------------
+ * Kaam Ase is for every job, not only daily wage work: teachers, nurses,
+ * office staff and government adverts sit beside masons and drivers. The
+ * words on this page say so, and avoid "trade" where it would tell a
+ * teacher the site is not for them. The trade taxonomy keeps its name
+ * underneath; only what a visitor reads changed.
+ *
  * @package Kaamase
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.0.0
  */
 
@@ -107,7 +115,7 @@ $kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 
 			<p class="ka-hero__lead">
 				<?php
 				esc_html_e(
-					'Find work near you, or hire a mason, electrician, plumber, driver or helper in any district, from Dimapur and Kohima to Mon.',
+					'Every kind of job, government and private, from teaching and office work to driving and building, in every district.',
 					'kaamase'
 				);
 				?>
@@ -147,7 +155,7 @@ $kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 
 									'name'            => 'kaamase_trade',
 									'id'              => 'ka-trade',
 									'class'           => 'ka-select',
-									'show_option_all' => __( 'Any trade', 'kaamase' ),
+									'show_option_all' => __( 'All kinds of work', 'kaamase' ),
 									'hide_empty'      => false,
 									'value_field'     => 'slug',
 									'orderby'         => 'name',
@@ -204,7 +212,7 @@ $kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 
 			<ul class="ka-hero__facts">
 				<li>
 					<?php echo $kaamase_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed markup above. ?>
-					<?php esc_html_e( 'Free for workers, always', 'kaamase' ); ?>
+					<?php esc_html_e( 'Free for job seekers, always', 'kaamase' ); ?>
 				</li>
 
 				<?php if ( $kaamase_districts ) : ?>
@@ -228,8 +236,8 @@ $kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 
 						<?php
 						echo esc_html(
 							sprintf(
-								/* translators: %s: number of trades */
-								_n( '%s trade', '%s trades', $kaamase_trade_count, 'kaamase' ),
+								/* translators: %s: number of trades, every kind of work from teacher to mason */
+								_n( '%s kind of work', '%s kinds of work', $kaamase_trade_count, 'kaamase' ),
 								number_format_i18n( $kaamase_trade_count )
 							)
 						);
@@ -274,7 +282,7 @@ if ( $kaamase_has_trades ) :
 		?>
 		<section class="ka-container ka-section ka-home-trades">
 
-			<h2 class="ka-home-trades__title"><?php esc_html_e( 'Popular trades', 'kaamase' ); ?></h2>
+			<h2 class="ka-home-trades__title"><?php esc_html_e( 'Popular categories', 'kaamase' ); ?></h2>
 
 			<div class="ka-chips-scroll">
 				<?php foreach ( $kaamase_trades as $kaamase_trade ) : ?>
@@ -287,7 +295,7 @@ if ( $kaamase_has_trades ) :
 				<?php endforeach; ?>
 
 				<a class="ka-chip ka-chip--more" href="<?php echo esc_url( home_url( '/trades/' ) ); ?>">
-					<?php esc_html_e( 'All trades', 'kaamase' ); ?>
+					<?php esc_html_e( 'All categories', 'kaamase' ); ?>
 				</a>
 			</div>
 
@@ -345,7 +353,7 @@ if ( $kaamase_has_jobs ) :
 
 			<div class="ka-section-head">
 				<h2><?php esc_html_e( 'Latest jobs in Nagaland', 'kaamase' ); ?></h2>
-				<p><?php esc_html_e( 'Posted by employers across the state. Workers never pay to apply.', 'kaamase' ); ?></p>
+				<p><?php esc_html_e( 'Government and private jobs from across the state. Job seekers never pay to apply.', 'kaamase' ); ?></p>
 			</div>
 
 			<div class="ka-grid ka-grid--2 ka-grid--3">
@@ -424,7 +432,7 @@ if ( $kaamase_has_workers ) :
 
 			<div class="ka-section-head">
 				<h2><?php esc_html_e( 'Workers available now in Nagaland', 'kaamase' ); ?></h2>
-				<p><?php esc_html_e( 'See their trade, district, ratings and who vouches for them.', 'kaamase' ); ?></p>
+				<p><?php esc_html_e( 'See what they do, where they are, their ratings and who vouches for them.', 'kaamase' ); ?></p>
 			</div>
 
 			<div class="ka-grid ka-grid--2 ka-grid--3">

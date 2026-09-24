@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 03:36+0000\n"
-"PO-Revision-Date: 2026-09-24 03:36+0000\n"
+"POT-Creation-Date: 2026-09-24 06:35+0000\n"
+"PO-Revision-Date: 2026-09-24 06:35+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +24,13 @@ msgid_plural "%s days"
 msgstr[0] "%s din"
 msgstr[1] "%s din"
 
+#. translators: %s: number of trades, every kind of work from teacher to mason
+#: front-page.php:240
+msgid "%s kind of work"
+msgid_plural "%s kinds of work"
+msgstr[0] "%s kisim laka kaam"
+msgstr[1] "%s kisim laka kaam"
+
 #. translators: %s: number of times opened
 #: inc/template-tags.php:340
 msgid "%s opened"
@@ -35,13 +42,6 @@ msgid "%s result"
 msgid_plural "%s results"
 msgstr[0] "%s result"
 msgstr[1] "%s result khan"
-
-#. translators: %s: number of trades
-#: front-page.php:232
-msgid "%s trade"
-msgid_plural "%s trades"
-msgstr[0] "%s kisim laka kaam"
-msgstr[1] "%s kisim laka kaam"
 
 #. translators: %s: number of workers hired
 #: inc/template-tags.php:858
@@ -71,7 +71,7 @@ msgid_plural "%s years of experience"
 msgstr[0] "%s bosor laka experience"
 msgstr[1] "%s bosor laka experience"
 
-#: front-page.php:604
+#: front-page.php:612
 msgid "A Nagaland company"
 msgstr "Nagaland laka ekta company"
 
@@ -100,21 +100,29 @@ msgid "Agree the rate and the payment day out loud before the first day, not aft
 msgstr "Poila din laka age te rate aro pisa pabo laka din kotha pora thik kuri lobi, pichete hoina. Kaam Ase te kunbi apni ke kaam dibole pisa mangibo napare. Kunba mangile, report koribi."
 
 #. translators: %s: number of districts
-#: front-page.php:217
+#: front-page.php:225
 msgid "All %s district"
 msgid_plural "All %s districts"
 msgstr[0] "%s district"
 msgstr[1] "Sob %s district"
 
-#: front-page.php:176
+#: front-page.php:184
 msgid "All Nagaland"
 msgstr "Pura Nagaland"
+
+#: front-page.php:298
+msgid "All categories"
+msgstr "Sob kisim laka kaam"
 
 #: footer.php:90
 msgid "All districts"
 msgstr "Sob district khan"
 
-#: footer.php:89 front-page.php:290
+#: front-page.php:158
+msgid "All kinds of work"
+msgstr "Sob kisim laka kaam"
+
+#: footer.php:89
 msgid "All trades"
 msgstr "Sob kaam khan"
 
@@ -125,10 +133,6 @@ msgstr "Ekjon manu, kiba banai ase nohoile thik kuri ase"
 #: inc/app-banner.php:375
 msgid "Android"
 msgstr "Android"
-
-#: front-page.php:150
-msgid "Any trade"
-msgstr "Jiman kaam hoileh b"
 
 #: inc/app-banner.php:379
 msgid "App Store"
@@ -154,7 +158,7 @@ msgstr "Pichete"
 msgid "Before you agree"
 msgstr "Haan kobo laka age te"
 
-#: front-page.php:597
+#: front-page.php:605
 msgid "Both sides rate"
 msgstr "Duita phale pra rating diye"
 
@@ -211,7 +215,7 @@ msgstr "Copyright %1$s %2$s"
 msgid "Day rate"
 msgstr "Ek din laka rate"
 
-#: front-page.php:185
+#: front-page.php:193
 msgid "Dimapur, Kohima, Mokokchung"
 msgstr "Dimapur, Kohima, Mokokchung"
 
@@ -235,9 +239,13 @@ msgstr "Moi laka team thik koribo"
 msgid "Edit this job"
 msgstr "Etu kaam thik koribo"
 
-#: front-page.php:472
+#: front-page.php:480
 msgid "Every district of Nagaland, from Dimapur and Kohima to Mon and Noklak."
 msgstr "Nagaland laka sob district, Dimapur aro Kohima pra Mon aro Noklak tak."
+
+#: front-page.php:117
+msgid "Every kind of job, government and private, from teaching and office work to driving and building, in every district."
+msgstr "Sob kisim laka kaam, government aro private, teaching aro office kaam pra driving aro construction kaam tak, sob district te."
 
 #: single-kaamase_gang.php:153 single-kaamase_worker.php:190
 msgid "Experience"
@@ -251,7 +259,7 @@ msgstr "Phone te aru joldi ase, aro kaam ahile logot te apni ke koi diye."
 msgid "Faster, and it tells you when work appears"
 msgstr "Aru joldi, aro kaam ahile apni ke koi diye"
 
-#: front-page.php:471
+#: front-page.php:479
 msgid "Find jobs and workers by district"
 msgstr "District hisab te kaam aro worker khan bisaribo"
 
@@ -259,7 +267,7 @@ msgstr "District hisab te kaam aro worker khan bisaribo"
 msgid "Find other workers"
 msgstr "Dusra worker khan bisaribo"
 
-#: 404.php:152 footer.php:83 front-page.php:196 inc/setup.php:393
+#: 404.php:152 footer.php:83 front-page.php:204 inc/setup.php:393
 msgid "Find work"
 msgstr "Kaam bisaribo"
 
@@ -267,15 +275,11 @@ msgstr "Kaam bisaribo"
 msgid "Find work and find workers across Nagaland. Free for every worker, always."
 msgstr "Pura Nagaland te kaam aro worker khan bisaribo. Sob worker karne free ase, hodai."
 
-#: front-page.php:109
-msgid "Find work near you, or hire a mason, electrician, plumber, driver or helper in any district, from Dimapur and Kohima to Mon."
-msgstr "Apni laka usor te kaam bisaribo, nohoile Dimapur aro Kohima pra Mon tak jun district te hoileh b mason, electrician, plumber, driver nohoile helper ke kaam dibo."
-
-#: 404.php:161 footer.php:82 front-page.php:191 inc/setup.php:392
+#: 404.php:161 footer.php:82 front-page.php:199 inc/setup.php:392
 msgid "Find workers"
 msgstr "Worker khan bisaribo"
 
-#: front-page.php:637
+#: front-page.php:645
 msgid "Finding work and workers in Nagaland"
 msgstr "Nagaland te kaam aro worker khan kineka bisaribo"
 
@@ -295,15 +299,15 @@ msgstr "Footer, sabo aro bisaribo"
 msgid "Footer, legal and policy"
 msgstr "Footer, legal aro policy"
 
-#: front-page.php:207
-msgid "Free for workers, always"
-msgstr "Worker khan karne free, hodai"
+#: front-page.php:215
+msgid "Free for job seekers, always"
+msgstr "Kaam bisari thaka khan karne free, hodai"
 
 #: 404.php:173
 msgid "Free to post, any district"
 msgstr "Post koribole free, jiman district hoileh b"
 
-#: front-page.php:583
+#: front-page.php:591
 msgid "Free to use"
 msgstr "Cholabole free"
 
@@ -338,6 +342,10 @@ msgstr "Home te jabo"
 #: inc/app-banner.php:380
 msgid "Google Play"
 msgstr "Google Play"
+
+#: front-page.php:356
+msgid "Government and private jobs from across the state. Job seekers never pay to apply."
+msgstr "Pura state pra government aro private kaam khan. Kaam bisari thaka khan apply koribole kitia b pisa nadiye."
 
 #: inc/page-display.php:215
 msgid "Heading"
@@ -391,11 +399,11 @@ msgstr "Etu bhorti hoi jaishey hobo pare, nohoile employer pra bondh kuri dishey
 msgid "Jobs"
 msgstr "Kaam khan"
 
-#: front-page.php:482
+#: front-page.php:490
 msgid "Jobs and workers"
 msgstr "Kaam aro worker khan"
 
-#: front-page.php:104
+#: front-page.php:112
 msgid "Jobs and workers in Nagaland"
 msgstr "Nagaland te kaam aro worker khan"
 
@@ -463,7 +471,7 @@ msgstr "Kaam Ase chaura"
 msgid "Latest"
 msgstr "Notun"
 
-#: front-page.php:347
+#: front-page.php:355
 msgid "Latest jobs in Nagaland"
 msgstr "Nagaland te notun kaam khan"
 
@@ -484,11 +492,11 @@ msgstr "Legal"
 msgid "Loading"
 msgstr "Load hoi ase"
 
-#: front-page.php:532
+#: front-page.php:540
 msgid "Looking for work"
 msgstr "Kaam bisari ase"
 
-#: front-page.php:549
+#: front-page.php:557
 msgid "Looking for workers"
 msgstr "Worker bisari ase"
 
@@ -500,15 +508,15 @@ msgstr "Main"
 msgid "Main menu"
 msgstr "Main menu"
 
-#: front-page.php:536
+#: front-page.php:544
 msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
 msgstr "Ekta free profile banabi. Pura Nagaland laka employer khan apni ke kaam aro district pra bisaribo pare. Kaam Ase worker khan karne free ase aro hodai free thakibo."
 
-#: front-page.php:544
+#: front-page.php:552
 msgid "Make my free profile"
 msgstr "Moi laka free profile banabo"
 
-#: front-page.php:159
+#: front-page.php:167
 msgid "Mason, electrician, driver"
 msgstr "Mason, electrician, driver"
 
@@ -548,7 +556,7 @@ msgstr "Moi laka account"
 msgid "My jobs"
 msgstr "Moi laka kaam khan"
 
-#: front-page.php:98
+#: front-page.php:106
 msgid "Nagaland’s own job platform"
 msgstr "Nagaland laka nije laka job platform"
 
@@ -564,7 +572,7 @@ msgstr "Yate notun ase, etiya tak kunba kaam diya nai"
 msgid "Next"
 msgstr "Age te"
 
-#: front-page.php:585
+#: front-page.php:593
 msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
 msgstr "Profile banabole, kaam post koribole, nohoile kaam pabole kuno fee nai. Worker khan kitia b pisa diya nai."
 
@@ -638,7 +646,7 @@ msgstr "Purana kaam"
 msgid "Pay"
 msgstr "Mojuri"
 
-#: front-page.php:638
+#: front-page.php:646
 msgid "Plain answers to what people ask most."
 msgstr "Manu khan pra sob pra bisi question kora laka sidha jowab."
 
@@ -646,25 +654,21 @@ msgstr "Manu khan pra sob pra bisi question kora laka sidha jowab."
 msgid "Plans"
 msgstr "Plan khan"
 
-#: front-page.php:277
-msgid "Popular trades"
+#: front-page.php:285
+msgid "Popular categories"
 msgstr "Popular kaam khan"
 
 #: 404.php:170 header.php:132 header.php:142 header.php:176 inc/setup.php:394
 msgid "Post a job"
 msgstr "Kaam post koribo"
 
-#: front-page.php:561 index.php:255
+#: front-page.php:569 index.php:255
 msgid "Post a job free"
 msgstr "Free te kaam post koribo"
 
-#: front-page.php:553
+#: front-page.php:561
 msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
 msgstr "Apni laka rate, kiman worker lage aro kitia lage — etu likhi kaam post koribi. Ekjon manu nohoile pura ekta team ke kaam dibi."
-
-#: front-page.php:348
-msgid "Posted by employers across the state. Workers never pay to apply."
-msgstr "Pura state laka employer khan pra post kora. Apply koribole worker khan kitia b pisa nadiye."
 
 #: single.php:84
 msgid "Previous"
@@ -678,7 +682,7 @@ msgstr "Primary menu, desktop header"
 msgid "Privacy"
 msgstr "Privacy"
 
-#: front-page.php:592
+#: front-page.php:600
 msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
 msgstr "Profile te colony nohoile village laka kunba dangor manu, jun etu manu ke jane, tai laka vouch thakibo pare."
 
@@ -697,7 +701,7 @@ msgstr[1] "%2$s kaam khan pra 5 te %1$s rating"
 msgid "Register free"
 msgstr "Free te register koribo"
 
-#: front-page.php:606
+#: front-page.php:614
 msgid "Registered and run from Dimapur. Not an outside app that has never been here."
 msgstr "Dimapur te registered ase aro yate pra he chalai ase. Bahar laka kuno app hoina jun kitia b yate aha nai."
 
@@ -734,11 +738,11 @@ msgstr "Kaam Ase te bisaribo"
 msgid "Search by trade and district"
 msgstr "Kaam aro district pra bisaribo"
 
-#: front-page.php:376 index.php:237
+#: front-page.php:384 index.php:237
 msgid "See all jobs"
 msgstr "Sob kaam khan sabo"
 
-#: front-page.php:442
+#: front-page.php:450
 msgid "See all workers"
 msgstr "Sob worker khan sabo"
 
@@ -746,13 +750,13 @@ msgstr "Sob worker khan sabo"
 msgid "See jobs open now"
 msgstr "Etiya khuli thaka kaam khan sabo"
 
-#: front-page.php:427
-msgid "See their trade, district, ratings and who vouches for them."
-msgstr "Tai khan laka kaam, district, rating aro tai khan karne kun vouch kore, etu sabo."
-
 #: inc/template-tags.php:877
 msgid "See this employer"
 msgstr "Etu employer ke sabo"
+
+#: front-page.php:435
+msgid "See what they do, where they are, their ratings and who vouches for them."
+msgstr "Tai khan ki kaam kore, kote thake, tai khan laka rating aro tai khan karne kun vouch kore, etu sabo."
 
 #: inc/setup.php:450
 msgid "Set up menu"
@@ -986,7 +990,7 @@ msgstr "Vouched"
 msgid "Vouched for by"
 msgstr "Vouch dishey"
 
-#: front-page.php:590
+#: front-page.php:598
 msgid "Vouched locally"
 msgstr "Yate laka manu pra vouched"
 
@@ -994,11 +998,11 @@ msgstr "Yate laka manu pra vouched"
 msgid "Wage or job complaint"
 msgstr "Mojuri nohoile kaam laka complaint"
 
-#: front-page.php:139
+#: front-page.php:147
 msgid "What work"
 msgstr "Ki kaam"
 
-#: front-page.php:165
+#: front-page.php:173
 msgid "Which district"
 msgstr "Kun district"
 
@@ -1022,7 +1026,7 @@ msgstr "Tai khan ki kaam karne manu bisari ase"
 msgid "Workers"
 msgstr "Worker khan"
 
-#: front-page.php:426
+#: front-page.php:434
 msgid "Workers available now in Nagaland"
 msgstr "Nagaland te etiya available thaka worker khan"
 
@@ -1030,7 +1034,7 @@ msgstr "Nagaland te etiya available thaka worker khan"
 msgid "Workers hired here"
 msgstr "Yate pra kaam pua worker khan"
 
-#: front-page.php:599
+#: front-page.php:607
 msgid "Workers rate employers too. Ratings come only from jobs that were actually done."
 msgstr "Worker khan pra b employer ke rating diye. Rating khali hosa te kora kaam pra he ahe."
 

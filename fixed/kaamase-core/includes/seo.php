@@ -51,7 +51,7 @@
  * account pages and /llms.txt apply either way.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.13.0
  */
 
@@ -415,15 +415,19 @@ if ( ! function_exists( 'kaamase_home_faq' ) ) {
 		$faq = array(
 			array(
 				'q' => __( 'What is Kaam Ase?', 'kaamase-core' ),
-				'a' => __( 'Kaam Ase, Nagamese for "there is work", is a free job platform built for Nagaland. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me.', 'kaamase-core' ),
+				'a' => __( 'Kaam Ase, Nagamese for "there is work", is a free job platform built for Nagaland, for every kind of job: government and private, teaching, office, health and sales work, driving, skilled trades and daily work. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me.', 'kaamase-core' ),
 			),
 			array(
 				'q' => __( 'How can I find a job in Nagaland?', 'kaamase-core' ),
-				'a' => __( 'Register free on Kaam Ase with your name, district, trade and phone number. Browse the jobs posted in your district, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your trade and district. Kaam Ase never asks a worker for money to get a job.', 'kaamase-core' ),
+				'a' => __( 'Register free on Kaam Ase with your name, district, the kind of work you do and your phone number. Browse the jobs posted in your district, government and private, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your field and district. Kaam Ase never asks a job seeker for money to get a job.', 'kaamase-core' ),
+			),
+			array(
+				'q' => __( 'Are there government jobs on Kaam Ase?', 'kaamase-core' ),
+				'a' => __( 'Yes. Government job adverts for Nagaland are posted here alongside private jobs, free to read. Apply the way each advert says, through the official process it gives. Nobody can get you a government job for money; if anyone asks, report it.', 'kaamase-core' ),
 			),
 			array(
 				'q' => __( 'Where can I find workers in Nagaland?', 'kaamase-core' ),
-				'a' => __( 'On Kaam Ase. Search for masons, electricians, plumbers, carpenters, drivers, cooks, helpers and many other trades by district, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let workers come to you.', 'kaamase-core' ),
+				'a' => __( 'On Kaam Ase. Search by district for teachers, nurses, accountants, office staff, drivers, electricians, masons, cooks and many other kinds of work, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let people come to you.', 'kaamase-core' ),
 			),
 			array(
 				'q' => __( 'Is Kaam Ase free?', 'kaamase-core' ),
@@ -524,8 +528,8 @@ if ( ! function_exists( 'kaamase_seo_title_parts' ) ) {
 
 		} elseif ( is_tax( 'kaamase_trade' ) && '' !== $trade ) {
 
-			/* translators: 1: trade name, 2: place, such as "Dimapur, Nagaland" */
-			$title = sprintf( __( '%1$s in %2$s: workers and jobs', 'kaamase-core' ), $trade, $where );
+			/* translators: 1: trade name, such as "Teacher" or "AC repair", 2: place, such as "Dimapur, Nagaland" */
+			$title = sprintf( __( '%1$s jobs and workers in %2$s', 'kaamase-core' ), $trade, $where );
 
 		} elseif ( is_tax( 'kaamase_district' ) && '' !== $district ) {
 
@@ -584,7 +588,7 @@ if ( ! function_exists( 'kaamase_seo_description' ) ) {
 	function kaamase_seo_description() {
 
 		if ( is_front_page() ) {
-			return __( 'Find jobs and hire workers in Nagaland: masons, electricians, plumbers, drivers, cooks and helpers in every district, from Dimapur to Mon. Free for workers.', 'kaamase-core' );
+			return __( 'Government and private jobs in Nagaland, and people to hire: teachers, nurses, office staff, drivers, electricians and more, in every district. Free to use.', 'kaamase-core' );
 		}
 
 		$trade    = kaamase_seo_term_name( 'kaamase_trade' );
@@ -597,21 +601,29 @@ if ( ! function_exists( 'kaamase_seo_description' ) ) {
 				/* translators: 1: trade name, 2: place */
 				? sprintf( __( 'Latest %1$s jobs in %2$s, posted by employers on Kaam Ase. See the pay and the place, and get in touch free. Workers never pay to apply.', 'kaamase-core' ), $trade, $where )
 				/* translators: %s: place */
-				: sprintf( __( 'Latest jobs in %s: daily wage, monthly and contract work posted by employers. See the pay and the place, and get in touch free. Workers never pay.', 'kaamase-core' ), $where );
+				: sprintf( __( 'Latest jobs in %s, government and private: teaching, office, health, driving and skilled work. See the pay and the place, and apply free.', 'kaamase-core' ), $where );
 		}
 
-		if ( is_post_type_archive( array( 'kaamase_worker', 'kaamase_gang' ) ) || ( is_tax( 'kaamase_trade' ) && '' !== $trade ) ) {
+		// Before the trade page: a list filtered to a trade is also is_tax() to WordPress.
+		if ( is_post_type_archive( array( 'kaamase_worker', 'kaamase_gang' ) ) ) {
 
 			return '' !== $trade
 				/* translators: 1: trade name, 2: place */
-				? sprintf( __( 'Find %1$s workers for hire in %2$s on Kaam Ase. See who is available now, their ratings and local vouches, then get in touch. Free to search.', 'kaamase-core' ), $trade, $where )
+				? sprintf( __( '%1$s: people to hire in %2$s on Kaam Ase. See who is available now, their ratings and local vouches, then get in touch. Free to search.', 'kaamase-core' ), $trade, $where )
 				/* translators: %s: place */
-				: sprintf( __( 'Find workers for hire in %s: masons, electricians, plumbers, drivers and helpers. See who is available now, their ratings and local vouches.', 'kaamase-core' ), $where );
+				: sprintf( __( 'Find people to hire in %s: teachers, nurses, office staff, drivers, electricians and more. See who is available now, their ratings and vouches.', 'kaamase-core' ), $where );
+		}
+
+		// A trade page lists both sides, so its line says both. Worded so any
+		// trade name reads right in it, "Teacher" as well as "AC repair".
+		if ( is_tax( 'kaamase_trade' ) && '' !== $trade ) {
+			/* translators: 1: trade name, 2: place */
+			return sprintf( __( '%1$s jobs and people to hire in %2$s. See the latest jobs, who is available now, their ratings and local vouches. Free on Kaam Ase.', 'kaamase-core' ), $trade, $where );
 		}
 
 		if ( is_tax( 'kaamase_district' ) && '' !== $district ) {
-			/* translators: 1: district name, 2: district name again */
-			return sprintf( __( 'Jobs and workers in %1$s, Nagaland. Find work near you, or hire a mason, electrician, plumber, driver or helper in %2$s on Kaam Ase. Free for workers.', 'kaamase-core' ), $district, $district );
+			/* translators: %s: district name */
+			return sprintf( __( 'Jobs and workers in %s, Nagaland: government and private jobs, from teaching and office work to driving and building, and people to hire. Free to use.', 'kaamase-core' ), $district );
 		}
 
 		if ( is_singular( 'kaamase_job' ) && function_exists( 'kaamase_share_description' ) ) {
@@ -739,7 +751,7 @@ if ( ! function_exists( 'kaamase_seo_organisation' ) ) {
 		$schema['@id']           = home_url( '/#organization' );
 		$schema['alternateName'] = 'Kaamase';
 		$schema['slogan']        = 'There is work.';
-		$schema['description']   = __( 'Kaam Ase is a free job platform for Nagaland. People looking for work find jobs, and employers find and hire local workers, in every district of Nagaland.', 'kaamase-core' );
+		$schema['description']   = __( 'Kaam Ase is a free job platform for Nagaland, for every kind of job, government and private. People looking for work find jobs, and employers find and hire local people, in every district of Nagaland.', 'kaamase-core' );
 		$schema['areaServed']    = array(
 			'@type' => 'State',
 			'name'  => 'Nagaland',
@@ -850,11 +862,12 @@ if ( ! function_exists( 'kaamase_llms_text' ) ) {
 
 		$lines[] = '# Kaam Ase';
 		$lines[] = '';
-		$lines[] = '> Kaam Ase ("there is work" in Nagamese) is a free job and worker platform for Nagaland, India, run from Dimapur. People looking for work find jobs, and employers find and hire local workers (masons, electricians, plumbers, carpenters, drivers, cooks, helpers and many other trades) in every district of Nagaland, on the website and on free Android and iPhone apps.';
+		$lines[] = '> Kaam Ase ("there is work" in Nagamese) is a free job and worker platform for Nagaland, India, run from Dimapur, for every kind of job: government and private jobs, teachers, nurses, accountants, office staff, sales staff, drivers, electricians, masons, cooks and many other kinds of work. People looking for work find jobs, and employers find and hire local people, in every district of Nagaland, on the website and on free Android and iPhone apps.';
 		$lines[] = '';
 		$lines[] = 'Facts:';
 		$lines[] = '';
-		$lines[] = '- Free for workers, always: no fee to register, look for work or be hired. Kaam Ase never asks a worker for money to get a job.';
+		$lines[] = '- Free for job seekers, always: no fee to register, look for work or be hired. Kaam Ase never asks a job seeker for money to get a job.';
+		$lines[] = '- Government job adverts for Nagaland are posted alongside private jobs, free to read. Apply the way each advert says.';
 		$lines[] = '- Employers post jobs free. An optional paid plan adds extras and changes nothing a worker pays.';
 		$lines[] = '- Phone numbers are never shown on public pages. Lookups are limited and recorded, and a worker can require their approval for every request.';
 		$lines[] = '- Every new employer\'s first job is read by a person before workers see it. Jobs below the legal minimum wage cannot be posted.';
@@ -876,7 +889,7 @@ if ( ! function_exists( 'kaamase_llms_text' ) ) {
 		$jobs = get_post_type_archive_link( 'kaamase_job' );
 
 		if ( $jobs ) {
-			$lines[] = '- [Latest jobs in Nagaland](' . $jobs . '): open jobs posted by employers across the state';
+			$lines[] = '- [Latest jobs in Nagaland](' . $jobs . '): open jobs across the state, government and private';
 		}
 
 		foreach ( $districts as $term ) {
@@ -895,7 +908,7 @@ if ( ! function_exists( 'kaamase_llms_text' ) ) {
 		$workers = get_post_type_archive_link( 'kaamase_worker' );
 
 		if ( $workers ) {
-			$lines[] = '- [Workers in Nagaland](' . $workers . '): workers for hire, with availability, ratings and local vouches';
+			$lines[] = '- [Workers in Nagaland](' . $workers . '): people to hire for any kind of work, with availability, ratings and local vouches';
 		}
 
 		$teams = get_post_type_archive_link( 'kaamase_gang' );
@@ -922,7 +935,7 @@ if ( ! function_exists( 'kaamase_llms_text' ) ) {
 					$link = get_term_link( $term );
 
 					if ( ! is_wp_error( $link ) ) {
-						$lines[] = '- [' . $term->name . ' in Nagaland](' . $link . ')';
+						$lines[] = '- [' . $term->name . ' jobs and workers in Nagaland](' . $link . ')';
 					}
 				}
 			}
@@ -936,7 +949,7 @@ if ( ! function_exists( 'kaamase_llms_text' ) ) {
 			'how-it-works' => 'How Kaam Ase works',
 			'safety'       => 'Safety',
 			'about'        => 'About Kaam Ase',
-			'trades'       => 'All trades',
+			'trades'       => 'All kinds of work',
 			'districts'    => 'All districts',
 			'employers'    => 'Who is hiring',
 			'contact'      => 'Contact',
