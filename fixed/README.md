@@ -5544,10 +5544,14 @@ what hour it runs, so the whole task moves together.
   only ever Nagaland, so 6:30 is 6:30 IST either way. Setting **Settings →
   General → Timezone** to Kolkata is still worth doing (the dashboard and other
   dates use it), but the notification no longer depends on it.
-- Changing the code cannot move a task WordPress has already booked, so a
-  one-time step clears the old 2 a.m. booking on the first load after upload and
-  re-books the morning slot. It runs once and never fights a time set on purpose
-  later.
+- Changing the code cannot move a task WordPress has already booked, so every
+  page load checks, cheaply, that the booking sits on the 6:30 slot. If it does
+  not, every copy of it is cleared and the slot booked. So the old 2 a.m. booking
+  moves on the first load after upload, even if it had been booked twice (which
+  `uninstall.php` already allows for), and it would mend itself if the time or
+  timezone were ever changed. A 6:30 run that is due but has not happened yet,
+  because nobody visited since 6:30, counts as on the slot and is left alone, so
+  no day's run is lost.
 - `6:30` can be changed without editing code, through the `kaamase_daily_hour`
   and `kaamase_daily_minute` filters.
 
@@ -5556,13 +5560,25 @@ to the second; on a site with steady traffic that is a few minutes past 6:30.
 
 ### Tested on the real WordPress site
 
-On the real WordPress copy, against WordPress's own scheduler: an existing 2:03
-a.m. booking moved to 6:30 IST on the next load and stayed there over repeated
-loads; a fresh install booked 6:30 IST; a site set to Kolkata and a site left on
-UTC both gave 6:30 IST; the `kaamase_daily_hour`/`minute` filters moved it (7:00
-tested); the next run is always in the future; and the hire-question sender is
-still attached to the task. Pages load with nothing from this file in
-`debug.log`.
+On the real WordPress copy, against WordPress's own scheduler, 18 checks, each
+with the site left on UTC and set to Kolkata: the next slot is 6:30 IST and in the
+future; an old 2:03 a.m. booking moves to 6:30; two old copies are both cleared
+to one; an old copy beside a 6:30 copy leaves one; a fresh install books 6:30; a
+6:30 run that is due but not yet run is left alone; four loads in a row keep
+exactly one copy. Setting the hour filter to 7:00 moved it and removing the
+filter moved it back; a misspelt timezone from the filter does not crash and
+falls back to Kolkata; the hire-question sender is still attached.
+
+Then a real run through `wp-cron.php`: the due task ran all of its jobs to the
+end, and afterwards exactly one copy was booked, on the next 6:30. Nothing from
+this file in `debug.log`.
+
+The other nine jobs on the daily task (closing expired jobs, promotions, rating
+release, hire-claim expiry, saved lists, view pruning, rate-limit clean-up,
+privacy retention, contact logs) were read for any dependence on the hour: all
+work on rolling windows, and a promotion's own end time already decides whether
+it shows, so none is affected. The privacy retention notices now go out in the
+morning too.
 
 ## Not changed, and why
 

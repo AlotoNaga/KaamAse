@@ -543,7 +543,13 @@ if ( ! function_exists( 'kaamase_daily_time' ) ) {
 		 * set its timezone, to Kolkata or anywhere else, keeps it.
 		 */
 		if ( 0 === $zone->getOffset( new DateTimeImmutable( 'now', new DateTimeZone( 'UTC' ) ) ) ) {
-			$zone = new DateTimeZone( (string) apply_filters( 'kaamase_daily_timezone', 'Asia/Kolkata' ) );
+
+			// A misspelt name from the filter must not take the site down on every load.
+			try {
+				$zone = new DateTimeZone( (string) apply_filters( 'kaamase_daily_timezone', 'Asia/Kolkata' ) );
+			} catch ( Exception $e ) {
+				$zone = new DateTimeZone( 'Asia/Kolkata' );
+			}
 		}
 
 		$now  = new DateTimeImmutable( 'now', $zone );
@@ -571,30 +577,34 @@ if ( ! function_exists( 'kaamase_schedule_events' ) ) {
 	 */
 	function kaamase_schedule_events() {
 
+		$next = wp_next_scheduled( 'kaamase_daily' );
+		$want = kaamase_daily_time();
+
 		/*
-		 * A one-time move of a task that is already booked.
+		 * Booked, but not on the morning slot.
 		 *
-		 * Changing the code below does nothing to an event WordPress has
-		 * already scheduled: it keeps firing at the old hour until it is
-		 * cleared. Sites set up before this booked the task at "switched
-		 * on plus an hour", so this clears that once and lets the block
-		 * below re-book it for the morning. The flag makes it happen
-		 * exactly once, never fighting a time an admin sets on purpose
-		 * afterwards.
+		 * Changing the code does nothing to an event WordPress has already
+		 * booked: it keeps firing at the old hour. Sites set up before
+		 * this booked the task at "switched on plus an hour", which here
+		 * was two in the morning. So this checks, cheaply, on every load,
+		 * that the booking sits on the slot, and if not, clears every copy
+		 * of it and books the slot.
+		 *
+		 * On the slot means a whole number of days from it. A run that
+		 * is due but has not happened yet, because nobody has visited
+		 * since 6:30, is still on the slot and is left alone, so no day's
+		 * run is lost. Every copy is cleared, not only the first, because
+		 * an old booking can have been doubled and uninstall.php already
+		 * allows for that. And it mends itself if the hour or the timezone
+		 * is changed later.
 		 */
-		if ( ! get_option( 'kaamase_daily_morning' ) ) {
-
-			update_option( 'kaamase_daily_morning', '1', false );
-
-			$booked = wp_next_scheduled( 'kaamase_daily' );
-
-			if ( $booked ) {
-				wp_unschedule_event( $booked, 'kaamase_daily' );
-			}
+		if ( $next && 0 !== ( $want - (int) $next ) % DAY_IN_SECONDS ) {
+			wp_clear_scheduled_hook( 'kaamase_daily' );
+			$next = false;
 		}
 
-		if ( ! wp_next_scheduled( 'kaamase_daily' ) ) {
-			wp_schedule_event( kaamase_daily_time(), 'daily', 'kaamase_daily' );
+		if ( ! $next ) {
+			wp_schedule_event( $want, 'daily', 'kaamase_daily' );
 		}
 	}
 }
