@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 07:46+0000\n"
-"PO-Revision-Date: 2026-09-24 07:46+0000\n"
+"POT-Creation-Date: 2026-09-24 21:22+0000\n"
+"PO-Revision-Date: 2026-09-24 21:22+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +57,7 @@ msgstr "%2$s pra %1$s"
 #. translators: 1: job title, 2: number of times it has been opened
 #: includes/push.php:884
 msgid "%1$s has been opened %2$s times on Kaam Ase. Workers are looking."
-msgstr "Kaam Ase te %1$s ke %2$s bar khulishey. Worker khan sai ase."
+msgstr "Kaam Ase te %1$s ke %2$s bar khulise. Worker khan sai ase."
 
 #. translators: 1: trade name, 2: district name
 #. translators: 1: what was found, 2: district name
@@ -80,16 +80,16 @@ msgstr ""
 
 #: includes/seo.php:532
 msgid "%1$s jobs and workers in %2$s"
-msgstr "%2$s te %1$s laka kaam aro worker khan"
+msgstr "%2$s te %1$s laga kaam aro worker khan"
 
 #: includes/seo.php:512
 msgid "%1$s jobs in %2$s"
-msgstr "%2$s te %1$s laka kaam khan"
+msgstr "%2$s te %1$s laga kaam khan"
 
 #. translators: 1: how many jobs, 2: trade, 3: district
 #: includes/job-alerts.php:385
 msgid "%1$s new %2$s jobs in %3$s"
-msgstr "%3$s te %2$s laka %1$s notun kaam"
+msgstr "%3$s te %2$s laga %1$s notun kaam"
 
 #. translators: 1: free amount, 2: amount on this plan
 #: includes/plan-pitch.php:327
@@ -100,8 +100,8 @@ msgstr "Free account te %1$s, etu plan te %2$s."
 #: includes/who-looked.php:333
 msgid "%1$s person looked at you in the last %2$s."
 msgid_plural "%1$s people looked at you in the last %2$s."
-msgstr[0] "Hesh %2$s te %1$s manu apni ke saishey."
-msgstr[1] "Hesh %2$s te %1$s manu khan apni ke saishey."
+msgstr[0] "Poila %2$s te %1$s manu apnake saishe."
+msgstr[1] "Poila %2$s te %1$s manu khan apnake saishe."
 
 #. translators: 1: number of times, 2: how long ago
 #: includes/who-looked.php:405
@@ -118,7 +118,7 @@ msgstr ""
 #. translators: 1: date and time, 2: how many people
 #: includes/job-alerts.php:859
 msgid "%1$s, sent to %2$s"
-msgstr "%1$s, %2$s ke pathai dishey"
+msgstr "%1$s, %2$s ke pathai dishe"
 
 #. translators: 1: what changed, 2: old value, 3: new value, 4: how long ago
 #: includes/mark-changes.php:969
@@ -137,8 +137,8 @@ msgstr ""
 #: includes/number-requests.php:875
 msgid "%d person wants your number"
 msgid_plural "%d people want your number"
-msgstr[0] "%d manu apni laka number mangi ase"
-msgstr[1] "%d manu khan apni laka number mangi ase"
+msgstr[0] "%d manu apni laga number mangi ase"
+msgstr[1] "%d manu khan apni laga number mangi ase"
 
 #. translators: %d: percentage complete
 #: includes/dashboard.php:304
@@ -216,17 +216,17 @@ msgstr[1] ""
 #. translators: %s: who is asking, with their district when known
 #: includes/number-requests.php:621
 msgid "%s has asked for your phone number. They may want to hire you. Open Kaam Ase to say yes or no."
-msgstr "%s pra apni laka phone number mangishey. Tai khan apni ke kaam dibo mon koribo pare. Hoi nohoile nai kobole Kaam Ase khulibi."
+msgstr "%s pra apni laga phone number mangishey. Tai khan apni ke kaam dibo mon koribo pare. Hoi nohoile nai kobole Kaam Ase khulibi."
 
 #. translators: %s: the worker's name
 #: includes/number-requests.php:698
 msgid "%s has decided not to share their phone number."
-msgstr "%s pra tai laka phone number nadibole thik kuri shey."
+msgstr "%s pra tai laga phone number nadibole thik kuri shey."
 
 #. translators: %s: the worker's name
 #: includes/number-requests.php:680
 msgid "%s has shared their phone number with you. Open their profile to see it."
-msgstr "%s pra apni ke tai laka phone number dishey. Etu sabole tai laka profile khulibi."
+msgstr "%s pra apni ke tai laga phone number dishe. Etu sabole tai laga profile khulibi."
 
 #. translators: %s: trade name
 #: includes/indexes.php:610
@@ -236,7 +236,7 @@ msgstr ""
 #. translators: %s: the employer's name
 #: includes/posted-for.php:133
 msgid "%s is hiring, not us. The number on this job is theirs, so you speak to them directly."
-msgstr "Kaam %s pra di ase, amikhan nohoi. Etu kaam laka number tai khan laka ase, etu karne apni tai khan logote sidha kotha koribi."
+msgstr "Kaam %s pra di ase, amikhan nohoi. Etu kaam laga number tai khan laga ase, etu karne apni tai khan logote sidha kotha koribi."
 
 #. translators: %s: number of open jobs
 #: includes/indexes.php:189 includes/indexes.php:304
@@ -266,35 +266,35 @@ msgstr[1] "Aji %s lookup baki ase."
 #: includes/dashboard.php:341
 msgid "%s more thing after these."
 msgid_plural "%s more things after these."
-msgstr[0] "Etu khan laka pichete %s jinis aru."
-msgstr[1] "Etu khan laka pichete %s jinis aru."
+msgstr[0] "Etu khan laga pichete %s jinis aru ase."
+msgstr[1] "Etu khan laga pichete %s jinis aru ase."
 
 #. translators: %s: site name
 #: includes/account-password.php:215 includes/push.php:291 includes/registration.php:760
 msgid "%s never asks a worker for money."
-msgstr "%s kitia b worker pra pisa mangi nai."
+msgstr "%s kitia b worker pra paisa mangi nai."
 
 #. translators: %s: number of times the job has been opened
 #: includes/push.php:878
 msgid "%s opens on your job"
-msgstr "Apni laka kaam te %s bar khulishey"
+msgstr "Apni laga kaam te %s bar khulise"
 
 #. translators: %s: number of times the profile has been opened
 #: includes/push.php:907
 msgid "%s opens on your profile"
-msgstr "Apni laka profile te %s bar khulishey"
+msgstr "Apni laga profile te %s bar khulise"
 
 #. translators: %s: number of times the team profile has been opened
 #: includes/push.php:893
 msgid "%s opens on your team"
-msgstr "Apni laka team te %s bar khulishey"
+msgstr "Apni laga team te %s bar khulise"
 
 #. translators: %s: number of people
 #: includes/who-looked.php:451
 msgid "%s person looked at you before this week"
 msgid_plural "%s people looked at you before this week"
-msgstr[0] "Etu hafta laka age te %s manu apni ke saishey"
-msgstr[1] "Etu hafta laka age te %s manu khan apni ke saishey"
+msgstr[0] "Etu hafta laga age te %s manu apnake saishe"
+msgstr[1] "Etu hafta laga age te %s manu khan apnake saishe"
 
 #. translators: %s: number of profiles updated
 #: includes/admin.php:813
@@ -330,7 +330,7 @@ msgstr "%s, Nagaland"
 
 #: includes/mark-changes.php:713
 msgid ", "
-msgstr ", "
+msgstr ","
 
 #. translators: %d: days remaining
 #: includes/admin.php:671
@@ -345,15 +345,15 @@ msgstr "10 digit"
 
 #: includes/registration.php:169
 msgid "10 digits. Your number is never shown on the site. Employers reach you through Kaam Ase."
-msgstr "10 digit. Apni laka number site te kitia b dikha nai. Employer khan Kaam Ase pra he apni tak ahe."
+msgstr "10 digit. Apni laga number site te kitia b dikha nai. Employer khan Kaam Ase pra he apni tak ahe."
 
 #: includes/google-signin.php:1763
 msgid "10 digits. Your number is never shown on the site. People reach you through Kaam Ase."
-msgstr "10 digit. Apni laka number site te kitia b dikha nai. Manu khan Kaam Ase pra he apni tak ahe."
+msgstr "10 digit. Apni laga number site te kitia b dikha nai. Manu khan Kaam Ase pra he apni tak ahe."
 
 #: includes/registration.php:170
 msgid "10 digits. Your number is never shown on the site. Workers reach you through Kaam Ase."
-msgstr "10 digit. Apni laka number site te kitia b dikha nai. Worker khan Kaam Ase pra he apni tak ahe."
+msgstr "10 digit. Apni laga number site te kitia b dikha nai. Worker khan Kaam Ase pra he apni tak ahe."
 
 #: includes/insights.php:928
 msgid "A batch at a time on purpose. Six hundred messages handed to a shared mail server in one breath is how a domain stops being trusted, and one request could not finish them anyway. Press it again for the next batch."
@@ -365,7 +365,7 @@ msgstr "Etu pra purana bondh kaam search engine te dikha bondh hoi. Etu site te 
 
 #: includes/dashboard.php:186
 msgid "A colony council member, GB, church elder or a past employer. This is the strongest thing on your profile."
-msgstr "Colony council laka member, GB, church laka elder nohoile age laka employer. Apni laka profile te etu he sob pra dangor jinis ase."
+msgstr "Colony council laga member, GB, church laga elder nohoile age laga employer. Apni laga profile te etu he sob pra dangor jinis ase."
 
 #: includes/profile-edit.php:652
 msgid "A contractor"
@@ -382,7 +382,7 @@ msgstr ""
 #. translators: 1: free lookups a day, 2: lookups a day on this plan
 #: includes/plan-pitch.php:287
 msgid "A free account can get the phone number of %1$s workers in a day. On this plan it is %2$s. If you are ringing round twenty masons to find four who are free on Thursday, you will not be stopped halfway."
-msgstr "Free account ek din te %1$s worker laka phone number lobo pare. Etu plan te %2$s ase. Brihospoti bar te khali thaka charjon bisaribole bis jon mason ke call kuri ase koile, apni adha rasta te rukhi najabo."
+msgstr "Free account ek din te %1$s worker laga phone number lobo pare. Etu plan te %2$s ase. Brihospoti bar te khali thaka charjon bisaribole bis jon mason ke call kuri ase koile, apni adha rasta te rukhi najabo."
 
 #. translators: 1: free jobs a day, 2: jobs a day on this plan
 #: includes/plan-pitch.php:307
@@ -392,12 +392,12 @@ msgstr "Free account ek din te %1$s kaam post kore. Etu plan te %2$s ase."
 #. translators: 1: free photos, 2: photos on this plan
 #: includes/plan-pitch.php:317
 msgid "A free account puts %1$s picture on a job. On this plan it is %2$s. A photo of the site gets a job answered far more often than words alone."
-msgstr "Free account ekta kaam te %1$s photo lagai. Etu plan te %2$s ase. Site laka photo pra kaam ke khali kotha pra bisi bar jowab ahe."
+msgstr "Free account ekta kaam te %1$s photo lagai. Etu plan te %2$s ase. Site laga photo pra kaam ke khali kotha pra bisi bar jowab ahe."
 
 #. translators: 1: free urgent jobs, 2: urgent jobs on this plan
 #: includes/plan-pitch.php:297
 msgid "A free account runs %1$s urgent job at a time and has to wait for it to close before marking another. On this plan you can run %2$s at once, so a week with several jobs starting tomorrow is not a problem."
-msgstr "Free account ekbar te %1$s joldi laka kaam chalai aro dusra mark koribo laka age te etu bondh hua tak rukhibo lage. Etu plan te apni ekbar te %2$s chalabo pare, etu karne kali bisi kaam suru hua hafta problem nohoi."
+msgstr "Free account ekbar te %1$s joldi laga kaam chalai aro dusra mark koribo laga age te etu bondh hua tak rukhibo lage. Etu plan te apni ekbar te %2$s chalabo pare, etu karne kali bisi kaam suru hua hafta problem nohoi."
 
 #: includes/settings.php:179
 msgid "A helpline printed on a safety page that rings out is worse than no helpline at all."
@@ -410,12 +410,12 @@ msgstr ""
 #. translators: 1: comma separated list of categories, 2: edit URL
 #: includes/job-screening.php:721
 msgid "A job post has been held before going live.\n\nIt matched: %1$s\n\nIt is not visible to anybody. Read it here:\n%2$s\n\nIf it is what it looks like, do not simply delete it. Keep the account and the post, and report it.\n"
-msgstr "Ekta kaam laka post live hobo laka age te rukhai rakhishey.\n\nEtu logote milishey: %1$s\n\nEtu kunba ke dikha nai. Yate porhibi:\n%2$s\n\nEtu jineka dikhi ase iman he hoile, etu khali mitai nadibi. Account aro post rakhi dibi, aro report koribi.\n"
+msgstr "Ekta kaam laga post live hobo laga age te rukhai rakhishey. Etu logote milishey: %1$s Etu kunba ke dikha nai. Yate porhibi: %2$s Etu jineka dikhi ase iman he hoile, etu khali mitai nadibi. Account aro post rakhi dibi, aro report koribi."
 
 #. translators: %s: site name
 #: includes/job-screening.php:715
 msgid "A job post on %s needs looking at now"
-msgstr "%s te ekta kaam laka post etiya sabo lage"
+msgstr "%s te ekta kaam laga post etiya sabo lage"
 
 #: includes/install.php:742
 msgid "A lawyer needs to write this. The points below are the ones that will actually be argued about."
@@ -431,19 +431,19 @@ msgstr "Notun profile age te jai."
 
 #: includes/entitlements.php:427
 msgid "A note on lowering these"
-msgstr "Etu khan kom kora laka bare te ek kotha"
+msgstr "Etu khan kom kora laga bare te ek kotha"
 
 #: includes/account-password.php:205
 msgid "A password was just set on your Kaam Ase account."
-msgstr "Apni laka Kaam Ase account te etiya he ekta password lagai dishey."
+msgstr "Apni laga Kaam Ase account te etiya he ekta password lagai dishe."
 
 #: includes/account-password.php:222
 msgid "A password was set on your Kaam Ase account"
-msgstr "Apni laka Kaam Ase account te password lagai dishey"
+msgstr "Apni laga Kaam Ase account te password lagai dishe"
 
 #: includes/dashboard.php:613
 msgid "A person reads the first job from every new employer before workers see it. It is usually done within a few hours, and you will get an email when it goes live. Nothing more is needed from you. After this one, your jobs go live straight away."
-msgstr "Hor notun employer laka poila kaam worker khan sabo laka age te ekjon manu porhe. Etu bisi somoi olop ghanta bhitor te hoi jai, aro live hole apni ke email ahibo. Apni pra aru eku nalage. Etu laka pichete apni laka kaam khan logot te live hoi jabo."
+msgstr "Hor notun employer laga poila kaam worker khan sabo laga age te ekjon manu porhe. Etu bisi somoi olop ghanta bhitor te hoi jai, aro live hole apni ke email ahibo. Apni pra aru eku nalage. Etu laga pichete apni laga kaam khan logot te live hoi jabo."
 
 #: includes/rest-auth.php:621
 msgid "A phone"
@@ -455,11 +455,11 @@ msgstr ""
 
 #: includes/job-photos.php:575
 msgid "A photo of the site or the shop gets a job far more answers than words alone, and it shows the work is real."
-msgstr "Site nohoile dukan laka photo pra kaam ke khali kotha pra bisi bhal jowab ahe, aro etu pra kaam hosa ase koi dikhe."
+msgstr "Site nohoile dukan laga photo pra kaam ke khali kotha pra bisi bhal jowab ahe, aro etu pra kaam hosa ase koi dikhe."
 
 #: includes/teams.php:264
 msgid "A photo of the team"
-msgstr "Team laka photo"
+msgstr "Team laga photo"
 
 #: includes/how-seen.php:177
 msgid "A photograph."
@@ -467,7 +467,7 @@ msgstr "Ekta photo."
 
 #: includes/teams.php:280
 msgid "A picture of the team on a site is worth more than anything you can write. We remove the hidden location information phones save inside photos."
-msgstr "Site te team laka ekta photo apni likhibo para jiman kotha pra b bhal ase. Phone khan pra photo bhitor te lukai rakha jaga laka information amikhan uthai diye."
+msgstr "Site te team laga ekta photo apni likhibo para jiman kotha pra b bhal ase. Phone khan pra photo bhitor te lukai rakha jaga laga information amikhan uthai diye."
 
 #: includes/schema.php:205
 msgid "A place to stay is provided."
@@ -475,15 +475,15 @@ msgstr ""
 
 #: includes/profile-edit.php:200
 msgid "A plain photo of your face is enough. Profiles with a photo get called far more often."
-msgstr "Apni laka chehera laka sidha photo kafi ase. Photo thaka profile khan te bisi bar call ahe."
+msgstr "Apni laga chehera laga sidha photo kafi ase. Photo thaka profile khan te bisi bar call ahe."
 
 #: includes/how-seen.php:178
 msgid "A profile with a face gets tapped far more than one without. It does not have to be a good photograph. It has to be you."
-msgstr "Chehera thaka profile te nathaka pra bisi tap ahe. Photo bhal hobo lage koi nai. Apni laka hobo lage."
+msgstr "Chehera thaka profile te nathaka pra bisi tap ahe. Photo bhal hobo lage koi nai. Apni laga hobo lage."
 
 #: includes/dashboard.php:172
 msgid "A profile with a photo gets called far more often. A plain head and shoulders picture is enough."
-msgstr "Photo thaka profile te bisi bar call ahe. Matha aro kandha laka sidha photo kafi ase."
+msgstr "Photo thaka profile te bisi bar call ahe. Matha aro kandha laga sidha photo kafi ase."
 
 #: includes/email-check.php:528
 msgid "A real mailbox you have created on your own domain. Everything will be sent from this address, so it should be one people could reply to or one that says plainly it is not read."
@@ -499,15 +499,15 @@ msgstr "Ekta registered company"
 
 #: includes/how-seen.php:207
 msgid "A second profile."
-msgstr "Duita number laka profile."
+msgstr "Duita number laga profile."
 
 #: includes/services.php:478
 msgid "A team is two workers or more. If you work alone, your worker profile is the right listing."
-msgstr "Team mane duijon worker nohoile tar pra bisi. Apni ekla kaam kore koile, apni laka worker profile he thik listing ase."
+msgstr "Team mane duijon worker nohoile tar pra bisi. Apni ekla kaam kore koile, apni laga worker profile he thik listing ase."
 
 #: includes/plan-pitch.php:242
 msgid "A tick on your profile."
-msgstr "Apni laka profile te ekta tick."
+msgstr "Apni laga profile te ekta tick."
 
 #: includes/taxonomies.php:314
 msgid "AC repair"
@@ -523,11 +523,11 @@ msgstr ""
 
 #: includes/standing.php:253
 msgid "About who is hiring"
-msgstr "Kun kaam di ase etu laka bare te"
+msgstr "Kun kaam di ase etu laga bare te"
 
 #: includes/profile-edit.php:689
 msgid "About your work"
-msgstr "Apni laka kaam laka bare te"
+msgstr "Apni laga kaam laga bare te"
 
 #. translators: %s: who the report is about
 #: includes/reports.php:724
@@ -556,7 +556,7 @@ msgstr "Thakibole jaga pabo"
 
 #: includes/dashboard.php:894
 msgid "Account created"
-msgstr "Account bonai dishey"
+msgstr "Account bonai dishe"
 
 #. translators: %s: email address
 #: includes/mark-changes.php:819
@@ -577,7 +577,7 @@ msgstr ""
 
 #: includes/hiring-request.php:536
 msgid "Accounts that are a worker and an employer at the same time. Anybody can add hiring to their own account, so nothing here is waiting on you. Removing hiring takes away job posting and leaves the worker profile, the ratings and the login untouched."
-msgstr "Jun account ekbar te worker b ase aro employer b ase. Kunba nije laka account te kaam diya laka suwidha add koribo pare, etu karne yate eku apni laka upor te rukhi thaka nai. Etu uthai dile kaam post kora bondh hoi jai, hoileh worker profile, rating aro login thik iman he thake."
+msgstr "Jun account ekbar te worker b ase aro employer b ase. Kunba nije laga account te kaam diya laga suwidha add koribo pare, etu karne yate eku apni laga upor te rukhi thaka nai. Etu uthai dile kaam post kora bondh hoi jai, hoileh worker profile, rating aro login thik iman he thake."
 
 #: includes/privacy.php:864
 msgid "Accounts that go unused are warned by email at around eighteen months, hidden from searches at twenty months, and have their personal details removed at two years. Signing in at any point stops this and restores the profile."
@@ -593,11 +593,11 @@ msgstr "Kaam"
 
 #: includes/dashboard.php:328
 msgid "Add"
-msgstr "Add koribo"
+msgstr "Add kuribi"
 
 #: includes/dashboard.php:171
 msgid "Add a photo of yourself"
-msgstr "Apni laka photo add koribo"
+msgstr "Apni laga photo add koribo"
 
 #: includes/how-seen.php:232
 msgid "Add a photograph and say what you actually do. That is what decides whether somebody calls."
@@ -617,7 +617,7 @@ msgstr ""
 
 #: includes/hiring-request.php:184
 msgid "Add hiring to my account"
-msgstr "Moi laka account te kaam diya suwidha add koribo"
+msgstr "Moi laga account te kaam diya suwidha add koribo"
 
 #: includes/hiring-request.php:706
 msgid "Add job posting to this account"
@@ -649,7 +649,7 @@ msgstr ""
 
 #: includes/dashboard.php:145
 msgid "Add your phone number"
-msgstr "Apni laka phone number add koribi"
+msgstr "Apni laga phone number add koribi"
 
 #: includes/promote.php:471
 msgid "Add your phone number to your profile. We arrange this over the telephone, so we cannot start without one."
@@ -661,19 +661,19 @@ msgstr ""
 
 #: includes/dashboard.php:159
 msgid "Add your town"
-msgstr "Apni laka town add koribi"
+msgstr "Apni laga town add koribi"
 
 #: includes/dashboard.php:199
 msgid "Add your town or village"
-msgstr "Apni laka town nohoile gaon add koribi"
+msgstr "Apni laga town nohoile gaon add koribi"
 
 #: includes/dashboard.php:192
 msgid "Add your years of experience"
-msgstr "Apni laka experience laka bosor add koribi"
+msgstr "Apni laga experience laga sal add koribi"
 
 #: includes/hiring-request.php:550
 msgid "Added"
-msgstr "Add hoishey"
+msgstr "Add hoishe"
 
 #: includes/gift.php:424
 msgid "Added on top of anything already running on their account."
@@ -681,7 +681,7 @@ msgstr ""
 
 #: includes/account-providers.php:698
 msgid "Address changed. Tap the link in the email we have just sent to finish."
-msgstr "Address bodli hoishey. Khotom koribole amikhan etiya pathai diya email laka link te tap koribi."
+msgstr "Address bodli hoishe. Khotom koribole amikhan etiya pathai diya email laga link te tap koribi."
 
 #: includes/how-seen.php:149
 msgid "After that it is turn taking."
@@ -752,7 +752,7 @@ msgstr ""
 
 #: includes/how-seen.php:168
 msgid "Almost nobody hires across the state for a day of work. Your district is what puts you in front of the people close enough to call you."
-msgstr "Ek din laka kaam karne prai kunba pura state pra manu naloi. Apni laka district he apni ke call koribo para usor laka manu khan laka age te rakhe."
+msgstr "Ek din laga kaam karne prai kunba pura state pra manu naloi. Apni laga district he apni ke call koribo para usor laga manu khan laga age te rakhe."
 
 #: includes/registration.php:251 includes/registration.php:316
 msgid "Already registered?"
@@ -765,11 +765,11 @@ msgstr ""
 
 #: includes/how-seen.php:204
 msgid "Although we encourage you to actively use the Kaam Ase app, it does not change where you appear in the list. Open it when you need work, make sure you are available, and get on with your day otherwise."
-msgstr "Amikhan mangi thake apni Kaam Ase app cholabi, hoileh etu pra apni list te kate dikhe etu bodli nohoi. Kaam lagile khulibi, apni available ase etu pakka koribi, aro baki somoi apni laka din chalai thakibi."
+msgstr "Amikhan mangi thake apni Kaam Ase app cholabi, hoileh etu pra apni list te kate dikhe etu bodli nohoi. Kaam lagile khulibi, apni available ase etu pakka koribi, aro baki somoi apni laga din chalai thakibi."
 
 #: includes/how-seen.php:150
 msgid "Among available workers, whoever has gone longest without being on a first page goes to the top. Your turn comes around whether or not you do anything. Nobody sits at the bottom forever."
-msgstr "Available worker khan majot te, jun sob pra bisi din poila page te aha nai tai upor te jai. Apni kiba koribi na nakoribi, apni laka bari ahe. Kunba hodai nichete boi thaka nai."
+msgstr "Available worker khan majot te, jun sob pra bisi din poila page te aha nai tai upor te jai. Apni kiba koribi na nakoribi, apni laga bari ahe. Kunba hodai nichete boi thaka nai."
 
 #: includes/post-job.php:288 includes/reports.php:417
 msgid "Amount in rupees"
@@ -829,7 +829,7 @@ msgstr "Jiman kaam hoileh b"
 
 #: includes/profile-edit.php:526
 msgid "Anything else about your work"
-msgstr "Apni laka kaam laka bare te aru kiba"
+msgstr "Apni laga kaam laga bare te aru kiba"
 
 #: includes/post-job.php:395
 msgid "Anything else they should know"
@@ -853,11 +853,11 @@ msgstr "Nagaland te jate hoileh b"
 
 #: includes/profile-edit.php:415
 msgid "Anywhere in my district"
-msgstr "Moi laka district te jate hoileh b"
+msgstr "Moi laga district te jate hoileh b"
 
 #: includes/teams.php:237
 msgid "Anywhere in our district"
-msgstr "Amikhan laka district te jate hoileh b"
+msgstr "Amikhan laga district te jate hoileh b"
 
 #: includes/taxonomies.php:644
 msgid "Ao"
@@ -914,11 +914,11 @@ msgstr ""
 
 #: includes/number-requests.php:76
 msgid "Ask before showing my number"
-msgstr "Moi laka number dikhabo laka age te hudibi"
+msgstr "Moi laga number dikhabo laga age te hudibi"
 
 #: includes/number-requests.php:1012
 msgid "Ask me before showing my number"
-msgstr "Moi laka number dikhabo laka age te moi ke hudibi"
+msgstr "Moi laga number dikhabo laga age te moi ke hudibi"
 
 #: includes/contact.php:857
 msgid "Ask to be verified"
@@ -955,7 +955,7 @@ msgstr ""
 
 #: includes/number-requests.php:1241
 msgid "Asked. They will see it the next time they open Kaam Ase, and you will be told when they answer."
-msgstr "Hudi dishey. Tai khan pichete Kaam Ase khulile sabo, aro tai khan jowab dile apni ke koi dibo."
+msgstr "Hudi dishe. Tai khan pichete Kaam Ase khulile sabo, aro tai khan jowab dile apni ke koi dibo."
 
 #: includes/hire-claims.php:496
 msgid "Asked. They will see it the next time they open Kaam Ase."
@@ -963,7 +963,7 @@ msgstr ""
 
 #: includes/job-screening.php:810
 msgid "Asks the worker for money"
-msgstr "Worker pra pisa mange"
+msgstr "Worker pra paisa mange"
 
 #: includes/taxonomies.php:659
 msgid "Assamese"
@@ -992,7 +992,7 @@ msgstr "Availability"
 
 #: includes/dashboard.php:878
 msgid "Availability updated."
-msgstr "Availability bodli hoishey."
+msgstr "Availability bodli hoishe."
 
 #: includes/how-seen.php:145
 msgid "Available comes first."
@@ -1016,7 +1016,7 @@ msgstr ""
 
 #: includes/profile-edit.php:151
 msgid "Back to my account"
-msgstr "Moi laka account te wapas"
+msgstr "Moi laga account te wapas"
 
 #: includes/taxonomies.php:139
 msgid "Back to trades"
@@ -1068,11 +1068,11 @@ msgstr ""
 
 #: includes/number-requests.php:396
 msgid "Before you can ask for this number, finish your employer profile: confirm your email and add your phone number. It takes a minute and it means the person you are asking can see who is asking."
-msgstr "Etu number mangibo laka age te apni laka employer profile khotom koribi: apni laka email confirm koribi aro phone number add koribi. Ek minute lage aro etu pra jun ke apni hudi ase tai sabo pare kun hudi ase."
+msgstr "Etu number mangibo laga age te apni laga employer profile khotom koribi: apni laga email confirm koribi aro phone number add koribi. Ek minute lage aro etu pra jun ke apni hudi ase tai sabo pare kun hudi ase."
 
 #: includes/contact.php:327
 msgid "Before you can see this number, finish your employer profile: confirm your email and add your phone number. It takes a minute and it means the person you are calling can see who asked."
-msgstr "Etu number sabo laka age te apni laka employer profile khotom koribi: apni laka email confirm koribi aro phone number add koribi. Ek minute lage aro etu pra jun ke apni call kuri ase tai sabo pare kun hudishey."
+msgstr "Etu number sabo laga age te apni laga employer profile khotom koribi: apni laga email confirm koribi aro phone number add koribi. Ek minute lage aro etu pra jun ke apni call kuri ase tai sabo pare kun hudishe."
 
 #: includes/install.php:670
 msgid "Before you start work"
@@ -1108,11 +1108,11 @@ msgstr ""
 
 #: includes/contact.php:1031
 msgid "Block"
-msgstr "Block koribo"
+msgstr "Block kuribi"
 
 #: includes/contact.php:1041
 msgid "Blocking stops that person seeing your number. They are not told."
-msgstr "Block kurile etu manu apni laka number sabo napare. Tai ke kua nai."
+msgstr "Block kurile etu manu apni laga number sabo napare. Tai ke kua nai."
 
 #: includes/past-jobs.php:719
 msgid "Browse all past jobs"
@@ -1124,7 +1124,7 @@ msgstr "Ghor banai ase, site chalai ase, nohoile business karne manu loi ase. Fr
 
 #: includes/teams.php:287
 msgid "Buildings you have worked on, how long you have worked together, tools you bring."
-msgstr "Apni kun building te kaam kurishey, kiman din pra eke logote kaam kuri ase, ki tool khan ane."
+msgstr "Apni kun building te kaam kurise, kiman din pra eke logote kaam kuri ase, ki tool khan ane."
 
 #: includes/app-links.php:525
 msgid "Bundle identifier"
@@ -1136,7 +1136,7 @@ msgstr ""
 
 #: includes/profile-edit.php:224
 msgid "Business or your name"
-msgstr "Business nohoile apni laka naam"
+msgstr "Business nohoile apni laga naam"
 
 #: includes/settings.php:254
 msgid "By default, deleting this plugin leaves every worker profile, job, rating and report in the database. Reinstalling brings it all back. That is on purpose: a plugin gets deleted for many reasons, and most of them are not a decision to destroy several hundred people's listings."
@@ -1156,7 +1156,7 @@ msgstr ""
 
 #: includes/contact.php:763
 msgid "Call now"
-msgstr "Etiya call koribo"
+msgstr "Etiya call kuribi"
 
 #. translators: %s: date
 #: includes/rich-manu.php:719
@@ -1173,7 +1173,7 @@ msgstr ""
 
 #: includes/hiring-request.php:686
 msgid "Can post jobs"
-msgstr "Kaam post koribo pare"
+msgstr "Kaam post kuribi pare"
 
 #: includes/taxonomies.php:319
 msgid "Car mechanic"
@@ -1217,12 +1217,12 @@ msgstr ""
 
 #: includes/mark-changes.php:1105
 msgid "Changing this takes your tick off"
-msgstr "Etu bodli korile apni laka tick uthai dibo"
+msgstr "Etu bodli korile apni laga tick uthai dibo"
 
 #. translators: %s: the details that are checked, for example "name, phone number, photograph"
 #: includes/mark-changes.php:1021
 msgid "Changing your %s will take your tick off until somebody can ring you again. Your plan is not affected."
-msgstr "Apni laka %s bodli korile, kunba pra apni ke aru ekbar phone nakora tak apni laka tick uthai dibo. Apni laka plan te eku asor nai."
+msgstr "Apni laga %s bodli korile, kunba pra apni ke aru ekbar phone nakora tak apni laga tick uthai dibo. Apni laga plan te eku asor nai."
 
 #: includes/indexing-api.php:1127
 msgid "Check it really works"
@@ -1234,12 +1234,12 @@ msgstr ""
 
 #: includes/email-typos.php:462
 msgid "Check your email address. A Gmail address has at least 6 letters or numbers before the @, and never a dash or an underscore."
-msgstr "Apni laka email address check koribi. Gmail address te @ age te kam pra kam 6 ta letter nohoile number thake, aru dash (-) nohoile underscore (_) kitia bhi nathake."
+msgstr "Apni laga email address check koribi. Gmail address te @ age te kam pra kam 6 ta letter nohoile number thake, aru dash (-) nohoile underscore (_) kitia bhi nathake."
 
 #. translators: %s: the email address we think they meant
 #: includes/email-typos.php:453
 msgid "Check your email address. Did you mean %s?"
-msgstr "Apni laka email address check koribi. %s hobo lage naki?"
+msgstr "Apni laga email address check koribi. %s hobo lage naki?"
 
 #: includes/taxonomies.php:410
 msgid "Chef"
@@ -1271,7 +1271,7 @@ msgstr "Kaam basi lobi"
 
 #: includes/reports.php:583 includes/services.php:651
 msgid "Choose what the report is about."
-msgstr "Report ki laka bare te ase etu basi lobi."
+msgstr "Report ki laga bare te ase etu basi lobi."
 
 #: includes/services.php:62
 msgid "Choose what work you need done."
@@ -1284,23 +1284,23 @@ msgstr "Apni kaam bisari ase na worker bisari ase, etu basi lobi."
 
 #: includes/google-signin.php:1773 includes/registration.php:181 includes/teams.php:204
 msgid "Choose your district"
-msgstr "Apni laka district basi lobi"
+msgstr "Apni laga district basi lobi"
 
 #: includes/services.php:486
 msgid "Choose your district."
-msgstr "Apni laka district basi lobi."
+msgstr "Apni laga district basi lobi."
 
 #: includes/google-signin.php:1796 includes/registration.php:198
 msgid "Choose your trade"
-msgstr "Apni laka kaam basi lobi"
+msgstr "Apni laga kaam basi lobi"
 
 #: includes/profile-edit.php:494 includes/rest-shape.php:319
 msgid "Church elder or pastor"
-msgstr "Church laka elder nohoile pastor"
+msgstr "Church laga elder nohoile pastor"
 
 #: includes/insights.php:1260 includes/queries.php:1017
 msgid "Clear"
-msgstr "Sapha koribo"
+msgstr "Sapha kuribi"
 
 #: includes/admin.php:681 includes/dashboard.php:692
 msgid "Closed"
@@ -1309,7 +1309,7 @@ msgstr "Bondh"
 #. translators: %s: a date
 #: includes/past-jobs.php:445
 msgid "Closed %s"
-msgstr "%s bondh hoishey"
+msgstr "%s bondh hoishe"
 
 #: includes/post-types.php:293
 msgid "Closed <span class=\"count\">(%s)</span>"
@@ -1331,7 +1331,7 @@ msgstr "Bondh hobo"
 
 #: includes/profile-edit.php:492 includes/rest-shape.php:317
 msgid "Colony council member"
-msgstr "Colony council laka member"
+msgstr "Colony council laga member"
 
 #: includes/employer-index.php:327
 msgid "Company"
@@ -1363,24 +1363,24 @@ msgstr ""
 
 #: includes/number-requests.php:362
 msgid "Confirm your email first. Somebody deciding whether to give you their number should be able to see a real account."
-msgstr "Poila apni laka email confirm koribi. Jun manu apni ke tai laka number dibo na nai thik kuri ase, tai ke ekta hosa account dikhibo lage."
+msgstr "Poila apni laga email confirm koribi. Jun manu apni ke tai laga number dibo na nai thik kuri ase, tai ke ekta hosa account dikhibo lage."
 
 #: includes/contact.php:289
 msgid "Confirm your email first. We keep unconfirmed accounts away from other people's numbers."
-msgstr "Poila apni laka email confirm koribi. Confirm nakora account khan ke amikhan dusra manu laka number pra dur rakhe."
+msgstr "Poila apni laga email confirm koribi. Confirm nakora account khan ke amikhan dusra manu laga number pra dur rakhe."
 
 #. translators: %s: site name
 #: includes/registration.php:743
 msgid "Confirm your email for %s"
-msgstr "%s karne apni laka email confirm koribi"
+msgstr "%s karne apni laga email confirm koribi"
 
 #: includes/post-job.php:216
 msgid "Confirm your email to make jobs visible"
-msgstr "Kaam khan dikhabole apni laka email confirm koribi"
+msgstr "Kaam khan dikhabole apni laga email confirm koribi"
 
 #: includes/rest-api.php:92
 msgid "Confirm your email to see who is hiring. We sent you a link when you registered."
-msgstr "Kun kaam di ase etu sabole apni laka email confirm koribi. Apni register kora somoi te amikhan ekta link pathai dishey."
+msgstr "Kun kaam di ase etu sabole apni laga email confirm koribi. Apni register kora somoi te amikhan ekta link pathai dishe."
 
 #: includes/insights.php:1037 includes/insights.php:1093 includes/insights.php:1138
 #: includes/insights.php:1230 includes/insights.php:1361 includes/insights.php:585
@@ -1414,7 +1414,7 @@ msgstr ""
 
 #: includes/contact.php:865
 msgid "Contact details are not shown"
-msgstr "Contact laka details dikha nai"
+msgstr "Contact laga details dikha nai"
 
 #: includes/entitlements.php:60
 msgid "Contact lookups a day"
@@ -1426,11 +1426,11 @@ msgstr "Contact number"
 
 #: includes/fields.php:207
 msgid "Contact person"
-msgstr "Contact laka manu"
+msgstr "Contact laga manu"
 
 #: includes/hiring-request.php:161
 msgid "Contact us"
-msgstr "Amikhan logote contact koribo"
+msgstr "Amikhan logote contact kuribi"
 
 #: includes/taxonomies.php:440
 msgid "Content creator"
@@ -1462,7 +1462,7 @@ msgstr ""
 
 #: includes/google-signin.php:1830 includes/registration.php:243
 msgid "Create my account"
-msgstr "Moi laka account banabo"
+msgstr "Moi laga account banabo"
 
 #: includes/privacy.php:114
 msgid "Created"
@@ -1506,11 +1506,11 @@ msgstr ""
 
 #: includes/teams.php:221
 msgid "Day rate for the team"
-msgstr "Team laka ek din laka rate"
+msgstr "Team laga ek din laga rate"
 
 #: includes/profile-edit.php:379
 msgid "Day rate you expect"
-msgstr "Apni ek din laka kiman rate mange"
+msgstr "Apni ek din laga kiman rate mange"
 
 #: includes/promote.php:1628 includes/promote.php:1886
 msgid "Days"
@@ -1522,11 +1522,11 @@ msgstr ""
 
 #: includes/profile-edit.php:901
 msgid "Delete my account"
-msgstr "Moi laka account delete koribo"
+msgstr "Moi laga account delete koribo"
 
 #: includes/profile-edit.php:933
 msgid "Delete my account for good"
-msgstr "Moi laka account hodai karne delete koribo"
+msgstr "Moi laga account hodai karne delete koribo"
 
 #: includes/settings.php:250
 msgid "Deleting the plugin"
@@ -1554,15 +1554,15 @@ msgstr ""
 
 #: includes/ratings.php:121
 msgid "Did they stick to the rate that was agreed?"
-msgstr "Tai khan thik kora rate te thakishey na?"
+msgstr "Tai khan thik kora rate te thakishe na?"
 
 #: includes/ratings.php:106
 msgid "Did they turn up on the day?"
-msgstr "Tai khan etu din te ahishey na?"
+msgstr "Tai khan etu din te ahishe na?"
 
 #: includes/hires.php:298 includes/push.php:524
 msgid "Did you hire them?"
-msgstr "Apni tai khan ke kaam dishey na?"
+msgstr "Apni tai khan ke kaam dishe na?"
 
 #: includes/hire-claims.php:585
 msgid "Did you work together?"
@@ -1594,11 +1594,11 @@ msgstr ""
 
 #: includes/teams.php:627
 msgid "Do you bring other workers?"
-msgstr "Apni dusra worker khan b ane na?"
+msgstr "Apni dusra worker khan bhi ane sha?"
 
 #: includes/working-request.php:374
 msgid "Do you take work yourself?"
-msgstr "Apni nije b kaam loi na?"
+msgstr "Apni nijor kaam loisha?"
 
 #: includes/gstin.php:385
 msgid "Does not check out"
@@ -1606,7 +1606,7 @@ msgstr "Check te thik ulua nai"
 
 #: includes/dashboard.php:881
 msgid "Done. That person can no longer see your number."
-msgstr "Hoi jaishey. Etu manu aru apni laka number sabo napare."
+msgstr "Hoi goise. Etu manu aru apni laga number sabo napare."
 
 #: includes/gift.php:350
 msgid "Done. Their account has it now."
@@ -1638,7 +1638,7 @@ msgstr ""
 
 #: includes/entitlements.php:430
 msgid "Dropping a free allowance to make room for something to sell is the most tempting mistake here, and the one that does lasting damage. Somebody who could do their work yesterday and cannot today does not read it as a new product, they read it as the platform turning on them. Raise what paying gets you rather than lowering what free gets you."
-msgstr "Kiba bikri koribole jaga bonabole free allowance kom kora yate laka sob pra mon jua bhul ase, aro etu he sob pra bisi din laka nuksan kore. Jun kali tai laka kaam koribo parishey aro aji napare, tai etu ke notun product koi napore, tai etu ke platform tai laka birodh te hoishey koi pore. Free te ki pai etu kom kora laka bodli pisa dile ki pai etu barai dibi."
+msgstr "Kiba bikri koribole jaga bonabole free allowance kom kora yate laga sob pra mon jua bhul ase, aro etu he sob pra bisi din laga nuksan kore. Jun kali tai laga kaam koribo parishey aro aji napare, tai etu ke notun product koi napore, tai etu ke platform tai laga birodh te hoishe koi pore. Free te ki pai etu kom kora laga bodli paisa dile ki pai etu barai dibi."
 
 #: includes/taxonomies.php:177
 msgid "Edit district"
@@ -1658,15 +1658,15 @@ msgstr ""
 
 #: includes/dashboard.php:537
 msgid "Edit my details"
-msgstr "Moi laka details thik koribo"
+msgstr "Moi laga details thik koribo"
 
 #: includes/dashboard.php:545
 msgid "Edit my profile"
-msgstr "Moi laka profile thik koribo"
+msgstr "Moi laga profile thik koribo"
 
 #: includes/teams.php:642
 msgid "Edit my team"
-msgstr "Moi laka team thik koribo"
+msgstr "Moi laga team thik koribo"
 
 #: includes/post-types.php:125
 msgid "Edit team"
@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: includes/post-job.php:231
 msgid "Edit this job"
-msgstr "Etu kaam thik koribo"
+msgstr "Etu kaam thik kuribi"
 
 #: includes/taxonomies.php:133
 msgid "Edit trade"
@@ -1715,7 +1715,7 @@ msgstr ""
 
 #: includes/dashboard.php:871
 msgid "Email confirmed. Your profile is live."
-msgstr "Email confirm hoishey. Apni laka profile live ase."
+msgstr "Email confirm hoishe. Apni laga profile live ase."
 
 #: includes/settings.php:208
 msgid "Email me when somebody collects three flags"
@@ -1739,7 +1739,7 @@ msgstr ""
 
 #: includes/push.php:395
 msgid "Employers across Nagaland can find you now. Set yourself available when you are free for work."
-msgstr "Etiya pura Nagaland laka employer khan apni ke bisaribo pare. Kaam karne khali thakile nije ke available kuri dibi."
+msgstr "Etiya pura Nagaland laga employer khan apni ke bisaribo pare. Kaam karne khali thakile nije ke available kuri dibi."
 
 #: includes/dashboard.php:179
 msgid "Employers filter by rate. With no rate, you are left out of most searches."
@@ -1748,24 +1748,24 @@ msgstr "Employer khan rate pra filter kore. Rate nathakile, apni bisi search pra
 #. translators: %s: number of times the profile has been opened
 #: includes/push.php:913
 msgid "Employers have opened your profile %s times on Kaam Ase. Set yourself available when you are free for work."
-msgstr "Kaam Ase te employer khan pra apni laka profile %s bar khulishey. Kaam karne khali thakile nije ke available kuri dibi."
+msgstr "Kaam Ase te employer khan pra apni laga profile %s bar khulise. Kaam karne khali thakile nije ke available kuri dibi."
 
 #. translators: %s: number of times the team profile has been opened
 #: includes/push.php:899
 msgid "Employers have opened your team %s times on Kaam Ase. Keep it up to date so they can reach you."
-msgstr "Kaam Ase te employer khan pra apni laka team %s bar khulishey. Etu notun kuri rakhibi titia tai khan apni tak ahibo pare."
+msgstr "Kaam Ase te employer khan pra apni laga team %s bar khulise. Etu notun kuri rakhibi titia tai khan apni tak ahibo pare."
 
 #: includes/how-seen.php:164
 msgid "Employers look for a mason, a driver, a carpenter. If your trade is missing or wrong you are not in that list at any position. Pick the one you actually do most."
-msgstr "Employer khan mason, driver, carpenter bisare. Apni laka kaam likha nai nohoile bhul ase koile, apni etu list te kate b nai. Apni hosa te sob pra bisi ki kore etu basi lobi."
+msgstr "Employer khan mason, driver, carpenter bisare. Apni laga kaam likha nai nohoile bhul ase koile, apni etu list te kate b nai. Apni hosa te sob pra bisi ki kore etu basi lobi."
 
 #: includes/profile-edit.php:272
 msgid "Employers look for people near the work."
-msgstr "Employer khan kaam laka usor te thaka manu bisare."
+msgstr "Employer khan kaam laga usor te thaka manu bisare."
 
 #: includes/dashboard.php:200
 msgid "Employers look for workers near the site."
-msgstr "Employer khan site laka usor te thaka worker bisare."
+msgstr "Employer khan site laga usor te thaka worker bisare."
 
 #: includes/dashboard.php:314
 msgid "Employers skip past profiles that are half empty. These are the ones that matter most."
@@ -1797,11 +1797,11 @@ msgstr ""
 
 #: includes/seo.php:462
 msgid "English, Hindi and Nagamese. You can change the language at any time, from the top of the website or in the app."
-msgstr "English, Hindi aro Nagamese. Apni jitia b bhasa bodli koribo pare, website laka upor pra nohoile app te."
+msgstr "English, Hindi aro Nagamese. Apni jitia b bhasa bodli koribo pare, website laga upor pra nohoile app te."
 
 #: includes/account-password.php:143
 msgid "Enter your current password to change it. If you cannot remember it, use the forgotten password link instead."
-msgstr "Bodlibole apni laka etiya laka password likhibi. Mon te nai koile, forgotten password laka link cholabi."
+msgstr "Bodlibole apni laga etiya laga password likhibi. Mon te nai koile, forgotten password laga link cholabi."
 
 #: includes/more-trades.php:124
 msgid "Event helper, decorator, tent work, catering staff, wedding work, sound and light."
@@ -1829,7 +1829,7 @@ msgstr ""
 
 #: includes/saved.php:613
 msgid "Everybody you have done a job for through Kaam Ase."
-msgstr "Kaam Ase pra apni jun khan laka karne kaam kurishey, sob."
+msgstr "Kaam Ase te apni jun manu khan laga kaam kuri dise, taikhan sob."
 
 #: includes/media.php:287
 msgid "Everything"
@@ -1837,19 +1837,19 @@ msgstr ""
 
 #: includes/how-seen.php:190
 msgid "Everything above is wasted on a number that does not ring. Check it today."
-msgstr "Nabaji thaka number te upor laka sob kaam laga nai. Aji etu check koribi."
+msgstr "Ring nabaja number te uporte likha sob bekar hoijabo. Aji he check kuribi."
 
 #: includes/job-screening.php:811
 msgid "Excludes people by tribe, religion or origin"
-msgstr "Tribe, dhorom nohoile kate pra ahishey etu pra manu khan ke bahar kore"
+msgstr "Tribe, dhorom nohoile kate pra ahishe etu pra manu khan ke bahar kore"
 
 #: includes/fields.php:104
 msgid "Expected day rate"
-msgstr "Ek din laka mangi thaka rate"
+msgstr "Ek din laga mangi thaka rate"
 
 #: includes/fields.php:110
 msgid "Expected monthly pay"
-msgstr "Ek mahina laka mangi thaka mojuri"
+msgstr "Ek mahina laga mangi thaka mojuri"
 
 #: includes/settings.php:170
 msgid "Extra emergency numbers"
@@ -1897,11 +1897,11 @@ msgstr ""
 
 #: includes/dashboard.php:299
 msgid "Finish your profile"
-msgstr "Apni laka profile khotom koribi"
+msgstr "Apni laga profile khotom koribi"
 
 #: includes/job-screening.php:813
 msgid "First post from this employer"
-msgstr "Etu employer laka poila post"
+msgstr "Etu employer laga poila post"
 
 #: includes/taxonomies.php:341
 msgid "Fish farm worker"
@@ -1933,7 +1933,7 @@ msgstr "Jineka: Imliakum mason team"
 
 #: includes/posted-for.php:233
 msgid "For jobs you have seen elsewhere and checked yourself. The job goes up under Kaam Ase with the employer's name on it, and workers get the employer's number, never yours. Ring the employer first and make sure the job is real and that they are happy to be listed."
-msgstr "Apni dusra jagate dikhi kene nije check kora kaam khan karne. Kaam Kaam Ase te employer laka naam logote lage, aro worker khan ke employer laka number diye, apni laka kitia b nohoi. Poila employer ke call kuri pakka koribi kaam hosa ase aro tai khan list te thakibole khusi ase."
+msgstr "Apni dusra jagate dikhi kene nije check kora kaam khan karne. Kaam Kaam Ase te employer laga naam logote lage, aro worker khan ke employer laga number diye, apni laga kitia b nohoi. Poila employer ke call kuri pakka koribi kaam hosa ase aro tai khan list te thakibole khusi ase."
 
 #: includes/install.php:668
 msgid "For maid, cook, babysitter and caregiver work, only verified employers can make contact. Tell someone you trust where you are going and who you are working for. If a place or a person does not feel right, leave. You do not need a reason and you do not need permission."
@@ -1941,7 +1941,7 @@ msgstr ""
 
 #: includes/post-job.php:384
 msgid "For work away from home these matter as much as the rate. Say so if you provide them."
-msgstr "Ghor pra dur laka kaam te etu khan rate iman he dorkar ase. Apni dile koi dibi."
+msgstr "Ghor pra dur laga kaam te etu khan rate iman he dorkar ase. Apni dile koi dibi."
 
 #: includes/gift.php:96
 msgid "Forever"
@@ -2006,7 +2006,7 @@ msgstr "Kunba pra apni karne vouch koribole kobi"
 
 #: includes/how-seen.php:231
 msgid "Get your trade and district right. That is what decides which lists you turn up in."
-msgstr "Apni laka kaam aro district thik rakhibi. Apni kun list te dikhibo etu he thik kore."
+msgstr "Apni laga kaam aro district thik rakhibi. Apni kun list te dikhibo etu he thik kore."
 
 #: includes/gift.php:460
 msgid "Give it"
@@ -2022,7 +2022,7 @@ msgstr ""
 
 #: includes/services.php:474
 msgid "Give the team a name. Your own name is fine."
-msgstr "Team ke ekta naam dibi. Apni laka nije laka naam b thik ase."
+msgstr "Team ke ekta naam dibi. Apni laga nije laga naam b thik ase."
 
 #: includes/gift.php:478
 msgid "Given"
@@ -2042,7 +2042,7 @@ msgstr ""
 
 #: includes/contact.php:853 includes/employer-index.php:199 includes/registration.php:64
 msgid "Go to my account"
-msgstr "Moi laka account te jabo"
+msgstr "Moi laga account te jabo"
 
 #: includes/insights.php:136
 msgid "Google"
@@ -2050,7 +2050,7 @@ msgstr ""
 
 #: includes/google-signin.php:237
 msgid "Google Cloud Console, under Credentials. Make one OAuth client ID per platform. For the website client, add this exact address to Authorised redirect URIs:"
-msgstr "Google Cloud Console, Credentials laka nichete. Hor platform karne ekta OAuth client ID banabi. Website client karne, thik etu address Authorised redirect URIs te add koribi:"
+msgstr "Google Cloud Console, Credentials laga nichete. Hor platform karne ekta OAuth client ID banabi. Website client karne, thik etu address Authorised redirect URIs te add koribi:"
 
 #: includes/promote.php:1637 includes/promote.php:1888
 msgid "Google Pay reference"
@@ -2121,7 +2121,7 @@ msgstr ""
 
 #: includes/posted-for.php:273
 msgid "Group name, link, or who told you. Only you see this."
-msgstr "Group laka naam, link, nohoile kun pra koishey. Etu khali apni he dikhe."
+msgstr "Group laga naam, link, nohoile kun pra koishey. Etu khali apni he dikhe."
 
 #: includes/taxonomies.php:338
 msgid "Harvest worker"
@@ -2131,8 +2131,8 @@ msgstr ""
 #: includes/standing.php:113
 msgid "Has hired %d person through Kaam Ase"
 msgid_plural "Has hired %d people through Kaam Ase"
-msgstr[0] "Kaam Ase pra %d manu ke kaam dishey"
-msgstr[1] "Kaam Ase pra %d manu khan ke kaam dishey"
+msgstr[0] "Kaam Ase para %d manu ke kaam dishe"
+msgstr[1] "Kaam Ase para %d manu khan ke kaam dishe"
 
 #: includes/taxonomies.php:395
 msgid "Health"
@@ -2153,12 +2153,12 @@ msgstr "Rukhai rakhishey kilemane"
 #. translators: 1: display name, 2: job title, 3: job URL
 #: includes/job-screening.php:661
 msgid "Hello %1$s,\n\n\"%2$s\" is live. Workers in your district can see it now, and it stays open for three weeks.\n\n%3$s\n\nShare that link on WhatsApp if you want it seen faster. Your next jobs go live straight away.\n"
-msgstr "Namaskar %1$s,\n\n\"%2$s\" live hoi jaishey. Apni laka district laka worker khan etiya etu sabo pare, aro etu tinta hafta khuli thakibo.\n\n%3$s\n\nJoldi dikhabole mon hoile etu link WhatsApp te pathai dibi. Apni laka pichete laka kaam khan logot te live hoi jabo.\n"
+msgstr "Namaskar %1$s, \"%2$s\" live hoi goise. Apni laga district laga worker khan etiya etu sabo pare, aro etu tinta hafta khuli thakibo. %3$s Joldi dikhabole mon hoile etu link WhatsApp te pathai dibi. Apni laga pichete laga kaam khan logot te live hoi jabo."
 
 #. translators: 1: display name, 2: post a job URL
 #: includes/hiring-request.php:468
 msgid "Hello %1$s,\n\nHiring has been added to your account. You can post jobs now, using the same login you already have. Your worker profile and your ratings are unchanged.\n\nPost a job here: %2$s\n"
-msgstr "Namaskar %1$s,\n\nApni laka account te kaam diya suwidha add kuri dishey. Etiya apni age te pra thaka eke login pra kaam post koribo pare. Apni laka worker profile aro apni laka rating thik iman he ase.\n\nYate kaam post koribi: %2$s\n"
+msgstr "Namaskar %1$s, Apni laga account te kaam diya suwidha add kuri dishe. Etiya apni age te pra thaka eke login pra kaam post koribo pare. Apni laga worker profile aro apni laga rating thik iman he ase. Yate kaam post koribi: %2$s"
 
 #. translators: 1: display name, 2: the label shown on the mark
 #: includes/rich-manu.php:368
@@ -2173,7 +2173,7 @@ msgstr ""
 #. translators: 1: display name, 2: job title, 3: dashboard URL
 #: includes/job-screening.php:602
 msgid "Hello %1$s,\n\nYour job \"%2$s\" has been saved and is being checked before workers see it. A person reads the first job from every new employer. It is usually done within a few hours and you will get another email when it goes live.\n\nNothing more is needed from you. After this one, your jobs go live straight away.\n\nYou can see it here: %3$s\n"
-msgstr "Namaskar %1$s,\n\nApni laka kaam \"%2$s\" save hoishey aro worker khan sabo laka age te check kuri ase. Hor notun employer laka poila kaam ekjon manu porhe. Etu bisi somoi olop ghanta bhitor te hoi jai aro live hole apni ke aru ekta email ahibo.\n\nApni pra aru eku nalage. Etu laka pichete apni laka kaam khan logot te live hoi jabo.\n\nApni etu yate sabo pare: %3$s\n"
+msgstr "Namaskar %1$s, Apni laga kaam \"%2$s\" save hoishe aro worker khan sabo laga age te check kuri ase. Hor notun employer laga poila kaam ekjon manu porhe. Etu bisi somoi olop ghanta bhitor te hoi jai aro live hole apni ke aru ekta email ahibo. Apni pra aru eku nalage. Etu laga pichete apni laga kaam khan logot te live hoi jabo. Apni etu yate sabo pare: %3$s"
 
 #. translators: %s: person's name
 #: includes/dashboard.php:393
@@ -2216,7 +2216,7 @@ msgstr "Kuneka hoi kaam di ase"
 
 #: includes/hiring-request.php:646
 msgid "Hiring removed. Their worker account is untouched."
-msgstr "Kaam diya suwidha uthai dishey. Tai laka worker account thik iman he ase."
+msgstr "Kaam diya suwidha uthai dishe. Tai laga worker account thik iman he ase."
 
 #: includes/hiring-request.php:158
 msgid "Hiring was not added to this account"
@@ -2224,7 +2224,7 @@ msgstr "Etu account te kaam diya suwidha add kora nai"
 
 #: includes/hiring-request.php:892
 msgid "Hiring was removed from this account. Get in touch if that was a mistake."
-msgstr "Etu account pra kaam diya suwidha uthai dishey. Etu bhul hoile amikhan logote contact koribi."
+msgstr "Etu account pra kaam diya suwidha uthai dishe. Etu bhul hoile amikhan logote contact koribi."
 
 #: includes/taxonomies.php:307
 msgid "Home nurse or attendant"
@@ -2264,7 +2264,7 @@ msgstr ""
 
 #: includes/hires.php:483 includes/ratings.php:886
 msgid "How did it go?"
-msgstr "Kineka hoishey?"
+msgstr "Kineka hoishe?"
 
 #: includes/teams.php:232
 msgid "How far will the team travel"
@@ -2292,7 +2292,7 @@ msgstr ""
 
 #: includes/post-job.php:348
 msgid "How long is the work"
-msgstr "Kaam kiman din laka ase"
+msgstr "Kaam kiman din laga ase"
 
 #: includes/fields.php:313 includes/posted-for.php:406
 msgid "How long the work lasts"
@@ -2312,19 +2312,19 @@ msgstr ""
 
 #: includes/entitlements.php:61
 msgid "How many different workers one account can get the number of in a day. This is the main protection against somebody harvesting phone numbers, so keep it a real number rather than a large one."
-msgstr "Ekta account ek din te kiman alag-alag worker laka number lobo pare. Kunba phone number joma kora pra bachabole etu he main tarika ase, etu karne etu dangor nohoi, hosa number rakhibi."
+msgstr "Ekta account ek din te kiman alag-alag worker laga number lobo pare. Kunba phone number joma kora pra bachabole etu he main tarika ase, etu karne etu dangor nohoi, hosa number rakhibi."
 
 #: includes/entitlements.php:68
 msgid "How many jobs one employer can have marked urgent at the same time. Urgent only means anything while it is rare. If everybody can mark everything urgent, the tag stops being read."
-msgstr "Ekta employer ekbar te kiman kaam joldi koi mark koribo pare. Joldi laka mane titia tak he ase jitia etu kom ase. Sob manu sob jinis joldi koi mark koribo parile, etu tag porha bondh hoi jai."
+msgstr "Ekta employer ekbar te kiman kaam joldi koi mark koribo pare. Joldi laga mane titia tak he ase jitia etu kom ase. Sob manu sob jinis joldi koi mark koribo parile, etu tag porha bondh hoi jai."
 
 #: includes/entitlements.php:75
 msgid "How many jobs one employer can post in a day. This is here to stop the listings being flooded by one account rather than to ration honest use, so it should sit well above what a real employer would ever need."
-msgstr "Ekta employer ek din te kiman kaam post koribo pare. Etu hosa cholua ke rukhabole nohoi, ekta account pra listing bhorti hua ke rukhabole ase, etu karne etu kuno hosa employer laka dorkar pra bisi upor te thakibo lage."
+msgstr "Ekta employer ek din te kiman kaam post koribo pare. Etu hosa cholua ke rukhabole nohoi, ekta account pra listing bhorti hua ke rukhabole ase, etu karne etu kuno hosa employer laga dorkar pra bisi upor te thakibo lage."
 
 #: includes/job-photos.php:85
 msgid "How many pictures one job post can carry. One is enough to make a listing worth looking at, which is why it is the free number. More is a reason to pay rather than something a job needs."
-msgstr "Ekta kaam laka post te kiman photo lagibo pare. Listing ke sabo laga bonabole ekta he kafi ase, etu karne free te iman he ase. Tar pra bisi pisa diya laka karon ase, kaam laka dorkar hoina."
+msgstr "Ekta kaam laga post te kiman photo lagibo pare. Listing ke sabo laga bonabole ekta he kafi ase, etu karne free te iman he ase. Tar pra bisi paisa diya laga karon ase, kaam laga dorkar hoina."
 
 #: includes/insights.php:913
 msgid "How many this time"
@@ -2401,7 +2401,7 @@ msgstr ""
 
 #: includes/account-password.php:209
 msgid "If it was not you, change it straight away using the forgotten password link on the sign in screen. That also signs out every phone currently signed in to your account."
-msgstr "Etu apni nohoile, sign in screen te thaka forgotten password laka link pra logot te bodli koribi. Etu pra apni laka account te etiya sign in thaka sob phone b sign out hoi jabo."
+msgstr "Etu apni nohoile, sign in screen te thaka forgotten password laga link pra logot te bodli koribi. Etu pra apni laga account te etiya sign in thaka sob phone b sign out hoi jabo."
 
 #: includes/reports.php:795
 msgid "If somebody has done something serious, their account goes."
@@ -2409,11 +2409,11 @@ msgstr ""
 
 #: includes/rest-api.php:868 includes/rest-api.php:883
 msgid "If that address has an account, we have sent it a link to set a new password."
-msgstr "Etu address te account thakile, amikhan notun password lagabole ekta link pathai dishey."
+msgstr "Etu address te account thakile, amikhan notun password lagabole ekta link pathai dishe."
 
 #: includes/account-password.php:207
 msgid "If that was you, there is nothing to do. You can now sign in with your email and this password on the website and in the app, as well as any other way you already use."
-msgstr "Etu apni he hoile, eku koribole nai. Etiya apni website aro app te apni laka email aro etu password pra sign in koribo pare, aro age te pra cholai thaka dusra jiman tarika hoileh b."
+msgstr "Etu apni he hoile, eku koribole nai. Etiya apni website aro app te apni laga email aro etu password pra sign in koribo pare, aro age te pra cholai thaka dusra jiman tarika hoileh b."
 
 #: includes/posted-for.php:338
 msgid "If the original says negotiable, ask the employer for a figure when you ring. A job with no rate gets almost no answers."
@@ -2453,7 +2453,7 @@ msgstr ""
 
 #: includes/teams.php:137
 msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
-msgstr "Apni logote dusra worker khan anile, nije laka logote team b list koribi. Contractor khan pura kaam koribole lagile team bisare, aro tai khan karne pachjon manu ke pach call kora pra apni ke ek call kora sohoj ase."
+msgstr "Apni logote dusra worker khan anile, nije laga logote team b list koribi. Contractor khan pura kaam koribole lagile team bisare, aro tai khan karne pachjon manu ke pach call kora pra apni ke ek call kora sohoj ase."
 
 #: includes/registration.php:757
 msgid "If you did not create this account, ignore this message and nothing will happen."
@@ -2465,7 +2465,7 @@ msgstr ""
 
 #: includes/how-seen.php:275
 msgid "If you ever see something on Kaam Ase that looks like it contradicts this page, tell us. This page describes how the site is built, and if the two disagree then one of them is wrong and we want to know which."
-msgstr "Kaam Ase te kitia ba etu page laka birodh te dikha kiba dikhile, amikhan ke kobi. Etu page site kineka bonaishey etu koi, aro duita mila nai koile ekta bhul ase aro amikhan janibo mange kunta."
+msgstr "Kaam Ase te kitia ba etu page laga birodh te dikha kiba dikhile, amikhan ke kobi. Etu page site kineka bonaishey etu koi, aro duita mila nai koile ekta bhul ase aro amikhan janibo mange kunta."
 
 #: includes/profile-edit.php:1011
 msgid "If you ever want to come back, you are welcome to register again."
@@ -2473,11 +2473,11 @@ msgstr "Apni kitia ba wapas ahibo mon hoile, aru register koribole swagat ase."
 
 #: includes/ratings.php:832
 msgid "If you have worked for them, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
-msgstr "Apni tai khan laka karne kaam kurishey koile, koi dibi aro titia apni duijon ekjon-ekjon ke rating dibo pare. Duijon nalikha tak kunba rating sabo napare."
+msgstr "Apni tai khan laga karne kaam kurise koile, koi dibi aro titia apni duijon ekjon-ekjon ke rating dibo pare. Duijon nalikha tak kunba rating sabo napare."
 
 #: includes/ratings.php:831
 msgid "If you hired this person, say so and you will both be able to rate each other. Nobody sees a rating until you have both written one."
-msgstr "Apni etu manu ke kaam dishey koile, koi dibi aro titia apni duijon ekjon-ekjon ke rating dibo pare. Duijon nalikha tak kunba rating sabo napare."
+msgstr "Apni etu manu ke kaam dishe koile, koi dibi aro titia apni duijon ekjon-ekjon ke rating dibo pare. Duijon nalikha tak kunba rating sabo napare."
 
 #: includes/hiring-request.php:159
 msgid "If you think this is a mistake, get in touch and tell us about the work you hire for."
@@ -2489,11 +2489,11 @@ msgstr ""
 
 #: includes/teams.php:635
 msgid "If you work with a group, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and that is work you will not see otherwise."
-msgstr "Apni group te kaam kore koile, nije laka logote team b list koribi. Contractor khan pura kaam koribole lagile team bisare, aro etu kaam apni nohoile dikhibo nai."
+msgstr "Apni group te kaam kore koile, nije laga logote team b list koribi. Contractor khan pura kaam koribole lagile team bisare, aro etu kaam apni nohoile dikhibo nai."
 
 #: includes/how-seen.php:146
 msgid "If your profile says you are available for work, you are shown ahead of everybody marked busy. This is the single biggest thing you control and it is one tap. Turn it off when you are working. An employer who rings three busy people stops ringing anybody."
-msgstr "Apni laka profile te apni kaam karne available ase koi likhile, apni busy mark thaka sob manu laka age te dikhe. Apni laka hath te etu he sob pra dangor jinis ase aro etu ek tap laka kaam ase. Kaam te thakile etu bondh kuri dibi. Jun employer tinjon busy manu ke call kuri diye tai kunba ke b call kora bondh kore."
+msgstr "Apni laga profile te apni kaam karne available ase koi likhile, apni busy mark thaka sob manu laga age te dikhe. Apni laga hath te etu he sob pra dangor jinis ase aro etu ek tap laga kaam ase. Kaam te thakile etu bondh kuri dibi. Jun employer tinjon busy manu ke call kuri diye tai kunba ke b call kora bondh kore."
 
 #: includes/employer-index.php:325
 msgid "Individual"
@@ -2509,11 +2509,11 @@ msgstr "Kaam Ase free ase na?"
 
 #: includes/seo.php:451
 msgid "Is my phone number shown publicly?"
-msgstr "Moi laka phone number sob manu ke dikhai diye na?"
+msgstr "Moi laga phone number sob manu ke dikhai diye na?"
 
 #: includes/seo.php:456
 msgid "Is there a Kaam Ase app?"
-msgstr "Kaam Ase laka app ase na?"
+msgstr "Kaam Ase laga app ase na?"
 
 #: includes/dashboard.php:207
 msgid "It helps an employer know you can talk to each other on site."
@@ -2525,7 +2525,7 @@ msgstr "Record thakibo karne etu yate rakhishey, hoileh kaam khotom hoi gaishey.
 
 #: includes/dashboard.php:193
 msgid "It is the second thing an employer looks at, after the trade."
-msgstr "Kaam laka pichete employer pra duita number te etu he sai."
+msgstr "Kaam laga pichete employer pra duita number te etu he sai."
 
 #: includes/verify-requests.php:263
 msgid "It means somebody at Kaam Ase telephoned that person and spoke to them. It is not sold and it does not move anybody up a list. It only tells a stranger they are real, which is the one thing a stranger cannot tell on their own."
@@ -2533,7 +2533,7 @@ msgstr ""
 
 #: includes/how-seen.php:212
 msgid "It means somebody at Kaam Ase telephoned that person and spoke to them. It tells a stranger they are real. It does not move them above you and it is not given out for using the app."
-msgstr "Etu laka mane Kaam Ase laka kunba pra etu manu ke call kuri kotha kurishey. Etu pra najana manu ke tai khan hosa ase koi dikhe. Etu pra tai khan apni laka upor te najai aro etu app cholua karne diya nai."
+msgstr "Etu laga mane Kaam Ase laga kunba pra etu manu ke call kuri kotha kurise. Etu pra najana manu ke tai khan hosa ase koi dikhe. Etu pra tai khan apni laga upor te najai aro etu app cholua karne diya nai."
 
 #: includes/rich-manu.php:907
 msgid "It says we have spoken to them. It is not a promise about the quality of their work, and it does not replace agreeing the rate and the payment day before anybody starts."
@@ -2553,7 +2553,7 @@ msgstr ""
 
 #: includes/job-photos.php:593
 msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
-msgstr "JPG, PNG nohoile WEBP. Phone khan pra photo bhitor te lukai rakha jaga laka information kunba sabo laka age te amikhan uthai diye."
+msgstr "JPG, PNG nohoile WEBP. Phone khan pra photo bhitor te lukai rakha jaga laga information kunba sabo laga age te amikhan uthai diye."
 
 #: includes/promote.php:1582 includes/promote.php:1905
 msgid "Job"
@@ -2561,11 +2561,11 @@ msgstr ""
 
 #: includes/job-alerts.php:732 includes/job-alerts.php:733 includes/job-alerts.php:764
 msgid "Job alerts"
-msgstr "Kaam laka alert khan"
+msgstr "Kaam laga alert khan"
 
 #: includes/dashboard.php:882
 msgid "Job closed. Workers will stop calling about it."
-msgstr "Kaam bondh hoishey. Worker khan etu laka bare te call kora bondh koribo."
+msgstr "Kaam bondh hoishe. Worker khan etu laga bare te call kora bondh koribo."
 
 #: includes/post-types.php:234
 msgid "Job photo"
@@ -2573,7 +2573,7 @@ msgstr ""
 
 #: includes/dashboard.php:879
 msgid "Job posted again. It is open for three weeks."
-msgstr "Kaam aru post kuri dishey. Etu tinta hafta khuli thakibo."
+msgstr "Kaam aru post kuri dishe. Etu tinta hafta khuli thakibo."
 
 #: includes/post-types.php:233
 msgid "Jobs"
@@ -2585,7 +2585,7 @@ msgstr "Kaam aro profile khan likha manu pra bebohar kora kotha te thakibo. Dusr
 
 #: includes/profile-edit.php:911
 msgid "Jobs and ratings involving other people are kept without your name, because they are part of somebody else's record too."
-msgstr "Dusra manu khan b thaka kaam aro rating khan apni laka naam nohoi kene rakhe, kilemane etu khan dusra kunba laka record laka b hissa ase."
+msgstr "Dusra manu khan b thaka kaam aro rating khan apni laga naam nohoi kene rakhe, kilemane etu khan dusra kunba laga record laga b hissa ase."
 
 #: includes/seo.php:537
 msgid "Jobs and workers in %s"
@@ -2681,7 +2681,7 @@ msgstr ""
 
 #: includes/google-signin.php:1834 includes/registration.php:247
 msgid "Kaam Ase is free. We will never ask a worker for money."
-msgstr "Kaam Ase free ase. Amikhan kitia b worker pra pisa mangibo nai."
+msgstr "Kaam Ase free ase. Amikhan kitia b worker pra paisa mangibo nai."
 
 #: includes/install.php:783
 msgid "Kaam Ase is installed. Three things before you show it to anybody."
@@ -2689,7 +2689,7 @@ msgstr ""
 
 #: includes/who-looked.php:228
 msgid "Kaam Ase keeps a note of who opened your profile and your jobs. Sign in and it is yours."
-msgstr "Apni laka profile aro apni laka kaam khan kun pra khulishey, Kaam Ase etu likhi rakhe. Sign in koribi aro etu apni laka ase."
+msgstr "Apni laga profile aro apni laga kaam khan kun pra khulise, Kaam Ase etu likhi rakhe. Sign in koribi aro etu apni laga ase."
 
 #: includes/install.php:695
 msgid "Kaam Ase means there is work. It is a hiring platform built in Nagaland, for Nagaland, by a company registered in Dimapur. Write the rest of this page yourself. People trust a page that sounds like a person more than one that sounds like a company."
@@ -2722,15 +2722,15 @@ msgstr ""
 
 #: includes/seo.php:418
 msgid "Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland, for every kind of job: government and private, teaching, office, health and sales work, driving, skilled trades and daily work. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me."
-msgstr "Kaam Ase, Nagamese te \"kaam ase\" koi mane, Nagaland karne bonua ekta free job platform ase, sob kisim laka kaam karne: government aro private, teaching, office, health aro sales laka kaam, driving, skilled kaam aro hazira kaam. Etu kaam bisari thaka manu khan ke kaam dibole manu bisari thaka khan logote milai diye, website te aro Android aro iPhone app te. Etu Dimapur pra Nagaland Me pra chalai ase."
+msgstr "Kaam Ase, Nagamese te \"kaam ase\" koi mane, Nagaland karne bonua ekta free job platform ase, sob kisim laga kaam karne: government aro private, teaching, office, health aro sales laga kaam, driving, skilled kaam aro hazira kaam. Etu kaam bisari thaka manu khan ke kaam dibole manu bisari thaka khan logote milai diye, website te aro Android aro iPhone app te. Etu Dimapur pra Nagaland Me pra chalai ase."
 
 #: includes/teams.php:634
 msgid "Keep the headcount right. It is the first thing a contractor looks at."
-msgstr "Manu laka ginti thik rakhibi. Contractor pra poila etu he sai."
+msgstr "Manu laga ginti thik rakhibi. Contractor pra poila etu he sai."
 
 #: includes/dashboard.php:288
 msgid "Keep your availability up to date and you will show up in more searches."
-msgstr "Apni laka availability notun kuri rakhibi aro apni aru bisi search te dikhibo."
+msgstr "Apni laga availability notun kuri rakhibi aro apni aru bisi search te dikhibo."
 
 #: includes/indexing-api.php:1099
 msgid "Key file"
@@ -2812,7 +2812,7 @@ msgstr "Etu apni he hoile khali chari dibi"
 
 #: includes/post-job.php:446
 msgid "Leave blank to use your account number"
-msgstr "Apni laka account laka number cholabole khali chari dibi"
+msgstr "Apni laga account laga number cholabole khali chari dibi"
 
 #: includes/reports.php:405
 msgid "Leave empty if it is not about a person."
@@ -2832,7 +2832,7 @@ msgstr ""
 
 #: includes/google-signin.php:213
 msgid "Lets people sign in with a Google account instead of a password. Email and password keep working either way. Leave these empty and the Google buttons do not appear at all."
-msgstr "Manu khan ke password laka bodli Google account pra sign in koribole diye. Email aro password duita phale te chali thake. Etu khan khali chari dile Google laka button khan eku dikha nai."
+msgstr "Manu khan ke password laga bodli Google account pra sign in koribole diye. Email aro password duita phale te chali thake. Etu khan khali chari dile Google laga button khan eku dikha nai."
 
 #: includes/apple-signin.php:188
 msgid "Lets people sign in with an Apple account. Apple requires this on the iPhone app because the app also offers Google. Email, password and Google all keep working either way. Leave this empty and Sign in with Apple is switched off."
@@ -2844,11 +2844,11 @@ msgstr "Limit khan"
 
 #: includes/teams.php:294 includes/teams.php:643
 msgid "List my team"
-msgstr "Moi laka team list koribo"
+msgstr "Moi laga team list koribo"
 
 #: includes/teams.php:131
 msgid "List your team"
-msgstr "Apni laka team list koribo"
+msgstr "Apni laga team list koribo"
 
 #: includes/teams.php:72
 msgid "Listing a team takes a couple of minutes once you have a worker account."
@@ -2888,7 +2888,7 @@ msgstr ""
 
 #: includes/queries.php:305
 msgid "Lowest day rate"
-msgstr "Sob pra kom ek din laka rate"
+msgstr "Sob pra kom ek din laga rate"
 
 #: includes/taxonomies.php:300
 msgid "Maid"
@@ -2916,7 +2916,7 @@ msgstr ""
 
 #: includes/registration.php:131
 msgid "Make your free worker profile"
-msgstr "Apni laka free worker profile banabo"
+msgstr "Apni laga free worker profile banabo"
 
 #: includes/taxonomies.php:469
 msgid "Make-up artist"
@@ -2928,7 +2928,7 @@ msgstr ""
 
 #: includes/dashboard.php:735
 msgid "Mark as filled"
-msgstr "Bhorti hoishey koi mark koribo"
+msgstr "Bhorti hoishe koi mark koribo"
 
 #: includes/admin.php:741
 msgid "Mark verified"
@@ -2976,7 +2976,7 @@ msgstr ""
 
 #: includes/profile-edit.php:396
 msgid "Monthly pay you expect"
-msgstr "Apni ek mahina laka kiman mojuri mange"
+msgstr "Apni ek mahina laga kiman mojuri mange"
 
 #: includes/plan-pitch.php:314
 msgid "More pictures on a job."
@@ -2985,7 +2985,7 @@ msgstr "Ekta kaam te aru bisi photo."
 #. translators: 1: trade name, 2: district, 3: median day rate
 #: includes/profile-edit.php:613
 msgid "Most %1$s in %2$s ask around rupees %3$s a day. Yours is yours to decide."
-msgstr "%2$s te bisi %1$s ek din te prai %3$s taka mange. Apni laka apni he thik koribo."
+msgstr "%2$s te bisi %1$s ek din te prai %3$s taka mange. Apni laga apni he thik koribo."
 
 #: includes/queries.php:303
 msgid "Most experienced"
@@ -3013,19 +3013,19 @@ msgstr ""
 
 #: includes/profile-edit.php:164
 msgid "My details"
-msgstr "Moi laka details"
+msgstr "Moi laga details"
 
 #: includes/dashboard.php:656
 msgid "My jobs"
-msgstr "Moi laka kaam khan"
+msgstr "Moi laga kaam khan"
 
 #: includes/dashboard.php:997 includes/profile-edit.php:165
 msgid "My profile"
-msgstr "Moi laka profile"
+msgstr "Moi laga profile"
 
 #: includes/install.php:329 includes/teams.php:130 includes/teams.php:626
 msgid "My team"
-msgstr "Moi laka team"
+msgstr "Moi laga team"
 
 #: includes/gstin.php:176 includes/seo.php:292
 msgid "Nagaland"
@@ -3049,7 +3049,7 @@ msgstr ""
 
 #: includes/post-job.php:269
 msgid "Need a whole team? Put the number and we will show your job to team leaders too."
-msgstr "Pura ekta team lage na? Number lagai dibi aro amikhan apni laka kaam team leader khan ke b dikhabo."
+msgstr "Pura ekta team lage na? Number lagai dibi aro amikhan apni laga kaam team leader khan ke b dikhabo."
 
 #: includes/admin.php:404
 msgid "Needs your attention"
@@ -3065,11 +3065,11 @@ msgstr "Kitia b nohoi"
 
 #: includes/teams.php:259
 msgid "Never shown on the site. Contractors reach you through Kaam Ase and you can see who asked."
-msgstr "Site te kitia b dikha nai. Contractor khan Kaam Ase pra apni tak ahe aro apni sabo pare kun hudishey."
+msgstr "Site te kitia b dikha nai. Contractor khan Kaam Ase pra apni tak ahe aro apni sabo pare kun hudishe."
 
 #: includes/profile-edit.php:285
 msgid "Never shown on the site. People reach you through Kaam Ase, and you can see who asked."
-msgstr "Site te kitia b dikha nai. Manu khan Kaam Ase pra apni tak ahe, aro apni sabo pare kun hudishey."
+msgstr "Site te kitia b dikha nai. Manu khan Kaam Ase pra apni tak ahe, aro apni sabo pare kun hudishe."
 
 #: includes/post-job.php:448
 msgid "Never shown on the site. Workers reach you through Kaam Ase."
@@ -3077,7 +3077,7 @@ msgstr "Site te kitia b dikha nai. Worker khan Kaam Ase pra apni tak ahe."
 
 #: includes/profile-edit.php:515
 msgid "Never shown publicly. Only we see it, and only to check if there is a problem. Ask them before you put their number here."
-msgstr "Kitia b sob manu ke dikha nai. Khali amikhan he dikhe, aro khali problem hoile check koribole. Tai laka number yate lagabo laka age te tai ke hudi lobi."
+msgstr "Kitia b sob manu ke dikha nai. Khali amikhan he dikhe, aro khali problem hoile check koribole. Tai laga number yate lagabo laga age te tai ke hudi lobi."
 
 #: includes/exposure.php:489
 msgid "Never yet reached one"
@@ -3090,7 +3090,7 @@ msgstr ""
 #. translators: 1: trade, 2: district
 #: includes/job-alerts.php:374
 msgid "New %1$s work in %2$s"
-msgstr "%2$s te %1$s laka notun kaam"
+msgstr "%2$s te %1$s laga notun kaam"
 
 #: includes/taxonomies.php:180
 msgid "New district name"
@@ -3102,7 +3102,7 @@ msgstr ""
 
 #: includes/standing.php:191
 msgid "New here, and has not hired anybody through Kaam Ase yet. That is normal for somebody who has just joined. Agree the rate and the payment day out loud before the first day, as you would with anyone."
-msgstr "Yate notun ase, aro etiya tak Kaam Ase pra kunba ke kaam diya nai. Etiya he jog hoa manu karne etu sadharan ase. Poila din laka age te rate aro pisa pabo laka din kotha pora thik kuri lobi, jineka kunba logote b kore."
+msgstr "Yate notun ase, aro etiya tak Kaam Ase pra kunba ke kaam diya nai. Etiya he jog hoa manu karne etu sadharan ase. Poila din laga age te rate aro paisa pabo laga din kotha pora thik kuri lobi, jineka kunba logote b kore."
 
 #: includes/post-types.php:227
 msgid "New job"
@@ -3216,7 +3216,7 @@ msgstr ""
 
 #: includes/past-jobs.php:254
 msgid "No page is set yet. Make a page called Past jobs, put the shortcode below in it, then choose it here."
-msgstr "Etiya tak kuno page thik kora nai. Past jobs koi ekta page banabi, tar bhitor te nichete laka shortcode lagai dibi, tar pichete yate etu basi lobi."
+msgstr "Etiya tak kuno page thik kora nai. Past jobs koi ekta page banabi, tar bhitor te nichete laga shortcode lagai dibi, tar pichete yate etu basi lobi."
 
 #: includes/rest-api.php:1064
 msgid "No photo arrived. Please try again."
@@ -3264,7 +3264,7 @@ msgstr ""
 
 #: includes/seo.php:452
 msgid "No. Nobody's number is printed on a public page. An employer has to look it up through Kaam Ase, lookups are limited and recorded, and you can choose to approve every request yourself before your number is shared."
-msgstr "Nai. Kunba laka number b public page te dikhai nadiye. Employer pra Kaam Ase pra he etu sabo lage, lookup khan limit ase aro record hoi, aro apni mon hoile apni laka number diya age te sob request nije approve koribo pare."
+msgstr "Nai. Kunba laga number b public page te dikhai nadiye. Employer pra Kaam Ase pra he etu sabo lage, lookup khan limit ase aro record hoi, aro apni mon hoile apni laga number diya age te sob request nije approve koribo pare."
 
 #. translators: %s: the question that was answered no
 #: includes/ratings.php:999
@@ -3273,15 +3273,15 @@ msgstr "Nai: %s"
 
 #: includes/how-seen.php:326 includes/how-seen.php:379
 msgid "Nobody can pay to be higher up this site. Four things decide whether you get called."
-msgstr "Etu site te upor te jabole kunba pisa dibo napare. Apni ke call ahibo na nai, charta jinis pra thik kore."
+msgstr "Etu site te upor te jabole kunba paisa dibo napare. Apni ke call ahibo na nai, charta jinis pra thik kore."
 
 #: includes/how-seen.php:252
 msgid "Nobody can pay to be higher up this site. There is no advertisement, no boosted profile and no hidden score. Here is exactly what decides who gets seen, so you can judge for yourself whether that is true."
-msgstr "Etu site te upor te jabole kunba pisa dibo napare. Kuno advertisement nai, kuno barai diya profile nai aro kuno lukai rakha score nai. Kun ke dikhibo etu ki pra thik kore, thik etu yate likhi ase, titia apni nije sabo pare etu hosa ase na nai."
+msgstr "Etu site te upor te jabole kunba paisa dibo napare. Kuno advertisement nai, kuno barai diya profile nai aro kuno lukai rakha score nai. Kun ke dikhibo etu ki pra thik kore, thik etu yate likhi ase, titia apni nije sabo pare etu hosa ase na nai."
 
 #: includes/closed-jobs.php:311
 msgid "Nobody has been rung and nothing has been counted against your lookups for today."
-msgstr "Kunba ke call kora nai aro aji laka apni laka lookup pra eku kata nai."
+msgstr "Kunba ke call kora nai aro aji laga apni laga lookup pra eku kata nai."
 
 #: includes/insights.php:884
 msgid "Nobody is waiting. Either everybody matching has been sent one recently, or the filters match nobody unconfirmed."
@@ -3314,7 +3314,7 @@ msgstr "Apni duijon jowab nadia tak etu kunba nadikhe. Hosa kua karne apni ke ku
 #. translators: %s: a length of time, for example 7 days
 #: includes/who-looked.php:319
 msgid "Nobody signed in has opened your profile in the last %s. Names appear here as soon as they do."
-msgstr "Hesh %s te kuno sign in thaka manu pra apni laka profile khula nai. Kunba khulile logot te yate naam dikhibo."
+msgstr "Hesh %s te kuno sign in thaka manu pra apni laga profile khula nai. Kunba khulile logot te yate naam dikhibo."
 
 #: includes/who-looked.php:310
 msgid "Nobody this week"
@@ -3334,7 +3334,7 @@ msgstr "Etiya tak kunba nai."
 
 #: includes/contact.php:985
 msgid "Nobody yet. Finish your profile and set yourself available, and you will show up in more searches."
-msgstr "Etiya tak kunba nai. Apni laka profile khotom koribi aro nije ke available kuri dibi, titia apni aru bisi search te dikhibo."
+msgstr "Etiya tak kunba nai. Apni laga profile khotom koribi aro nije ke available kuri dibi, titia apni aru bisi search te dikhibo."
 
 #: includes/email-check.php:561 includes/insights.php:1380
 msgid "None"
@@ -3380,7 +3380,7 @@ msgstr ""
 
 #: includes/hiring-request.php:653
 msgid "Not removed. That account has no other role, so it would be left unable to sign in."
-msgstr "Uthai dia nai. Etu account laka dusra kuno role nai, etu karne tai sign in koribo napara hoi jabo."
+msgstr "Uthai dia nai. Etu account laga dusra kuno role nai, etu karne tai sign in koribo napara hoi jabo."
 
 #: includes/admin.php:575 includes/past-jobs.php:277
 msgid "Not set"
@@ -3404,7 +3404,7 @@ msgstr ""
 
 #: includes/dashboard.php:884
 msgid "Noted. We will not ask about that one again."
-msgstr "Likhi loishey. Amikhan etu laka bare te aru hudibo nai."
+msgstr "Likhi loishe. Amikhan etu laga bare te aru hudibo nai."
 
 #: includes/admin.php:407
 msgid "Nothing flagged. Nobody has been reported for not paying or not turning up."
@@ -3424,7 +3424,7 @@ msgstr ""
 
 #: includes/entitlements.php:387
 msgid "Nothing is being charged for right now, so these numbers are the whole story. Somebody who runs out is told to come back tomorrow."
-msgstr "Etiya kuno jinis laka pisa loa nai, etu karne etu number khan he pura kotha ase. Jun laka khotom hoi jai tai ke kali wapas ahibi koi."
+msgstr "Etiya kuno jinis laga paisa loa nai, etu karne etu number khan he pura kotha ase. Jun laga khotom hoi jai tai ke kali wapas ahibi koi."
 
 #: includes/exposure.php:508
 msgid "Nothing recorded yet"
@@ -3460,19 +3460,19 @@ msgstr ""
 
 #: includes/teams.php:252
 msgid "Number for the team"
-msgstr "Team laka number"
+msgstr "Team laga number"
 
 #: includes/post-job.php:441
 msgid "Number for this job"
-msgstr "Etu kaam laka number"
+msgstr "Etu kaam laga number"
 
 #: includes/fields.php:173 includes/fields.php:256
 msgid "Number of ratings"
-msgstr "Rating laka ginti"
+msgstr "Rating laga ginti"
 
 #: includes/fields.php:198
 msgid "Number of workers"
-msgstr "Worker laka ginti"
+msgstr "Worker laga ginti"
 
 #: includes/plan-pitch.php:284
 msgid "Numbers whenever you need them."
@@ -3504,7 +3504,7 @@ msgstr ""
 
 #: includes/job-alerts.php:802
 msgid "Off until you switch it on. Leave it off until there is enough work being posted that a message is worth sending, because the first one somebody gets decides whether they keep the next."
-msgstr "Apni chalu nakora tak bondh ase. Message pathabo laga iman kaam post nohua tak etu bondh he rakhibi, kilemane kunba pabo laka poila message he thik kore tai pichete laka rakhibo na nai."
+msgstr "Apni chalu nakora tak bondh ase. Message pathabo laga iman kaam post nohua tak etu bondh he rakhibi, kilemane kunba pabo laga poila message he thik kore tai pichete laga rakhibo na nai."
 
 #: includes/taxonomies.php:363
 msgid "Office assistant"
@@ -3541,7 +3541,7 @@ msgstr ""
 
 #: includes/seo.php:430
 msgid "On Kaam Ase. Search by district for teachers, nurses, accountants, office staff, drivers, electricians, masons, cooks and many other kinds of work, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let people come to you."
-msgstr "Kaam Ase te. District hisab te teacher, nurse, accountant, office staff, driver, electrician, mason, cook aro bisi dusra kaam laka manu khan bisaribi, etiya kun available ase, tai khan laka rating aro tai khan karne kun vouch kore etu sabi, tar pichete Kaam Ase pra tai laka number lobi. Apni free te kaam post kuri kene manu khan ke apni logote ahibole b dibo pare."
+msgstr "Kaam Ase te. District hisab te teacher, nurse, accountant, office staff, driver, electrician, mason, cook aro bisi dusra kaam laga manu khan bisaribi, etiya kun available ase, tai khan laga rating aro tai khan karne kun vouch kore etu sabi, tar pichete Kaam Ase pra tai laga number lobi. Apni free te kaam post kuri kene manu khan ke apni logote ahibole b dibo pare."
 
 #: includes/admin.php:566 includes/dashboard.php:442
 msgid "On leave"
@@ -3549,15 +3549,15 @@ msgstr "Chutti te ase"
 
 #: includes/job-alerts.php:783
 msgid "Once a day, every worker who has new work posted in their trade and their district gets one message about all of it. Never more than one a day each, whatever gets posted. Nobody chooses a trade or a district for this: it uses what is already on their profile."
-msgstr "Din te ekbar, jun worker laka kaam aro district te notun kaam post hoishey tai ke etu sob laka ekta message ahe. Jiman post hoileh b, hor manu ke din te ekta pra bisi kitia b nohoi. Etu karne kunba kaam ba district basi naloi: tai laka profile te age te pra ja ase etu he cholai."
+msgstr "Din te ekbar, jun worker laga kaam aro district te notun kaam post hoishe tai ke etu sob laga ekta message ahe. Jiman post hoileh b, hor manu ke din te ekta pra bisi kitia b nohoi. Etu karne kunba kaam ba district basi naloi: tai laga profile te age te pra ja ase etu he cholai."
 
 #: includes/job-alerts.php:572
 msgid "Once a day, if new work has been posted in your trade and your district, we send one message with all of it. Never more than one a day, whatever gets posted."
-msgstr "Din te ekbar, apni laka kaam aro apni laka district te notun kaam post hoile, amikhan etu sob laka ekta message pathai diye. Jiman post hoileh b, din te ekta pra bisi kitia b nohoi."
+msgstr "Din te ekbar, apni laga kaam aro apni laga district te notun kaam post hoile, amikhan etu sob laga ekta message pathai diye. Jiman post hoileh b, din te ekta pra bisi kitia b nohoi."
 
 #: includes/job-alerts.php:653
 msgid "Once a day, one message with any new work in your trade and district. This does not affect messages about you, like somebody looking up your number."
-msgstr "Din te ekbar, apni laka kaam aro district laka jiman notun kaam laka ekta message. Etu pra apni laka bare te aha message khan te asar nai, jineka kunba pra apni laka number sabo."
+msgstr "Din te ekbar, apni laga kaam aro district laga jiman notun kaam laga ekta message. Etu pra apni laga bare te aha message khan te asar nai, jineka kunba pra apni laga number sabo."
 
 #: includes/gift.php:84 includes/promote.php:145
 msgid "One month"
@@ -3595,20 +3595,20 @@ msgstr ""
 #: includes/job-photos.php:438
 msgid "Only %s picture was kept. That is what this account can put on a job."
 msgid_plural "Only %s pictures were kept. That is what this account can put on a job."
-msgstr[0] "Khali %s photo rakhishey. Etu account pra ekta kaam te iman he lagabo pare."
-msgstr[1] "Khali %s photo rakhishey. Etu account pra ekta kaam te iman he lagabo pare."
+msgstr[0] "Khali %s photo rakhise. Etu account para ekta kaam te iman he lagabo pare."
+msgstr[1] "Khali %s photo rakhise. Etu account para ekta kaam te iman he lagabo pare."
 
 #: includes/profile-edit.php:414
 msgid "Only around my town"
-msgstr "Khali moi laka town laka usor te"
+msgstr "Khali moi laga town laga usor te"
 
 #: includes/teams.php:236
 msgid "Only around our town"
-msgstr "Khali amikhan laka town laka usor te"
+msgstr "Khali amikhan laga town laga usor te"
 
 #: includes/profile-edit.php:402
 msgid "Only if you want steady monthly work. Leave empty otherwise."
-msgstr "Khali pakka mahina laka kaam mon hoile. Nohoile khali chari dibi."
+msgstr "Khali pakka mahina laga kaam mon hoile. Nohoile khali chari dibi."
 
 #: includes/apple-signin.php:235
 msgid "Only needed if Sign in with Apple is ever added to the website. Leave empty otherwise."
@@ -3659,7 +3659,7 @@ msgstr ""
 
 #: includes/ratings.php:908
 msgid "Optional. Keep it about the work."
-msgstr "Mon hoile dibi. Etu kaam laka bare te he rakhibi."
+msgstr "Mon hoile dibi. Etu kaam laga bare te he rakhibi."
 
 #: includes/profile-edit.php:683
 msgid "Optional. Registered businesses get taken more seriously by workers."
@@ -3710,11 +3710,11 @@ msgstr ""
 
 #: includes/account-password.php:458
 msgid "Password set. You can now sign in with your email address as well."
-msgstr "Password lagi jaishey. Etiya apni laka email address pra b sign in koribo pare."
+msgstr "Password lagi goise. Etiya apni laga email address pra b sign in koribo pare."
 
 #: includes/account-password.php:298
 msgid "Password set. You can sign in with your email and this password from now on."
-msgstr "Password lagi jaishey. Etiya pra apni laka email aro etu password pra sign in koribo pare."
+msgstr "Password lagi goise. Etiya pra apni laga email aro etu password pra sign in koribo pare."
 
 #: includes/closed-jobs.php:271 includes/past-jobs.php:203 includes/past-jobs.php:204
 #: includes/past-jobs.php:233
@@ -3740,15 +3740,15 @@ msgstr "Mojuri"
 
 #: includes/fields.php:297 includes/post-job.php:290
 msgid "Pay period"
-msgstr "Mojuri laka somoi"
+msgstr "Mojuri laga somoi"
 
 #: includes/how-seen.php:199
 msgid "Paying. There is nothing to buy."
-msgstr "Pisa diya. Kinibole eku nai."
+msgstr "Paisa diya. Kinibole eku nai."
 
 #: includes/entitlements.php:383
 msgid "Payments are switched on. People can buy more than the numbers below. Prices are set on the payments screen, not here."
-msgstr "Payment chalu ase. Manu khan nichete laka number pra bisi kinibo pare. Price payments screen te thik kore, yate nohoi."
+msgstr "Payment chalu ase. Manu khan nichete laga number pra bisi kinibo pare. Price payments screen te thik kore, yate nohoi."
 
 #: includes/verify-requests.php:458
 msgid "People who have asked to be telephoned. Payers are not in this list, they are on the Calls to make screen and they go first. Ring the number, speak to them, then give it here. Whatever length you choose runs out on its own, and the mark goes with it."
@@ -3765,7 +3765,7 @@ msgstr ""
 
 #: includes/saved.php:605
 msgid "People you have worked for"
-msgstr "Apni jun khan laka karne kaam kurishey"
+msgstr "Apni jun khan laga karne kaam kurise"
 
 #: includes/teams.php:227
 msgid "Per worker per day is the usual way to quote it. Say so in the description if you mean something else."
@@ -3820,7 +3820,7 @@ msgstr "Sign in thaka phone khan"
 
 #: includes/profile-edit.php:179
 msgid "Photo of yourself"
-msgstr "Apni laka photo"
+msgstr "Apni laga photo"
 
 #: includes/taxonomies.php:465
 msgid "Photographer"
@@ -3852,7 +3852,7 @@ msgstr ""
 
 #: includes/how-seen.php:182
 msgid "Plastering, shuttering, tile work, night shifts, your own tools. Somebody deciding between two masons decides on this."
-msgstr "Plaster, shuttering, tile laka kaam, rati laka shift, nije laka tool. Duijon mason majot te basi thaka manu etu he sai kene thik kore."
+msgstr "Plaster, shuttering, tile laga kaam, rati laga shift, nije laga tool. Duijon mason majot te basi thaka manu etu he sai kene thik kore."
 
 #: includes/app-links.php:494
 msgid "Play Console, Test and release, App signing. Copy the SHA-256 certificate fingerprint from the app signing key. One per line if you have more than one."
@@ -3871,7 +3871,7 @@ msgstr "Apni ki kaam kore etu basi lobi."
 #: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:474
 #: includes/rest-api.php:673 includes/services.php:338
 msgid "Please choose your district."
-msgstr "Apni laka district basi lobi."
+msgstr "Apni laga district basi lobi."
 
 #: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:470
 #: includes/rest-api.php:669
@@ -3880,17 +3880,17 @@ msgstr "Chali thaka ekta email address likhibi."
 
 #: includes/account-providers.php:569 includes/apple-signin.php:803
 msgid "Please enter your email address."
-msgstr "Apni laka email address likhibi."
+msgstr "Apni laga email address likhibi."
 
 #: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:436
 #: includes/rest-api.php:651
 msgid "Please enter your name."
-msgstr "Apni laka naam likhibi."
+msgstr "Apni laga naam likhibi."
 
 #: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:502
 #: includes/rest-api.php:689
 msgid "Please enter your phone number."
-msgstr "Apni laka phone number likhibi."
+msgstr "Apni laga phone number likhibi."
 
 #: includes/google-signin.php:1698 includes/post-job.php:203 includes/profile-edit.php:126
 #: includes/registration.php:78 includes/reports.php:340 includes/teams.php:101
@@ -3903,11 +3903,11 @@ msgstr "Ekta phone number lagai dibi. Etu 6, 7, 8 nohoile 9 pra suru hua 10 digi
 
 #: includes/services.php:334
 msgid "Please put your name."
-msgstr "Apni laka naam lagai dibi."
+msgstr "Apni laga naam lagai dibi."
 
 #: includes/reports.php:587 includes/services.php:655
 msgid "Please tell us a bit more about what happened, so we know where to start."
-msgstr "Ki hoishey etu laka bare te amikhan ke olop aru kobi, titia amikhan kate pra suru koribo etu janibo."
+msgstr "Ki hoishe etu laga bare te amikhan ke olop aru kobi, titia amikhan kate pra suru koribo etu janibo."
 
 #: includes/app-version.php:165
 msgid "Please update Kaam Ase to carry on."
@@ -3915,7 +3915,7 @@ msgstr "Cholai thakibole Kaam Ase ke update koribi."
 
 #: includes/working-request.php:375
 msgid "Plenty of people here hire for one job and work on another. Add a worker profile to this same account and employers can find you too. It is free, and your login and your job posts stay exactly as they are."
-msgstr "Yate bisi manu ekta kaam karne manu loi aro dusra kaam te nije kaam kore. Etu he account te ekta worker profile add koribi aro employer khan apni ke b bisaribo pare. Etu free ase, aro apni laka login aro apni laka kaam post khan thik iman he thake."
+msgstr "Yate bisi manu ekta kaam karne manu loi aro dusra kaam te nije kaam kore. Etu he account te ekta worker profile add koribi aro employer khan apni ke b bisaribo pare. Etu free ase, aro apni laga login aro apni laga kaam post khan thik iman he thake."
 
 #: includes/taxonomies.php:285
 msgid "Plumber"
@@ -3947,7 +3947,7 @@ msgstr "Manu bikri nohoile bandha mojdur hobo pare"
 
 #: includes/job-screening.php:808
 msgid "Possibly involves someone under 18"
-msgstr "18 bosor pra kom kunba thakibo pare"
+msgstr "18 sal pra kom kunba thakibo pare"
 
 #: includes/dashboard.php:535 includes/install.php:306 includes/post-job.php:232
 #: includes/post-types.php:224 includes/post-types.php:225
@@ -3984,11 +3984,11 @@ msgstr "Etu kaam post koribo"
 
 #: includes/dashboard.php:665
 msgid "Post your first job"
-msgstr "Apni laka poila kaam post koribo"
+msgstr "Apni laga poila kaam post koribo"
 
 #: includes/posted-for.php:65
 msgid "Posted for an outside employer"
-msgstr "Bahar laka employer karne post kuri shey"
+msgstr "Bahar laga employer karne post kuri shey"
 
 #: includes/admin.php:92
 msgid "Posted more than once. The clearest sign it works."
@@ -4024,7 +4024,7 @@ msgstr ""
 
 #: includes/dashboard.php:880
 msgid "Profile saved."
-msgstr "Profile save hoishey."
+msgstr "Profile save hoishe."
 
 #: includes/promote.php:1062
 msgid "Promote a job or your profile"
@@ -4036,7 +4036,7 @@ msgstr ""
 
 #: includes/job-screening.php:871
 msgid "Publishing it from here clears it, and this employer's later jobs will go live on their own."
-msgstr "Yate pra publish kurile etu pass hoi jai, aro etu employer laka pichete laka kaam khan nije pra live hobo."
+msgstr "Yate pra publish kurile etu pass hoi jai, aro etu employer laga pichete laga kaam khan nije pra live hobo."
 
 #: includes/services.php:490
 msgid "Put a phone number for the team. It should be 10 digits starting with 6, 7, 8 or 9."
@@ -4044,7 +4044,7 @@ msgstr "Team karne ekta phone number lagai dibi. Etu 6, 7, 8 nohoile 9 pra suru 
 
 #: includes/posted-for.php:491
 msgid "Put the name of the person or firm hiring."
-msgstr "Kaam diya manu nohoile firm laka naam lagai dibi."
+msgstr "Kaam diya manu nohoile firm laga naam lagai dibi."
 
 #: includes/services.php:76
 msgid "Put the rate you are paying. Jobs with no rate get almost no answers."
@@ -4056,7 +4056,7 @@ msgstr ""
 
 #: includes/posted-for.php:495
 msgid "Put their number. Ten digits starting with 6, 7, 8 or 9. Without it this job is no use to anybody."
-msgstr "Tai laka number lagai dibi. 6, 7, 8 nohoile 9 pra suru hua dohta digit. Etu nathakile etu kaam kunba karne kaam laga nai."
+msgstr "Tai laga number lagai dibi. 6, 7, 8 nohoile 9 pra suru hua dohta digit. Etu nathakile etu kaam kunba karne kaam laga nai."
 
 #: includes/posted-for.php:426
 msgid "Put this job up"
@@ -4086,8 +4086,8 @@ msgstr "Tai khan ke rating dibo"
 #: includes/standing.php:98
 msgid "Rated %1$s by %2$d worker"
 msgid_plural "Rated %1$s by %2$d workers"
-msgstr[0] "%2$d worker pra %1$s rating dishey"
-msgstr[1] "%2$d worker khan pra %1$s rating dishey"
+msgstr[0] "%2$d worker para %1$s rating dishe"
+msgstr[1] "%2$d worker khan para %1$s rating dishe"
 
 #: includes/ratings.php:939 includes/ratings.php:961
 msgid "Ratings"
@@ -4095,11 +4095,11 @@ msgstr "Rating khan"
 
 #: includes/ratings.php:368
 msgid "Ratings can only be left after real work. If you worked together, confirm the hire first."
-msgstr "Rating khali hosa kaam laka pichete he dibo pare. Apni khan eke logote kaam kurishey koile, poila kaam laka confirm koribi."
+msgstr "Rating khali hosa kaam laga pichete he dibo pare. Apni khan eke logote kaam kurise koile, poila kaam laga confirm koribi."
 
 #: includes/ratings.php:829
 msgid "Ratings open once a hire is confirmed"
-msgstr "Kaam laka confirm hole rating khuli jai"
+msgstr "Kaam laga confirm hole rating khuli jai"
 
 #: includes/privacy.php:162
 msgid "Ratings you gave"
@@ -4136,7 +4136,7 @@ msgstr ""
 
 #: includes/dashboard.php:946
 msgid "Rebuild my profile"
-msgstr "Moi laka profile aru banabo"
+msgstr "Moi laga profile aru banabo"
 
 #: includes/email-check.php:643
 msgid "Recent messages"
@@ -4192,7 +4192,7 @@ msgstr "Poila register koribi, etu free ase"
 
 #: includes/seo.php:422
 msgid "Register free on Kaam Ase with your name, district, the kind of work you do and your phone number. Browse the jobs posted in your district, government and private, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your field and district. Kaam Ase never asks a job seeker for money to get a job."
-msgstr "Apni laka naam, district, apni ki kaam kore aro phone number loi kene Kaam Ase te free te register koribi. Apni laka district te post kora government aro private kaam khan sabi, aro employer khan apni laka profile bisari kene apni logote contact koribo pare. App te apni laka kaam aro district te notun kaam karne din te ekta alert b pabo. Kaam Ase kitia b kaam dibole kaam bisari thaka manu pra pisa mangi nai."
+msgstr "Apni laga naam, district, apni ki kaam kore aro phone number loi kene Kaam Ase te free te register koribi. Apni laga district te post kora government aro private kaam khan sabi, aro employer khan apni laga profile bisari kene apni logote contact koribo pare. App te apni laga kaam aro district te notun kaam karne din te ekta alert b pabo. Kaam Ase kitia b kaam dibole kaam bisari thaka manu pra paisa mangi nai."
 
 #: includes/insights.php:1363 includes/insights.php:587 includes/not-confirmed.php:240
 msgid "Registered"
@@ -4264,7 +4264,7 @@ msgstr ""
 
 #: includes/how-seen.php:200
 msgid "Rich Manu gives an employer more phone lookups in a day and lets them mark more jobs urgent. It does not move anybody up a list, and it never will. If it did, the person at the top would be the person with money rather than the person free for work on Thursday, and every employer here would learn to ignore the top of the list."
-msgstr "Rich Manu pra employer ke ek din te aru bisi phone lookup diye aro aru bisi kaam joldi koi mark koribole diye. Etu pra kunba list te upor te najai, aro kitia b najabo. Jodi jabole thakishey, titia upor te thaka manu pisa thaka manu hobole thakishey, brihospoti bar te kaam karne khali thaka manu nohoi, aro yate laka hor employer list laka upor phale chari dibole sikhi lobole thakishey."
+msgstr "Rich Manu pra employer ke ek din te aru bisi phone lookup diye aro aru bisi kaam joldi koi mark koribole diye. Etu pra kunba list te upor te najai, aro kitia b najabo. Jodi jabole thakishe, titia upor te thaka manu paisa thaka manu hobole thakishe, brihospoti bar te kaam karne khali thaka manu nohoi, aro yate laga hor employer list laga upor phale chari dibole sikhi lobole thakishe."
 
 #: includes/rich-manu.php:488
 msgid "Ring"
@@ -4298,7 +4298,7 @@ msgstr "Taka"
 #. translators: 1: amount offered, 2: statutory minimum
 #: includes/services.php:84
 msgid "Rupees %1$s is below the legal minimum wage of rupees %2$s. Check the amount, or change the pay period if you picked the wrong one."
-msgstr "%1$s taka legal minimum mojuri %2$s taka pra kom ase. Amount check koribi, nohoile bhul basi loishey koile mojuri laka somoi bodli koribi."
+msgstr "%1$s taka legal minimum mojuri %2$s taka pra kom ase. Amount check koribi, nohoile bhul basi loishe koile mojuri laga somoi bodli koribi."
 
 #: includes/sharing.php:255
 msgid "Rupees %s"
@@ -4352,7 +4352,7 @@ msgstr "Bodli kora khan save koribo"
 
 #: includes/teams.php:293
 msgid "Save my team"
-msgstr "Moi laka team save koribo"
+msgstr "Moi laga team save koribo"
 
 #: includes/email-check.php:585
 msgid "Save the mailbox"
@@ -4377,7 +4377,7 @@ msgstr "Save kora worker khan"
 
 #: includes/app-version.php:407 includes/apple-signin.php:158 includes/google-signin.php:182
 msgid "Saved."
-msgstr "Save hoishey."
+msgstr "Save hoishe."
 
 #: includes/number-requests.php:1307
 msgid "Say approve or reject."
@@ -4409,7 +4409,7 @@ msgstr "Kun phone sign out koribo etu kobi."
 
 #: includes/how-seen.php:230
 msgid "Say you are available. Available workers are shown ahead of busy ones, and it is one tap."
-msgstr "Apni available ase koi dibi. Available worker khan busy thaka khan laka age te dikhe, aro etu ek tap laka kaam ase."
+msgstr "Apni available ase koi dibi. Available worker khan busy thaka khan laga age te dikhe, aro etu ek tap laga kaam ase."
 
 #: includes/more-trades.php:108
 msgid "School teacher, assistant teacher, private tuition, coaching class, music teacher, computer teacher, sports coach, pre school."
@@ -4461,7 +4461,7 @@ msgstr "Rich Manu sabo"
 
 #: includes/who-looked.php:473
 msgid "See a whole year"
-msgstr "Pura ek bosor sabo"
+msgstr "Pura ek sal sabo"
 
 #: includes/teams.php:116
 msgid "See how a contractor sees it"
@@ -4469,7 +4469,7 @@ msgstr "Contractor pra etu kineka dikhe etu sabo"
 
 #: includes/dashboard.php:402
 msgid "See how others see your profile"
-msgstr "Dusra khan pra apni laka profile kineka dikhe etu sabo"
+msgstr "Dusra khan pra apni laga profile kineka dikhe etu sabo"
 
 #: includes/job-photos.php:822
 msgid "See the whole picture"
@@ -4481,7 +4481,7 @@ msgstr ""
 
 #: includes/hiring-request.php:571
 msgid "See their worker profile"
-msgstr "Tai laka worker profile sabo"
+msgstr "Tai laga worker profile sabo"
 
 #. translators: %s: the plan name
 #: includes/plan-pitch.php:164
@@ -4554,7 +4554,7 @@ msgstr ""
 
 #: includes/job-alerts.php:878
 msgid "Sending now counts for today, so anybody reached will not get the scheduled one as well. Use it once to see that it works, not to test repeatedly."
-msgstr "Etiya pathua aji laka he ginti hobo, etu karne jun tak ahe tai ke thik somoi laka b nahibo. Etu chale na nai sabole ekbar cholabi, bar-bar test koribole nohoi."
+msgstr "Etiya pathua aji laga he ginti hobo, etu karne jun tak ahe tai ke thik somoi laga b nahibo. Etu chale na nai sabole ekbar cholabi, bar-bar test koribole nohoi."
 
 #: includes/indexing-api.php:989
 msgid "Sending the URL"
@@ -4569,8 +4569,8 @@ msgstr ""
 #: includes/job-alerts.php:773
 msgid "Sent to %s person."
 msgid_plural "Sent to %s people."
-msgstr[0] "%s manu ke pathai dishey."
-msgstr[1] "%s manu khan ke pathai dishey."
+msgstr[0] "%s manu ke pathai dishe."
+msgstr[1] "%s manu khan ke pathai dishe."
 
 #. translators: 1: how many sent today, 2: the daily allowance, 3: how many are waiting
 #: includes/indexing-api.php:1151
@@ -4579,7 +4579,7 @@ msgstr ""
 
 #: includes/dashboard.php:873
 msgid "Sent. Check your email."
-msgstr "Pathai dishey. Apni laka email sabi."
+msgstr "Pathai dishe. Apni laga email sabi."
 
 #: includes/indexing-api.php:1240
 msgid "Sent: %s"
@@ -4595,7 +4595,7 @@ msgstr "Ekta password lagabo"
 
 #: includes/account-password.php:404
 msgid "Set my password"
-msgstr "Moi laka password lagabo"
+msgstr "Moi laga password lagabo"
 
 #: includes/install.php:791
 msgid "Set permalinks to Post name under Settings, Permalinks. Nothing on this platform works with plain permalinks."
@@ -4611,7 +4611,7 @@ msgstr ""
 
 #: includes/dashboard.php:178
 msgid "Set your day rate"
-msgstr "Apni laka ek din laka rate thik koribi"
+msgstr "Apni laga ek din laga rate thik koribi"
 
 #: includes/install.php:632
 msgid "Set yourself available when you are free and busy when you are not."
@@ -4619,7 +4619,7 @@ msgstr ""
 
 #: includes/dashboard.php:465
 msgid "Set yourself working when you take a job. It stops employers calling you for nothing, and it keeps your rating clean."
-msgstr "Kaam lole nije ke kaam te ase kuri dibi. Etu pra employer khan khali khali call nakore, aro apni laka rating sapha thake."
+msgstr "Kaam lole nije ke kaam te ase kuri dibi. Etu pra employer khan khali khali call nakore, aro apni laga rating sapha thake."
 
 #: includes/settings.php:47 includes/settings.php:48 kaamase-core.php:329
 msgid "Settings"
@@ -4631,7 +4631,7 @@ msgstr ""
 
 #: includes/number-requests.php:917
 msgid "Share my number"
-msgstr "Moi laka number dibo"
+msgstr "Moi laga number dibo"
 
 #: includes/sharing.php:499
 msgid "Share on WhatsApp"
@@ -4643,7 +4643,7 @@ msgstr "Kaam Ase pra share kuri shey."
 
 #: includes/number-requests.php:1076
 msgid "Shared. They can see your number now."
-msgstr "Di dishey. Etiya tai khan apni laka number sabo pare."
+msgstr "Di dishe. Etiya tai khan apni laga number sabo pare."
 
 #: includes/taxonomies.php:372
 msgid "Shop and sales"
@@ -4667,7 +4667,7 @@ msgstr ""
 
 #: includes/number-requests.php:1011
 msgid "Show my number again"
-msgstr "Moi laka number aru dikhabo"
+msgstr "Moi laga number aru dikhabo"
 
 #: includes/queries.php:1012
 msgid "Show results"
@@ -4717,7 +4717,7 @@ msgstr "Etu koribole sign in koribi."
 
 #: includes/profile-edit.php:88
 msgid "Sign in to edit your profile"
-msgstr "Apni laka profile thik koribole sign in koribi"
+msgstr "Apni laga profile thik koribole sign in koribi"
 
 #: includes/ratings.php:348 includes/services.php:566
 msgid "Sign in to leave a rating."
@@ -4725,7 +4725,7 @@ msgstr "Rating dibole sign in koribi."
 
 #: includes/contact.php:275
 msgid "Sign in to see contact details. It takes a minute and it keeps numbers away from strangers."
-msgstr "Contact laka details sabole sign in koribi. Ek minute lage aro etu pra number khan najana manu pra dur thake."
+msgstr "Contact laga details sabole sign in koribi. Ek minute lage aro etu pra number khan najana manu pra dur thake."
 
 #: includes/saved.php:404
 msgid "Sign in to see the things you saved."
@@ -4745,7 +4745,7 @@ msgstr "Kun pra apni ke saishey etu sabole sign in koribi"
 
 #: includes/dashboard.php:52
 msgid "Sign in to see your account."
-msgstr "Apni laka account sabole sign in koribi."
+msgstr "Apni laga account sabole sign in koribi."
 
 #: includes/dashboard.php:1044
 msgid "Sign out"
@@ -4770,11 +4770,11 @@ msgstr ""
 #. translators: %s: the email address Google confirmed
 #: includes/google-signin.php:1713
 msgid "Signed in with Google as %s. Just a few more things and you are done."
-msgstr "%s hoi Google pra sign in hoishey. Aru olop jinis baki ase aro apni laka kaam khotom."
+msgstr "%s hoi Google pra sign in hoishe. Aru olop jinis baki ase aro apni laga kaam khotom."
 
 #: includes/rest-auth.php:716
 msgid "Signed out. That phone will have to sign in again to use the app."
-msgstr "Sign out hoishey. App cholabole etu phone ke aru ekbar sign in koribo lagibo."
+msgstr "Sign out hoishe. App cholabole etu phone ke aru ekbar sign in koribo lagibo."
 
 #: includes/insights.php:1137
 msgid "Signed up"
@@ -4802,7 +4802,7 @@ msgstr ""
 
 #: includes/job-alerts.php:820
 msgid "Site time. Early morning works best: somebody deciding whether to look for work today decides it before they leave the house."
-msgstr "Site laka somoi. Bihan joldi sob pra bhal hoi: jun aji kaam bisaribo na nai thik kuri ase tai ghor pra ulabo laka age te thik kore."
+msgstr "Site laga somoi. Bihan joldi sob pra bhal hoi: jun aji kaam bisaribo na nai thik kuri ase tai ghor pra ulabo laga age te thik kore."
 
 #: includes/profile-edit.php:437
 msgid "So an employer knows you can understand each other on site."
@@ -4850,15 +4850,15 @@ msgstr ""
 
 #: includes/push.php:351
 msgid "Somebody has your number"
-msgstr "Kunba logote apni laka number ase"
+msgstr "Kunba logote apni laga number ase"
 
 #: includes/post-job.php:897
 msgid "Somebody is reading it before it goes out to workers. This is usually done within a few hours, and every job on Kaam Ase gets the same check. Nothing more is needed from you."
-msgstr "Worker khan tak juwa laka age te kunba etu porhi ase. Etu bisi somoi olop ghanta bhitor te hoi jai, aro Kaam Ase laka hor kaam etu he check pai. Apni pra aru eku nalage."
+msgstr "Worker khan tak juwa laga age te kunba etu porhi ase. Etu bisi somoi olop ghanta bhitor te hoi jai, aro Kaam Ase laga hor kaam etu he check pai. Apni pra aru eku nalage."
 
 #: includes/profile-edit.php:475
 msgid "Somebody local who knows you and will say so. A colony council member, a GB, a church elder, a student union officer, or somebody you worked for before. This carries more weight with employers than anything else on your profile."
-msgstr "Yate laka kunba manu jun apni ke jane aro kobole tayar ase. Colony council laka member, GB, church laka elder, student union laka officer, nohoile kunba jun laka karne apni age te kaam kurishey. Employer khan laka age te apni laka profile laka dusra jiman jinis pra etu laka bhar bisi ase."
+msgstr "Yate laga kunba manu jun apni ke jane aro kobole tayar ase. Colony council laga member, GB, church laga elder, student union laga officer, nohoile kunba jun laga karne apni age te kaam kurise. Employer khan laga age te apni laga profile laga dusra jiman jinis pra etu laga bhar bisi ase."
 
 #: includes/hire-claims.php:608
 msgid "Somebody on Kaam Ase"
@@ -4870,15 +4870,15 @@ msgstr ""
 
 #: includes/number-requests.php:618
 msgid "Somebody wants your number"
-msgstr "Kunba apni laka number mangi ase"
+msgstr "Kunba apni laga number mangi ase"
 
 #: includes/how-seen.php:154
 msgid "Somebody who joined this morning has waited longer than everybody, as far as the list is concerned, so they are seen on their first day rather than waiting weeks for a turn."
-msgstr "List laka hisab te, aji bihan jog hua manu sob pra bisi rukhi ase, etu karne tai bari karne hafta rukhi thaka laka bodli poila din te he dikhe."
+msgstr "List laga hisab te, aji bihan jog hua manu sob pra bisi rukhi ase, etu karne tai bari karne hafta rukhi thaka laga bodli poila din te he dikhe."
 
 #: includes/profile-edit.php:496
 msgid "Someone I worked for"
-msgstr "Kunba jun laka karne moi kaam kurishey"
+msgstr "Kunba jun laga karne moi kaam kurise"
 
 #: includes/profile-edit.php:497
 msgid "Someone else who knows me"
@@ -4886,7 +4886,7 @@ msgstr "Dusra kunba jun moi ke jane"
 
 #: includes/rest-shape.php:321
 msgid "Someone they worked for"
-msgstr "Kunba jun laka karne tai kaam kuri shey"
+msgstr "Kunba jun laga karne tai kaam kuri shey"
 
 #: includes/rest-shape.php:322
 msgid "Someone who knows them"
@@ -4906,7 +4906,7 @@ msgstr ""
 
 #: includes/services.php:611
 msgid "Something went wrong saving that rating."
-msgstr "Etu rating save kora somoi te kiba gorbor hoishey."
+msgstr "Etu rating save kora somoi te kiba gorbor hoishe."
 
 #: includes/reports.php:643
 msgid "Something went wrong sending that. Please try again, or call us."
@@ -4914,11 +4914,11 @@ msgstr ""
 
 #: includes/dashboard.php:938
 msgid "Something went wrong when your account was made. Tap below and we will build it again. Nothing else about your account changes."
-msgstr "Apni laka account bona somoi te kiba gorbor hoishey. Nichete tap koribi aro amikhan etu aru banai dibo. Apni laka account laka dusra eku bodli nohobo."
+msgstr "Apni laga account bona somoi te kiba gorbor hoishe. Nichete tap koribi aro amikhan etu aru banai dibo. Apni laga account laga dusra eku bodli nohobo."
 
 #: includes/registration.php:365
 msgid "Something went wrong. Please try again."
-msgstr "Kiba gorbor hoishey. Aru ekbar kuri sabi."
+msgstr "Kiba gorbor hoishe. Aru ekbar kuri sabi."
 
 #: includes/post-job.php:375
 msgid "Somewhere to stay"
@@ -4938,7 +4938,7 @@ msgstr ""
 
 #: includes/fields.php:308 includes/posted-for.php:397
 msgid "Start date"
-msgstr "Suru hobo laka din"
+msgstr "Suru hobo laga din"
 
 #: includes/promote.php:1565 includes/promote.php:1643
 msgid "Start it"
@@ -4966,7 +4966,7 @@ msgstr ""
 
 #: includes/job-alerts.php:594
 msgid "Stop telling me about new work"
-msgstr "Moi ke notun kaam laka bare te kua bondh koribo"
+msgstr "Moi ke notun kaam laga bare te kua bondh koribo"
 
 #. translators: %s: how many were sent before it stopped
 #: includes/insights.php:840
@@ -4992,7 +4992,7 @@ msgstr ""
 
 #: includes/profile-edit.php:495 includes/rest-shape.php:320
 msgid "Student or workers union officer"
-msgstr "Student nohoile workers union laka officer"
+msgstr "Student nohoile workers union laga officer"
 
 #: includes/taxonomies.php:646
 msgid "Sumi"
@@ -5032,11 +5032,11 @@ msgstr ""
 
 #: includes/teams.php:306
 msgid "Take my team listing down"
-msgstr "Moi laka team laka listing uthai dibo"
+msgstr "Moi laga team laga listing uthai dibo"
 
 #: includes/teams.php:305
 msgid "Take the team listing down? Your own worker profile stays."
-msgstr "Team laka listing uthai dibo na? Apni laka nije laka worker profile thaki jabo."
+msgstr "Team laga listing uthai dibo na? Apni laga nije laga worker profile thaki jabo."
 
 #: includes/gift.php:354
 msgid "Taken back."
@@ -5057,11 +5057,11 @@ msgstr ""
 
 #: includes/registration.php:755
 msgid "Tap the link below to confirm your email address. Your profile goes live as soon as you do."
-msgstr "Apni laka email address confirm koribole nichete laka link te tap koribi. Etu kurile logot te apni laka profile live hoi jai."
+msgstr "Apni laga email address confirm koribole nichete laga link te tap koribi. Etu kurile logot te apni laga profile live hoi jai."
 
 #: includes/post-job.php:900
 msgid "Tap the link in your email and it goes live straight away."
-msgstr "Apni laka email te thaka link te tap koribi aro etu logot te live hoi jabo."
+msgstr "Apni laga email te thaka link te tap koribi aro etu logot te live hoi jabo."
 
 #: includes/taxonomies.php:421
 msgid "Taxi driver"
@@ -5093,7 +5093,7 @@ msgstr ""
 
 #: includes/dashboard.php:885
 msgid "Team saved."
-msgstr "Team save hoishey."
+msgstr "Team save hoishe."
 
 #: includes/insights.php:1040 includes/post-types.php:132
 msgid "Teams"
@@ -5101,7 +5101,7 @@ msgstr ""
 
 #: includes/teams.php:82
 msgid "Teams are listed by the worker who leads them. If you hire teams rather than lead one, post a job instead and say how many workers you need."
-msgstr "Team khan ke jun worker pra lead kore tai laka naam te list kore. Apni team lead kora laka bodli team ke kaam diye koile, tar bodli ekta kaam post koribi aro kiman worker lage etu kobi."
+msgstr "Team khan ke jun worker pra lead kore tai laga naam te list kore. Apni team lead kora laga bodli team ke kaam diye koile, tar bodli ekta kaam post koribi aro kiman worker lage etu kobi."
 
 #: includes/indexes.php:628
 msgid "Teams for hire"
@@ -5117,7 +5117,7 @@ msgstr ""
 
 #: includes/job-alerts.php:595
 msgid "Tell me about new work"
-msgstr "Moi ke notun kaam laka bare te kobi"
+msgstr "Moi ke notun kaam laga bare te kobi"
 
 #: includes/indexes.php:209
 msgid "Tell us"
@@ -5137,7 +5137,7 @@ msgstr ""
 
 #: includes/job-alerts.php:569
 msgid "Telling you about new work"
-msgstr "Apni ke notun kaam laka bare te kua"
+msgstr "Apni ke notun kaam laga bare te kua"
 
 #: includes/app-links.php:518
 msgid "Ten characters, top right of the Apple developer account page."
@@ -5149,15 +5149,15 @@ msgstr ""
 
 #: includes/ratings.php:871
 msgid "Thank you, your rating is saved. It appears once the other side has written theirs."
-msgstr "Dhanyabad, apni laka rating save hoishey. Dusra phale pra tai laka likhile etu dikhibo."
+msgstr "Dhanyabad, apni laga rating save hoishe. Dusra phale pra tai laga likhile etu dikhibo."
 
 #: includes/rest-api.php:2538
 msgid "Thank you. It appears once the other side has written theirs."
-msgstr "Dhanyabad. Dusra phale pra tai laka likhile etu dikhibo."
+msgstr "Dhanyabad. Dusra phale pra tai laga likhile etu dikhibo."
 
 #: includes/dashboard.php:883
 msgid "Thank you. You can rate each other now, and it helps the next person."
-msgstr "Dhanyabad. Etiya apni khan ekjon-ekjon ke rating dibo pare, aro etu pra pichete laka manu ke modot hoi."
+msgstr "Dhanyabad. Etiya apni khan ekjon-ekjon ke rating dibo pare, aro etu pra pichete laga manu ke modot hoi."
 
 #: includes/apple-signin.php:422
 msgid "That Apple sign in could not be confirmed. Please try again."
@@ -5165,7 +5165,7 @@ msgstr "Etu Apple sign in confirm koribo para nai. Aru ekbar kuri sabi."
 
 #: includes/gstin.php:273
 msgid "That GST number does not look right. It is 15 characters, and the last one is a check character, so a single wrong letter makes the whole number fail. Copy it from your registration certificate. You can also leave it blank."
-msgstr "Etu GST number thik dikha nai. Etu 15 character laka ase, aro hesh laka ekta check character ase, etu karne ekta bhul letter pra pura number fail hoi jai. Apni laka registration certificate pra etu copy koribi. Apni etu khali b chari dibo pare."
+msgstr "Etu GST number thik dikha nai. Etu 15 character laga ase, aro hesh laga ekta check character ase, etu karne ekta bhul letter pra pura number fail hoi jai. Apni laga registration certificate pra etu copy koribi. Apni etu khali b chari dibo pare."
 
 #: includes/google-signin.php:504
 msgid "That Google sign in could not be confirmed. Please try again."
@@ -5173,7 +5173,7 @@ msgstr "Etu Google sign in confirm koribo para nai. Aru ekbar kuri sabi."
 
 #: includes/google-signin.php:1267
 msgid "That Google sign in did not go through. Please try again, or sign in with your password."
-msgstr "Etu Google sign in jua nai. Aru ekbar kuri sabi, nohoile apni laka password pra sign in koribi."
+msgstr "Etu Google sign in jua nai. Aru ekbar kuri sabi, nohoile apni laga password pra sign in koribi."
 
 #: includes/account-providers.php:385
 msgid "That account is already connected to a different Kaam Ase account. Sign in with it instead, or disconnect it there first."
@@ -5218,7 +5218,7 @@ msgstr "Etu filter available nai."
 
 #: includes/registration.php:353
 msgid "That form expired. Please try again."
-msgstr "Etu form laka somoi khotom hoishey. Aru ekbar kuri sabi."
+msgstr "Etu form laga somoi khotom hoishe. Aru ekbar kuri sabi."
 
 #: includes/rest-api.php:1767
 msgid "That is a lot of sign outs at once. Try again in an hour, or use the website."
@@ -5242,11 +5242,11 @@ msgstr "Etu amikhan jana availability hoina."
 
 #: includes/account-password.php:151
 msgid "That is not your current password."
-msgstr "Etu apni laka etiya laka password hoina."
+msgstr "Etu apni laga etiya laga password hoina."
 
 #: includes/number-requests.php:1351 includes/number-requests.php:484
 msgid "That is not your profile."
-msgstr "Etu apni laka profile hoina."
+msgstr "Etu apni laga profile hoina."
 
 #: includes/promote.php:1366 includes/promote.php:452
 msgid "That is not yours to promote."
@@ -5254,15 +5254,15 @@ msgstr ""
 
 #: includes/hire-claims.php:170 includes/hire-claims.php:176 includes/number-requests.php:354
 msgid "That is your own profile."
-msgstr "Etu apni laka nije laka profile ase."
+msgstr "Etu apni laga nije laga profile ase."
 
 #: includes/services.php:159
 msgid "That job is not yours to edit."
-msgstr "Etu kaam thik kora laka hok apni laka nohoi."
+msgstr "Etu kaam thik kora laga hok apni laga nohoi."
 
 #: includes/job-photos.php:975 includes/rest-api.php:1609
 msgid "That job is not yours."
-msgstr "Etu kaam apni laka hoina."
+msgstr "Etu kaam apni laga hoina."
 
 #: includes/rest-api.php:1539
 msgid "That job no longer exists."
@@ -5270,7 +5270,7 @@ msgstr "Etu kaam aru nai."
 
 #: includes/dashboard.php:872
 msgid "That link did not work. It may have expired. Send a new one below."
-msgstr "Etu link kaam kora nai. Etu laka somoi khotom hoishey hobo pare. Nichete pra notun ekta pathai dibi."
+msgstr "Etu link kaam kora nai. Etu laga somoi khotom hoishe hobo pare. Nichete pra notun ekta pathai dibi."
 
 #: includes/rest-api.php:2019
 msgid "That link does not lead anywhere any more."
@@ -5307,11 +5307,11 @@ msgstr "Etu profile available nai."
 
 #: includes/services.php:321
 msgid "That profile is not yours to edit."
-msgstr "Etu profile thik kora laka hok apni laka nohoi."
+msgstr "Etu profile thik kora laga hok apni laga nohoi."
 
 #: includes/rest-api.php:1002 includes/rest-api.php:1058
 msgid "That profile is not yours."
-msgstr "Etu profile apni laka hoina."
+msgstr "Etu profile apni laga hoina."
 
 #: includes/contact.php:269 includes/hire-claims.php:166 includes/ratings.php:354
 #: includes/rest-api.php:1906 includes/services.php:317
@@ -5328,11 +5328,11 @@ msgstr "Etu request aru nai."
 
 #: includes/account-providers.php:346 includes/account-providers.php:425
 msgid "That sign in method is not one this site offers."
-msgstr "Etu sign in laka tarika etu site pra diya nai."
+msgstr "Etu sign in laga tarika etu site pra diya nai."
 
 #: includes/account-providers.php:354
 msgid "That sign in method is not switched on for this site."
-msgstr "Etu site karne etu sign in laka tarika chalu kora nai."
+msgstr "Etu site karne etu sign in laga tarika chalu kora nai."
 
 #: includes/apple-signin.php:537 includes/apple-signin.php:568
 msgid "That sign in took too long. Please tap the Apple button again."
@@ -5344,7 +5344,7 @@ msgstr "Etu sign in te bisi somoi lagishey. Google button te aru ekbar tap korib
 
 #: includes/services.php:462
 msgid "That team is not yours to edit."
-msgstr "Etu team thik kora laka hok apni laka nohoi."
+msgstr "Etu team thik kora laga hok apni laga nohoi."
 
 #: includes/registration.php:372 includes/reports.php:548
 msgid "That was too quick. Please try again."
@@ -5352,7 +5352,7 @@ msgstr "Etu bisi joldi hoi gaishey. Aru ekbar kuri sabi."
 
 #: includes/google-signin.php:292
 msgid "The app signs in with its own Android client, but the token it sends names the Web client ID as its audience. Fill both in."
-msgstr "App pra nije laka Android client pra sign in kore, hoileh tai pathai diya token te Web client ID ke audience koi likhe. Duita he bhorti koribi."
+msgstr "App pra nije laga Android client pra sign in kore, hoileh tai pathai diya token te Web client ID ke audience koi likhe. Duita he bhorti koribi."
 
 #: includes/rich-manu.php:712
 msgid "The call"
@@ -5368,7 +5368,7 @@ msgstr ""
 
 #: includes/closed-jobs.php:191
 msgid "The employer has closed this job."
-msgstr "Employer pra etu kaam bondh kuri dishey."
+msgstr "Employer pra etu kaam bondh kuri dishe."
 
 #: includes/app-version.php:380
 msgid "The gate is off. Every version can sign in again."
@@ -5380,7 +5380,7 @@ msgstr ""
 
 #: includes/apple-signin.php:222
 msgid "The iPhone app’s bundle identifier, exactly as it appears in App Store Connect. This is what the app’s sign in tokens are addressed to."
-msgstr "iPhone app laka bundle identifier, thik jineka App Store Connect te dikhe. App laka sign in token khan etu laka naam te he bone."
+msgstr "iPhone app laga bundle identifier, thik jineka App Store Connect te dikhe. App laga sign in token khan etu laga naam te he bone."
 
 #: includes/posted-for.php:279
 msgid "The job"
@@ -5388,7 +5388,7 @@ msgstr "Kaam"
 
 #: includes/posted-for.php:216
 msgid "The job is up."
-msgstr "Kaam lagi jaishey."
+msgstr "Kaam lagi goise."
 
 #. translators: %s: the name of a missing field
 #: includes/indexing-api.php:177
@@ -5401,11 +5401,11 @@ msgstr ""
 
 #: includes/closed-jobs.php:305
 msgid "The number for this job is closed"
-msgstr "Etu kaam laka number bondh ase"
+msgstr "Etu kaam laga number bondh ase"
 
 #: includes/posted-for.php:136
 msgid "The number on this job belongs to the employer, not to us. You speak to them directly."
-msgstr "Etu kaam laka number employer laka ase, amikhan laka nohoi. Apni tai khan logote sidha kotha koribi."
+msgstr "Etu kaam laga number employer laga ase, amikhan laga nohoi. Apni tai khan logote sidha kotha koribi."
 
 #: includes/past-jobs.php:268
 msgid "The page"
@@ -5471,7 +5471,7 @@ msgstr ""
 
 #: includes/posted-for.php:247 includes/profile-edit.php:479
 msgid "Their name"
-msgstr "Tai laka naam"
+msgstr "Tai laga naam"
 
 #: includes/reports.php:403
 msgid "Their name, or the link to their profile"
@@ -5479,15 +5479,15 @@ msgstr ""
 
 #: includes/who-looked.php:464
 msgid "Their names are held for a year. A free account sees the last week, which is why this one looks empty. Rich Manu opens the rest of it."
-msgstr "Tai khan laka naam ek bosor tak rakhe. Free account hesh hafta he dikhe, etu karne etu khali dikhi ase. Rich Manu pra baki sob khuli diye."
+msgstr "Tai khan laga naam ek sal tak rakhe. Free account hesh hafta he dikhe, etu karne etu khali dikhi ase. Rich Manu pra baki sob khuli diye."
 
 #: includes/posted-for.php:258
 msgid "Their number"
-msgstr "Tai laka number"
+msgstr "Tai laga number"
 
 #: includes/profile-edit.php:510
 msgid "Their phone number"
-msgstr "Tai laka phone number"
+msgstr "Tai laga phone number"
 
 #: includes/mark-changes.php:842
 msgid "Their plan has not been touched."
@@ -5495,11 +5495,11 @@ msgstr ""
 
 #: includes/fields.php:145
 msgid "Their position"
-msgstr "Tai laka position"
+msgstr "Tai laga position"
 
 #: includes/how-seen.php:233
 msgid "Then wait. The order is turn taking, so everybody reaches the top. Nobody can pay to get there sooner."
-msgstr "Tar pichete rukhibi. Order bari-bari kene ase, etu karne sob manu upor te punche. Joldi jabole kunba pisa dibo napare."
+msgstr "Tar pichete rukhibi. Order bari-bari kene ase, etu karne sob manu upor te punche. Joldi jabole kunba paisa dibo napare."
 
 #: includes/gift.php:370
 msgid "There are no plans set up yet. Make one on the Plans screen first, otherwise the app will not show the plan as running."
@@ -5518,7 +5518,7 @@ msgstr[1] "%s bondh kaam khan ase."
 
 #: includes/rest-api.php:2410
 msgid "There is no open question about that person."
-msgstr "Etu manu laka bare te kuno khula question nai."
+msgstr "Etu manu laga bare te kuno khula question nai."
 
 #: includes/job-alerts.php:586
 msgid "These are off."
@@ -5534,11 +5534,11 @@ msgstr ""
 
 #: includes/rest-auth.php:614
 msgid "These are the phones the Kaam Ase app is signed in on with your account. If you do not recognise one, or a phone was lost or sold, sign it out here."
-msgstr "Etu phone khan te apni laka account pra Kaam Ase app sign in ase. Kunba ke apni chini napale, nohoile phone haraishey ba bikri kuri dishey, yate pra sign out koribi."
+msgstr "Etu phone khan te apni laga account pra Kaam Ase app sign in ase. Kunba ke apni chini napale, nohoile phone haraishey ba bikri kuri dishe, yate pra sign out koribi."
 
 #: includes/saved.php:855
 msgid "These closed or were taken down. Kept here so you know what happened to them."
-msgstr "Etu khan bondh hoishey nohoile uthai dishey. Etu khan laka ki hoishey apni janibo karne yate rakhishey."
+msgstr "Etu khan bondh hoishe nohoile uthai dishe. Etu khan laga ki hoishe apni janibo karne yate rakhishey."
 
 #: kaamase-core.php:304
 msgid "These core files have not been uploaded yet. The plugin cannot work properly without them."
@@ -5562,7 +5562,7 @@ msgstr ""
 
 #: includes/number-requests.php:888
 msgid "They cannot see it until you say yes. Saying no tells them nothing about you."
-msgstr "Apni hoi nakua tak tai khan etu sabo napare. Nai kuwa pra tai khan ke apni laka bare te eku najane."
+msgstr "Apni hoi nakua tak tai khan etu sabo napare. Nai kuwa pra tai khan ke apni laga bare te eku najane."
 
 #: includes/hire-claims.php:266 includes/hire-claims.php:497
 msgid "They have already been asked. It is with them now."
@@ -5570,7 +5570,7 @@ msgstr ""
 
 #: includes/number-requests.php:429
 msgid "They have already shared their number with you."
-msgstr "Tai khan age te pra apni ke tai laka number di dishey."
+msgstr "Tai khan age te pra apni ke tai laga number di dishe."
 
 #: includes/settings.php:197
 msgid "They pass through Expo and sit readable on a locked screen."
@@ -5606,11 +5606,11 @@ msgstr "Etu account pra kaam post koribo napare."
 
 #: includes/contact.php:804
 msgid "This account has no daily limit."
-msgstr "Etu account laka kuno din laka limit nai."
+msgstr "Etu account laga kuno din laga limit nai."
 
 #: includes/hiring-request.php:713
 msgid "This adds or removes the employer role only. Everything else about the account is left alone."
-msgstr "Etu pra khali employer laka role add nohoile uthai diye. Account laka dusra sob thik iman he thake."
+msgstr "Etu pra khali employer laga role add nohoile uthai diye. Account laga dusra sob thik iman he thake."
 
 #: includes/locale.php:1255
 msgid "This changes the website, and it changes the language we write to you in when we send you something."
@@ -5626,7 +5626,7 @@ msgstr ""
 
 #: includes/ratings.php:909
 msgid "This is shown publicly with your name on it."
-msgstr "Etu apni laka naam logote sob manu ke dikhe."
+msgstr "Etu apni laga naam logote sob manu ke dikhe."
 
 #: includes/email-check.php:495
 msgid "This is the answer. Nobody is receiving anything, and no wording or button will change that. It needs a proper sending service configured before anything else is worth trying."
@@ -5658,11 +5658,11 @@ msgstr "Etu kaam te etu account pra add koribo para sob photo lagi ase. Dusra ek
 
 #: includes/closed-jobs.php:187
 msgid "This job has been filled."
-msgstr "Etu kaam bhorti hoi jaishey."
+msgstr "Etu kaam bhorti hoi goise."
 
 #: includes/rest-api.php:1550 includes/rest-api.php:2029
 msgid "This job has closed. It was probably filled."
-msgstr "Etu kaam bondh hoi jaishey. Bhorti hoi jaishey hobo pare."
+msgstr "Etu kaam bondh hoi goise. Bhorti hoi goise hobo pare."
 
 #: includes/closed-jobs.php:306 includes/saved.php:867
 msgid "This job is closed"
@@ -5679,7 +5679,7 @@ msgstr "Etu kaam rukhai rakhishey aro kunba ke dikha nai."
 #. translators: %s: the date the job ran out
 #: includes/closed-jobs.php:199
 msgid "This job ran out on %s."
-msgstr "Etu kaam %s te khotom hoishey."
+msgstr "Etu kaam %s te khotom hoishe."
 
 #: includes/employer-index.php:188
 msgid "This list shows every employer on Kaam Ase, which district they are in, how many workers they have taken on and how those workers rated them. It is for people with an account, so that employers are not listed on the open internet."
@@ -5687,11 +5687,11 @@ msgstr ""
 
 #: includes/number-requests.php:978
 msgid "This means fewer calls. Somebody with work starting tomorrow usually rings the numbers they can see rather than waiting on an answer."
-msgstr "Etu laka mane kom call ahibo. Jun laka kaam kali suru hoi ase tai bisi somoi jowab laka rukhi thaka pra dikhibo para number khan te he call kore."
+msgstr "Etu laga mane kom call ahibo. Jun laga kaam kali suru hoi ase tai bisi somoi jowab laga rukhi thaka pra dikhibo para number khan te he call kore."
 
 #: includes/job-alerts.php:602
 msgid "This only covers new work. You will still hear when somebody looks up your number and when we ask whether you were hired, because those are about you and there are only a few of them."
-msgstr "Etu khali notun kaam laka bare te ase. Kunba pra apni laka number sale aro amikhan apni ke kaam paishey na nai hudile, apni titia b janibo, kilemane etu khan apni laka bare te ase aro etu khan olop he ase."
+msgstr "Etu khali notun kaam laga bare te ase. Kunba pra apni laga number sale aro amikhan apni ke kaam paishey na nai hudile, apni titia b janibo, kilemane etu khan apni laga bare te ase aro etu khan olop he ase."
 
 #: includes/install.php:712 includes/install.php:741
 msgid "This page is not written yet. Do not launch with it as it stands."
@@ -5699,11 +5699,11 @@ msgstr ""
 
 #: includes/number-requests.php:820
 msgid "This person asks to be told before their number is shared. Send a request and they will say yes or no."
-msgstr "Etu manu tai laka number diya laka age te koi dibole mange. Ekta request pathai dibi aro tai hoi nohoile nai kobo."
+msgstr "Etu manu tai laga number diya laga age te koi dibole mange. Ekta request pathai dibi aro tai hoi nohoile nai kobo."
 
 #: includes/number-requests.php:813
 msgid "This person has decided not to share their number with you."
-msgstr "Etu manu pra apni ke tai laka number nadibole thik kuri shey."
+msgstr "Etu manu pra apni ke tai laga number nadibole thik kuri shey."
 
 #: includes/contact.php:749
 msgid "This person has not added a phone number yet. Nothing we can do from here."
@@ -5712,7 +5712,7 @@ msgstr "Etu manu etiya tak phone number add kora nai. Yate pra amikhan eku korib
 #. translators: 1: required PHP version, 2: current PHP version, 3: required WordPress version, 4: current WordPress version
 #: kaamase-core.php:64
 msgid "This plugin needs PHP %1$s or newer (running %2$s) and WordPress %3$s or newer (running %4$s)."
-msgstr "Etu plugin ke PHP %1$s nohoile tar pichete laka lage (etiya %2$s chali ase) aro WordPress %3$s nohoile tar pichete laka (etiya %4$s)."
+msgstr "Etu plugin ke PHP %1$s nohoile tar pichete laga lage (etiya %2$s chali ase) aro WordPress %3$s nohoile tar pichete laga (etiya %4$s)."
 
 #: includes/email-check.php:454
 msgid "This plugin, through your own mailbox"
@@ -5724,7 +5724,7 @@ msgstr "Etu profile available nai"
 
 #: includes/profile-edit.php:907
 msgid "This removes your profile, your photo and your details from Kaam Ase. It cannot be undone and you would have to start again."
-msgstr "Etu pra apni laka profile, apni laka photo aro apni laka details Kaam Ase pra uthi jabo. Etu wapas koribo napare aro apni ke aru suru koribo lagibo."
+msgstr "Etu pra apni laga profile, apni laga photo aro apni laga details Kaam Ase pra uthi jabo. Etu wapas koribo napare aro apni ke aru suru koribo lagibo."
 
 #: includes/insights.php:888
 msgid "This sends a real email to real people and cannot be taken back. Continue?"
@@ -5740,11 +5740,11 @@ msgstr ""
 
 #: includes/google-signin.php:224
 msgid "This server has no OpenSSL support in PHP, so a Google token cannot be checked here. Google sign in stays off until your host enables it."
-msgstr "Etu server laka PHP te OpenSSL nai, etu karne yate Google token check koribo napare. Apni laka host pra etu chalu nakora tak Google pra sign in bondh thakibo."
+msgstr "Etu server laga PHP te OpenSSL nai, etu karne yate Google token check koribo napare. Apni laga host pra etu chalu nakora tak Google pra sign in bondh thakibo."
 
 #: includes/apple-signin.php:199
 msgid "This server has no OpenSSL support in PHP, so an Apple token cannot be checked here. Sign in with Apple stays off until your host enables it."
-msgstr "Etu server laka PHP te OpenSSL nai, etu karne yate Apple token check koribo napare. Apni laka host pra etu chalu nakora tak Apple pra sign in bondh thakibo."
+msgstr "Etu server laga PHP te OpenSSL nai, etu karne yate Apple token check koribo napare. Apni laga host pra etu chalu nakora tak Apple pra sign in bondh thakibo."
 
 #: includes/posted-for.php:252
 msgid "This shows on the job as who is hiring."
@@ -5898,7 +5898,7 @@ msgstr ""
 
 #: includes/number-requests.php:1077
 msgid "Turned down. They have been told, and they cannot ask again."
-msgstr "Mana kuri dishey. Tai khan ke koi dishey, aro tai khan aru mangibo napare."
+msgstr "Mana kuri dishe. Tai khan ke koi dishe, aro tai khan aru mangibo napare."
 
 #: includes/admin.php:85
 msgid "Turned up"
@@ -5914,7 +5914,7 @@ msgstr "Bara pra suru kora thik ase. Site te etiya tak eku iman purana nai je et
 
 #: includes/how-seen.php:208
 msgid "Two profiles split your ratings and your history in half, so both do worse than one would have. Employers also notice, and it is the kind of thing that gets both taken down."
-msgstr "Duita profile pra apni laka rating aro apni laka history adha-adha hoi jai, etu karne duita he ekta pra kom kaam kore. Employer khan b etu dikhe, aro etu nisina jinis pra duita he uthai diye."
+msgstr "Duita profile pra apni laga rating aro apni laga history adha-adha hoi jai, etu karne duita he ekta pra kom kaam kore. Employer khan b etu dikhe, aro etu nisina jinis pra duita he uthai diye."
 
 #: includes/posted-for.php:410
 msgid "Two weeks, one month, ongoing"
@@ -5940,7 +5940,7 @@ msgstr ""
 
 #: includes/rest-api.php:1120
 msgid "Type DELETE to confirm you want to remove your account."
-msgstr "Apni laka account uthai dibo mon ase etu confirm koribole DELETE likhibi."
+msgstr "Apni laga account uthai dibo mon ase etu confirm koribole DELETE likhibi."
 
 #: includes/app-version.php:483
 msgid "Type a version that is already live in the App Store and on Google Play. If you type one that has not been released yet, every single user is locked out with no way back in until you come here and turn it off, and the stores have nothing for them to update to."
@@ -5952,7 +5952,7 @@ msgstr ""
 
 #: includes/profile-edit.php:974
 msgid "Type the word exactly to confirm you want to delete your account."
-msgstr "Apni laka account delete koribo mon ase etu confirm koribole kotha thik iman he likhibi."
+msgstr "Apni laga account delete koribo mon ase etu confirm koribole kotha thik iman he likhibi."
 
 #: includes/google-signin.php:268
 msgid "Type: Web application. Empty means no button on the website."
@@ -5985,7 +5985,7 @@ msgstr ""
 #. translators: %s: how many pictures may be added
 #: includes/posted-for.php:385
 msgid "Up to %s. A screenshot of the original post is not a picture of the work, so use a photo of the site or the shop where you can get one."
-msgstr "%s tak. Asol post laka screenshot kaam laka photo hoina, etu karne kate pra pabo pare ta te site nohoile dukan laka photo cholabi."
+msgstr "%s tak. Asol post laga screenshot kaam laga photo hoina, etu karne kate pra pabo pare ta te site nohoile dukan laga photo cholabi."
 
 #: includes/taxonomies.php:178
 msgid "Update district"
@@ -6001,7 +6001,7 @@ msgstr ""
 
 #: includes/queries.php:295
 msgid "Urgent first"
-msgstr "Joldi laka poila"
+msgstr "Joldi laga poila"
 
 #: includes/fields.php:329
 msgid "Urgent hiring"
@@ -6009,15 +6009,15 @@ msgstr "Joldi manu lage"
 
 #: includes/entitlements.php:67
 msgid "Urgent jobs at once"
-msgstr "Ekbar te joldi laka kaam"
+msgstr "Ekbar te joldi laga kaam"
 
 #: includes/post-job.php:429
 msgid "Urgent jobs go to the top and close after three days. One at a time."
-msgstr "Joldi laka kaam khan upor te jai aro tinta din pichete bondh hoi. Ekbar te ekta."
+msgstr "Joldi laga kaam khan upor te jai aro tinta din pichete bondh hoi. Ekbar te ekta."
 
 #: includes/queries.php:988
 msgid "Urgent only"
-msgstr "Khali joldi laka"
+msgstr "Khali joldi laga"
 
 #: includes/posted-for.php:417
 msgid "Urgent, needed today or tomorrow"
@@ -6077,7 +6077,7 @@ msgstr ""
 
 #: includes/profile-edit.php:493 includes/rest-shape.php:318
 msgid "Village council member"
-msgstr "Village council laka member"
+msgstr "Village council laga member"
 
 #: includes/admin.php:582
 msgid "Vouched"
@@ -6085,7 +6085,7 @@ msgstr ""
 
 #: includes/fields.php:139
 msgid "Vouched by"
-msgstr "Vouch dishey"
+msgstr "Vouch dishe"
 
 #: includes/queries.php:1004
 msgid "Vouched only"
@@ -6093,15 +6093,15 @@ msgstr "Khali vouched thaka"
 
 #: includes/fields.php:151
 msgid "Voucher phone number"
-msgstr "Vouch diya manu laka phone number"
+msgstr "Vouch diya manu laga phone number"
 
 #: includes/dashboard.php:1034
 msgid "Wage complaint"
-msgstr "Mojuri laka complaint"
+msgstr "Mojuri laga complaint"
 
 #: includes/reports.php:622 includes/services.php:692
 msgid "Wage complaint %s"
-msgstr "Mojuri laka complaint %s"
+msgstr "Mojuri laga complaint %s"
 
 #: includes/install.php:374 includes/reports.php:366
 msgid "Wage or job complaint"
@@ -6129,7 +6129,7 @@ msgstr ""
 
 #: includes/dashboard.php:688
 msgid "Waiting for you to confirm your email"
-msgstr "Apni laka email confirm kora laka rukhi ase"
+msgstr "Apni laga email confirm kora laga rukhi ase"
 
 #: includes/promote.php:1551
 msgid "Waiting to be rung"
@@ -6141,7 +6141,7 @@ msgstr ""
 
 #: includes/ratings.php:116
 msgid "Was the work done properly?"
-msgstr "Kaam thik kene hoishey na?"
+msgstr "Kaam thik kene hoishe na?"
 
 #: includes/ratings.php:79
 msgid "Was the work what they described?"
@@ -6161,7 +6161,7 @@ msgstr ""
 
 #: includes/account-providers.php:610 includes/account-providers.php:644
 msgid "We could not change your address to that one. If it is already yours, sign in with it instead."
-msgstr "Apni laka address etu te bodli koribo para nai. Etu age te pra apni laka hoile, tar bodli etu pra he sign in koribi."
+msgstr "Apni laga address etu te bodli koribo para nai. Etu age te pra apni laga hoile, tar bodli etu pra he sign in koribi."
 
 #: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:513
 #: includes/rest-api.php:696
@@ -6178,7 +6178,7 @@ msgstr ""
 
 #: includes/rest-api.php:2626
 msgid "We have it. Somebody reads it within two working days."
-msgstr "Amikhan pai gaishey. Duita kaam laka din bhitor te kunba etu porhibo."
+msgstr "Amikhan pai gaishey. Duita kaam laga din bhitor te kunba etu porhibo."
 
 #: includes/privacy.php:715
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
@@ -6191,7 +6191,7 @@ msgstr "Amikhan etu address apni karne box te likhi dise. Apni age likha tu he t
 #. translators: %s: the person's name
 #: includes/contact.php:776
 msgid "We have told %s that you looked up their number. Agree the rate before work starts."
-msgstr "Apni tai laka number saishey koi amikhan %s ke koi dishey. Kaam suru hobo laka age te rate thik kuri lobi."
+msgstr "Apni tai laga number saishey koi amikhan %s ke koi dishe. Kaam suru hobo laga age te rate thik kuri lobi."
 
 #: includes/promote.php:1066
 msgid "We have your request and will ring you. There is nothing to pay until we have spoken."
@@ -6199,7 +6199,7 @@ msgstr ""
 
 #: includes/dashboard.php:874 includes/rest-api.php:904
 msgid "We just sent one. Please wait a few minutes before asking again."
-msgstr "Amikhan etiya he ekta pathai dishey. Aru mangibo laka age te olop minute rukhibi."
+msgstr "Amikhan etiya he ekta pathai dishe. Aru mangibo laga age te olop minute rukhibi."
 
 #: includes/promote.php:1074
 msgid "We never ask for money to apply for a job, and we never promote a job that asks a worker to pay."
@@ -6211,20 +6211,20 @@ msgstr ""
 
 #: includes/profile-edit.php:205
 msgid "We remove the hidden location information that phones save inside photos, so uploading a picture taken at home does not tell anybody where you live."
-msgstr "Phone khan pra photo bhitor te lukai rakha jaga laka information amikhan uthai diye, etu karne ghor te loa photo upload kurile kunba ke apni kate thake etu jana nai."
+msgstr "Phone khan pra photo bhitor te lukai rakha jaga laga information amikhan uthai diye, etu karne ghor te loa photo upload kurile kunba ke apni kate thake etu jana nai."
 
 #: includes/plan-pitch.php:243
 msgid "We ring you and speak to you. Once we have, the mark goes on your profile and stays there. A worker looking at an unknown number can see that somebody at Kaam Ase has checked who you are, which is the difference between a call answered and a call ignored."
-msgstr "Amikhan apni ke call kuri kotha kore. Ekbar kotha hole, mark apni laka profile te lagi jai aro ta te thaki thake. Najana number sai thaka worker dikhibo pare Kaam Ase laka kunba pra apni kun ase etu check kuri loishey, aro call uthua aro call nuthua majot te etu he alag ase."
+msgstr "Amikhan apni ke call kuri kotha kore. Ekbar kotha hole, mark apni laga profile te lagi jai aro ta te thaki thake. Najana number sai thaka worker dikhibo pare Kaam Ase laga kunba pra apni kun ase etu check kuri loishe, aro call uthua aro call nuthua majot te etu he alag ase."
 
 #: includes/registration.php:153
 msgid "We send one link to this address to confirm it is yours."
-msgstr "Etu apni laka ase etu confirm koribole amikhan etu address te ekta link pathai diye."
+msgstr "Etu apni laga ase etu confirm koribole amikhan etu address te ekta link pathai diye."
 
 #. translators: %s: email address
 #: includes/dashboard.php:834
 msgid "We sent a link to %s. Tap it and your profile goes live straight away."
-msgstr "Amikhan %s te ekta link pathai dishey. Etu te tap koribi aro apni laka profile logot te live hoi jabo."
+msgstr "Amikhan %s te ekta link pathai dishe. Etu te tap koribi aro apni laga profile logot te live hoi jabo."
 
 #: includes/employer-index.php:197
 msgid "We sent you a link when you registered. Open it and this list is yours. It is held back from unconfirmed accounts because an employer directory is worth harvesting."
@@ -6236,7 +6236,7 @@ msgstr ""
 
 #: includes/how-seen.php:186
 msgid "We wait for three before showing a score, so one bad day does not decide everything. When somebody hires you, answer the question we send afterwards. That is what builds it."
-msgstr "Score dikhabo laka age te amikhan tinta tak rukhe, titia ekta biya din pra sob thik nohoi. Kunba apni ke kaam dile, pichete amikhan pathai diya question laka jowab dibi. Etu pra he etu bone."
+msgstr "Score dikhabo laga age te amikhan tinta tak rukhe, titia ekta biya din pra sob thik nohoi. Kunba apni ke kaam dile, pichete amikhan pathai diya question laga jowab dibi. Etu pra he etu bone."
 
 #. translators: %s: plan name
 #: includes/rich-manu.php:319
@@ -6273,15 +6273,15 @@ msgstr "Tai khan somoi te ashilo na?"
 
 #: includes/ratings.php:69
 msgid "Were you paid the amount that was agreed?"
-msgstr "Apni ke thik kora amount dishey na?"
+msgstr "Apni ke thik kora amount dishe na?"
 
 #: includes/ratings.php:74
 msgid "Were you paid when they said you would be?"
-msgstr "Tai khan kua somoi te apni ke pisa dishey na?"
+msgstr "Tai khan kua somoi te apni ke paisa dishe na?"
 
 #: includes/ratings.php:84
 msgid "Were you treated properly?"
-msgstr "Apni logote thik kene beybohar kurishey na?"
+msgstr "Apni logote thik kene beybohar kurise na?"
 
 #: includes/admin.php:415 includes/promote.php:1562 includes/promote.php:1678 includes/promote.php:1743
 #: includes/promote.php:1883
@@ -6290,7 +6290,7 @@ msgstr ""
 
 #: includes/posted-for.php:263
 msgid "What a worker gets when they ask for contact details. Never shown openly on the page."
-msgstr "Worker pra contact laka details mangile ki pai. Page te kitia b khula dikha nai."
+msgstr "Worker pra contact laga details mangile ki pai. Page te kitia b khula dikha nai."
 
 #: includes/profile-edit.php:485
 msgid "What are they"
@@ -6302,11 +6302,11 @@ msgstr "Apni kiman di ase"
 
 #: includes/google-signin.php:1729
 msgid "What brings you here"
-msgstr "Apni yate kile ahishey"
+msgstr "Apni yate kile ahishe"
 
 #: includes/registration.php:281
 msgid "What brings you here?"
-msgstr "Apni yate kile ahishey?"
+msgstr "Apni yate kile ahishe?"
 
 #: includes/how-seen.php:174
 msgid "What decides whether they call"
@@ -6326,7 +6326,7 @@ msgstr "Ki kaam nalage"
 
 #: includes/entitlements.php:378
 msgid "What everybody gets for free. These apply whether or not anything is being charged for, because they are what stops one account from taking more out of the platform than it puts in."
-msgstr "Sob manu free te ki pai. Kuno jinis laka pisa loi ase na nai, etu khan chali thake, kilemane etu khan he ekta account ke platform te diya pra bisi loa pra rukhai."
+msgstr "Sob manu free te ki pai. Kuno jinis laga paisa loi ase na nai, etu khan chali thake, kilemane etu khan he ekta account ke platform te diya pra bisi loa pra rukhai."
 
 #: includes/email-check.php:657 includes/reports.php:440
 msgid "What happened"
@@ -6366,7 +6366,7 @@ msgstr ""
 
 #: includes/teams.php:143
 msgid "What is the team called"
-msgstr "Team laka naam ki ase"
+msgstr "Team laga naam ki ase"
 
 #: includes/admin.php:358
 msgid "What it needs"
@@ -6386,7 +6386,7 @@ msgstr "Kaam te ki ki ase, ki tool lage, etu din te kun ke bisaribo."
 
 #: includes/posted-for.php:368
 msgid "What the work is, in your own words."
-msgstr "Kaam ki ase, apni laka nije laka kotha te."
+msgstr "Kaam ki ase, apni laga nije laga kotha te."
 
 #: includes/job-alerts.php:809
 msgid "What time"
@@ -6414,7 +6414,7 @@ msgstr "Team ki kaam kore"
 
 #: includes/profile-edit.php:692
 msgid "What you build, how you pay, anything a worker should know before taking a job with you."
-msgstr "Apni ki banai, kineka pisa diye, aro apni logote kaam lobo laka age te worker ke jani thakibo laga jiman kiba."
+msgstr "Apni ki banai, kineka paisa diye, aro apni logote kaam lobo laga age te worker ke jani thakibo laga jiman kiba."
 
 #: includes/plan-pitch.php:390
 msgid "What you get"
@@ -6447,7 +6447,7 @@ msgstr "Etu kitia suru hobo"
 
 #: includes/saved.php:753
 msgid "When you find a worker you might use later, open their profile and tap Save. Saving is free and it does not use a contact lookup."
-msgstr "Pichete kaam lagibo para kuno worker pale, tai laka profile khuli Save te tap koribi. Save kora free ase aro etu pra kuno contact lookup khoros nohoi."
+msgstr "Pichete kaam lagibo para kuno worker pale, tai laga profile khuli Save te tap koribi. Save kora free ase aro etu pra kuno contact lookup khoros nohoi."
 
 #: includes/saved.php:754
 msgid "When you see a job worth coming back to, open it and tap Save this job."
@@ -6479,7 +6479,7 @@ msgstr ""
 
 #: includes/posted-for.php:71
 msgid "Where this job came from"
-msgstr "Etu kaam kate pra ahishey"
+msgstr "Etu kaam kate pra ahishe"
 
 #: includes/settings.php:150
 msgid "Where wage complaints and safety reports are emailed. Use an address a person actually opens, not a general company inbox nobody reads on a Saturday."
@@ -6495,7 +6495,7 @@ msgstr ""
 
 #: includes/seo.php:440
 msgid "Which districts of Nagaland does Kaam Ase cover?"
-msgstr "Kaam Ase Nagaland laka kun kun district te ase?"
+msgstr "Kaam Ase Nagaland laga kun kun district te ase?"
 
 #: includes/media.php:291
 msgid "Which images to show"
@@ -6619,7 +6619,7 @@ msgstr ""
 
 #: includes/who-looked.php:476
 msgid "Work here comes back around. The employer who looked at you last March is the one to ring this March, and a week cannot tell you that. Rich Manu keeps the list for a year."
-msgstr "Yate kaam ghuri kene wapas ahe. Jun employer pra gaya March te apni ke saishey, etu March te tai ke he call koribo lage, aro ekta hafta pra apni etu janibo napare. Rich Manu pra etu list ek bosor tak rakhe."
+msgstr "Yate kaam ghuri kene wapas ahe. Jun employer pra gaya March te apni ke saishey, etu March te tai ke he call koribo lage, aro ekta hafta pra apni etu janibo napare. Rich Manu pra etu list ek sal tak rakhe."
 
 #: includes/install.php:667
 msgid "Work in someone else's home"
@@ -6636,7 +6636,7 @@ msgstr ""
 #. translators: %s: how long ago
 #: includes/saved.php:699
 msgid "Worked together %s ago"
-msgstr "%s age te eke logote kaam kurishey"
+msgstr "%s age te eke logote kaam kurise"
 
 #: includes/insights.php:114 includes/not-confirmed.php:197 includes/roles.php:132
 msgid "Worker"
@@ -6666,11 +6666,11 @@ msgstr ""
 
 #: includes/dashboard.php:146
 msgid "Workers cannot be introduced to you without it."
-msgstr "Etu nathakile worker khan logote apni laka parichoi koribo napare."
+msgstr "Etu nathakile worker khan logote apni laga parichoi koribo napare."
 
 #: includes/dashboard.php:315
 msgid "Workers decide whether to answer based on what your profile shows."
-msgstr "Apni laka profile te ki dikhe etu sai kene worker khan jowab dibo na nai thik kore."
+msgstr "Apni laga profile te ki dikhe etu sai kene worker khan jowab dibo na nai thik kore."
 
 #: includes/fields.php:263
 msgid "Workers hired"
@@ -6686,7 +6686,7 @@ msgstr "%s te worker khan"
 
 #: includes/post-job.php:869
 msgid "Workers in this district can see it now. It stays open for three weeks, then closes on its own. Share the link on WhatsApp if you want it seen faster."
-msgstr "Etu district laka worker khan etiya etu sabo pare. Etu tinta hafta khuli thakibo, tar pichete nije pra bondh hobo. Joldi dikhabole mon hoile link WhatsApp te pathai dibi."
+msgstr "Etu district laga worker khan etiya etu sabo pare. Etu tinta hafta khuli thakibo, tar pichete nije pra bondh hobo. Joldi dikhabole mon hoile link WhatsApp te pathai dibi."
 
 #: includes/admin.php:102
 msgid "Workers marked available today."
@@ -6694,7 +6694,7 @@ msgstr ""
 
 #: includes/dashboard.php:160
 msgid "Workers nearby will see your jobs first."
-msgstr "Usor laka worker khan apni laka kaam khan poila sabo."
+msgstr "Usor laga worker khan apni laga kaam khan poila sabo."
 
 #: includes/fields.php:303
 msgid "Workers needed"
@@ -6710,7 +6710,7 @@ msgstr "Ghor banai thaka ekjon manu aro contractor ke worker khan alag-alag kene
 
 #: includes/profile-edit.php:199
 msgid "Workers trust a job more when they can see who is behind it."
-msgstr "Kaam laka pichete kun ase etu dikhile worker khan etu te bisi bharosa kore."
+msgstr "Kaam laga pichete kun ase etu dikhile worker khan etu te bisi bharosa kore."
 
 #: includes/hiring-request.php:504 includes/hiring-request.php:505 includes/hiring-request.php:533
 msgid "Workers who hire"
@@ -6730,7 +6730,7 @@ msgstr "Apni tai khan ke aru kaam dibo na?"
 
 #: includes/ratings.php:89
 msgid "Would you work for them again?"
-msgstr "Apni tai khan laka karne aru kaam koribo na?"
+msgstr "Apni tai khan laga karne aru kaam koribo na?"
 
 #: includes/reports.php:786
 msgid "Write it down. Quote it if you contact us again about the same thing."
@@ -6746,11 +6746,11 @@ msgstr ""
 
 #: includes/profile-edit.php:365
 msgid "Years doing this work"
-msgstr "Etu kaam kuri thaka bosor"
+msgstr "Etu kaam kuri thaka sal"
 
 #: includes/fields.php:98
 msgid "Years of experience"
-msgstr "Experience laka bosor"
+msgstr "Experience laga sal"
 
 #: includes/admin.php:564 includes/gift.php:512 includes/hiring-request.php:692
 #: includes/insights.php:1387 includes/insights.php:607
@@ -6759,15 +6759,15 @@ msgstr "Hoi"
 
 #: includes/hires.php:335
 msgid "Yes, I hired them"
-msgstr "Hoi, moi tai khan ke kaam dishey"
+msgstr "Hoi, moi tai khan ke kaam dishe"
 
 #: includes/seo.php:457
 msgid "Yes, free for Android and iPhone. Open kaamase.com/app on your phone and it takes you to the right store."
-msgstr "Hoi, Android aro iPhone karne free ase. Apni laka phone te kaamase.com/app khulibi, etu apni ke thik store te loi jabo."
+msgstr "Hoi, Android aro iPhone karne free ase. Apni laga phone te kaamase.com/app khulibi, etu apni ke thik store te loi jabo."
 
 #: includes/job-alerts.php:799
 msgid "Yes, send the daily message"
-msgstr "Hoi, hor din laka message pathabi"
+msgstr "Hoi, hor din laga message pathabi"
 
 #: includes/hire-claims.php:649
 msgid "Yes, we did"
@@ -6775,11 +6775,11 @@ msgstr ""
 
 #: includes/seo.php:426
 msgid "Yes. Government job adverts for Nagaland are posted here alongside private jobs, free to read. Apply the way each advert says, through the official process it gives. Nobody can get you a government job for money; if anyone asks, report it."
-msgstr "Hoi. Nagaland laka government kaam laka advert khan yate private kaam khan logote post kore, aro etu porhibole free ase. Advert te ki koise, etu official tarika pra he apply koribi. Pisa dikene kunba b government kaam napai; kunba pisa mangile, report koribi."
+msgstr "Hoi. Nagaland laga government kaam laga advert khan yate private kaam khan logote post kore, aro etu porhibole free ase. Advert te ki koise, etu official tarika pra he apply koribi. Paisa dikene kunba b government kaam napai; kunba paisa mangile, report koribi."
 
 #: includes/seo.php:434
 msgid "Yes. Registering, looking for work and being hired is free for workers, and always will be. Employers can post jobs free too. An optional paid plan adds extras such as more urgent posts, but it never changes what a worker pays, which is nothing."
-msgstr "Hoi. Register kora, kaam bisara aro kaam pua worker khan karne free ase, aro hodai free thakibo. Employer khan b free te kaam post koribo pare. Mon hoile lobo para ekta paid plan pra kisu extra pai, jineka bisi joldi laka kaam, hoileh etu pra worker ki diye etu kitia b bodli nohoi: worker eku nadiye."
+msgstr "Hoi. Register kora, kaam bisara aro kaam pua worker khan karne free ase, aro hodai free thakibo. Employer khan b free te kaam post koribo pare. Mon hoile lobo para ekta paid plan pra kisu extra pai, jineka bisi joldi laga kaam, hoileh etu pra worker ki diye etu kitia b bodli nohoi: worker eku nadiye."
 
 #: includes/taxonomies.php:655
 msgid "Yimkhiung"
@@ -6787,7 +6787,7 @@ msgstr ""
 
 #: includes/entitlements.php:229 includes/services.php:93
 msgid "You already have an urgent job running. One at a time."
-msgstr "Apni laka age te pra ekta joldi laka kaam chali ase. Ekbar te ekta."
+msgstr "Apni laga age te pra ekta joldi laga kaam chali ase. Ekbar te ekta."
 
 #. translators: %s: plan name
 #: includes/rich-manu.php:1051
@@ -6796,7 +6796,7 @@ msgstr ""
 
 #: includes/post-job.php:428
 msgid "You already have one urgent job running. Close it first, or leave this one normal. One urgent job at a time keeps the tag worth something."
-msgstr "Apni laka age te pra ekta joldi laka kaam chali ase. Poila etu bondh koribi, nohoile etu ke sadharan he chari dibi. Ekbar te ekta joldi laka kaam rakhile etu tag laka mane thake."
+msgstr "Apni laga age te pra ekta joldi laga kaam chali ase. Poila etu bondh koribi, nohoile etu ke sadharan he chari dibi. Ekbar te ekta joldi laga kaam rakhile etu tag laga mane thake."
 
 #: includes/hire-claims.php:255 includes/hire-claims.php:500
 msgid "You are already able to rate each other."
@@ -6823,12 +6823,12 @@ msgstr ""
 #: includes/job-photos.php:565
 msgid "You can add %s picture to this job."
 msgid_plural "You can add up to %s pictures to this job."
-msgstr[0] "Apni etu kaam te %s photo add koribo pare."
-msgstr[1] "Apni etu kaam te %s tak photo add koribo pare."
+msgstr[0] "Apni etu kaam te %s photo add kuribo pare."
+msgstr[1] "Apni etu kaam te %s tak photo add kuribi pare."
 
 #: includes/registration.php:211
 msgid "You can add more trades to your profile afterwards."
-msgstr "Pichete apni laka profile te aru kaam khan add koribo pare."
+msgstr "Pichete apni laga profile te aru kaam khan add koribo pare."
 
 #: includes/number-requests.php:993
 msgid "You can hide it and be asked first instead. Most people should not: it means fewer calls, because somebody hiring today rings the numbers they can see."
@@ -6849,7 +6849,7 @@ msgstr "Etiya apni number sabo pare"
 
 #: includes/post-job.php:217
 msgid "You can write the job now. It goes live the moment you tap the link in your email."
-msgstr "Apni etiya kaam likhibo pare. Apni laka email te thaka link te tap kora logot te etu live hoi jai."
+msgstr "Apni etiya kaam likhibo pare. Apni laga email te thaka link te tap kora logot te etu live hoi jai."
 
 #: includes/roles.php:497
 msgid "You cannot change your own account type. Contact Kaam Ase if you need to."
@@ -6882,11 +6882,11 @@ msgstr ""
 #. translators: %s: the details that changed, for example "name, phone number"
 #: includes/mark-changes.php:747
 msgid "You changed your %s, so the tick has come off until somebody from Kaam Ase can ring you again. Your plan is not affected and nothing has been charged. We will call you."
-msgstr "Apni pra apni laka %s bodli kuri shey, etu karne Kaam Ase pra kunba apni ke aru ekbar phone nakora tak tick uthai dishey. Apni laka plan te eku asor nai aro eku pisa kata nai. Amikhan apni ke phone koribo."
+msgstr "Apni pra apni laga %s bodli kuri shey, etu karne Kaam Ase pra kunba apni ke aru ekbar phone nakora tak tick uthai dishe. Apni laga plan te eku asor nai aro eku paisa kata nai. Amikhan apni ke phone koribo."
 
 #: includes/hires.php:489
 msgid "You did work for these people. A few yes or no questions each, including whether you were paid what was agreed. Neither side sees the other's answers until you have both written one."
-msgstr "Apni etu manu khan laka karne kaam kurishey. Hor ekjon laka bare te olop hoi nohoile nai laka question, aro etu b je apni ke thik kora pisa dishey na nai. Duijon nalikha tak kuno phale dusra laka jowab nadikhe."
+msgstr "Apni etu manu khan laga karne kaam kurise. Hor ekjon laga bare te olop hoi nohoile nai laga question, aro etu b je apni ke thik kora paisa dishe na nai. Duijon nalikha tak kuno phale dusra laga jowab nadikhe."
 
 #: includes/mark-changes.php:1044
 msgid "You have a tick"
@@ -6894,19 +6894,19 @@ msgstr "Apni logote tick ase"
 
 #: includes/number-requests.php:502
 msgid "You have already answered that one."
-msgstr "Apni etu laka jowab age te pra di dishey."
+msgstr "Apni etu laga jowab age te pra di dishe."
 
 #: includes/number-requests.php:406
 msgid "You have already asked. They will see it the next time they open Kaam Ase."
-msgstr "Apni age te pra hudi dishey. Tai khan pichete Kaam Ase khulile sabo."
+msgstr "Apni age te pra hudi dishe. Tai khan pichete Kaam Ase khulile sabo."
 
 #: includes/ratings.php:362
 msgid "You have already rated this person."
-msgstr "Apni etu manu ke age te pra rating di dishey."
+msgstr "Apni etu manu ke age te pra rating di dishe."
 
 #: includes/plan-pitch.php:81
 msgid "You have as many urgent jobs running as one account can have at once. Close one and you can mark another."
-msgstr "Ekta account ekbar te jiman joldi laka kaam rakhibo pare, apni laka iman chali ase. Ekta bondh koribi aro titia dusra mark koribo pare."
+msgstr "Ekta account ekbar te jiman joldi laga kaam rakhibo pare, apni laga iman chali ase. Ekta bondh koribi aro titia dusra mark koribo pare."
 
 #: includes/number-requests.php:805
 msgid "You have asked for this number. They will see it the next time they open Kaam Ase, and you will be told when they answer."
@@ -6914,11 +6914,11 @@ msgstr "Apni etu number mangishey. Tai khan pichete Kaam Ase khulile sabo, aro t
 
 #: includes/number-requests.php:421
 msgid "You have asked this person before and they said no."
-msgstr "Apni etu manu ke age te hudishey aro tai nai koishey."
+msgstr "Apni etu manu ke age te hudishe aro tai nai koishey."
 
 #: includes/contact.php:373 includes/entitlements.php:231
 msgid "You have looked up a lot of numbers today. Try again tomorrow."
-msgstr "Apni aji bisi number sai loishey. Kali aru kuri sabi."
+msgstr "Apni aji bisi number sai loishe. Kali aru kuri sabi."
 
 #: includes/dashboard.php:663
 msgid "You have not posted a job yet."
@@ -6930,15 +6930,15 @@ msgstr ""
 
 #: includes/entitlements.php:230 includes/services.php:105
 msgid "You have posted a lot of jobs today. Try again tomorrow."
-msgstr "Apni aji bisi kaam post kuri dishey. Kali aru kuri sabi."
+msgstr "Apni aji bisi kaam post kuri dishe. Kali aru kuri sabi."
 
 #: includes/plan-pitch.php:82
 msgid "You have posted all the jobs one account can post in a day. It starts again after midnight."
-msgstr "Ekta account ek din te jiman kaam post koribo pare, apni sob post kuri dishey. Adha rati laka pichete etu aru suru hoi."
+msgstr "Ekta account ek din te jiman kaam post koribo pare, apni sob post kuri dishe. Adha rati laga pichete etu aru suru hoi."
 
 #: includes/entitlements.php:242
 msgid "You have posted all the jobs this account can post today. You can get more now, or wait until tomorrow."
-msgstr "Etu account aji jiman kaam post koribo pare, apni sob post kuri dishey. Apni etiya aru lobo pare, nohoile kali tak rukhibo pare."
+msgstr "Etu account aji jiman kaam post koribo pare, apni sob post kuri dishe. Apni etiya aru lobo pare, nohoile kali tak rukhibo pare."
 
 #: includes/hire-claims.php:405
 msgid "You have said you worked together. It opens as soon as they agree."
@@ -6946,19 +6946,19 @@ msgstr ""
 
 #: includes/reports.php:558 includes/rest-api.php:2613
 msgid "You have sent several already. If it is urgent, call us instead."
-msgstr "Apni age te pra bisi pathai dishey. Joldi lage koile, tar bodli amikhan ke call koribi."
+msgstr "Apni age te pra bisi pathai dishe. Joldi lage koile, tar bodli amikhan ke call koribi."
 
 #: includes/plan-pitch.php:80
 msgid "You have used today's contact lookups. That cap is on every account including yours, and it is there to stop numbers being harvested. It starts again after midnight."
-msgstr "Apni aji laka contact lookup khan cholai loishey. Etu limit apni laka logote sob account te ase, aro number khan joma kora pra rukhabole ase. Adha rati laka pichete etu aru suru hoi."
+msgstr "Apni aji laga contact lookup khan cholai loishe. Etu limit apni laga logote sob account te ase, aro number khan joma kora pra rukhabole ase. Adha rati laga pichete etu aru suru hoi."
 
 #: includes/entitlements.php:243
 msgid "You have used today's contact lookups. You can get more now, or wait until tomorrow."
-msgstr "Apni aji laka contact lookup khan cholai loishey. Apni etiya aru lobo pare, nohoile kali tak rukhibo pare."
+msgstr "Apni aji laga contact lookup khan cholai loishe. Apni etiya aru lobo pare, nohoile kali tak rukhibo pare."
 
 #: includes/entitlements.php:241
 msgid "You have used your urgent jobs. You can get more, or wait until one of the current ones closes."
-msgstr "Apni laka joldi laka kaam khan cholai loishey. Apni aru lobo pare, nohoile etiya chali thaka khan pra ekta bondh hua tak rukhibo pare."
+msgstr "Apni laga joldi laga kaam khan cholai loishe. Apni aru lobo pare, nohoile etiya chali thaka khan pra ekta bondh hua tak rukhibo pare."
 
 #. translators: %s: how long ago
 #: includes/hires.php:320
@@ -6968,11 +6968,11 @@ msgstr "Apni tai khan ke %s age te saishey"
 #. translators: %s: worker name
 #: includes/push.php:527
 msgid "You looked up %s recently. Telling us what happened lets you both rate each other."
-msgstr "Apni etiya he %s laka number saishey. Ki hoishey etu amikhan ke kuwa pra apni duijon ekjon-ekjon ke rating dibo pare."
+msgstr "Apni etiya he %s laga number saishey. Ki hoishe etu amikhan ke kuwa pra apni duijon ekjon-ekjon ke rating dibo pare."
 
 #: includes/hires.php:301
 msgid "You looked up these numbers recently. Telling us what happened is what lets you and them rate each other, and it is the only reason the ratings on this site mean anything."
-msgstr "Apni etiya he etu number khan saishey. Ki hoishey etu amikhan ke kuwa pra he apni aro tai khan ekjon-ekjon ke rating dibo pare, aro etu he ekta karon ase kile etu site laka rating khan laka mane ase."
+msgstr "Apni etiya he etu number khan saishey. Ki hoishe etu amikhan ke kuwa pra he apni aro tai khan ekjon-ekjon ke rating dibo pare, aro etu he ekta karon ase kile etu site laga rating khan laga mane ase."
 
 #: includes/promote.php:447
 msgid "You need a live profile or an open job before anything can be promoted."
@@ -6984,24 +6984,24 @@ msgstr ""
 
 #: includes/hiring-request.php:175
 msgid "You registered as a worker. If you also hire people, add hiring to this same account. It happens straight away. You keep your profile, your ratings and your login exactly as they are."
-msgstr "Apni worker hoi register kurishey. Apni manu ke kaam b diye koile, etu he account te kaam diya suwidha add koribi. Etu logot te hoi jai. Apni laka profile, apni laka rating aro apni laka login thik iman he thake."
+msgstr "Apni worker hoi register kurise. Apni manu ke kaam b diye koile, etu he account te kaam diya suwidha add koribi. Etu logot te hoi jai. Apni laga profile, apni laga rating aro apni laga login thik iman he thake."
 
 #: includes/post-job.php:184
 msgid "You registered as a worker. If you also hire people, get in touch and we will add hiring to your account."
-msgstr "Apni worker hoi register kurishey. Apni manu ke kaam b diye koile, amikhan logote contact koribi aro amikhan apni laka account te etu suwidha add kuri dibo."
+msgstr "Apni worker hoi register kurise. Apni manu ke kaam b diye koile, amikhan logote contact koribi aro amikhan apni laga account te etu suwidha add kuri dibo."
 
 #: includes/account-password.php:374
 msgid "You signed up without one, so at the moment you can only get in the way you joined. Set a password and you can also sign in with your email address, on this website and on any phone."
-msgstr "Apni password nohoi kene sign up kurishey, etu karne etiya apni jineka jog hoishey etu tarika pra he ahibo pare. Ekta password lagabi aro titia etu website te aro jiman phone hoileh b apni laka email address pra b sign in koribo pare."
+msgstr "Apni password nohoi kene sign up kurise, etu karne etiya apni jineka jog hoishe etu tarika pra he ahibo pare. Ekta password lagabi aro titia etu website te aro jiman phone hoileh b apni laga email address pra b sign in koribo pare."
 
 #: includes/hires.php:488
 msgid "You worked with these people. A few yes or no questions each. Neither of you sees the other's answers until you have both written one, so you cannot be punished for being honest."
-msgstr "Apni etu manu khan logote kaam kurishey. Hor ekjon laka bare te olop hoi nohoile nai laka question. Duijon nalikha tak apni khan ekjon dusra laka jowab nadikhe, etu karne hosa kua karne apni ke kuno nuksan hobo napare."
+msgstr "Apni etu manu khan logote kaam kurise. Hor ekjon laga bare te olop hoi nohoile nai laga question. Duijon nalikha tak apni khan ekjon dusra laga jowab nadikhe, etu karne hosa kua karne apni ke kuno nuksan hobo napare."
 
 #. translators: %s: site name
 #: includes/profile-edit.php:999
 msgid "Your %s account is closed"
-msgstr "Apni laka %s account bondh kuri dishey"
+msgstr "Apni laga %s account bondh kuri dishe"
 
 #. translators: %s: site name
 #: includes/privacy.php:681
@@ -7010,7 +7010,7 @@ msgstr ""
 
 #: includes/profile-edit.php:1010
 msgid "Your account and your profile have been removed. Nothing of yours is left on the site."
-msgstr "Apni laka account aro apni laka profile uthai dishey. Site te apni laka eku baki nai."
+msgstr "Apni laga account aro apni laga profile uthai dishe. Site te apni laga eku baki nai."
 
 #: includes/privacy.php:174
 msgid "Your comment"
@@ -7018,61 +7018,61 @@ msgstr ""
 
 #: includes/how-seen.php:167
 msgid "Your district."
-msgstr "Apni laka district."
+msgstr "Apni laga district."
 
 #: includes/account-providers.php:558
 msgid "Your email address is already confirmed and cannot be changed here yet."
-msgstr "Apni laka email address age te pra confirm hoi jaishey aro etiya yate pra bodlibo napare."
+msgstr "Apni laga email address age te pra confirm hoi goise aro etiya yate pra bodlibo napare."
 
 #: includes/dashboard.php:701
 msgid "Your first job is read by a person before workers see it. Usually done within a few hours. Nothing more is needed from you."
-msgstr "Worker khan sabo laka age te apni laka poila kaam ekjon manu porhe. Bisi somoi olop ghanta bhitor te hoi jai. Apni pra aru eku nalage."
+msgstr "Worker khan sabo laga age te apni laga poila kaam ekjon manu porhe. Bisi somoi olop ghanta bhitor te hoi jai. Apni pra aru eku nalage."
 
 #: includes/registration.php:138
 msgid "Your full name"
-msgstr "Apni laka pura naam"
+msgstr "Apni laga pura naam"
 
 #: includes/post-job.php:866
 msgid "Your job is live"
-msgstr "Apni laka kaam live ase"
+msgstr "Apni laga kaam live ase"
 
 #. translators: %s: site name
 #: includes/job-screening.php:655
 msgid "Your job is live on %s"
-msgstr "%s te apni laka kaam live ase"
+msgstr "%s te apni laga kaam live ase"
 
 #: includes/dashboard.php:612
 msgid "Your job is saved and is being checked"
-msgstr "Apni laka kaam save hoishey aro check kuri ase"
+msgstr "Apni laga kaam save hoishe aro check kuri ase"
 
 #: includes/post-job.php:867
 msgid "Your job is saved but not live yet"
-msgstr "Apni laka kaam save hoishey hoileh etiya tak live nai"
+msgstr "Apni laga kaam save hoishe hoileh etiya tak live nai"
 
 #. translators: %s: site name
 #: includes/job-screening.php:596
 msgid "Your job on %s is being checked"
-msgstr "%s te apni laka kaam check kuri ase"
+msgstr "%s te apni laga kaam check kuri ase"
 
 #: includes/google-signin.php:1746 includes/profile-edit.php:225 includes/reports.php:473
 msgid "Your name"
-msgstr "Apni laka naam"
+msgstr "Apni laga naam"
 
 #: includes/number-requests.php:1057
 msgid "Your number is hidden now. People will have to ask."
-msgstr "Etiya apni laka number lukai ase. Manu khan ke hudibo lagibo."
+msgstr "Etiya apni laga number lukai ase. Manu khan ke hudibo lagibo."
 
 #: includes/number-requests.php:973
 msgid "Your number is hidden. People have to ask, and you decide each time."
-msgstr "Apni laka number lukai ase. Manu khan ke hudibo lage, aro hor bar apni thik kore."
+msgstr "Apni laga number lukai ase. Manu khan ke hudibo lage, aro hor bar apni thik kore."
 
 #: includes/number-requests.php:1058
 msgid "Your number is shown again."
-msgstr "Apni laka number aru dikhi ase."
+msgstr "Apni laga number aru dikhi ase."
 
 #: includes/number-requests.php:988
 msgid "Your number is shown to signed in people who look you up, which is how work reaches you."
-msgstr "Apni ke sabole aha sign in thaka manu khan ke apni laka number dikhe, aro etu pra he kaam apni tak ahe."
+msgstr "Apni ke sabole aha sign in thaka manu khan ke apni laga number dikhe, aro etu pra he kaam apni tak ahe."
 
 #: includes/app-version.php:494
 msgid "Your old message is no longer being sent."
@@ -7080,44 +7080,44 @@ msgstr ""
 
 #: includes/teams.php:150
 msgid "Your own name works perfectly well. Contractors remember people, not brands."
-msgstr "Apni laka nije laka naam bhal kene kaam kore. Contractor khan manu ke mon te rakhe, brand ke nohoi."
+msgstr "Apni laga nije laga naam bhal kene kaam kore. Contractor khan manu ke mon te rakhe, brand ke nohoi."
 
 #. translators: %d: the smallest number of characters allowed
 #: includes/account-password.php:131
 msgid "Your password needs at least %d characters."
-msgstr "Apni laka password te kom pora kom %d character lage."
+msgstr "Apni laga password te kom pora kom %d character lage."
 
 #: includes/registration.php:482 includes/rest-api.php:681
 msgid "Your password needs at least 8 characters."
-msgstr "Apni laka password te kom pora kom 8 character lage."
+msgstr "Apni laga password te kom pora kom 8 character lage."
 
 #: includes/number-requests.php:968 includes/reports.php:478
 msgid "Your phone number"
-msgstr "Apni laka phone number"
+msgstr "Apni laga phone number"
 
 #: includes/dashboard.php:287
 msgid "Your profile is complete"
-msgstr "Apni laka profile pura hoishey"
+msgstr "Apni laga profile pura hoishe"
 
 #: includes/dashboard.php:829
 msgid "Your profile is hidden until you confirm your email"
-msgstr "Apni laka email confirm nakora tak apni laka profile lukai thakibo"
+msgstr "Apni laga email confirm nakora tak apni laga profile lukai thakibo"
 
 #: includes/push.php:394
 msgid "Your profile is live"
-msgstr "Apni laka profile live ase"
+msgstr "Apni laga profile live ase"
 
 #: includes/dashboard.php:936
 msgid "Your profile is missing"
-msgstr "Apni laka profile pua nai"
+msgstr "Apni laga profile pua nai"
 
 #: includes/rest-api.php:962
 msgid "Your profile is missing. Open the app again and we will rebuild it."
-msgstr "Apni laka profile pua nai. App aru ekbar khulibi aro amikhan etu aru banai dibo."
+msgstr "Apni laga profile pua nai. App aru ekbar khulibi aro amikhan etu aru banai dibo."
 
 #: includes/dashboard.php:407
 msgid "Your profile is not live yet. Confirm your email to publish it."
-msgstr "Apni laka profile etiya tak live nai. Etu publish koribole apni laka email confirm koribi."
+msgstr "Apni laga profile etiya tak live nai. Etu publish koribole apni laga email confirm koribi."
 
 #: includes/verify-requests.php:106
 msgid "Your profile needs to be finished and live first."
@@ -7141,19 +7141,19 @@ msgstr ""
 
 #: includes/number-requests.php:695
 msgid "Your request was turned down"
-msgstr "Apni laka request mana kuri dishey"
+msgstr "Apni laga request mana kuri dishe"
 
 #: includes/teams.php:114
 msgid "Your team is listed"
-msgstr "Apni laka team list hoi jaishey"
+msgstr "Apni laga team list hoi goise"
 
 #: includes/dashboard.php:886
 msgid "Your team listing is down. Your own profile is untouched."
-msgstr "Apni laka team laka listing uthai dishey. Apni laka nije laka profile thik iman he ase."
+msgstr "Apni laga team laga listing uthai dishe. Apni laga nije laga profile thik iman he ase."
 
 #: includes/mark-changes.php:744
 msgid "Your tick has come off for now"
-msgstr "Apni laka tick etiya karne uthai dishey"
+msgstr "Apni laga tick etiya karne uthai dishe"
 
 #: includes/rich-manu.php:364
 msgid "Your tick is on your account"
@@ -7165,7 +7165,7 @@ msgstr ""
 
 #: includes/how-seen.php:163
 msgid "Your trade."
-msgstr "Apni laka kaam."
+msgstr "Apni laga kaam."
 
 #: includes/taxonomies.php:650
 msgid "Zeliang"
@@ -7177,7 +7177,7 @@ msgstr ""
 
 #: includes/google-signin.php:246
 msgid "and add your site address to Authorised JavaScript origins."
-msgstr "aro apni laka site laka address Authorised JavaScript origins te add koribi."
+msgstr "aro apni laga site laga address Authorised JavaScript origins te add koribi."
 
 #: includes/reports.php:731
 msgid "anonymous"
@@ -7230,7 +7230,7 @@ msgstr "nohoile"
 
 #: includes/google-signin.php:1365
 msgid "or fill in the form below"
-msgstr "nohoile nichete laka form bhorti koribi"
+msgstr "nohoile nichete laga form bhorti koribi"
 
 #: includes/google-signin.php:1181
 msgid "or sign in with a password below"
@@ -7238,7 +7238,7 @@ msgstr "nohoile nichete password pra sign in koribi"
 
 #: includes/gstin.php:177
 msgid "outside Nagaland"
-msgstr "Nagaland laka bahar te"
+msgstr "Nagaland laga bahar te"
 
 #: includes/post-job.php:291 includes/posted-for.php:332
 msgid "per day"
@@ -7279,7 +7279,7 @@ msgstr "terms"
 
 #: includes/mark-changes.php:1106
 msgid "until somebody can ring you again. Your plan is not affected."
-msgstr "kunba pra apni ke aru ekbar phone nakora tak. Apni laka plan te eku asor nai."
+msgstr "kunba pra apni ke aru ekbar phone nakora tak. Apni laga plan te eku asor nai."
 
 #: includes/profile-edit.php:609
 msgid "workers"
@@ -7287,23 +7287,23 @@ msgstr "worker khan"
 
 #: includes/who-looked.php:265
 msgid "year"
-msgstr "bosor"
+msgstr "sal"
 
 #: includes/who-looked.php:175
 msgid "your employer profile"
-msgstr "apni laka employer profile"
+msgstr "apni laga employer profile"
 
 #: includes/who-looked.php:169
 msgid "your job, %s"
-msgstr "apni laka kaam, %s"
+msgstr "apni laga kaam, %s"
 
 #: includes/who-looked.php:178
 msgid "your profile"
-msgstr "apni laka profile"
+msgstr "apni laga profile"
 
 #: includes/who-looked.php:172
 msgid "your team"
-msgstr "apni laka team"
+msgstr "apni laga team"
 
 #: includes/promote.php:1632
 msgid "₹"

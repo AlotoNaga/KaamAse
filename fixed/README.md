@@ -5580,6 +5580,57 @@ work on rolling windows, and a promotion's own end time already decides whether
 it shows, so none is affected. The privacy retention notices now go out in the
 morning too.
 
+## 79. The owner's Nagamese review, folded in
+
+The Nagamese was machine-drafted and leaned Assamese in places. The owner, who
+speaks Nagamese, reviewed all 1,252 lines and returned corrections. This folds
+them into the three Nagamese files, exactly as written.
+
+### Upload
+
+Only the Nagamese `.po` and `.mo` files changed. The English templates and the
+Hindi files are untouched.
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/languages/kaamase-core-nag.po` and `.mo` | |
+| `fixed/kaamase/languages/nag.po` and `.mo` | |
+| `fixed/kaamase-pay/languages/kaamase-pay-nag.po` and `.mo` | |
+
+Then **LiteSpeed Cache → Toolbox → Purge All**, so cached Nagamese pages pick up
+the new wording. The app reads its own copy from `translations/app-strings.json`,
+which was updated in the same pass.
+
+### What changed
+
+573 of the 1,252 lines were improved. The consistent spelling fixes: `laka →
+laga` (every one, none left), `bosor → sal`, `pisa → paisa`, most past tenses
+from `-shey` to `-she` (e.g. `dishey → dishe`), and some command forms to
+`kuribi`. The 29 lines that carry a separate "more than one" form were reviewed
+on their own and finalised by the owner, singular and plural both.
+
+Verb forms the owner uses on purpose were left alone. `koribo` ("will do") and
+`koribi` ("do") are different words, not two spellings of one, so they were not
+levelled.
+
+### Left for the owner to decide
+
+Three spellings appear in two forms across the file. They were **not** touched,
+because only a speaker can say which is right or whether the difference is
+deliberate: `pra` / `para`, `apni ke` / `apnake`, and about 50 words still
+ending `-shey` where most became `-she`. A later pass can settle any of these on
+one form in a few minutes once the owner says which.
+
+### Tested on the real WordPress site
+
+`checktrans` on all three Nagamese files: every placeholder (`%s`, `%1$s`, `%d`)
+in the English is present in the Nagamese, 0 problems. The homepage rendered in
+Nagamese with the new wording (`kisim laga kaam`, not `laka`) and no errors in
+`debug.log`. The plural machinery was exercised through `_n()` against the real
+compiled files: *%s year* gave "1 sal" and "3 sal"; *Team of %s worker* gave
+"1 worker laga team" and "5 worker khan laga team"; *%d person wants your number*
+and *Sent to %s person.* each gave the right one-versus-many form.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

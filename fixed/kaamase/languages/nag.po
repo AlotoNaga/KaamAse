@@ -4,14 +4,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 07:05+0000\n"
-"PO-Revision-Date: 2026-09-24 07:05+0000\n"
+"POT-Creation-Date: 2026-09-24 21:22+0000\n"
+"PO-Revision-Date: 2026-09-24 21:22+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: kaamase\n"
+"X-Domain: nag\n"
 
 #: inc/template-tags.php:627
 msgid "%s ago"
@@ -28,13 +28,13 @@ msgstr[1] "%s din"
 #: front-page.php:332
 msgid "%s kind of work"
 msgid_plural "%s kinds of work"
-msgstr[0] "%s kisim laka kaam"
-msgstr[1] "%s kisim laka kaam"
+msgstr[0] "%s kisim laga kaam"
+msgstr[1] "%s kisim laga kaam"
 
 #. translators: %s: number of times opened
 #: inc/template-tags.php:340
 msgid "%s opened"
-msgstr "%s bar khulishey"
+msgstr "%s bar khulise"
 
 #. translators: %s: number of results
 #: index.php:119
@@ -47,8 +47,8 @@ msgstr[1] "%s result khan"
 #: inc/template-tags.php:858
 msgid "%s worker hired through Kaam Ase"
 msgid_plural "%s workers hired through Kaam Ase"
-msgstr[0] "Kaam Ase pra %s worker ke kaam dishey"
-msgstr[1] "Kaam Ase pra %s worker khan ke kaam dishey"
+msgstr[0] "Kaam Ase para %s worker ke kaam dishe"
+msgstr[1] "Kaam Ase para %s worker khan ke kaam dishe"
 
 #. translators: %s: number of workers wanted
 #: inc/template-tags.php:1142
@@ -61,19 +61,19 @@ msgstr[1] "%s worker khan lage"
 #: single-kaamase_gang.php:159 single-kaamase_worker.php:197
 msgid "%s year"
 msgid_plural "%s years"
-msgstr[0] "%s bosor"
-msgstr[1] "%s bosor"
+msgstr[0] "%s sal"
+msgstr[1] "%s sal"
 
 #. translators: %s: number of years
 #: inc/template-tags.php:753
 msgid "%s year of experience"
 msgid_plural "%s years of experience"
-msgstr[0] "%s bosor laka experience"
-msgstr[1] "%s bosor laka experience"
+msgstr[0] "%s sal laga experience"
+msgstr[1] "%s sal laga experience"
 
 #: front-page.php:797
 msgid "A Nagaland company"
-msgstr "Nagaland laka ekta company"
+msgstr "Nagaland laga ekta company"
 
 #: single-kaamase_employer.php:40
 msgid "A contractor"
@@ -85,19 +85,19 @@ msgstr "Ekta registered company"
 
 #: footer.php:215
 msgid "A venture of Nagaland Me"
-msgstr "Nagaland Me laka ekta venture"
+msgstr "Nagaland Me laga ekta venture"
 
 #: footer.php:104
 msgid "About"
-msgstr "Amikhan laka bare te"
+msgstr "Amikhan laga bare te"
 
 #: footer.php:109
 msgid "About us"
-msgstr "Amikhan laka bare te"
+msgstr "Amikhan laga bare te"
 
 #: single-kaamase_job.php:265
 msgid "Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it."
-msgstr "Poila din laka age te rate aro pisa pabo laka din kotha pora thik kuri lobi, pichete hoina. Kaam Ase te kunbi apni ke kaam dibole pisa mangibo napare. Kunba mangile, report koribi."
+msgstr "Poila din laga age te rate aro paisa pabo laga din kotha pora thik kuri lobi, pichete hoina. Kaam Ase te kunbi apni ke kaam dibole paisa mangibo napare. Kunba mangile, report koribi."
 
 #. translators: %s: number of districts
 #: front-page.php:317
@@ -112,7 +112,7 @@ msgstr "Pura Nagaland"
 
 #: front-page.php:483
 msgid "All categories"
-msgstr "Sob kisim laka kaam"
+msgstr "Sob kisim laga kaam"
 
 #: footer.php:90
 msgid "All districts"
@@ -120,7 +120,7 @@ msgstr "Sob district khan"
 
 #: front-page.php:250
 msgid "All kinds of work"
-msgstr "Sob kisim laka kaam"
+msgstr "Sob kisim laga kaam"
 
 #: footer.php:89
 msgid "All trades"
@@ -156,7 +156,7 @@ msgstr "Pichete"
 
 #: single-kaamase_job.php:264
 msgid "Before you agree"
-msgstr "Haan kobo laka age te"
+msgstr "Haan kobo laga age te"
 
 #: front-page.php:790
 msgid "Both sides rate"
@@ -172,15 +172,15 @@ msgstr "Sob kaam khan sabo"
 
 #: inc/template-tags.php:660
 msgid "Call"
-msgstr "Call koribo"
+msgstr "Call kuribi"
 
 #: single-kaamase_worker.php:62
 msgid "Church elder or pastor"
-msgstr "Church laka elder nohoile pastor"
+msgstr "Church laga elder nohoile pastor"
 
 #: inc/enqueue.php:145
 msgid "Close menu"
-msgstr "Menu bondh koribo"
+msgstr "Menu bondh kuribi"
 
 #: single-kaamase_job.php:189
 msgid "Closes in"
@@ -188,7 +188,7 @@ msgstr "Bondh hobo"
 
 #: single-kaamase_worker.php:60
 msgid "Colony council member"
-msgstr "Colony council laka member"
+msgstr "Colony council laga member"
 
 #: inc/template-tags.php:813
 msgid "Company"
@@ -204,7 +204,7 @@ msgstr "Contractor"
 
 #: inc/enqueue.php:149
 msgid "Copied"
-msgstr "Copy hoishey"
+msgstr "Copy hoishe"
 
 #. translators: 1: current year, 2: site name
 #: footer.php:207
@@ -213,7 +213,7 @@ msgstr "Copyright %1$s %2$s"
 
 #: single-kaamase_gang.php:145 single-kaamase_worker.php:174
 msgid "Day rate"
-msgstr "Ek din laka rate"
+msgstr "Ek din laga rate"
 
 #: front-page.php:285
 msgid "Dimapur, Kohima, Mokokchung"
@@ -225,27 +225,27 @@ msgstr "Dimapur, Nagaland, India"
 
 #: single-kaamase_employer.php:54
 msgid "Edit my details"
-msgstr "Moi laka details thik koribo"
+msgstr "Moi laga details thik koribo"
 
 #: single-kaamase_worker.php:78
 msgid "Edit my profile"
-msgstr "Moi laka profile thik koribo"
+msgstr "Moi laga profile thik koribo"
 
 #: single-kaamase_gang.php:52
 msgid "Edit my team"
-msgstr "Moi laka team thik koribo"
+msgstr "Moi laga team thik koribo"
 
 #: single-kaamase_job.php:63
 msgid "Edit this job"
-msgstr "Etu kaam thik koribo"
+msgstr "Etu kaam thik kuribi"
 
 #: front-page.php:665
 msgid "Every district of Nagaland, from Dimapur and Kohima to Mon and Noklak."
-msgstr "Nagaland laka sob district, Dimapur aro Kohima pra Mon aro Noklak tak."
+msgstr "Nagaland laga sob district, Dimapur aro Kohima pra Mon aro Noklak tak."
 
 #: front-page.php:190
 msgid "Every kind of job, government and private, from teaching and office work to driving and building, in every district."
-msgstr "Sob kisim laka kaam, government aro private, teaching aro office kaam pra driving aro construction kaam tak, sob district te."
+msgstr "Sob kisim laga kaam, government aro private, teaching aro office kaam pra driving aro construction kaam tak, sob district te."
 
 #: single-kaamase_gang.php:153 single-kaamase_worker.php:190
 msgid "Experience"
@@ -289,7 +289,7 @@ msgstr "Khana pabo"
 
 #: inc/setup.php:110
 msgid "Footer, about Kaam Ase"
-msgstr "Footer, Kaam Ase laka bare te"
+msgstr "Footer, Kaam Ase laga bare te"
 
 #: inc/setup.php:109
 msgid "Footer, browse and discover"
@@ -345,7 +345,7 @@ msgstr "Google Play"
 
 #: front-page.php:541
 msgid "Government and private jobs from across the state. Job seekers never pay to apply."
-msgstr "Pura state pra government aro private kaam khan. Kaam bisari thaka khan apply koribole kitia b pisa nadiye."
+msgstr "Pura state pra government aro private kaam khan. Kaam bisari thaka khan apply koribole kitia b paisa nadiye."
 
 #: inc/page-display.php:215
 msgid "Heading"
@@ -393,7 +393,7 @@ msgstr "Ekjon manu"
 
 #: 404.php:73
 msgid "It has probably been filled, or the employer closed it. Links shared in WhatsApp keep working for days after a job is taken."
-msgstr "Etu bhorti hoi jaishey hobo pare, nohoile employer pra bondh kuri dishey. WhatsApp te pathai diya link khan kaam loi juwa laka pichete b bisi din tak khuli thake."
+msgstr "Etu bhorti hoi goise hobo pare, nohoile employer pra bondh kuri dishe. WhatsApp te pathai diya link khan kaam loi juwa laga pichete b bisi din tak khuli thake."
 
 #: inc/template-tags.php:1292
 msgid "Jobs"
@@ -449,11 +449,11 @@ msgstr "Kaam Ase ekta listing platform ase. Amikhan worker aro employer khan ke 
 
 #: index.php:254
 msgid "Kaam Ase is new and this district is still filling up. Post your job and workers nearby will see it."
-msgstr "Kaam Ase notun ase aro etu district etiya b bhorti hoi ase. Apni laka kaam post koribi, usor laka worker khan etu sabo."
+msgstr "Kaam Ase notun ase aro etu district etiya b bhorti hoi ase. Apni laga kaam post koribi, usor laga worker khan etu sabo."
 
 #: footer.php:150
 msgid "Kaam Ase never asks a worker for money to get a job. If anyone asks, report it."
-msgstr "Kaam Ase kitia b kaam dibole worker ke pisa mangi nai. Kunba mangile, report koribi."
+msgstr "Kaam Ase kitia b kaam dibole worker ke paisa mangi nai. Kunba mangile, report koribi."
 
 #: functions.php:66
 msgid "Kaam Ase theme is not running."
@@ -510,11 +510,11 @@ msgstr "Main menu"
 
 #: front-page.php:729
 msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
-msgstr "Ekta free profile banabi. Pura Nagaland laka employer khan apni ke kaam aro district pra bisaribo pare. Kaam Ase worker khan karne free ase aro hodai free thakibo."
+msgstr "Ekta free profile banabi. Pura Nagaland laga employer khan apni ke kaam aro district pra bisaribo pare. Kaam Ase worker khan karne free ase aro hodai free thakibo."
 
 #: front-page.php:737
 msgid "Make my free profile"
-msgstr "Moi laka free profile banabo"
+msgstr "Moi laga free profile banabo"
 
 #: front-page.php:259
 msgid "Mason, electrician, driver"
@@ -542,7 +542,7 @@ msgstr "Mobile menu, kadi ulai diya drawer"
 
 #: single-kaamase_worker.php:182
 msgid "Monthly"
-msgstr "Ek mahina laka"
+msgstr "Ek mahina laga"
 
 #: single.php:80
 msgid "More posts"
@@ -550,15 +550,15 @@ msgstr "Aru post khan"
 
 #: header.php:128 header.php:180
 msgid "My account"
-msgstr "Moi laka account"
+msgstr "Moi laga account"
 
 #: single-kaamase_job.php:67
 msgid "My jobs"
-msgstr "Moi laka kaam khan"
+msgstr "Moi laga kaam khan"
 
 #: front-page.php:179
 msgid "Nagaland’s own job platform"
-msgstr "Nagaland laka nije laka job platform"
+msgstr "Nagaland laga nije laga job platform"
 
 #: inc/template-tags.php:230
 msgid "New"
@@ -574,7 +574,7 @@ msgstr "Age te"
 
 #: front-page.php:778
 msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
-msgstr "Profile banabole, kaam post koribole, nohoile kaam pabole kuno fee nai. Worker khan kitia b pisa diya nai."
+msgstr "Profile banabole, kaam post koribole, nohoile kaam pabole kuno fee nai. Worker khan kitia b paisa diya nai."
 
 #: index.php:235
 msgid "No jobs here yet"
@@ -586,7 +586,7 @@ msgstr "Yate etiya tak kuno worker nai"
 
 #: index.php:236
 msgid "Nobody has posted work in this trade or district yet. Check another district, or tell an employer you know about Kaam Ase."
-msgstr "Etu kaam nohoile district te etiya tak kunba kiba post kora nai. Dusra district sabi, nohoile apni jani thaka kunba employer ke Kaam Ase laka bare te kobi."
+msgstr "Etu kaam nohoile district te etiya tak kunba kiba post kora nai. Dusra district sabi, nohoile apni jani thaka kunba employer ke Kaam Ase laga bare te kobi."
 
 #: single-kaamase_worker.php:202
 msgid "Not given"
@@ -619,8 +619,8 @@ msgstr "Menu khulibo"
 #: inc/template-tags.php:313
 msgid "Opened %s time"
 msgid_plural "Opened %s times"
-msgstr[0] "%s bar khulishey"
-msgstr[1] "%s bar khulishey"
+msgstr[0] "%s bar khulise"
+msgstr[1] "%s bar khulise"
 
 #: 404.php:146
 msgid "Or go to"
@@ -628,7 +628,7 @@ msgstr "Nohoile yate jabi"
 
 #: inc/page-display.php:75
 msgid "Page heading"
-msgstr "Page laka heading"
+msgstr "Page laga heading"
 
 #: inc/template-tags.php:1254
 msgid "Page navigation"
@@ -636,7 +636,7 @@ msgstr "Page navigation"
 
 #: page.php:136 single.php:60
 msgid "Page sections"
-msgstr "Page laka section khan"
+msgstr "Page laga section khan"
 
 #: footer.php:113
 msgid "Past Job"
@@ -652,7 +652,7 @@ msgstr "Mojuri"
 
 #: front-page.php:831
 msgid "Plain answers to what people ask most."
-msgstr "Manu khan pra sob pra bisi question kora laka sidha jowab."
+msgstr "Manu khan pra sob pra bisi question kora laga sidha jowab."
 
 #: inc/setup.php:430
 msgid "Plans"
@@ -676,7 +676,7 @@ msgstr "Free te kaam post koribo"
 
 #: front-page.php:746
 msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
-msgstr "Apni laka rate, kiman worker lage aro kitia lage — etu likhi kaam post koribi. Ekjon manu nohoile pura ekta team ke kaam dibi."
+msgstr "Apni laga rate, kiman worker lage aro kitia lage — etu likhi kaam post koribi. Ekjon manu nohoile pura ekta team ke kaam dibi."
 
 #: single.php:84
 msgid "Previous"
@@ -692,7 +692,7 @@ msgstr "Privacy"
 
 #: front-page.php:785
 msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
-msgstr "Profile te colony nohoile village laka kunba dangor manu, jun etu manu ke jane, tai laka vouch thakibo pare."
+msgstr "Profile te colony nohoile village laga kunba dangor manu, jun etu manu ke jane, tai laga vouch thakibo pare."
 
 #: inc/template-tags.php:404
 msgid "Rate on asking"
@@ -702,8 +702,8 @@ msgstr "Rate hudile kobo"
 #: inc/template-tags.php:243
 msgid "Rated %1$s out of 5 from %2$s job"
 msgid_plural "Rated %1$s out of 5 from %2$s jobs"
-msgstr[0] "%2$s kaam pra 5 te %1$s rating"
-msgstr[1] "%2$s kaam khan pra 5 te %1$s rating"
+msgstr[0] "%2$s kaam para 5 te %1$s rating"
+msgstr[1] "%2$s kaam khan para 5 te %1$s rating"
 
 #: header.php:190
 msgid "Register free"
@@ -711,7 +711,7 @@ msgstr "Free te register koribo"
 
 #: front-page.php:799
 msgid "Registered and run from Dimapur. Not an outside app that has never been here."
-msgstr "Dimapur te registered ase aro yate pra he chalai ase. Bahar laka kuno app hoina jun kitia b yate aha nai."
+msgstr "Dimapur te registered ase aro yate pra he chalai ase. Bahar laga kuno app hoina jun kitia b yate aha nai."
 
 #: footer.php:133 single-kaamase_job.php:268
 msgid "Report a problem"
@@ -720,7 +720,7 @@ msgstr "Problem report koribo"
 #. translators: %s: search term
 #: index.php:53
 msgid "Results for %s"
-msgstr "%s laka result khan"
+msgstr "%s laga result khan"
 
 #: footer.php:111
 msgid "Safety"
@@ -764,7 +764,7 @@ msgstr "Etu employer ke sabo"
 
 #: front-page.php:620
 msgid "See what they do, where they are, their ratings and who vouches for them."
-msgstr "Tai khan ki kaam kore, kote thake, tai khan laka rating aro tai khan karne kun vouch kore, etu sabo."
+msgstr "Tai khan ki kaam kore, kote thake, tai khan laga rating aro tai khan karne kun vouch kore, etu sabo."
 
 #: inc/setup.php:450
 msgid "Set up menu"
@@ -773,7 +773,7 @@ msgstr "Menu set koribo"
 #. translators: %s: parent menu item title
 #: inc/nav-walker.php:230
 msgid "Show items under %s"
-msgstr "%s laka nichete thaka jinis khan dikhabo"
+msgstr "%s laga nichete thaka jinis khan dikhabo"
 
 #: inc/page-display.php:240
 msgid "Shown"
@@ -783,8 +783,8 @@ msgstr "Dikhaishey"
 #: inc/template-tags.php:352
 msgid "Shown %s time"
 msgid_plural "Shown %s times"
-msgstr[0] "%s bar dikhaishey"
-msgstr[1] "%s bar dikhaishey"
+msgstr[0] "%s bar dikhaise"
+msgstr[1] "%s bar dikhaise"
 
 #: header.php:138 header.php:194
 msgid "Sign in"
@@ -804,11 +804,11 @@ msgstr "Sidha content te jabo"
 
 #: single-kaamase_worker.php:161
 msgid "Somebody local who knows this person and will say so. We hold their number and check it if there is ever a problem."
-msgstr "Yate laka kunba manu jun etu manu ke jane aro kobole tayar ase. Tai laka number amikhan logote thake aro kitia ba problem hoile amikhan check kore."
+msgstr "Yate laga kunba manu jun etu manu ke jane aro kobole tayar ase. Tai laga number amikhan logote thake aro kitia ba problem hoile amikhan check kore."
 
 #: single-kaamase_worker.php:64
 msgid "Someone they worked for"
-msgstr "Kunba jun laka karne tai kaam kuri shey"
+msgstr "Kunba jun laga karne tai kaam kuri shey"
 
 #: single-kaamase_worker.php:65
 msgid "Someone who knows them"
@@ -816,7 +816,7 @@ msgstr "Kunba jun tai ke jane"
 
 #: inc/enqueue.php:147
 msgid "Something went wrong. Please try again."
-msgstr "Kiba gorbor hoishey. Aru ekbar kuri sabi."
+msgstr "Kiba gorbor hoishe. Aru ekbar kuri sabi."
 
 #: single-kaamase_job.php:139
 msgid "Somewhere to stay"
@@ -840,14 +840,14 @@ msgstr "Thakibole jaga pabo"
 
 #: single-kaamase_worker.php:63
 msgid "Student or workers union officer"
-msgstr "Student nohoile workers union laka officer"
+msgstr "Student nohoile workers union laga officer"
 
 #. translators: %s: number of workers in the team
 #: inc/template-tags.php:931
 msgid "Team of %s worker"
 msgid_plural "Team of %s workers"
-msgstr[0] "%s worker laka team"
-msgstr[1] "%s worker khan laka team"
+msgstr[0] "%s worker laga team"
+msgstr[1] "%s worker khan laga team"
 
 #: single-kaamase_gang.php:116
 msgid "Team size"
@@ -863,11 +863,11 @@ msgstr "Terms"
 
 #: 404.php:111
 msgid "The link may be old, or it may have been typed wrong. Try searching instead."
-msgstr "Link purana hobo pare, nohoile bhul type hoishey hobo pare. Bisari sabi."
+msgstr "Link purana hobo pare, nohoile bhul type hoishe hobo pare. Bisari sabi."
 
 #: 404.php:94
 msgid "The person may have removed their profile, or the link is out of date."
-msgstr "Etu manu pra tai laka profile uthai loishey hobo pare, nohoile link purana hoi jaishey."
+msgstr "Etu manu pra tai laga profile uthai loishe hobo pare, nohoile link purana hoi goise."
 
 #: index.php:265
 msgid "There is nothing on this page at the moment."
@@ -879,7 +879,7 @@ msgstr "Etiya dusra kaam b post kuri rakhishey."
 
 #: functions.php:259
 msgid "These module files have not been uploaded yet. The site will work, but the features in them are not active."
-msgstr "Etu module file khan etiya tak upload kora nai. Site chalibo, hoileh etu bhitor laka feature khan chalu nai."
+msgstr "Etu module file khan etiya tak upload kora nai. Site chalibo, hoileh etu bhitor laga feature khan chalu nai."
 
 #: single-kaamase_gang.php:130
 msgid "They come as a group. One call and the whole team arrives."
@@ -887,7 +887,7 @@ msgstr "Tai khan ekta group hoi ahe. Ekta call kurile pura team ahi jai."
 
 #: 404.php:199
 msgid "Think this is a mistake on our side?"
-msgstr "Etu amikhan laka phale laka bhul ase koi bhabi ase na?"
+msgstr "Etu amikhan laga phale laga bhul ase koi bhabi ase na?"
 
 #: single-kaamase_worker.php:75
 msgid "This is exactly what an employer sees when they open it."
@@ -899,7 +899,7 @@ msgstr "Contractor pra khulile etu he dikhe."
 
 #: single-kaamase_employer.php:51
 msgid "This is what a worker sees before deciding whether to answer your job."
-msgstr "Apni laka kaam te jowab dibo na nai etu thik koribo laka age te worker pra etu he dikhe."
+msgstr "Apni laga kaam te jowab dibo na nai etu thik koribo laga age te worker pra etu he dikhe."
 
 #: single-kaamase_job.php:58
 msgid "This is what a worker sees. Share the link on WhatsApp if you want it seen faster."
@@ -907,19 +907,19 @@ msgstr "Worker pra etu he dikhe. Joldi dikhabole mon hoile link WhatsApp te path
 
 #: single-kaamase_job.php:57
 msgid "This is your job post"
-msgstr "Etu apni laka kaam post ase"
+msgstr "Etu apni laga kaam post ase"
 
 #: single-kaamase_employer.php:50
 msgid "This is your page"
-msgstr "Etu apni laka page ase"
+msgstr "Etu apni laga page ase"
 
 #: single-kaamase_worker.php:74
 msgid "This is your profile"
-msgstr "Etu apni laka profile ase"
+msgstr "Etu apni laga profile ase"
 
 #: single-kaamase_gang.php:48
 msgid "This is your team"
-msgstr "Etu apni laka team ase"
+msgstr "Etu apni laga team ase"
 
 #: single-kaamase_job.php:282
 msgid "This job"
@@ -944,7 +944,7 @@ msgstr "Etu profile available nai"
 #. translators: 1: required PHP version, 2: current PHP version, 3: required WordPress version, 4: current WordPress version
 #: functions.php:69
 msgid "This theme needs PHP %1$s or newer (running %2$s) and WordPress %3$s or newer (running %4$s). Ask your host to upgrade PHP."
-msgstr "Etu theme ke PHP %1$s nohoile tar pichete laka lage (etiya %2$s chali ase) aro WordPress %3$s nohoile tar pichete laka (etiya %4$s). Apni laka host ke PHP upgrade koribole kobi."
+msgstr "Etu theme ke PHP %1$s nohoile tar pichete laga lage (etiya %2$s chali ase) aro WordPress %3$s nohoile tar pichete laga (etiya %4$s). Apni laga host ke PHP upgrade koribole kobi."
 
 #: inc/security.php:280
 msgid "Those details are not correct. Please check and try again."
@@ -960,7 +960,7 @@ msgstr "Dusra district nohoile kaam kuri sabi."
 
 #: index.php:225
 msgid "Try a trade name like mason or electrician, or search by district instead."
-msgstr "Mason nohoile electrician nisina kaam laka naam likhibi, nohoile district pra bisaribi."
+msgstr "Mason nohoile electrician nisina kaam laga naam likhibi, nohoile district pra bisaribi."
 
 #: single-kaamase_employer.php:90
 msgid "Type"
@@ -972,7 +972,7 @@ msgstr "Joldi lage"
 
 #: inc/page-display.php:112
 msgid "Use this when the page writes its own heading. The title stays in the page code for search engines and screen readers, it is only hidden from view. The featured image is still used for search results and link previews."
-msgstr "Jitia page pra nije laka heading likhe titia etu cholabi. Title search engine aro screen reader karne page code te thake, khali dikha nai. Featured image search result aro link preview te etiya b cholai ase."
+msgstr "Jitia page pra nije laga heading likhe titia etu cholabi. Title search engine aro screen reader karne page code te thake, khali dikha nai. Featured image search result aro link preview te etiya b cholai ase."
 
 #: 404.php:144
 msgid "Useful links"
@@ -988,7 +988,7 @@ msgstr "Kaam sabo"
 
 #: single-kaamase_worker.php:61
 msgid "Village council member"
-msgstr "Village council laka member"
+msgstr "Village council laga member"
 
 #: inc/template-tags.php:535
 msgid "Vouched"
@@ -996,15 +996,15 @@ msgstr "Vouched"
 
 #: single-kaamase_gang.php:172 single-kaamase_worker.php:152
 msgid "Vouched for by"
-msgstr "Vouch dishey"
+msgstr "Vouch dishe"
 
 #: front-page.php:783
 msgid "Vouched locally"
-msgstr "Yate laka manu pra vouched"
+msgstr "Yate laga manu pra vouched"
 
 #: footer.php:138
 msgid "Wage or job complaint"
-msgstr "Mojuri nohoile kaam laka complaint"
+msgstr "Mojuri nohoile kaam laga complaint"
 
 #: front-page.php:239
 msgid "What work"
@@ -1024,7 +1024,7 @@ msgstr "Nagaland te jate hoileh b jabo"
 
 #: single-kaamase_gang.php:38 single-kaamase_worker.php:54
 msgid "Will travel anywhere in their district"
-msgstr "Tai laka district te jate hoileh b jabo"
+msgstr "Tai laga district te jate hoileh b jabo"
 
 #: single-kaamase_employer.php:142
 msgid "Work they are hiring for"
@@ -1052,7 +1052,7 @@ msgstr "Worker khan lage"
 
 #: single-kaamase_job.php:237
 msgid "Workers who have done a job for them rate them too. Open their page to see what they said."
-msgstr "Jun worker khan tai khan laka karne kaam kuri shey, tai khan pra b rating diye. Tai khan ki koishey etu sabole tai laka page khulibi."
+msgstr "Jun worker khan tai khan laga karne kaam kuri shey, tai khan pra b rating diye. Tai khan ki koishey etu sabole tai laga page khulibi."
 
 #: functions.php:299
 msgid "Workers, gangs, employers and jobs are stored by the Kaam Ase Core plugin. Until it is installed and activated, this theme will display ordinary pages and posts only."
@@ -1064,7 +1064,7 @@ msgstr "Kaam te ase"
 
 #: single-kaamase_gang.php:37 single-kaamase_worker.php:53
 msgid "Works around their own town"
-msgstr "Tai laka nije laka town laka usor te kaam kore"
+msgstr "Tai laga nije laga town laga usor te kaam kore"
 
 #: inc/security.php:235
 msgid "You are not allowed to view this."
@@ -1072,7 +1072,7 @@ msgstr "Apni ke etu sabole permission nai."
 
 #: inc/enqueue.php:148
 msgid "You are offline. Check your connection."
-msgstr "Apni offline ase. Apni laka connection sabi."
+msgstr "Apni offline ase. Apni laga connection sabi."
 
 #: inc/template-tags.php:411
 msgid "for the job"
@@ -1086,8 +1086,8 @@ msgstr "iPhone"
 #: inc/template-tags.php:359
 msgid "opened %s time"
 msgid_plural "opened %s times"
-msgstr[0] "%s bar khulishey"
-msgstr[1] "%s bar khulishey"
+msgstr[0] "%s bar khulise"
+msgstr[1] "%s bar khulise"
 
 #: inc/template-tags.php:409
 msgid "per day"
