@@ -87,6 +87,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
 | `fixed/kaamase-core/includes/seo.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/assets/images/hero/` (14 photos) | `wp-content/themes/kaamase/assets/images/hero/` **(new folder)** |
+| `fixed/kaamase-core/includes/job-photos.php` | `wp-content/plugins/kaamase-core/includes/job-photos.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -5389,6 +5390,121 @@ button hidden; the button's words in Hindi and Nagamese. No sideways scroll at
 list emptied, every measured position of the hero matched the previous version
 exactly. The pause button shows the amber focus ring from the keyboard. Nothing
 in `debug.log`.
+
+## 77. Photo weight, profile photos, and job pictures shown whole
+
+Three things were checked: advice that PNG photos make heavy thumbnails,
+whether very small or very big profile photos look bad, and feedback that job
+pictures lose part of what is written on them. The first and third were real,
+and checking the second found a weight problem of its own. Each was measured on
+the real WordPress copy before anything changed.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase/inc/setup.php` | 1.2.0 |
+| `fixed/kaamase/inc/template-tags.php` | 1.2.0 |
+| `fixed/kaamase-core/includes/job-photos.php` | 1.3.0, **first time in `fixed/`**, over the live one |
+| `fixed/kaamase-core/languages/kaamase-core.pot`, `kaamase-core-hi_IN.po` and `.mo`, `kaamase-core-nag.po` and `.mo` | one new line |
+
+Then **LiteSpeed Cache → Toolbox → Purge All**. No other file changed; the
+theme's language files and `style.css` are as they were.
+
+### 1. PNG photos: the advice was right
+
+WordPress makes every smaller copy in the format the photo arrived in. The same
+photograph, uploaded both ways:
+
+| | as PNG | as JPEG |
+| --- | --- | --- |
+| 128 px avatar, on every card | 33.6 KB | 4.8 KB |
+| 320 px, profile page | 163.6 KB | 19.6 KB |
+| 960 × 540, a job picture | 565.1 KB | 64.1 KB |
+
+Now the copies of a member's PNG are made as JPEG, so a PNG photo weighs what
+a JPEG does. Four limits keep it safe:
+
+- **Member photos only**: profile pictures and job pictures, told apart by what
+  they belong to. The site's own images are untouched.
+- **Nothing see-through**: a logo with a clear background, or a photo cut into
+  a circle, keeps PNG copies. JPEG would turn the clear parts black. The file is
+  checked, not guessed: a PNG saved with an unused see-through layer, which
+  phones often do, is recognised as solid and made JPEG.
+- **Only the copies**: the uploaded file keeps its format, so the step that
+  removes location data from every upload works exactly as before. Tested with
+  a PNG carrying a hidden location note: removed, as before.
+- **JPEG, not WebP**: WhatsApp does not reliably show WebP pictures in link
+  previews, and these are the pictures a shared job or profile shows.
+
+Photos uploaded before this keep their PNG copies. They become light when
+re-uploaded, or all at once with the free *Regenerate Thumbnails* plugin, which
+is optional.
+
+### 2. Profile photos, any size: they look right
+
+Every avatar is drawn in a fixed square that is filled, never stretched.
+Checked with a 60 × 40 photo, a 4000 × 2776 one, a 3000 × 600 strip and a
+600 × 3000 strip: all show as clean squares. A very big photo is shrunk to 1600
+and cut square from the middle. A tiny one is still square, just soft, because
+there are no more pixels to show. Nothing to change there.
+
+What the check did find: **phones were downloading far more than they show.**
+WordPress told the browser an avatar is 128 or 320 wide, but the page draws it
+at 56 on a card and 96 on a profile. For a square photo, which is what most
+croppers make, the phone then chose the 1024 copy.
+
+| Square profile photo, phone | Before | Now |
+| --- | --- | --- |
+| Worker list, one face | 107.7 KB | 18.3 KB |
+| Profile page | 107.7 KB | 18.3 KB |
+
+Just as sharp: the browser still gets three pixels for every pixel on screen.
+
+### 3. Job pictures: shown whole
+
+The job page showed a **960 by 540 crop**, a band across the middle. A tall
+flyer lost its heading at the top and its phone number at the bottom, which are
+the two things that matter. Now:
+
+- **One picture** shows whole, as wide as the column and never taller than most
+  of the screen, in a light frame.
+- **Several pictures** sit in a grid of equal frames, each shown whole inside
+  its frame.
+- **A tap opens the picture large**: the stored picture, up to 1600 pixels, to
+  zoom into the small print. For a PNG, the 1024 copy instead, because the
+  stored PNG can be many megabytes.
+- The page never downloads the stored original on its own: at most the 1024
+  copy, which for the test flyer was 29 KB.
+
+**For the app:** each job photo now also has `whole`, with `whole_width` and
+`whole_height`: the same picture uncropped, at most 1024 on its longest side.
+`small` and `large` are unchanged crops, so nothing in the app changes by
+itself. The job screen should use `whole` to show a flyer in full.
+
+**Job cards** in lists asked for a 128 crop that is only ever made for profile
+photos, so they fell back to a big copy for a 64 pixel thumbnail. They now use
+the 150 square WordPress already makes for every job photo. On the test list:
+41.7 KB of pictures before, 3.0 KB now. The share picture on WhatsApp is still
+the 960 by 540 crop, which is what a preview wants.
+
+### Tested on the real WordPress site
+
+- 18 uploads through the site's own path, plus 3 through the app's photo route
+  over HTTP: PNG photos, a PNG with an unused see-through layer, palette and
+  grey PNGs, a PNG flyer, a round-cut photo, two see-through logos, a PNG with a
+  location note, a PNG on an ordinary page, and tiny, huge, wide and tall
+  JPEGs. Each gave the result described above; the switch never stayed on
+  between uploads.
+- Job page with one and with three pictures, on a phone and a computer: whole
+  pictures, the right file opened by a tap, the original never in the choice.
+  The job data over the REST API carries `whole` at 576 by 1024 for the flyer.
+- What a phone really downloads, for the worker list, a profile page and the job
+  list, before and after.
+- Home, jobs, workers, teams, a job, a worker, a district, a trade and a
+  filtered list in English, Hindi and Nagamese: every page complete, the new
+  label read out as *पूरी तस्वीर देखें* and *Pura photo sabo*, and nothing from
+  these files in `debug.log`. Language files: 0 placeholder problems.
 
 ## Not changed, and why
 

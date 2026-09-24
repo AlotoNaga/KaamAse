@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 06:34+0000\n"
-"PO-Revision-Date: 2026-09-24 06:34+0000\n"
+"POT-Creation-Date: 2026-09-24 07:46+0000\n"
+"PO-Revision-Date: 2026-09-24 07:46+0000\n"
 "Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -453,7 +453,7 @@ msgstr "एक फ़ोन"
 msgid "A phone number is never put in a notification."
 msgstr ""
 
-#: includes/job-photos.php:564
+#: includes/job-photos.php:575
 msgid "A photo of the site or the shop gets a job far more answers than words alone, and it shows the work is real."
 msgstr "साइट या दुकान की फ़ोटो से काम को सिर्फ़ शब्दों के मुक़ाबले कहीं ज़्यादा जवाब मिलते हैं, और इससे पता चलता है कि काम असली है।"
 
@@ -2322,7 +2322,7 @@ msgstr "एक मालिक एक साथ कितने काम ज़
 msgid "How many jobs one employer can post in a day. This is here to stop the listings being flooded by one account rather than to ration honest use, so it should sit well above what a real employer would ever need."
 msgstr "एक मालिक एक दिन में कितने काम डाल सकता है। यह ईमानदार इस्तेमाल पर रोक लगाने के लिए नहीं, बल्कि एक खाते से लिस्टिंग भर जाने से रोकने के लिए है, इसलिए यह किसी असली मालिक की ज़रूरत से काफ़ी ऊपर होना चाहिए।"
 
-#: includes/job-photos.php:74
+#: includes/job-photos.php:85
 msgid "How many pictures one job post can carry. One is enough to make a listing worth looking at, which is why it is the free number. More is a reason to pay rather than something a job needs."
 msgstr "एक काम की पोस्ट पर कितनी तस्वीरें लग सकती हैं। लिस्टिंग को देखने लायक बनाने के लिए एक ही काफ़ी है, इसीलिए मुफ़्त में इतनी ही है। इससे ज़्यादा पैसे देने की वजह है, काम की ज़रूरत नहीं।"
 
@@ -2551,7 +2551,7 @@ msgstr ""
 msgid "Its password"
 msgstr ""
 
-#: includes/job-photos.php:582
+#: includes/job-photos.php:593
 msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
 msgstr "JPG, PNG या WEBP। फ़ोन जो छिपी हुई जगह की जानकारी फ़ोटो के अंदर सहेजते हैं, वह किसी के देखने से पहले हम हटा देते हैं।"
 
@@ -3222,11 +3222,11 @@ msgstr "अभी कोई पेज तय नहीं है। Past jobs �
 msgid "No photo arrived. Please try again."
 msgstr "कोई फ़ोटो नहीं आई। दोबारा कोशिश करें।"
 
-#: includes/job-photos.php:255
+#: includes/job-photos.php:266
 msgid "No picture arrived."
 msgstr "कोई तस्वीर नहीं आई।"
 
-#: includes/job-photos.php:915
+#: includes/job-photos.php:996
 msgid "No picture arrived. Please try again."
 msgstr "कोई तस्वीर नहीं आई। दोबारा कोशिश करें।"
 
@@ -3592,7 +3592,7 @@ msgid "One year"
 msgstr ""
 
 #. translators: %s: how many photos the account may have
-#: includes/job-photos.php:427
+#: includes/job-photos.php:438
 msgid "Only %s picture was kept. That is what this account can put on a job."
 msgid_plural "Only %s pictures were kept. That is what this account can put on a job."
 msgstr[0] "सिर्फ़ %s तस्वीर रखी गई। इस खाते से एक काम पर इतनी ही लग सकती है।"
@@ -3691,7 +3691,7 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: includes/job-photos.php:577
+#: includes/job-photos.php:588
 msgid "Paid accounts can put more than one picture on a job."
 msgstr "पेड खाते एक काम पर एक से ज़्यादा तस्वीरें लगा सकते हैं।"
 
@@ -3830,7 +3830,7 @@ msgstr ""
 msgid "Photos need to be a JPG, PNG or WEBP."
 msgstr "फ़ोटो JPG, PNG या WEBP होनी चाहिए।"
 
-#: includes/job-photos.php:73
+#: includes/job-photos.php:84
 msgid "Photos on a job"
 msgstr "एक काम पर फ़ोटो"
 
@@ -3842,7 +3842,7 @@ msgstr ""
 msgid "Physiotherapist"
 msgstr ""
 
-#: includes/job-photos.php:515 includes/posted-for.php:375
+#: includes/job-photos.php:526 includes/posted-for.php:375
 msgid "Pictures"
 msgstr "तस्वीरें"
 
@@ -4198,7 +4198,7 @@ msgstr "अपने नाम, ज़िले, अपने काम और �
 msgid "Registered"
 msgstr ""
 
-#: includes/job-photos.php:536 includes/saved.php:572 includes/saved.php:840
+#: includes/job-photos.php:547 includes/saved.php:572 includes/saved.php:840
 msgid "Remove"
 msgstr "हटाएँ"
 
@@ -4470,6 +4470,10 @@ msgstr "देखें ठेकेदार को यह कैसा दि�
 #: includes/dashboard.php:402
 msgid "See how others see your profile"
 msgstr "देखें दूसरों को आपकी प्रोफ़ाइल कैसी दिखती है"
+
+#: includes/job-photos.php:822
+msgid "See the whole picture"
+msgstr "पूरी तस्वीर देखें"
 
 #: includes/verify-requests.php:490
 msgid "See their profile"
@@ -5204,7 +5208,7 @@ msgstr "वह मालिक उपलब्ध नहीं है।"
 msgid "That employer no longer exists."
 msgstr "वह मालिक अब मौजूद नहीं है।"
 
-#: includes/job-photos.php:273
+#: includes/job-photos.php:284
 msgid "That file is not a picture. Only JPG, PNG and WEBP photos can go on a job."
 msgstr "वह फ़ाइल तस्वीर नहीं है। काम पर सिर्फ़ JPG, PNG और WEBP फ़ोटो लग सकती हैं।"
 
@@ -5256,7 +5260,7 @@ msgstr "यह आपकी अपनी प्रोफ़ाइल है।"
 msgid "That job is not yours to edit."
 msgstr "वह काम बदलने का हक़ आपका नहीं है।"
 
-#: includes/job-photos.php:894 includes/rest-api.php:1609
+#: includes/job-photos.php:975 includes/rest-api.php:1609
 msgid "That job is not yours."
 msgstr "वह काम आपका नहीं है।"
 
@@ -5289,11 +5293,11 @@ msgstr "वह नंबर छिपा हुआ नहीं है, इस�
 msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
 msgstr "वह फ़ोन नंबर ठीक नहीं लग रहा। यह 10 अंकों का होना चाहिए और 6, 7, 8 या 9 से शुरू होना चाहिए।"
 
-#: includes/job-photos.php:266
+#: includes/job-photos.php:277
 msgid "That picture did not upload. Please try again."
 msgstr "वह तस्वीर अपलोड नहीं हुई। दोबारा कोशिश करें।"
 
-#: includes/job-photos.php:265
+#: includes/job-photos.php:276
 msgid "That picture was too big for the server to take. Photos straight from a phone are often very large. Try one taken at a smaller size."
 msgstr "वह तस्वीर सर्वर के लेने के लिए बहुत बड़ी थी। सीधे फ़ोन से ली गई फ़ोटो अक्सर बहुत बड़ी होती हैं। छोटे आकार में ली गई कोई तस्वीर आज़माएँ।"
 
@@ -5640,7 +5644,7 @@ msgstr ""
 msgid "This is the only way you can sign in. Set a password first, then you can disconnect it."
 msgstr "साइन इन का आपके पास बस यही तरीक़ा है। पहले पासवर्ड लगाएँ, फिर इसे हटा सकते हैं।"
 
-#: includes/job-photos.php:907
+#: includes/job-photos.php:988
 msgid "This job already has all the pictures this account can add."
 msgstr "इस काम पर पहले से उतनी तस्वीरें हैं जितनी यह खाता जोड़ सकता है।"
 
@@ -5648,7 +5652,7 @@ msgstr "इस काम पर पहले से उतनी तस्वी
 msgid "This job has all the pictures one job can carry. Remove one to put a different one up."
 msgstr "इस काम पर उतनी तस्वीरें हैं जितनी एक काम पर लग सकती हैं। दूसरी लगाने के लिए एक हटाएँ।"
 
-#: includes/job-photos.php:570
+#: includes/job-photos.php:581
 msgid "This job has all the pictures this account can add. Remove one to put a different one up."
 msgstr "इस काम पर उतनी तस्वीरें हैं जितनी यह खाता जोड़ सकता है। दूसरी लगाने के लिए एक हटाएँ।"
 
@@ -6816,7 +6820,7 @@ msgid "You asked about this one recently. Ring us if you have not heard back."
 msgstr ""
 
 #. translators: %s: how many more pictures may be added
-#: includes/job-photos.php:554
+#: includes/job-photos.php:565
 msgid "You can add %s picture to this job."
 msgid_plural "You can add up to %s pictures to this job."
 msgstr[0] "आप इस काम पर %s तस्वीर जोड़ सकते हैं।"

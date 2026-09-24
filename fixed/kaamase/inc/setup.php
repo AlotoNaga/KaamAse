@@ -13,7 +13,7 @@
  * between a page that loads and a page that gets abandoned.
  *
  * @package Kaamase
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.0.0
  */
 
@@ -201,6 +201,259 @@ function kaamase_jpeg_quality() {
 }
 add_filter( 'jpeg_quality', 'kaamase_jpeg_quality' );
 add_filter( 'wp_editor_set_quality', 'kaamase_jpeg_quality' );
+
+/*
+ * PNG photographs, made small as JPEG.
+ *
+ * WordPress makes every smaller copy of an upload in the format it came
+ * in, and PNG is the wrong format for a photograph. Measured on this
+ * site, one photograph as a 128 pixel avatar was 33.6 KB as PNG and
+ * 4.8 KB as JPEG, and 163.6 KB against 19.6 KB at 320 on a profile. Some
+ * phones and croppers save photographs as PNG, and every card they
+ * appeared on carried seven or eight times the weight.
+ *
+ * So the copies of a member's PNG are made as JPEG, with four limits:
+ *
+ * - Member photographs only: profile pictures and job pictures, told
+ *   apart by what they are attached to, the same way media.php does.
+ *   The site's own images are left alone.
+ * - Only a picture with nothing see-through in it. JPEG has no
+ *   transparency, and WordPress would fill a logo's clear background
+ *   with black. A logo that really is see-through keeps PNG copies,
+ *   which for a logo are small anyway.
+ * - Only the copies. The uploaded file keeps its format, because
+ *   security.php re-saves it in place to strip location data.
+ *   WordPress gives that save a file name and gives the copies none,
+ *   which is how the two are told apart below.
+ * - JPEG, not WebP. These are the pictures a shared job or profile
+ *   shows, and WhatsApp does not reliably show WebP in a link preview.
+ *
+ * Photos uploaded before this keep their PNG copies until regenerated.
+ */
+
+if ( ! function_exists( 'kaamase_png_is_opaque' ) ) {
+	/**
+	 * Whether a PNG file has nothing see-through in it.
+	 *
+	 * The header settles most files without opening the picture: saved
+	 * with neither an alpha channel nor a transparency chunk, a PNG
+	 * cannot have a clear pixel. One with an alpha channel is opened and
+	 * looked at, because phones and croppers routinely save an alpha
+	 * channel that is solid everywhere. A grid across the picture and
+	 * every pixel of its four edges, where a logo's clear background is.
+	 *
+	 * Anything that cannot be read counts as see-through, which leaves
+	 * the file exactly as it would have been.
+	 *
+	 * @since 1.2.0
+	 * @param string $file Path to the PNG.
+	 * @return bool
+	 */
+	function kaamase_png_is_opaque( $file ) {
+
+		$handle = ( is_string( $file ) && is_readable( $file ) ) ? fopen( $file, 'rb' ) : false; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Reading a header, not writing.
+
+		if ( ! $handle ) {
+			return false;
+		}
+
+		$head = (string) fread( $handle, 33 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+		$trns = false;
+
+		if ( strlen( $head ) < 33 || "\x89PNG\r\n\x1a\n" !== substr( $head, 0, 8 ) || 'IHDR' !== substr( $head, 12, 4 ) ) {
+			fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+			return false;
+		}
+
+		$color = ord( $head[25] );
+
+		// A transparency chunk, if there is one, comes before the picture data.
+		while ( ! feof( $handle ) ) {
+
+			$chunk = (string) fread( $handle, 8 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+
+			if ( 8 !== strlen( $chunk ) ) {
+				break;
+			}
+
+			$type = substr( $chunk, 4, 4 );
+
+			if ( 'tRNS' === $type ) {
+				$trns = true;
+				break;
+			}
+
+			if ( 'IDAT' === $type || 'IEND' === $type ) {
+				break;
+			}
+
+			$length = unpack( 'N', substr( $chunk, 0, 4 ) );
+
+			if ( 0 !== fseek( $handle, (int) $length[1] + 4, SEEK_CUR ) ) {
+				break;
+			}
+		}
+
+		fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+
+		// A transparency chunk is only ever there to make something clear.
+		if ( $trns ) {
+			return false;
+		}
+
+		// Grey, colour or palette with no alpha channel: solid by definition.
+		if ( in_array( $color, array( 0, 2, 3 ), true ) ) {
+			return true;
+		}
+
+		if ( ! function_exists( 'imagecreatefrompng' ) ) {
+			return false;
+		}
+
+		$size = wp_getimagesize( $file );
+
+		// Too big to open safely on a shared server. Left as PNG.
+		if ( empty( $size[0] ) || empty( $size[1] ) || $size[0] * $size[1] > 25000000 ) {
+			return false;
+		}
+
+		wp_raise_memory_limit( 'image' );
+
+		$image = @imagecreatefrompng( $file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- An unreadable file is answered below.
+
+		if ( ! $image ) {
+			return false;
+		}
+
+		if ( ! imageistruecolor( $image ) ) {
+			imagepalettetotruecolor( $image );
+		}
+
+		$width  = imagesx( $image );
+		$height = imagesy( $image );
+		$step   = max( 1, (int) floor( min( $width, $height ) / 200 ) );
+		$solid  = true;
+
+		$clear = static function ( $x, $y ) use ( $image ) {
+			return 0 !== ( ( imagecolorat( $image, $x, $y ) >> 24 ) & 0x7F );
+		};
+
+		for ( $x = 0; $x < $width && $solid; $x++ ) {
+			$solid = ! $clear( $x, 0 ) && ! $clear( $x, $height - 1 );
+		}
+
+		for ( $y = 0; $y < $height && $solid; $y++ ) {
+			$solid = ! $clear( 0, $y ) && ! $clear( $width - 1, $y );
+		}
+
+		for ( $y = 0; $y < $height && $solid; $y += $step ) {
+			for ( $x = 0; $x < $width; $x += $step ) {
+				if ( $clear( $x, $y ) ) {
+					$solid = false;
+					break;
+				}
+			}
+		}
+
+		unset( $image );
+
+		return $solid;
+	}
+}
+
+if ( ! function_exists( 'kaamase_png_copies_as_jpeg' ) ) {
+	/**
+	 * Whether the picture being cut into copies right now should get
+	 * JPEG copies. Set just before the copies are made, cleared after.
+	 *
+	 * @since 1.2.0
+	 * @param bool|null $set New value, or null to only read it.
+	 * @return bool
+	 */
+	function kaamase_png_copies_as_jpeg( $set = null ) {
+
+		static $on = false;
+
+		if ( null !== $set ) {
+			$on = (bool) $set;
+		}
+
+		return $on;
+	}
+}
+
+if ( ! function_exists( 'kaamase_png_copies_plan' ) ) {
+	/**
+	 * Decide, as WordPress starts on a picture's copies.
+	 *
+	 * @since 1.2.0
+	 * @param array $sizes         Sizes about to be made. Returned untouched.
+	 * @param array $metadata      Attachment metadata. Unused.
+	 * @param int   $attachment_id Attachment ID.
+	 * @return array
+	 */
+	function kaamase_png_copies_plan( $sizes, $metadata = array(), $attachment_id = 0 ) {
+
+		unset( $metadata );
+
+		kaamase_png_copies_as_jpeg( false );
+
+		if ( ! $attachment_id
+			|| 'image/png' !== get_post_mime_type( $attachment_id )
+			|| ! function_exists( 'kaamase_attachment_parent_type' )
+			|| ! function_exists( 'kaamase_user_media_parent_types' )
+			|| ! in_array( kaamase_attachment_parent_type( $attachment_id ), kaamase_user_media_parent_types(), true ) ) {
+			return $sizes;
+		}
+
+		kaamase_png_copies_as_jpeg( kaamase_png_is_opaque( get_attached_file( $attachment_id ) ) );
+
+		return $sizes;
+	}
+}
+add_filter( 'intermediate_image_sizes_advanced', 'kaamase_png_copies_plan', 30, 3 );
+
+if ( ! function_exists( 'kaamase_png_copies_format' ) ) {
+	/**
+	 * Make the copies JPEG when the plan says so.
+	 *
+	 * Only a save with no file name, which is a copy. The metadata strip
+	 * in security.php names its file, so it is never touched. If the
+	 * server cannot write JPEG, WordPress ignores this and keeps PNG.
+	 *
+	 * @since 1.2.0
+	 * @param string[]    $formats   Source mime type mapped to output mime type.
+	 * @param string|null $filename  File being saved, or null for a copy.
+	 * @param string|null $mime_type Mime type of the picture.
+	 * @return string[]
+	 */
+	function kaamase_png_copies_format( $formats, $filename = null, $mime_type = null ) {
+
+		if ( null === $filename && 'image/png' === $mime_type && kaamase_png_copies_as_jpeg() ) {
+			$formats['image/png'] = 'image/jpeg';
+		}
+
+		return $formats;
+	}
+}
+add_filter( 'image_editor_output_format', 'kaamase_png_copies_format', 10, 3 );
+
+if ( ! function_exists( 'kaamase_png_copies_done' ) ) {
+	/**
+	 * Clear the plan once the copies are made.
+	 *
+	 * @since 1.2.0
+	 * @param array $metadata Attachment metadata, returned untouched.
+	 * @return array
+	 */
+	function kaamase_png_copies_done( $metadata ) {
+
+		kaamase_png_copies_as_jpeg( false );
+
+		return $metadata;
+	}
+}
+add_filter( 'wp_generate_attachment_metadata', 'kaamase_png_copies_done', 1 );
 
 /**
  * Expose the theme image sizes in the media picker.

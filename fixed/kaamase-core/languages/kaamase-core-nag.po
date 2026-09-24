@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 06:34+0000\n"
-"PO-Revision-Date: 2026-09-24 06:34+0000\n"
+"POT-Creation-Date: 2026-09-24 07:46+0000\n"
+"PO-Revision-Date: 2026-09-24 07:46+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -453,7 +453,7 @@ msgstr "Ekta phone"
 msgid "A phone number is never put in a notification."
 msgstr ""
 
-#: includes/job-photos.php:564
+#: includes/job-photos.php:575
 msgid "A photo of the site or the shop gets a job far more answers than words alone, and it shows the work is real."
 msgstr "Site nohoile dukan laka photo pra kaam ke khali kotha pra bisi bhal jowab ahe, aro etu pra kaam hosa ase koi dikhe."
 
@@ -2322,7 +2322,7 @@ msgstr "Ekta employer ekbar te kiman kaam joldi koi mark koribo pare. Joldi laka
 msgid "How many jobs one employer can post in a day. This is here to stop the listings being flooded by one account rather than to ration honest use, so it should sit well above what a real employer would ever need."
 msgstr "Ekta employer ek din te kiman kaam post koribo pare. Etu hosa cholua ke rukhabole nohoi, ekta account pra listing bhorti hua ke rukhabole ase, etu karne etu kuno hosa employer laka dorkar pra bisi upor te thakibo lage."
 
-#: includes/job-photos.php:74
+#: includes/job-photos.php:85
 msgid "How many pictures one job post can carry. One is enough to make a listing worth looking at, which is why it is the free number. More is a reason to pay rather than something a job needs."
 msgstr "Ekta kaam laka post te kiman photo lagibo pare. Listing ke sabo laga bonabole ekta he kafi ase, etu karne free te iman he ase. Tar pra bisi pisa diya laka karon ase, kaam laka dorkar hoina."
 
@@ -2551,7 +2551,7 @@ msgstr ""
 msgid "Its password"
 msgstr ""
 
-#: includes/job-photos.php:582
+#: includes/job-photos.php:593
 msgid "JPG, PNG or WEBP. We remove the hidden location information phones save inside photos before anybody sees them."
 msgstr "JPG, PNG nohoile WEBP. Phone khan pra photo bhitor te lukai rakha jaga laka information kunba sabo laka age te amikhan uthai diye."
 
@@ -3222,11 +3222,11 @@ msgstr "Etiya tak kuno page thik kora nai. Past jobs koi ekta page banabi, tar b
 msgid "No photo arrived. Please try again."
 msgstr "Kuno photo aha nai. Aru ekbar kuri sabi."
 
-#: includes/job-photos.php:255
+#: includes/job-photos.php:266
 msgid "No picture arrived."
 msgstr "Kuno photo aha nai."
 
-#: includes/job-photos.php:915
+#: includes/job-photos.php:996
 msgid "No picture arrived. Please try again."
 msgstr "Kuno photo aha nai. Aru ekbar kuri sabi."
 
@@ -3592,7 +3592,7 @@ msgid "One year"
 msgstr ""
 
 #. translators: %s: how many photos the account may have
-#: includes/job-photos.php:427
+#: includes/job-photos.php:438
 msgid "Only %s picture was kept. That is what this account can put on a job."
 msgid_plural "Only %s pictures were kept. That is what this account can put on a job."
 msgstr[0] "Khali %s photo rakhishey. Etu account pra ekta kaam te iman he lagabo pare."
@@ -3691,7 +3691,7 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: includes/job-photos.php:577
+#: includes/job-photos.php:588
 msgid "Paid accounts can put more than one picture on a job."
 msgstr "Paid account khan ekta kaam te ekta pra bisi photo lagabo pare."
 
@@ -3830,7 +3830,7 @@ msgstr ""
 msgid "Photos need to be a JPG, PNG or WEBP."
 msgstr "Photo khan JPG, PNG nohoile WEBP hobo lage."
 
-#: includes/job-photos.php:73
+#: includes/job-photos.php:84
 msgid "Photos on a job"
 msgstr "Ekta kaam te photo khan"
 
@@ -3842,7 +3842,7 @@ msgstr ""
 msgid "Physiotherapist"
 msgstr ""
 
-#: includes/job-photos.php:515 includes/posted-for.php:375
+#: includes/job-photos.php:526 includes/posted-for.php:375
 msgid "Pictures"
 msgstr "Photo khan"
 
@@ -4198,7 +4198,7 @@ msgstr "Apni laka naam, district, apni ki kaam kore aro phone number loi kene Ka
 msgid "Registered"
 msgstr ""
 
-#: includes/job-photos.php:536 includes/saved.php:572 includes/saved.php:840
+#: includes/job-photos.php:547 includes/saved.php:572 includes/saved.php:840
 msgid "Remove"
 msgstr "Uthai dibo"
 
@@ -4470,6 +4470,10 @@ msgstr "Contractor pra etu kineka dikhe etu sabo"
 #: includes/dashboard.php:402
 msgid "See how others see your profile"
 msgstr "Dusra khan pra apni laka profile kineka dikhe etu sabo"
+
+#: includes/job-photos.php:822
+msgid "See the whole picture"
+msgstr "Pura photo sabo"
 
 #: includes/verify-requests.php:490
 msgid "See their profile"
@@ -5204,7 +5208,7 @@ msgstr "Etu employer available nai."
 msgid "That employer no longer exists."
 msgstr "Etu employer aru nai."
 
-#: includes/job-photos.php:273
+#: includes/job-photos.php:284
 msgid "That file is not a picture. Only JPG, PNG and WEBP photos can go on a job."
 msgstr "Etu file photo hoina. Kaam te khali JPG, PNG aro WEBP photo khan he lagibo pare."
 
@@ -5256,7 +5260,7 @@ msgstr "Etu apni laka nije laka profile ase."
 msgid "That job is not yours to edit."
 msgstr "Etu kaam thik kora laka hok apni laka nohoi."
 
-#: includes/job-photos.php:894 includes/rest-api.php:1609
+#: includes/job-photos.php:975 includes/rest-api.php:1609
 msgid "That job is not yours."
 msgstr "Etu kaam apni laka hoina."
 
@@ -5289,11 +5293,11 @@ msgstr "Etu number lukua nai, etu karne mangibole eku nai."
 msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
 msgstr "Etu phone number thik dikha nai. Etu 6, 7, 8 nohoile 9 pra suru hua 10 digit hobo lage."
 
-#: includes/job-photos.php:266
+#: includes/job-photos.php:277
 msgid "That picture did not upload. Please try again."
 msgstr "Etu photo upload hua nai. Aru ekbar kuri sabi."
 
-#: includes/job-photos.php:265
+#: includes/job-photos.php:276
 msgid "That picture was too big for the server to take. Photos straight from a phone are often very large. Try one taken at a smaller size."
 msgstr "Etu photo server pra lobole bisi dangor ase. Phone pra sidha loa photo khan bisi somoi bisi dangor hoi. Chutu size te loa ekta kuri sabi."
 
@@ -5640,7 +5644,7 @@ msgstr ""
 msgid "This is the only way you can sign in. Set a password first, then you can disconnect it."
 msgstr "Apni sign in koribo para khali etu he tarika ase. Poila ekta password lagabi, tar pichete etu khuli dibo pare."
 
-#: includes/job-photos.php:907
+#: includes/job-photos.php:988
 msgid "This job already has all the pictures this account can add."
 msgstr "Etu kaam te age te pra etu account pra add koribo para sob photo lagi ase."
 
@@ -5648,7 +5652,7 @@ msgstr "Etu kaam te age te pra etu account pra add koribo para sob photo lagi as
 msgid "This job has all the pictures one job can carry. Remove one to put a different one up."
 msgstr "Etu kaam te ekta kaam te lagibo para sob photo lagi ase. Dusra ekta lagabole ekta uthai dibi."
 
-#: includes/job-photos.php:570
+#: includes/job-photos.php:581
 msgid "This job has all the pictures this account can add. Remove one to put a different one up."
 msgstr "Etu kaam te etu account pra add koribo para sob photo lagi ase. Dusra ekta lagabole ekta uthai dibi."
 
@@ -6816,7 +6820,7 @@ msgid "You asked about this one recently. Ring us if you have not heard back."
 msgstr ""
 
 #. translators: %s: how many more pictures may be added
-#: includes/job-photos.php:554
+#: includes/job-photos.php:565
 msgid "You can add %s picture to this job."
 msgid_plural "You can add up to %s pictures to this job."
 msgstr[0] "Apni etu kaam te %s photo add koribo pare."

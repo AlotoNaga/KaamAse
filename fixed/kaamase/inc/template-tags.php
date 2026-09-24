@@ -21,7 +21,7 @@
  * plugin so the platform stays between the two parties.
  *
  * @package Kaamase
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.0.0
  */
 
@@ -130,6 +130,7 @@ if ( ! function_exists( 'kaamase_avatar' ) ) {
 					'loading'  => 'lazy',
 					'decoding' => 'async',
 					'alt'      => '',
+					'sizes'    => kaamase_avatar_sizes( $classes ),
 				)
 			);
 		}
@@ -141,6 +142,41 @@ if ( ! function_exists( 'kaamase_avatar' ) ) {
 			esc_attr( $classes ),
 			esc_html( kaamase_initials( $name ) )
 		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_avatar_sizes' ) ) {
+	/**
+	 * How wide an avatar is really drawn, so the browser fetches a file
+	 * to match.
+	 *
+	 * WordPress guesses from the size asked for, 128 or 320 wide, and the
+	 * stylesheet draws avatars far smaller. For a square photograph, which
+	 * is what most croppers make, the choice includes the 1024 copy: a
+	 * phone was fetching 107.7 KB for a 56 pixel face on the worker list,
+	 * where 18.3 KB is sharp. These match the widths in style.css.
+	 *
+	 * @since 1.2.0
+	 * @param string $classes The avatar's classes.
+	 * @return string A sizes attribute.
+	 */
+	function kaamase_avatar_sizes( $classes ) {
+
+		$classes = ' ' . $classes . ' ';
+
+		if ( false !== strpos( $classes, ' ka-avatar--xl ' ) ) {
+			return '(min-width: 640px) 128px, 96px';
+		}
+
+		if ( false !== strpos( $classes, ' ka-avatar--lg ' ) ) {
+			return '88px';
+		}
+
+		if ( false !== strpos( $classes, ' ka-avatar--sm ' ) ) {
+			return '40px';
+		}
+
+		return '56px';
 	}
 }
 
@@ -1069,6 +1105,12 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 				 * Hidden from screen readers and skipped by the keyboard:
 				 * the heading beside it is the same link, and two links
 				 * to one job is one thing to tab past for nothing.
+				 *
+				 * WordPress's own 150 pixel square, not the 128 avatar
+				 * crop: media.php makes the avatar crops for profile
+				 * pictures only, so asking for one here fell back to the
+				 * full picture and the phone fetched a 1024 pixel copy
+				 * for a 64 pixel square.
 				 */
 				if ( has_post_thumbnail( $post_id ) ) :
 					?>
@@ -1076,7 +1118,7 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 						<?php
 						echo get_the_post_thumbnail( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							$post_id,
-							'kaamase-avatar',
+							'thumbnail',
 							array(
 								'alt'     => '',
 								'loading' => 'lazy',
