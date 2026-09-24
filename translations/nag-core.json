@@ -913,5 +913,32 @@
 "Check your email address. A Gmail address has at least 6 letters or numbers before the @, and never a dash or an underscore.": "Apni laka email address check koribi. Gmail address te @ age te kam pra kam 6 ta letter nohoile number thake, aru dash (-) nohoile underscore (_) kitia bhi nathake.",
 "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it.": "Amikhan etu address apni karne box te likhi dise. Apni age likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo.",
 "If what you typed is right, type it again exactly and we will use it.": "Apni likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo.",
-"Share on WhatsApp": "WhatsApp te pathai dibi"
+"Share on WhatsApp": "WhatsApp te pathai dibi",
+"%1$s in %2$s: workers and jobs": "%2$s te %1$s: worker aro kaam khan",
+"%1$s jobs in %2$s": "%2$s te %1$s laka kaam khan",
+"%s, Nagaland": "%s, Nagaland",
+"Jobs and workers in %s": "%s te kaam aro worker khan",
+"Jobs and workers in Nagaland": "Nagaland te kaam aro worker khan",
+"Jobs in %s": "%s te kaam khan",
+"Teams for hire in %s": "%s te kaam karne team khan",
+"Workers in %s": "%s te worker khan",
+"What is Kaam Ase?": "Kaam Ase ki ase?",
+"Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me.": "Kaam Ase, Nagamese te \"kaam ase\" koi mane, Nagaland karne bonua ekta free job platform ase. Etu kaam bisari thaka manu khan ke kaam dibole manu bisari thaka khan logote milai diye, website te aro Android aro iPhone app te. Etu Dimapur pra Nagaland Me pra chalai ase.",
+"How can I find a job in Nagaland?": "Nagaland te kaam kineka bisaribo?",
+"Register free on Kaam Ase with your name, district, trade and phone number. Browse the jobs posted in your district, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your trade and district. Kaam Ase never asks a worker for money to get a job.": "Apni laka naam, district, kaam aro phone number loi kene Kaam Ase te free te register koribi. Apni laka district te post kora kaam khan sabi, aro employer khan apni laka profile bisari kene apni logote contact koribo pare. App te apni laka kaam aro district te notun kaam karne din te ekta alert b pabo. Kaam Ase kitia b kaam dibole worker ke pisa mangi nai.",
+"Where can I find workers in Nagaland?": "Nagaland te worker khan kote pabo?",
+"On Kaam Ase. Search for masons, electricians, plumbers, carpenters, drivers, cooks, helpers and many other trades by district, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let workers come to you.": "Kaam Ase te. District hisab te mason, electrician, plumber, carpenter, driver, cook, helper aro bisi dusra kaam laka manu khan bisaribi, etiya kun available ase, tai khan laka rating aro tai khan karne kun vouch kore etu sabi, tar pichete Kaam Ase pra tai laka number lobi. Apni free te kaam post kuri kene worker khan ke apni logote ahibole b dibo pare.",
+"Is Kaam Ase free?": "Kaam Ase free ase na?",
+"Yes. Registering, looking for work and being hired is free for workers, and always will be. Employers can post jobs free too. An optional paid plan adds extras such as more urgent posts, but it never changes what a worker pays, which is nothing.": "Hoi. Register kora, kaam bisara aro kaam pua worker khan karne free ase, aro hodai free thakibo. Employer khan b free te kaam post koribo pare. Mon hoile lobo para ekta paid plan pra kisu extra pai, jineka bisi joldi laka kaam, hoileh etu pra worker ki diye etu kitia b bodli nohoi: worker eku nadiye.",
+"Which districts of Nagaland does Kaam Ase cover?": "Kaam Ase Nagaland laka kun kun district te ase?",
+"All %1$d district: %2$s.": [
+"%1$d district: %2$s.",
+"Sob %1$d district: %2$s."
+],
+"Is my phone number shown publicly?": "Moi laka phone number sob manu ke dikhai diye na?",
+"No. Nobody's number is printed on a public page. An employer has to look it up through Kaam Ase, lookups are limited and recorded, and you can choose to approve every request yourself before your number is shared.": "Nai. Kunba laka number b public page te dikhai nadiye. Employer pra Kaam Ase pra he etu sabo lage, lookup khan limit ase aro record hoi, aro apni mon hoile apni laka number diya age te sob request nije approve koribo pare.",
+"Is there a Kaam Ase app?": "Kaam Ase laka app ase na?",
+"Yes, free for Android and iPhone. Open kaamase.com/app on your phone and it takes you to the right store.": "Hoi, Android aro iPhone karne free ase. Apni laka phone te kaamase.com/app khulibi, etu apni ke thik store te loi jabo.",
+"Which languages can I use Kaam Ase in?": "Kaam Ase kun kun bhasa te ase?",
+"English, Hindi and Nagamese. You can change the language at any time, from the top of the website or in the app.": "English, Hindi aro Nagamese. Apni jitia b bhasa bodli koribo pare, website laka upor pra nohoile app te."
 }

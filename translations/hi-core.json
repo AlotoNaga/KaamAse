@@ -913,5 +913,32 @@
 "Check your email address. A Gmail address has at least 6 letters or numbers before the @, and never a dash or an underscore.": "अपना ईमेल पता जाँच लें। Gmail पते में @ से पहले कम से कम 6 अक्षर या अंक होते हैं, और उसमें कभी डैश (-) या अंडरस्कोर (_) नहीं होता।",
 "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it.": "हमने वह पता आपके लिए बॉक्स में भर दिया है। अगर आपने जो लिखा था वही सही था, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।",
 "If what you typed is right, type it again exactly and we will use it.": "अगर आपने जो लिखा है वही सही है, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।",
-"Share on WhatsApp": "WhatsApp पर भेजें"
+"Share on WhatsApp": "WhatsApp पर भेजें",
+"%1$s in %2$s: workers and jobs": "%2$s में %1$s: मज़दूर और काम",
+"%1$s jobs in %2$s": "%2$s में %1$s का काम",
+"%s, Nagaland": "%s, नागालैंड",
+"Jobs and workers in %s": "%s में काम और मज़दूर",
+"Jobs and workers in Nagaland": "नागालैंड में काम और मज़दूर",
+"Jobs in %s": "%s में काम",
+"Teams for hire in %s": "%s में काम के लिए टीमें",
+"Workers in %s": "%s में मज़दूर",
+"What is Kaam Ase?": "Kaam Ase क्या है?",
+"Kaam Ase, Nagamese for \"there is work\", is a free job platform built for Nagaland. It connects people looking for work with people looking to hire, on the website and on the Android and iPhone apps. It is run from Dimapur by Nagaland Me.": "Kaam Ase, जिसका नागामीज़ में मतलब है \"काम है\", नागालैंड के लिए बना एक मुफ़्त जॉब प्लेटफ़ॉर्म है। यह काम ढूँढने वालों को काम देने वालों से जोड़ता है, वेबसाइट पर और Android और iPhone ऐप पर। इसे दीमापुर से Nagaland Me चलाता है।",
+"How can I find a job in Nagaland?": "नागालैंड में काम कैसे ढूँढें?",
+"Register free on Kaam Ase with your name, district, trade and phone number. Browse the jobs posted in your district, and employers can find your profile and contact you. With the app you also get one alert a day for new work in your trade and district. Kaam Ase never asks a worker for money to get a job.": "अपने नाम, ज़िले, काम और फ़ोन नंबर के साथ Kaam Ase पर मुफ़्त रजिस्टर करें। अपने ज़िले में डाले गए काम देखें, और मालिक आपकी प्रोफ़ाइल ढूँढकर आपसे संपर्क कर सकते हैं। ऐप से आपको अपने काम और ज़िले में नए काम की दिन में एक सूचना भी मिलती है। Kaam Ase काम दिलाने के लिए किसी मज़दूर से कभी पैसे नहीं मांगता।",
+"Where can I find workers in Nagaland?": "नागालैंड में मज़दूर कहाँ मिलेंगे?",
+"On Kaam Ase. Search for masons, electricians, plumbers, carpenters, drivers, cooks, helpers and many other trades by district, see who is available now, their ratings and who vouches for them, then get their number through Kaam Ase. You can also post a job free and let workers come to you.": "Kaam Ase पर। ज़िले के हिसाब से राजमिस्त्री, बिजली मिस्त्री, प्लंबर, बढ़ई, ड्राइवर, रसोइया, हेल्पर और कई दूसरे काम करने वाले खोजें, देखें कि अभी कौन उपलब्ध है, उनकी रेटिंग और उनकी ज़मानत कौन देता है, फिर Kaam Ase से उनका नंबर लें। आप मुफ़्त में काम डालकर मज़दूरों को खुद अपने पास आने भी दे सकते हैं।",
+"Is Kaam Ase free?": "क्या Kaam Ase मुफ़्त है?",
+"Yes. Registering, looking for work and being hired is free for workers, and always will be. Employers can post jobs free too. An optional paid plan adds extras such as more urgent posts, but it never changes what a worker pays, which is nothing.": "हाँ। मज़दूरों के लिए रजिस्टर करना, काम ढूँढना और काम पाना मुफ़्त है, और हमेशा रहेगा। मालिक भी मुफ़्त में काम डाल सकते हैं। एक वैकल्पिक पेड प्लान कुछ अतिरिक्त सुविधाएँ देता है, जैसे ज़्यादा ज़रूरी काम, लेकिन इससे यह कभी नहीं बदलता कि मज़दूर कितना देता है, यानी कुछ भी नहीं।",
+"Which districts of Nagaland does Kaam Ase cover?": "Kaam Ase नागालैंड के किन ज़िलों में है?",
+"All %1$d district: %2$s.": [
+"%1$d ज़िला: %2$s।",
+"सभी %1$d ज़िले: %2$s।"
+],
+"Is my phone number shown publicly?": "क्या मेरा फ़ोन नंबर सबको दिखता है?",
+"No. Nobody's number is printed on a public page. An employer has to look it up through Kaam Ase, lookups are limited and recorded, and you can choose to approve every request yourself before your number is shared.": "नहीं। किसी का भी नंबर किसी सार्वजनिक पेज पर नहीं छपता। मालिक को इसे Kaam Ase के ज़रिए देखना पड़ता है, लुकअप सीमित होते हैं और उनका रिकॉर्ड रहता है, और आप चाहें तो अपना नंबर दिए जाने से पहले हर अनुरोध को खुद मंज़ूर कर सकते हैं।",
+"Is there a Kaam Ase app?": "क्या Kaam Ase का ऐप है?",
+"Yes, free for Android and iPhone. Open kaamase.com/app on your phone and it takes you to the right store.": "हाँ, Android और iPhone के लिए मुफ़्त। अपने फ़ोन पर kaamase.com/app खोलें, यह आपको सही स्टोर पर ले जाएगा।",
+"Which languages can I use Kaam Ase in?": "Kaam Ase किन भाषाओं में है?",
+"English, Hindi and Nagamese. You can change the language at any time, from the top of the website or in the app.": "अंग्रेज़ी, हिन्दी और नागामीज़। आप कभी भी भाषा बदल सकते हैं, वेबसाइट के ऊपर से या ऐप में।"
 }

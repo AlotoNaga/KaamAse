@@ -17,8 +17,22 @@
  * with nothing under it. Sections that have nothing to show remove
  * themselves entirely and the page still reads as finished.
  *
+ * Said in the words people search for
+ * -----------------------------------
+ * The heading used to be the slogan, "Kaam ase.", and nothing on the page
+ * said jobs in Nagaland or workers in Nagaland. Somebody who had never
+ * heard of Kaam Ase could not find it by describing what it is, and an
+ * AI assistant asked where to find work in Nagaland had nothing here to
+ * quote. So the heading, the section titles and the questions at the
+ * bottom now say it plainly. The slogan stays, as the name above the
+ * heading and in the header.
+ *
+ * The questions come from kaamase_home_faq() in the core plugin, which
+ * also gives the same answers to search engines as structured data.
+ * Written once, so the two can never disagree.
+ *
  * @package Kaamase
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.0.0
  */
 
@@ -36,6 +50,33 @@ $kaamase_has_jobs    = post_type_exists( 'kaamase_job' );
 $kaamase_has_workers = post_type_exists( 'kaamase_worker' );
 $kaamase_has_trades  = taxonomy_exists( 'kaamase_trade' );
 $kaamase_has_places  = taxonomy_exists( 'kaamase_district' );
+
+/*
+ * Real counts, never written in by hand. A number on the front page that
+ * stops being true the week a trade is added is worse than no number.
+ */
+$kaamase_trade_count = 0;
+
+if ( $kaamase_has_trades ) {
+	$kaamase_count       = wp_count_terms( array( 'taxonomy' => 'kaamase_trade', 'hide_empty' => false ) );
+	$kaamase_trade_count = is_wp_error( $kaamase_count ) ? 0 : (int) $kaamase_count;
+}
+
+$kaamase_districts = array();
+
+if ( $kaamase_has_places ) {
+	$kaamase_districts = get_terms(
+		array(
+			'taxonomy'   => 'kaamase_district',
+			'hide_empty' => false,
+			'orderby'    => 'name',
+		)
+	);
+
+	$kaamase_districts = is_array( $kaamase_districts ) ? $kaamase_districts : array();
+}
+
+$kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 ?>
 
 <?php
@@ -46,16 +87,27 @@ $kaamase_has_places  = taxonomy_exists( 'kaamase_district' );
 <section class="ka-hero">
 	<div class="ka-container">
 
-		<div class="ka-hero__inner ka-stack--lg">
+		<div class="ka-hero__inner">
+
+			<p class="ka-hero__eyebrow">
+				<span class="ka-hero__dot" aria-hidden="true"></span>
+				<?php
+				printf(
+					'%1$s &middot; %2$s',
+					esc_html( get_bloginfo( 'name', 'display' ) ),
+					esc_html__( 'Nagaland’s own job platform', 'kaamase' )
+				);
+				?>
+			</p>
 
 			<h1 class="ka-hero__title">
-				<?php esc_html_e( 'Kaam ase.', 'kaamase' ); ?>
+				<?php esc_html_e( 'Jobs and workers in Nagaland', 'kaamase' ); ?>
 			</h1>
 
 			<p class="ka-hero__lead">
 				<?php
 				esc_html_e(
-					'Find a mason, electrician, plumber, driver or helper near you. Anywhere in Nagaland.',
+					'Find work near you, or hire a mason, electrician, plumber, driver or helper in any district, from Dimapur and Kohima to Mon.',
 					'kaamase'
 				);
 				?>
@@ -65,20 +117,22 @@ $kaamase_has_places  = taxonomy_exists( 'kaamase_district' );
 			/* --------------------------------------------------------------
 			 * Search
 			 *
-			 * Two fields and a button. Trade and district, because that is
-			 * how a person actually asks the question out loud. Adding a
-			 * wage filter or an availability toggle here would be more
-			 * complete and would get used less.
+			 * Two fields and two buttons. Trade and district, because that
+			 * is how a person actually asks the question out loud. The same
+			 * two answers find either side, so there are two doors out of
+			 * one form: Find workers goes to the worker list, Find work goes
+			 * to the job list, carrying the same choices.
 			 *
-			 * This is a plain GET form. It works with JavaScript switched
-			 * off, it works on a browser from 2015, and the result is a
-			 * shareable URL somebody can paste into WhatsApp.
+			 * This is a plain GET form, and the second button chooses its
+			 * address with formaction, which needs no script. It works with
+			 * JavaScript switched off, on a browser from 2015, and the
+			 * result is a shareable URL somebody can paste into WhatsApp.
 			 * ------------------------------------------------------------ */
 			?>
-			<form class="ka-hero__search ka-card ka-card--pad-lg" role="search" method="get"
+			<form class="ka-hero__search" role="search" method="get"
 				action="<?php echo esc_url( home_url( '/workers/' ) ); ?>">
 
-				<div class="ka-hero__fields">
+				<div class="ka-hero__grid">
 
 					<div class="ka-field">
 						<label class="ka-label" for="ka-trade">
@@ -132,22 +186,63 @@ $kaamase_has_places  = taxonomy_exists( 'kaamase_district' );
 						<?php endif; ?>
 					</div>
 
-					<div class="ka-field ka-hero__submit">
-						<button class="ka-btn ka-btn--action ka-btn--lg ka-btn--block" type="submit">
-							<?php esc_html_e( 'Search', 'kaamase' ); ?>
+					<div class="ka-hero__actions">
+						<button class="ka-btn ka-btn--action ka-btn--lg" type="submit">
+							<?php esc_html_e( 'Find workers', 'kaamase' ); ?>
+						</button>
+
+						<button class="ka-btn ka-btn--primary ka-btn--lg" type="submit"
+							formaction="<?php echo esc_url( home_url( '/jobs/' ) ); ?>">
+							<?php esc_html_e( 'Find work', 'kaamase' ); ?>
 						</button>
 					</div>
 
 				</div>
 
-				<p class="ka-hint ka-mt-4">
-					<?php esc_html_e( 'Looking for work instead?', 'kaamase' ); ?>
-					<a href="<?php echo esc_url( home_url( '/jobs/' ) ); ?>">
-						<?php esc_html_e( 'See jobs near you', 'kaamase' ); ?>
-					</a>
-				</p>
-
 			</form>
+
+			<ul class="ka-hero__facts">
+				<li>
+					<?php echo $kaamase_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed markup above. ?>
+					<?php esc_html_e( 'Free for workers, always', 'kaamase' ); ?>
+				</li>
+
+				<?php if ( $kaamase_districts ) : ?>
+					<li>
+						<?php echo $kaamase_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php
+						echo esc_html(
+							sprintf(
+								/* translators: %s: number of districts */
+								_n( 'All %s district', 'All %s districts', count( $kaamase_districts ), 'kaamase' ),
+								number_format_i18n( count( $kaamase_districts ) )
+							)
+						);
+						?>
+					</li>
+				<?php endif; ?>
+
+				<?php if ( $kaamase_trade_count ) : ?>
+					<li>
+						<?php echo $kaamase_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php
+						echo esc_html(
+							sprintf(
+								/* translators: %s: number of trades */
+								_n( '%s trade', '%s trades', $kaamase_trade_count, 'kaamase' ),
+								number_format_i18n( $kaamase_trade_count )
+							)
+						);
+						?>
+					</li>
+				<?php endif; ?>
+
+				<li>
+					<?php echo $kaamase_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php // The names of the three languages, each in itself, so they are never translated. ?>
+					English &middot; हिन्दी &middot; Nagamese
+				</li>
+			</ul>
 
 		</div>
 
@@ -177,9 +272,9 @@ if ( $kaamase_has_trades ) :
 
 	if ( ! empty( $kaamase_trades ) && ! is_wp_error( $kaamase_trades ) ) :
 		?>
-		<section class="ka-container ka-section">
+		<section class="ka-container ka-section ka-home-trades">
 
-			<h2 class="ka-sr"><?php esc_html_e( 'Trades', 'kaamase' ); ?></h2>
+			<h2 class="ka-home-trades__title"><?php esc_html_e( 'Popular trades', 'kaamase' ); ?></h2>
 
 			<div class="ka-chips-scroll">
 				<?php foreach ( $kaamase_trades as $kaamase_trade ) : ?>
@@ -191,7 +286,7 @@ if ( $kaamase_has_trades ) :
 					<?php endif; ?>
 				<?php endforeach; ?>
 
-				<a class="ka-chip" href="<?php echo esc_url( home_url( '/trades/' ) ); ?>">
+				<a class="ka-chip ka-chip--more" href="<?php echo esc_url( home_url( '/trades/' ) ); ?>">
 					<?php esc_html_e( 'All trades', 'kaamase' ); ?>
 				</a>
 			</div>
@@ -221,6 +316,26 @@ if ( $kaamase_has_jobs ) :
 			'post_status'         => 'publish',
 			'ignore_sticky_posts' => true,
 			'no_found_rows'       => true,
+
+			/*
+			 * The same rule the job list uses: a job whose date has passed
+			 * is not shown, even in the hours before the daily task marks
+			 * it closed. Otherwise the front page could advertise work
+			 * that the job list has already stopped showing.
+			 */
+			'meta_query'          => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'relation' => 'OR',
+				array(
+					'key'     => '_kaamase_expires',
+					'compare' => 'NOT EXISTS',
+				),
+				array(
+					'key'     => '_kaamase_expires',
+					'value'   => time(),
+					'compare' => '>',
+					'type'    => 'NUMERIC',
+				),
+			),
 		)
 	);
 
@@ -228,11 +343,12 @@ if ( $kaamase_has_jobs ) :
 		?>
 		<section class="ka-container ka-section">
 
-			<div class="ka-cluster ka-cluster--between">
-				<h2><?php esc_html_e( 'Work posted recently', 'kaamase' ); ?></h2>
+			<div class="ka-section-head">
+				<h2><?php esc_html_e( 'Latest jobs in Nagaland', 'kaamase' ); ?></h2>
+				<p><?php esc_html_e( 'Posted by employers across the state. Workers never pay to apply.', 'kaamase' ); ?></p>
 			</div>
 
-			<div class="ka-grid ka-grid--2 ka-grid--3 ka-mt-6">
+			<div class="ka-grid ka-grid--2 ka-grid--3">
 				<?php
 				while ( $kaamase_jobs->have_posts() ) :
 					$kaamase_jobs->the_post();
@@ -306,11 +422,12 @@ if ( $kaamase_has_workers ) :
 		?>
 		<section class="ka-container ka-section">
 
-			<div class="ka-cluster ka-cluster--between">
-				<h2><?php esc_html_e( 'Available now', 'kaamase' ); ?></h2>
+			<div class="ka-section-head">
+				<h2><?php esc_html_e( 'Workers available now in Nagaland', 'kaamase' ); ?></h2>
+				<p><?php esc_html_e( 'See their trade, district, ratings and who vouches for them.', 'kaamase' ); ?></p>
 			</div>
 
-			<div class="ka-grid ka-grid--2 ka-grid--3 ka-mt-6">
+			<div class="ka-grid ka-grid--2 ka-grid--3">
 				<?php
 				while ( $kaamase_workers->have_posts() ) :
 					$kaamase_workers->the_post();
@@ -332,6 +449,45 @@ if ( $kaamase_has_workers ) :
 
 	wp_reset_postdata();
 
+endif;
+?>
+
+<?php
+/* ==========================================================================
+   BY DISTRICT
+
+   Every district, each one a link to its own page of jobs and workers.
+   Those pages are what answers "jobs in Kohima" or "electrician in
+   Dimapur" in a search engine, and a link from the front page is the
+   strongest signal the site can give that they matter. It is also the
+   quickest way in for somebody who thinks in places rather than trades.
+   ========================================================================== */
+
+if ( $kaamase_districts ) :
+	?>
+	<section class="ka-container ka-section">
+
+		<div class="ka-section-head">
+			<h2><?php esc_html_e( 'Find jobs and workers by district', 'kaamase' ); ?></h2>
+			<p><?php esc_html_e( 'Every district of Nagaland, from Dimapur and Kohima to Mon and Noklak.', 'kaamase' ); ?></p>
+		</div>
+
+		<ul class="ka-districts">
+			<?php foreach ( $kaamase_districts as $kaamase_district ) : ?>
+				<?php $kaamase_link = get_term_link( $kaamase_district ); ?>
+				<?php if ( ! is_wp_error( $kaamase_link ) ) : ?>
+					<li>
+						<a class="ka-district" href="<?php echo esc_url( $kaamase_link ); ?>">
+							<span class="ka-district__name"><?php echo esc_html( $kaamase_district->name ); ?></span>
+							<span class="ka-district__sub"><?php esc_html_e( 'Jobs and workers', 'kaamase' ); ?></span>
+						</a>
+					</li>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</ul>
+
+	</section>
+	<?php
 endif;
 ?>
 
@@ -457,4 +613,49 @@ endif;
 </section>
 
 <?php
+/* ==========================================================================
+   QUESTIONS
+
+   Plain answers to what people ask a search box or an AI assistant. The
+   first one is open, so the page states what Kaam Ase is without anybody
+   having to tap. The rest stay closed to keep the page short; the text is
+   in the page either way, and a search engine reads it all.
+
+   Only drawn when the core plugin is there to supply the answers.
+   ========================================================================== */
+
+if ( function_exists( 'kaamase_home_faq' ) ) :
+
+	$kaamase_faq = kaamase_home_faq();
+
+	if ( $kaamase_faq ) :
+		?>
+		<section class="ka-section ka-home-faq" id="questions">
+			<div class="ka-container ka-container--narrow">
+
+				<div class="ka-section-head ka-section-head--center">
+					<h2><?php esc_html_e( 'Finding work and workers in Nagaland', 'kaamase' ); ?></h2>
+					<p><?php esc_html_e( 'Plain answers to what people ask most.', 'kaamase' ); ?></p>
+				</div>
+
+				<div class="ka-faq">
+					<?php foreach ( $kaamase_faq as $kaamase_i => $kaamase_row ) : ?>
+						<details class="ka-faq__item" <?php echo 0 === $kaamase_i ? 'open' : ''; ?>>
+							<summary>
+								<h3 class="ka-faq__q"><?php echo esc_html( $kaamase_row['q'] ); ?></h3>
+							</summary>
+							<div class="ka-faq__a">
+								<p><?php echo esc_html( $kaamase_row['a'] ); ?></p>
+							</div>
+						</details>
+					<?php endforeach; ?>
+				</div>
+
+			</div>
+		</section>
+		<?php
+	endif;
+
+endif;
+
 get_footer();

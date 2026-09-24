@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-17 12:25+0000\n"
-"PO-Revision-Date: 2026-09-17 12:25+0000\n"
+"POT-Creation-Date: 2026-09-24 03:36+0000\n"
+"PO-Revision-Date: 2026-09-24 03:36+0000\n"
 "Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +36,13 @@ msgid_plural "%s results"
 msgstr[0] "%s नतीजा"
 msgstr[1] "%s नतीजे"
 
+#. translators: %s: number of trades
+#: front-page.php:232
+msgid "%s trade"
+msgid_plural "%s trades"
+msgstr[0] "%s तरह का काम"
+msgstr[1] "%s तरह के काम"
+
 #. translators: %s: number of workers hired
 #: inc/template-tags.php:858
 msgid "%s worker hired through Kaam Ase"
@@ -64,7 +71,7 @@ msgid_plural "%s years of experience"
 msgstr[0] "%s साल का अनुभव"
 msgstr[1] "%s साल का अनुभव"
 
-#: front-page.php:448
+#: front-page.php:604
 msgid "A Nagaland company"
 msgstr "नागालैंड की कंपनी"
 
@@ -76,7 +83,7 @@ msgstr "ठेकेदार"
 msgid "A registered company"
 msgstr "रजिस्टर्ड कंपनी"
 
-#: footer.php:194
+#: footer.php:215
 msgid "A venture of Nagaland Me"
 msgstr "Nagaland Me का उपक्रम"
 
@@ -92,7 +99,14 @@ msgstr "हमारे बारे में"
 msgid "Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it."
 msgstr "काम शुरू करने से पहले ही रेट और पैसे मिलने का दिन साफ़-साफ़ तय कर लें, बाद में नहीं। Kaam Ase पर कोई भी आपसे काम दिलाने के बदले पैसे नहीं मांग सकता। कोई मांगे तो शिकायत करें।"
 
-#: front-page.php:122
+#. translators: %s: number of districts
+#: front-page.php:217
+msgid "All %s district"
+msgid_plural "All %s districts"
+msgstr[0] "%s ज़िला"
+msgstr[1] "सभी %s ज़िले"
+
+#: front-page.php:176
 msgid "All Nagaland"
 msgstr "पूरा नागालैंड"
 
@@ -100,7 +114,7 @@ msgstr "पूरा नागालैंड"
 msgid "All districts"
 msgstr "सभी ज़िले"
 
-#: footer.php:89 front-page.php:195
+#: footer.php:89 front-page.php:290
 msgid "All trades"
 msgstr "सभी काम"
 
@@ -112,7 +126,7 @@ msgstr "एक व्यक्ति, जो कुछ बनवा या ठ�
 msgid "Android"
 msgstr "Android"
 
-#: front-page.php:96
+#: front-page.php:150
 msgid "Any trade"
 msgstr "कोई भी काम"
 
@@ -128,7 +142,7 @@ msgstr "क्या आप पक्का चाहते हैं?"
 msgid "Ask for"
 msgstr "रेट"
 
-#: front-page.php:310 inc/template-tags.php:189
+#: inc/template-tags.php:189
 msgid "Available now"
 msgstr "अभी उपलब्ध"
 
@@ -140,7 +154,7 @@ msgstr "वापस"
 msgid "Before you agree"
 msgstr "हाँ कहने से पहले"
 
-#: front-page.php:441
+#: front-page.php:597
 msgid "Both sides rate"
 msgstr "दोनों तरफ़ से रेटिंग"
 
@@ -189,7 +203,7 @@ msgid "Copied"
 msgstr "कॉपी हो गया"
 
 #. translators: 1: current year, 2: site name
-#: footer.php:186
+#: footer.php:207
 msgid "Copyright %1$s %2$s"
 msgstr "कॉपीराइट %1$s %2$s"
 
@@ -197,11 +211,11 @@ msgstr "कॉपीराइट %1$s %2$s"
 msgid "Day rate"
 msgstr "दिन का रेट"
 
-#: front-page.php:131
+#: front-page.php:185
 msgid "Dimapur, Kohima, Mokokchung"
 msgstr "दीमापुर, कोहिमा, मोकोकचुंग"
 
-#: footer.php:198
+#: footer.php:219
 msgid "Dimapur, Nagaland, India"
 msgstr "दीमापुर, नागालैंड, भारत"
 
@@ -221,6 +235,10 @@ msgstr "अपनी टीम बदलें"
 msgid "Edit this job"
 msgstr "यह काम बदलें"
 
+#: front-page.php:472
+msgid "Every district of Nagaland, from Dimapur and Kohima to Mon and Noklak."
+msgstr "नागालैंड का हर ज़िला, दीमापुर और कोहिमा से लेकर मोन और नोकलाक तक।"
+
 #: single-kaamase_gang.php:153 single-kaamase_worker.php:190
 msgid "Experience"
 msgstr "अनुभव"
@@ -233,15 +251,15 @@ msgstr "फ़ोन पर ज़्यादा तेज़, और काम
 msgid "Faster, and it tells you when work appears"
 msgstr "ज़्यादा तेज़, और काम आने पर बता देता है"
 
-#: front-page.php:57
-msgid "Find a mason, electrician, plumber, driver or helper near you. Anywhere in Nagaland."
-msgstr "अपने पास राजमिस्त्री, बिजली मिस्त्री, प्लंबर, ड्राइवर या हेल्पर ढूँढें। नागालैंड में कहीं भी।"
+#: front-page.php:471
+msgid "Find jobs and workers by district"
+msgstr "ज़िले के हिसाब से काम और मज़दूर ढूँढें"
 
 #: 404.php:102
 msgid "Find other workers"
 msgstr "और मज़दूर ढूँढें"
 
-#: 404.php:152 footer.php:83 inc/setup.php:393
+#: 404.php:152 footer.php:83 front-page.php:196 inc/setup.php:393
 msgid "Find work"
 msgstr "काम ढूँढें"
 
@@ -249,9 +267,17 @@ msgstr "काम ढूँढें"
 msgid "Find work and find workers across Nagaland. Free for every worker, always."
 msgstr "पूरे नागालैंड में काम और मज़दूर ढूँढें। हर मज़दूर के लिए मुफ़्त, हमेशा।"
 
-#: 404.php:161 footer.php:82 inc/setup.php:392
+#: front-page.php:109
+msgid "Find work near you, or hire a mason, electrician, plumber, driver or helper in any district, from Dimapur and Kohima to Mon."
+msgstr "अपने पास काम ढूँढें, या किसी भी ज़िले में राजमिस्त्री, बिजली मिस्त्री, प्लंबर, ड्राइवर या हेल्पर रखें, दीमापुर और कोहिमा से लेकर मोन तक।"
+
+#: 404.php:161 footer.php:82 front-page.php:191 inc/setup.php:392
 msgid "Find workers"
 msgstr "मज़दूर ढूँढें"
+
+#: front-page.php:637
+msgid "Finding work and workers in Nagaland"
+msgstr "नागालैंड में काम और मज़दूर ढूँढना"
 
 #: inc/template-tags.php:1151 single-kaamase_job.php:135
 msgid "Food provided"
@@ -269,11 +295,15 @@ msgstr "फ़ुटर, देखें और खोजें"
 msgid "Footer, legal and policy"
 msgstr "फ़ुटर, कानूनी और नीति"
 
+#: front-page.php:207
+msgid "Free for workers, always"
+msgstr "मज़दूरों के लिए मुफ़्त, हमेशा"
+
 #: 404.php:173
 msgid "Free to post, any district"
 msgstr "काम डालना मुफ़्त, किसी भी ज़िले में"
 
-#: front-page.php:427
+#: front-page.php:583
 msgid "Free to use"
 msgstr "इस्तेमाल मुफ़्त"
 
@@ -281,7 +311,7 @@ msgstr "इस्तेमाल मुफ़्त"
 msgid "GST"
 msgstr "GST"
 
-#: footer.php:196
+#: footer.php:217
 msgid "GST: 13DIHPA5679B1ZK"
 msgstr "GST: 13DIHPA5679B1ZK"
 
@@ -361,6 +391,14 @@ msgstr "शायद काम भर गया है, या मालिक �
 msgid "Jobs"
 msgstr "काम"
 
+#: front-page.php:482
+msgid "Jobs and workers"
+msgstr "काम और मज़दूर"
+
+#: front-page.php:104
+msgid "Jobs and workers in Nagaland"
+msgstr "नागालैंड में काम और मज़दूर"
+
 #: single-kaamase_worker.php:210
 msgid "Jobs done here"
 msgstr "यहाँ हुए काम"
@@ -397,7 +435,7 @@ msgstr "Kaam Ase अवतार, छोटा"
 msgid "Kaam Ase card"
 msgstr "Kaam Ase कार्ड"
 
-#: footer.php:203
+#: footer.php:224
 msgid "Kaam Ase is a listing platform. We connect workers and employers. We are not the employer and we do not pay wages."
 msgstr "Kaam Ase एक लिस्टिंग प्लेटफ़ॉर्म है। हम मज़दूरों और मालिकों को मिलाते हैं। हम मालिक नहीं हैं और न ही मज़दूरी देते हैं।"
 
@@ -421,13 +459,13 @@ msgstr "Kaam Ase थीम चल रही है पर कुछ फ़ाइ
 msgid "Kaam Ase wide"
 msgstr "Kaam Ase चौड़ा"
 
-#: front-page.php:52
-msgid "Kaam ase."
-msgstr "Kaam ase."
-
 #: index.php:67
 msgid "Latest"
 msgstr "नए"
+
+#: front-page.php:347
+msgid "Latest jobs in Nagaland"
+msgstr "नागालैंड में नए काम"
 
 #: single-kaamase_gang.php:139
 msgid "Led by"
@@ -438,7 +476,7 @@ msgstr "मुखिया"
 msgid "Led by %s"
 msgstr "मुखिया %s"
 
-#: footer.php:171
+#: footer.php:192
 msgid "Legal"
 msgstr "कानूनी"
 
@@ -446,15 +484,11 @@ msgstr "कानूनी"
 msgid "Loading"
 msgstr "लोड हो रहा है"
 
-#: front-page.php:376
+#: front-page.php:532
 msgid "Looking for work"
 msgstr "काम की तलाश में"
 
-#: front-page.php:144
-msgid "Looking for work instead?"
-msgstr "काम ढूँढ रहे हैं?"
-
-#: front-page.php:393
+#: front-page.php:549
 msgid "Looking for workers"
 msgstr "मज़दूर की तलाश में"
 
@@ -466,15 +500,15 @@ msgstr "मुख्य"
 msgid "Main menu"
 msgstr "मुख्य मेन्यू"
 
-#: front-page.php:380
+#: front-page.php:536
 msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
 msgstr "मुफ़्त प्रोफ़ाइल बनाएँ। पूरे नागालैंड के मालिक आपको आपके काम और ज़िले से ढूँढ सकते हैं। Kaam Ase मज़दूरों के लिए मुफ़्त है और हमेशा रहेगा।"
 
-#: front-page.php:388
+#: front-page.php:544
 msgid "Make my free profile"
 msgstr "मेरी मुफ़्त प्रोफ़ाइल बनाएँ"
 
-#: front-page.php:105
+#: front-page.php:159
 msgid "Mason, electrician, driver"
 msgstr "राजमिस्त्री, बिजली मिस्त्री, ड्राइवर"
 
@@ -486,11 +520,11 @@ msgstr "राजमिस्त्री, बिजली मिस्त्र
 msgid "Me"
 msgstr "मैं"
 
-#: header.php:144
+#: header.php:158
 msgid "Menu"
 msgstr "मेन्यू"
 
-#: header.php:154
+#: header.php:168
 msgid "Mobile menu"
 msgstr "मोबाइल मेन्यू"
 
@@ -506,13 +540,17 @@ msgstr "महीने का"
 msgid "More posts"
 msgstr "और पोस्ट"
 
-#: header.php:114 header.php:166
+#: header.php:128 header.php:180
 msgid "My account"
 msgstr "मेरा खाता"
 
 #: single-kaamase_job.php:67
 msgid "My jobs"
 msgstr "मेरे काम"
+
+#: front-page.php:98
+msgid "Nagaland’s own job platform"
+msgstr "नागालैंड का अपना जॉब प्लेटफ़ॉर्म"
 
 #: inc/template-tags.php:230
 msgid "New"
@@ -526,7 +564,7 @@ msgstr "यहाँ नया, अभी किसी ने काम नह�
 msgid "Next"
 msgstr "आगे"
 
-#: front-page.php:429
+#: front-page.php:585
 msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
 msgstr "प्रोफ़ाइल बनाने, काम डालने या काम पाने का कोई शुल्क नहीं। मज़दूर कभी पैसे नहीं देते।"
 
@@ -600,21 +638,33 @@ msgstr "पिछला काम"
 msgid "Pay"
 msgstr "मज़दूरी"
 
+#: front-page.php:638
+msgid "Plain answers to what people ask most."
+msgstr "लोग जो सबसे ज़्यादा पूछते हैं, उनके सीधे जवाब।"
+
 #: inc/setup.php:430
 msgid "Plans"
 msgstr "प्लान"
 
-#: 404.php:170 header.php:118 header.php:128 header.php:162 inc/setup.php:394
+#: front-page.php:277
+msgid "Popular trades"
+msgstr "लोकप्रिय काम"
+
+#: 404.php:170 header.php:132 header.php:142 header.php:176 inc/setup.php:394
 msgid "Post a job"
 msgstr "काम डालें"
 
-#: front-page.php:405 index.php:255
+#: front-page.php:561 index.php:255
 msgid "Post a job free"
 msgstr "मुफ़्त में काम डालें"
 
-#: front-page.php:397
+#: front-page.php:553
 msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
 msgstr "अपना रेट, कितने मज़दूर चाहिए और कब चाहिए — यह लिखकर काम डालें। एक व्यक्ति रखें या पूरी टीम।"
+
+#: front-page.php:348
+msgid "Posted by employers across the state. Workers never pay to apply."
+msgstr "पूरे राज्य के मालिकों ने डाले हैं। मज़दूर काम मांगने के लिए कभी पैसे नहीं देते।"
 
 #: single.php:84
 msgid "Previous"
@@ -624,11 +674,11 @@ msgstr "पीछे"
 msgid "Primary menu, desktop header"
 msgstr "मुख्य मेन्यू, डेस्कटॉप हेडर"
 
-#: footer.php:176
+#: footer.php:197
 msgid "Privacy"
 msgstr "निजता"
 
-#: front-page.php:436
+#: front-page.php:592
 msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
 msgstr "प्रोफ़ाइल पर कॉलोनी या गाँव के किसी ज़िम्मेदार व्यक्ति की ज़मानत हो सकती है, जो उस आदमी को जानता हो।"
 
@@ -643,11 +693,11 @@ msgid_plural "Rated %1$s out of 5 from %2$s jobs"
 msgstr[0] "%2$s काम से 5 में से %1$s रेटिंग"
 msgstr[1] "%2$s कामों से 5 में से %1$s रेटिंग"
 
-#: header.php:176
+#: header.php:190
 msgid "Register free"
 msgstr "मुफ़्त रजिस्टर करें"
 
-#: front-page.php:450
+#: front-page.php:606
 msgid "Registered and run from Dimapur. Not an outside app that has never been here."
 msgstr "दीमापुर में रजिस्टर्ड और यहीं से चलाया जाता है। कोई बाहरी ऐप नहीं जो कभी यहाँ आया ही न हो।"
 
@@ -664,7 +714,7 @@ msgstr "%s के नतीजे"
 msgid "Safety"
 msgstr "सुरक्षा"
 
-#: footer.php:178
+#: footer.php:199
 msgid "Safety policy"
 msgstr "सुरक्षा नीति"
 
@@ -672,7 +722,7 @@ msgstr "सुरक्षा नीति"
 msgid "Saved"
 msgstr "सहेजे गए"
 
-#: front-page.php:137 searchform.php:53 searchform.php:55
+#: searchform.php:53 searchform.php:55
 msgid "Search"
 msgstr "खोजें"
 
@@ -684,21 +734,21 @@ msgstr "Kaam Ase में खोजें"
 msgid "Search by trade and district"
 msgstr "काम और ज़िले से खोजें"
 
-#: front-page.php:260 index.php:237
+#: front-page.php:376 index.php:237
 msgid "See all jobs"
 msgstr "सारे काम देखें"
 
-#: front-page.php:325
+#: front-page.php:442
 msgid "See all workers"
 msgstr "सारे मज़दूर देखें"
-
-#: front-page.php:146
-msgid "See jobs near you"
-msgstr "अपने पास के काम देखें"
 
 #: 404.php:85
 msgid "See jobs open now"
 msgstr "अभी खुले काम देखें"
+
+#: front-page.php:427
+msgid "See their trade, district, ratings and who vouches for them."
+msgstr "उनका काम, ज़िला, रेटिंग और उनकी ज़मानत कौन देता है, देखें।"
 
 #: inc/template-tags.php:877
 msgid "See this employer"
@@ -724,7 +774,7 @@ msgid_plural "Shown %s times"
 msgstr[0] "%s बार दिखाया गया"
 msgstr[1] "%s बार दिखाया गया"
 
-#: header.php:124 header.php:180
+#: header.php:138 header.php:194
 msgid "Sign in"
 msgstr "साइन इन"
 
@@ -732,7 +782,7 @@ msgstr "साइन इन"
 msgid "Sign in to contact"
 msgstr "संपर्क के लिए साइन इन करें"
 
-#: header.php:170
+#: header.php:184
 msgid "Sign out"
 msgstr "साइन आउट"
 
@@ -795,7 +845,7 @@ msgstr "टीम में कितने"
 msgid "Tell us"
 msgstr "हमें बताएँ"
 
-#: footer.php:177
+#: footer.php:198
 msgid "Terms"
 msgstr "शर्तें"
 
@@ -888,10 +938,6 @@ msgstr "इस थीम को PHP %1$s या नया चाहिए (अ�
 msgid "Those details are not correct. Please check and try again."
 msgstr "यह जानकारी सही नहीं है। जाँचकर दोबारा कोशिश करें।"
 
-#: front-page.php:182
-msgid "Trades"
-msgstr "काम"
-
 #: single-kaamase_job.php:143
 msgid "Transport to site"
 msgstr "साइट तक आने-जाने की सुविधा"
@@ -940,7 +986,7 @@ msgstr "ज़मानत"
 msgid "Vouched for by"
 msgstr "ज़मानत दी"
 
-#: front-page.php:434
+#: front-page.php:590
 msgid "Vouched locally"
 msgstr "स्थानीय ज़मानत"
 
@@ -948,11 +994,11 @@ msgstr "स्थानीय ज़मानत"
 msgid "Wage or job complaint"
 msgstr "मज़दूरी या काम की शिकायत"
 
-#: front-page.php:85
+#: front-page.php:139
 msgid "What work"
 msgstr "कौन सा काम"
 
-#: front-page.php:111
+#: front-page.php:165
 msgid "Which district"
 msgstr "कौन सा ज़िला"
 
@@ -968,10 +1014,6 @@ msgstr "नागालैंड में कहीं भी जाएँग�
 msgid "Will travel anywhere in their district"
 msgstr "अपने ज़िले में कहीं भी जाएँगे"
 
-#: front-page.php:232
-msgid "Work posted recently"
-msgstr "हाल में डाले गए काम"
-
 #: single-kaamase_employer.php:142
 msgid "Work they are hiring for"
 msgstr "जिस काम के लिए मज़दूर चाहिए"
@@ -980,11 +1022,15 @@ msgstr "जिस काम के लिए मज़दूर चाहिए"
 msgid "Workers"
 msgstr "मज़दूर"
 
+#: front-page.php:426
+msgid "Workers available now in Nagaland"
+msgstr "नागालैंड में अभी उपलब्ध मज़दूर"
+
 #: single-kaamase_employer.php:104
 msgid "Workers hired here"
 msgstr "यहाँ से रखे गए मज़दूर"
 
-#: front-page.php:443
+#: front-page.php:599
 msgid "Workers rate employers too. Ratings come only from jobs that were actually done."
 msgstr "मज़दूर भी मालिकों को रेटिंग देते हैं। रेटिंग सिर्फ़ उन्हीं कामों से आती है जो सच में हुए।"
 

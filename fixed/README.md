@@ -85,6 +85,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/email-typos.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/sharing.php` | `wp-content/plugins/kaamase-core/includes/sharing.php` |
 | `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
+| `fixed/kaamase-core/includes/seo.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -5104,6 +5105,151 @@ from the same phone straight after still going through; wording capped at 20; an
 in the owner's Reports list, the Wording fixes link present, none of them in the
 main list, *All* counting exactly what it shows, and the details box reading
 *Wording fix from the app*. Nothing from these files in `debug.log`.
+
+## 74. Being found for "jobs in Nagaland" and "workers in Nagaland"
+
+The site ranked for its own name and for words already on its pages, and not
+for what people actually type into Google or ask an AI assistant: *jobs in
+Nagaland*, *workers in Nagaland*, *how to find a job in Nagaland*. The homepage
+was titled "Kaam Ase – There is work." and headed "Kaam ase.", which says
+nothing to somebody who has never heard of it, and no page had a description,
+so Google wrote its own.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/seo.php` | **new file**, 1.0.0. Loaded like every other file in `includes/` |
+| `fixed/kaamase/front-page.php` | 1.2.0, the new homepage |
+| `fixed/kaamase/style.css` | 1.8.0 |
+| `fixed/kaamase-core/languages/kaamase-core.pot`, `kaamase-core-hi_IN.po` and `.mo`, `kaamase-core-nag.po` and `.mo` | the questions and the page titles |
+| `fixed/kaamase/languages/kaamase.pot`, `hi_IN.po` and `.mo`, `nag.po` and `.mo` | the homepage |
+
+Upload `seo.php` before or with `front-page.php`. The homepage asks for its
+questions with `function_exists()`, so the other order does no harm, but the
+questions only appear once `seo.php` is there.
+
+### After uploading
+
+1. **LiteSpeed Cache → Toolbox → Purge All.**
+2. **Google Search Console → Sitemaps:** submit `https://kaamase.com/wp-sitemap.xml`
+   again. If `wp-sitemap-users-1.xml` is listed there on its own, remove it.
+3. **Search Console → URL Inspection:** inspect `https://kaamase.com/` and press
+   *Request indexing*, so Google reads the new homepage now rather than on its
+   next visit.
+4. **Let the AI crawlers in.** If the site sits behind Cloudflare or Hostinger's
+   CDN, look for any setting that blocks AI bots or AI crawlers. If it is on,
+   ChatGPT, Claude and Perplexity cannot read the site, so they can never
+   recommend it. Turn it off.
+5. **If Yoast, Rank Math, SEOPress or All in One SEO is installed**, `seo.php`
+   leaves titles, descriptions and structured data to it (two sets on one page
+   is worse than one). Then set the homepage title in that plugin to
+   **Jobs and workers in Nagaland – Kaam Ase**. The sitemap fix, the private
+   pages and `/llms.txt` work either way.
+
+Rankings move over weeks, not days. The pages are now right for these searches;
+how fast Google re-ranks them is up to Google.
+
+### What was broken: members' email names in the sitemap
+
+WordPress's own sitemap listed every member at `/author/<login>/`. Login names
+here are the part of the email address before the @, so
+`/wp-sitemap-users-1.xml` published the start of every member's email to anybody
+who opened it. `security.php` already refuses author pages, so every one of those
+links also answered "not found", and a sitemap full of dead links teaches Google
+to distrust the rest. The users list is gone from the sitemap, and its old
+address now answers 404 rather than showing the homepage.
+
+The account pages (My account, Saved, My team, Who looked at you) were in the
+sitemap too. A crawler sees only a sign in prompt there. They are out of the
+sitemap and marked `noindex`.
+
+### Titles and descriptions
+
+| Page | Title in a search result |
+| --- | --- |
+| Homepage | Jobs and workers in Nagaland – Kaam Ase |
+| Jobs | Jobs in Nagaland; AC repair jobs in Kohima, Nagaland, when filtered |
+| Workers | Workers in Nagaland; Workers in Dimapur, Nagaland |
+| Teams | Teams for hire in Nagaland |
+| District | Jobs and workers in Dimapur, Nagaland |
+| Trade | AC repair in Nagaland: workers and jobs |
+| Worker or team | Raju Kumar – AC repair in Dimapur – Kaam Ase |
+| Job | its own title, plus the district when the title does not say it |
+
+The homepage and every list, district and trade page now have a description of
+about 150 characters written for them, not left to Google. Profiles and jobs get
+one built from their own trade, district and text. The homepage also names its
+own address as the canonical one.
+
+Titles follow the reader's language. Descriptions stay in English, which is the
+version Google reads, and a Hindi place name inside an English sentence reads
+worse than either language.
+
+### For AI assistants
+
+- **Questions on the homepage.** Eight plain questions and answers: what Kaam
+  Ase is, how to find a job in Nagaland, where to find workers, is it free,
+  which districts (the real list, from the site), is my number shown, is there
+  an app, which languages. Every answer is something the site really does. The
+  same text goes to Google as FAQ data, from one source, so the two can never
+  differ. They are in English, Hindi and Nagamese.
+- **`/llms.txt`**, a short plain-text page of facts and links in the format AI
+  tools look for: what the site is, that workers never pay, how numbers are
+  protected, a link to each district, the jobs, workers and teams lists, the
+  20 trades with the most people, and the app.
+- **Who runs it.** The organisation data now says Kaam Ase serves Nagaland, in
+  English, Hindi and Nagamese, is run by Nagaland Me, and links the two app
+  store pages, so an assistant can tie the website and the apps together.
+
+### The homepage
+
+Built around the words people search with, and the answer they want next:
+
+- **Top:** *Jobs and workers in Nagaland* as the main heading, one search with
+  trade and district, and two buttons: **Find workers** goes to the worker list
+  and **Find work** to the job list, carrying the same choices. It is a plain
+  form, so it works with no JavaScript. Under it, four true facts: free for
+  workers, all 17 districts, the real number of trades, the three languages.
+- **Popular trades**, **Latest jobs in Nagaland** (expired jobs never shown) and
+  **Workers available now in Nagaland**.
+- **Find jobs and workers by district:** a tile for every district, each one a
+  link Google can follow to that district's page.
+- The app, the two doors and the trust band, as before, then the questions.
+
+Dark green top with the hills of the state along its lower edge, a white search
+card, no web fonts and nothing loaded from another site, so it costs nothing
+extra on a slow connection.
+
+### Two layout faults found while testing, fixed
+
+- **Worker cards pushed the page sideways on a 320px phone in Nagamese**, and at
+  360px, the most common Android width, they ran 4px past their column. The
+  status "Etiya available ase" is longer than "Available now" and was never
+  allowed to move. When there is no room beside the name, it now drops to its
+  own line under the name. The same change gives the name the full width on a
+  small phone in every language: at 360px in English it was squeezed into 88px.
+  From 390px up in English and Hindi nothing moves.
+- **On a desktop in Nagamese the trade box was cut off** ("Jiman kaam hoileh b")
+  because the longer button words took the room. The top of the page is now
+  1040px wide rather than 920; the heading and the lead keep their own width.
+
+### Tested on the real WordPress site
+
+- Titles, descriptions and robots tags on the homepage, jobs, workers, teams, a
+  district, a trade, a worker and a job, filtered and unfiltered, in English,
+  Hindi and Nagamese.
+- The FAQ data parses and matches the questions on the page word for word, in
+  all three languages; the organisation, website and job data parse.
+- Sitemap index with no users list, account pages gone from it, the old users
+  sitemap 404, `/dashboard/` marked `noindex, follow`, `robots.txt` naming the
+  sitemap, `/llms.txt` answering as plain text.
+- In a real browser: both buttons land on the right list with trade and district
+  carried (*AC repair jobs in Kohima, Nagaland*), and at 320, 360, 390, 1024,
+  1280 and 1440 pixels in all three languages the page never scrolls sideways,
+  and no district name breaks mid-word.
+- Nothing from these files in `debug.log`. Language files: 0 placeholder
+  problems.
 
 ## Not changed, and why
 

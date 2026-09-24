@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.7.0
+Version: 1.8.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -1361,64 +1361,154 @@ body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-ar
 /* --------------------------------------------------------------------------
    13.4 Hero
 
-   The first screen. Warm, high contrast, and the search card is the
-   brightest object on it because searching is the one thing this page
-   is asking a visitor to do.
+   The first screen, on the deep green of the ads and the newspaper box, so
+   somebody who saw either recognises the page they land on. The search
+   card is the brightest object on it because searching is the one thing
+   this page is asking a visitor to do.
+
+   The hills along the bottom are one inline SVG in this file. No image
+   request, and they draw at any width.
    -------------------------------------------------------------------------- */
 
 .ka-hero {
   position: relative;
-  padding-block: var(--ka-10) var(--ka-8);
+  isolation: isolate;
+  overflow: hidden;
+  /* Room at the bottom for the hills, so they sit under the ticks, not behind them. */
+  padding-block: var(--ka-10) 6.5rem;
+  color: var(--ka-white);
   background:
-    radial-gradient(1200px 400px at 15% -10%, var(--ka-green-100), transparent 60%),
-    linear-gradient(170deg, var(--ka-green-50) 0%, var(--ka-bg) 70%);
-  border-bottom: 1px solid var(--ka-border);
+    radial-gradient(900px 420px at 88% -12%, rgba(31, 149, 96, 0.55), transparent 62%),
+    radial-gradient(700px 360px at -12% 115%, rgba(245, 166, 35, 0.14), transparent 60%),
+    var(--ka-green-900);
+}
+
+.ka-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 72px;
+  z-index: -1;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath fill='%230b4527' d='M0 70 L120 38 L230 62 L360 18 L470 54 L600 26 L720 60 L850 22 L980 58 L1110 30 L1240 64 L1360 36 L1440 52 V120 H0 Z'/%3E%3Cpath fill='%2310603a' fill-opacity='.55' d='M0 96 L150 66 L300 90 L450 60 L610 92 L760 64 L920 94 L1080 68 L1230 92 L1440 72 V120 H0 Z'/%3E%3C/svg%3E") bottom / 100% 100% no-repeat;
 }
 
 @media (min-width: 768px) {
-  .ka-hero { padding-block: var(--ka-16) var(--ka-12); }
+  .ka-hero { padding-block: var(--ka-16) 9.5rem; }
+  .ka-hero::after { height: 130px; }
 }
 
-.ka-hero__inner { max-width: 860px; }
+/* Wide enough for the search card to hold both fields and both buttons
+   in Nagamese, whose button words are the longest. The title and the
+   lead keep their own, narrower measure. */
+.ka-hero__inner { max-width: 1040px; }
+
+.ka-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ka-2);
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--ka-radius-pill);
+  background: rgba(255, 255, 255, 0.07);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  color: var(--ka-ink-100);
+}
+
+.ka-hero__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ka-amber-400);
+  box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.2);
+}
 
 .ka-hero__title {
-  font-size: var(--ka-text-3xl);
-  color: var(--ka-green-900);
-  letter-spacing: -0.03em;
-}
-
-@media (min-width: 768px) {
-  .ka-hero__title { font-size: 3rem; }
+  margin-top: var(--ka-5);
+  max-width: 17ch;
+  font-size: clamp(2.25rem, 1.35rem + 3.6vw, 3.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--ka-white);
 }
 
 .ka-hero__lead {
+  margin-top: var(--ka-4);
+  max-width: 52ch;
   font-size: var(--ka-text-lg);
   line-height: var(--ka-leading-snug);
-  color: var(--ka-text-soft);
-  max-width: 46ch;
+  color: rgba(255, 255, 255, 0.84);
 }
 
 @media (min-width: 768px) {
   .ka-hero__lead { font-size: var(--ka-text-xl); }
 }
 
+/* The card. White on the green, lifted, and wide enough on a desktop to
+   carry both fields and both buttons in one row. */
 .ka-hero__search {
-  box-shadow: var(--ka-shadow-lg);
-  border-color: var(--ka-border-firm);
+  margin-top: var(--ka-8);
+  padding: var(--ka-5);
+  background: var(--ka-surface);
+  color: var(--ka-text);
+  border-radius: var(--ka-radius-lg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-/* One column on a phone, three across from tablet up. The button sits on
-   its own row on a phone so it stays full width and thumb sized. */
-.ka-hero__fields { display: grid; gap: var(--ka-4); grid-template-columns: 1fr; }
+@media (min-width: 768px) {
+  .ka-hero__search { padding: var(--ka-6); }
+}
 
-@media (min-width: 720px) {
-  .ka-hero__fields { grid-template-columns: 1fr 1fr auto; align-items: end; }
-  .ka-hero__submit { min-width: 160px; }
+/* One column on a phone. Fields side by side from a small tablet, and the
+   whole search in one row on a desktop. */
+.ka-hero__grid { display: grid; gap: var(--ka-4); grid-template-columns: 1fr; }
+
+@media (min-width: 640px) {
+  .ka-hero__grid { grid-template-columns: 1fr 1fr; }
+  .ka-hero__actions { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1024px) {
+  .ka-hero__grid { grid-template-columns: 1fr 1fr auto; align-items: end; }
+  .ka-hero__actions { grid-column: auto; }
 }
 
 /* The field wrapper is a .ka-field, which adds a top margin to siblings.
    Inside a grid that margin fights the gap, so remove it. */
-.ka-hero__fields .ka-field + .ka-field { margin-top: 0; }
+.ka-hero__grid .ka-field + .ka-field { margin-top: 0; }
+
+/* The two buttons. Stacked on a narrow phone so each stays full width and
+   thumb sized, side by side from there up. */
+.ka-hero__actions { display: grid; gap: var(--ka-3); grid-template-columns: 1fr; }
+
+@media (min-width: 420px) {
+  .ka-hero__actions { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1024px) {
+  .ka-hero__actions .ka-btn { min-width: 150px; }
+}
+
+/* What is true, in four ticks, under the card. */
+.ka-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ka-3) var(--ka-6);
+  margin: var(--ka-6) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-medium);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ka-hero__facts li { display: inline-flex; align-items: center; gap: var(--ka-2); }
+.ka-hero__tick { flex-shrink: 0; color: var(--ka-amber-400); }
+
+@media (min-width: 768px) {
+  .ka-hero__facts { font-size: var(--ka-text-base); }
+}
 
 
 /* --------------------------------------------------------------------------
@@ -1499,9 +1589,22 @@ body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-ar
 .ka-employer-card__name a:hover { color: var(--ka-green-700); text-decoration: underline; }
 
 /* The status pill sits top right of the card head and must not squash
-   the name column when the name is long. */
+   the name column when the name is long.
+
+   When there is not room for both -- a 360px phone, or "Etiya available
+   ase" in Nagamese -- the pill drops to its own line under the name,
+   instead of squeezing the name to a word a line or pushing the card
+   wider than the screen. The name column growing is what keeps the pill
+   on the right the rest of the time, so it needs no auto margin, and on
+   its own line it starts at the left like everything else in the card. */
+.ka-worker-card .ka-card__head,
+.ka-gang-card .ka-card__head { flex-wrap: wrap; }
+
+.ka-worker-card__id,
+.ka-gang-card__id { flex-basis: 6rem; }
+
 .ka-worker-card .ka-card__head > .ka-status,
-.ka-gang-card .ka-card__head > .ka-status { flex-shrink: 0; margin-left: auto; }
+.ka-gang-card .ka-card__head > .ka-status { flex-shrink: 0; }
 
 .ka-job-card h3 { font-size: var(--ka-text-lg); }
 
@@ -1582,6 +1685,161 @@ body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-ar
 .ka-trust__item {
   padding-left: var(--ka-4);
   border-left: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+/* A section title with one line under it. Replaces a bare h2, so every
+   list on the front page says what it is and where. */
+.ka-section-head { margin-bottom: var(--ka-6); }
+.ka-section-head h2 {
+  font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2rem);
+  letter-spacing: -0.02em;
+  color: var(--ka-green-900);
+}
+.ka-section-head p {
+  margin-top: var(--ka-2);
+  max-width: 60ch;
+  color: var(--ka-text-mute);
+}
+.ka-section-head--center { text-align: center; }
+.ka-section-head--center p { margin-inline: auto; }
+
+/* Popular trades. A swipe row on a phone, where width is short; on a
+   wider screen they wrap, so the last chip is never cut off at the edge. */
+.ka-home-trades { padding-bottom: 0; }
+.ka-home-trades__title {
+  margin-bottom: var(--ka-3);
+  font-size: var(--ka-text-sm);
+  font-weight: var(--ka-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ka-text-mute);
+}
+
+@media (min-width: 768px) {
+  .ka-home-trades .ka-chips-scroll { flex-wrap: wrap; overflow: visible; }
+}
+
+.ka-chip--more { border-style: dashed; color: var(--ka-green-700); font-weight: var(--ka-weight-medium); }
+
+/* Districts. One tile each, every one a link to its own page. */
+.ka-districts {
+  display: grid;
+  gap: var(--ka-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ka-district {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--ka-tap-lg);
+  padding: var(--ka-3) 30px var(--ka-3) var(--ka-4);
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius-lg);
+  text-decoration: none;
+  transition: border-color var(--ka-fast) var(--ka-ease),
+              box-shadow var(--ka-fast) var(--ka-ease),
+              transform var(--ka-fast) var(--ka-ease);
+}
+
+.ka-district::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--ka-green-600);
+  border-right: 2px solid var(--ka-green-600);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.ka-district:hover { border-color: var(--ka-green-500); box-shadow: var(--ka-shadow); transform: translateY(-1px); }
+
+/* Never broken inside a word. Chumoukedima is the longest name, and on a
+   narrow phone the page wide break-word rule was splitting it in two. */
+.ka-district__name { font-weight: var(--ka-weight-bold); color: var(--ka-green-900); overflow-wrap: normal; }
+
+/* The smallest phones fit two tiles a row only if the longest names give a
+   little: a touch smaller type and less room on the left. */
+@media (max-width: 399px) {
+  .ka-district { padding-left: var(--ka-3); padding-right: 26px; }
+  .ka-district::after { right: 12px; }
+  .ka-district__name { font-size: min(1rem, 4.05vw); }
+}
+.ka-district__sub { font-size: var(--ka-text-xs); color: var(--ka-text-mute); }
+
+@media (min-width: 640px) {
+  .ka-districts { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ka-district { transition: none; }
+  .ka-district:hover { transform: none; }
+}
+
+/* Questions. A details element each: opens with no script, announces its
+   own state to a screen reader, and its text is in the page for anybody
+   reading it, a search engine included, whether it is open or not. */
+.ka-faq { display: grid; gap: var(--ka-3); }
+
+.ka-faq__item {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border);
+  border-radius: var(--ka-radius-lg);
+  transition: border-color var(--ka-fast) var(--ka-ease), box-shadow var(--ka-fast) var(--ka-ease);
+}
+
+.ka-faq__item[open] { border-color: var(--ka-green-100); box-shadow: var(--ka-shadow-sm); }
+
+.ka-faq__item > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ka-4);
+  min-height: var(--ka-tap);
+  padding: var(--ka-4) var(--ka-5);
+  cursor: pointer;
+  list-style: none;
+}
+
+.ka-faq__item > summary::-webkit-details-marker { display: none; }
+
+.ka-faq__item > summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  margin-top: -4px;
+  border-right: 2px solid var(--ka-green-700);
+  border-bottom: 2px solid var(--ka-green-700);
+  transform: rotate(45deg);
+  transition: transform var(--ka-fast) var(--ka-ease);
+}
+
+.ka-faq__item[open] > summary::after { margin-top: 4px; transform: rotate(-135deg); }
+.ka-faq__item > summary:focus-visible { outline: var(--ka-focus) solid var(--ka-amber-500); outline-offset: 2px; border-radius: var(--ka-radius-lg); }
+
+.ka-faq__q {
+  font-size: var(--ka-text-base);
+  line-height: var(--ka-leading-snug);
+  color: var(--ka-text);
+}
+
+@media (min-width: 768px) {
+  .ka-faq__q { font-size: var(--ka-text-lg); }
+}
+
+.ka-faq__a {
+  padding: 0 var(--ka-5) var(--ka-5);
+  color: var(--ka-text-soft);
+  line-height: var(--ka-leading);
 }
 
 
