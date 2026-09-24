@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.8.0
+Version: 1.9.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -1443,6 +1443,135 @@ body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-ar
 
 @media (min-width: 768px) {
   .ka-hero__lead { font-size: var(--ka-text-xl); }
+}
+
+/* Photos behind the heading.
+
+   The badge, the heading and the line under it sit on photographs that
+   fade from one to the next. The band ends where the search card
+   begins; below it the hero is the green it always was.
+
+   A shade over every photo keeps the white words readable on a bright
+   one. On a phone the words cover most of the photo, so the shade is
+   even. On a computer the words are on the left, so the shade is heavy
+   there and the photo shows clearly on the right. The bottom edge fades
+   into the green, so there is no line where the photo stops.
+
+   Without photos the band is only a wrapper, and the hero looks exactly
+   as it did. */
+.ka-hero__band {
+  position: relative;
+  isolation: isolate;
+}
+
+.ka-hero--photos { padding-top: 0; }
+
+.ka-hero--photos .ka-hero__band {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 21rem;
+  /* Room at the bottom for the pause button, clear of the words. */
+  padding-block: var(--ka-10) 4rem;
+}
+
+@media (min-width: 768px) {
+  .ka-hero--photos .ka-hero__band {
+    min-height: 30rem;
+    padding-block: var(--ka-16) 4.5rem;
+  }
+}
+
+.ka-hero__slides {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.ka-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.ka-hero__slide.is-on { opacity: 1; }
+
+.ka-hero__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ka-hero__slides::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(4, 28, 17, 0.62) 0%,
+    rgba(4, 28, 17, 0.5) 45%,
+    rgba(4, 28, 17, 0.74) 82%,
+    var(--ka-green-900) 100%);
+}
+
+@media (min-width: 768px) {
+  .ka-hero__slides::after {
+    background:
+      linear-gradient(180deg, transparent 58%, var(--ka-green-900) 100%),
+      linear-gradient(90deg,
+        rgba(4, 28, 17, 0.86) 0%,
+        rgba(4, 28, 17, 0.62) 38%,
+        rgba(4, 28, 17, 0.18) 72%,
+        rgba(4, 28, 17, 0.06) 100%);
+  }
+}
+
+.ka-hero--photos .ka-hero__title,
+.ka-hero--photos .ka-hero__lead {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.ka-hero--photos .ka-hero__lead { color: rgba(255, 255, 255, 0.92); }
+
+.ka-hero--photos .ka-hero__eyebrow {
+  background: rgba(0, 0, 0, 0.32);
+  border-color: rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* The band's own bottom padding is the space above the card. */
+.ka-hero--photos .ka-hero__search { margin-top: 0; }
+
+/* Pause. The script shows it; without one it stays hidden. */
+.ka-hero__pause {
+  position: absolute;
+  right: var(--ka-4);
+  bottom: var(--ka-2);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--ka-white);
+  cursor: pointer;
+}
+
+.ka-hero__pause[hidden] { display: none; }
+.ka-hero__pause:hover { background: rgba(0, 0, 0, 0.55); }
+.ka-hero__pause:focus-visible { outline: var(--ka-focus) solid var(--ka-amber-500); outline-offset: 3px; }
+
+.ka-hero__play-icon,
+.ka-hero__pause.is-paused .ka-hero__pause-icon { display: none; }
+.ka-hero__pause.is-paused .ka-hero__play-icon { display: block; }
+
+@media (min-width: 768px) {
+  .ka-hero__pause { right: var(--ka-6); bottom: var(--ka-4); }
 }
 
 /* The card. White on the green, lifted, and wide enough on a desktop to

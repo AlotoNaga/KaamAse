@@ -40,7 +40,7 @@
  * underneath; only what a visitor reads changed.
  *
  * @package Kaamase
- * @version 1.3.0
+ * @version 1.4.0
  * @since   1.0.0
  */
 
@@ -90,36 +90,128 @@ $kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 
 <?php
 /* ==========================================================================
    HERO
+
+   Photos behind the heading
+   -------------------------
+   The badge, the heading and the line under it sit on photographs that
+   fade from one to the next. Only that part: the search card and the
+   ticks stay on the green, where a photo would have to be too tall to
+   look like anything.
+
+   The words stay real text on top, never part of a picture. They are
+   what a search engine reads, and they change language.
+
+   Each photo is in assets/images/hero/ twice, cropped 16:9: "-s", at
+   most 800 wide, for phones, and "-l" for everything wider. A phone
+   never fetches a large one. Only the first photo comes with the page;
+   the rest are fetched once the page has finished loading, so a slow
+   connection gets a working page first and the pictures after.
+
+   "w" is the large file's width. "focus" is the part of the photo that
+   must stay in view: a phone shows the middle of a wide photo, a
+   computer a band across it.
+
+   No script, or reduced motion asked for, and the first photo simply
+   stays. No photos at all and the hero is the green it was.
    ========================================================================== */
+
+$kaamase_hero_photos = array_values(
+	(array) apply_filters(
+		'kaamase_hero_photos',
+		array(
+			array( 'name' => 'queue', 'w' => 1000, 'focus' => '35% 50%' ),
+			array( 'name' => 'electrician', 'w' => 1600, 'focus' => '45% 50%' ),
+			array( 'name' => 'dishes', 'w' => 740, 'focus' => '60% 50%' ),
+			array( 'name' => 'interview', 'w' => 1024, 'focus' => '50% 60%' ),
+			array( 'name' => 'building', 'w' => 1000, 'focus' => '12% 50%' ),
+			array( 'name' => 'job-fair', 'w' => 1000, 'focus' => '50% 50%' ),
+			array( 'name' => 'kohima', 'w' => 1200, 'focus' => '50% 50%' ),
+		)
+	)
+);
+
+// A one pixel stand-in, so photos two onwards fetch nothing until the script asks.
+$kaamase_blank = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 ?>
-<section class="ka-hero">
+<section class="ka-hero<?php echo $kaamase_hero_photos ? ' ka-hero--photos' : ''; ?>">
+
+	<div class="ka-hero__band">
+
+		<?php if ( $kaamase_hero_photos ) : ?>
+			<div class="ka-hero__slides" aria-hidden="true">
+				<?php foreach ( $kaamase_hero_photos as $kaamase_i => $kaamase_photo ) : ?>
+					<?php
+					$kaamase_file  = 'assets/images/hero/' . sanitize_file_name( (string) ( $kaamase_photo['name'] ?? '' ) );
+					$kaamase_small = get_theme_file_uri( $kaamase_file . '-s.webp' );
+					$kaamase_large = get_theme_file_uri( $kaamase_file . '-l.webp' );
+					$kaamase_wide  = max( 1, (int) ( $kaamase_photo['w'] ?? 1600 ) );
+					$kaamase_focus = preg_match( '/^\d{1,3}% \d{1,3}%$/', (string) ( $kaamase_photo['focus'] ?? '' ) ) ? $kaamase_photo['focus'] : '50% 50%';
+					?>
+					<picture class="ka-hero__slide<?php echo 0 === $kaamase_i ? ' is-on' : ''; ?>">
+						<?php if ( 0 === $kaamase_i ) : ?>
+							<source media="(max-width: 767px)" srcset="<?php echo esc_url( $kaamase_small ); ?>">
+							<img src="<?php echo esc_url( $kaamase_large ); ?>" alt=""
+								width="<?php echo (int) $kaamase_wide; ?>" height="<?php echo (int) round( $kaamase_wide * 9 / 16 ); ?>"
+								fetchpriority="high" data-no-lazy="1" class="skip-lazy"
+								style="object-position: <?php echo esc_attr( $kaamase_focus ); ?>">
+						<?php else : ?>
+							<source media="(max-width: 767px)" srcset="<?php echo esc_attr( $kaamase_blank ); ?>"
+								data-srcset="<?php echo esc_url( $kaamase_small ); ?>">
+							<img src="<?php echo esc_attr( $kaamase_blank ); ?>" data-src="<?php echo esc_url( $kaamase_large ); ?>" alt=""
+								width="<?php echo (int) $kaamase_wide; ?>" height="<?php echo (int) round( $kaamase_wide * 9 / 16 ); ?>"
+								decoding="async" data-no-lazy="1" class="skip-lazy"
+								style="object-position: <?php echo esc_attr( $kaamase_focus ); ?>">
+						<?php endif; ?>
+					</picture>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+
+		<div class="ka-container">
+			<div class="ka-hero__inner">
+
+				<p class="ka-hero__eyebrow">
+					<span class="ka-hero__dot" aria-hidden="true"></span>
+					<?php
+					printf(
+						'%1$s &middot; %2$s',
+						esc_html( get_bloginfo( 'name', 'display' ) ),
+						esc_html__( 'Nagaland’s own job platform', 'kaamase' )
+					);
+					?>
+				</p>
+
+				<h1 class="ka-hero__title">
+					<?php esc_html_e( 'Jobs and workers in Nagaland', 'kaamase' ); ?>
+				</h1>
+
+				<p class="ka-hero__lead">
+					<?php
+					esc_html_e(
+						'Every kind of job, government and private, from teaching and office work to driving and building, in every district.',
+						'kaamase'
+					);
+					?>
+				</p>
+
+			</div>
+		</div>
+
+		<?php if ( count( $kaamase_hero_photos ) > 1 ) : ?>
+			<?php // Shown by the script, so nobody without one sees a button that does nothing. ?>
+			<button class="ka-hero__pause" type="button" hidden
+				data-pause="<?php esc_attr_e( 'Pause the photos', 'kaamase' ); ?>"
+				data-play="<?php esc_attr_e( 'Play the photos', 'kaamase' ); ?>"
+				aria-label="<?php esc_attr_e( 'Pause the photos', 'kaamase' ); ?>">
+				<svg class="ka-hero__pause-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"/></svg>
+				<svg class="ka-hero__play-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 2.5v11a1 1 0 0 0 1.5.86l9-5.5a1 1 0 0 0 0-1.72l-9-5.5A1 1 0 0 0 4 2.5z" fill="currentColor"/></svg>
+			</button>
+		<?php endif; ?>
+
+	</div>
+
 	<div class="ka-container">
-
 		<div class="ka-hero__inner">
-
-			<p class="ka-hero__eyebrow">
-				<span class="ka-hero__dot" aria-hidden="true"></span>
-				<?php
-				printf(
-					'%1$s &middot; %2$s',
-					esc_html( get_bloginfo( 'name', 'display' ) ),
-					esc_html__( 'Nagaland’s own job platform', 'kaamase' )
-				);
-				?>
-			</p>
-
-			<h1 class="ka-hero__title">
-				<?php esc_html_e( 'Jobs and workers in Nagaland', 'kaamase' ); ?>
-			</h1>
-
-			<p class="ka-hero__lead">
-				<?php
-				esc_html_e(
-					'Every kind of job, government and private, from teaching and office work to driving and building, in every district.',
-					'kaamase'
-				);
-				?>
-			</p>
 
 			<?php
 			/* --------------------------------------------------------------
@@ -253,8 +345,101 @@ $kaamase_tick = '<svg class="ka-hero__tick" width="18" height="18" viewBox="0 0 
 			</ul>
 
 		</div>
-
 	</div>
+
+	<?php if ( count( $kaamase_hero_photos ) > 1 ) : ?>
+		<script>
+		(function () {
+			var hero = document.querySelector('.ka-hero--photos');
+
+			if (!hero) { return; }
+
+			var slides = [].slice.call(hero.querySelectorAll('.ka-hero__slide'));
+			var button = hero.querySelector('.ka-hero__pause');
+			var still  = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			/*
+			 * Somebody who asked for less motion keeps the first photo,
+			 * and never downloads the others.
+			 */
+			if (slides.length < 2 || still) { return; }
+
+			var current = 0;
+			var timer   = null;
+			var paused  = false;
+
+			/* Photos two onwards, once the page itself has finished. */
+			function fetchRest() {
+				slides.forEach(function (slide) {
+					var source = slide.querySelector('source[data-srcset]');
+					var img    = slide.querySelector('img[data-src]');
+
+					if (source) {
+						source.srcset = source.getAttribute('data-srcset');
+						source.removeAttribute('data-srcset');
+					}
+
+					if (img) {
+						img.src = img.getAttribute('data-src');
+						img.removeAttribute('data-src');
+					}
+				});
+			}
+
+			/* A photo that has not arrived is skipped, never shown half loaded. */
+			function arrived(slide) {
+				var img = slide.querySelector('img');
+				return img && img.complete && img.naturalWidth > 1;
+			}
+
+			function next() {
+				for (var step = 1; step < slides.length; step++) {
+					var n = (current + step) % slides.length;
+
+					if (arrived(slides[n])) {
+						slides[current].classList.remove('is-on');
+						slides[n].classList.add('is-on');
+						current = n;
+						return;
+					}
+				}
+			}
+
+			function stop() {
+				if (timer) { clearInterval(timer); timer = null; }
+			}
+
+			/* Nothing moves in a tab nobody is looking at. */
+			function start() {
+				stop();
+
+				if (!paused && !document.hidden) { timer = setInterval(next, 5500); }
+			}
+
+			if (document.readyState === 'complete') {
+				fetchRest();
+			} else {
+				window.addEventListener('load', fetchRest);
+			}
+
+			document.addEventListener('visibilitychange', start);
+
+			if (button) {
+				button.hidden = false;
+
+				button.addEventListener('click', function () {
+					paused = !paused;
+					button.classList.toggle('is-paused', paused);
+					button.setAttribute('aria-label', button.getAttribute(paused ? 'data-play' : 'data-pause'));
+
+					if (paused) { stop(); } else { next(); start(); }
+				});
+			}
+
+			start();
+		})();
+		</script>
+	<?php endif; ?>
 </section>
 
 <?php

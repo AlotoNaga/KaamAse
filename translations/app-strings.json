@@ -2497,6 +2497,10 @@
   "hi_IN": "पिछले काम",
   "nag": "Purana kaam khan"
  },
+ "Pause the photos": {
+  "hi_IN": "फ़ोटो रोकें",
+  "nag": "Photo khan rukhai dibi"
+ },
  "Pay": {
   "hi_IN": "मज़दूरी",
   "nag": "Mojuri"
@@ -2584,6 +2588,10 @@
  "Plastering, shuttering, tile work, night shifts, your own tools. Somebody deciding between two masons decides on this.": {
   "hi_IN": "प्लास्टर, शटरिंग, टाइल का काम, रात की शिफ़्ट, अपने औज़ार। दो राजमिस्त्री में से चुनने वाला इसी आधार पर चुनता है।",
   "nag": "Plaster, shuttering, tile laka kaam, rati laka shift, nije laka tool. Duijon mason majot te basi thaka manu etu he sai kene thik kore."
+ },
+ "Play the photos": {
+  "hi_IN": "फ़ोटो चलाएँ",
+  "nag": "Photo khan chalai dibi"
  },
  "Please agree to the terms and the privacy notice.": {
   "hi_IN": "कृपया शर्तों और निजता सूचना से सहमति दें।",

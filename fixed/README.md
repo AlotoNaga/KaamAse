@@ -86,6 +86,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/sharing.php` | `wp-content/plugins/kaamase-core/includes/sharing.php` |
 | `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
 | `fixed/kaamase-core/includes/seo.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase/assets/images/hero/` (14 photos) | `wp-content/themes/kaamase/assets/images/hero/` **(new folder)** |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -5317,6 +5318,77 @@ for word in each language. Titles and descriptions checked on the job, worker,
 team, trade (Teacher and AC repair), filtered and district pages; the longest
 description, Chumoukedima, is 160 characters. Nothing in `debug.log`; language
 files 0 placeholder problems.
+
+## 76. Photos behind the heading
+
+The badge, the heading and the line under it now sit on seven photos that fade
+from one to the next every five or six seconds. Only that part changed: the
+search card, the ticks and the hills stay on the green.
+
+### Upload
+
+This includes fix 75, so if 75 is not up yet, upload once for both.
+
+| File | |
+| --- | --- |
+| `fixed/kaamase/front-page.php` | 1.4.0 (includes 75) |
+| `fixed/kaamase/style.css` | 1.9.0 |
+| `fixed/kaamase/assets/images/hero/` | **new folder**, 14 files |
+| `fixed/kaamase/languages/kaamase.pot`, `hi_IN.po` and `.mo`, `nag.po` and `.mo` | includes 75 |
+| `fixed/kaamase-core/includes/seo.php` and `fixed/kaamase-core/languages/` | from 75, if not up yet |
+
+The folder: in Hostinger's File Manager open `wp-content/themes/kaamase/assets/`,
+make a folder `images`, inside it a folder `hero`, and upload the 14 `.webp`
+files into `hero`. Then **LiteSpeed Cache → Toolbox → Purge All**.
+
+### The photos, in this order
+
+1. `queue`: job fair, the queue
+2. `electrician`: hands at a distribution board (stock photo)
+3. `dishes`: washing up (stock photo)
+4. `interview`: interviews in an office
+5. `building`: building site, Kohima
+6. `job-fair`: job fair, waiting
+7. `kohima`: Kohima from above
+
+Each is there twice, cropped to the same 16:9 shape: `-s`, at most 800 wide, for
+phones, and `-l` for computers. The 14 files are 740 KB together. To change the
+order, add or drop a photo, edit the list at the top of the hero in
+`front-page.php`; a new photo needs its two files in the folder.
+
+### How it behaves
+
+- **Only the first photo loads with the page.** The other six are fetched after
+  the page has finished, so a slow phone gets a working page first. A photo that
+  has not arrived is skipped, never shown half loaded.
+- **Phones fetch only the small files** (23 to 71 KB each); computers only the
+  large ones.
+- **A round pause button** sits at the bottom right. It reads *Pause the photos*
+  or *Play the photos* to a screen reader, in all three languages.
+- **Nothing moves** in a tab nobody is looking at, or for somebody whose phone
+  is set to reduce motion. They get the first photo and nothing else downloads.
+  With no script at all the first photo shows and the button stays hidden.
+- **The words are still text**, on a shade that keeps them readable on a bright
+  photo, and the bottom edge fades into the green.
+- LiteSpeed's lazy loading is told to leave these images alone
+  (`data-no-lazy`), because the script already loads them at the right time.
+
+Most of the photos are about 1000 pixels wide, so on a large computer screen
+they are a little soft. Sharper originals can replace them at any time with the
+same names.
+
+### Tested on the real WordPress site
+
+20 checks in a real browser: on a phone and a computer, only the first photo
+before the page finished and all seven after, phones never fetching a large
+file nor computers a small one; the photo changing by itself; pause holding it,
+play moving on at once; one photo showing after each fade; reduced motion
+fetching one photo with no button; no script showing the first photo with the
+button hidden; the button's words in Hindi and Nagamese. No sideways scroll at
+320, 360, 390, 768, 1024, 1280 and 1440 pixels in any language. With the photo
+list emptied, every measured position of the hero matched the previous version
+exactly. The pause button shows the amber focus ring from the keyboard. Nothing
+in `debug.log`.
 
 ## Not changed, and why
 

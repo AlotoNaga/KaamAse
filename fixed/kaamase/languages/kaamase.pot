@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 06:35+0000\n"
+"POT-Creation-Date: 2026-09-24 07:05+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +23,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of trades, every kind of work from teacher to mason
-#: front-page.php:240
+#: front-page.php:332
 msgid "%s kind of work"
 msgid_plural "%s kinds of work"
 msgstr[0] ""
@@ -69,7 +69,7 @@ msgid_plural "%s years of experience"
 msgstr[0] ""
 msgstr[1] ""
 
-#: front-page.php:612
+#: front-page.php:797
 msgid "A Nagaland company"
 msgstr ""
 
@@ -98,17 +98,17 @@ msgid "Agree the rate and the payment day out loud before the first day, not aft
 msgstr ""
 
 #. translators: %s: number of districts
-#: front-page.php:225
+#: front-page.php:317
 msgid "All %s district"
 msgid_plural "All %s districts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: front-page.php:184
+#: front-page.php:276
 msgid "All Nagaland"
 msgstr ""
 
-#: front-page.php:298
+#: front-page.php:483
 msgid "All categories"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgstr ""
 msgid "All districts"
 msgstr ""
 
-#: front-page.php:158
+#: front-page.php:250
 msgid "All kinds of work"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr ""
 msgid "Before you agree"
 msgstr ""
 
-#: front-page.php:605
+#: front-page.php:790
 msgid "Both sides rate"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Day rate"
 msgstr ""
 
-#: front-page.php:193
+#: front-page.php:285
 msgid "Dimapur, Kohima, Mokokchung"
 msgstr ""
 
@@ -237,11 +237,11 @@ msgstr ""
 msgid "Edit this job"
 msgstr ""
 
-#: front-page.php:480
+#: front-page.php:665
 msgid "Every district of Nagaland, from Dimapur and Kohima to Mon and Noklak."
 msgstr ""
 
-#: front-page.php:117
+#: front-page.php:190
 msgid "Every kind of job, government and private, from teaching and office work to driving and building, in every district."
 msgstr ""
 
@@ -257,7 +257,7 @@ msgstr ""
 msgid "Faster, and it tells you when work appears"
 msgstr ""
 
-#: front-page.php:479
+#: front-page.php:664
 msgid "Find jobs and workers by district"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr ""
 msgid "Find other workers"
 msgstr ""
 
-#: 404.php:152 footer.php:83 front-page.php:204 inc/setup.php:393
+#: 404.php:152 footer.php:83 front-page.php:296 inc/setup.php:393
 msgid "Find work"
 msgstr ""
 
@@ -273,11 +273,11 @@ msgstr ""
 msgid "Find work and find workers across Nagaland. Free for every worker, always."
 msgstr ""
 
-#: 404.php:161 footer.php:82 front-page.php:199 inc/setup.php:392
+#: 404.php:161 footer.php:82 front-page.php:291 inc/setup.php:392
 msgid "Find workers"
 msgstr ""
 
-#: front-page.php:645
+#: front-page.php:830
 msgid "Finding work and workers in Nagaland"
 msgstr ""
 
@@ -297,7 +297,7 @@ msgstr ""
 msgid "Footer, legal and policy"
 msgstr ""
 
-#: front-page.php:215
+#: front-page.php:307
 msgid "Free for job seekers, always"
 msgstr ""
 
@@ -305,7 +305,7 @@ msgstr ""
 msgid "Free to post, any district"
 msgstr ""
 
-#: front-page.php:591
+#: front-page.php:776
 msgid "Free to use"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Google Play"
 msgstr ""
 
-#: front-page.php:356
+#: front-page.php:541
 msgid "Government and private jobs from across the state. Job seekers never pay to apply."
 msgstr ""
 
@@ -397,11 +397,11 @@ msgstr ""
 msgid "Jobs"
 msgstr ""
 
-#: front-page.php:490
+#: front-page.php:675
 msgid "Jobs and workers"
 msgstr ""
 
-#: front-page.php:112
+#: front-page.php:185
 msgid "Jobs and workers in Nagaland"
 msgstr ""
 
@@ -469,7 +469,7 @@ msgstr ""
 msgid "Latest"
 msgstr ""
 
-#: front-page.php:355
+#: front-page.php:540
 msgid "Latest jobs in Nagaland"
 msgstr ""
 
@@ -490,11 +490,11 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: front-page.php:540
+#: front-page.php:725
 msgid "Looking for work"
 msgstr ""
 
-#: front-page.php:557
+#: front-page.php:742
 msgid "Looking for workers"
 msgstr ""
 
@@ -506,15 +506,15 @@ msgstr ""
 msgid "Main menu"
 msgstr ""
 
-#: front-page.php:544
+#: front-page.php:729
 msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
 msgstr ""
 
-#: front-page.php:552
+#: front-page.php:737
 msgid "Make my free profile"
 msgstr ""
 
-#: front-page.php:167
+#: front-page.php:259
 msgid "Mason, electrician, driver"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "My jobs"
 msgstr ""
 
-#: front-page.php:106
+#: front-page.php:179
 msgid "Nagaland’s own job platform"
 msgstr ""
 
@@ -570,7 +570,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: front-page.php:593
+#: front-page.php:778
 msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
 msgstr ""
 
@@ -640,11 +640,15 @@ msgstr ""
 msgid "Past Job"
 msgstr ""
 
+#: front-page.php:203 front-page.php:205
+msgid "Pause the photos"
+msgstr ""
+
 #: single-kaamase_job.php:126
 msgid "Pay"
 msgstr ""
 
-#: front-page.php:646
+#: front-page.php:831
 msgid "Plain answers to what people ask most."
 msgstr ""
 
@@ -652,7 +656,11 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
-#: front-page.php:285
+#: front-page.php:204
+msgid "Play the photos"
+msgstr ""
+
+#: front-page.php:470
 msgid "Popular categories"
 msgstr ""
 
@@ -660,11 +668,11 @@ msgstr ""
 msgid "Post a job"
 msgstr ""
 
-#: front-page.php:569 index.php:255
+#: front-page.php:754 index.php:255
 msgid "Post a job free"
 msgstr ""
 
-#: front-page.php:561
+#: front-page.php:746
 msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
 msgstr ""
 
@@ -680,7 +688,7 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
-#: front-page.php:600
+#: front-page.php:785
 msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
 msgstr ""
 
@@ -699,7 +707,7 @@ msgstr[1] ""
 msgid "Register free"
 msgstr ""
 
-#: front-page.php:614
+#: front-page.php:799
 msgid "Registered and run from Dimapur. Not an outside app that has never been here."
 msgstr ""
 
@@ -736,11 +744,11 @@ msgstr ""
 msgid "Search by trade and district"
 msgstr ""
 
-#: front-page.php:384 index.php:237
+#: front-page.php:569 index.php:237
 msgid "See all jobs"
 msgstr ""
 
-#: front-page.php:450
+#: front-page.php:635
 msgid "See all workers"
 msgstr ""
 
@@ -752,7 +760,7 @@ msgstr ""
 msgid "See this employer"
 msgstr ""
 
-#: front-page.php:435
+#: front-page.php:620
 msgid "See what they do, where they are, their ratings and who vouches for them."
 msgstr ""
 
@@ -988,7 +996,7 @@ msgstr ""
 msgid "Vouched for by"
 msgstr ""
 
-#: front-page.php:598
+#: front-page.php:783
 msgid "Vouched locally"
 msgstr ""
 
@@ -996,11 +1004,11 @@ msgstr ""
 msgid "Wage or job complaint"
 msgstr ""
 
-#: front-page.php:147
+#: front-page.php:239
 msgid "What work"
 msgstr ""
 
-#: front-page.php:173
+#: front-page.php:265
 msgid "Which district"
 msgstr ""
 
@@ -1024,7 +1032,7 @@ msgstr ""
 msgid "Workers"
 msgstr ""
 
-#: front-page.php:434
+#: front-page.php:619
 msgid "Workers available now in Nagaland"
 msgstr ""
 
@@ -1032,7 +1040,7 @@ msgstr ""
 msgid "Workers hired here"
 msgstr ""
 
-#: front-page.php:607
+#: front-page.php:792
 msgid "Workers rate employers too. Ratings come only from jobs that were actually done."
 msgstr ""
 
