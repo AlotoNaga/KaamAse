@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.12.0
+Version: 1.13.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -1337,10 +1337,18 @@ body.has-tabbar { padding-bottom: calc(var(--ka-tap) + var(--ka-4) + env(safe-ar
 
 .ka-nav__item { position: relative; }
 
-.ka-nav__list--stack { display: block; }
-.ka-nav__list--stack > .ka-nav__item + .ka-nav__item { border-top: 1px solid var(--ka-border); }
+/* The mobile drawer always stacks its menu top to bottom. The list gets
+   the stack layout both when a real menu is assigned (ka-nav__list--stack)
+   and when none is, in which case the built-in fallback ships the plain
+   ka-nav__list -- which is a flex row for the desktop bar and would other-
+   wise squeeze the links into cramped columns inside the drawer. */
+.ka-nav__list--stack,
+.ka-drawer__panel .ka-nav__list { display: block; }
+.ka-nav__list--stack > .ka-nav__item + .ka-nav__item,
+.ka-drawer__panel .ka-nav__list > li + li { border-top: 1px solid var(--ka-border); }
 
-.ka-nav__link--stack {
+.ka-nav__link--stack,
+.ka-drawer__panel .ka-nav__link {
   justify-content: flex-start;
   gap: var(--ka-3);
   width: 100%;
@@ -2893,10 +2901,16 @@ body.has-tabbar .ka-actionbar {
 }
 
 /* Full width rows in the drawer. A thumb reaching across a phone should
-   not have to find a pill. */
-@media (max-width: 720px) {
-  .ka-lang--drawer .ka-lang__list { display: grid; grid-template-columns: 1fr; }
-  .ka-lang--drawer .ka-lang__link { justify-content: center; border-radius: var(--ka-radius); }
+   not have to find a pill. The switcher only ever appears inside the
+   mobile drawer, so these apply whenever it is shown. The links must be
+   flex, not the row's inline-flex, or they shrink to their text and leave
+   an empty gap beside them instead of filling the row. */
+.ka-lang--drawer .ka-lang__list { display: grid; grid-template-columns: 1fr; }
+.ka-lang--drawer .ka-lang__link {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  border-radius: var(--ka-radius);
 }
 
 /* Nothing to switch to on paper. */

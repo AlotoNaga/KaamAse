@@ -5694,6 +5694,36 @@ already have an account". Each card opens the right form (worker and employer,
 with the form's security token), and the Google button still sits above that
 form. Language files: 0 placeholder problems. Nothing in `debug.log`.
 
+## 81. The mobile menu, stacked properly
+
+The phone menu (the ☰ drawer) was showing its links — Find workers, Find work,
+Post a job — squeezed side by side in one cramped row, each word wrapping onto
+two lines. It should be a plain top-to-bottom list.
+
+The cause was the built-in fallback menu (the links you see when no menu is set
+up under Appearance → Menus). It always drew the desktop row markup, even
+inside the phone drawer, so the drawer inherited the horizontal layout.
+
+The fix is in the theme's `style.css` only: inside the drawer the menu is now
+forced to stack top to bottom with a light divider between each link, whether
+the links come from a real menu or the fallback. The language buttons in the
+drawer, which were meant to be full-width rows but were shrinking to their
+text and leaving an empty gap beside them, now fill the width like the
+Register and Sign in buttons above them.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase/style.css` | 1.13.0 |
+
+Upload it to `wp-content/themes/kaamase/`, then **LiteSpeed Cache → Toolbox →
+Purge All**. No other file changed. The desktop menu bar is untouched.
+
+Tested on the WordPress copy at 412px: the drawer links now stack top to
+bottom with dividers, the language buttons are full-width, there is no
+sideways scroll, and the desktop menu is still a single row. No errors logged.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
