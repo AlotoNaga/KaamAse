@@ -26,8 +26,11 @@
  * aliases. Do not change the slugs. They appear in URLs that people
  * will have shared.
  *
+ * Each district also carries its headquarters PIN code, used to fill
+ * postalCode in a job's address so a posting is complete for Google Jobs.
+ *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 
@@ -67,6 +70,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'chumoukedima' => array(
 				'name'    => 'Chumoukedima',
+				'pin'     => '797103',
 				'hq'      => 'Chumoukedima',
 				'aliases' => array( 'Chümoukedima', 'Chumukedima', 'Chümukedima', 'Chumoukidima', 'CMD' ),
 				'towns'   => array( 'Chumoukedima', 'Medziphema', 'Diphupar', 'Sethekema', 'Piphema', 'Kukidolong' ),
@@ -74,6 +78,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'dimapur' => array(
 				'name'    => 'Dimapur',
+				'pin'     => '797112',
 				'hq'      => 'Dimapur',
 				'aliases' => array( 'Dimapure', 'DMP' ),
 				'towns'   => array( 'Dimapur', 'Purana Bazar', 'Rangapahar', 'Dhansiripar', 'Signal Angami', 'Half Nagarjan' ),
@@ -81,6 +86,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'kiphire' => array(
 				'name'    => 'Kiphire',
+				'pin'     => '798611',
 				'hq'      => 'Kiphire',
 				'aliases' => array( 'Kiphere', 'Khiphire' ),
 				'towns'   => array( 'Kiphire', 'Pungro', 'Seyochung', 'Sitimi', 'Amahator' ),
@@ -88,6 +94,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'kohima' => array(
 				'name'    => 'Kohima',
+				'pin'     => '797001',
 				'hq'      => 'Kohima',
 				'aliases' => array( 'Kohema', 'KHM' ),
 				'towns'   => array( 'Kohima', 'Jakhama', 'Viswema', 'Khuzama', 'Chiephobozou', 'Jotsoma', 'Sechu Zubza', 'Kezocha' ),
@@ -95,6 +102,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'longleng' => array(
 				'name'    => 'Longleng',
+				'pin'     => '798625',
 				'hq'      => 'Longleng',
 				'aliases' => array( 'Long Leng' ),
 				'towns'   => array( 'Longleng', 'Tamlu', 'Yaongyimchen', 'Sakshi' ),
@@ -102,6 +110,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'meluri' => array(
 				'name'    => 'Meluri',
+				'pin'     => '797114',
 				'hq'      => 'Meluri',
 				'aliases' => array( 'Meluri Town', 'Melury' ),
 				'towns'   => array( 'Meluri', 'Phor', 'Lephori', 'Akhegwo' ),
@@ -109,6 +118,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'mokokchung' => array(
 				'name'    => 'Mokokchung',
+				'pin'     => '798601',
 				'hq'      => 'Mokokchung',
 				'aliases' => array( 'Mokukchung', 'Mokokchang', 'MKG' ),
 				'towns'   => array( 'Mokokchung', 'Tuli', 'Changtongya', 'Mangkolemba', 'Chuchuyimlang', 'Longchem', 'Alongkima', 'Merangkong' ),
@@ -116,6 +126,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'mon' => array(
 				'name'    => 'Mon',
+				'pin'     => '798621',
 				'hq'      => 'Mon',
 				'aliases' => array( 'Mon Town' ),
 				'towns'   => array( 'Mon', 'Naginimora', 'Tizit', 'Aboi', 'Chen', 'Wakching', 'Phomching', 'Tobu', 'Longshen' ),
@@ -133,6 +144,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 			 */
 			'niuland' => array(
 				'name'    => 'Niuland',
+				'pin'     => '797109',
 				'hq'      => 'Niuland',
 				'aliases' => array( 'Niu Land', 'Nuiland' ),
 				'towns'   => array( 'Niuland', 'Aquqhnaqua', 'Kuhuboto' ),
@@ -140,6 +152,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'noklak' => array(
 				'name'    => 'Noklak',
+				'pin'     => '798626',
 				'hq'      => 'Noklak',
 				'aliases' => array( 'Nok Lak' ),
 				'towns'   => array( 'Noklak', 'Thonoknyu', 'Panso', 'Chingmei' ),
@@ -147,6 +160,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'peren' => array(
 				'name'    => 'Peren',
+				'pin'     => '797101',
 				'hq'      => 'Peren',
 				'aliases' => array( 'Perren' ),
 				'towns'   => array( 'Peren', 'Jalukie', 'Tening', 'Athibung', 'Ngwalwa' ),
@@ -154,6 +168,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'phek' => array(
 				'name'    => 'Phek',
+				'pin'     => '797108',
 				'hq'      => 'Phek',
 				'aliases' => array( 'Phek Town' ),
 				'towns'   => array( 'Phek', 'Pfutsero', 'Chozuba', 'Chetheba', 'Sekruzu', 'Zhavame' ),
@@ -161,6 +176,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'shamator' => array(
 				'name'    => 'Shamator',
+				'pin'     => '798612',
 				'hq'      => 'Shamator',
 				'aliases' => array( 'Shamatore', 'Samator' ),
 				'towns'   => array( 'Shamator', 'Chessore', 'Kutur', 'Waoshu' ),
@@ -168,6 +184,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'tseminyu' => array(
 				'name'    => 'Tseminyu',
+				'pin'     => '797109',
 				'hq'      => 'Tseminyu',
 				'aliases' => array( 'Tseminyü', 'Tsemenyu', 'Tsminyu' ),
 				'towns'   => array( 'Tseminyu', 'Nsunyu', 'Tsogin', 'Chunlikha' ),
@@ -175,6 +192,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'tuensang' => array(
 				'name'    => 'Tuensang',
+				'pin'     => '798612',
 				'hq'      => 'Tuensang',
 				'aliases' => array( 'Tuensung', 'TSG' ),
 				'towns'   => array( 'Tuensang', 'Longkhim', 'Noksen', 'Chare', 'Sangsangnyu' ),
@@ -182,6 +200,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'wokha' => array(
 				'name'    => 'Wokha',
+				'pin'     => '797111',
 				'hq'      => 'Wokha',
 				'aliases' => array( 'Woka', 'Wokha Town' ),
 				'towns'   => array( 'Wokha', 'Bhandari', 'Sanis', 'Ralan', 'Baghty', 'Chukitong' ),
@@ -189,6 +208,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'zunheboto' => array(
 				'name'    => 'Zunheboto',
+				'pin'     => '798620',
 				'hq'      => 'Zunheboto',
 				'aliases' => array( 'Zünheboto', 'Zunhebotto', 'Zunhebot', 'ZBT' ),
 				'towns'   => array( 'Zunheboto', 'Aghunato', 'Atoizu', 'Satakha', 'Akuluto', 'Suruhuto', 'Pughoboto' ),
@@ -246,6 +266,27 @@ if ( ! function_exists( 'kaamase_district_name' ) ) {
 		$district = kaamase_get_district( $slug );
 
 		return $district ? $district['name'] : '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_district_pin' ) ) {
+	/**
+	 * PIN (postal) code for a district slug.
+	 *
+	 * The headquarters PIN, used to fill postalCode in a job's address so
+	 * the posting is complete for Google Jobs. A district-level code, not a
+	 * per-town one: the town is carried as the street line, and a job in a
+	 * small settlement is served through its district headquarters anyway.
+	 *
+	 * @since 1.1.0
+	 * @param string $slug District slug.
+	 * @return string Six digit PIN, or an empty string when unknown.
+	 */
+	function kaamase_district_pin( $slug ) {
+
+		$district = kaamase_get_district( $slug );
+
+		return ( $district && ! empty( $district['pin'] ) ) ? (string) $district['pin'] : '';
 	}
 }
 

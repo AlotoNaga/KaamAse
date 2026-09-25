@@ -5724,6 +5724,54 @@ Tested on the WordPress copy at 412px: the drawer links now stack top to
 bottom with dividers, the language buttons are full-width, there is no
 sideways scroll, and the desktop menu is still a single row. No errors logged.
 
+## 82. Google Jobs: the missing postalCode
+
+Search Console shows the job pages are **valid** for Google Jobs (the green
+bars). The one warning, under *Improve item appearance* (not a critical error,
+so the jobs still qualify), was:
+
+> Missing field 'postalCode' (in 'jobLocation.address')
+
+Google likes a postal code in a job's address. Kaam Ase never asks a job for a
+PIN code, so the address in the JobPosting markup had a district and a state
+but no PIN, and Google flagged it.
+
+The fix teaches the platform each district's headquarters PIN. The district
+list (`districts.php`) is the single place every place name lives, so the PIN
+goes there too, one per district. When a job's structured data is built, the
+address now carries that PIN as `postalCode`.
+
+The same change fixes a smaller thing at the same time. The address was
+printing the district as its stored form — the lowercase slug `dimapur` —
+while the page shows `Dimapur`. Google asks that the markup match what the
+reader sees, so the address now resolves the slug to the proper name. A job in
+an unknown or blank district is left exactly as before, with no PIN invented.
+
+Closed and expired jobs already carry **no** JobPosting markup at all
+(`kaamase_job_is_open()` gates it), which is what Google asks for expired
+postings, so nothing was needed there.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/districts.php` | 1.1.0 — a PIN on each of the 17 districts, and a `kaamase_district_pin()` reader |
+| `fixed/kaamase-core/includes/schema.php` | 1.1.0 — `postalCode` and the proper locality name in a job's address; PIN added to the site's own address too |
+
+Upload both to `wp-content/plugins/kaamase-core/includes/`, then **LiteSpeed
+Cache → Toolbox → Purge All**. In Search Console, open the *postalCode* issue
+and press **Validate fix** so Google re-checks. It takes a few days.
+
+The PIN codes used (headquarters): Kohima 797001, Dimapur 797112, Chümoukedima
+797103, Niuland 797109, Tseminyü 797109, Peren 797101, Phek 797108, Meluri
+797114, Wokha 797111, Zünheboto 798620, Mokokchung 798601, Longleng 798625,
+Mon 798621, Tuensang 798612, Shamator 798612, Noklak 798626, Kiphire 798611.
+If any is wrong for your area, change it in `districts.php` — it is one line.
+
+Checked with the real JobPosting builder: a job in Dimapur produces
+`"addressLocality":"Dimapur","postalCode":"797112"`, an accented or aliased
+district name still resolves, and an unknown district produces no PIN.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
