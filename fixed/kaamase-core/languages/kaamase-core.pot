@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 07:46+0000\n"
+"POT-Creation-Date: 2026-09-25 09:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -268,7 +268,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: site name
-#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:760
+#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:801
 msgid "%s never asks a worker for money."
 msgstr ""
 
@@ -752,7 +752,7 @@ msgstr ""
 msgid "Almost nobody hires across the state for a day of work. Your district is what puts you in front of the people close enough to call you."
 msgstr ""
 
-#: includes/registration.php:251 includes/registration.php:316
+#: includes/registration.php:251
 msgid "Already registered?"
 msgstr ""
 
@@ -1116,10 +1116,6 @@ msgstr ""
 msgid "Browse all past jobs"
 msgstr ""
 
-#: includes/registration.php:298
-msgid "Building a house, running a site, or hiring for a business. Post jobs free."
-msgstr ""
-
 #: includes/teams.php:287
 msgid "Buildings you have worked on, how long you have worked together, tools you bring."
 msgstr ""
@@ -1275,7 +1271,7 @@ msgstr ""
 msgid "Choose what work you need done."
 msgstr ""
 
-#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:432
+#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:473
 #: includes/rest-api.php:647
 msgid "Choose whether you are looking for work or looking for workers."
 msgstr ""
@@ -1368,7 +1364,7 @@ msgid "Confirm your email first. We keep unconfirmed accounts away from other pe
 msgstr ""
 
 #. translators: %s: site name
-#: includes/registration.php:743
+#: includes/registration.php:784
 msgid "Confirm your email for %s"
 msgstr ""
 
@@ -1472,6 +1468,10 @@ msgstr ""
 
 #: includes/insights.php:1098
 msgid "Daily registrations for the last 30 days, split by whether the account was confirmed. The same figures are in the table below the chart."
+msgstr ""
+
+#: includes/registration.php:291
+msgid "Daily work, monthly jobs and government work"
 msgstr ""
 
 #: includes/taxonomies.php:364
@@ -1723,7 +1723,8 @@ msgstr ""
 msgid "Email them about it"
 msgstr ""
 
-#: includes/insights.php:116 includes/not-confirmed.php:199 includes/roles.php:154
+#: includes/insights.php:116 includes/not-confirmed.php:199 includes/registration.php:300
+#: includes/roles.php:154
 msgid "Employer"
 msgstr ""
 
@@ -1881,7 +1882,8 @@ msgstr ""
 msgid "Find people to hire in %s: teachers, nurses, office staff, drivers, electricians and more. See who is available now, their ratings and vouches."
 msgstr ""
 
-#: includes/dashboard.php:1114 includes/dashboard.php:544 includes/saved.php:757
+#: includes/dashboard.php:1114 includes/dashboard.php:544 includes/registration.php:290
+#: includes/saved.php:757
 msgid "Find work"
 msgstr ""
 
@@ -2180,7 +2182,7 @@ msgstr ""
 
 #. translators: %s: person's name
 #: includes/privacy.php:690 includes/privacy.php:712 includes/profile-edit.php:1007
-#: includes/registration.php:752
+#: includes/registration.php:793
 msgid "Hello %s,"
 msgstr ""
 
@@ -2206,6 +2208,10 @@ msgstr ""
 
 #: includes/install.php:639
 msgid "Hire one person or a whole team with a leader."
+msgstr ""
+
+#: includes/registration.php:298
+msgid "Hire workers"
 msgstr ""
 
 #: includes/fields.php:271
@@ -2365,15 +2371,19 @@ msgstr ""
 msgid "I agree to the %1$s and the %2$s."
 msgstr ""
 
+#: includes/registration.php:358
+msgid "I already have an account"
+msgstr ""
+
 #: includes/working-request.php:378
 msgid "I also look for work"
 msgstr ""
 
-#: includes/google-signin.php:1735 includes/registration.php:287
+#: includes/google-signin.php:1735
 msgid "I am looking for work"
 msgstr ""
 
-#: includes/google-signin.php:1740 includes/registration.php:296
+#: includes/google-signin.php:1740
 msgid "I am looking for workers"
 msgstr ""
 
@@ -2429,7 +2439,7 @@ msgstr ""
 msgid "If we can reach you, we call and ask what we need to know."
 msgstr ""
 
-#: includes/registration.php:464
+#: includes/registration.php:505
 msgid "If what you typed is right, type it again exactly and we will use it."
 msgstr ""
 
@@ -2453,7 +2463,7 @@ msgstr ""
 msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
 msgstr ""
 
-#: includes/registration.php:757
+#: includes/registration.php:798
 msgid "If you did not create this account, ignore this message and nothing will happen."
 msgstr ""
 
@@ -2896,16 +2906,16 @@ msgstr ""
 msgid "Mailbox address"
 msgstr ""
 
+#: includes/registration.php:314
+msgid "Make a free profile so employers can find you, or register as an employer and post a job. Kaam Ase is free for workers and always will be."
+msgstr ""
+
 #: includes/install.php:629
 msgid "Make a free profile. It takes a few minutes."
 msgstr ""
 
 #: includes/teams.php:74
 msgid "Make a free worker profile"
-msgstr ""
-
-#: includes/registration.php:291
-msgid "Make a worker profile"
 msgstr ""
 
 #: includes/app-links.php:563
@@ -2942,10 +2952,6 @@ msgstr ""
 
 #: includes/taxonomies.php:282
 msgid "Mason"
-msgstr ""
-
-#: includes/registration.php:289
-msgid "Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always."
 msgstr ""
 
 #: includes/job-screening.php:812
@@ -3856,22 +3862,22 @@ msgstr ""
 msgid "Play Console, Test and release, App signing. Copy the SHA-256 certificate fingerprint from the app signing key. One per line if you have more than one."
 msgstr ""
 
-#: includes/apple-signin.php:830 includes/google-signin.php:815 includes/registration.php:486
+#: includes/apple-signin.php:830 includes/google-signin.php:815 includes/registration.php:527
 #: includes/rest-api.php:685
 msgid "Please agree to the terms and the privacy notice."
 msgstr ""
 
-#: includes/apple-signin.php:820 includes/google-signin.php:805 includes/registration.php:478
+#: includes/apple-signin.php:820 includes/google-signin.php:805 includes/registration.php:519
 #: includes/rest-api.php:677
 msgid "Please choose the work you do."
 msgstr ""
 
-#: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:474
+#: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:515
 #: includes/rest-api.php:673 includes/services.php:338
 msgid "Please choose your district."
 msgstr ""
 
-#: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:470
+#: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:511
 #: includes/rest-api.php:669
 msgid "Please enter a working email address."
 msgstr ""
@@ -3880,12 +3886,12 @@ msgstr ""
 msgid "Please enter your email address."
 msgstr ""
 
-#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:436
+#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:477
 #: includes/rest-api.php:651
 msgid "Please enter your name."
 msgstr ""
 
-#: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:502
+#: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:543
 #: includes/rest-api.php:689
 msgid "Please enter your phone number."
 msgstr ""
@@ -3950,6 +3956,10 @@ msgstr ""
 #: includes/dashboard.php:535 includes/install.php:306 includes/post-job.php:232
 #: includes/post-types.php:224 includes/post-types.php:225
 msgid "Post a job"
+msgstr ""
+
+#: includes/registration.php:299
+msgid "Post a job and find skilled workers"
 msgstr ""
 
 #: includes/posted-for.php:179 includes/posted-for.php:211
@@ -4178,10 +4188,6 @@ msgstr ""
 
 #: includes/post-job.php:160 includes/registration.php:132
 msgid "Register as an employer"
-msgstr ""
-
-#: includes/registration.php:300
-msgid "Register as employer"
 msgstr ""
 
 #: includes/post-job.php:157 includes/teams.php:71
@@ -4688,8 +4694,7 @@ msgid "Shown to people who cannot use the website. Many workers will phone rathe
 msgstr ""
 
 #: includes/contact.php:849 includes/dashboard.php:54 includes/employer-index.php:190
-#: includes/registration.php:252 includes/registration.php:317 includes/saved.php:406
-#: includes/who-looked.php:230
+#: includes/registration.php:252 includes/saved.php:406 includes/who-looked.php:230
 msgid "Sign in"
 msgstr ""
 
@@ -4914,7 +4919,7 @@ msgstr ""
 msgid "Something went wrong when your account was made. Tap below and we will build it again. Nothing else about your account changes."
 msgstr ""
 
-#: includes/registration.php:365
+#: includes/registration.php:406
 msgid "Something went wrong. Please try again."
 msgstr ""
 
@@ -5053,7 +5058,7 @@ msgstr ""
 msgid "Taken this financial year: ₹%1$s across %2$s"
 msgstr ""
 
-#: includes/registration.php:755
+#: includes/registration.php:796
 msgid "Tap the link below to confirm your email address. Your profile goes live as soon as you do."
 msgstr ""
 
@@ -5214,7 +5219,7 @@ msgstr ""
 msgid "That filter is not available."
 msgstr ""
 
-#: includes/registration.php:353
+#: includes/registration.php:394
 msgid "That form expired. Please try again."
 msgstr ""
 
@@ -5286,7 +5291,7 @@ msgstr ""
 msgid "That number is not hidden, so there is nothing to ask for."
 msgstr ""
 
-#: includes/apple-signin.php:826 includes/google-signin.php:811 includes/registration.php:504
+#: includes/apple-signin.php:826 includes/google-signin.php:811 includes/registration.php:545
 #: includes/rest-api.php:691 includes/services.php:99
 msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
 msgstr ""
@@ -5344,7 +5349,7 @@ msgstr ""
 msgid "That team is not yours to edit."
 msgstr ""
 
-#: includes/registration.php:372 includes/reports.php:548
+#: includes/registration.php:413 includes/reports.php:548
 msgid "That was too quick. Please try again."
 msgstr ""
 
@@ -5825,7 +5830,7 @@ msgstr ""
 msgid "Told Google"
 msgstr ""
 
-#: includes/registration.php:384 includes/rest-api.php:629
+#: includes/registration.php:425 includes/rest-api.php:629
 msgid "Too many attempts from this connection. Please try again later."
 msgstr ""
 
@@ -6161,7 +6166,7 @@ msgstr ""
 msgid "We could not change your address to that one. If it is already yours, sign in with it instead."
 msgstr ""
 
-#: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:513
+#: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:554
 #: includes/rest-api.php:696
 msgid "We could not create an account with those details. If you already have one, try signing in."
 msgstr ""
@@ -6182,7 +6187,7 @@ msgstr ""
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
 msgstr ""
 
-#: includes/registration.php:462
+#: includes/registration.php:503
 msgid "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it."
 msgstr ""
 
@@ -6302,7 +6307,7 @@ msgstr ""
 msgid "What brings you here"
 msgstr ""
 
-#: includes/registration.php:281
+#: includes/registration.php:312
 msgid "What brings you here?"
 msgstr ""
 
@@ -6636,7 +6641,8 @@ msgstr ""
 msgid "Worked together %s ago"
 msgstr ""
 
-#: includes/insights.php:114 includes/not-confirmed.php:197 includes/roles.php:132
+#: includes/insights.php:114 includes/not-confirmed.php:197 includes/registration.php:292
+#: includes/roles.php:132
 msgid "Worker"
 msgstr ""
 
@@ -7085,7 +7091,7 @@ msgstr ""
 msgid "Your password needs at least %d characters."
 msgstr ""
 
-#: includes/registration.php:482 includes/rest-api.php:681
+#: includes/registration.php:523 includes/rest-api.php:681
 msgid "Your password needs at least 8 characters."
 msgstr ""
 

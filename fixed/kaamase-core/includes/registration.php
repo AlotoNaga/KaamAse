@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.0.0
  *
  * Changelog
@@ -274,48 +274,89 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 	 */
 	function kaamase_register_chooser() {
 
+		/*
+		 * The same screen as the app: a photo on each door, a two word
+		 * title, one line under it and a button. Real people from here
+		 * rather than stock faces, because the photo is the first thing
+		 * read and it should look like Nagaland.
+		 *
+		 * The photos live in the theme, beside the homepage's. A theme
+		 * without them still gets both doors, just without the picture.
+		 */
+		$doors = array(
+			'worker'   => array(
+				'class'  => 'ka-choice--worker',
+				'photo'  => 'worker',
+				'title'  => __( 'Find work', 'kaamase-core' ),
+				'body'   => __( 'Daily work, monthly jobs and government work', 'kaamase-core' ),
+				'button' => __( 'Worker', 'kaamase-core' ),
+				'btn'    => 'ka-btn--primary',
+			),
+			'employer' => array(
+				'class'  => 'ka-choice--employer',
+				'photo'  => 'employer',
+				'title'  => __( 'Hire workers', 'kaamase-core' ),
+				'body'   => __( 'Post a job and find skilled workers', 'kaamase-core' ),
+				'button' => __( 'Employer', 'kaamase-core' ),
+				'btn'    => 'ka-btn--action',
+			),
+		);
+
+		$arrow = '<svg class="ka-choice__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
 		ob_start();
 		?>
-		<div class="ka-stack--lg">
+		<div class="ka-join">
 
-			<h2><?php esc_html_e( 'What brings you here?', 'kaamase-core' ); ?></h2>
+			<div class="ka-join__head">
+				<h2 class="ka-join__title"><?php esc_html_e( 'What brings you here?', 'kaamase-core' ); ?></h2>
+				<p class="ka-join__lead">
+					<?php esc_html_e( 'Make a free profile so employers can find you, or register as an employer and post a job. Kaam Ase is free for workers and always will be.', 'kaamase-core' ); ?>
+				</p>
+			</div>
 
-			<div class="ka-grid ka-grid--2">
+			<div class="ka-join__doors">
+				<?php foreach ( $doors as $type => $door ) : ?>
+					<?php
+					$small = 'assets/images/register/' . $door['photo'] . '-s.webp';
+					$large = 'assets/images/register/' . $door['photo'] . '-l.webp';
+					$has   = file_exists( get_theme_file_path( $small ) ) && file_exists( get_theme_file_path( $large ) );
+					?>
+					<a class="ka-choice <?php echo esc_attr( $door['class'] ); ?>"
+						href="<?php echo esc_url( add_query_arg( 'type', $type, kaamase_page_url( 'register' ) ) ); ?>">
 
-				<a class="ka-card ka-card--link ka-card--pad-lg ka-choice ka-choice--worker"
-					href="<?php echo esc_url( add_query_arg( 'type', 'worker', kaamase_page_url( 'register' ) ) ); ?>">
-					<h3 class="ka-choice__title"><?php esc_html_e( 'I am looking for work', 'kaamase-core' ); ?></h3>
-					<p class="ka-choice__body">
-						<?php esc_html_e( 'Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always.', 'kaamase-core' ); ?>
-					</p>
-					<span class="ka-btn ka-btn--primary ka-btn--block"><?php esc_html_e( 'Make a worker profile', 'kaamase-core' ); ?></span>
-				</a>
+						<?php if ( $has ) : ?>
+							<span class="ka-choice__photo">
+								<img src="<?php echo esc_url( get_theme_file_uri( $small ) ); ?>"
+									srcset="<?php echo esc_url( get_theme_file_uri( $small ) ); ?> 560w, <?php echo esc_url( get_theme_file_uri( $large ) ); ?> 960w"
+									sizes="(min-width: 700px) 480px, 100vw"
+									width="560" height="448" alt="" decoding="async">
+							</span>
+						<?php endif; ?>
 
-				<a class="ka-card ka-card--link ka-card--pad-lg ka-choice ka-choice--employer"
-					href="<?php echo esc_url( add_query_arg( 'type', 'employer', kaamase_page_url( 'register' ) ) ); ?>">
-					<h3 class="ka-choice__title"><?php esc_html_e( 'I am looking for workers', 'kaamase-core' ); ?></h3>
-					<p class="ka-choice__body">
-						<?php esc_html_e( 'Building a house, running a site, or hiring for a business. Post jobs free.', 'kaamase-core' ); ?>
-					</p>
-					<span class="ka-btn ka-btn--action ka-btn--block"><?php esc_html_e( 'Register as employer', 'kaamase-core' ); ?></span>
-				</a>
+						<span class="ka-choice__text">
+							<span class="ka-choice__title"><?php echo esc_html( $door['title'] ); ?></span>
+							<span class="ka-choice__body"><?php echo esc_html( $door['body'] ); ?></span>
+						</span>
 
+						<span class="ka-btn <?php echo esc_attr( $door['btn'] ); ?> ka-btn--lg ka-btn--block">
+							<?php echo esc_html( $door['button'] ); ?>
+							<?php echo $arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed markup above. ?>
+						</span>
+					</a>
+				<?php endforeach; ?>
 			</div>
 
 			<?php
 			/*
-			 * The way out for somebody who is already registered.
-			 *
-			 * The form on the next screen has offered this since the
-			 * beginning; this screen never did, so anybody who arrived
-			 * here by mistake had to choose a side they did not want in
-			 * order to find a sign in link.
+			 * The way out for somebody who is already registered, as a
+			 * button of its own like the app's. The Google button is added
+			 * underneath by google-signin.php.
 			 */
 			?>
-			<p class="ka-choice-foot">
-				<?php esc_html_e( 'Already registered?', 'kaamase-core' ); ?>
-				<a href="<?php echo esc_url( wp_login_url() ); ?>"><?php esc_html_e( 'Sign in', 'kaamase-core' ); ?></a>
-			</p>
+			<a class="ka-btn ka-btn--outline ka-btn--lg ka-btn--block ka-join__signin" href="<?php echo esc_url( wp_login_url() ); ?>">
+				<?php esc_html_e( 'I already have an account', 'kaamase-core' ); ?>
+			</a>
 
 		</div>
 		<?php

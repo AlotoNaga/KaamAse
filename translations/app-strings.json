@@ -927,6 +927,10 @@
   "hi_IN": "मेरा खाता बनाएँ",
   "nag": "Moi laga account banabo"
  },
+ "Daily work, monthly jobs and government work": {
+  "hi_IN": "दिहाड़ी काम, महीने की नौकरी और सरकारी काम",
+  "nag": "Hazira kaam, mahina laga kaam aro government kaam"
+ },
  "Day rate": {
   "hi_IN": "दिन का रेट",
   "nag": "Ek din laga rate"
@@ -1030,6 +1034,10 @@
  "Email confirmed. Your profile is live.": {
   "hi_IN": "ईमेल पक्का हो गया। आपकी प्रोफ़ाइल चालू है।",
   "nag": "Email confirm hoishe. Apni laga profile live ase."
+ },
+ "Employer": {
+  "hi_IN": "मालिक",
+  "nag": "Employer"
  },
  "Employer profile": {
   "hi_IN": "मालिक प्रोफ़ाइल",
@@ -1389,6 +1397,10 @@
   "hi_IN": "पूरी टीम रखें",
   "nag": "Ekta team ke kaam dibo"
  },
+ "Hire workers": {
+  "hi_IN": "मज़दूर रखें",
+  "nag": "Worker khan ke kaam dibo"
+ },
  "Hiring": {
   "hi_IN": "काम दे रहे हैं",
   "nag": "Kaam di ase"
@@ -1484,6 +1496,10 @@
  "I agree to the %1$s and the %2$s.": {
   "hi_IN": "मैं %1$s और %2$s से सहमत हूँ।",
   "nag": "Moi %1$s aro %2$s logote raji ase."
+ },
+ "I already have an account": {
+  "hi_IN": "मेरा पहले से खाता है",
+  "nag": "Moi laga age te pra account ase"
  },
  "I also look for work": {
   "hi_IN": "मैं काम भी ढूँढता हूँ",
@@ -1928,6 +1944,10 @@
  "Main menu": {
   "hi_IN": "मुख्य मेन्यू",
   "nag": "Main menu"
+ },
+ "Make a free profile so employers can find you, or register as an employer and post a job. Kaam Ase is free for workers and always will be.": {
+  "hi_IN": "मुफ़्त प्रोफ़ाइल बनाएँ ताकि मालिक आपको ढूँढ सकें, या मालिक के रूप में रजिस्टर करके काम डालें। Kaam Ase मज़दूरों के लिए मुफ़्त है और हमेशा रहेगा।",
+  "nag": "Free te profile banabi titia employer khan apni ke bisaribo pare, nohoile employer hoi register kuri kene kaam post koribi. Kaam Ase worker khan karne free ase aro hodai free thakibo."
  },
  "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be.": {
   "hi_IN": "मुफ़्त प्रोफ़ाइल बनाएँ। पूरे नागालैंड के मालिक आपको आपके काम और ज़िले से ढूँढ सकते हैं। Kaam Ase मज़दूरों के लिए मुफ़्त है और हमेशा रहेगा।",
@@ -2668,6 +2688,10 @@
  "Post a job": {
   "hi_IN": "काम डालें",
   "nag": "Kaam post koribo"
+ },
+ "Post a job and find skilled workers": {
+  "hi_IN": "काम डालें और हुनरमंद मज़दूर ढूँढें",
+  "nag": "Kaam post koribo aro kaam jana worker khan bisaribo"
  },
  "Post a job for somebody": {
   "hi_IN": "किसी और के लिए काम डालें",
@@ -4476,6 +4500,10 @@
  "Worked together %s ago": {
   "hi_IN": "%s पहले साथ काम किया",
   "nag": "%s age te eke logote kaam kurise"
+ },
+ "Worker": {
+  "hi_IN": "मज़दूर",
+  "nag": "Worker"
  },
  "Workers": {
   "hi_IN": "मज़दूर",

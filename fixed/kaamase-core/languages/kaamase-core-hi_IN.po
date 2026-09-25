@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 07:46+0000\n"
-"PO-Revision-Date: 2026-09-24 07:46+0000\n"
+"POT-Creation-Date: 2026-09-25 09:12+0000\n"
+"PO-Revision-Date: 2026-09-25 09:12+0000\n"
 "Language: hi_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,7 +270,7 @@ msgstr[0] "इनके बाद %s चीज़ और।"
 msgstr[1] "इनके बाद %s चीज़ें और।"
 
 #. translators: %s: site name
-#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:760
+#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:801
 msgid "%s never asks a worker for money."
 msgstr "%s किसी मज़दूर से कभी पैसे नहीं मांगता।"
 
@@ -754,7 +754,7 @@ msgstr ""
 msgid "Almost nobody hires across the state for a day of work. Your district is what puts you in front of the people close enough to call you."
 msgstr "एक दिन के काम के लिए पूरे राज्य से कोई नहीं बुलाता। आपका ज़िला ही आपको उन लोगों के सामने रखता है जो इतने पास हैं कि फ़ोन कर सकें।"
 
-#: includes/registration.php:251 includes/registration.php:316
+#: includes/registration.php:251
 msgid "Already registered?"
 msgstr "पहले से रजिस्टर्ड हैं?"
 
@@ -1118,10 +1118,6 @@ msgstr "ब्लॉक करने पर वह व्यक्ति आप�
 msgid "Browse all past jobs"
 msgstr "सारे पिछले काम देखें"
 
-#: includes/registration.php:298
-msgid "Building a house, running a site, or hiring for a business. Post jobs free."
-msgstr "घर बनवा रहे हैं, साइट चला रहे हैं, या कारोबार के लिए लोग रख रहे हैं। मुफ़्त में काम डालें।"
-
 #: includes/teams.php:287
 msgid "Buildings you have worked on, how long you have worked together, tools you bring."
 msgstr "कौन-सी इमारतों पर काम किया है, कितने समय से साथ काम कर रहे हैं, कौन-से औज़ार लाते हैं।"
@@ -1277,7 +1273,7 @@ msgstr "चुनें शिकायत किस बारे में ह�
 msgid "Choose what work you need done."
 msgstr "चुनें आपको कौन सा काम कराना है।"
 
-#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:432
+#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:473
 #: includes/rest-api.php:647
 msgid "Choose whether you are looking for work or looking for workers."
 msgstr "चुनें कि आप काम ढूँढ रहे हैं या मज़दूर।"
@@ -1370,7 +1366,7 @@ msgid "Confirm your email first. We keep unconfirmed accounts away from other pe
 msgstr "पहले अपना ईमेल पक्का करें। बिना पुष्टि वाले खातों को हम दूसरों के नंबरों से दूर रखते हैं।"
 
 #. translators: %s: site name
-#: includes/registration.php:743
+#: includes/registration.php:784
 msgid "Confirm your email for %s"
 msgstr "%s के लिए अपना ईमेल पक्का करें"
 
@@ -1475,6 +1471,10 @@ msgstr ""
 #: includes/insights.php:1098
 msgid "Daily registrations for the last 30 days, split by whether the account was confirmed. The same figures are in the table below the chart."
 msgstr ""
+
+#: includes/registration.php:291
+msgid "Daily work, monthly jobs and government work"
+msgstr "दिहाड़ी काम, महीने की नौकरी और सरकारी काम"
 
 #: includes/taxonomies.php:364
 msgid "Data entry operator"
@@ -1725,9 +1725,10 @@ msgstr ""
 msgid "Email them about it"
 msgstr ""
 
-#: includes/insights.php:116 includes/not-confirmed.php:199 includes/roles.php:154
+#: includes/insights.php:116 includes/not-confirmed.php:199 includes/registration.php:300
+#: includes/roles.php:154
 msgid "Employer"
-msgstr ""
+msgstr "मालिक"
 
 #: includes/fields.php:278
 msgid "Employer profile"
@@ -1883,7 +1884,8 @@ msgstr "इन नतीजों को छाँटें"
 msgid "Find people to hire in %s: teachers, nurses, office staff, drivers, electricians and more. See who is available now, their ratings and vouches."
 msgstr ""
 
-#: includes/dashboard.php:1114 includes/dashboard.php:544 includes/saved.php:757
+#: includes/dashboard.php:1114 includes/dashboard.php:544 includes/registration.php:290
+#: includes/saved.php:757
 msgid "Find work"
 msgstr "काम ढूँढें"
 
@@ -2182,7 +2184,7 @@ msgstr "नमस्ते %s"
 
 #. translators: %s: person's name
 #: includes/privacy.php:690 includes/privacy.php:712 includes/profile-edit.php:1007
-#: includes/registration.php:752
+#: includes/registration.php:793
 msgid "Hello %s,"
 msgstr "नमस्ते %s,"
 
@@ -2209,6 +2211,10 @@ msgstr ""
 #: includes/install.php:639
 msgid "Hire one person or a whole team with a leader."
 msgstr ""
+
+#: includes/registration.php:298
+msgid "Hire workers"
+msgstr "मज़दूर रखें"
 
 #: includes/fields.php:271
 msgid "Hiring as"
@@ -2367,15 +2373,19 @@ msgstr ""
 msgid "I agree to the %1$s and the %2$s."
 msgstr "मैं %1$s और %2$s से सहमत हूँ।"
 
+#: includes/registration.php:358
+msgid "I already have an account"
+msgstr "मेरा पहले से खाता है"
+
 #: includes/working-request.php:378
 msgid "I also look for work"
 msgstr "मैं काम भी ढूँढता हूँ"
 
-#: includes/google-signin.php:1735 includes/registration.php:287
+#: includes/google-signin.php:1735
 msgid "I am looking for work"
 msgstr "मैं काम ढूँढ रहा हूँ"
 
-#: includes/google-signin.php:1740 includes/registration.php:296
+#: includes/google-signin.php:1740
 msgid "I am looking for workers"
 msgstr "मैं मज़दूर ढूँढ रहा हूँ"
 
@@ -2431,7 +2441,7 @@ msgstr ""
 msgid "If we can reach you, we call and ask what we need to know."
 msgstr ""
 
-#: includes/registration.php:464
+#: includes/registration.php:505
 msgid "If what you typed is right, type it again exactly and we will use it."
 msgstr "अगर आपने जो लिखा है वही सही है, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।"
 
@@ -2455,7 +2465,7 @@ msgstr ""
 msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
 msgstr "अगर आप अपने साथ और मज़दूर लाते हैं, तो अपने अलावा टीम भी लिस्ट करें। जब ठेकेदारों को पूरा काम कराना होता है तो वे टीम ढूँढते हैं, और उनके लिए पाँच लोगों को पाँच फ़ोन करने से आपको एक फ़ोन करना आसान है।"
 
-#: includes/registration.php:757
+#: includes/registration.php:798
 msgid "If you did not create this account, ignore this message and nothing will happen."
 msgstr "अगर यह खाता आपने नहीं बनाया, तो इस संदेश को छोड़ दें, कुछ नहीं होगा।"
 
@@ -2898,6 +2908,10 @@ msgstr ""
 msgid "Mailbox address"
 msgstr ""
 
+#: includes/registration.php:314
+msgid "Make a free profile so employers can find you, or register as an employer and post a job. Kaam Ase is free for workers and always will be."
+msgstr "मुफ़्त प्रोफ़ाइल बनाएँ ताकि मालिक आपको ढूँढ सकें, या मालिक के रूप में रजिस्टर करके काम डालें। Kaam Ase मज़दूरों के लिए मुफ़्त है और हमेशा रहेगा।"
+
 #: includes/install.php:629
 msgid "Make a free profile. It takes a few minutes."
 msgstr ""
@@ -2905,10 +2919,6 @@ msgstr ""
 #: includes/teams.php:74
 msgid "Make a free worker profile"
 msgstr "मुफ़्त मज़दूर प्रोफ़ाइल बनाएँ"
-
-#: includes/registration.php:291
-msgid "Make a worker profile"
-msgstr "मज़दूर प्रोफ़ाइल बनाएँ"
 
 #: includes/app-links.php:563
 msgid "Make sure the domain in the Play Console is written exactly the way the site answers on, without www if the site has no www."
@@ -2945,10 +2955,6 @@ msgstr ""
 #: includes/taxonomies.php:282
 msgid "Mason"
 msgstr ""
-
-#: includes/registration.php:289
-msgid "Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always."
-msgstr "राजमिस्त्री, बढ़ई, बिजली मिस्त्री, ड्राइवर, रसोइया, हेल्पर और हर दूसरा काम। मुफ़्त, हमेशा।"
 
 #: includes/job-screening.php:812
 msgid "May not be a job"
@@ -3858,22 +3864,22 @@ msgstr "प्लास्टर, शटरिंग, टाइल का का
 msgid "Play Console, Test and release, App signing. Copy the SHA-256 certificate fingerprint from the app signing key. One per line if you have more than one."
 msgstr ""
 
-#: includes/apple-signin.php:830 includes/google-signin.php:815 includes/registration.php:486
+#: includes/apple-signin.php:830 includes/google-signin.php:815 includes/registration.php:527
 #: includes/rest-api.php:685
 msgid "Please agree to the terms and the privacy notice."
 msgstr "कृपया शर्तों और निजता सूचना से सहमति दें।"
 
-#: includes/apple-signin.php:820 includes/google-signin.php:805 includes/registration.php:478
+#: includes/apple-signin.php:820 includes/google-signin.php:805 includes/registration.php:519
 #: includes/rest-api.php:677
 msgid "Please choose the work you do."
 msgstr "कृपया वह काम चुनें जो आप करते हैं।"
 
-#: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:474
+#: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:515
 #: includes/rest-api.php:673 includes/services.php:338
 msgid "Please choose your district."
 msgstr "कृपया अपना ज़िला चुनें।"
 
-#: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:470
+#: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:511
 #: includes/rest-api.php:669
 msgid "Please enter a working email address."
 msgstr "कृपया चालू ईमेल पता डालें।"
@@ -3882,12 +3888,12 @@ msgstr "कृपया चालू ईमेल पता डालें।"
 msgid "Please enter your email address."
 msgstr "कृपया अपना ईमेल पता डालें।"
 
-#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:436
+#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:477
 #: includes/rest-api.php:651
 msgid "Please enter your name."
 msgstr "कृपया अपना नाम डालें।"
 
-#: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:502
+#: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:543
 #: includes/rest-api.php:689
 msgid "Please enter your phone number."
 msgstr "कृपया अपना फ़ोन नंबर डालें।"
@@ -3953,6 +3959,10 @@ msgstr "संभवतः 18 साल से कम उम्र का को
 #: includes/post-types.php:224 includes/post-types.php:225
 msgid "Post a job"
 msgstr "काम डालें"
+
+#: includes/registration.php:299
+msgid "Post a job and find skilled workers"
+msgstr "काम डालें और हुनरमंद मज़दूर ढूँढें"
 
 #: includes/posted-for.php:179 includes/posted-for.php:211
 msgid "Post a job for somebody"
@@ -4180,10 +4190,6 @@ msgstr ""
 
 #: includes/post-job.php:160 includes/registration.php:132
 msgid "Register as an employer"
-msgstr "मालिक के रूप में रजिस्टर करें"
-
-#: includes/registration.php:300
-msgid "Register as employer"
 msgstr "मालिक के रूप में रजिस्टर करें"
 
 #: includes/post-job.php:157 includes/teams.php:71
@@ -4690,8 +4696,7 @@ msgid "Shown to people who cannot use the website. Many workers will phone rathe
 msgstr ""
 
 #: includes/contact.php:849 includes/dashboard.php:54 includes/employer-index.php:190
-#: includes/registration.php:252 includes/registration.php:317 includes/saved.php:406
-#: includes/who-looked.php:230
+#: includes/registration.php:252 includes/saved.php:406 includes/who-looked.php:230
 msgid "Sign in"
 msgstr "साइन इन"
 
@@ -4916,7 +4921,7 @@ msgstr ""
 msgid "Something went wrong when your account was made. Tap below and we will build it again. Nothing else about your account changes."
 msgstr "आपका खाता बनाते समय कुछ गड़बड़ हो गई थी। नीचे टैप करें, हम इसे दोबारा बना देंगे। आपके खाते की और कोई चीज़ नहीं बदलेगी।"
 
-#: includes/registration.php:365
+#: includes/registration.php:406
 msgid "Something went wrong. Please try again."
 msgstr "कुछ गड़बड़ हो गई। दोबारा कोशिश करें।"
 
@@ -5055,7 +5060,7 @@ msgstr ""
 msgid "Taken this financial year: ₹%1$s across %2$s"
 msgstr ""
 
-#: includes/registration.php:755
+#: includes/registration.php:796
 msgid "Tap the link below to confirm your email address. Your profile goes live as soon as you do."
 msgstr "अपना ईमेल पता पक्का करने के लिए नीचे दिए लिंक पर टैप करें। ऐसा करते ही आपकी प्रोफ़ाइल चालू हो जाएगी।"
 
@@ -5216,7 +5221,7 @@ msgstr "वह फ़ाइल तस्वीर नहीं है। का�
 msgid "That filter is not available."
 msgstr "वह फ़िल्टर उपलब्ध नहीं है।"
 
-#: includes/registration.php:353
+#: includes/registration.php:394
 msgid "That form expired. Please try again."
 msgstr "उस फ़ॉर्म की मियाद खत्म हो गई। दोबारा कोशिश करें।"
 
@@ -5288,7 +5293,7 @@ msgstr "वह अब मौजूद नहीं है।"
 msgid "That number is not hidden, so there is nothing to ask for."
 msgstr "वह नंबर छिपा हुआ नहीं है, इसलिए मांगने को कुछ नहीं है।"
 
-#: includes/apple-signin.php:826 includes/google-signin.php:811 includes/registration.php:504
+#: includes/apple-signin.php:826 includes/google-signin.php:811 includes/registration.php:545
 #: includes/rest-api.php:691 includes/services.php:99
 msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
 msgstr "वह फ़ोन नंबर ठीक नहीं लग रहा। यह 10 अंकों का होना चाहिए और 6, 7, 8 या 9 से शुरू होना चाहिए।"
@@ -5346,7 +5351,7 @@ msgstr "उस साइन इन में बहुत देर लग ग�
 msgid "That team is not yours to edit."
 msgstr "वह टीम बदलने का हक़ आपका नहीं है।"
 
-#: includes/registration.php:372 includes/reports.php:548
+#: includes/registration.php:413 includes/reports.php:548
 msgid "That was too quick. Please try again."
 msgstr "यह बहुत जल्दी हो गया। दोबारा कोशिश करें।"
 
@@ -5827,7 +5832,7 @@ msgstr ""
 msgid "Told Google"
 msgstr ""
 
-#: includes/registration.php:384 includes/rest-api.php:629
+#: includes/registration.php:425 includes/rest-api.php:629
 msgid "Too many attempts from this connection. Please try again later."
 msgstr "इस कनेक्शन से बहुत ज़्यादा कोशिशें हुई हैं। बाद में दोबारा कोशिश करें।"
 
@@ -6163,7 +6168,7 @@ msgstr ""
 msgid "We could not change your address to that one. If it is already yours, sign in with it instead."
 msgstr "हम आपका पता उस पर नहीं बदल सके। अगर वह पहले से आपका है, तो उसी से साइन इन करें।"
 
-#: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:513
+#: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:554
 #: includes/rest-api.php:696
 msgid "We could not create an account with those details. If you already have one, try signing in."
 msgstr "उन जानकारियों से हम खाता नहीं बना सके। अगर आपका पहले से खाता है, तो साइन इन करके देखें।"
@@ -6184,7 +6189,7 @@ msgstr "हमें मिल गया। दो कामकाजी दि�
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
 msgstr ""
 
-#: includes/registration.php:462
+#: includes/registration.php:503
 msgid "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it."
 msgstr "हमने वह पता आपके लिए बॉक्स में भर दिया है। अगर आपने जो लिखा था वही सही था, तो उसे ठीक वैसे ही दोबारा लिखें, हम वही इस्तेमाल करेंगे।"
 
@@ -6304,7 +6309,7 @@ msgstr "आप कितना दे रहे हैं"
 msgid "What brings you here"
 msgstr "आप यहाँ क्यों आए हैं"
 
-#: includes/registration.php:281
+#: includes/registration.php:312
 msgid "What brings you here?"
 msgstr "आप यहाँ क्यों आए हैं?"
 
@@ -6638,9 +6643,10 @@ msgstr ""
 msgid "Worked together %s ago"
 msgstr "%s पहले साथ काम किया"
 
-#: includes/insights.php:114 includes/not-confirmed.php:197 includes/roles.php:132
+#: includes/insights.php:114 includes/not-confirmed.php:197 includes/registration.php:292
+#: includes/roles.php:132
 msgid "Worker"
-msgstr ""
+msgstr "मज़दूर"
 
 #: includes/exposure.php:475
 msgid "Worker listings put whoever has waited longest at the top. These numbers say whether that is actually turning over. If nobody has waited more than a few days, it is working."
@@ -7087,7 +7093,7 @@ msgstr "आपका अपना नाम बिल्कुल ठीक च�
 msgid "Your password needs at least %d characters."
 msgstr "आपके पासवर्ड में कम से कम %d अक्षर होने चाहिए।"
 
-#: includes/registration.php:482 includes/rest-api.php:681
+#: includes/registration.php:523 includes/rest-api.php:681
 msgid "Your password needs at least 8 characters."
 msgstr "आपके पासवर्ड में कम से कम 8 अक्षर होने चाहिए।"
 
@@ -7358,7 +7364,7 @@ msgstr "मज़दूर"
 #: includes/post-types.php:172
 msgctxt "post type singular name"
 msgid "Employer"
-msgstr ""
+msgstr "मालिक"
 
 #: includes/post-types.php:223
 msgctxt "post type singular name"
@@ -7378,7 +7384,7 @@ msgstr ""
 #: includes/post-types.php:72
 msgctxt "post type singular name"
 msgid "Worker"
-msgstr ""
+msgstr "मज़दूर"
 
 #: includes/reports.php:93
 msgctxt "report status"

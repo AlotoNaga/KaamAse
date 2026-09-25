@@ -87,6 +87,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/verified-mark.php` | `wp-content/plugins/kaamase-core/includes/verified-mark.php` |
 | `fixed/kaamase-core/includes/seo.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/assets/images/hero/` (14 photos) | `wp-content/themes/kaamase/assets/images/hero/` **(new folder)** |
+| `fixed/kaamase/assets/images/register/` (4 photos) | `wp-content/themes/kaamase/assets/images/register/` **(new folder)** |
 | `fixed/kaamase-core/includes/job-photos.php` | `wp-content/plugins/kaamase-core/includes/job-photos.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
@@ -5630,6 +5631,51 @@ Nagamese with the new wording (`kisim laga kaam`, not `laka`) and no errors in
 compiled files: *%s year* gave "1 sal" and "3 sal"; *Team of %s worker* gave
 "1 worker laga team" and "5 worker khan laga team"; *%d person wants your number*
 and *Sent to %s person.* each gave the right one-versus-many form.
+
+## 80. The register page, matching the app
+
+The "What brings you here?" page now looks like the app's: a real photo on
+each door, a short title, one line and a button.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/registration.php` | 1.3.0 |
+| `fixed/kaamase/style.css` | 1.10.0 (includes 76) |
+| `fixed/kaamase/assets/images/register/` | **new folder**, 4 files |
+| `fixed/kaamase-core/languages/kaamase-core.pot`, `-hi_IN.po` and `.mo`, `-nag.po` and `.mo` | the new words |
+
+In Hostinger's File Manager, inside `wp-content/themes/kaamase/assets/images/`,
+make a folder `register` and upload the 4 `.webp` files into it. Then
+**LiteSpeed Cache → Toolbox → Purge All**.
+
+### What it shows
+
+- **Find work**: the owner's photo, "Daily work, monthly jobs and government
+  work", green **Worker →**.
+- **Hire workers**: the owner's wife's photo, at her request on the employer
+  side, "Post a job and find skilled workers", amber **Employer →**.
+- **I already have an account**, as a button, to the sign in page. The Google
+  button still appears under it with "or", added by `google-signin.php`, which
+  was not changed.
+
+Each card is tinted in its path's colour, green for work and amber for hiring.
+Stacked on a phone so the faces stay large, side by side from 600px up.
+
+The photos were cropped to one shape and resized, nothing else; no filter or
+retouching. Each is there twice, 560 and 960 wide, 12 to 27 KB. If the folder
+is ever missing the cards still work, without the picture.
+
+"Continue with Apple" is not on the website: Sign in with Apple is built for
+the app only. The web has Google.
+
+### Tested on the real WordPress site
+
+English, Hindi and Nagamese at 390 and 1280 pixels: no sideways scroll, both
+photos load, and each card opens the right form (worker and employer, with the
+form's security token). Language files: 0 placeholder problems. Nothing in
+`debug.log`.
 
 ## Not changed, and why
 

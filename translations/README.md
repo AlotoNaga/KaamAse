@@ -27,7 +27,7 @@ screens in English and translating them is effort with no reader.
 ## app-strings.json — for the app side, not for upload
 
 Every English string this platform has already translated, with its Hindi and
-Nagamese, in one flat file. 1,241 of them, 29 carrying plural forms.
+Nagamese, in one flat file. 1,248 of them, 29 carrying plural forms.
 
 It exists because the app was re-translating strings that were already done.
 The app cannot read a `.mo` file — that is PHP on the server, and the phone

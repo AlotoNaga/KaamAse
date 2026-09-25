@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kaam Ase Core\n"
 "Report-Msgid-Bugs-To: https://kaamase.com\n"
-"POT-Creation-Date: 2026-09-24 21:22+0000\n"
-"PO-Revision-Date: 2026-09-24 21:22+0000\n"
+"POT-Creation-Date: 2026-09-25 09:12+0000\n"
+"PO-Revision-Date: 2026-09-25 09:12+0000\n"
 "Language: nag\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,7 +270,7 @@ msgstr[0] "Etu khan laga pichete %s jinis aru ase."
 msgstr[1] "Etu khan laga pichete %s jinis aru ase."
 
 #. translators: %s: site name
-#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:760
+#: includes/account-password.php:215 includes/push.php:291 includes/registration.php:801
 msgid "%s never asks a worker for money."
 msgstr "%s kitia b worker pra paisa mangi nai."
 
@@ -754,7 +754,7 @@ msgstr ""
 msgid "Almost nobody hires across the state for a day of work. Your district is what puts you in front of the people close enough to call you."
 msgstr "Ek din laga kaam karne prai kunba pura state pra manu naloi. Apni laga district he apni ke call koribo para usor laga manu khan laga age te rakhe."
 
-#: includes/registration.php:251 includes/registration.php:316
+#: includes/registration.php:251
 msgid "Already registered?"
 msgstr "Age te pra register kuri rakhishey na?"
 
@@ -1118,10 +1118,6 @@ msgstr "Block kurile etu manu apni laga number sabo napare. Tai ke kua nai."
 msgid "Browse all past jobs"
 msgstr "Sob purana kaam khan sabo"
 
-#: includes/registration.php:298
-msgid "Building a house, running a site, or hiring for a business. Post jobs free."
-msgstr "Ghor banai ase, site chalai ase, nohoile business karne manu loi ase. Free te kaam post koribi."
-
 #: includes/teams.php:287
 msgid "Buildings you have worked on, how long you have worked together, tools you bring."
 msgstr "Apni kun building te kaam kurise, kiman din pra eke logote kaam kuri ase, ki tool khan ane."
@@ -1277,7 +1273,7 @@ msgstr "Report ki laga bare te ase etu basi lobi."
 msgid "Choose what work you need done."
 msgstr "Apni ki kaam karabo mange etu basi lobi."
 
-#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:432
+#: includes/apple-signin.php:785 includes/google-signin.php:793 includes/registration.php:473
 #: includes/rest-api.php:647
 msgid "Choose whether you are looking for work or looking for workers."
 msgstr "Apni kaam bisari ase na worker bisari ase, etu basi lobi."
@@ -1370,7 +1366,7 @@ msgid "Confirm your email first. We keep unconfirmed accounts away from other pe
 msgstr "Poila apni laga email confirm koribi. Confirm nakora account khan ke amikhan dusra manu laga number pra dur rakhe."
 
 #. translators: %s: site name
-#: includes/registration.php:743
+#: includes/registration.php:784
 msgid "Confirm your email for %s"
 msgstr "%s karne apni laga email confirm koribi"
 
@@ -1475,6 +1471,10 @@ msgstr ""
 #: includes/insights.php:1098
 msgid "Daily registrations for the last 30 days, split by whether the account was confirmed. The same figures are in the table below the chart."
 msgstr ""
+
+#: includes/registration.php:291
+msgid "Daily work, monthly jobs and government work"
+msgstr "Hazira kaam, mahina laga kaam aro government kaam"
 
 #: includes/taxonomies.php:364
 msgid "Data entry operator"
@@ -1725,9 +1725,10 @@ msgstr ""
 msgid "Email them about it"
 msgstr ""
 
-#: includes/insights.php:116 includes/not-confirmed.php:199 includes/roles.php:154
+#: includes/insights.php:116 includes/not-confirmed.php:199 includes/registration.php:300
+#: includes/roles.php:154
 msgid "Employer"
-msgstr ""
+msgstr "Employer"
 
 #: includes/fields.php:278
 msgid "Employer profile"
@@ -1883,7 +1884,8 @@ msgstr "Etu result khan filter koribo"
 msgid "Find people to hire in %s: teachers, nurses, office staff, drivers, electricians and more. See who is available now, their ratings and vouches."
 msgstr ""
 
-#: includes/dashboard.php:1114 includes/dashboard.php:544 includes/saved.php:757
+#: includes/dashboard.php:1114 includes/dashboard.php:544 includes/registration.php:290
+#: includes/saved.php:757
 msgid "Find work"
 msgstr "Kaam bisaribo"
 
@@ -2182,7 +2184,7 @@ msgstr "Namaskar %s"
 
 #. translators: %s: person's name
 #: includes/privacy.php:690 includes/privacy.php:712 includes/profile-edit.php:1007
-#: includes/registration.php:752
+#: includes/registration.php:793
 msgid "Hello %s,"
 msgstr "Namaskar %s,"
 
@@ -2209,6 +2211,10 @@ msgstr ""
 #: includes/install.php:639
 msgid "Hire one person or a whole team with a leader."
 msgstr ""
+
+#: includes/registration.php:298
+msgid "Hire workers"
+msgstr "Worker khan ke kaam dibo"
 
 #: includes/fields.php:271
 msgid "Hiring as"
@@ -2367,15 +2373,19 @@ msgstr ""
 msgid "I agree to the %1$s and the %2$s."
 msgstr "Moi %1$s aro %2$s logote raji ase."
 
+#: includes/registration.php:358
+msgid "I already have an account"
+msgstr "Moi laga age te pra account ase"
+
 #: includes/working-request.php:378
 msgid "I also look for work"
 msgstr "Moi kaam b bisare"
 
-#: includes/google-signin.php:1735 includes/registration.php:287
+#: includes/google-signin.php:1735
 msgid "I am looking for work"
 msgstr "Moi kaam bisari ase"
 
-#: includes/google-signin.php:1740 includes/registration.php:296
+#: includes/google-signin.php:1740
 msgid "I am looking for workers"
 msgstr "Moi worker bisari ase"
 
@@ -2431,7 +2441,7 @@ msgstr ""
 msgid "If we can reach you, we call and ask what we need to know."
 msgstr ""
 
-#: includes/registration.php:464
+#: includes/registration.php:505
 msgid "If what you typed is right, type it again exactly and we will use it."
 msgstr "Apni likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo."
 
@@ -2455,7 +2465,7 @@ msgstr ""
 msgid "If you bring other workers with you, list the team as well as yourself. Contractors search for teams when they need a whole job covered, and one call to you is easier for them than five calls to five people."
 msgstr "Apni logote dusra worker khan anile, nije laga logote team b list koribi. Contractor khan pura kaam koribole lagile team bisare, aro tai khan karne pachjon manu ke pach call kora pra apni ke ek call kora sohoj ase."
 
-#: includes/registration.php:757
+#: includes/registration.php:798
 msgid "If you did not create this account, ignore this message and nothing will happen."
 msgstr "Etu account apni bonua nai koile, etu message chari dibi aro eku nohobo."
 
@@ -2898,6 +2908,10 @@ msgstr ""
 msgid "Mailbox address"
 msgstr ""
 
+#: includes/registration.php:314
+msgid "Make a free profile so employers can find you, or register as an employer and post a job. Kaam Ase is free for workers and always will be."
+msgstr "Free te profile banabi titia employer khan apni ke bisaribo pare, nohoile employer hoi register kuri kene kaam post koribi. Kaam Ase worker khan karne free ase aro hodai free thakibo."
+
 #: includes/install.php:629
 msgid "Make a free profile. It takes a few minutes."
 msgstr ""
@@ -2905,10 +2919,6 @@ msgstr ""
 #: includes/teams.php:74
 msgid "Make a free worker profile"
 msgstr "Free worker profile banabo"
-
-#: includes/registration.php:291
-msgid "Make a worker profile"
-msgstr "Worker profile banabo"
 
 #: includes/app-links.php:563
 msgid "Make sure the domain in the Play Console is written exactly the way the site answers on, without www if the site has no www."
@@ -2945,10 +2955,6 @@ msgstr ""
 #: includes/taxonomies.php:282
 msgid "Mason"
 msgstr ""
-
-#: includes/registration.php:289
-msgid "Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always."
-msgstr "Mason, carpenter, electrician, driver, cook, helper aro dusra sob kaam. Free, hodai."
 
 #: includes/job-screening.php:812
 msgid "May not be a job"
@@ -3858,22 +3864,22 @@ msgstr "Plaster, shuttering, tile laga kaam, rati laga shift, nije laga tool. Du
 msgid "Play Console, Test and release, App signing. Copy the SHA-256 certificate fingerprint from the app signing key. One per line if you have more than one."
 msgstr ""
 
-#: includes/apple-signin.php:830 includes/google-signin.php:815 includes/registration.php:486
+#: includes/apple-signin.php:830 includes/google-signin.php:815 includes/registration.php:527
 #: includes/rest-api.php:685
 msgid "Please agree to the terms and the privacy notice."
 msgstr "Terms aro privacy notice logote raji hobi."
 
-#: includes/apple-signin.php:820 includes/google-signin.php:805 includes/registration.php:478
+#: includes/apple-signin.php:820 includes/google-signin.php:805 includes/registration.php:519
 #: includes/rest-api.php:677
 msgid "Please choose the work you do."
 msgstr "Apni ki kaam kore etu basi lobi."
 
-#: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:474
+#: includes/apple-signin.php:816 includes/google-signin.php:801 includes/registration.php:515
 #: includes/rest-api.php:673 includes/services.php:338
 msgid "Please choose your district."
 msgstr "Apni laga district basi lobi."
 
-#: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:470
+#: includes/account-providers.php:594 includes/apple-signin.php:808 includes/registration.php:511
 #: includes/rest-api.php:669
 msgid "Please enter a working email address."
 msgstr "Chali thaka ekta email address likhibi."
@@ -3882,12 +3888,12 @@ msgstr "Chali thaka ekta email address likhibi."
 msgid "Please enter your email address."
 msgstr "Apni laga email address likhibi."
 
-#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:436
+#: includes/apple-signin.php:789 includes/google-signin.php:797 includes/registration.php:477
 #: includes/rest-api.php:651
 msgid "Please enter your name."
 msgstr "Apni laga naam likhibi."
 
-#: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:502
+#: includes/apple-signin.php:824 includes/google-signin.php:809 includes/registration.php:543
 #: includes/rest-api.php:689
 msgid "Please enter your phone number."
 msgstr "Apni laga phone number likhibi."
@@ -3953,6 +3959,10 @@ msgstr "18 sal pra kom kunba thakibo pare"
 #: includes/post-types.php:224 includes/post-types.php:225
 msgid "Post a job"
 msgstr "Kaam post koribo"
+
+#: includes/registration.php:299
+msgid "Post a job and find skilled workers"
+msgstr "Kaam post koribo aro kaam jana worker khan bisaribo"
 
 #: includes/posted-for.php:179 includes/posted-for.php:211
 msgid "Post a job for somebody"
@@ -4180,10 +4190,6 @@ msgstr ""
 
 #: includes/post-job.php:160 includes/registration.php:132
 msgid "Register as an employer"
-msgstr "Employer hoi register koribo"
-
-#: includes/registration.php:300
-msgid "Register as employer"
 msgstr "Employer hoi register koribo"
 
 #: includes/post-job.php:157 includes/teams.php:71
@@ -4690,8 +4696,7 @@ msgid "Shown to people who cannot use the website. Many workers will phone rathe
 msgstr ""
 
 #: includes/contact.php:849 includes/dashboard.php:54 includes/employer-index.php:190
-#: includes/registration.php:252 includes/registration.php:317 includes/saved.php:406
-#: includes/who-looked.php:230
+#: includes/registration.php:252 includes/saved.php:406 includes/who-looked.php:230
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -4916,7 +4921,7 @@ msgstr ""
 msgid "Something went wrong when your account was made. Tap below and we will build it again. Nothing else about your account changes."
 msgstr "Apni laga account bona somoi te kiba gorbor hoishe. Nichete tap koribi aro amikhan etu aru banai dibo. Apni laga account laga dusra eku bodli nohobo."
 
-#: includes/registration.php:365
+#: includes/registration.php:406
 msgid "Something went wrong. Please try again."
 msgstr "Kiba gorbor hoishe. Aru ekbar kuri sabi."
 
@@ -5055,7 +5060,7 @@ msgstr ""
 msgid "Taken this financial year: ₹%1$s across %2$s"
 msgstr ""
 
-#: includes/registration.php:755
+#: includes/registration.php:796
 msgid "Tap the link below to confirm your email address. Your profile goes live as soon as you do."
 msgstr "Apni laga email address confirm koribole nichete laga link te tap koribi. Etu kurile logot te apni laga profile live hoi jai."
 
@@ -5216,7 +5221,7 @@ msgstr "Etu file photo hoina. Kaam te khali JPG, PNG aro WEBP photo khan he lagi
 msgid "That filter is not available."
 msgstr "Etu filter available nai."
 
-#: includes/registration.php:353
+#: includes/registration.php:394
 msgid "That form expired. Please try again."
 msgstr "Etu form laga somoi khotom hoishe. Aru ekbar kuri sabi."
 
@@ -5288,7 +5293,7 @@ msgstr "Etu aru nai."
 msgid "That number is not hidden, so there is nothing to ask for."
 msgstr "Etu number lukua nai, etu karne mangibole eku nai."
 
-#: includes/apple-signin.php:826 includes/google-signin.php:811 includes/registration.php:504
+#: includes/apple-signin.php:826 includes/google-signin.php:811 includes/registration.php:545
 #: includes/rest-api.php:691 includes/services.php:99
 msgid "That phone number does not look right. It should be 10 digits starting with 6, 7, 8 or 9."
 msgstr "Etu phone number thik dikha nai. Etu 6, 7, 8 nohoile 9 pra suru hua 10 digit hobo lage."
@@ -5346,7 +5351,7 @@ msgstr "Etu sign in te bisi somoi lagishey. Google button te aru ekbar tap korib
 msgid "That team is not yours to edit."
 msgstr "Etu team thik kora laga hok apni laga nohoi."
 
-#: includes/registration.php:372 includes/reports.php:548
+#: includes/registration.php:413 includes/reports.php:548
 msgid "That was too quick. Please try again."
 msgstr "Etu bisi joldi hoi gaishey. Aru ekbar kuri sabi."
 
@@ -5827,7 +5832,7 @@ msgstr ""
 msgid "Told Google"
 msgstr ""
 
-#: includes/registration.php:384 includes/rest-api.php:629
+#: includes/registration.php:425 includes/rest-api.php:629
 msgid "Too many attempts from this connection. Please try again later."
 msgstr "Etu connection pra bisi bar kuri sailishey. Pichete aru kuri sabi."
 
@@ -6163,7 +6168,7 @@ msgstr ""
 msgid "We could not change your address to that one. If it is already yours, sign in with it instead."
 msgstr "Apni laga address etu te bodli koribo para nai. Etu age te pra apni laga hoile, tar bodli etu pra he sign in koribi."
 
-#: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:513
+#: includes/apple-signin.php:811 includes/apple-signin.php:907 includes/registration.php:554
 #: includes/rest-api.php:696
 msgid "We could not create an account with those details. If you already have one, try signing in."
 msgstr "Etu details pra account banabo para nai. Apni logote age te pra thakile, sign in kuri sabi."
@@ -6184,7 +6189,7 @@ msgstr "Amikhan pai gaishey. Duita kaam laga din bhitor te kunba etu porhibo."
 msgid "We have not seen you for a while. If you are still available, sign in and set yourself available so employers can find you."
 msgstr ""
 
-#: includes/registration.php:462
+#: includes/registration.php:503
 msgid "We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it."
 msgstr "Amikhan etu address apni karne box te likhi dise. Apni age likha tu he thik ase koile, etu ke thik jineka aru ekbar likhibi, amikhan etu he cholabo."
 
@@ -6304,7 +6309,7 @@ msgstr "Apni kiman di ase"
 msgid "What brings you here"
 msgstr "Apni yate kile ahishe"
 
-#: includes/registration.php:281
+#: includes/registration.php:312
 msgid "What brings you here?"
 msgstr "Apni yate kile ahishe?"
 
@@ -6638,9 +6643,10 @@ msgstr ""
 msgid "Worked together %s ago"
 msgstr "%s age te eke logote kaam kurise"
 
-#: includes/insights.php:114 includes/not-confirmed.php:197 includes/roles.php:132
+#: includes/insights.php:114 includes/not-confirmed.php:197 includes/registration.php:292
+#: includes/roles.php:132
 msgid "Worker"
-msgstr ""
+msgstr "Worker"
 
 #: includes/exposure.php:475
 msgid "Worker listings put whoever has waited longest at the top. These numbers say whether that is actually turning over. If nobody has waited more than a few days, it is working."
@@ -7087,7 +7093,7 @@ msgstr "Apni laga nije laga naam bhal kene kaam kore. Contractor khan manu ke mo
 msgid "Your password needs at least %d characters."
 msgstr "Apni laga password te kom pora kom %d character lage."
 
-#: includes/registration.php:482 includes/rest-api.php:681
+#: includes/registration.php:523 includes/rest-api.php:681
 msgid "Your password needs at least 8 characters."
 msgstr "Apni laga password te kom pora kom 8 character lage."
 
@@ -7358,7 +7364,7 @@ msgstr "Worker khan"
 #: includes/post-types.php:172
 msgctxt "post type singular name"
 msgid "Employer"
-msgstr ""
+msgstr "Employer"
 
 #: includes/post-types.php:223
 msgctxt "post type singular name"
@@ -7378,7 +7384,7 @@ msgstr ""
 #: includes/post-types.php:72
 msgctxt "post type singular name"
 msgid "Worker"
-msgstr ""
+msgstr "Worker"
 
 #: includes/reports.php:93
 msgctxt "report status"
