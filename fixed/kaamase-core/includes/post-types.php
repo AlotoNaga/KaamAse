@@ -22,7 +22,7 @@
  * this file, and urgent jobs close faster because urgent means today.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 
@@ -504,9 +504,69 @@ if ( ! function_exists( 'kaamase_backfill_job_expiry' ) ) {
 }
 add_action( 'kaamase_daily', 'kaamase_close_expired_jobs' );
 
+if ( ! function_exists( 'kaamase_daily_time' ) ) {
+	/**
+	 * When the daily task should next run: the coming 6:30 in the morning,
+	 * in the site's own timezone.
+	 *
+	 * The task carries the "Did you hire them?" notification, and a
+	 * notification is a morning thing, not a two-in-the-morning thing. It
+	 * used to be booked for an hour after the plugin was first switched
+	 * on, which is no time in particular and, on this site, landed in the
+	 * middle of the night. The maintenance the same task does -- closing
+	 * expired jobs, tidying old rows -- does not care what hour it runs,
+	 * so the whole task moves to the morning together.
+	 *
+	 * The hour is read through wp_timezone(), the same source the rest of
+	 * the plugin reads local time from, so a site set to Kolkata gets
+	 * 6:30 IST with no +05:30 written anywhere. India keeps no daylight
+	 * saving, so a daily event booked once stays on 6:30 year round.
+	 *
+	 * @since 1.1.0
+	 * @return int A UTC timestamp for the next morning slot.
+	 */
+	function kaamase_daily_time() {
+
+		$hour = (int) apply_filters( 'kaamase_daily_hour', 6 );
+		$min  = (int) apply_filters( 'kaamase_daily_minute', 30 );
+
+		$hour = max( 0, min( 23, $hour ) );
+		$min  = max( 0, min( 59, $min ) );
+
+		$zone = function_exists( 'wp_timezone' ) ? wp_timezone() : new DateTimeZone( 'UTC' );
+
+		/*
+		 * A site left on WordPress's default of UTC would send at 6:30
+		 * UTC, which is noon in Nagaland. This platform is for Nagaland
+		 * and never means UTC, so a timezone left unset is read as
+		 * Kolkata rather than taken at face value. A site that has really
+		 * set its timezone, to Kolkata or anywhere else, keeps it.
+		 */
+		if ( 0 === $zone->getOffset( new DateTimeImmutable( 'now', new DateTimeZone( 'UTC' ) ) ) ) {
+
+			// A misspelt name from the filter must not take the site down on every load.
+			try {
+				$zone = new DateTimeZone( (string) apply_filters( 'kaamase_daily_timezone', 'Asia/Kolkata' ) );
+			} catch ( Exception $e ) {
+				$zone = new DateTimeZone( 'Asia/Kolkata' );
+			}
+		}
+
+		$now  = new DateTimeImmutable( 'now', $zone );
+		$next = $now->setTime( $hour, $min, 0 );
+
+		// Past for today already, so the same time tomorrow.
+		if ( $next <= $now ) {
+			$next = $next->modify( '+1 day' );
+		}
+
+		return $next->getTimestamp();
+	}
+}
+
 if ( ! function_exists( 'kaamase_schedule_events' ) ) {
 	/**
-	 * Make sure the daily task is scheduled.
+	 * Make sure the daily task is scheduled, in the morning.
 	 *
 	 * Checked on every load rather than only on activation, because a
 	 * missing cron event is invisible until somebody notices that
@@ -517,8 +577,34 @@ if ( ! function_exists( 'kaamase_schedule_events' ) ) {
 	 */
 	function kaamase_schedule_events() {
 
-		if ( ! wp_next_scheduled( 'kaamase_daily' ) ) {
-			wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', 'kaamase_daily' );
+		$next = wp_next_scheduled( 'kaamase_daily' );
+		$want = kaamase_daily_time();
+
+		/*
+		 * Booked, but not on the morning slot.
+		 *
+		 * Changing the code does nothing to an event WordPress has already
+		 * booked: it keeps firing at the old hour. Sites set up before
+		 * this booked the task at "switched on plus an hour", which here
+		 * was two in the morning. So this checks, cheaply, on every load,
+		 * that the booking sits on the slot, and if not, clears every copy
+		 * of it and books the slot.
+		 *
+		 * On the slot means a whole number of days from it. A run that
+		 * is due but has not happened yet, because nobody has visited
+		 * since 6:30, is still on the slot and is left alone, so no day's
+		 * run is lost. Every copy is cleared, not only the first, because
+		 * an old booking can have been doubled and uninstall.php already
+		 * allows for that. And it mends itself if the hour or the timezone
+		 * is changed later.
+		 */
+		if ( $next && 0 !== ( $want - (int) $next ) % DAY_IN_SECONDS ) {
+			wp_clear_scheduled_hook( 'kaamase_daily' );
+			$next = false;
+		}
+
+		if ( ! $next ) {
+			wp_schedule_event( $want, 'daily', 'kaamase_daily' );
 		}
 	}
 }

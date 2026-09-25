@@ -369,7 +369,30 @@ add_action( 'send_headers', 'kaamase_security_headers' );
  */
 function kaamase_no_cache_when_signed_in() {
 
-	if ( ! is_user_logged_in() || headers_sent() ) {
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	/*
+	 * The constant and the action come first, and before the
+	 * headers_sent check, because neither of them needs headers and
+	 * they are the two that actually stop the page being stored.
+	 *
+	 * Response headers on their own were not enough on this server.
+	 * The /app page sent exactly these and LiteSpeed went on serving a
+	 * stored copy for hours at a time; what fixed it was DONOTCACHEPAGE
+	 * together with LiteSpeed's own switch. A dashboard is the same
+	 * request with somebody's name and telephone number in it, so it
+	 * needs all three, not one of them.
+	 */
+	if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+		define( 'DONOTCACHEPAGE', true );
+	}
+
+	// LiteSpeed's own switch, ignored harmlessly if it is not installed.
+	do_action( 'litespeed_control_set_nocache', 'kaamase signed in' );
+
+	if ( headers_sent() ) {
 		return;
 	}
 
