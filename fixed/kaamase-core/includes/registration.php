@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.3.0
+ * @version 1.4.0
  * @since   1.0.0
  *
  * Changelog
@@ -276,9 +276,12 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 
 		/*
 		 * The same screen as the app: a photo on each door, a two word
-		 * title, one line under it and a button. Real people from here
-		 * rather than stock faces, because the photo is the first thing
-		 * read and it should look like Nagaland.
+		 * title, one line under it and a button. Both doors sit side by
+		 * side at every width. The worker door shows a Nagaland job fair,
+		 * a hall of people looking for work, so it reads as a job portal
+		 * at a glance; the employer door shows a real employer. Real
+		 * Nagaland photos rather than stock faces, because the photo is
+		 * the first thing read.
 		 *
 		 * The photos live in the theme, beside the homepage's. A theme
 		 * without them still gets both doors, just without the picture.
@@ -329,7 +332,7 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 							<span class="ka-choice__photo">
 								<img src="<?php echo esc_url( get_theme_file_uri( $small ) ); ?>"
 									srcset="<?php echo esc_url( get_theme_file_uri( $small ) ); ?> 560w, <?php echo esc_url( get_theme_file_uri( $large ) ); ?> 960w"
-									sizes="(min-width: 700px) 480px, 100vw"
+									sizes="(min-width: 700px) 480px, 50vw"
 									width="560" height="448" alt="" decoding="async">
 							</span>
 						<?php endif; ?>

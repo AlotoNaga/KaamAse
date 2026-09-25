@@ -5635,25 +5635,29 @@ and *Sent to %s person.* each gave the right one-versus-many form.
 ## 80. The register page, matching the app
 
 The "What brings you here?" page now looks like the app's: a real photo on
-each door, a short title, one line and a button.
+each door, a short title, one line and a button. The worker door shows a
+Nagaland job fair — a hall of people looking for work — so at a glance the
+page reads as a job portal, not two portraits.
 
 ### Upload
 
 | File | |
 | --- | --- |
-| `fixed/kaamase-core/includes/registration.php` | 1.3.0 |
-| `fixed/kaamase/style.css` | 1.10.0 (includes 76) |
+| `fixed/kaamase-core/includes/registration.php` | 1.4.0 |
+| `fixed/kaamase/style.css` | 1.11.0 (includes 76) |
 | `fixed/kaamase/assets/images/register/` | **new folder**, 4 files |
 | `fixed/kaamase-core/languages/kaamase-core.pot`, `-hi_IN.po` and `.mo`, `-nag.po` and `.mo` | the new words |
 
 In Hostinger's File Manager, inside `wp-content/themes/kaamase/assets/images/`,
-make a folder `register` and upload the 4 `.webp` files into it. Then
+make a folder `register` and upload the 4 `.webp` files into it. (If it already
+holds the earlier set, overwrite `worker-l.webp` and `worker-s.webp` — those
+two changed to the job-fair photo; the two `employer` files are the same.) Then
 **LiteSpeed Cache → Toolbox → Purge All**.
 
 ### What it shows
 
-- **Find work**: the owner's photo, "Daily work, monthly jobs and government
-  work", green **Worker →**.
+- **Find work**: a Nagaland job-fair crowd, "Daily work, monthly jobs and
+  government work", green **Worker →**.
 - **Hire workers**: the owner's wife's photo, at her request on the employer
   side, "Post a job and find skilled workers", amber **Employer →**.
 - **I already have an account**, as a button, to the sign in page. The Google
@@ -5661,10 +5665,12 @@ make a folder `register` and upload the 4 `.webp` files into it. Then
   was not changed.
 
 Each card is tinted in its path's colour, green for work and amber for hiring.
-Stacked on a phone so the faces stay large, side by side from 600px up.
+The two doors sit side by side at every width, phone included, to match the
+app; on a phone the padding, type and button sizes step down so both still fit
+two-up without any sideways scroll.
 
 The photos were cropped to one shape and resized, nothing else; no filter or
-retouching. Each is there twice, 560 and 960 wide, 12 to 27 KB. If the folder
+retouching. Each is there twice, 560 and 960 wide, 12 to 63 KB. If the folder
 is ever missing the cards still work, without the picture.
 
 "Continue with Apple" is not on the website: Sign in with Apple is built for

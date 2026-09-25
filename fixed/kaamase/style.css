@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.10.0
+Version: 1.11.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -570,14 +570,17 @@ table { border-collapse: collapse; width: 100%; }
 
 /* The register page's two doors, matching the app.
 
-   A photo of a real person on each, a two word title, one line and a
-   button. The card is tinted in its path's colour -- green for working,
-   amber for hiring, the same two used everywhere else -- so somebody who
-   has been here before knows which is which before reading.
+   A real Nagaland photo on each -- a job-fair crowd for finding work, an
+   employer for hiring -- a two word title, one line and a button. The card
+   is tinted in its path's colour -- green for working, amber for hiring,
+   the same two used everywhere else -- so somebody who has been here before
+   knows which is which before reading.
 
-   Stacked on a phone so the faces stay a good size; side by side from a
-   small tablet up. The line under the title grows so both buttons sit
-   level whatever the wording, and in Hindi or Nagamese it wraps longer. */
+   Two doors side by side at every width, phone included, so the choice
+   reads at a glance like the app. On a phone the padding, gap and type
+   step down so both cards still fit two-up; from a tablet up they open
+   out. The body line grows so both buttons sit level whatever the
+   wording, and in Hindi or Nagamese it wraps longer. */
 
 .ka-join { display: flex; flex-direction: column; gap: var(--ka-5); }
 
@@ -591,19 +594,19 @@ table { border-collapse: collapse; width: 100%; }
 
 .ka-join__doors {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--ka-4);
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ka-3);
 }
 
-@media (min-width: 600px) {
-  .ka-join__doors { grid-template-columns: 1fr 1fr; }
+@media (min-width: 700px) {
+  .ka-join__doors { gap: var(--ka-5); }
 }
 
 .ka-choice {
   display: flex;
   flex-direction: column;
-  gap: var(--ka-4);
-  padding: var(--ka-4);
+  gap: var(--ka-3);
+  padding: var(--ka-3);
   border-radius: var(--ka-radius-lg);
   border: 1px solid var(--ka-border);
   box-shadow: var(--ka-shadow-sm);
@@ -612,6 +615,10 @@ table { border-collapse: collapse; width: 100%; }
   text-align: center;
   transition: box-shadow var(--ka-fast) var(--ka-ease),
               transform var(--ka-fast) var(--ka-ease);
+}
+
+@media (min-width: 700px) {
+  .ka-choice { gap: var(--ka-4); padding: var(--ka-5); }
 }
 
 .ka-choice--worker   { background: var(--ka-green-50); border-color: var(--ka-green-100); }
@@ -627,19 +634,20 @@ table { border-collapse: collapse; width: 100%; }
 
 .ka-choice--employer .ka-choice__photo { background: var(--ka-amber-100); }
 
-/* Cover, from the top: the faces are in the upper part of both photos. */
+/* The photos are already cut to 5:4, so cover fills the frame without
+   trimming; centre keeps the crowd and the owner both well placed. */
 .ka-choice__photo img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 0;
+  object-position: 50% 50%;
 }
 
 .ka-choice__text { display: flex; flex: 1 1 auto; flex-direction: column; }
 
 .ka-choice__title {
-  font-size: var(--ka-text-2xl);
+  font-size: var(--ka-text-lg);
   font-weight: var(--ka-weight-bold);
   line-height: var(--ka-leading-snug);
   color: var(--ka-text);
@@ -648,11 +656,24 @@ table { border-collapse: collapse; width: 100%; }
 .ka-choice__body {
   flex: 1 1 auto;
   margin-top: var(--ka-1);
+  font-size: var(--ka-text-sm);
   color: var(--ka-text-soft);
 }
 
-.ka-choice .ka-btn { gap: var(--ka-2); }
+/* On a phone the doors are two-up, so the buttons carry less side padding
+   and drop to body size to keep the longer label on one line. */
+.ka-choice .ka-btn {
+  gap: var(--ka-1);
+  padding-inline: var(--ka-2);
+  font-size: var(--ka-text-base);
+}
 .ka-choice__arrow { flex-shrink: 0; }
+
+@media (min-width: 700px) {
+  .ka-choice__title { font-size: var(--ka-text-2xl); }
+  .ka-choice__body { font-size: var(--ka-text-base); }
+  .ka-choice .ka-btn { gap: var(--ka-2); padding-inline: var(--ka-6); font-size: var(--ka-text-lg); }
+}
 
 .ka-choice:hover { box-shadow: var(--ka-shadow-lg); transform: translateY(-2px); }
 .ka-choice:focus-visible { outline: var(--ka-focus) solid var(--ka-amber-500); outline-offset: 3px; }
