@@ -5763,10 +5763,12 @@ Cache → Toolbox → Purge All**. In Search Console, open the *postalCode* issu
 and press **Validate fix** so Google re-checks. It takes a few days.
 
 The PIN codes used (headquarters): Kohima 797001, Dimapur 797112, Chümoukedima
-797103, Niuland 797109, Tseminyü 797109, Peren 797101, Phek 797108, Meluri
+797103, Niuland 797112, Tseminyü 797109, Peren 797101, Phek 797108, Meluri
 797114, Wokha 797111, Zünheboto 798620, Mokokchung 798601, Longleng 798625,
-Mon 798621, Tuensang 798612, Shamator 798612, Noklak 798626, Kiphire 798611.
-If any is wrong for your area, change it in `districts.php` — it is one line.
+Mon 798621, Tuensang 798612, Shamator 798628, Noklak 798626, Kiphire 798611.
+Niuland shares Dimapur's code because India Post runs its office (spelled
+"Nuiland") as a branch of Dimapur. If any is wrong for your area, change it in
+`districts.php` — it is one line.
 
 Checked with the real JobPosting builder: a job in Dimapur produces
 `"addressLocality":"Dimapur","postalCode":"797112"`, an accented or aliased

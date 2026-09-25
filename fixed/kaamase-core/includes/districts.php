@@ -144,7 +144,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 			 */
 			'niuland' => array(
 				'name'    => 'Niuland',
-				'pin'     => '797109',
+				'pin'     => '797112',
 				'hq'      => 'Niuland',
 				'aliases' => array( 'Niu Land', 'Nuiland' ),
 				'towns'   => array( 'Niuland', 'Aquqhnaqua', 'Kuhuboto' ),
@@ -176,7 +176,7 @@ if ( ! function_exists( 'kaamase_districts' ) ) {
 
 			'shamator' => array(
 				'name'    => 'Shamator',
-				'pin'     => '798612',
+				'pin'     => '798628',
 				'hq'      => 'Shamator',
 				'aliases' => array( 'Shamatore', 'Samator' ),
 				'towns'   => array( 'Shamator', 'Chessore', 'Kutur', 'Waoshu' ),
