@@ -5634,44 +5634,54 @@ and *Sent to %s person.* each gave the right one-versus-many form.
 
 ## 80. The register page, matching the app
 
-The "What brings you here?" page now looks like the app's: a real photo on
-each door, a short title, one line and a button. The worker door shows a
-Nagaland job fair — a hall of people looking for work — so at a glance the
-page reads as a job portal, not two portraits.
+The "What brings you here?" page is now drawn to match the app screen: a
+group of workers on each door, a short title, one line and a button, then the
+Google button and the account link. The two group pictures come straight from
+the app.
 
 ### Upload
 
 | File | |
 | --- | --- |
-| `fixed/kaamase-core/includes/registration.php` | 1.4.0 |
-| `fixed/kaamase/style.css` | 1.11.0 (includes 76) |
+| `fixed/kaamase-core/includes/registration.php` | 1.5.0 |
+| `fixed/kaamase-core/includes/google-signin.php` | 1.1.0 |
+| `fixed/kaamase/style.css` | 1.12.0 (includes 76) |
 | `fixed/kaamase/assets/images/register/` | **new folder**, 4 files |
-| `fixed/kaamase-core/languages/kaamase-core.pot`, `-hi_IN.po` and `.mo`, `-nag.po` and `.mo` | the new words |
+| `fixed/kaamase-core/languages/kaamase-core.pot`, `-hi_IN.po` and `.mo`, `-nag.po` and `.mo` | the register words |
 
 In Hostinger's File Manager, inside `wp-content/themes/kaamase/assets/images/`,
-make a folder `register` and upload the 4 `.webp` files into it. (If it already
-holds the earlier set, overwrite `worker-l.webp` and `worker-s.webp` — those
-two changed to the job-fair photo; the two `employer` files are the same.) Then
-**LiteSpeed Cache → Toolbox → Purge All**.
+make a folder `register` and upload the 4 `.webp` files into it. If it already
+holds an earlier set, **overwrite all four** — both the worker and the employer
+pictures changed to the app's group pictures. Then **LiteSpeed Cache → Toolbox
+→ Purge All**.
 
 ### What it shows
 
-- **Find work**: a Nagaland job-fair crowd, "Daily work, monthly jobs and
-  government work", green **Worker →**.
-- **Hire workers**: the owner's wife's photo, at her request on the employer
-  side, "Post a job and find skilled workers", amber **Employer →**.
-- **I already have an account**, as a button, to the sign in page. The Google
-  button still appears under it with "or", added by `google-signin.php`, which
-  was not changed.
+- **Find work**: the app's group of workers (the owner's wife is in this
+  group), "Daily work, monthly jobs and government work", green **Worker →**.
+- **Hire workers**: the app's second group, led by an employer, "Post a job
+  and find skilled workers", amber **Employer →**.
+- Then, in the app's order, the **Continue with Google** button, and below it
+  **I already have an account** as a button to the sign in page.
 
-Each card is tinted in its path's colour, green for work and amber for hiring.
-The two doors sit side by side at every width, phone included, to match the
-app; on a phone the padding, type and button sizes step down so both still fit
-two-up without any sideways scroll.
+The picture bleeds to the top of each card over a pale tint — green for work,
+amber for hiring — exactly as in the app; the picture carries that same tint,
+so where the figures end and the card takes over does not show. The two doors
+sit side by side at every width, phone included, so on a phone the padding,
+type and button sizes step down to keep both two-up without any sideways
+scroll.
 
-The photos were cropped to one shape and resized, nothing else; no filter or
-retouching. Each is there twice, 560 and 960 wide, 12 to 63 KB. If the folder
-is ever missing the cards still work, without the picture.
+The two pictures were cut from the app screen and resized only — the faces are
+not altered in any way. Each is there twice, 400 and 720 wide, 15 to 29 KB. If
+the folder is ever missing, the cards still work, without the picture.
+
+**The Google button moved.** It used to be appended below "I already have an
+account" with an "or" line. To match the app it is now drawn by the chooser
+itself, between the doors and the account link, with no caption.
+`google-signin.php` still appends the button above the *form* (the
+`?type=worker` / `?type=employer` step); only the first screen changed. If
+`google-signin.php` is removed, the chooser simply shows the doors and the
+account link, as before.
 
 "Continue with Apple" is not on the website: Sign in with Apple is built for
 the app only. The web has Google.
@@ -5679,9 +5689,10 @@ the app only. The web has Google.
 ### Tested on the real WordPress site
 
 English, Hindi and Nagamese at 390 and 1280 pixels: no sideways scroll, both
-photos load, and each card opens the right form (worker and employer, with the
-form's security token). Language files: 0 placeholder problems. Nothing in
-`debug.log`.
+pictures load and blend into the card, and the order is doors → Google → "I
+already have an account". Each card opens the right form (worker and employer,
+with the form's security token), and the Google button still sits above that
+form. Language files: 0 placeholder problems. Nothing in `debug.log`.
 
 ## Not changed, and why
 

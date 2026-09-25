@@ -59,7 +59,7 @@
  * existed.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.6.0
  */
 
@@ -1178,19 +1178,24 @@ if ( ! function_exists( 'kaamase_google_button' ) ) {
 			return '';
 		}
 
-		$label = '' !== $label ? $label : __( 'or sign in with a password below', 'kaamase-core' );
-
 		/*
 		 * The caption sits under the button when the button comes first
 		 * and over it when it comes last, so that in both places it reads
 		 * as the join between this way in and the other one rather than
-		 * as a stray line of text.
+		 * as a stray line of text. Pass null to draw the button with no
+		 * caption at all, which is how the register chooser uses it, to
+		 * match the app.
 		 */
-		$caption = sprintf(
-			'<p class="ka-small ka-mute" style="text-align:center;margin:%s;">%s</p>',
-			$above ? '0 0 12px' : '12px 0 0',
-			esc_html( $label )
-		);
+		if ( null === $label ) {
+			$caption = '';
+		} else {
+			$label   = '' !== $label ? $label : __( 'or sign in with a password below', 'kaamase-core' );
+			$caption = sprintf(
+				'<p class="ka-small ka-mute" style="text-align:center;margin:%s;">%s</p>',
+				$above ? '0 0 12px' : '12px 0 0',
+				esc_html( $label )
+			);
+		}
 
 		ob_start();
 		?>
@@ -1337,29 +1342,20 @@ if ( ! function_exists( 'kaamase_google_on_register_page' ) ) {
 		/*
 		 * Where the button goes depends on which step this is.
 		 *
-		 * On the first screen the page is one question with two answers,
-		 * and putting a third way in above the question answers it before
-		 * it has been asked. It goes underneath, after the choice has been
-		 * offered.
+		 * On the first screen -- the two doors -- the chooser draws the
+		 * Google button itself, in the app's place: between the doors and
+		 * the "I already have an account" link. So nothing is added here,
+		 * or the button would appear twice.
 		 *
-		 * On the form itself the opposite holds. Somebody looking at a
-		 * dozen fields wants to know there is a shorter way before they
-		 * start filling them in, not after.
+		 * On the form itself, somebody looking at a dozen fields wants to
+		 * know there is a shorter way before they start filling them in,
+		 * so the button goes above the form.
 		 */
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$type = isset( $_GET['type'] ) ? sanitize_key( wp_unslash( $_GET['type'] ) ) : '';
 
 		if ( ! in_array( $type, array( 'worker', 'employer' ), true ) ) {
-
-			/*
-			 * Just "or". The line above it already says "Already
-			 * registered? Sign in", so this joins the two ways a
-			 * returning person gets back in rather than introducing
-			 * the idea a second time.
-			 */
-			$button = kaamase_google_button( __( 'or', 'kaamase-core' ), true );
-
-			return '' === $button ? $output : $output . $button;
+			return $output;
 		}
 
 		$button = kaamase_google_button( __( 'or fill in the form below', 'kaamase-core' ) );

@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.4.0
+ * @version 1.5.0
  * @since   1.0.0
  *
  * Changelog
@@ -275,15 +275,12 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 	function kaamase_register_chooser() {
 
 		/*
-		 * The same screen as the app: a photo on each door, a two word
-		 * title, one line under it and a button. Both doors sit side by
-		 * side at every width. The worker door shows a Nagaland job fair,
-		 * a hall of people looking for work, so it reads as a job portal
-		 * at a glance; the employer door shows a real employer. Real
-		 * Nagaland photos rather than stock faces, because the photo is
-		 * the first thing read.
+		 * The same screen as the app, matched to it: a group of workers on
+		 * each door, a two word title, one line under it and a button. Both
+		 * doors sit side by side at every width. Then the Google button and
+		 * the account link, in the app's order (see below the loop).
 		 *
-		 * The photos live in the theme, beside the homepage's. A theme
+		 * The pictures live in the theme, beside the homepage's. A theme
 		 * without them still gets both doors, just without the picture.
 		 */
 		$doors = array(
@@ -331,9 +328,9 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 						<?php if ( $has ) : ?>
 							<span class="ka-choice__photo">
 								<img src="<?php echo esc_url( get_theme_file_uri( $small ) ); ?>"
-									srcset="<?php echo esc_url( get_theme_file_uri( $small ) ); ?> 560w, <?php echo esc_url( get_theme_file_uri( $large ) ); ?> 960w"
+									srcset="<?php echo esc_url( get_theme_file_uri( $small ) ); ?> 400w, <?php echo esc_url( get_theme_file_uri( $large ) ); ?> 720w"
 									sizes="(min-width: 700px) 480px, 50vw"
-									width="560" height="448" alt="" decoding="async">
+									width="720" height="526" alt="" decoding="async">
 							</span>
 						<?php endif; ?>
 
@@ -352,10 +349,22 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 
 			<?php
 			/*
-			 * The way out for somebody who is already registered, as a
-			 * button of its own like the app's. The Google button is added
-			 * underneath by google-signin.php.
+			 * Then the sign in options, in the app's order: the Google
+			 * button, then the way out for somebody who already has an
+			 * account. The website has no Apple button -- Sign in with
+			 * Apple is built for the app only.
+			 *
+			 * The Google button is drawn here, between the doors and the
+			 * account link, rather than left to google-signin.php to append
+			 * at the very end, so the order matches the app. It is guarded
+			 * by function_exists: if that file is ever removed the page
+			 * simply shows the doors and the account link, exactly as it
+			 * did before Google sign in existed.
 			 */
+			if ( function_exists( 'kaamase_google_button' ) ) {
+				// Null label: no caption, so the button stands on its own like the app's.
+				echo kaamase_google_button( null ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_* inside.
+			}
 			?>
 			<a class="ka-btn ka-btn--outline ka-btn--lg ka-btn--block ka-join__signin" href="<?php echo esc_url( wp_login_url() ); ?>">
 				<?php esc_html_e( 'I already have an account', 'kaamase-core' ); ?>
