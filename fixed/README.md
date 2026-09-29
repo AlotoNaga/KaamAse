@@ -5774,6 +5774,47 @@ Checked with the real JobPosting builder: a job in Dimapur produces
 `"addressLocality":"Dimapur","postalCode":"797112"`, an accented or aliased
 district name still resolves, and an unknown district produces no PIN.
 
+## 83. Promote a job you posted for somebody
+
+Anybody on the site can ask to promote their own job from their dashboard.
+Jobs you put up from **Kaam Ase → Post for somebody** had no way in: that
+card only offers a person their own listings, and it turns a request down
+when the account asking has no phone on its own profile — which staff
+accounts never have.
+
+The "Post for somebody" screen now has a **Promote a job you posted** section
+under the form, with the same choices a user gets: which job, one week or one
+month, best time to ring, and a note. After you put a job up, the "The job is
+up" notice also has an **Ask to promote it** link that takes you there with
+that job already chosen.
+
+The request lands in **Kaam Ase → Promotions** under *Waiting to be rung*,
+exactly like one from anybody else, with the employer's number from the job
+as the number to ring. From there it is the same as always: ring, agree the
+price, take it on Google Pay, enter the days, amount and reference, press
+**Start it**. The same rules apply as for everybody: a job waiting or running
+cannot be asked about again, and one you take off the list waits a month.
+
+Nothing in the promotions system itself was changed (`promote.php` is
+untouched), and no language file was changed. The new wording is on an admin
+screen only.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/posted-for.php` | 1.2.0 — **new to this folder**; the original file with the promote section added |
+
+Upload it to `wp-content/plugins/kaamase-core/includes/`, replacing the file
+of the same name, then **LiteSpeed Cache → Toolbox → Purge All**.
+
+Tested on a real WordPress install with the whole plugin: posting a job for
+somebody, asking to promote it, seeing it in Promotions with the employer's
+number, starting it with a price and a Google Pay reference, and seeing the Ad
+slot on the jobs page. Asking twice, pushing in an ordinary job, a made-up job
+number, a missing security token and a subscriber account were all refused.
+Nothing in the error log.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
