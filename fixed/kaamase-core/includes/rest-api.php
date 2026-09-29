@@ -29,7 +29,7 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.8.0
+ * @version 1.9.0
  * @since   1.3.0
  */
 
@@ -2087,16 +2087,28 @@ if ( ! function_exists( 'kaamase_rest_contact' ) ) {
 
 		$channel = kaamase_contact_channel( $id );
 		$number  = (string) $channel['number'];
+		$email   = isset( $channel['email'] ) ? (string) $channel['email'] : '';
 
+		/*
+		 * A job that takes applications by email comes back with the
+		 * address and no number, so no tel and no WhatsApp either.
+		 *
+		 * method says which, for builds that know about it. display
+		 * carries the address too, so a build that only knows numbers
+		 * still prints something a person can use rather than a blank.
+		 */
 		return new WP_REST_Response(
 			array(
 				'name'       => get_the_title( $id ),
+				'method'     => '' !== $email ? 'email' : 'phone',
 				'number'     => $number,
-				'display'    => kaamase_format_phone( $number ),
+				'display'    => '' !== $email ? $email : kaamase_format_phone( $number ),
 				'masked'     => (bool) $channel['masked'],
 				'label'      => (string) $channel['label'],
 				'whatsapp'   => $number ? 'https://wa.me/91' . $number : '',
 				'tel'        => $number ? 'tel:+91' . $number : '',
+				'email'      => $email,
+				'mailto'     => '' !== $email ? kaamase_contact_mailto( $email, $id ) : '',
 				'quota_left' => kaamase_contact_quota_wire( $user_id ),
 				'quota_unlimited' => kaamase_contact_unmetered( $user_id ),
 			),

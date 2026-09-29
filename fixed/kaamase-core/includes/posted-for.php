@@ -38,8 +38,19 @@
  * the number to ring. See section 5. Nothing about how promotions work
  * is changed here; promote.php still decides everything after the ask.
  *
+ * An email address instead of a number
+ * ------------------------------------
+ * Government offices and larger firms often take applications by email
+ * only and give no phone at all. So a job put up from this screen can
+ * carry the employer's email address in place of the number, and then a
+ * worker who asks for contact details gets that address and a button to
+ * write, with no call and no WhatsApp. It goes through the same gate as a
+ * number: signed in, email confirmed, counted, logged. Only this screen
+ * can set it, so it is not something a member can choose. See section 6
+ * for changing it on a job already up.
+ *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.0.0
  */
 
@@ -47,7 +58,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /* ==========================================================================
-   1. THE TWO EXTRA FIELDS
+   1. THE EXTRA FIELDS
    ========================================================================== */
 
 if ( ! function_exists( 'kaamase_posted_for_fields' ) ) {
@@ -79,6 +90,17 @@ if ( ! function_exists( 'kaamase_posted_for_fields' ) ) {
 			'label'   => __( 'Where this job came from', 'kaamase-core' ),
 		);
 
+		/*
+		 * Private for the same reason the number is: it reaches a worker
+		 * only through the contact screen, never printed in a page or
+		 * handed out in the job the app downloads.
+		 */
+		$schema['kaamase_job']['contact_email'] = array(
+			'type'    => 'string',
+			'private' => true,
+			'label'   => __( 'Contact email', 'kaamase-core' ),
+		);
+
 		return $schema;
 	}
 }
@@ -95,6 +117,32 @@ if ( ! function_exists( 'kaamase_job_is_posted_for' ) ) {
 	function kaamase_job_is_posted_for( $job_id ) {
 
 		return (bool) kaamase_read_field( (int) $job_id, 'posted_for' );
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_email' ) ) {
+	/**
+	 * The email address workers use instead of a number, if there is one.
+	 *
+	 * Only ever on a job put up from this screen. Anything else answers
+	 * with an empty string, whatever is stored, so the email route can
+	 * never turn up on a member's own job.
+	 *
+	 * @since 1.3.0
+	 * @param int $job_id Job ID.
+	 * @return string The address, or an empty string for a job reached by phone.
+	 */
+	function kaamase_posted_for_email( $job_id ) {
+
+		$job_id = (int) $job_id;
+
+		if ( 'kaamase_job' !== get_post_type( $job_id ) || ! kaamase_job_is_posted_for( $job_id ) ) {
+			return '';
+		}
+
+		$email = sanitize_email( (string) kaamase_read_field( $job_id, 'contact_email' ) );
+
+		return is_email( $email ) ? $email : '';
 	}
 }
 
@@ -131,18 +179,31 @@ if ( ! function_exists( 'kaamase_posted_for_notice' ) ) {
 
 		$name = (string) kaamase_read_field( $job_id, 'employer_name' );
 
+		if ( '' !== kaamase_posted_for_email( $job_id ) ) {
+
+			$line = $name
+				? sprintf(
+					/* translators: %s: the employer's name */
+					__( '%s is hiring, not us. They take applications by email, and the address on this job is theirs, so you write to them directly.', 'kaamase-core' ),
+					$name
+				)
+				: __( 'The email address on this job belongs to the employer, not to us. You write to them directly.', 'kaamase-core' );
+
+		} else {
+
+			$line = $name
+				? sprintf(
+					/* translators: %s: the employer's name */
+					__( '%s is hiring, not us. The number on this job is theirs, so you speak to them directly.', 'kaamase-core' ),
+					$name
+				)
+				: __( 'The number on this job belongs to the employer, not to us. You speak to them directly.', 'kaamase-core' );
+		}
+
 		$notice = sprintf(
 			'<p class="ka-hint"><strong>%1$s</strong> %2$s</p>',
 			esc_html__( 'Shared by Kaam Ase.', 'kaamase-core' ),
-			esc_html(
-				$name
-					? sprintf(
-						/* translators: %s: the employer's name */
-						__( '%s is hiring, not us. The number on this job is theirs, so you speak to them directly.', 'kaamase-core' ),
-						$name
-					)
-					: __( 'The number on this job belongs to the employer, not to us. You speak to them directly.', 'kaamase-core' )
-			)
+			esc_html( $line )
 		);
 
 		return $notice . $content;
@@ -163,10 +224,49 @@ if ( ! function_exists( 'kaamase_posted_for_shape' ) ) {
 
 		$out['posted_for'] = kaamase_job_is_posted_for( $post->ID );
 
+		/*
+		 * How a worker reaches this job, so the app can say "email" on
+		 * the button before anybody presses it. The address itself is not
+		 * here: like a number, it comes only from the contact endpoint,
+		 * behind the same gate.
+		 */
+		$out['contact_method'] = '' !== kaamase_posted_for_email( $post->ID ) ? 'email' : 'phone';
+
 		return $out;
 	}
 }
 add_filter( 'kaamase_shape_job', 'kaamase_posted_for_shape', 16, 2 );
+
+if ( ! function_exists( 'kaamase_posted_for_channel' ) ) {
+	/**
+	 * Hand out the email address instead of a number.
+	 *
+	 * Through the channel filter contact.php already offers, so the gate,
+	 * the daily count and the log are exactly the ones a number goes
+	 * through. The number is emptied on purpose: an email job has no
+	 * phone and no WhatsApp, not both.
+	 *
+	 * @since 1.3.0
+	 * @param array $channel Channel details.
+	 * @param int   $post_id Profile or job ID.
+	 * @return array
+	 */
+	function kaamase_posted_for_channel( $channel, $post_id ) {
+
+		$email = kaamase_posted_for_email( $post_id );
+
+		if ( '' === $email ) {
+			return $channel;
+		}
+
+		$channel['number'] = '';
+		$channel['email']  = $email;
+		$channel['label']  = __( 'Email address', 'kaamase-core' );
+
+		return $channel;
+	}
+}
+add_filter( 'kaamase_contact_channel', 'kaamase_posted_for_channel', 10, 2 );
 
 
 /* ==========================================================================
@@ -230,6 +330,7 @@ if ( ! function_exists( 'kaamase_posted_for_page' ) ) {
 							<a href="#kaamase-pf-promote"><?php esc_html_e( 'Ask to promote it', 'kaamase-core' ); ?></a>
 						<?php endif; ?>
 					</p>
+					<?php kaamase_posted_for_email_posted( $posted ); ?>
 				</div>
 			<?php endif; ?>
 
@@ -245,7 +346,7 @@ if ( ! function_exists( 'kaamase_posted_for_page' ) ) {
 				<?php esc_html_e( 'For jobs you have seen elsewhere and checked yourself. The job goes up under Kaam Ase with the employer\'s name on it, and workers get the employer\'s number, never yours. Ring the employer first and make sure the job is real and that they are happy to be listed.', 'kaamase-core' ); ?>
 			</p>
 
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data">
+			<form class="kaamase-pf-contact" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data">
 
 				<input type="hidden" name="action" value="kaamase_post_for">
 				<?php wp_nonce_field( 'kaamase_post_for' ); ?>
@@ -265,16 +366,7 @@ if ( ! function_exists( 'kaamase_posted_for_page' ) ) {
 						</td>
 					</tr>
 
-					<tr>
-						<th scope="row">
-							<label for="kaamase-pf-phone"><?php esc_html_e( 'Their number', 'kaamase-core' ); ?></label>
-						</th>
-						<td>
-							<input class="regular-text" type="tel" id="kaamase-pf-phone" name="kaamase_contact_phone" required
-								maxlength="15" placeholder="<?php esc_attr_e( '10 digits', 'kaamase-core' ); ?>">
-							<p class="description"><?php esc_html_e( 'What a worker gets when they ask for contact details. Never shown openly on the page.', 'kaamase-core' ); ?></p>
-						</td>
-					</tr>
+					<?php kaamase_posted_for_contact_rows( 'kaamase-pf' ); ?>
 
 					<tr>
 						<th scope="row">
@@ -441,6 +533,10 @@ if ( ! function_exists( 'kaamase_posted_for_page' ) ) {
 
 			<?php kaamase_posted_for_promo_section( $posted ); ?>
 
+			<?php kaamase_posted_for_contact_section(); ?>
+
+			<?php kaamase_posted_for_contact_script(); ?>
+
 		</div>
 		<?php
 	}
@@ -476,9 +572,9 @@ if ( ! function_exists( 'kaamase_posted_for_handle' ) ) {
 		$back    = admin_url( 'admin.php?page=kaamase-post-for' );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Checked above.
-		$name   = isset( $_POST['kaamase_employer_name'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_employer_name'] ) ) : '';
-		$phone  = isset( $_POST['kaamase_contact_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_contact_phone'] ) ) : '';
-		$source = isset( $_POST['kaamase_source'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_source'] ) ) : '';
+		$name    = isset( $_POST['kaamase_employer_name'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_employer_name'] ) ) : '';
+		$contact = kaamase_posted_for_contact_input();
+		$source  = isset( $_POST['kaamase_source'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_source'] ) ) : '';
 
 		$values = array(
 			'title'              => isset( $_POST['kaamase_title'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_title'] ) ) : '',
@@ -495,7 +591,7 @@ if ( ! function_exists( 'kaamase_posted_for_handle' ) ) {
 			'food_provided'      => ! empty( $_POST['kaamase_food'] ),
 			'stay_provided'      => ! empty( $_POST['kaamase_stay'] ),
 			'transport_provided' => ! empty( $_POST['kaamase_transport'] ),
-			'contact_phone'      => $phone,
+			'contact_phone'      => $contact['phone'],
 		);
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -505,9 +601,7 @@ if ( ! function_exists( 'kaamase_posted_for_handle' ) ) {
 			$errors[] = __( 'Put the name of the person or firm hiring.', 'kaamase-core' );
 		}
 
-		if ( '' === kaamase_sanitize_phone( $phone ) ) {
-			$errors[] = __( 'Put their number. Ten digits starting with 6, 7, 8 or 9. Without it this job is no use to anybody.', 'kaamase-core' );
-		}
+		$errors = array_merge( $errors, $contact['errors'] );
 
 		if ( $errors ) {
 			set_transient( 'kaamase_post_for_' . $user_id, $errors, 15 * MINUTE_IN_SECONDS );
@@ -556,6 +650,14 @@ if ( ! function_exists( 'kaamase_posted_for_handle' ) ) {
 		kaamase_save_field( $job_id, 'employer_name', $name );
 		kaamase_save_field( $job_id, 'posted_for', true );
 		kaamase_save_field( $job_id, 'posted_source', $source );
+
+		/*
+		 * The number or the address, whichever was chosen, and never both.
+		 * An email job is saved with no number, and kaamase_save_job()
+		 * fills an empty one from the author's own profile, so it is
+		 * emptied again here rather than left as a staff phone.
+		 */
+		kaamase_posted_for_contact_save( $job_id, $contact );
 
 		delete_post_meta( $job_id, KAAMASE_META_PREFIX . 'employer_id' );
 
@@ -636,36 +738,7 @@ if ( ! function_exists( 'kaamase_posted_for_promo_jobs' ) ) {
 	 */
 	function kaamase_posted_for_promo_jobs() {
 
-		$ids = get_posts(
-			array(
-				'post_type'      => 'kaamase_job',
-				'post_status'    => 'publish',
-				'posts_per_page' => 100,
-				'fields'         => 'ids',
-				'no_found_rows'  => true,
-				'orderby'        => 'date',
-				'order'          => 'DESC',
-				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					array(
-						'key'   => KAAMASE_META_PREFIX . 'posted_for',
-						'value' => '1',
-					),
-				),
-			)
-		);
-
-		$open = array();
-
-		foreach ( (array) $ids as $job_id ) {
-
-			$job_id = (int) $job_id;
-
-			if ( kaamase_job_is_posted_for( $job_id ) && kaamase_promo_showable( $job_id ) ) {
-				$open[] = $job_id;
-			}
-		}
-
-		return $open;
+		return array_values( array_filter( kaamase_posted_for_jobs(), 'kaamase_promo_showable' ) );
 	}
 }
 
@@ -921,6 +994,20 @@ if ( ! function_exists( 'kaamase_posted_for_promo_handle' ) ) {
 		$user_id = (int) get_post_field( 'post_author', $job_id );
 		$phone   = (string) kaamase_read_field( $job_id, 'contact_phone' );
 		$want    = kaamase_promo_days( $want ) ? $want : 'week';
+		$email   = kaamase_posted_for_email( $job_id );
+
+		/*
+		 * A job reached by email has no number to ring, so its address
+		 * goes at the front of the note, which the Promotions screen
+		 * shows under the request.
+		 */
+		if ( '' !== $email ) {
+			$note = sprintf(
+				/* translators: %s: the employer's email address */
+				__( 'Email: %s', 'kaamase-core' ),
+				$email
+			) . ( '' !== $note ? ' — ' . $note : '' );
+		}
 
 		update_post_meta(
 			$job_id,
@@ -945,3 +1032,427 @@ if ( ! function_exists( 'kaamase_posted_for_promo_handle' ) ) {
 	}
 }
 add_action( 'admin_post_kaamase_post_for_promo', 'kaamase_posted_for_promo_handle' );
+
+
+/* ==========================================================================
+   6. HOW WORKERS REACH THEM
+
+   A number, or an email address instead. Chosen when the job goes up and
+   changeable afterwards from the same screen, for a typo, for an employer
+   who would rather be written to, or the other way round.
+
+   Never both. An office that gives only an email does not want calls to
+   a number that is not theirs, and a job with a number and an address
+   would leave the worker guessing which one is answered.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_posted_for_jobs' ) ) {
+	/**
+	 * The jobs put up from this screen that are still up.
+	 *
+	 * Newest first, so the one just posted is at the top of any list.
+	 *
+	 * @since 1.3.0
+	 * @return int[] Job IDs.
+	 */
+	function kaamase_posted_for_jobs() {
+
+		$ids = get_posts(
+			array(
+				'post_type'      => 'kaamase_job',
+				'post_status'    => 'publish',
+				'posts_per_page' => 100,
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => KAAMASE_META_PREFIX . 'posted_for',
+						'value' => '1',
+					),
+				),
+			)
+		);
+
+		return array_values( array_filter( array_map( 'intval', (array) $ids ), 'kaamase_job_is_posted_for' ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_contact_rows' ) ) {
+	/**
+	 * The phone-or-email choice, as rows of a form table.
+	 *
+	 * Both inputs are always in the page, so the form still works with
+	 * scripts off; the script only hides the one not chosen. Which one is
+	 * required is decided on the server, from the choice.
+	 *
+	 * @since 1.3.0
+	 * @param string $prefix Start of the input IDs, unique to the form.
+	 * @return void
+	 */
+	function kaamase_posted_for_contact_rows( $prefix ) {
+		?>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'How workers reach them', 'kaamase-core' ); ?></th>
+			<td>
+				<fieldset>
+					<legend class="screen-reader-text"><?php esc_html_e( 'How workers reach them', 'kaamase-core' ); ?></legend>
+					<label>
+						<input type="radio" name="kaamase_contact_method" value="phone" checked>
+						<?php esc_html_e( 'Phone: workers can call and WhatsApp', 'kaamase-core' ); ?>
+					</label><br>
+					<label>
+						<input type="radio" name="kaamase_contact_method" value="email">
+						<?php esc_html_e( 'Email only: no phone and no WhatsApp', 'kaamase-core' ); ?>
+					</label>
+					<p class="description">
+						<?php esc_html_e( 'Email is for offices and firms that take applications by email and give no number, such as government departments and big companies.', 'kaamase-core' ); ?>
+					</p>
+				</fieldset>
+			</td>
+		</tr>
+
+		<tr data-kaamase-pf-for="phone">
+			<th scope="row">
+				<label for="<?php echo esc_attr( $prefix ); ?>-phone"><?php esc_html_e( 'Their number', 'kaamase-core' ); ?></label>
+			</th>
+			<td>
+				<input class="regular-text" type="tel" id="<?php echo esc_attr( $prefix ); ?>-phone" name="kaamase_contact_phone"
+					maxlength="15" placeholder="<?php esc_attr_e( '10 digits', 'kaamase-core' ); ?>">
+				<p class="description"><?php esc_html_e( 'What a worker gets when they ask for contact details. Never shown openly on the page.', 'kaamase-core' ); ?></p>
+			</td>
+		</tr>
+
+		<tr data-kaamase-pf-for="email">
+			<th scope="row">
+				<label for="<?php echo esc_attr( $prefix ); ?>-email"><?php esc_html_e( 'Their email', 'kaamase-core' ); ?></label>
+			</th>
+			<td>
+				<input class="regular-text" type="email" id="<?php echo esc_attr( $prefix ); ?>-email" name="kaamase_contact_email"
+					maxlength="100" placeholder="<?php esc_attr_e( 'jobs@example.com', 'kaamase-core' ); ?>">
+				<p class="description"><?php esc_html_e( 'What a worker gets instead of a number, with a button to write to it. Never shown openly on the page.', 'kaamase-core' ); ?></p>
+			</td>
+		</tr>
+		<?php
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_contact_input' ) ) {
+	/**
+	 * Read the choice and the one detail that goes with it.
+	 *
+	 * The caller has already checked the nonce.
+	 *
+	 * @since 1.3.0
+	 * @return array{method: string, phone: string, email: string, errors: string[]}
+	 */
+	function kaamase_posted_for_contact_input() {
+
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Checked by the caller.
+		$method = isset( $_POST['kaamase_contact_method'] ) && 'email' === sanitize_key( wp_unslash( $_POST['kaamase_contact_method'] ) ) ? 'email' : 'phone';
+		$phone  = isset( $_POST['kaamase_contact_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_contact_phone'] ) ) : '';
+		$email  = isset( $_POST['kaamase_contact_email'] ) ? sanitize_email( wp_unslash( $_POST['kaamase_contact_email'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+
+		$errors = array();
+
+		if ( 'email' === $method ) {
+
+			$phone = '';
+
+			if ( ! is_email( $email ) ) {
+				$errors[] = __( 'Put their email address, like jobs@example.com. Without it this job is no use to anybody.', 'kaamase-core' );
+			}
+		} else {
+
+			$email = '';
+
+			if ( '' === kaamase_sanitize_phone( $phone ) ) {
+				$errors[] = __( 'Put their number. Ten digits starting with 6, 7, 8 or 9. Without it this job is no use to anybody.', 'kaamase-core' );
+			}
+		}
+
+		return array(
+			'method' => $method,
+			'phone'  => $phone,
+			'email'  => $email,
+			'errors' => $errors,
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_contact_save' ) ) {
+	/**
+	 * Store the number or the address, and clear the other.
+	 *
+	 * @since 1.3.0
+	 * @param int   $job_id  Job ID.
+	 * @param array $contact What kaamase_posted_for_contact_input() read.
+	 * @return void
+	 */
+	function kaamase_posted_for_contact_save( $job_id, $contact ) {
+
+		if ( 'email' === $contact['method'] ) {
+			kaamase_save_field( $job_id, 'contact_email', $contact['email'] );
+			kaamase_save_field( $job_id, 'contact_phone', '' );
+			return;
+		}
+
+		kaamase_save_field( $job_id, 'contact_phone', $contact['phone'] );
+		delete_post_meta( $job_id, KAAMASE_META_PREFIX . 'contact_email' );
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_contact_now' ) ) {
+	/**
+	 * What a worker gets today, in a few words, for the list of jobs.
+	 *
+	 * @since 1.3.0
+	 * @param int $job_id Job ID.
+	 * @return string
+	 */
+	function kaamase_posted_for_contact_now( $job_id ) {
+
+		$email = kaamase_posted_for_email( $job_id );
+
+		if ( '' !== $email ) {
+			return $email;
+		}
+
+		$number = (string) kaamase_read_field( $job_id, 'contact_phone' );
+
+		if ( '' === $number ) {
+			return __( 'no number', 'kaamase-core' );
+		}
+
+		return function_exists( 'kaamase_format_phone' ) ? kaamase_format_phone( $number ) : $number;
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_email_posted' ) ) {
+	/**
+	 * Say which address workers will get, and catch an obvious typo.
+	 *
+	 * Shown in the notice after the job goes up or the contact changes,
+	 * so the address is read once more by the person who typed it. The
+	 * typo check is the one sign up uses; it only ever suggests, and the
+	 * section below is where to put it right.
+	 *
+	 * @since 1.3.0
+	 * @param int $job_id Job ID.
+	 * @return void
+	 */
+	function kaamase_posted_for_email_posted( $job_id ) {
+
+		$email = kaamase_posted_for_email( $job_id );
+
+		if ( '' === $email ) {
+			return;
+		}
+
+		$better = function_exists( 'kaamase_email_suggest' ) ? kaamase_email_suggest( $email ) : '';
+		?>
+		<p>
+			<?php
+			printf(
+				/* translators: %s: the employer's email address */
+				esc_html__( 'Workers who ask for contact details get %s, with no phone and no WhatsApp.', 'kaamase-core' ),
+				'<strong>' . esc_html( $email ) . '</strong>'
+			);
+			?>
+		</p>
+		<?php if ( '' !== $better ) : ?>
+			<p>
+				<?php
+				printf(
+					/* translators: %s: the email address we think was meant */
+					esc_html__( 'Check it: did you mean %s? Change it below if so.', 'kaamase-core' ),
+					'<strong>' . esc_html( $better ) . '</strong>'
+				);
+				?>
+				<a href="#kaamase-pf-contact"><?php esc_html_e( 'Change how workers reach a job', 'kaamase-core' ); ?></a>
+			</p>
+		<?php endif; ?>
+		<?php
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_contact_section' ) ) {
+	/**
+	 * Draw the section for changing the contact on a job already up.
+	 *
+	 * @since 1.3.0
+	 * @return void
+	 */
+	function kaamase_posted_for_contact_section() {
+
+		$jobs = kaamase_posted_for_jobs();
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read only notice.
+		$changed = isset( $_GET['contact'] ) ? absint( $_GET['contact'] ) : 0;
+
+		if ( $changed && ! in_array( $changed, $jobs, true ) ) {
+			$changed = 0;
+		}
+		?>
+		<hr style="margin:2em 0 1.4em">
+
+		<h2 id="kaamase-pf-contact"><?php esc_html_e( 'Change how workers reach a job', 'kaamase-core' ); ?></h2>
+
+		<?php if ( $changed ) : ?>
+			<div class="notice notice-success inline">
+				<p>
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: %s: the job's title */
+							__( 'Saved. Workers who ask about "%s" from now on get the new contact.', 'kaamase-core' ),
+							get_the_title( $changed )
+						)
+					);
+					?>
+				</p>
+				<?php kaamase_posted_for_email_posted( $changed ); ?>
+			</div>
+		<?php endif; ?>
+
+		<p style="max-width:45em">
+			<?php esc_html_e( 'For a job you already put up here: correct the number or the email address, or switch between the two. Anybody who asked before keeps what they were given.', 'kaamase-core' ); ?>
+		</p>
+
+		<?php if ( empty( $jobs ) ) : ?>
+
+			<p class="description"><?php esc_html_e( 'No open job put up from this screen yet.', 'kaamase-core' ); ?></p>
+
+		<?php else : ?>
+
+			<form class="kaamase-pf-contact" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+
+				<input type="hidden" name="action" value="kaamase_post_for_contact">
+				<?php wp_nonce_field( 'kaamase_post_for_contact' ); ?>
+
+				<table class="form-table" role="presentation">
+
+					<tr>
+						<th scope="row">
+							<label for="kaamase-pf-change-job"><?php esc_html_e( 'Which job', 'kaamase-core' ); ?></label>
+						</th>
+						<td>
+							<select id="kaamase-pf-change-job" name="job" required style="max-width:100%">
+								<?php foreach ( $jobs as $job_id ) : ?>
+									<option value="<?php echo esc_attr( (string) $job_id ); ?>" <?php selected( $changed, $job_id ); ?>>
+										<?php echo esc_html( get_the_title( $job_id ) . ' — ' . kaamase_posted_for_contact_now( $job_id ) ); ?>
+									</option>
+								<?php endforeach; ?>
+							</select>
+						</td>
+					</tr>
+
+					<?php kaamase_posted_for_contact_rows( 'kaamase-pf-change' ); ?>
+
+				</table>
+
+				<?php submit_button( __( 'Save the new contact', 'kaamase-core' ), 'secondary', 'kaamase-pf-contact-submit' ); ?>
+
+			</form>
+
+		<?php endif; ?>
+		<?php
+	}
+}
+
+if ( ! function_exists( 'kaamase_posted_for_contact_handle' ) ) {
+	/**
+	 * Change the number or the address on a job already up.
+	 *
+	 * @since 1.3.0
+	 * @return void
+	 */
+	function kaamase_posted_for_contact_handle() {
+
+		if ( ! current_user_can( 'edit_others_kaamase_jobs' ) ) {
+			wp_die( esc_html__( 'You cannot do that.', 'kaamase-core' ) );
+		}
+
+		check_admin_referer( 'kaamase_post_for_contact' );
+
+		$user_id = get_current_user_id();
+		$back    = admin_url( 'admin.php?page=kaamase-post-for' );
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Checked above.
+		$job_id = isset( $_POST['job'] ) ? absint( $_POST['job'] ) : 0;
+
+		/*
+		 * Only a job put up from this screen. A member's own job carries
+		 * the member's own number and is theirs to change, not ours.
+		 */
+		if ( ! $job_id || 'kaamase_job' !== get_post_type( $job_id ) || ! kaamase_job_is_posted_for( $job_id ) ) {
+			set_transient(
+				'kaamase_post_for_' . $user_id,
+				array( __( 'Only a job put up from this screen can be changed here.', 'kaamase-core' ) ),
+				15 * MINUTE_IN_SECONDS
+			);
+			wp_safe_redirect( $back );
+			exit;
+		}
+
+		$contact = kaamase_posted_for_contact_input();
+
+		if ( $contact['errors'] ) {
+			set_transient( 'kaamase_post_for_' . $user_id, $contact['errors'], 15 * MINUTE_IN_SECONDS );
+			wp_safe_redirect( $back );
+			exit;
+		}
+
+		kaamase_posted_for_contact_save( $job_id, $contact );
+
+		/*
+		 * The line above the job says "number" or "email address", and a
+		 * page cache would go on showing the old one to anybody signed
+		 * out. Does nothing where LiteSpeed is not installed.
+		 */
+		clean_post_cache( $job_id );
+		do_action( 'litespeed_purge_post', $job_id );
+
+		wp_safe_redirect( add_query_arg( 'contact', $job_id, $back ) . '#kaamase-pf-contact' );
+		exit;
+	}
+}
+add_action( 'admin_post_kaamase_post_for_contact', 'kaamase_posted_for_contact_handle' );
+
+if ( ! function_exists( 'kaamase_posted_for_contact_script' ) ) {
+	/**
+	 * Show only the box that goes with the choice.
+	 *
+	 * @since 1.3.0
+	 * @return void
+	 */
+	function kaamase_posted_for_contact_script() {
+		?>
+		<script>
+		( function () {
+			document.querySelectorAll( 'form.kaamase-pf-contact' ).forEach( function ( form ) {
+				function sync() {
+					var chosen = form.querySelector( 'input[name="kaamase_contact_method"]:checked' );
+					var method = chosen ? chosen.value : 'phone';
+
+					form.querySelectorAll( '[data-kaamase-pf-for]' ).forEach( function ( row ) {
+						var on = row.getAttribute( 'data-kaamase-pf-for' ) === method;
+
+						row.style.display = on ? '' : 'none';
+
+						row.querySelectorAll( 'input' ).forEach( function ( input ) {
+							input.required = on;
+						} );
+					} );
+				}
+
+				form.addEventListener( 'change', sync );
+				sync();
+			} );
+		}() );
+		</script>
+		<?php
+	}
+}

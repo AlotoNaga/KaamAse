@@ -89,6 +89,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase/assets/images/hero/` (14 photos) | `wp-content/themes/kaamase/assets/images/hero/` **(new folder)** |
 | `fixed/kaamase/assets/images/register/` (4 photos) | `wp-content/themes/kaamase/assets/images/register/` **(new folder)** |
 | `fixed/kaamase-core/includes/job-photos.php` | `wp-content/plugins/kaamase-core/includes/job-photos.php` |
+| `fixed/kaamase-core/includes/posted-for.php` | `wp-content/plugins/kaamase-core/includes/posted-for.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -5814,6 +5815,70 @@ number, starting it with a price and a Google Pay reference, and seeing the Ad
 slot on the jobs page. Asking twice, pushing in an ordinary job, a made-up job
 number, a missing security token and a subscriber account were all refused.
 Nothing in the error log.
+
+## 84. Email instead of a phone, for jobs you post for somebody
+
+Government offices and big companies often take applications by email only
+and give no number. **Kaam Ase → Post for somebody** now asks **How workers
+reach them**:
+
+- **Phone** (the default, same as before): workers can call and WhatsApp.
+- **Email only**: you type the office's email address instead. There is no
+  phone and no WhatsApp on that job.
+
+Only this admin screen has the choice. Members posting their own jobs see
+nothing new.
+
+On the website, a worker presses **Get contact details** on the job, just as
+before. For an email job they see the address and a **Send an email** button.
+It opens their mail app with the subject already filled in ("Job
+application: *job title*") and a line saying they saw it on Kaam Ase. It goes
+through the same checks as a number: they must be signed in with a confirmed
+email, it counts as one of their daily lookups, and it is logged. The address
+is never printed in the page, and it is never sent in the job data the app
+downloads. The note above the job says the office takes applications by
+email instead of mentioning a number.
+
+A new section at the bottom of the screen, **Change how workers reach a job**,
+lets you correct the number or the address on a job you already put up, or
+switch it between phone and email. If an address looks like a typo (such as
+`gmial.com`), the notice after saving asks "did you mean …?". This uses the
+same check as sign-up.
+
+If you ask to promote an email job, the address goes at the front of the
+request note in **Promotions**, since there is no number to ring.
+
+For the app, the contact answer (`POST /kaamase/v1/contact/{id}`) now also
+carries `method` (`phone` or `email`), `email` and `mailto`. The job data
+carries `contact_method`. For an email job, `number`, `tel` and `whatsapp` are
+empty and `display` is the address. That way an app build that doesn't know
+about email yet still shows something usable.
+
+No language file was changed, so the new wording shows in English until it is
+translated.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/posted-for.php` | 1.3.0 — the choice, the change section, the email on promote requests |
+| `fixed/kaamase-core/includes/contact.php` | 1.3.0 — the email card on the contact screen |
+| `fixed/kaamase-core/includes/rest-api.php` | 1.9.0 — `method`, `email`, `mailto` in the app's contact answer |
+
+Upload all three to `wp-content/plugins/kaamase-core/includes/`, replacing
+the files of the same name, then **LiteSpeed Cache → Toolbox → Purge All**.
+Existing jobs are unaffected: every one of them stays a phone job until you
+change it.
+
+Tested on a real WordPress install with the whole plugin and theme: the
+choice and which box shows, posting an email job, the signed-out page (no
+address anywhere), a signed-in worker on a phone-sized screen getting the
+address and the mail button with no call or WhatsApp, the app endpoint with a
+real app sign-in, phone jobs exactly as before, a member's own job ignoring
+any stored address, switching a job from phone to email and back, the typo
+warning, a bad or missing address refused, the Promotions note, and a
+member's job, a missing security token and a subscriber account all refused.
+The earlier promote test still passes. Nothing in the error log.
 
 ## Not changed, and why
 

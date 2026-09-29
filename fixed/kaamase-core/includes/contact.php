@@ -35,8 +35,16 @@
  * The Safety page promises exactly this in public. This file is where
  * that promise is either kept or quietly broken.
  *
+ * An email address instead of a number
+ * ------------------------------------
+ * A job staff put up for an office that only takes applications by
+ * email carries that address in place of a number (posted-for.php). It
+ * comes through the channel below and the screen shows it with a button
+ * to write, and no call and no WhatsApp. The gate, the count and the log
+ * are the same ones a number goes through.
+ *
  * @package KaamaseCore
- * @version 1.2.1
+ * @version 1.3.0
  * @since   1.0.0
  */
 
@@ -603,9 +611,12 @@ if ( ! function_exists( 'kaamase_contact_channel' ) ) {
 	 * gate, the same log, the same quota, a different number on the
 	 * screen.
 	 *
+	 * A job can come back with an email address and no number, which
+	 * means write to them, not ring. See posted-for.php.
+	 *
 	 * @since 1.0.0
 	 * @param int $post_id Profile or job ID.
-	 * @return array With keys number, masked and label.
+	 * @return array With keys number, email, masked and label.
 	 */
 	function kaamase_contact_channel( $post_id ) {
 
@@ -614,6 +625,7 @@ if ( ! function_exists( 'kaamase_contact_channel' ) ) {
 
 		$channel = array(
 			'number' => (string) kaamase_read_field( $post_id, $key ),
+			'email'  => '',
 			'masked' => false,
 			'label'  => __( 'Direct number', 'kaamase-core' ),
 		);
@@ -713,6 +725,7 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 		$channel = kaamase_contact_channel( $post_id );
 		$number  = $channel['number'];
+		$email   = isset( $channel['email'] ) ? (string) $channel['email'] : '';
 
 		/*
 		 * The stored name, not the displayed one.
@@ -743,7 +756,26 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 			<h2><?php echo esc_html( $name ); ?></h2>
 
-			<?php if ( '' === $number ) : ?>
+			<?php if ( '' !== $email ) : ?>
+
+				<p class="ka-label ka-mt-4"><?php echo esc_html( $channel['label'] ); ?></p>
+
+				<p class="ka-text-xl">
+					<?php echo esc_html( $email ); ?>
+				</p>
+
+				<div class="ka-cluster ka-mt-6">
+					<a class="ka-btn ka-btn--action ka-btn--lg" rel="nofollow"
+						href="<?php echo esc_url( kaamase_contact_mailto( $email, $post_id ) ); ?>">
+						<?php esc_html_e( 'Send an email', 'kaamase-core' ); ?>
+					</a>
+				</div>
+
+				<p class="ka-hint ka-mt-6">
+					<?php esc_html_e( 'They take applications by email, not by phone. Say which job you are writing about, and send whatever the job details ask for.', 'kaamase-core' ); ?>
+				</p>
+
+			<?php elseif ( '' === $number ) : ?>
 
 				<p class="ka-soft ka-mt-4">
 					<?php esc_html_e( 'This person has not added a phone number yet. Nothing we can do from here.', 'kaamase-core' ); ?>
@@ -875,6 +907,40 @@ if ( ! function_exists( 'kaamase_contact_refused' ) ) {
 		<?php
 
 		return (string) ob_get_clean();
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_mailto' ) ) {
+	/**
+	 * A mailto: link with the job already named in the subject.
+	 *
+	 * Somebody applying from a phone should not have to work out what to
+	 * put in the subject line, and an office reading a hundred emails
+	 * should be able to tell which post each one is for. The link back
+	 * says where it was seen.
+	 *
+	 * @since 1.3.0
+	 * @param string $email   Address to write to.
+	 * @param int    $post_id Job ID.
+	 * @return string
+	 */
+	function kaamase_contact_mailto( $email, $post_id ) {
+
+		$title = (string) get_post_field( 'post_title', $post_id, 'raw' );
+
+		$subject = sprintf(
+			/* translators: %s: the job's title */
+			__( 'Job application: %s', 'kaamase-core' ),
+			$title
+		);
+
+		$body = sprintf(
+			/* translators: %s: the job's web address */
+			__( 'I saw this job on Kaam Ase: %s', 'kaamase-core' ),
+			(string) get_permalink( $post_id )
+		);
+
+		return 'mailto:' . $email . '?subject=' . rawurlencode( $subject ) . '&body=' . rawurlencode( $body . "\n\n" );
 	}
 }
 
