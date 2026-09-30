@@ -94,6 +94,8 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/share-card.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/assets/fonts/` (2 fonts + licence) | `wp-content/plugins/kaamase-core/assets/fonts/` **(new folder)** |
 | `fixed/kaamase-core/includes/job-alerts.php` | `wp-content/plugins/kaamase-core/includes/job-alerts.php` |
+| `fixed/kaamase-core/includes/free-lock.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/verify-requests.php` | `wp-content/plugins/kaamase-core/includes/verify-requests.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -6073,6 +6075,146 @@ only result, and none on a job's own page. LiteSpeed was told `max-age` equal
 to the seconds left in the turn (242 of 300 in the run), signed-in answers were
 never stored, and **Start it** and **Stop** sent a refresh for the jobs list and
 the app answers. 46 checks. Nothing in the error log.
+
+## 88. One free verification a year
+
+Free verification is given away on two screens: **Asked to be verified** and
+**Give the plan**. Both use the same gift, and a gift runs out on its own. Before
+this, nothing stopped somebody asking again the day it ran out, and again the
+month after, and nobody could be expected to remember who had one last month.
+
+### The rule
+
+Once a free one **ends**, that person cannot ask for another for **365 days
+from the day it ended**. "Ends" means either way it ends:
+
+- **It runs out** on its date (a month, three months, a year — any length).
+- **The owner takes it back** early with **Take it back** on the Give the plan
+  screen. Taking back a year's gift after a week does not reset anything: the
+  year is counted from the day it was taken back.
+
+What it does **not** touch:
+
+- **The tick coming off when somebody changes their name, number or photo.**
+  That is `mark-changes.php` and it works exactly as before: the tick comes off,
+  the person goes back on **Calls to make**, the gift keeps running, and nothing
+  is locked or sent. Checked end to end.
+- **The owner.** The lock is only on the person asking. The owner can still give
+  anybody anything from Give the plan at any time. That is how to make an
+  exception.
+- **The 30-day wait after "Not now".** It is unchanged.
+- **Somebody paying.** A person with a subscription gets no messages about a
+  free one ending, and never sees the lock message while they have the tick.
+
+**A slip is not a gift.** A gift taken back **within an hour** of being given
+(wrong person, wrong length) is undone as if it never happened. There is no lock
+and no message, and any earlier year is put back exactly as it was.
+
+### What the person sees and gets
+
+- **Email and app notification**, once, when a free one ends, in their own
+  language where WordPress has that language installed (see the note below).
+  The email says when it ended, thanks them, says free verification is given
+  once a year so everybody gets a fair turn, gives the date they can ask again,
+  and links **Rich Manu** in case they would like the tick back sooner. The
+  notification says the same in two lines. Natural endings go out with the
+  morning run (6:30). A take-back goes out straight away.
+- **Website dashboard:** instead of **Ask us to ring you**, a note with the date
+  and a **See what Rich Manu gives you** button to the plans page. The button
+  text was already translated, so it shows in Hindi and Nagamese too.
+- **App:** see the app notes below.
+
+The wording (the new sentences are in English until they are translated):
+
+> **Your free verification on Kaam Ase has ended**
+>
+> Hello Natural Person,
+>
+> The free verification we gave you on Kaam Ase ended on October 1, 2026, so the
+> tick is no longer on your profile. Your profile itself stays exactly as it is.
+>
+> Thank you for being with us. Free verification is given to each person once a
+> year, so that everybody who asks gets a fair turn. You can ask for it again
+> from October 1, 2027.
+>
+> If you would like the tick back sooner, you can get Rich Manu here:
+> *(the link to your plans page)*
+
+Dashboard and app note: *"You have had free verification in the last year. You
+can ask for it again from October 1, 2027. If you would like the tick sooner,
+you can get Rich Manu."*
+
+### What the owner sees
+
+On **Asked to be verified**, under a person's name: *"Had free verification
+until …"*. It shows in red with *"Cannot ask again before …"* while the year
+still applies. In practice that is somebody who asked before this went live.
+**Rang them, give it** still works for them.
+
+### Gifts from before this
+
+The first time any page loads after upload, every gift already on an account
+gets its end date written down. From then on they are counted like new ones.
+Somebody whose gift ran out in the last year is locked until a year after that
+date. Only ones that ended in the **last 7 days** get the email, so nobody
+receives a surprise message about something from months ago. Somebody on a
+subscription is left out, because their end date is the one they pay for. A gift
+that was **taken back before this went live** left nothing behind (Take it back
+used to erase it), so those cannot be counted.
+
+### For the app (`/me` and `POST /verify-request`)
+
+- `/me` → `verify` has two new fields:
+  - `locked_until`: a unix timestamp, or `0`.
+  - `locked_note`: the sentence above, or `""`.
+  
+  They are only set when the lock is what stops the person asking (not when
+  they already have the tick, are waiting for a call, or are already on the
+  list). While locked, `can_ask` is `false` and `missing` is empty. `copy.closed`
+  also carries the note, so the app already in the stores shows the right words
+  with no update.
+- `POST /verify-request` while locked → **403**, `code: "kaamase_ask_locked"`,
+  `message` = the note, plus `locked_until`.
+- A new push, `data.type = "free_verify_ended"`, with `data.locked_until`. The
+  best place to open it is the Rich Manu / plans screen.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/free-lock.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/includes/verify-requests.php` | 1.1.0 → 1.2.0 |
+
+Upload both to `wp-content/plugins/kaamase-core/includes/`, `free-lock.php`
+first. Either one alone does no harm. No language files were changed.
+
+Tested on WordPress 7.1.2 with the real admin screens, the website dashboard,
+`/me`, `POST /verify-request` and the morning run. The tests covered:
+
+- a month given from the Asked list and running out
+- a year taken back after two days
+- a slip taken back straight away, including over an earlier year
+- a subscriber given a gift on top of their plan
+- old gifts that ended 30 days ago, 3 days ago, and on a subscription
+- a mail server refusing one email, then sending it the next morning
+- a name change while a gift runs
+- the 30-day "Not now" rule
+
+73 checks, and nothing from Kaam Ase code in the error log. The dashboard card
+was checked at phone width, with no sideways scroll.
+
+**A note on languages, found while testing, and not new.** Every email and push
+on the platform switches to the reader's language with WordPress's
+`switch_to_locale()`. WordPress only switches to a language it has a file for in
+`wp-content/languages/`:
+
+- **Hindi** works if Hindi was installed under Settings → General → Site
+  Language at some point.
+- **Nagamese** (`nag`) is never offered there, so Nagamese readers get every
+  notification in the site language.
+
+This affects all notifications, not just this one. It can be fixed separately
+in `locale.php`.
 
 ## Not changed, and why
 
