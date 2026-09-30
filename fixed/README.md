@@ -90,6 +90,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase/assets/images/register/` (4 photos) | `wp-content/themes/kaamase/assets/images/register/` **(new folder)** |
 | `fixed/kaamase-core/includes/job-photos.php` | `wp-content/plugins/kaamase-core/includes/job-photos.php` |
 | `fixed/kaamase-core/includes/posted-for.php` | `wp-content/plugins/kaamase-core/includes/posted-for.php` |
+| `fixed/kaamase-core/includes/verified-list.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -5879,6 +5880,50 @@ any stored address, switching a job from phone to email and back, the typo
 warning, a bad or missing address refused, the Promotions note, and a
 member's job, a missing security token and a subscriber account all refused.
 The earlier promote test still passes. Nothing in the error log.
+
+## 85. The Verified list, for the app
+
+A new list for the app, beside Workers and Employers, of everyone who has the
+green tick right now: workers, teams and employers together. People with the
+tick get seen, and people without it can see what having it gets them.
+
+It lists exactly the people the tick is drawn on, using the same check as
+the tick itself: the call is on record and the plan is still running. When a
+plan runs out, or the tick comes off after a name, number or photo change,
+that person drops out of the list immediately. When you give someone the tick,
+they appear immediately. Nothing needs clearing by hand.
+
+- **Order:** shuffled once a day, so every verified person gets days at the
+  top. It holds still all day, so scrolling never reshuffles. "Latest first"
+  shows the most recently verified people first.
+- **Employers** only show to people who are signed in with a confirmed email,
+  which is the same rule as the Employers list. Anyone else still sees the
+  verified workers and teams.
+- **Filters:** workers, teams or employers; trade; district; search.
+- The Workers and Employers lists are untouched: same people, same fair order.
+  Being shown here doesn't use up anyone's turn on the Workers list.
+
+It is only for the app. There is no website page. No existing file and no
+language file was changed.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/verified-list.php` | 1.0.0 — **new file** |
+
+Upload it to `wp-content/plugins/kaamase-core/includes/`, then
+**LiteSpeed Cache → Toolbox → Purge All**. It can go up before the app update:
+it only adds a new address the current app never asks for.
+
+Tested on a real WordPress install with the whole plugin: verified workers,
+teams and employers listed; plans run out, paid-but-not-called, draft
+profiles and ordinary workers never listed; the tick taken off and given back;
+employers refused to signed-out and unconfirmed accounts with the same answer
+as the Employers list; every filter, paging, both orders, the Workers
+list left alone, and nonsense input (huge or negative page numbers, lists
+where one value was expected, odd characters in search) answered without an
+error. 47 checks. Nothing in the error log.
 
 ## Not changed, and why
 
