@@ -45,9 +45,9 @@
  * Opening the job from the notification
  * --------------------------------------
  * Each message carries the newest job in its group as id, the way the
- * other notifications carry theirs, and every job in the group as ids.
- * With one job the app opens it; with several it opens the list for the
- * trade and district.
+ * other notifications carry theirs, and up to twenty of the group's jobs,
+ * newest first, as ids. With one job the app opens it; with several it
+ * opens the list for the trade and district.
  *
  * @package KaamaseCore
  * @version 1.1.0

@@ -173,9 +173,19 @@ if ( ! function_exists( 'kaamase_share_card_text' ) ) {
 	function kaamase_share_card_text( $text, $fallback = '' ) {
 
 		$text = html_entity_decode( wp_strip_all_tags( (string) $text ), ENT_QUOTES, 'UTF-8' );
+
+		/*
+		 * Emoji and other pictures-as-letters are taken out rather than
+		 * allowed to sink the whole line. Titles copied across from group
+		 * chats are full of them, and "Driver needed" with the flame
+		 * removed is still the right title, where throwing it away for the
+		 * trade and district would not be.
+		 */
+		$text = (string) preg_replace( '/[\p{So}\p{Cs}\p{Co}\x{200D}\x{20E3}\x{FE00}-\x{FE0F}\x{1F3FB}-\x{1F3FF}\x{E0020}-\x{E007F}]/u', '', $text );
 		$text = trim( (string) preg_replace( '/\s+/u', ' ', $text ) );
 
-		if ( '' === $text ) {
+		// Nothing left worth drawing, or only punctuation.
+		if ( '' === $text || 1 !== preg_match( '/[\p{L}\p{N}]/u', $text ) ) {
 			return (string) $fallback;
 		}
 
@@ -335,9 +345,13 @@ if ( ! function_exists( 'kaamase_share_card_facts' ) ) {
 
 			$type = (string) kaamase_read_field( $id, 'employer_type' );
 
-			$facts['title'] = kaamase_share_card_text( $raw_title, kaamase_share_card_text( __( 'Hiring on Kaam Ase', 'kaamase-core' ), 'Hiring on Kaam Ase' ) );
+			$hiring = kaamase_share_card_text( __( 'Hiring on Kaam Ase', 'kaamase-core' ), 'Hiring on Kaam Ase' );
+
+			$facts['title'] = kaamase_share_card_text( $raw_title, $hiring );
 			$facts['chips'] = isset( $types[ $type ] ) ? array( kaamase_share_card_text( $types[ $type ], ucfirst( $type ) ) ) : array();
-			$facts['extra'] = kaamase_share_card_text( __( 'Hiring on Kaam Ase', 'kaamase-core' ), 'Hiring on Kaam Ase' );
+
+			// Said once. When the name could not be drawn it is already the title.
+			$facts['extra'] = $facts['title'] !== $hiring ? $hiring : '';
 
 		} else {
 
@@ -373,14 +387,24 @@ if ( ! function_exists( 'kaamase_share_card_facts' ) ) {
 			}
 		}
 
-		// Initials only from a name the font can draw.
-		if ( kaamase_share_card_text( $raw_title ) === $raw_title && '' !== trim( $raw_title ) ) {
+		/*
+		 * Initials only from a real name the font can draw: the first
+		 * letter or digit of the first word and of the last, so "Vito
+		 * Awomi" is VA, and "(Ravi) Kumar" is RK rather than "(K".
+		 */
+		$name    = kaamase_share_card_text( $raw_title );
+		$letters = array();
 
-			$words = preg_split( '/\s+/u', trim( $raw_title ) );
-			$first = mb_substr( (string) $words[0], 0, 1 );
-			$last  = count( $words ) > 1 ? mb_substr( (string) end( $words ), 0, 1 ) : '';
+		if ( '' !== $name ) {
+			foreach ( (array) preg_split( '/\s+/u', $name ) as $word ) {
+				if ( 1 === preg_match( '/[\p{L}\p{N}]/u', (string) $word, $found ) ) {
+					$letters[] = $found[0];
+				}
+			}
+		}
 
-			$facts['initials'] = mb_strtoupper( $first . $last );
+		if ( $letters ) {
+			$facts['initials'] = mb_strtoupper( $letters[0] . ( count( $letters ) > 1 ? end( $letters ) : '' ) );
 		}
 
 		return $facts;
@@ -784,20 +808,24 @@ if ( ! function_exists( 'kaamase_share_card_draw' ) ) {
 
 		kaamase_share_card_write( $im, $s, 24, $right - $sw, 603, $c['gold'], $bold, $site );
 
-		// Down to size.
+		/*
+		 * Down to size. The canvases are let go of by setting them to
+		 * null rather than with imagedestroy(), which has done nothing
+		 * since PHP 8.0 and is deprecated from 8.5, where it would put a
+		 * notice in the log for every card.
+		 */
 		$out = imagecreatetruecolor( 1200, 630 );
 
 		if ( ! $out ) {
-			imagedestroy( $im );
+			$im = null;
 			return false;
 		}
 
 		imagecopyresampled( $out, $im, 0, 0, 0, 0, 1200, 630, 1200 * $s, 630 * $s );
-		imagedestroy( $im );
+		$im = null;
 
 		$saved = imagepng( $out, $file, 9 );
-
-		imagedestroy( $out );
+		$out   = null;
 
 		return (bool) $saved;
 	}
@@ -817,6 +845,32 @@ if ( ! function_exists( 'kaamase_share_card' ) ) {
 	 * @return array{url: string, width: int, height: int, type: string}|array Empty when there is none.
 	 */
 	function kaamase_share_card( $post_id ) {
+
+		/*
+		 * Rank Math asks twice on every page, once for the Facebook tags
+		 * and once for the Twitter ones. The answer is worked out once.
+		 */
+		static $answered = array();
+
+		$post_id = (int) $post_id;
+
+		if ( ! array_key_exists( $post_id, $answered ) ) {
+			$answered[ $post_id ] = kaamase_share_card_make( $post_id );
+		}
+
+		return $answered[ $post_id ];
+	}
+}
+
+if ( ! function_exists( 'kaamase_share_card_make' ) ) {
+	/**
+	 * Find the card for one page, or draw it.
+	 *
+	 * @since 1.13.0
+	 * @param int $post_id Job or profile.
+	 * @return array{url: string, width: int, height: int, type: string}|array Empty when there is none.
+	 */
+	function kaamase_share_card_make( $post_id ) {
 
 		$post  = get_post( (int) $post_id );
 		$types = kaamase_share_card_types();
@@ -853,7 +907,12 @@ if ( ! function_exists( 'kaamase_share_card' ) ) {
 
 		if ( ! file_exists( $file ) ) {
 
-			if ( ! wp_mkdir_p( $place['dir'] ) ) {
+			/*
+			 * A folder that exists but cannot be written to would pass
+			 * wp_mkdir_p() and then make the save complain in the log.
+			 * Asked first, so it is simply no card.
+			 */
+			if ( ! wp_mkdir_p( $place['dir'] ) || ! wp_is_writable( $place['dir'] ) ) {
 				return array();
 			}
 

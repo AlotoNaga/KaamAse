@@ -5956,6 +5956,8 @@ icon or logo.
   when the title, pay or place changes, so WhatsApp picks up the new one.
 - It is removed when the job is closed or deleted.
 - It is always in the site's language, whoever opens the page first.
+- Emoji in a title (common in jobs copied from groups) are left off the
+  picture, so "🔥 Driver needed 🔥" shows as "Driver needed".
 - A title in Hindi script shows as "Mason in Dimapur" (trade and district) on
   the picture, because the picture tool cannot join Hindi letters correctly.
 - If the server can't draw pictures, there's simply no card, and the next
@@ -6000,6 +6002,19 @@ nothing, never an error); the home page and ordinary pages are untouched; with
 Rank Math switched off, `sharing.php` writes its own tags as before. A job alert
 run sent one alert with `id` and `ids` newest first. 35 checks plus the language
 checks. Nothing in the error log.
+
+Re-checked before upload, and five fixes made:
+- **Newer PHP:** stopped using `imagedestroy()`, which PHP 8.5 marks as
+  deprecated and would have logged a notice for every card.
+- **Uploads folder that can't be written to:** now means no card and nothing
+  in the log, instead of a warning.
+- **Emoji** no longer wipe out a whole title.
+- **Initials** now work for names with an extra space or a bracket.
+- **Employers** whose name can't be drawn no longer show "Hiring on Kaam Ase"
+  twice.
+
+The card is also worked out once per page instead of twice. Every check
+above was run again, plus 17 new ones for these fixes, all passing.
 
 ## Not changed, and why
 
