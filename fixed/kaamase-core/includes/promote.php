@@ -61,8 +61,25 @@
  * and views.php was built the same way for the same reason: the machinery
  * should be right and running before the first person sees a mark.
  *
+ * One pinned place, and the page cache
+ * ------------------------------------
+ * The slot is one place at the top of a list, like a pinned post, and the
+ * advertisers take turns in it every five minutes. Only the card in that
+ * place says Ad. The pinned listing is lifted out of the list below it,
+ * by the website here and by the app on the phone, and any other
+ * promoted listing that turns up in the list, in the place the list gives
+ * it anyway, is shown there as the ordinary card it is.
+ *
+ * The turns were being frozen by LiteSpeed. It keeps public pages and
+ * public app answers for a week, so whichever advertiser was showing when
+ * a page was stored stayed there until something else cleared the cache,
+ * and starting or ending a promotion cleared nothing. Now any page or
+ * answer carrying the slot is kept only until the next turn, or until the
+ * run ends if that is sooner, and starting or ending a promotion tells
+ * LiteSpeed to refresh the lists at once. See section 11.
+ *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.10.0
  */
 
@@ -1973,6 +1990,19 @@ if ( ! function_exists( 'kaamase_promo_badge' ) ) {
 			return '';
 		}
 
+		/*
+		 * Only on the card in the pinned place at the top of a list.
+		 *
+		 * Wherever else a promoted listing appears -- further down the
+		 * same list in the place it would have had anyway, its own page,
+		 * a search -- it has not been given anything for its money, so it
+		 * is shown as the ordinary card it is. One place says Ad, which is
+		 * the place that was bought.
+		 */
+		if ( absint( $post_id ) !== kaamase_promo_slot_choice() ) {
+			return '';
+		}
+
 		return sprintf(
 			'<span class="ka-badge ka-badge--ad" title="%1$s">%2$s</span>',
 			/* translators: the tooltip on the Ad mark */
@@ -2056,13 +2086,12 @@ if ( ! function_exists( 'kaamase_promo_pick' ) ) {
 	 * a single candidate the same one is chosen every time whatever the
 	 * clock says, so a sole buyer holds the slot without a break.
 	 *
-	 * The website is behind a page cache, so a cached page holds whoever
-	 * was chosen when it was built until it is rebuilt. Over a day that
-	 * still comes out even, and the app -- which is most of the traffic
-	 * and is not cached -- rotates on the dot.
+	 * Pages and app answers that carry the slot are kept by the page cache
+	 * only until the next turn, so the website and the app both change on
+	 * the dot. See section 11.
 	 *
 	 * Sorted first so the choice is the same on every server and every
-	 * request within the hour.
+	 * request within the same five minutes.
 	 *
 	 * @since 1.10.0
 	 * @param int[] $ids Listings that could take the slot.
@@ -2228,11 +2257,15 @@ if ( ! function_exists( 'kaamase_promo_slot_choose' ) ) {
 			return $posts;
 		}
 
-		$post_id = kaamase_promo_slot_pick( $kind, kaamase_promo_query_district( $query ) );
+		$candidates = kaamase_promo_slot_candidates( $kind, kaamase_promo_query_district( $query ) );
+		$post_id    = kaamase_promo_pick( $candidates );
 
 		if ( ! $post_id ) {
 			return $posts;
 		}
+
+		// This page carries the slot: the cache may keep it only until the next turn.
+		kaamase_promo_cache_until_turn( $candidates );
 
 		$kept  = array();
 		$found = false;
@@ -2255,6 +2288,15 @@ if ( ! function_exists( 'kaamase_promo_slot_choose' ) ) {
 		 * advertisement would vanish with it.
 		 */
 		if ( $found && empty( $kept ) ) {
+
+			/*
+			 * Already alone at the top, so it is the pinned card: it is
+			 * marked as the one in the slot, so it says Ad, and noted as
+			 * drawn, so the slot does not draw it a second time.
+			 */
+			kaamase_promo_slot_choice( $post_id );
+			kaamase_promo_slot_drawn( true );
+
 			return $posts;
 		}
 
@@ -2394,7 +2436,16 @@ if ( ! function_exists( 'kaamase_promo_shape_worker' ) ) {
 			$out['badges'] = array();
 		}
 
-		$out['badges']['promoted'] = kaamase_promo_is_live( is_object( $post ) ? $post->ID : $post );
+		/*
+		 * Always false here, and set to true only on the card /promoted
+		 * hands back for the pinned place. So the app draws Ad in one
+		 * place, the top, and nowhere else. The key stays, always a real
+		 * boolean, because a key that comes and goes is one somebody
+		 * forgets to check for.
+		 */
+		unset( $post );
+
+		$out['badges']['promoted'] = false;
 
 		return $out;
 	}
@@ -2417,7 +2468,10 @@ if ( ! function_exists( 'kaamase_promo_shape_job' ) ) {
 	 */
 	function kaamase_promo_shape_job( $out, $post ) {
 
-		$out['promoted'] = kaamase_promo_is_live( is_object( $post ) ? $post->ID : $post );
+		// False everywhere but the pinned card. See kaamase_promo_shape_worker().
+		unset( $post );
+
+		$out['promoted'] = false;
 
 		return $out;
 	}
@@ -2438,6 +2492,21 @@ if ( ! function_exists( 'kaamase_promo_slot_pick' ) ) {
 	 * @return int Listing ID, or 0.
 	 */
 	function kaamase_promo_slot_pick( $kind, $district = '' ) {
+
+		return kaamase_promo_pick( kaamase_promo_slot_candidates( $kind, $district ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_slot_candidates' ) ) {
+	/**
+	 * Every listing taking turns in the slot on a list of a given kind.
+	 *
+	 * @since 1.13.0
+	 * @param string $kind     worker or job.
+	 * @param string $district District slug, or an empty string for everywhere.
+	 * @return int[] Listing IDs.
+	 */
+	function kaamase_promo_slot_candidates( $kind, $district = '' ) {
 
 		$kind     = 'job' === $kind ? 'job' : 'worker';
 		$district = sanitize_title( (string) $district );
@@ -2462,7 +2531,7 @@ if ( ! function_exists( 'kaamase_promo_slot_pick' ) ) {
 			$wanted[] = (int) $post_id;
 		}
 
-		return kaamase_promo_pick( $wanted );
+		return $wanted;
 	}
 }
 
@@ -2530,14 +2599,16 @@ if ( ! function_exists( 'kaamase_promo_slot_rest' ) ) {
 	 */
 	function kaamase_promo_slot_rest( $request ) {
 
-		$kind     = (string) $request->get_param( 'kind' );
-		$district = (string) $request->get_param( 'district' );
-
-		$post_id = kaamase_promo_slot_pick( $kind, $district );
+		$kind       = (string) $request->get_param( 'kind' );
+		$district   = (string) $request->get_param( 'district' );
+		$candidates = kaamase_promo_slot_candidates( $kind, $district );
+		$post_id    = kaamase_promo_pick( $candidates );
 
 		if ( ! $post_id ) {
 			return rest_ensure_response( array( 'item' => null ) );
 		}
+
+		kaamase_promo_cache_until_turn( $candidates );
 
 		$post = get_post( $post_id );
 
@@ -2549,6 +2620,152 @@ if ( ! function_exists( 'kaamase_promo_slot_rest' ) ) {
 			? kaamase_shape_job( $post, false )
 			: kaamase_shape_worker( $post, false );
 
+		// The one card that says Ad: the pinned one.
+		if ( is_array( $item ) ) {
+			if ( 'kaamase_job' === $post->post_type ) {
+				$item['promoted'] = true;
+			} else {
+				$item['badges']             = isset( $item['badges'] ) && is_array( $item['badges'] ) ? $item['badges'] : array();
+				$item['badges']['promoted'] = true;
+			}
+		}
+
 		return rest_ensure_response( array( 'item' => $item ) );
 	}
 }
+
+
+/* ==========================================================================
+   11. KEEPING THE TURNS TURNING
+
+   LiteSpeed keeps a public page, and a public answer to the app, for a
+   week. The slot changes every five minutes. So without this, whoever was
+   in the slot when a list was stored stayed there for everybody until
+   something else happened to clear the cache: the owner saw it change
+   once after Purge All and then never again, on the website and in the
+   app alike. The app asks afresh at every turn, which is right, and was
+   simply handed the stored answer each time.
+
+   Two things fix it. Anything carrying the slot is kept only until the
+   next turn, or until a run ends if that comes first. And starting or
+   ending a promotion tells LiteSpeed to refresh the lists at once, since
+   a list stored before the promotion began has no slot in it to expire.
+
+   Where LiteSpeed is not installed every call here does nothing.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_promo_hold_seconds' ) ) {
+	/**
+	 * How long a page or answer carrying the slot may be kept.
+	 *
+	 * Until the next turn when there are two or more taking turns; with
+	 * one there is nothing to turn, so a day at most. Never past the end
+	 * of anybody's run, so a finished promotion does not linger.
+	 *
+	 * @since 1.13.0
+	 * @param int[] $ids The listings taking turns.
+	 * @return int Seconds.
+	 */
+	function kaamase_promo_hold_seconds( $ids ) {
+
+		$ids  = array_filter( array_map( 'absint', (array) $ids ) );
+		$now  = time();
+		$turn = max( 1, (int) KAAMASE_PROMO_ROTATE );
+
+		$hold = count( $ids ) > 1 ? $turn - ( $now % $turn ) : DAY_IN_SECONDS;
+
+		foreach ( $ids as $post_id ) {
+
+			$ends = kaamase_promo_ends( $post_id );
+
+			if ( $ends > $now ) {
+				$hold = min( $hold, $ends - $now + 1 );
+			}
+		}
+
+		return max( 1, (int) $hold );
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_cache_until_turn' ) ) {
+	/**
+	 * Tell the page cache how long this page or answer may be kept.
+	 *
+	 * With only seconds left before the turn it is not kept at all. A copy
+	 * stored in the last moments of one turn and handed out in the first
+	 * moments of the next would give the app, which keeps one answer per
+	 * turn, the wrong advertiser for the whole of that turn.
+	 *
+	 * @since 1.13.0
+	 * @param int[] $ids The listings taking turns in the slot being shown.
+	 * @return void
+	 */
+	function kaamase_promo_cache_until_turn( $ids ) {
+
+		if ( empty( $ids ) ) {
+			return;
+		}
+
+		$hold = kaamase_promo_hold_seconds( $ids );
+
+		if ( $hold < 10 ) {
+			do_action( 'litespeed_control_set_nocache', 'kaamase promoted slot about to turn' );
+		} else {
+			do_action( 'litespeed_control_set_ttl', $hold, 'kaamase promoted slot' );
+		}
+
+		/**
+		 * Fires when a page or answer carrying the slot may be kept only so long.
+		 *
+		 * For any page cache other than LiteSpeed.
+		 *
+		 * @since 1.13.0
+		 * @param int $hold Seconds.
+		 */
+		do_action( 'kaamase_promo_cache_hold', $hold );
+	}
+}
+
+if ( ! function_exists( 'kaamase_promo_refresh_caches' ) ) {
+	/**
+	 * Refresh the lists when a promotion starts or ends.
+	 *
+	 * The listing's own page and its archives, the lists of its kind, and
+	 * the stored app answers. A team can take the slot on the workers list
+	 * and a worker on the teams list, so both of those lists go together.
+	 *
+	 * @since 1.13.0
+	 * @param int $post_id The listing.
+	 * @return void
+	 */
+	function kaamase_promo_refresh_caches( $post_id ) {
+
+		$post_id = absint( $post_id );
+
+		if ( ! $post_id ) {
+			return;
+		}
+
+		do_action( 'litespeed_purge_post', $post_id );
+
+		$types = 'kaamase_job' === get_post_type( $post_id ) ? array( 'kaamase_job' ) : array( 'kaamase_worker', 'kaamase_gang' );
+
+		foreach ( $types as $type ) {
+			do_action( 'litespeed_purge_posttype', $type );
+		}
+
+		// The app's stored answers, including /promoted.
+		do_action( 'litespeed_purge', 'REST' );
+
+		/**
+		 * Fires when the lists should be refreshed because a promotion
+		 * started or ended. For any page cache other than LiteSpeed.
+		 *
+		 * @since 1.13.0
+		 * @param int $post_id The listing.
+		 */
+		do_action( 'kaamase_promo_cache_refresh', $post_id );
+	}
+}
+add_action( 'kaamase_promo_started', 'kaamase_promo_refresh_caches' );
+add_action( 'kaamase_promo_ended', 'kaamase_promo_refresh_caches' );

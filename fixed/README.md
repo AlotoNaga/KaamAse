@@ -6016,6 +6016,64 @@ Re-checked before upload, and five fixes made:
 The card is also worked out once per page instead of twice. Every check
 above was run again, plus 17 new ones for these fixes, all passing.
 
+## 87. The Ad slot: one pinned place that really turns every 5 minutes
+
+Reported: the Ad changed once right after **Purge All** and then never again,
+on the website or in the app, on both Jobs and Workers.
+
+### Why it wasn't turning
+
+Choosing the advertiser was working. Every 5 minutes the next one takes the slot,
+the app asks again at every turn, and a single advertiser keeps it. What froze it
+was **LiteSpeed Cache**. By default it keeps public pages, and the app's
+`/promoted` answer for anyone not signed in, for **7 days**. So whoever was in
+the slot when a list was stored stayed there until something else cleared the
+cache. Starting or ending a promotion cleared nothing, so a new Ad could fail to
+appear and a finished one could keep showing. On a local copy with LiteSpeed's
+default settings: `/promoted` went out as `public,max-age=604800`, and pressing
+**Start it** told LiteSpeed nothing.
+
+### What changed (`promote.php` only)
+
+- **One pinned place.** Only the card in the slot at the top says **Ad**. It is
+  lifted out of the list below it (the website does this, and the app does the
+  same on the phone). Any other promoted listing that appears in the list, in
+  the place it would have had anyway, is shown as an ordinary card. For the app,
+  `promoted` / `badges.promoted` is now `true` only on the card `/promoted`
+  returns and `false` in every list.
+- **Kept only until the next turn.** A page or app answer that carries the slot
+  may be kept by LiteSpeed only until the next 5-minute turn, or until a run
+  ends if that is sooner. In the last few seconds before a turn it isn't stored
+  at all. With a single advertiser it is kept for a day at most. Pages with no
+  slot keep their normal caching.
+- **Refreshed when promotions change.** Starting, stopping, or the daily sweep
+  ending a promotion now tells LiteSpeed to refresh the lists of that kind (for
+  workers, both the workers and teams lists), the home page and the app's stored
+  answers.
+
+The turns fall on the clock: :00, :05, :10 and so on. Rotation needs at least two
+promotions running on the same list. With a district chosen, they must be in
+that district.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/promote.php` | 1.3.0 |
+
+Upload to `wp-content/plugins/kaamase-core/includes/`, then **LiteSpeed Cache →
+Toolbox → Purge All** once. After that, nothing needs purging by hand.
+
+Tested on WordPress 7.1.2 with LiteSpeed Cache 7.9.1 on its default settings.
+Three promotions took turns through the slot (a 4-second turn was used for the
+test only). A sole advertiser held the slot. Ended, closed and unpromoted jobs
+never appeared. District filtering was respected. Exactly one Ad mark appeared on
+the website's jobs and workers pages, including when the promoted job was the
+only result, and none on a job's own page. LiteSpeed was told `max-age` equal
+to the seconds left in the turn (242 of 300 in the run), signed-in answers were
+never stored, and **Start it** and **Stop** sent a refresh for the jobs list and
+the app answers. 46 checks. Nothing in the error log.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
