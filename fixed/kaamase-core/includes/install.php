@@ -60,6 +60,70 @@ if ( ! function_exists( 'kaamase_maybe_install' ) ) {
 }
 add_action( 'init', 'kaamase_maybe_install', 20 );
 
+if ( ! function_exists( 'kaamase_heal_pages' ) ) {
+	/**
+	 * Create any page that is defined but missing.
+	 *
+	 * Why this exists
+	 * ---------------
+	 * Page creation used to happen only inside kaamase_upgrade(), which
+	 * runs once, when the stored schema number is lower than the one in
+	 * the plugin file. On a site whose files are replaced one at a time
+	 * by hand, that is a race with a live audience:
+	 *
+	 *   1. kaamase-core.php lands, carrying the new schema number.
+	 *   2. A visitor loads any page. The upgrade runs, using the OLD
+	 *      install.php, whose page list does not have the new page in
+	 *      it. It creates nothing, and writes the new schema number.
+	 *   3. The new install.php lands a minute later. Its page list is
+	 *      never read, because the schema now matches and the upgrade
+	 *      never runs again.
+	 *
+	 * The page is then missing permanently, re-copying the files does
+	 * not fix it, and the only visible symptom is a 404 on a URL that
+	 * the menu is already linking to. That is exactly what happened.
+	 *
+	 * So the definitions are the authority now, not a version number.
+	 * Anything defined and missing is created.
+	 *
+	 * Admin only, and not during AJAX or cron, because building the
+	 * definitions runs the starter content builders. Admin screen loads
+	 * are rare and already heavy; the front end must not pay for this.
+	 *
+	 * @since 1.4.2
+	 * @return void
+	 */
+	function kaamase_heal_pages() {
+
+		if ( wp_doing_ajax() || wp_doing_cron() ) {
+			return;
+		}
+
+		$stored = (array) get_option( 'kaamase_pages', array() );
+
+		foreach ( kaamase_page_definitions() as $name => $page ) {
+
+			if ( ! empty( $stored[ $name ] ) && 'page' === get_post_type( $stored[ $name ] ) ) {
+				continue;
+			}
+
+			/*
+			 * One is missing. kaamase_create_pages() handles the whole
+			 * list, including finding a page somebody made by hand with
+			 * the same slug, so it is called once and then we stop.
+			 */
+			kaamase_create_pages();
+
+			// A new page needs its permalink to resolve.
+			update_option( 'kaamase_core_flush_rewrite', 1, false );
+
+			return;
+		}
+	}
+}
+add_action( 'admin_init', 'kaamase_heal_pages' );
+
+
 
 /* ==========================================================================
    2. FIRST INSTALL
@@ -136,6 +200,16 @@ if ( ! function_exists( 'kaamase_upgrade' ) ) {
 					 * that sites already running pick up the My team page
 					 * and the refreshed roles, both of which happen below
 					 * on every upgrade.
+					 */
+					break;
+
+				case 4:
+					/*
+					 * Same again for the Who is hiring page. Nothing is
+					 * migrated; the page is created by the
+					 * kaamase_create_pages() call below, and the rewrite
+					 * flush it schedules is what makes /employers/ resolve
+					 * rather than 404 on a site that was already running.
 					 */
 					break;
 
@@ -267,6 +341,27 @@ if ( ! function_exists( 'kaamase_page_definitions' ) ) {
 				'title'   => __( 'All districts', 'kaamase-core' ),
 				'slug'    => 'districts',
 				'content' => '[kaamase_district_index]',
+			),
+
+			/*
+			 * Not /employer/. That slug belongs to the employer post
+			 * type, and a page competing with it for the same URL is the
+			 * mistake called out at the top of this file.
+			 */
+			'employers' => array(
+				'title'   => __( 'Who is hiring', 'kaamase-core' ),
+				'slug'    => 'employers',
+				'content' => '[kaamase_employer_index]',
+			),
+
+			/*
+			 * Named for what the person came to find out, not for the
+			 * feature. Nobody arrives wanting "profile analytics".
+			 */
+			'who-looked' => array(
+				'title'   => __( 'Who looked at you', 'kaamase-core' ),
+				'slug'    => 'who-looked',
+				'content' => '[kaamase_who_looked]',
 			),
 
 			'report' => array(

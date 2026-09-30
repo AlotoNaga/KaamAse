@@ -35,8 +35,16 @@
  * The Safety page promises exactly this in public. This file is where
  * that promise is either kept or quietly broken.
  *
+ * An email address instead of a number
+ * ------------------------------------
+ * A job staff put up for an office that only takes applications by
+ * email carries that address in place of a number (posted-for.php). It
+ * comes through the channel below and the screen shows it with a button
+ * to write, and no call and no WhatsApp. The gate, the count and the log
+ * are the same ones a number goes through.
+ *
  * @package KaamaseCore
- * @version 1.2.1
+ * @version 1.3.0
  * @since   1.0.0
  */
 
@@ -99,12 +107,23 @@ if ( ! function_exists( 'kaamase_protected_trades' ) ) {
 		 * unverified stranger can contact somebody who works alone in a
 		 * house, so do not.
 		 *
+		 * Home nurse was added with the trade itself. It sits in Home
+		 * services beside Maid, Cook, Babysitter and Caregiver, all of
+		 * which are already here, and it is the same situation: one
+		 * person, alone, at an address a stranger gave them. A new
+		 * trade of that kind that is not on this list is a hole in the
+		 * gate rather than a decision.
+		 *
+		 * Housekeeping is deliberately not here. It sits under Hotel
+		 * and food and means hotel housekeeping — a workplace with
+		 * colleagues and a manager, which is not what this gate is for.
+		 *
 		 * @since 1.0.0
 		 * @param string[] $trades Trade slugs.
 		 */
 		return (array) apply_filters(
 			'kaamase_protected_trades',
-			array( 'maid', 'house-cleaner', 'cook', 'babysitter', 'caregiver' )
+			array( 'maid', 'house-cleaner', 'cook', 'babysitter', 'caregiver', 'home-nurse' )
 		);
 	}
 }
@@ -318,6 +337,33 @@ if ( ! function_exists( 'kaamase_can_contact' ) ) {
 			}
 		}
 
+		/**
+		 * Filters one last refusal in, after the platform's own rules.
+		 *
+		 * Here rather than at the top so that everything the platform
+		 * itself insists on has already been said. Somebody who has not
+		 * confirmed their email should be told that, not sent down a
+		 * path that ends in the same place.
+		 *
+		 * Before the daily cap on purpose. A refusal from here means no
+		 * number was seen, and charging somebody a lookup for a number
+		 * they were not shown is taking something for nothing.
+		 *
+		 * Return a WP_Error to refuse, carrying a sentence written for
+		 * the person who will read it and a code the app can act on.
+		 * Return null to say nothing.
+		 *
+		 * @since 1.6.0
+		 * @param null|WP_Error $veto    Refusal so far.
+		 * @param int           $post_id Profile or job being asked about.
+		 * @param int           $user_id Who is asking.
+		 */
+		$veto = apply_filters( 'kaamase_contact_veto', null, (int) $post_id, $user_id );
+
+		if ( is_wp_error( $veto ) ) {
+			return $veto;
+		}
+
 		// Daily cap.
 		if ( ! kaamase_contact_quota_left( $user_id ) ) {
 			/*
@@ -381,6 +427,55 @@ if ( ! function_exists( 'kaamase_contact_quota_key' ) ) {
 		 * quota that had reset in the middle of the night.
 		 */
 		return 'kaamase_reveals_' . absint( $user_id ) . '_' . kaamase_rate_day();
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_unmetered' ) ) {
+	/**
+	 * Whether this account has no daily limit at all.
+	 *
+	 * The allowance layer says "not metered" by answering PHP_INT_MAX,
+	 * which is true and also unprintable. Staff and field agents come
+	 * back that way.
+	 *
+	 * The LIMIT is what gets asked about, never what is left. What is
+	 * left has already had today's lookups taken off it, so it stops
+	 * equalling the sentinel the moment somebody uses the page, and a
+	 * test against it would work exactly until it mattered.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return bool
+	 */
+	function kaamase_contact_unmetered( $user_id ) {
+		return kaamase_contact_daily_limit( $user_id ) >= PHP_INT_MAX;
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_quota_wire' ) ) {
+	/**
+	 * The lookups left, as a number that survives the journey.
+	 *
+	 * JSON carries integers, JavaScript reads them as doubles, and
+	 * anything above 9,007,199,254,740,991 loses precision on the way
+	 * in. PHP_INT_MAX minus today's count is well past that, so an
+	 * unmetered account was sending the app a number it could not hold
+	 * and the app was displaying whatever came out of the rounding.
+	 *
+	 * Two things travel now: quota_unlimited, which is the truth, and
+	 * this, which is a figure old builds can still print. A client that
+	 * reads the flag ignores this entirely. One that does not gets a
+	 * large, readable, harmless number instead of arithmetic noise.
+	 *
+	 * @since 1.6.0
+	 * @param int $user_id User ID.
+	 * @return int
+	 */
+	function kaamase_contact_quota_wire( $user_id ) {
+
+		$left = kaamase_contact_quota_left( $user_id );
+
+		return kaamase_contact_unmetered( $user_id ) ? 9999 : (int) $left;
 	}
 }
 
@@ -516,9 +611,12 @@ if ( ! function_exists( 'kaamase_contact_channel' ) ) {
 	 * gate, the same log, the same quota, a different number on the
 	 * screen.
 	 *
+	 * A job can come back with an email address and no number, which
+	 * means write to them, not ring. See posted-for.php.
+	 *
 	 * @since 1.0.0
 	 * @param int $post_id Profile or job ID.
-	 * @return array With keys number, masked and label.
+	 * @return array With keys number, email, masked and label.
 	 */
 	function kaamase_contact_channel( $post_id ) {
 
@@ -527,6 +625,7 @@ if ( ! function_exists( 'kaamase_contact_channel' ) ) {
 
 		$channel = array(
 			'number' => (string) kaamase_read_field( $post_id, $key ),
+			'email'  => '',
 			'masked' => false,
 			'label'  => __( 'Direct number', 'kaamase-core' ),
 		);
@@ -626,7 +725,30 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 		$channel = kaamase_contact_channel( $post_id );
 		$number  = $channel['number'];
-		$name    = get_the_title( $post_id );
+		$email   = isset( $channel['email'] ) ? (string) $channel['email'] : '';
+
+		/*
+		 * The stored name, not the displayed one.
+		 *
+		 * get_the_title() runs the the_title filter, and verified-mark.php
+		 * hooks that to append the tick as markup whenever the title being
+		 * asked for belongs to the profile currently being viewed. This
+		 * block is printed by the_content on that very profile, so every
+		 * condition of that filter is met and the name arrives carrying a
+		 * span and an svg inside it.
+		 *
+		 * Escaping it then does exactly what escaping is for and prints
+		 * the markup as words, which is the tag soup that appeared in the
+		 * heading and in the sentence below. Unescaping it instead would
+		 * be the wrong repair: a name is user supplied, and it would put
+		 * whatever somebody typed into their profile straight into the
+		 * page.
+		 *
+		 * So the raw title is asked for. The tick still renders where it
+		 * is meant to, in the page heading the theme prints, and this
+		 * block gets a plain name it can safely escape.
+		 */
+		$name = (string) get_post_field( 'post_title', $post_id, 'raw' );
 
 		ob_start();
 		?>
@@ -634,7 +756,26 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 			<h2><?php echo esc_html( $name ); ?></h2>
 
-			<?php if ( '' === $number ) : ?>
+			<?php if ( '' !== $email ) : ?>
+
+				<p class="ka-label ka-mt-4"><?php echo esc_html( $channel['label'] ); ?></p>
+
+				<p class="ka-text-xl">
+					<?php echo esc_html( $email ); ?>
+				</p>
+
+				<div class="ka-cluster ka-mt-6">
+					<a class="ka-btn ka-btn--action ka-btn--lg" rel="nofollow"
+						href="<?php echo esc_url( kaamase_contact_mailto( $email, $post_id ) ); ?>">
+						<?php esc_html_e( 'Send an email', 'kaamase-core' ); ?>
+					</a>
+				</div>
+
+				<p class="ka-hint ka-mt-6">
+					<?php esc_html_e( 'They take applications by email, not by phone. Say which job you are writing about, and send whatever the job details ask for.', 'kaamase-core' ); ?>
+				</p>
+
+			<?php elseif ( '' === $number ) : ?>
 
 				<p class="ka-soft ka-mt-4">
 					<?php esc_html_e( 'This person has not added a phone number yet. Nothing we can do from here.', 'kaamase-core' ); ?>
@@ -674,13 +815,38 @@ if ( ! function_exists( 'kaamase_contact_reveal' ) ) {
 
 			<p class="ka-small ka-mute ka-mt-4">
 				<?php
-				printf(
-					esc_html(
-						/* translators: %s: number of lookups left today */
-						_n( '%s lookup left today.', '%s lookups left today.', kaamase_contact_quota_left( $user_id ), 'kaamase-core' )
-					),
-					esc_html( number_format_i18n( kaamase_contact_quota_left( $user_id ) ) )
-				);
+				/*
+				 * An account that is not metered is told so, rather than
+				 * counted.
+				 *
+				 * Staff and field agents come back from the allowance
+				 * layer as PHP_INT_MAX, which is how that layer says "no
+				 * limit". Subtracting today's lookups from it and running
+				 * the result through number_format_i18n printed
+				 * 9,223,372,036,854,775,806 lookups left today on the
+				 * screen, which is not a number anybody can read and is
+				 * not a promise anybody should make.
+				 *
+				 * Asked through kaamase_contact_unmetered(), which is the
+				 * one place that knows what the sentinel means, and is
+				 * the same test the app is answered with.
+				 */
+				if ( kaamase_contact_unmetered( $user_id ) ) {
+
+					esc_html_e( 'This account has no daily limit.', 'kaamase-core' );
+
+				} else {
+
+					$left = kaamase_contact_quota_left( $user_id );
+
+					printf(
+						esc_html(
+							/* translators: %s: number of lookups left today */
+							_n( '%s lookup left today.', '%s lookups left today.', $left, 'kaamase-core' )
+						),
+						esc_html( number_format_i18n( $left ) )
+					);
+				}
 				?>
 			</p>
 
@@ -741,6 +907,40 @@ if ( ! function_exists( 'kaamase_contact_refused' ) ) {
 		<?php
 
 		return (string) ob_get_clean();
+	}
+}
+
+if ( ! function_exists( 'kaamase_contact_mailto' ) ) {
+	/**
+	 * A mailto: link with the job already named in the subject.
+	 *
+	 * Somebody applying from a phone should not have to work out what to
+	 * put in the subject line, and an office reading a hundred emails
+	 * should be able to tell which post each one is for. The link back
+	 * says where it was seen.
+	 *
+	 * @since 1.3.0
+	 * @param string $email   Address to write to.
+	 * @param int    $post_id Job ID.
+	 * @return string
+	 */
+	function kaamase_contact_mailto( $email, $post_id ) {
+
+		$title = (string) get_post_field( 'post_title', $post_id, 'raw' );
+
+		$subject = sprintf(
+			/* translators: %s: the job's title */
+			__( 'Job application: %s', 'kaamase-core' ),
+			$title
+		);
+
+		$body = sprintf(
+			/* translators: %s: the job's web address */
+			__( 'I saw this job on Kaam Ase: %s', 'kaamase-core' ),
+			(string) get_permalink( $post_id )
+		);
+
+		return 'mailto:' . $email . '?subject=' . rawurlencode( $subject ) . '&body=' . rawurlencode( $body . "\n\n" );
 	}
 }
 

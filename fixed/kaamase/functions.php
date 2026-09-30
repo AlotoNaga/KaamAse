@@ -199,6 +199,7 @@ $kaamase_modules = array(
 	'inc/nav-walker.php',     // Accessible navigation markup.
 	'inc/template-tags.php',  // Card renderers and display helpers.
 	'inc/page-display.php',   // Per page control over the title and featured image.
+	'inc/app-banner.php',     // Offers the app to somebody reading on a phone.
 );
 
 /**
