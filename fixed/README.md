@@ -91,6 +91,9 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/job-photos.php` | `wp-content/plugins/kaamase-core/includes/job-photos.php` |
 | `fixed/kaamase-core/includes/posted-for.php` | `wp-content/plugins/kaamase-core/includes/posted-for.php` |
 | `fixed/kaamase-core/includes/verified-list.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/share-card.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/assets/fonts/` (2 fonts + licence) | `wp-content/plugins/kaamase-core/assets/fonts/` **(new folder)** |
+| `fixed/kaamase-core/includes/job-alerts.php` | `wp-content/plugins/kaamase-core/includes/job-alerts.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -5924,6 +5927,79 @@ as the Employers list; every filter, paging, both orders, the Workers
 list left alone, and nonsense input (huge or negative page numbers, lists
 where one value was expected, odd characters in search) answered without an
 error. 47 checks. Nothing in the error log.
+
+## 86. A picture when a job is shared, and the job in job alerts
+
+### The share picture
+
+A job pasted into WhatsApp showed as a bare link with no picture. The live
+site runs **Rank Math PRO**, which writes the share tags. It uses a page's own
+photo and nothing else, and most jobs have no photo. (The plugin's own share
+tags in `sharing.php` correctly stand aside when an SEO plugin is present.)
+
+`share-card.php` gives Rank Math a picture to use through Rank Math's own
+hook, so Rank Math still writes all the tags. For any job, worker, team or
+employer page without its own photo, it draws a 1200×630 card in the Kaam Ase
+greens:
+
+- **Jobs:** title, pay, place, trade, and an Urgent tag when the job is urgent.
+- **Workers and teams:** name and initials, trades, rate, place, years of
+  experience, and the Verified tick when they have it.
+- **Employers:** name, company, contractor or individual, place and the tick.
+
+The picture used is the first of these that exists: the page's own photo,
+then the card, then Rank Math's default picture if one is set, then the site
+icon or logo.
+
+- A card is drawn once, on the first visit, and saved in
+  `uploads/kaamase-share/` at about 35–70 KB. It is redrawn under a new name
+  when the title, pay or place changes, so WhatsApp picks up the new one.
+- It is removed when the job is closed or deleted.
+- It is always in the site's language, whoever opens the page first.
+- A title in Hindi script shows as "Mason in Dimapur" (trade and district) on
+  the picture, because the picture tool cannot join Hindi letters correctly.
+- If the server can't draw pictures, there's simply no card, and the next
+  fallback is used.
+
+The font is Noto Sans (SIL Open Font License, included), cut down to Latin
+letters and the ₹ sign so it's about 110 KB per weight.
+
+Links that were already shared keep their old preview, because WhatsApp
+remembers them. New shares get the card.
+
+### Job alerts: the job in the notification
+
+Each daily job alert now also carries `id` (the newest job in it) and `ids`
+(up to 20 jobs, newest first), like the other notifications carry theirs. The
+app opens the job directly when there is only one. Nothing else about alerts
+changed. The **Job alerts** switch in wp-admin still has to be turned on for
+any to be sent.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/share-card.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/assets/fonts/NotoSans-Bold.ttf`, `NotoSans-Regular.ttf`, `OFL.txt` | **new folder** `assets/fonts` inside the plugin |
+| `fixed/kaamase-core/includes/job-alerts.php` | 1.1.0 — **new to this folder**; the original with `id` and `ids` added |
+
+Put `share-card.php` and `job-alerts.php` in
+`wp-content/plugins/kaamase-core/includes/`. Create the folder
+`wp-content/plugins/kaamase-core/assets/fonts/` and put the three font files in
+it. Then do **LiteSpeed Cache → Toolbox → Purge All**, so job pages are rebuilt
+with the picture. No language file changed.
+
+Tested on WordPress 7.1.2 with Rank Math 1.0.279 installed and set up. That
+reproduces the live problem exactly: title and description, no picture. After
+the change: the card appears as og:image and twitter:image with its size; a
+job's own photo still wins; workers, teams and employers get cards;
+changing the title or pay redraws; closing or deleting removes; drafts never
+get one; a Nagamese visitor gets the same English card and their own page stays
+Nagamese; the fallbacks work in order (Rank Math default, then site icon, then
+nothing, never an error); the home page and ordinary pages are untouched; with
+Rank Math switched off, `sharing.php` writes its own tags as before. A job alert
+run sent one alert with `id` and `ids` newest first. 35 checks plus the language
+checks. Nothing in the error log.
 
 ## Not changed, and why
 
