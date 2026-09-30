@@ -6176,6 +6176,13 @@ used to erase it), so those cannot be counted.
   list). While locked, `can_ask` is `false` and `missing` is empty. `copy.closed`
   also carries the note, so the app already in the stores shows the right words
   with no update.
+- `verify.state` is sent as `"done"` **only while it is true**: the person has
+  the tick, or is waiting for a call after a name, number or photo change.
+  Otherwise it is sent as `""`. Apps 2.5.0 and 2.6.0 read `"done"` as "has the
+  tick" and hide the whole card, and the stored state stays `"done"` after a gift
+  from the Asked list has ended. So they hid both the lock date and, a year
+  later, the button to ask again. Only what the app is sent changes; the stored
+  state is left alone.
 - `POST /verify-request` while locked → **403**, `code: "kaamase_ask_locked"`,
   `message` = the note, plus `locked_until`.
 - A new push, `data.type = "free_verify_ended"`, with `data.locked_until`. The
@@ -6186,7 +6193,7 @@ used to erase it), so those cannot be counted.
 | File | |
 | --- | --- |
 | `fixed/kaamase-core/includes/free-lock.php` | 1.0.0 — **new file** |
-| `fixed/kaamase-core/includes/verify-requests.php` | 1.1.0 → 1.2.0 |
+| `fixed/kaamase-core/includes/verify-requests.php` | 1.1.0 → 1.2.1 |
 
 Upload both to `wp-content/plugins/kaamase-core/includes/`, `free-lock.php`
 first. Either one alone does no harm. No language files were changed.
@@ -6207,7 +6214,7 @@ Tested on WordPress 7.1.2 with the real admin screens, the website dashboard,
 - a name change while a gift runs
 - the 30-day "Not now" rule
 
-83 checks, and nothing from Kaam Ase code in the error log. The dashboard card
+90 checks, and nothing from Kaam Ase code in the error log. The dashboard card
 was checked at phone width, with no sideways scroll.
 
 **A note on languages, found while testing, and not new.** Every email and push

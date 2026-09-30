@@ -51,7 +51,7 @@
  * wait. The owner can still give anybody anything from Give the plan.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.2.1
  * @since   1.0.0
  */
 
@@ -728,8 +728,29 @@ if ( ! function_exists( 'kaamase_ask_shape_me' ) ) {
 			$copy['closed'] = $note;
 		}
 
+		/*
+		 * The app reads "done" as "has the tick" and hides the whole card.
+		 * The stored state stays "done" long after that stops being true:
+		 * once a free one has ended, every app hid the card, so nobody saw
+		 * the date they could ask again, nor the button once that date came.
+		 * Sent as "done" only while it is true: the tick is on, or a call
+		 * is owed after a name, number or photo change. Only what the app
+		 * is sent changes; what is stored is left alone.
+		 */
+		$state = kaamase_ask_state( $user_id );
+
+		if ( 'done' === $state ) {
+
+			$ticked  = function_exists( 'kaamase_has_been_called' ) && kaamase_has_been_called( $user_id );
+			$waiting = function_exists( 'kaamase_waiting_for_call' ) && kaamase_waiting_for_call( $user_id );
+
+			if ( ! $ticked && ! $waiting ) {
+				$state = '';
+			}
+		}
+
 		$me['verify'] = array(
-			'state'        => kaamase_ask_state( $user_id ),
+			'state'        => $state,
 			'can_ask'      => kaamase_ask_can( $user_id ),
 			// Empty while locked, as on the website: finishing a profile would not help.
 			'missing'      => $locked ? array() : array_values( kaamase_ask_missing( $user_id ) ),
