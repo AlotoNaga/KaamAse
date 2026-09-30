@@ -33,7 +33,9 @@
  * --------------------
  * A gift taken back within the hour it was given was given to the wrong
  * person or with the wrong length. That is undone as if it never
- * happened: no lock, no message.
+ * happened: no lock, no message. The one exception is a gift put on top
+ * of an earlier free one that was still running: Take it back removes
+ * the whole plan, so the earlier one ends that day like any other.
  *
  * Telling them
  * ------------
@@ -80,7 +82,7 @@ define( 'KAAMASE_FREE_TELL_DAYS', 7 );
 define( 'KAAMASE_FREE_SLIP_SECONDS', HOUR_IN_SECONDS );
 
 /** Set once the gifts from before this file have been dated. */
-define( 'KAAMASE_FREE_DATED_OPTION', 'kaamase_free_lock_dated' );
+define( 'KAAMASE_FREE_DATED_OPTION', 'kaamase_gift_lock_dated' );
 
 
 /* ==========================================================================
@@ -356,7 +358,21 @@ if ( ! function_exists( 'kaamase_free_on_taken_back' ) ) {
 			delete_user_meta( $user_id, KAAMASE_FREE_GIVEN_KEY );
 			delete_user_meta( $user_id, KAAMASE_FREE_PREV_KEY );
 
-			return;
+			/*
+			 * Unless an earlier free one was still running underneath it.
+			 * Take it back removes the whole plan, not only the last
+			 * gift, so that earlier one has ended too, today. Somebody
+			 * paying keeps their plan, so for them it is still running.
+			 */
+			$earlier = (int) get_user_meta( $user_id, KAAMASE_FREE_UNTIL_KEY, true );
+
+			$earlier_ended_now = $earlier > time()
+				&& function_exists( 'kaamase_pay_is_active' )
+				&& ! kaamase_pay_is_active( $user_id );
+
+			if ( ! $earlier_ended_now ) {
+				return;
+			}
 		}
 
 		$until = (int) get_user_meta( $user_id, KAAMASE_FREE_UNTIL_KEY, true );
@@ -394,7 +410,11 @@ if ( ! function_exists( 'kaamase_free_date_old_gifts' ) ) {
 	 */
 	function kaamase_free_date_old_gifts( $limit = 500 ) {
 
-		if ( ! defined( 'KAAMASE_GIFT_AT_KEY' ) ) {
+		/*
+		 * Both, or nothing. Without the payment plugin every old gift
+		 * would be written down as having no end date, for good.
+		 */
+		if ( ! defined( 'KAAMASE_GIFT_AT_KEY' ) || ! defined( 'KAAMASE_PAY_EXPIRES_KEY' ) ) {
 			return 0;
 		}
 
@@ -444,7 +464,8 @@ if ( ! function_exists( 'kaamase_free_date_old_gifts_once' ) ) {
 			return;
 		}
 
-		if ( ! defined( 'KAAMASE_GIFT_AT_KEY' ) ) {
+		// Waits for the payment plugin, which holds the dates. See above.
+		if ( ! defined( 'KAAMASE_GIFT_AT_KEY' ) || ! defined( 'KAAMASE_PAY_EXPIRES_KEY' ) ) {
 			return;
 		}
 

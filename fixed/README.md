@@ -6108,7 +6108,10 @@ What it does **not** touch:
 
 **A slip is not a gift.** A gift taken back **within an hour** of being given
 (wrong person, wrong length) is undone as if it never happened. There is no lock
-and no message, and any earlier year is put back exactly as it was.
+and no message, and any earlier year is put back exactly as it was. The one
+exception: if it was put on top of an earlier free one that was still running,
+**Take it back** removes the whole plan, so that earlier one ends that day and
+counts like any other ending.
 
 ### What the person sees and gets
 
@@ -6194,13 +6197,17 @@ Tested on WordPress 7.1.2 with the real admin screens, the website dashboard,
 - a month given from the Asked list and running out
 - a year taken back after two days
 - a slip taken back straight away, including over an earlier year
+- a second gift put on top of a running one by mistake and taken straight back,
+  for an ordinary person and for a subscriber
+- the first page load happening while Kaam Ase Pay was switched off (the old
+  gifts wait to be dated until it is back)
 - a subscriber given a gift on top of their plan
 - old gifts that ended 30 days ago, 3 days ago, and on a subscription
 - a mail server refusing one email, then sending it the next morning
 - a name change while a gift runs
 - the 30-day "Not now" rule
 
-73 checks, and nothing from Kaam Ase code in the error log. The dashboard card
+83 checks, and nothing from Kaam Ase code in the error log. The dashboard card
 was checked at phone width, with no sideways scroll.
 
 **A note on languages, found while testing, and not new.** Every email and push
