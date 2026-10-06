@@ -96,6 +96,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/job-alerts.php` | `wp-content/plugins/kaamase-core/includes/job-alerts.php` |
 | `fixed/kaamase-core/includes/free-lock.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/verify-requests.php` | `wp-content/plugins/kaamase-core/includes/verify-requests.php` |
+| `fixed/kaamase-core/includes/professional-jobs.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -6229,6 +6230,187 @@ on the platform switches to the reader's language with WordPress's
 
 This affects all notifications, not just this one. It can be fixed separately
 in `locale.php`.
+
+## 89. Professional jobs (Part A of the professionals plan)
+
+Office, bank, school, hospital, engineering and other salaried career jobs,
+posted beside everyday work in the same jobs list. Bigger employers were not
+posting because the form only asked everyday questions: a daily rate, food and
+stay, urgent. This adds the questions they need. Nothing about everyday jobs
+changes.
+
+### What makes a job professional
+
+Its category. There is a new heading, **Professional jobs**, in the same trade
+list everything else uses, with 52 categories under it:
+
+> Banking · Insurance · Microfinance and cooperatives · Accounts and finance ·
+> Audit, tax and CA firms · Sales and business development · Marketing and
+> advertising · Customer support and call centre · Administration and office
+> management · Human resources (HR) · Management and leadership · Operations ·
+> Procurement, logistics and supply chain · Retail and store management · Real
+> estate · Software and IT development · IT support and networks · Data and
+> analytics · Design and creative · Telecom · Journalism and writing · Public
+> relations and communications · Arts, music and entertainment · School teaching ·
+> College and university · Education management and training · Library and
+> information · Doctors and medical officers · Nursing · Pharmacy · Medical
+> representative · Lab, radiology and diagnostics · Therapy and allied health ·
+> Hospital and health administration · Civil engineering · Mechanical and
+> automobile engineering · Electrical and electronics engineering · Architecture
+> and planning · Project management · Quality, safety and environment · Hotel and
+> hospitality management · Tourism and travel · Aviation and airport · Security
+> and facility management · Fitness, sports and wellness · Government and public
+> sector · NGO, development and social work · Legal · Agriculture, forestry and
+> veterinary · Research and science · Church and mission organisations · Other
+> professional jobs
+
+Each one carries a line of example job titles ("Bank officer, clerk,
+probationary officer…"), which the app already shows beside a category's name.
+They can be renamed, added to or removed in **Kaam Ase → Trades** like any trade.
+Any category added under the heading counts as professional.
+
+A job filed under one of them is professional **however it was posted**: the new
+form, the everyday form, or an app that has never heard of any of this. Using the
+existing trade list is what makes this work in the apps already on people's
+phones with **no app update**. They show the new heading and its categories, and
+professional jobs appear in their lists with category, salary and district.
+
+**None of your existing 102 trades were touched.** If you ever made a trade by
+hand with one of these names somewhere else, it is left where it is, never moved,
+and simply not added to the professional heading.
+
+### The rules that differ
+
+| | Everyday job | Professional job |
+| --- | --- | --- |
+| Open for | 21 days (urgent: 3) | Until the **last date to apply** the employer picks, **up to 90 days** (90 if posted from an older app) |
+| Urgent | Yes | **No.** Taken off whatever path the job came by |
+| Pay | Amount per day / month / job / hour | **Monthly salary range** (from and to) |
+| Also asks | Food, stay, transport, start date | Job type, where the work is done (workplace / partly from home / from home), qualification and course, experience, joining date |
+| How to apply | Phone | Phone/WhatsApp **or email** (reuses section 84's email option, same limits and records) |
+| First job checked by you | Only an employer's very first job | **Every employer's first professional job**, even if their everyday jobs go straight up |
+| "Still hiring?" | No | **Every 30 days** the employer gets an email and an app notification asking, so filled jobs get closed |
+| Closed job page | Stays readable | Stays readable, with the professional details |
+
+**Google Jobs** gets the fuller picture for professional jobs: the salary range
+per month, the real job type (full time, part time, contract, internship,
+temporary), the qualification, the months of experience (or "no requirements"),
+and work-from-home jobs marked as remote within India. Complete listings rank
+better there.
+
+### Where employers post them
+
+- A new page, **Post a professional job** (`/post-professional-job/`), made
+  automatically the first time any page loads. Only this page is created; no
+  page you deleted on purpose comes back.
+- The employer dashboard gets a card pointing to it, and the everyday **Post a
+  job** page shows a short note: "Hiring for an office or professional job?".
+- **Edit** on a professional job opens the professional form, so the salary
+  range and the rest are never lost by editing in the wrong form.
+- Workers and teams see no form; they get the usual "add hiring to your account"
+  box.
+
+### Where people find them
+
+- In the normal jobs list, mixed with everyday work.
+- **Professional jobs only**: `/trade/professional-jobs/` on the website, and
+  `/jobs?trade=professional-jobs` in the app. A heading includes everything under
+  it, so no new list was needed.
+- Each category also has its own page, for example `/trade/banking/`.
+
+### A bug this found and fixed: closed jobs answering "Page not found" (`queries.php` 1.2.1)
+
+`closed-jobs.php` keeps a closed job's page readable so the link and its search
+ranking survive. But a rule in `queries.php` that hides closed jobs from lists was
+also running on a **job's own page**. So **every job that closed by running out —
+everyday ones after their 21 days too — answered "Page not found" at its
+address**, and a job marked filled kept its page only until its old end date
+passed. That has been true on the live site until now and is the SEO loss you
+were worried about.
+
+The rule now applies to lists only. A closed job's own page opens, says it is
+closed, refuses the number as before, and carries no Google job markup. Every list
+still leaves closed jobs out (checked: the jobs, workers and teams lists, the trade
+pages and the app answers are identical before and after).
+
+### Known, small, and left for now
+
+- The "your job is live" email and the "Job posted again" message say the job
+  stays open **three weeks**. That wording is in the existing `job-screening.php`
+  and `dashboard.php`. For a professional job it is 90 days or the last date
+  picked.
+- On a professional job's page, the theme's top box shows only the **lowest**
+  salary and says **"Workers wanted"**. The professional details below it show the
+  full range. A small theme change can fix both later.
+- Professional categories also appear in the **worker** trade pickers (sign-up,
+  profile, team) on the website and in the current apps. The next app version can
+  hide them there using the `professional` flag. The website forms can be changed
+  in Part B.
+- A professional job posted from an **older app** gets the normal first-job check
+  only, not the extra "first professional job" one: the category is not known
+  until after the job is written. Everything posted from the new form or the new
+  app route gets it.
+- The new sentences are English until they are added to the translation files.
+
+### For the app (next version)
+
+- `GET /reference`:
+  - Every trade now has `professional: true|false`.
+  - A new `professional` object: `group` (`professional-jobs`), `group_name`,
+    `max_days` (90), `suggested_days` (30), and lists of `{key, label}` for
+    `job_types`, `work_modes`, `qualifications` and `apply_methods`.
+- Every job has a new `professional` field: `null` for everyday jobs, otherwise
+  `{category, job_type, job_type_label, work_mode, work_mode_label,
+  salary: {min, max, unit: "month"}, qualification, qualification_label, course,
+  experience_min, apply_by: "YYYY-MM-DD", apply_by_ts, apply_method}`.
+  `contact_method` is `email` for email jobs, as in section 84.
+- `POST /kaamase/v1/pro-jobs` posts, `POST /kaamase/v1/pro-jobs/{id}` edits.
+  - Body: `category, title, description, district, town, salary_min, salary_max,
+    openings, job_type, work_mode, qualification, course, experience, apply_by,
+    start_date, apply_method, apply_email, contact_phone`.
+  - Answers like `/jobs`: 201 or 200 with the job, or 400 with `message` and
+    `messages[]`.
+  - Editing an everyday job through it answers 400 `kaamase_not_professional`.
+- Professional-only list: `GET /jobs?trade=professional-jobs`.
+- Push `data.type = "pro_job_check"`, `data.id` = the job: "Still hiring?". Open
+  that job's manage screen.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-jobs.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/includes/queries.php` | 1.2.0 → 1.2.1 |
+
+Upload both to `wp-content/plugins/kaamase-core/includes/`. Then:
+
+1. Open any page of the site once. That creates the heading, the 52 categories
+   and the page.
+2. Run **LiteSpeed Cache → Toolbox → Purge All**, so the app gets the new
+   categories and closed job pages stop being served as stored "Page not found"
+   answers.
+
+`professional-jobs.php` needs nothing else. No existing file is required to
+change for it. `queries.php` is the closed-page fix and is worth uploading on its
+own.
+
+Tested on WordPress 7.1.2 with LiteSpeed Cache active, on a copy of the site
+restored to its state before this change: 99 checks, all passing.
+
+- **App routes:** every mistake refused with a clear message, permissions, and the
+  first-job hold surviving edits from the new and the old route.
+- **Contact:** the email answer, and the address never in the downloaded job.
+- **Old-app posts:** professional rules applied (90 days, no urgent).
+- **Everyday jobs:** unchanged (urgent 3 days, 21 days).
+- **Lists:** the right jobs in each.
+- **Website form:** errors shown once, typed answers kept, the edit redirect.
+- **Pages and markup:** the job page details, the Google markup, closed pages
+  opening, reposting, and the 30 and 60 day "Still hiring?" questions.
+
+Every app answer and page was also recorded before and after. The only
+differences are the ones listed above, and all 102 existing trades reach the app
+unchanged. Nothing from Kaam Ase code appeared in the error log, and the new
+pages fit a phone screen with no sideways scroll.
 
 ## Not changed, and why
 

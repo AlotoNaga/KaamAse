@@ -31,7 +31,7 @@
  * it. They are not handed it.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.2.1
  * @since   1.0.0
  */
 
@@ -131,7 +131,17 @@ if ( ! function_exists( 'kaamase_filter_archives' ) ) {
 
 		/* ---- Jobs: never show one that has closed ---- */
 
-		if ( in_array( 'kaamase_job', $types, true ) ) {
+		/*
+		 * In lists only, never on a job's own page.
+		 *
+		 * This used to run on the single job request too, so a job that
+		 * had run out matched nothing and its address answered 404 --
+		 * the exact thing closed-jobs.php exists to prevent. A job
+		 * filled by hand kept its page only until its old end date went
+		 * by. Its own page now always opens, marked closed, with the
+		 * number refused, and every list still leaves it out.
+		 */
+		if ( in_array( 'kaamase_job', $types, true ) && ! $query->is_singular() ) {
 
 			$meta[] = array(
 				'relation' => 'OR',
