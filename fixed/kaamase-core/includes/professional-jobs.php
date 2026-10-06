@@ -77,7 +77,7 @@ define( 'KAAMASE_PRO_SUGGEST_DAYS', 30 );
 /** How often an employer is asked whether they are still hiring. */
 define( 'KAAMASE_PRO_ASK_EVERY_DAYS', 30 );
 
-/** Which of those questions has been asked, counted in whole periods. */
+/** Which of those questions has been asked: the posting's time, a colon, and the count. */
 define( 'KAAMASE_PRO_ASKED_KEY', '_kaamase_pro_asked' );
 
 
@@ -347,6 +347,36 @@ if ( ! function_exists( 'kaamase_pro_install' ) ) {
 		// Marked first, so a slow run is not started again by every request behind it.
 		update_option( 'kaamase_pro_categories_version', KAAMASE_PRO_CATEGORIES_VERSION, true );
 
+		/*
+		 * Names are stored, so they are stored in English like every other
+		 * trade, whatever language the request that happens to arrive
+		 * first is in. The app and the site translate them on the way out.
+		 */
+		$switched = switch_to_locale( 'en_US' );
+
+		try {
+			kaamase_pro_make_categories();
+		} finally {
+			if ( $switched ) {
+				restore_previous_locale();
+			}
+		}
+
+		// Public app answers are kept by LiteSpeed; the category list just changed.
+		do_action( 'litespeed_purge', 'REST' );
+	}
+}
+add_action( 'init', 'kaamase_pro_install', 30 );
+
+if ( ! function_exists( 'kaamase_pro_make_categories' ) ) {
+	/**
+	 * The creating itself, for kaamase_pro_install().
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	function kaamase_pro_make_categories() {
+
 		$group = kaamase_pro_group_id();
 
 		if ( ! $group ) {
@@ -389,7 +419,7 @@ if ( ! function_exists( 'kaamase_pro_install' ) ) {
 				continue;
 			}
 
-			wp_insert_term(
+			$made = wp_insert_term(
 				$category[0],
 				'kaamase_trade',
 				array(
@@ -398,15 +428,15 @@ if ( ! function_exists( 'kaamase_pro_install' ) ) {
 					'description' => $category[1],
 				)
 			);
+
+			if ( is_wp_error( $made ) ) {
+				$skipped[] = $slug;
+			}
 		}
 
 		update_option( 'kaamase_pro_categories_skipped', $skipped, false );
-
-		// Public app answers are kept by LiteSpeed; the category list just changed.
-		do_action( 'litespeed_purge', 'REST' );
 	}
 }
-add_action( 'init', 'kaamase_pro_install', 30 );
 
 
 /* ==========================================================================
@@ -575,16 +605,44 @@ if ( ! function_exists( 'kaamase_pro_details' ) ) {
 			return kaamase_read_field( $job_id, $key );
 		};
 
-		$type   = (string) $get( 'pro_job_type' );
-		$mode   = (string) $get( 'pro_work_mode' );
-		$qual   = (string) $get( 'pro_qualification' );
+		/*
+		 * Whether the employer answered the professional questions. A job
+		 * filed under a professional category from an app that has never
+		 * asked them has no answers, and the defaults are not answers:
+		 * saying Full time and Freshers welcome about a job whose employer
+		 * said neither would be inventing the advert.
+		 */
+		// metadata_exists, not get_post_meta: the field is registered with a default, which WordPress hands back for a job that never stored one.
+		$complete = metadata_exists( 'post', $job_id, KAAMASE_META_PREFIX . 'pro_job_type' );
+
+		$type   = $complete ? (string) $get( 'pro_job_type' ) : '';
+		$mode   = $complete ? (string) $get( 'pro_work_mode' ) : '';
+		$qual   = $complete ? (string) $get( 'pro_qualification' ) : '';
 		$min    = absint( $get( 'pay_amount' ) );
-		$max    = max( $min, absint( $get( 'pro_salary_max' ) ) );
 		$closes = absint( get_post_meta( $job_id, KAAMASE_META_PREFIX . 'expires', true ) );
-		$terms  = get_the_terms( $job_id, 'kaamase_trade' );
+
+		/*
+		 * The pay period the job really has. Anything posted through the
+		 * professional form is monthly, but an app that does not know
+		 * about professional jobs can file one under a professional
+		 * category with a daily rate, and nine hundred rupees a day must
+		 * never be shown, or sent to Google, as nine hundred a month.
+		 */
+		$unit = (string) $get( 'pay_unit' );
+		$unit = in_array( $unit, array( 'day', 'month', 'job', 'hour' ), true ) ? $unit : 'month';
+		$max  = 'month' === $unit ? max( $min, absint( $get( 'pro_salary_max' ) ) ) : $min;
+
+		$category = '';
+		$group    = kaamase_pro_group_id();
+
+		foreach ( (array) get_the_terms( $job_id, 'kaamase_trade' ) as $term ) {
+			if ( $term instanceof WP_Term && ( '' === $category || (int) $term->parent === $group ) ) {
+				$category = (string) $term->slug;
+			}
+		}
 
 		return array(
-			'category'            => is_array( $terms ) && $terms ? (string) $terms[0]->slug : '',
+			'category'            => $category,
 			'job_type'            => $type,
 			'job_type_label'      => $choices['job_type'][ $type ] ?? '',
 			'work_mode'           => $mode,
@@ -592,12 +650,13 @@ if ( ! function_exists( 'kaamase_pro_details' ) ) {
 			'salary'              => array(
 				'min'  => $min,
 				'max'  => $max,
-				'unit' => 'month',
+				'unit' => $unit,
 			),
 			'qualification'       => $qual,
 			'qualification_label' => $choices['qualification'][ $qual ] ?? '',
-			'course'              => (string) $get( 'pro_course' ),
-			'experience_min'      => absint( $get( 'pro_experience' ) ),
+			'course'              => $complete ? (string) $get( 'pro_course' ) : '',
+			'experience_min'      => $complete ? absint( $get( 'pro_experience' ) ) : 0,
+			'complete'            => $complete,
 			'apply_by'            => $closes ? wp_date( 'Y-m-d', $closes ) : '',
 			'apply_by_ts'         => $closes,
 			'apply_method'        => '' !== kaamase_pro_apply_email( $job_id ) ? 'email' : 'phone',
@@ -922,10 +981,12 @@ if ( ! function_exists( 'kaamase_pro_validate' ) ) {
 	 * are still checked by services.php, the same as every job.
 	 *
 	 * @since 1.0.0
-	 * @param array $in Clean input.
+	 * @param array $in        Clean input.
+	 * @param bool  $keep_date Whether the last date is not being chosen now: the job has closed,
+	 *                         or an edit leaves the date as it was, even on its final day.
 	 * @return string[] Empty when it is fine.
 	 */
-	function kaamase_pro_validate( $in ) {
+	function kaamase_pro_validate( $in, $keep_date = false ) {
 
 		$errors = array();
 
@@ -955,7 +1016,9 @@ if ( ! function_exists( 'kaamase_pro_validate' ) ) {
 
 		$close = kaamase_pro_close_at( $in['apply_by'] );
 
-		if ( ! $close ) {
+		if ( $keep_date ) {
+			$close = true;
+		} elseif ( ! $close ) {
 			$errors[] = __( 'Choose the last date to apply.', 'kaamase-core' );
 		} else {
 
@@ -973,7 +1036,7 @@ if ( ! function_exists( 'kaamase_pro_validate' ) ) {
 			}
 		}
 
-		if ( '' !== $in['start_date'] && ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $in['start_date'] ) ) {
+		if ( '' !== $in['start_date'] && ! kaamase_pro_close_at( $in['start_date'] ) ) {
 			$errors[] = __( 'The joining date does not look right.', 'kaamase-core' );
 		}
 
@@ -1004,16 +1067,39 @@ if ( ! function_exists( 'kaamase_pro_save_job' ) ) {
 		$user_id = (int) $user_id;
 		$job_id  = (int) $job_id;
 
-		if ( $job_id && ( 'kaamase_job' !== get_post_type( $job_id ) || ! kaamase_pro_is_job( $job_id ) ) ) {
-			return new WP_Error(
-				'kaamase_not_professional',
-				__( 'That is not a professional job. Edit it on the normal job form.', 'kaamase-core' ),
-				array( 'status' => 400 )
-			);
+		$closed  = false;
+		$current = array();
+
+		if ( $job_id ) {
+
+			if ( 'kaamase_job' !== get_post_type( $job_id ) || ! user_can( $user_id, 'edit_post', $job_id ) ) {
+				return new WP_Error(
+					'kaamase_forbidden',
+					__( 'That job is not yours to edit.', 'kaamase-core' ),
+					array( 'status' => 403 )
+				);
+			}
+
+			if ( ! kaamase_pro_is_job( $job_id ) ) {
+				return new WP_Error(
+					'kaamase_not_professional',
+					__( 'That is not a professional job. Edit it on the normal job form.', 'kaamase-core' ),
+					array( 'status' => 400 )
+				);
+			}
+
+			/*
+			 * An edit starts from the job as it is, so an app that sends
+			 * only what changed does not wipe what it left out.
+			 */
+			$current = kaamase_pro_job_values( $job_id );
+			$raw     = array_merge( $current, is_array( $raw ) ? $raw : array() );
+			$closed  = 'kaamase_closed' === get_post_status( $job_id );
 		}
 
 		$in     = kaamase_pro_input( $raw );
-		$errors = kaamase_pro_validate( $in );
+		$keep   = $closed || ( $job_id && '' !== $in['apply_by'] && $in['apply_by'] === ( $current['apply_by'] ?? '' ) );
+		$errors = kaamase_pro_validate( $in, $keep );
 
 		if ( $errors ) {
 			return new WP_Error(
@@ -1373,35 +1459,55 @@ if ( ! function_exists( 'kaamase_pro_form_values' ) ) {
 			return $values;
 		}
 
+		return array_merge( $values, kaamase_pro_job_values( $job_id ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_pro_job_values' ) ) {
+	/**
+	 * A professional job read back as the answers the form and the app send.
+	 *
+	 * @since 1.0.0
+	 * @param int $job_id Job ID.
+	 * @return array Empty for anything that is not a professional job.
+	 */
+	function kaamase_pro_job_values( $job_id ) {
+
 		$details = kaamase_pro_details( $job_id );
 		$post    = get_post( $job_id );
 
 		if ( ! $details || ! $post ) {
-			return $values;
+			return array();
 		}
 
-		return array_merge(
-			$values,
-			array(
-				'title'         => get_the_title( $job_id ),
-				'description'   => (string) $post->post_content,
-				'trade'         => $details['category'],
-				'district'      => (string) kaamase_read_field( $job_id, 'district' ),
-				'town'          => (string) kaamase_read_field( $job_id, 'town' ),
-				'salary_min'    => $details['salary']['min'],
-				'salary_max'    => $details['salary']['max'],
-				'openings'      => absint( kaamase_read_field( $job_id, 'workers_needed' ) ),
-				'job_type'      => $details['job_type'],
-				'work_mode'     => $details['work_mode'],
-				'qualification' => $details['qualification'],
-				'course'        => $details['course'],
-				'experience'    => $details['experience_min'],
-				'apply_by'      => $details['apply_by'],
-				'start_date'    => (string) kaamase_read_field( $job_id, 'start_date' ),
-				'apply_method'  => $details['apply_method'],
-				'apply_email'   => (string) kaamase_read_field( $job_id, 'pro_apply_email' ),
-				'contact_phone' => (string) kaamase_read_field( $job_id, 'contact_phone' ),
-			)
+		/*
+		 * A job filed from an older app with a daily or hourly rate opens
+		 * with the salary boxes empty, so the employer types a monthly
+		 * salary rather than finding 900 sitting under a monthly label.
+		 */
+		$monthly = 'month' === $details['salary']['unit'];
+
+		$defaults = kaamase_pro_input( array() );
+
+		return array(
+			'title'         => (string) $post->post_title,
+			'description'   => (string) $post->post_content,
+			'trade'         => $details['category'],
+			'district'      => (string) kaamase_read_field( $job_id, 'district' ),
+			'town'          => (string) kaamase_read_field( $job_id, 'town' ),
+			'salary_min'    => $monthly ? $details['salary']['min'] : 0,
+			'salary_max'    => $monthly ? $details['salary']['max'] : 0,
+			'openings'      => absint( kaamase_read_field( $job_id, 'workers_needed' ) ),
+			'job_type'      => $details['complete'] ? $details['job_type'] : $defaults['job_type'],
+			'work_mode'     => $details['complete'] ? $details['work_mode'] : $defaults['work_mode'],
+			'qualification' => $details['complete'] ? $details['qualification'] : $defaults['qualification'],
+			'course'        => $details['course'],
+			'experience'    => $details['experience_min'],
+			'apply_by'      => $details['apply_by'],
+			'start_date'    => (string) kaamase_read_field( $job_id, 'start_date' ),
+			'apply_method'  => $details['apply_method'],
+			'apply_email'   => (string) kaamase_read_field( $job_id, 'pro_apply_email' ),
+			'contact_phone' => (string) kaamase_read_field( $job_id, 'contact_phone' ),
 		);
 	}
 }
@@ -1854,7 +1960,8 @@ if ( ! function_exists( 'kaamase_pro_everyday_form_hint' ) ) {
 			return $content;
 		}
 
-		if ( ! current_user_can( 'create_kaamase_jobs' ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only deciding whether to show a note.
+		if ( ! current_user_can( 'create_kaamase_jobs' ) || ! empty( $_GET['edit'] ) ) {
 			return $content;
 		}
 
@@ -1891,18 +1998,39 @@ if ( ! function_exists( 'kaamase_pro_job_facts' ) ) {
 			return $content;
 		}
 
-		$salary = $details['salary']['max'] > $details['salary']['min']
-			? sprintf(
-				/* translators: 1: lowest salary, 2: highest salary */
-				__( '₹%1$s to ₹%2$s a month', 'kaamase-core' ),
-				number_format_i18n( $details['salary']['min'] ),
-				number_format_i18n( $details['salary']['max'] )
-			)
-			: sprintf(
-				/* translators: %s: salary */
-				__( '₹%s a month', 'kaamase-core' ),
-				number_format_i18n( $details['salary']['min'] )
-			);
+		$amount = number_format_i18n( $details['salary']['min'] );
+
+		switch ( $details['salary']['unit'] ) {
+
+			case 'day':
+				/* translators: %s: amount */
+				$salary = sprintf( __( '₹%s a day', 'kaamase-core' ), $amount );
+				break;
+
+			case 'hour':
+				/* translators: %s: amount */
+				$salary = sprintf( __( '₹%s an hour', 'kaamase-core' ), $amount );
+				break;
+
+			case 'job':
+				/* translators: %s: amount */
+				$salary = sprintf( __( '₹%s for the whole job', 'kaamase-core' ), $amount );
+				break;
+
+			default:
+				$salary = $details['salary']['max'] > $details['salary']['min']
+					? sprintf(
+						/* translators: 1: lowest salary, 2: highest salary */
+						__( '₹%1$s to ₹%2$s a month', 'kaamase-core' ),
+						$amount,
+						number_format_i18n( $details['salary']['max'] )
+					)
+					: sprintf(
+						/* translators: %s: salary */
+						__( '₹%s a month', 'kaamase-core' ),
+						$amount
+					);
+		}
 
 		$qualification = $details['qualification_label'];
 
@@ -1910,13 +2038,17 @@ if ( ! function_exists( 'kaamase_pro_job_facts' ) ) {
 			$qualification .= ' · ' . $details['course'];
 		}
 
-		$experience = $details['experience_min']
-			? sprintf(
-				/* translators: %d: number of years */
-				_n( 'At least %d year', 'At least %d years', $details['experience_min'], 'kaamase-core' ),
-				$details['experience_min']
-			)
-			: __( 'Freshers welcome', 'kaamase-core' );
+		$experience = '';
+
+		if ( $details['complete'] ) {
+			$experience = $details['experience_min']
+				? sprintf(
+					/* translators: %d: number of years */
+					_n( 'At least %d year', 'At least %d years', $details['experience_min'], 'kaamase-core' ),
+					$details['experience_min']
+				)
+				: __( 'Freshers welcome', 'kaamase-core' );
+		}
 
 		$facts = array(
 			__( 'Salary', 'kaamase-core' )        => $salary,
@@ -2011,7 +2143,7 @@ if ( ! function_exists( 'kaamase_pro_schema' ) ) {
 			return $schema;
 		}
 
-		if ( $details['salary']['min'] > 0 ) {
+		if ( $details['salary']['min'] > 0 && 'month' === $details['salary']['unit'] ) {
 
 			$value = array(
 				'@type'    => 'QuantitativeValue',
@@ -2039,6 +2171,11 @@ if ( ! function_exists( 'kaamase_pro_schema' ) ) {
 			'internship' => 'INTERN',
 			'temporary'  => 'TEMPORARY',
 		);
+
+		// Unanswered: leave the markup exactly as everyday jobs have it.
+		if ( ! $details['complete'] ) {
+			return $schema;
+		}
 
 		if ( isset( $types[ $details['job_type'] ] ) ) {
 			$schema['employmentType'] = $types[ $details['job_type'] ];
@@ -2111,7 +2248,8 @@ if ( ! function_exists( 'kaamase_pro_ask_still_hiring' ) ) {
 
 		$write = static function () use ( $user, $author, $job_id, $days ) {
 
-			$title = get_the_title( $job_id );
+			// The title as typed. get_the_title() turns quotes into HTML entities, which a phone or an email shows as code.
+			$title = (string) get_post_field( 'post_title', $job_id, 'raw' );
 
 			if ( function_exists( 'kaamase_push_to_user' ) ) {
 				kaamase_push_to_user(
@@ -2216,21 +2354,30 @@ if ( ! function_exists( 'kaamase_pro_still_hiring_run' ) ) {
 			)
 		);
 
-		$asked = 0;
+		$told = 0;
 
 		foreach ( (array) $jobs as $job_id ) {
 
 			$job_id = (int) $job_id;
-			$age    = time() - (int) get_post_time( 'U', true, $job_id );
+			$posted = (int) get_post_time( 'U', true, $job_id );
+			$age    = time() - $posted;
 			$round  = (int) floor( $age / $period );
 			$closes = absint( get_post_meta( $job_id, KAAMASE_META_PREFIX . 'expires', true ) );
 
-			if ( $round < 1 || $round <= (int) get_post_meta( $job_id, KAAMASE_PRO_ASKED_KEY, true ) ) {
+			/*
+			 * The count belongs to one posting. A repost starts a new one,
+			 * so a reposted job is asked again thirty days on rather than
+			 * never.
+			 */
+			$mark  = explode( ':', (string) get_post_meta( $job_id, KAAMASE_PRO_ASKED_KEY, true ) );
+			$asked = ( 2 === count( $mark ) && (int) $mark[0] === $posted ) ? (int) $mark[1] : 0;
+
+			if ( $round < 1 || $round <= $asked ) {
 				continue;
 			}
 
 			// Marked first: whatever happens below, nobody is asked twice.
-			update_post_meta( $job_id, KAAMASE_PRO_ASKED_KEY, $round );
+			update_post_meta( $job_id, KAAMASE_PRO_ASKED_KEY, $posted . ':' . $round );
 
 			// Closing within three days anyway: nothing worth asking.
 			if ( $closes && $closes - time() < 3 * DAY_IN_SECONDS ) {
@@ -2238,10 +2385,10 @@ if ( ! function_exists( 'kaamase_pro_still_hiring_run' ) ) {
 			}
 
 			kaamase_pro_ask_still_hiring( $job_id, (int) floor( $age / DAY_IN_SECONDS ) );
-			$asked++;
+			$told++;
 		}
 
-		return $asked;
+		return $told;
 	}
 }
 add_action( 'kaamase_daily', 'kaamase_pro_still_hiring_run' );

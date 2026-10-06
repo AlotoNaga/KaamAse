@@ -6360,17 +6360,27 @@ pages and the app answers are identical before and after).
     `max_days` (90), `suggested_days` (30), and lists of `{key, label}` for
     `job_types`, `work_modes`, `qualifications` and `apply_methods`.
 - Every job has a new `professional` field: `null` for everyday jobs, otherwise
-  `{category, job_type, job_type_label, work_mode, work_mode_label,
-  salary: {min, max, unit: "month"}, qualification, qualification_label, course,
+  `{category, complete, job_type, job_type_label, work_mode, work_mode_label,
+  salary: {min, max, unit}, qualification, qualification_label, course,
   experience_min, apply_by: "YYYY-MM-DD", apply_by_ts, apply_method}`.
-  `contact_method` is `email` for email jobs, as in section 84.
+  - `complete` is `false` for a job filed under a professional category from an
+    app that never asked the professional questions. Then `job_type`,
+    `work_mode`, `qualification` and `course` are `""` and `experience_min` is 0:
+    nothing is invented.
+  - `salary.unit` is `month` for everything posted through the professional
+    form. A job from an older app can carry `day`, `hour` or `job`, and is shown
+    that way, never as a month.
+  - `contact_method` is `email` for email jobs, as in section 84.
 - `POST /kaamase/v1/pro-jobs` posts, `POST /kaamase/v1/pro-jobs/{id}` edits.
   - Body: `category, title, description, district, town, salary_min, salary_max,
     openings, job_type, work_mode, qualification, course, experience, apply_by,
     start_date, apply_method, apply_email, contact_phone`.
   - Answers like `/jobs`: 201 or 200 with the job, or 400 with `message` and
     `messages[]`.
-  - Editing an everyday job through it answers 400 `kaamase_not_professional`.
+  - An edit may send only the fields that changed; everything else is kept.
+  - On a job's last day it can still be edited without moving the date.
+  - Somebody else's job answers 403. An everyday job answers 400
+    `kaamase_not_professional`.
 - Professional-only list: `GET /jobs?trade=professional-jobs`.
 - Push `data.type = "pro_job_check"`, `data.id` = the job: "Still hiring?". Open
   that job's manage screen.
@@ -6395,7 +6405,7 @@ change for it. `queries.php` is the closed-page fix and is worth uploading on it
 own.
 
 Tested on WordPress 7.1.2 with LiteSpeed Cache active, on a copy of the site
-restored to its state before this change: 99 checks, all passing.
+restored to its state before this change: 115 checks, all passing.
 
 - **App routes:** every mistake refused with a clear message, permissions, and the
   first-job hold surviving edits from the new and the old route.
@@ -6406,6 +6416,16 @@ restored to its state before this change: 99 checks, all passing.
 - **Website form:** errors shown once, typed answers kept, the edit redirect.
 - **Pages and markup:** the job page details, the Google markup, closed pages
   opening, reposting, and the 30 and 60 day "Still hiring?" questions.
+- **Found by re-checking and fixed:**
+  - a daily rate from an older app shown as a monthly one
+  - job type and qualification invented for jobs whose employer was never asked
+  - edits from the app wiping fields they left out
+  - a reposted job never asked "Still hiring?" again
+  - quotes in titles showing as codes in emails
+  - editing on a job's last day being refused
+  - impossible joining dates being accepted
+  - category names being stored in whichever language the first request after
+    upload happened to be in
 
 Every app answer and page was also recorded before and after. The only
 differences are the ones listed above, and all 102 existing trades reach the app
