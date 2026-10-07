@@ -1734,7 +1734,7 @@ if ( ! function_exists( 'kaamase_prof_shape' ) ) {
 				'phone'   => (string) kaamase_read_field( $id, 'phone' ),
 				'listed'  => (bool) get_post_meta( $id, KAAMASE_PROF_LISTED_KEY, true ),
 				'state'   => kaamase_prof_state( $id ),
-				'lookups' => function_exists( 'kaamase_contact_log' ) ? count( kaamase_contact_log( $id, 200 ) ) : 0,
+				'lookups' => kaamase_prof_lookups( $id ),
 			);
 		}
 
@@ -2485,6 +2485,37 @@ add_filter( 'rest_post_dispatch', 'kaamase_prof_in_reference', 12, 3 );
 /* ==========================================================================
    6. CONTACT, NOTIFICATIONS AND THE TICK
    ========================================================================== */
+
+if ( ! function_exists( 'kaamase_prof_lookups' ) ) {
+	/**
+	 * How many different people have been given this profile's number.
+	 *
+	 * People, not lookups. The log records every time the number is shown,
+	 * and an employer who opens it again to ring a second time is still
+	 * one employer. Covers what the log keeps: the last 200 lookups, and
+	 * nothing older than a year.
+	 *
+	 * @since 1.0.0
+	 * @param int $post_id Profile.
+	 * @return int
+	 */
+	function kaamase_prof_lookups( $post_id ) {
+
+		if ( ! function_exists( 'kaamase_contact_log' ) ) {
+			return 0;
+		}
+
+		$people = array();
+
+		foreach ( kaamase_contact_log( (int) $post_id, 200 ) as $entry ) {
+			if ( is_array( $entry ) && ! empty( $entry['user'] ) ) {
+				$people[ absint( $entry['user'] ) ] = true;
+			}
+		}
+
+		return count( $people );
+	}
+}
 
 if ( ! function_exists( 'kaamase_prof_contact_veto' ) ) {
 	/**
@@ -4015,7 +4046,7 @@ if ( ! function_exists( 'kaamase_prof_dashboard_card' ) ) {
 				<h2><?php esc_html_e( 'Your professional profile', 'kaamase-core' ); ?></h2>
 				<p class="ka-small ka-soft ka-mt-4"><?php echo esc_html( $states[ $state ] ); ?></p>
 				<?php
-				$looked = function_exists( 'kaamase_contact_log' ) ? count( kaamase_contact_log( $id, 200 ) ) : 0;
+				$looked = kaamase_prof_lookups( $id );
 
 				if ( $looked ) :
 					?>

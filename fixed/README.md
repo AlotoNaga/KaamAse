@@ -6613,7 +6613,9 @@ These are one-line changes, and each one falls back to the full list if
   is_mine, updated_at}`.
   - The single profile adds `about, institute, passed_year, jobs[], skills[],
     languages[{slug,name}]`.
-  - The owner's own adds `mine: {phone, listed, state, lookups}`.
+  - The owner's own adds `mine: {phone, listed, state, lookups}`. `lookups` is
+    how many different people were given the number (the last 200 lookups, up
+    to a year back). An employer who looks twice counts once.
 - Contact: the usual `POST /contact/{id}` with the profile's id. Accounts that do
   not hire get 403 `kaamase_prof_employers_only`, and a hidden profile gets 403
   `kaamase_prof_unavailable`.
@@ -6650,7 +6652,7 @@ Section 89 (`professional-jobs.php`) must already be uploaded: the categories
 come from it.
 
 Tested on WordPress 7.1.2 with LiteSpeed Cache and Rank Math active, on a copy of
-the site: 140 checks, all passing. They cover:
+the site: 141 checks, all passing. They cover:
 
 - **The app routes:** every mistake refused, edits that send one field, one
   profile per account, the email-confirmation wait.
