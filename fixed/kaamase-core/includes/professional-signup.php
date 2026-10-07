@@ -37,13 +37,15 @@
  * as it was.
  *
  * @package KaamaseCore
- * @version 1.0.1
+ * @version 1.0.2
  * @since   1.0.0
  *
  * Changelog
  *   1.0.1  A professional-only account is told job_alerts.available is
  *          false, so the installed apps do not offer a switch that could
  *          never send anything.
+ *   1.0.2  The confirmation email's line for a professional, used by
+ *          registration.php 1.6.1.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -291,6 +293,36 @@ if ( ! function_exists( 'kaamase_join_welcome' ) ) {
 			esc_html__( 'Your account is made', 'kaamase-core' ),
 			esc_html( $text )
 		);
+	}
+}
+
+
+if ( ! function_exists( 'kaamase_join_email_line' ) ) {
+	/**
+	 * The line in the confirmation email, for an account that joined as
+	 * a professional.
+	 *
+	 * The usual one says the profile goes live as soon as the email is
+	 * confirmed. A professional profile also has to be finished first, so
+	 * that would be a promise the next screen breaks.
+	 *
+	 * @since 1.0.2
+	 * @param int $user_id Account.
+	 * @return string The line, or nothing for every other account.
+	 */
+	function kaamase_join_email_line( $user_id ) {
+
+		if ( 'professional' !== (string) get_user_meta( (int) $user_id, KAAMASE_JOIN_KEY, true ) ) {
+			return '';
+		}
+
+		$prof_id = kaamase_join_ready() ? kaamase_prof_id( (int) $user_id ) : 0;
+
+		if ( $prof_id && function_exists( 'kaamase_prof_is_complete' ) && kaamase_prof_is_complete( $prof_id ) ) {
+			return __( 'Tap the link below to confirm your email address. Your professional profile is shown to employers as soon as you do.', 'kaamase-core' );
+		}
+
+		return __( 'Tap the link below to confirm your email address. Then finish your professional profile, and employers can see it.', 'kaamase-core' );
 	}
 }
 

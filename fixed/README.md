@@ -110,6 +110,8 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/off-google.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/professional-matches.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/professional-signup.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/how-seen.php` | `wp-content/plugins/kaamase-core/includes/how-seen.php` |
+| `fixed/kaamase-core/includes/mark-restore.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/header.php` | `wp-content/themes/kaamase/header.php` |
 
 `fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
@@ -7000,6 +7002,127 @@ differences are the three new keys in `/me`, `professional_join` in
 `/reference`, and the third choice on the register page. Nothing from Kaam Ase
 code appeared in the error log. Every new screen fits a phone with no sideways
 scroll.
+
+## 93. Four fixes: a job's missing number, two hidden dashboard cards, the professional email, and ticks to give back
+
+### "No phone number added" on jobs posted by workers who also hire (`hiring-request.php` 1.2.0 → 1.3.0)
+
+A job's number is the one typed on the job form or, when left blank, the
+number on the poster's employer profile ("Leave blank to use your account
+number"). For some accounts that employer profile had no number:
+
+- **Accounts that added hiring a long time ago.** An old typo, fixed before
+  these fixes began, meant the worker's number was never copied onto the new
+  employer profile. A repair existed, but it only ran when that person looked
+  up somebody else's number. Somebody who only posts jobs never triggered it.
+- **Hiring added with nobody signed in** (staff tools, imports). The copy used
+  a privacy-checked read that returned nothing.
+
+Their jobs were saved with no number. A worker who asked was told "This person
+has not added a phone number yet", and the lookup still counted against them.
+
+What changed:
+
+- **Every job already posted is mended.** When somebody asks for a job's number
+  and the job has none, they get the poster's own account number. It is taken
+  from the employer profile, else the profile they registered with, else their
+  other profiles. It goes through the same gate, daily count and log as any
+  number, on the website and in the app.
+- **Never a staff member's number.** Jobs that staff put up for somebody else,
+  and a staff account's own jobs, never get one. Jobs that take applications by
+  email keep the email.
+- **The employer profile is mended when they post.** So their next job is saved
+  with the number on it.
+- **The number is copied between a person's own profiles without the privacy
+  check,** whoever is signed in.
+
+Reproduced on the test site first. Adding hiring today (on the website, in the
+app, or by staff) already worked. The two cases above did not, and the old code
+fails exactly those checks.
+
+### Two dashboard cards workers never saw (`job-alerts.php` 1.1.0 → 1.1.1, `how-seen.php` 1.0.0 → 1.0.1)
+
+"Telling you about new work" (the everyday job alerts switch) and "How people
+find you" waited for the dashboard to say `kaamase_worker`. The dashboard says
+`worker`, so neither ever appeared.
+
+They now show to anybody with a worker profile, including an employer who also
+looks for work. The alerts card still only shows when job alerts are switched
+on for the site. `how-seen.php` is new to `fixed/`: it is the original with
+this one change.
+
+### The confirmation email for professionals (`registration.php` 1.6.0 → 1.6.1, `professional-signup.php` 1.0.1 → 1.0.2)
+
+The email said "Your profile goes live as soon as you do". A professional
+profile also has to be finished, so it now says so:
+
+- If the profile is not finished yet: "Then finish your professional profile,
+  and employers can see it."
+- If it is already finished when the email is sent again: "Your professional
+  profile is shown to employers as soon as you do."
+
+Every other account gets the same email, word for word.
+
+### Ticks to give back (`mark-restore.php`, new)
+
+A new screen under Kaam Ase in wp-admin, **Ticks to give back**. It lists the
+people whose tick came off for adding a side to their own account, before
+`mark-changes.php` 1.2.1 fixed it.
+
+**Only exact matches are listed:**
+
+- the tick came off because of a change, and nobody has rung them since;
+- everything that changed in that save was a phone number going from empty to
+  a number;
+- that number is on two or more of their own profiles today.
+
+**Left off, to be rung as usual:** anybody whose name or photograph changed in
+the same save, whose number changed to a different one, or whose number is now
+on only one profile.
+
+**"Give the tick back"** (one person, or all):
+
+- puts the call back on record, dated the day the tick came off, because the
+  original date was deleted then;
+- takes them off the call list;
+- clears the stored copies of their pages.
+
+The tick shows at once where their plan is running, and when they renew if
+not. Nothing happens until you press the button.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/hiring-request.php` | 1.2.0 → 1.3.0 |
+| `fixed/kaamase-core/includes/job-alerts.php` | 1.1.0 → 1.1.1 |
+| `fixed/kaamase-core/includes/how-seen.php` | 1.0.0 → 1.0.1 — **new to this folder** |
+| `fixed/kaamase-core/includes/registration.php` | 1.6.0 → 1.6.1 |
+| `fixed/kaamase-core/includes/professional-signup.php` | 1.0.1 → 1.0.2 |
+| `fixed/kaamase-core/includes/mark-restore.php` | 1.0.0 — **new file** |
+
+All six go to `wp-content/plugins/kaamase-core/includes/`. Then:
+
+1. Run **LiteSpeed Cache → Toolbox → Purge All**.
+2. Open **Kaam Ase → Ticks to give back** in wp-admin.
+
+Tested on the test copy of the site: 37 new checks, all passing.
+
+- **The job's number:** an old job, through the app and the website; the repair
+  on posting; hiring added with nobody signed in; a typed number winning;
+  staff-posted and staff jobs given nothing; email jobs.
+- **The two cards** for a worker, an employer, an employer who also works, a
+  professional, and with alerts switched off. The alerts button works.
+- **The emails** for a professional, a worker and a finished profile.
+- **Ticks to give back:** people put into the state the live site is in by the
+  old tick rules. Only the right ones listed, one and all given back, a stale
+  page, and somebody who is not staff refused.
+
+The earlier suites still pass: Part C 107, professional profiles 141,
+professional jobs 115, tick 14, Google switch 25.
+
+Before and after, every app answer and page is the same except a worker's
+dashboard, which gains exactly the two cards. Nothing appeared in the error log.
 
 ## Not changed, and why
 

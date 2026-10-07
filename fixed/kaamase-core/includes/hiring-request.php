@@ -47,8 +47,17 @@
  * leaves the worker profile, the ratings and the login untouched.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.1.0
+ *
+ * Changelog
+ *   1.3.0  A job posted with no number of its own gives the poster's
+ *          account number when somebody asks for it, as the job form
+ *          promises ("Leave blank to use your account number"). Jobs
+ *          staff put up for somebody else are never given one. The
+ *          number is copied between a person's own profiles without the
+ *          privacy check that hid it when nobody, or staff, was signed
+ *          in, and the old repair also runs when a job is posted.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -415,10 +424,18 @@ if ( ! function_exists( 'kaamase_ensure_employer_profile' ) ) {
 		 */
 		$worker_id = (int) get_user_meta( $user_id, 'kaamase_profile_id', true );
 
-		if ( $worker_id && function_exists( 'kaamase_field' ) ) {
+		/*
+		 * Read as stored, not through kaamase_field(), which hands a phone
+		 * number only to somebody allowed to see it: the owner or an
+		 * administrator. Hiring can be added with neither signed in, and
+		 * then the number came back empty and the new profile had none.
+		 * Copying a person's number between their own two profiles shows
+		 * it to nobody.
+		 */
+		if ( $worker_id && function_exists( 'kaamase_read_field' ) ) {
 
-			$phone    = (string) kaamase_field( $worker_id, 'phone', '' );
-			$district = (string) kaamase_field( $worker_id, 'district', '' );
+			$phone    = (string) kaamase_read_field( $worker_id, 'phone' );
+			$district = (string) kaamase_read_field( $worker_id, 'district' );
 
 			if ( '' !== $phone ) {
 				kaamase_save_field( $post_id, 'phone', $phone );
@@ -790,7 +807,7 @@ if ( ! function_exists( 'kaamase_repair_employer_phone' ) ) {
 
 		$user_id = (int) $user_id;
 
-		if ( ! $user_id || ! function_exists( 'kaamase_field' ) ) {
+		if ( ! $user_id || ! function_exists( 'kaamase_read_field' ) ) {
 			return;
 		}
 
@@ -800,7 +817,8 @@ if ( ! function_exists( 'kaamase_repair_employer_phone' ) ) {
 			return;
 		}
 
-		if ( '' !== trim( (string) kaamase_field( $employer, 'phone', '' ) ) ) {
+		// As stored. See kaamase_ensure_employer_profile() for why not kaamase_field().
+		if ( '' !== trim( (string) kaamase_read_field( $employer, 'phone' ) ) ) {
 			return;
 		}
 
@@ -810,7 +828,7 @@ if ( ! function_exists( 'kaamase_repair_employer_phone' ) ) {
 			return;
 		}
 
-		$phone = (string) kaamase_field( $worker, 'phone', '' );
+		$phone = (string) kaamase_read_field( $worker, 'phone' );
 
 		if ( '' === trim( $phone ) ) {
 			return;
@@ -819,6 +837,135 @@ if ( ! function_exists( 'kaamase_repair_employer_phone' ) ) {
 		kaamase_save_field( $employer, 'phone', $phone );
 	}
 }
+
+if ( ! function_exists( 'kaamase_repair_on_job_saved' ) ) {
+	/**
+	 * The same repair when somebody posts a job.
+	 *
+	 * Asking for a number was the only thing that ran it, and somebody
+	 * who only posts jobs never asks. Their jobs went up with no number
+	 * on them, because a job with none typed takes the employer
+	 * profile's, and that was the profile missing it. Mended here, so
+	 * the next job they post carries it.
+	 *
+	 * @since 1.3.0
+	 * @param int $job_id Job ID.
+	 * @return void
+	 */
+	function kaamase_repair_on_job_saved( $job_id ) {
+
+		$author = (int) get_post_field( 'post_author', (int) $job_id );
+
+		if ( $author ) {
+			kaamase_repair_employer_phone( $author );
+		}
+	}
+}
+add_action( 'kaamase_job_saved', 'kaamase_repair_on_job_saved', 20, 1 );
+
+if ( ! function_exists( 'kaamase_account_phone' ) ) {
+	/**
+	 * A person's own number, from whichever of their profiles has one.
+	 *
+	 * The employer profile first, because that is the one a job uses,
+	 * then the profile they registered with, then any other they have.
+	 *
+	 * @since 1.3.0
+	 * @param int $user_id Account.
+	 * @return string The number, or an empty string.
+	 */
+	function kaamase_account_phone( $user_id ) {
+
+		$user_id = (int) $user_id;
+
+		if ( ! $user_id || ! function_exists( 'kaamase_read_field' ) || ! function_exists( 'kaamase_get_user_profile' ) ) {
+			return '';
+		}
+
+		$profiles = array(
+			(int) kaamase_get_user_profile( $user_id, 'kaamase_employer' ),
+			(int) get_user_meta( $user_id, 'kaamase_profile_id', true ),
+			(int) kaamase_get_user_profile( $user_id, 'kaamase_worker' ),
+			function_exists( 'kaamase_prof_id' ) ? (int) kaamase_prof_id( $user_id ) : 0,
+		);
+
+		foreach ( array_unique( array_filter( $profiles ) ) as $profile ) {
+
+			// Only the account's own profiles, whatever a stored ID says.
+			if ( (int) get_post_field( 'post_author', $profile ) !== $user_id ) {
+				continue;
+			}
+
+			$phone = function_exists( 'kaamase_sanitize_phone' )
+				? kaamase_sanitize_phone( (string) kaamase_read_field( $profile, 'phone' ) )
+				: trim( (string) kaamase_read_field( $profile, 'phone' ) );
+
+			if ( '' !== $phone ) {
+				return $phone;
+			}
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_job_account_number' ) ) {
+	/**
+	 * A job posted with no number of its own gives the poster's.
+	 *
+	 * The job form says "Leave blank to use your account number", and a
+	 * job keeps whatever number its poster's employer profile had at the
+	 * moment it was posted. For an account whose employer profile was
+	 * missing its number then, that was nothing, and every worker who
+	 * asked was told no number had been added -- after the lookup was
+	 * counted against them.
+	 *
+	 * Worked out when somebody asks, so every job already posted is
+	 * mended too, through the same gate, count and log as any number.
+	 *
+	 * Never for a job staff put up for somebody else (posted-for.php):
+	 * that job's number is the hirer's or nobody's, and filling in the
+	 * staff member's own would hand out the wrong person's phone. Never
+	 * for a staff account's own job either, for the same reason. A job
+	 * that takes applications by email is left to the email.
+	 *
+	 * Runs before the email filters (posted-for.php at 10,
+	 * professional-jobs.php at 11), which still clear the number for an
+	 * email job.
+	 *
+	 * @since 1.3.0
+	 * @param array $channel Channel details.
+	 * @param int   $post_id Profile or job ID.
+	 * @return array
+	 */
+	function kaamase_job_account_number( $channel, $post_id ) {
+
+		if ( ! is_array( $channel ) || '' !== (string) ( $channel['number'] ?? '' ) || '' !== (string) ( $channel['email'] ?? '' ) ) {
+			return $channel;
+		}
+
+		$post = get_post( (int) $post_id );
+
+		if ( ! $post || 'kaamase_job' !== $post->post_type ) {
+			return $channel;
+		}
+
+		if ( function_exists( 'kaamase_job_is_posted_for' ) && kaamase_job_is_posted_for( $post->ID ) ) {
+			return $channel;
+		}
+
+		$author = (int) $post->post_author;
+
+		if ( ! $author || user_can( $author, 'edit_others_kaamase_jobs' ) || user_can( $author, 'manage_options' ) ) {
+			return $channel;
+		}
+
+		$channel['number'] = kaamase_account_phone( $author );
+
+		return $channel;
+	}
+}
+add_filter( 'kaamase_contact_channel', 'kaamase_job_account_number', 5, 2 );
 
 /**
  * Repair before the contact rules are applied, not after.

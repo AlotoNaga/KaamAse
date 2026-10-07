@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.6.0
+ * @version 1.6.1
  * @since   1.0.0
  *
  * Changelog
@@ -41,6 +41,8 @@
  *   1.6.0  A third door, "I'm a professional", when professional-signup.php
  *          is present and switched on. Worker and employer registration
  *          are unchanged.
+ *   1.6.1  The confirmation email no longer tells a professional their
+ *          profile goes live on confirming: it also has to be finished.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -857,7 +859,10 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 					__( 'Hello %s,', 'kaamase-core' ),
 					$user->display_name
 				),
-				__( 'Tap the link below to confirm your email address. Your profile goes live as soon as you do.', 'kaamase-core' ),
+				// A professional profile also has to be finished first. See professional-signup.php.
+				( function_exists( 'kaamase_join_email_line' ) && '' !== kaamase_join_email_line( $user_id ) )
+					? kaamase_join_email_line( $user_id )
+					: __( 'Tap the link below to confirm your email address. Your profile goes live as soon as you do.', 'kaamase-core' ),
 				$link,
 				__( 'If you did not create this account, ignore this message and nothing will happen.', 'kaamase-core' ),
 				sprintf(

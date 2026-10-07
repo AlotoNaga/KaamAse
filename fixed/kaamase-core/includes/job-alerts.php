@@ -50,8 +50,12 @@
  * opens the list for the trade and district.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.1.1
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.1.1  The switch on the website dashboard shows again. It checked
+ *          for kaamase_worker, and the dashboard says worker.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -570,7 +574,16 @@ if ( ! function_exists( 'kaamase_alerts_card' ) ) {
 
 		unset( $profile );
 
-		if ( ! in_array( $type, array( 'kaamase_worker', 'kaamase_gang' ), true ) ) {
+		/*
+		 * The dashboard names the side, worker or employer, not the post
+		 * type, so this waited for a name it was never given and the card
+		 * never showed. Shown to anybody with a worker profile, the kind
+		 * these alerts go to, whichever side they registered as.
+		 */
+		$works = in_array( $type, array( 'worker', 'kaamase_worker', 'kaamase_gang' ), true )
+			|| ( function_exists( 'kaamase_has_worker_side' ) && kaamase_has_worker_side( (int) $user_id ) );
+
+		if ( ! $works ) {
 			return;
 		}
 
