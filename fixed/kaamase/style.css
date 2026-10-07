@@ -4,7 +4,7 @@ Theme URI: https://kaamase.com
 Author: Nagaland Me
 Author URI: https://nagaland.me
 Description: Hiring platform theme for Kaam Ase. Built for Nagaland. Mobile first, works on slow connections, no external fonts, no external requests. Presentation layer only. All data structures live in the kaamase-core plugin.
-Version: 1.13.0
+Version: 1.14.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
@@ -960,6 +960,19 @@ table { border-collapse: collapse; width: 100%; }
 @media (min-width: 900px) {
   .ka-nav { display: block; }
   .ka-menu-toggle { display: none; }
+}
+
+/* The orange Post a job button stands beside this bar from the width at
+   which the bar appears, so the bar does not say it a second time. The
+   phone drawer is not .ka-nav and keeps its link. The room it leaves is
+   what Professional jobs needed to fit without the links breaking onto
+   two lines. */
+.ka-nav .ka-nav__link[href$="/post-job/"] { display: none; }
+
+/* Between a tablet and a wide screen the bar is tight; a little less
+   space inside each link keeps it on one line. */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .ka-nav .ka-nav__link { padding: 0 var(--ka-2); }
 }
 
 .ka-menu-toggle {
@@ -2338,6 +2351,44 @@ body.has-tabbar .ka-actionbar {
 .ka-prose > .ka-stack--lg,
 .ka-prose > .ka-section,
 .ka-prose > .ka-filters { max-width: none; }
+
+/* Nor give them the look of a written page.
+
+   The rules above are for lists and headings somebody wrote. The account
+   pages, the trade and district lists and the report forms are drawn
+   into the same content, and were picking them up: a bullet beside every
+   job in My jobs and every language button, cards pushed right by the
+   list indent, the language buttons stepped down one after another, and
+   a blank band above the title of every card.
+
+   Only lists that are a layout -- the stack, cluster and grid helpers and
+   the few named lists below -- are given their own spacing back. A plain
+   list, written on a page or used for a short checklist, keeps its
+   bullets exactly as before. */
+.ka-prose :is(ul, ol):is(.ka-stack, .ka-cluster, .ka-grid, .ka-lang__list, .ka-how__list, .kp-history) { padding-left: 0; }
+
+.ka-prose :is(ul, ol):is(.ka-stack, .ka-cluster, .ka-grid, .ka-lang__list, .ka-how__list, .kp-history) > li { list-style: none; }
+
+/* Rows and grids space their items with gap; a top margin only knocks
+   the second and later ones out of line. */
+.ka-prose :is(ul, ol):is(.ka-cluster, .ka-grid, .ka-lang__list, .ka-how__list, .kp-history) > li + li { margin-top: 0; }
+
+/* A stack keeps the spacing it asks for. */
+.ka-prose :is(ul, ol).ka-stack > li + li { margin-top: var(--ka-4); }
+.ka-prose :is(ul, ol).ka-stack--sm > li + li { margin-top: var(--ka-2); }
+.ka-prose :is(ul, ol).ka-stack--lg > li + li { margin-top: var(--ka-6); }
+
+/* A card's padding is its top margin. Its first heading needs no more,
+   and every card title on a page is the same size. A title that names
+   its own size with ka-text-lg gets that size, as it does everywhere
+   else. */
+.ka-prose .ka-card :is(h2, h3, h4):first-child { margin-top: 0; }
+.ka-prose .ka-card h2:not([class]) { font-size: var(--ka-text-xl); }
+.ka-prose .ka-card h2.ka-text-lg { font-size: var(--ka-text-lg); }
+
+/* A title that is a link is as bold as the title, as it is on the jobs
+   list. */
+.ka-prose :is(h2, h3, h4) > a { font-weight: inherit; }
 
 .ka-page__media { margin: 0; }
 .ka-page__image { width: 100%; border-radius: var(--ka-radius-lg); }

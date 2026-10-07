@@ -29,10 +29,15 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.9.1
+ * @version 1.9.2
  * @since   1.3.0
  *
  * Changelog
+ *   1.9.2  A closed job opened from a shared link says why it closed
+ *          ("This job has been filled. Somebody was hired for it before
+ *          you.") instead of "That link does not lead anywhere any
+ *          more.". The status and code each route answers with are
+ *          unchanged, so apps already installed read it as before.
  *   1.9.1  /auth/register also takes type "professional" with a category,
  *          when professional-signup.php is present and switched on.
  */
@@ -1557,7 +1562,11 @@ if ( ! function_exists( 'kaamase_rest_job' ) ) {
 		 */
 		if ( ! kaamase_job_is_open( $id ) && ! current_user_can( 'edit_post', $id ) ) {
 			return kaamase_rest_error(
-				new WP_Error( 'kaamase_job_closed', __( 'This job has closed. It was probably filled.', 'kaamase-core' ), array( 'status' => 410 ) )
+				new WP_Error(
+					'kaamase_job_closed',
+					function_exists( 'kaamase_closed_jobs_message' ) ? kaamase_closed_jobs_message( $id ) : __( 'This job has closed. It was probably filled.', 'kaamase-core' ),
+					array( 'status' => 410 )
+				)
 			);
 		}
 
@@ -2025,8 +2034,39 @@ if ( ! function_exists( 'kaamase_rest_by_slug' ) ) {
 		);
 
 		if ( empty( $found ) ) {
+
+			$message = __( 'That link does not lead anywhere any more.', 'kaamase-core' );
+
+			/*
+			 * A job link that finds nothing open is nearly always a job
+			 * that closed: a closed job keeps its address but leaves the
+			 * published status, so the lookup above cannot see it. Say
+			 * why it closed, as the job's own page does. Still the same
+			 * 404 and code as before, so every app reads it as it always
+			 * has; only the words change. Nothing about the job is
+			 * returned.
+			 */
+			if ( array( 'kaamase_job' ) === $types && function_exists( 'kaamase_closed_jobs_message' ) ) {
+
+				$closed = get_posts(
+					array(
+						'name'             => $slug,
+						'post_type'        => 'kaamase_job',
+						'post_status'      => 'kaamase_closed',
+						'posts_per_page'   => 1,
+						'no_found_rows'    => true,
+						'suppress_filters' => false,
+						'fields'           => 'ids',
+					)
+				);
+
+				$message = $closed
+					? kaamase_closed_jobs_message( (int) $closed[0] )
+					: kaamase_closed_jobs_gone_message();
+			}
+
 			return kaamase_rest_error(
-				new WP_Error( 'kaamase_not_found', __( 'That link does not lead anywhere any more.', 'kaamase-core' ), array( 'status' => 404 ) )
+				new WP_Error( 'kaamase_not_found', $message, array( 'status' => 404 ) )
 			);
 		}
 
@@ -2036,7 +2076,11 @@ if ( ! function_exists( 'kaamase_rest_by_slug' ) ) {
 
 			if ( ! kaamase_job_is_open( $post->ID ) && ! current_user_can( 'edit_post', $post->ID ) ) {
 				return kaamase_rest_error(
-					new WP_Error( 'kaamase_job_closed', __( 'This job has closed. It was probably filled.', 'kaamase-core' ), array( 'status' => 410 ) )
+					new WP_Error(
+						'kaamase_job_closed',
+						function_exists( 'kaamase_closed_jobs_message' ) ? kaamase_closed_jobs_message( $post->ID ) : __( 'This job has closed. It was probably filled.', 'kaamase-core' ),
+						array( 'status' => 410 )
+					)
 				);
 			}
 

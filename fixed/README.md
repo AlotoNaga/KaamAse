@@ -113,6 +113,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/how-seen.php` | `wp-content/plugins/kaamase-core/includes/how-seen.php` |
 | `fixed/kaamase-core/includes/mark-restore.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/header.php` | `wp-content/themes/kaamase/header.php` |
+| `fixed/kaamase-core/includes/closed-jobs.php` | `wp-content/plugins/kaamase-core/includes/closed-jobs.php` |
 
 `fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
 copy, but a snippet that replaces the one in the WPCode plugin. See section 26.
@@ -7177,6 +7178,127 @@ Nothing appeared in the error log.
 **For the apps:** no change needed. `complete` is now false only for a profile
 begun at sign-up and never saved. A save without `listed` shows the profile
 only on that first save, and keeps the owner's choice on every save after it.
+
+## 95. Step 1 polish, part 1: closed jobs, account page styling, and Professional jobs in the menu
+
+### A closed job opened from a shared link (`closed-jobs.php` 1.1.0 → 1.2.0, `rest-api.php` 1.9.1 → 1.9.2, theme `single-kaamase_job.php` 1.1.0 → 1.2.0)
+
+**In the app.** A job shared on WhatsApp keeps its link after it closes. When
+somebody opened that link in the app months later, the app asked for the job by
+its link, found nothing open and was told **"That link does not lead anywhere
+any more."** That happened for every closed job. A closed job keeps its address
+but leaves the published list, so the lookup could not see it.
+
+It now says why the job closed, and what that means for the reader:
+
+| The job | What the app now says |
+| --- | --- |
+| Marked filled | This job has been filled. Somebody was hired for it before you. |
+| Closed by the employer | The employer has closed this job. They are no longer taking anybody for it. |
+| Ran out | This job ran out on *(its date)*. It is no longer taking anybody. |
+| Deleted | This job is no longer on Kaam Ase. It has probably been filled, or the employer closed it. |
+
+The app's own heading ("This job has closed") and its "See open jobs" button
+stay as they are. **No app update is needed:** each answer keeps the same
+status and code as before, so every app version already on phones reads it the
+same way. Only the words change.
+
+**On the website** the same closed job page:
+
+- says it is closed **first, above the pay**. Before, the pay, "Workers wanted"
+  and the employer came first and the closed notice sat below them;
+- no longer shows **"Closes in 14 days"** on a job that was already filled;
+- no longer shows **"Before you agree"**, which is advice for taking a job;
+- says the same kinder line as the app. The employer looking at their own closed
+  job still sees the line they always had.
+
+**Languages.** The reason sentences were already in Hindi and Nagamese, and they
+are used as they are. The new second sentences are English. A Hindi or Nagamese
+reader gets the full message they had before, never half one language and half
+the other, until the new sentences are translated. The language files were not
+touched.
+
+### Account pages looking like an article (theme `style.css` 1.13.0 → 1.14.0)
+
+The dashboard, the payment history ("What I have paid"), the trades and
+districts lists and the report forms are drawn inside the page's content. They
+were picking up the styles meant for written pages:
+
+- a bullet dot beside every job in My jobs, every language button and every
+  district;
+- cards and the payment rows pushed in from the left;
+- the language buttons stepped down one after another;
+- a large blank band above the title of every card;
+- card titles in two different sizes.
+
+Now:
+
+- Lists that are a layout lose the bullets and the indent. A plain list keeps its
+  bullets: the Privacy, Terms, Safety and How it works pages, and the short
+  "what is missing" checklists.
+- Card titles have no blank band above them and are one size.
+- A job or district title that is a link is bold like the title around it, as on
+  the jobs list.
+
+Checked by recording the computed look of every element on 156 page views (28
+pages, four kinds of account, phone and desktop) before and after:
+
+- The Privacy, Terms, Safety, How it works, About, Help and Contact pages, the
+  jobs list, job pages and the home page did not change at all.
+- Every change is on the account pages, trades, districts, report and grievance
+  forms, Jobs for you, the Professionals list and the empty-list cards.
+
+### Professional jobs in the menu (theme `inc/setup.php` 1.2.0 → 1.3.0, `style.css`)
+
+The header and the phone menu now read: Find workers · Find work · **Professional
+jobs** · Post a job · Rich Manu. The link goes to `/trade/professional-jobs/`. It
+is asked of the core plugin, so it goes away by itself if professional jobs ever
+do.
+
+On a computer screen the bar's own "Post a job" text link is hidden, because the
+orange **Post a job** button is right beside it. The phone menu keeps its
+link. That is what lets the new link fit: from 950 pixels up, the bar stays on
+one line exactly as before. At exactly 900 pixels, signed in, the logo wrapped
+before this change and still does.
+
+If a menu is ever set in Appearance → Menus, the link is added to it too, and
+never twice if it is already there. This is the same as Who is hiring.
+
+The label "Professional jobs" is English in Hindi and Nagamese until translated,
+like the category names.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/closed-jobs.php` | 1.1.0 → 1.2.0 — **new to this folder** |
+| `fixed/kaamase-core/includes/rest-api.php` | 1.9.1 → 1.9.2 |
+| `fixed/kaamase/single-kaamase_job.php` | 1.1.0 → 1.2.0 |
+| `fixed/kaamase/inc/setup.php` | 1.2.0 → 1.3.0 |
+| `fixed/kaamase/style.css` | 1.13.0 → 1.14.0 |
+
+The two plugin files go to `wp-content/plugins/kaamase-core/includes/`. The three
+theme files go to `wp-content/themes/kaamase/`, with `setup.php` inside `inc/`.
+Then run **LiteSpeed Cache → Toolbox → Purge All**.
+
+The new theme version makes phones fetch the new stylesheet rather than the copy
+they already have. Any order of upload is safe: an older plugin with the new
+theme keeps the closed notice where it was, and the reverse does the same.
+
+**Tested on the test copy of the site:**
+
+- Closed jobs: filled, ran out, closed by the employer and deleted, in English,
+  Hindi and Nagamese, through both app routes and the website. The owner's view
+  was checked too. The notice shows once.
+- Before and after, every app answer and page is the same except the closed-job
+  messages, the closed job pages and the new menu link.
+- The earlier suites still pass: the fixes 45, Part C 107, professional profiles
+  141, professional jobs 115, tick 14, Google switch 25.
+- Nothing appeared in the error log.
+
+**For the app (optional, later):** the message under "This job has closed" now
+explains itself. If the app ever wants its own heading per case, the reply for a
+closed job opened by id still has the code `kaamase_job_closed`.
 
 ## Not changed, and why
 

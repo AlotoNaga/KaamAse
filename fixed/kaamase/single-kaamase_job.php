@@ -17,8 +17,11 @@
  * The closing date is stated plainly. A job board where nothing visibly
  * closes is a job board full of work that was filled three weeks ago.
  *
+ * A closed job says so first, above the pay, and drops what only an
+ * open job needs: the days left and the advice for agreeing terms.
+ *
  * @package Kaamase
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.1.0
  */
 
@@ -43,6 +46,7 @@ while ( have_posts() ) :
 	$kaamase_employer  = absint( kaamase_field( $kaamase_id, 'employer_id' ) );
 	$kaamase_expires   = absint( kaamase_field( $kaamase_id, 'expires' ) );
 	$kaamase_owner     = function_exists( 'kaamase_user_owns' ) && kaamase_user_owns( $kaamase_id );
+	$kaamase_closed    = function_exists( 'kaamase_job_is_open' ) && ! kaamase_job_is_open( $kaamase_id );
 
 	$kaamase_days_left = $kaamase_expires
 		? (int) ceil( ( $kaamase_expires - time() ) / DAY_IN_SECONDS )
@@ -117,6 +121,26 @@ while ( have_posts() ) :
 			</header>
 
 			<?php
+			/*
+			 * Closed: said before anything else, so somebody who followed
+			 * an old link knows before they read a wage they cannot have.
+			 * The core plugin writes it; an older plugin without this
+			 * function still puts it at the top of the description.
+			 */
+			$kaamase_closed_box = ( $kaamase_closed && function_exists( 'kaamase_closed_jobs_box' ) )
+				? kaamase_closed_jobs_box( $kaamase_id )
+				: '';
+
+			if ( '' !== $kaamase_closed_box ) :
+				?>
+				<div class="ka-mt-6">
+					<?php echo $kaamase_closed_box; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped where it is built. ?>
+				</div>
+				<?php
+			endif;
+			?>
+
+			<?php
 			/* ----------------------------------------------------------
 			 * Pay. The headline.
 			 * -------------------------------------------------------- */
@@ -184,7 +208,7 @@ while ( have_posts() ) :
 					</div>
 				<?php endif; ?>
 
-				<?php if ( $kaamase_days_left > 0 ) : ?>
+				<?php if ( $kaamase_days_left > 0 && ! $kaamase_closed ) : ?>
 					<div class="ka-fact">
 						<p class="ka-fact__label"><?php esc_html_e( 'Closes in', 'kaamase' ); ?></p>
 						<p class="ka-fact__value">
@@ -258,7 +282,8 @@ while ( have_posts() ) :
 			 * because this is the moment somebody is about to agree to
 			 * work for a stranger.
 			 * -------------------------------------------------------- */
-			?>
+			if ( ! $kaamase_closed ) :
+				?>
 			<aside class="ka-notice ka-notice--warn ka-mt-6">
 				<div>
 					<span class="ka-notice__title"><?php esc_html_e( 'Before you agree', 'kaamase' ); ?></span>
@@ -269,6 +294,9 @@ while ( have_posts() ) :
 					</a>
 				</div>
 			</aside>
+				<?php
+			endif;
+			?>
 
 		</article>
 

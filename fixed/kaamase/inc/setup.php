@@ -13,8 +13,12 @@
  * between a page that loads and a page that gets abandoned.
  *
  * @package Kaamase
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.3.0  Professional jobs in the header and the drawer, after Find
+ *          work, while the core plugin has professional jobs.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -633,6 +637,69 @@ if ( ! function_exists( 'kaamase_hiring_menu_item' ) ) {
 }
 add_filter( 'wp_nav_menu_items', 'kaamase_hiring_menu_item', 10, 2 );
 
+if ( ! function_exists( 'kaamase_menu_professional_url' ) ) {
+	/**
+	 * Where the professional jobs are listed, or empty.
+	 *
+	 * Asked of the core plugin rather than written in, like the paid plan
+	 * below: the heading the professional categories sit under is the
+	 * plugin's, and if the plugin is older, switched off, or the heading
+	 * has been removed, the link goes rather than leading nowhere.
+	 *
+	 * @since 1.3.0
+	 * @return string
+	 */
+	function kaamase_menu_professional_url() {
+
+		if ( ! defined( 'KAAMASE_PRO_GROUP' ) || ! taxonomy_exists( 'kaamase_trade' ) ) {
+			return '';
+		}
+
+		$link = get_term_link( (string) KAAMASE_PRO_GROUP, 'kaamase_trade' );
+
+		return is_string( $link ) ? $link : '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_professional_menu_item' ) ) {
+	/**
+	 * Put Professional jobs into an assigned header or drawer menu.
+	 *
+	 * For the same reason as Who is hiring above: the fallback below
+	 * carries it, and an assigned menu would otherwise lose it.
+	 *
+	 * @since 1.3.0
+	 * @param string   $items The menu HTML so far.
+	 * @param stdClass $args  wp_nav_menu arguments.
+	 * @return string
+	 */
+	function kaamase_professional_menu_item( $items, $args ) {
+
+		$location = isset( $args->theme_location ) ? (string) $args->theme_location : '';
+
+		if ( ! in_array( $location, array( 'primary', 'mobile' ), true ) ) {
+			return $items;
+		}
+
+		$url = kaamase_menu_professional_url();
+
+		// Not available, or already added by hand.
+		if ( '' === $url || false !== strpos( $items, esc_url( $url ) ) ) {
+			return $items;
+		}
+
+		$stack = ( isset( $args->walker_style ) && 'stack' === $args->walker_style );
+
+		return $items . sprintf(
+			'<li class="ka-nav__item"><a class="%1$s" href="%2$s"><span class="ka-nav__text">%3$s</span></a></li>',
+			esc_attr( $stack ? 'ka-nav__link ka-nav__link--stack' : 'ka-nav__link' ),
+			esc_url( $url ),
+			esc_html__( 'Professional jobs', 'kaamase' )
+		);
+	}
+}
+add_filter( 'wp_nav_menu_items', 'kaamase_professional_menu_item', 10, 2 );
+
 if ( ! function_exists( 'kaamase_menu_fallback' ) ) {
 	/**
 	 * Render a minimal menu when no menu is assigned to a location.
@@ -642,10 +709,26 @@ if ( ! function_exists( 'kaamase_menu_fallback' ) ) {
 	 */
 	function kaamase_menu_fallback() {
 		$links = array(
-			home_url( '/workers/' )  => __( 'Find workers', 'kaamase' ),
-			home_url( '/jobs/' )     => __( 'Find work', 'kaamase' ),
-			home_url( '/post-job/' ) => __( 'Post a job', 'kaamase' ),
+			home_url( '/workers/' ) => __( 'Find workers', 'kaamase' ),
+			home_url( '/jobs/' )    => __( 'Find work', 'kaamase' ),
 		);
+
+		/*
+		 * Professional jobs, after Find work.
+		 *
+		 * Office, bank, school and hospital jobs are in the jobs list
+		 * too, but somebody looking for one should not have to know
+		 * that, or which filter finds them.
+		 *
+		 * @since 1.3.0
+		 */
+		$professional = kaamase_menu_professional_url();
+
+		if ( '' !== $professional ) {
+			$links[ $professional ] = __( 'Professional jobs', 'kaamase' );
+		}
+
+		$links[ home_url( '/post-job/' ) ] = __( 'Post a job', 'kaamase' );
 
 		/*
 		 * Who is hiring, for signed in people only.
