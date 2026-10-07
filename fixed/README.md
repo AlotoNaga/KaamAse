@@ -101,6 +101,17 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/templates/professional.php` | `wp-content/plugins/kaamase-core/templates/` **(new folder)** |
 | `fixed/kaamase-core/includes/profile-edit.php` | `wp-content/plugins/kaamase-core/includes/profile-edit.php` |
 | `fixed/kaamase-core/includes/teams.php` | `wp-content/plugins/kaamase-core/includes/teams.php` |
+| `fixed/kaamase-core/includes/hiring-request.php` | `wp-content/plugins/kaamase-core/includes/hiring-request.php` |
+| `fixed/kaamase-core/includes/job-screening.php` | `wp-content/plugins/kaamase-core/includes/job-screening.php` |
+| `fixed/kaamase-core/includes/rich-manu.php` | `wp-content/plugins/kaamase-core/includes/rich-manu.php` |
+| `fixed/kaamase-core/includes/schema.php` | `wp-content/plugins/kaamase-core/includes/schema.php` |
+| `fixed/kaamase-core/includes/locale.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/mark-changes.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/off-google.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase/header.php` | `wp-content/themes/kaamase/header.php` |
+
+`fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
+copy, but a snippet that replaces the one in the WPCode plugin. See section 26.
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -6675,6 +6686,85 @@ differences are the new keys in `/me` and `/reference`, the two new pages, the
 dashboard card, and the professional categories gone from the worker sign-up,
 worker profile and team forms. Nothing from Kaam Ase code appeared in the error
 log, and every new page fits a phone screen with no sideways scroll.
+
+## 91. Two fixes: the tick kept when adding a side, and "Show my profile on Google"
+
+### The tick is no longer lost for adding a side (`mark-changes.php` 1.2.0 → 1.2.1)
+
+Somebody with the tick lost it, and was put back in the queue to be rung, for
+any of these:
+
+- an employer tapping "I also look for work";
+- a worker adding hiring;
+- the automatic repair that puts a missing phone number back on an employer
+  profile;
+- listing a team with their own number.
+
+Each of these copies the person's own number onto another profile of theirs, and
+the tick rules counted that as a changed number.
+
+Now a profile getting its first number is not counted as a change when that
+number is already on one of the same account's other profiles. Everything else
+still takes the tick off, exactly as before:
+
+- a different number;
+- any change to a number a profile already had;
+- a changed name or photograph.
+
+Somebody who lost the tick this way before the fix can be found in your email.
+Look for a "Tick came off" message whose only line is the phone number going from
+empty ("") to the number they already had. Give them the tick back by hand if
+you want to.
+
+### "Show my profile on Google" (`off-google.php`, new)
+
+Profiles stay on Google by default. A new card on the dashboard, "Your profile
+on Google", has one tick box. Unticking it does three things for every profile
+page of that account (worker, team, employer and a public professional profile):
+
+- the page asks search engines not to list it or its photograph (`noindex,
+  noimageindex`, as a tag and as a header);
+- it leaves the Rank Math and WordPress sitemaps;
+- the stored copies are cleared at once.
+
+Nothing else changes. They are still in every list on Kaam Ase, employers still
+reach them the same way, and shared links still show their preview.
+
+The card says plainly what it cannot do: Google takes a few weeks to drop a page
+it already shows, and a list of many people can still show their name.
+
+The account pages (dashboard, saved, my team) were left as they are. Google only
+ever sees a "Sign in" screen on them.
+
+**For the app:**
+
+- `GET /me` has `on_google` (`true` unless they switched it off).
+- `POST /me/google` with `{show: true|false}` answers `{on_google}`.
+- `show` is required, so a tap sent twice cannot undo itself. Without it the
+  answer is 400 `kaamase_bad_value`.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/mark-changes.php` | 1.2.0 → 1.2.1 |
+| `fixed/kaamase-core/includes/off-google.php` | 1.0.0 — **new file** |
+
+Both go to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed
+Cache → Toolbox → Purge All**.
+
+Tested on the test copy of the site:
+
+- **The tick:** 14 checks. Each way of adding a side, the phone repair, teams,
+  and that real changes still take the tick off. The old file fails exactly the
+  ones that should fail.
+- **The Google switch:** 25 checks. Default on; the website switch and the app
+  route; robots and sitemaps for all four kinds of profile; somebody else's
+  profile untouched; still listed on Kaam Ase.
+- **Earlier suites:** the 141 professional profile checks and the 115
+  professional job checks still pass.
+- **Before and after:** the only differences are the new `on_google` in `/me`
+  and the new card. Nothing appeared in the error log.
 
 ## Not changed, and why
 

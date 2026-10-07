@@ -62,7 +62,7 @@
  * name loses the tick and keeps every day of the plan they paid for.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.2.1
  * @since   1.12.0
  */
 
@@ -394,6 +394,11 @@ if ( ! function_exists( 'kaamase_mark_watch_meta' ) ) {
 			return;
 		}
 
+		// A profile getting its first number, which is the account's own. See below.
+		if ( 'phone' === $what && '' === trim( (string) $old ) && kaamase_mark_is_own_number( $post, $value ) ) {
+			return;
+		}
+
 		kaamase_mark_noticed( $post, $what, $old, $value );
 	}
 }
@@ -435,10 +440,70 @@ if ( ! function_exists( 'kaamase_mark_watch_meta_added' ) ) {
 			return;
 		}
 
+		if ( 'phone' === $what && kaamase_mark_is_own_number( $post, $value ) ) {
+			return;
+		}
+
 		kaamase_mark_noticed( $post, $what, '', $value );
 	}
 }
 add_action( 'added_post_meta', 'kaamase_mark_watch_meta_added', 10, 4 );
+
+if ( ! function_exists( 'kaamase_mark_is_own_number' ) ) {
+	/**
+	 * Whether a number is one this account already has on another of its
+	 * own profiles.
+	 *
+	 * Asked only when a profile is getting its first number. Adding the
+	 * working side to an employer account, adding hiring to a worker
+	 * account, and the repair that puts a missing number back on an
+	 * employer profile all copy the person's own number onto their other
+	 * profile. Each of those was being recorded as a changed number, so
+	 * somebody with the tick lost it, and was put back in the queue to be
+	 * rung, for tapping "I also look for work". Nothing about them had
+	 * changed: it is the number that was rung, on another page of theirs.
+	 *
+	 * A number that is not already on one of their profiles still counts,
+	 * and so does every change to a number a profile already had.
+	 *
+	 * @since 1.2.1
+	 * @param WP_Post $post  The profile getting the number.
+	 * @param mixed   $value The number.
+	 * @return bool
+	 */
+	function kaamase_mark_is_own_number( $post, $value ) {
+
+		$value = function_exists( 'kaamase_sanitize_phone' ) ? kaamase_sanitize_phone( (string) $value ) : trim( (string) $value );
+
+		if ( '' === $value || ! $post instanceof WP_Post || ! (int) $post->post_author ) {
+			return false;
+		}
+
+		$others = get_posts(
+			array(
+				'post_type'      => kaamase_mark_profile_types(),
+				'author'         => (int) $post->post_author,
+				'post_status'    => 'any',
+				'post__not_in'   => array( (int) $post->ID ),
+				'posts_per_page' => 20,
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+			)
+		);
+
+		foreach ( (array) $others as $other ) {
+
+			$theirs = (string) get_post_meta( (int) $other, kaamase_mark_phone_key(), true );
+			$theirs = function_exists( 'kaamase_sanitize_phone' ) ? kaamase_sanitize_phone( $theirs ) : trim( $theirs );
+
+			if ( '' !== $theirs && $theirs === $value ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
 
 if ( ! function_exists( 'kaamase_mark_meta_is' ) ) {
 	/**
