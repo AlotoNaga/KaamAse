@@ -6921,6 +6921,13 @@ you to decide on.
     `"worker"`, `profile` is `null` and `profile_state` is `"missing"`, so older
     app versions see what they always saw for an account with no worker
     profile.
+  - For such an account, `profiles` is `{worker: null, employer: null}` (always
+    sent, so the installed apps never show their "Edit profile" button),
+    `has_worker_side` is `false` (true to the account: "I also look for work"
+    adds a worker profile, with their number and district copied onto it), and
+    `job_alerts.available` is `false`. The everyday alerts go by a worker
+    profile's trade and district, so the switch could never send anything. It
+    comes back once they add a worker profile.
   - `professional_alerts`: `{available, wanted, note}`;
   - `professional_profile.complete`.
 - **`GET /me/professional`:** has `complete`, and `profile.mine.complete`. When
@@ -6941,7 +6948,7 @@ you to decide on.
 
 | File | |
 | --- | --- |
-| `fixed/kaamase-core/includes/professional-signup.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/includes/professional-signup.php` | 1.0.1 — **new file** |
 | `fixed/kaamase-core/includes/professional-matches.php` | 1.0.0 — **new file** |
 | `fixed/kaamase-core/includes/registration.php` | 1.5.1 → 1.6.0 |
 | `fixed/kaamase-core/includes/rest-api.php` | 1.9.0 → 1.9.1 |
@@ -6959,12 +6966,12 @@ you to decide on.
    the daily message.
 4. Run **LiteSpeed Cache → Toolbox → Purge All**.
 
-Tested on the test copy of the site: 104 new checks, all passing. They cover:
+Tested on the test copy of the site: 107 new checks, all passing. They cover:
 
 - **The register page:** both doors kept, the third choice, its form, mistakes
   sent back, a duplicate address.
 - **The account it makes:** role, no worker profile, the draft, the email,
-  consent.
+  consent, and what the installed apps are sent for it.
 - **Confirming the email:** the profile stays unfinished.
 - **The dashboard,** the form greeting, and finishing the profile on the website
   and from the app.

@@ -37,8 +37,13 @@
  * as it was.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.0.1
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.0.1  A professional-only account is told job_alerts.available is
+ *          false, so the installed apps do not offer a switch that could
+ *          never send anything.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -765,6 +770,35 @@ if ( ! function_exists( 'kaamase_join_shape_me' ) ) {
 	}
 }
 add_filter( 'kaamase_shape_me', 'kaamase_join_shape_me', 27, 2 );
+
+if ( ! function_exists( 'kaamase_join_no_everyday_alerts' ) ) {
+	/**
+	 * No everyday job alerts switch for a professional-only account.
+	 *
+	 * The everyday alerts go by a worker or team profile's trade and
+	 * district, which this account does not have, so the switch could
+	 * never send anything. The apps already installed show it whenever
+	 * it is available. Professionals have their own daily message,
+	 * professional_alerts. Once the account adds a worker profile the
+	 * switch is back as for anybody else.
+	 *
+	 * After job-alerts.php has written it (priority 28).
+	 *
+	 * @since 1.0.1
+	 * @param array $me      The account object.
+	 * @param int   $user_id Account.
+	 * @return array
+	 */
+	function kaamase_join_no_everyday_alerts( $me, $user_id ) {
+
+		if ( is_array( $me ) && isset( $me['job_alerts'] ) && is_array( $me['job_alerts'] ) && kaamase_join_is_professional_only( (int) $user_id ) ) {
+			$me['job_alerts']['available'] = false;
+		}
+
+		return $me;
+	}
+}
+add_filter( 'kaamase_shape_me', 'kaamase_join_no_everyday_alerts', 31, 2 );
 
 if ( ! function_exists( 'kaamase_join_in_reference' ) ) {
 	/**
