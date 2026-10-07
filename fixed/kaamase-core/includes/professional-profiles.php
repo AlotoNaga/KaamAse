@@ -42,7 +42,7 @@
  * stop offering the professional categories, which belong here instead.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.1.1
  * @since   1.0.0
  *
  * Changelog
@@ -51,6 +51,10 @@
  *          is told with "complete". Where the account is kept off Google,
  *          a public profile says so, and the form explains it under the
  *          "Everyone" choice.
+ *   1.1.1  Only a profile that has never been saved is shown by its first
+ *          save. A profile its owner hid stays hidden even if a category
+ *          or language it uses is later removed and it has to be saved
+ *          again.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -1242,9 +1246,10 @@ if ( ! function_exists( 'kaamase_prof_save' ) ) {
 		/*
 		 * A profile begun at sign-up is not yet shown, because it is not
 		 * finished. The save that finishes it shows it, as a new profile
-		 * would be, unless the person said otherwise.
+		 * would be, unless the person said otherwise. Only that first save:
+		 * a profile saved before keeps the choice its owner made.
 		 */
-		if ( ! $is_new && ! array_key_exists( 'listed', $input ) && ! kaamase_prof_is_complete( $id ) ) {
+		if ( ! $is_new && ! array_key_exists( 'listed', $input ) && kaamase_prof_never_saved( $id ) ) {
 			$values['listed'] = true;
 		}
 
@@ -1388,12 +1393,19 @@ if ( ! function_exists( 'kaamase_prof_apply_listing' ) ) {
 
 if ( ! function_exists( 'kaamase_prof_is_complete' ) ) {
 	/**
-	 * Whether a profile has everything the form asks for.
+	 * Whether a profile has been finished: saved in full at least once.
 	 *
 	 * Every profile saved through the form or the app is, because saving
-	 * checks. One made at sign-up is not yet: it has a name, a number, a
-	 * district and a kind of work, and the rest is asked on the next
-	 * screen. See professional-signup.php.
+	 * checks everything. One made at sign-up is not yet: it has a name, a
+	 * number, a district and a kind of work, and the rest is asked on the
+	 * next screen. See professional-signup.php.
+	 *
+	 * Deliberately not "passes the checks today". A finished profile can
+	 * stop passing them if a category or language it uses is removed, and
+	 * calling that profile unfinished would tell its owner, and the app,
+	 * to treat it as new: "employers can see it once finished", the
+	 * "Show my profile" box ticked for them. That owner has already
+	 * chosen. The next save asks them to fix what was removed instead.
 	 *
 	 * @since 1.1.0
 	 * @param int $post_id Profile.
@@ -1401,9 +1413,32 @@ if ( ! function_exists( 'kaamase_prof_is_complete' ) ) {
 	 */
 	function kaamase_prof_is_complete( $post_id ) {
 
-		$values = kaamase_prof_values( (int) $post_id );
+		$post = get_post( (int) $post_id );
 
-		return ! empty( $values ) && ! kaamase_prof_validate( $values );
+		return $post && KAAMASE_PROF_TYPE === $post->post_type && ! kaamase_prof_never_saved( $post->ID );
+	}
+}
+
+if ( ! function_exists( 'kaamase_prof_never_saved' ) ) {
+	/**
+	 * Whether a profile has never been through a full save: one begun at
+	 * sign-up and not yet finished.
+	 *
+	 * Not the same as "not complete". A finished profile can stop being
+	 * complete later, if a category or language it uses is removed, and
+	 * that profile's owner has already chosen whether it is shown. Only a
+	 * profile nobody has saved yet may have that choice made for it.
+	 *
+	 * Every save writes the headline, which must be filled in, and a
+	 * field is never deleted by saving, so a stored headline is proof of
+	 * a save.
+	 *
+	 * @since 1.1.1
+	 * @param int $post_id Profile.
+	 * @return bool
+	 */
+	function kaamase_prof_never_saved( $post_id ) {
+		return ! metadata_exists( 'post', (int) $post_id, KAAMASE_META_PREFIX . 'prof_headline' );
 	}
 }
 
@@ -3446,8 +3481,8 @@ if ( ! function_exists( 'kaamase_prof_form' ) ) {
 
 		$unfinished = $id && ! kaamase_prof_is_complete( $id );
 
-		// Begun at sign-up: the box starts ticked, as it does for a new profile. See kaamase_prof_save().
-		if ( $unfinished && ! ( is_array( $errors ) && $errors ) ) {
+		// Begun at sign-up and never saved: the box starts ticked, as it does for a new profile. See kaamase_prof_save().
+		if ( $id && kaamase_prof_never_saved( $id ) && ! ( is_array( $errors ) && $errors ) ) {
 			$values['listed'] = true;
 		}
 

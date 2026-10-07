@@ -7124,6 +7124,60 @@ professional jobs 115, tick 14, Google switch 25.
 Before and after, every app answer and page is the same except a worker's
 dashboard, which gains exactly the two cards. Nothing appeared in the error log.
 
+## 94. Review of Part C and the four fixes: a hidden profile kept hidden (`professional-profiles.php` 1.1.0 → 1.1.1)
+
+Everything added in sections 92 and 93 was read again for mistakes:
+
+- who can see a number;
+- escaping, nonces and who may press each button;
+- how it works with "Ask before showing my number";
+- PHP versions;
+- what the apps are told.
+
+One mistake was found and fixed.
+
+**The mistake.** Part C let the save that finishes a sign-up profile show it to
+employers, as a new profile would be. The test for "not finished" was "does not
+pass the form's checks today". A profile can also fail those checks later, when
+a category or language it uses is removed. If its owner had hidden it and then
+saved it from the app, the app sends no "listed" choice, so it was shown again.
+
+**The fix.** Only a profile that has never been saved is shown by its first
+save. Every other save keeps the choice its owner made. "Finished" now means
+saved in full at least once, so a finished profile that lost a category is no
+longer called "Not finished yet". That one meaning is used everywhere: the
+form, the dashboard card, the app's `complete`, the email and Jobs for you.
+
+Every save writes the headline, which must be filled in, and nothing deletes
+it. So "has a stored headline" is the test. Every profile made before Part C
+has one, and so counts as finished, as it did before.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-profiles.php` | 1.1.0 → 1.1.1 |
+
+Goes to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed Cache
+→ Toolbox → Purge All**.
+
+Tested on the test copy of the site with 8 new checks:
+
+- the hidden profile stays hidden after an app save;
+- the form does not tick "Show my profile" for its owner;
+- the app and the dashboard say "Hidden", not "Not finished yet";
+- a sign-up profile is still shown by its first save;
+- a person can still choose to keep it hidden on that first save.
+
+The old file fails the first three. All the earlier suites still pass: the fixes
+45, Part C 107, professional profiles 141, professional jobs 115, tick 14,
+Google switch 25. Before and after, every app answer and page is the same.
+Nothing appeared in the error log.
+
+**For the apps:** no change needed. `complete` is now false only for a profile
+begun at sign-up and never saved. A save without `listed` shows the profile
+only on that first save, and keeps the owner's choice on every save after it.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
