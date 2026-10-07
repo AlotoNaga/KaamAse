@@ -26,7 +26,7 @@
  * because a promise nobody knows about is not reassuring anybody.
  *
  * @package KaamaseCore
- * @version 1.2.0
+ * @version 1.2.1
  * @since   1.0.0
  */
 
@@ -348,7 +348,17 @@ if ( ! function_exists( 'kaamase_worker_fields' ) ) {
 				<?php esc_html_e( 'Tick everything you can do. More trades means more searches you appear in.', 'kaamase-core' ); ?>
 			</p>
 
-			<?php foreach ( kaamase_trade_choices() as $group => $trades ) : ?>
+			<?php
+			/*
+			 * Without the professional categories, which belong to
+			 * professional profiles. Any already ticked stay on offer, so
+			 * saving this form never drops one. See professional-profiles.php.
+			 */
+			$kaamase_worker_trades = function_exists( 'kaamase_prof_worker_trade_choices' )
+				? kaamase_prof_worker_trade_choices( $my_trades )
+				: kaamase_trade_choices();
+			?>
+			<?php foreach ( $kaamase_worker_trades as $group => $trades ) : ?>
 				<p class="ka-small ka-bold ka-mt-4"><?php echo esc_html( $group ); ?></p>
 				<?php foreach ( $trades as $slug => $name ) : ?>
 					<label class="ka-check">

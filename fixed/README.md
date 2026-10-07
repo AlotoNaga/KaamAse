@@ -97,6 +97,10 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/free-lock.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/verify-requests.php` | `wp-content/plugins/kaamase-core/includes/verify-requests.php` |
 | `fixed/kaamase-core/includes/professional-jobs.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/professional-profiles.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/templates/professional.php` | `wp-content/plugins/kaamase-core/templates/` **(new folder)** |
+| `fixed/kaamase-core/includes/profile-edit.php` | `wp-content/plugins/kaamase-core/includes/profile-edit.php` |
+| `fixed/kaamase-core/includes/teams.php` | `wp-content/plugins/kaamase-core/includes/teams.php` |
 
 **Translation templates** (create the `languages/` folder if it is not there yet):
 
@@ -6431,6 +6435,244 @@ Every app answer and page was also recorded before and after. The only
 differences are the ones listed above, and all 102 existing trades reach the app
 unchanged. Nothing from Kaam Ase code appeared in the error log, and the new
 pages fit a phone screen with no sideways scroll.
+
+## 90. Professional profiles (Part B of the professionals plan)
+
+A second kind of profile, for people looking for salaried, qualified work:
+accountants, teachers, nurses, engineers, bank staff. It sits on the same
+account as the worker and employer profiles: same login, same phone number,
+same tick. Worker, team and employer profiles are not changed.
+
+### What a profile holds
+
+- Name, photo, a one-line headline, and up to 3 kinds of work, chosen from the 52
+  professional categories of section 89.
+- Status: looking, working (open to offers) or fresher.
+- Years of experience, the highest qualification (the same list professional
+  jobs use), course, college and year passed.
+- Up to 5 past jobs (title, employer, from and to year), up to 15 skills, and up
+  to 8 spoken languages.
+- Expected monthly salary (or "to discuss"), when they can join, district, town,
+  where they will work (own district, Nagaland, or anywhere), and "about you".
+- Phone number, private as on every profile.
+- Who can see it, and whether it is shown at all (hide without deleting).
+
+Name, phone and district are filled in from the profile the person already has.
+
+### Who can see a profile
+
+- **Employers only, by default.** That means accounts that hire, signed in, with
+  their email confirmed. Adding hiring to an account is free and instant, so this
+  keeps profiles away from strangers and scrapers, not from real employers.
+  Many professionals already have a job and are looking quietly; a public "looking
+  for work" page their boss can find on Google could cost them that job.
+- **Public, if the owner chooses.** Then anybody can open it and Google may show
+  it.
+- **Never in a sitemap, the site search, link previews, feeds or the WordPress
+  API,** public or not. The only lists are the Professionals page and the app's
+  list, and both apply the rules.
+- **Shown only once the owner's email is confirmed**, like every other profile.
+- **Somebody the owner blocked** does not see the profile at all.
+
+A person who may not open a profile gets a short page saying who can. It has a
+"not found" status, noindex, and nothing from the profile: not the name, not
+the photo, not even in the page title or link-preview tags. That decision is
+made the moment WordPress finds the profile, before Rank Math or anything else
+reads it.
+
+### How employers reach them
+
+Through the platform's one contact gate, exactly as for workers. The employer
+must be signed in, have their email confirmed, not be blocked, and have lookups
+left today. Each lookup is counted and logged, and the owner is told who asked.
+On top of that, only an account that hires may ask for a professional's number;
+anybody else is refused before a lookup is counted. The number is never in a
+page, a list or the app's profile data.
+
+There are no star ratings and no "Did you hire them?" question for
+professionals. Hiring a salaried person is not a one-day job, and those questions
+do not fit it. The push that tells the owner somebody has their number goes out
+with type `pro_contact_revealed`. Apps already installed would open
+`contact_revealed` as a worker profile and show "no longer exists".
+
+### On the website
+
+- **Professionals** (`/professionals/`): the list, with search (job title,
+  skill, course, employer), kind of work, district, status and order. The order
+  is mixed fresh each day, newest first, or most experience first. People signed
+  out, and accounts that do not hire, see only public profiles and are told why.
+  The page is never cached.
+- **My professional profile** (`/my-professional-profile/`): the form, to make,
+  change, hide or delete the profile. Mistakes are listed and what was typed is
+  kept. The page is kept out of Google.
+- **Profile pages** (`/professional/name/`): drawn by
+  `templates/professional.php` in the plugin, so they work whatever the theme.
+  The owner sees "This is your professional profile" and who looked them up,
+  with block buttons.
+- **Dashboard**: a card for everybody, either "Make a professional profile" or
+  where theirs stands and how many employers asked for the number. Accounts that
+  hire also get a "Find professionals" link.
+
+You may want to add **Professionals** to the site menu yourself. Nothing was
+added to the menus automatically.
+
+### The tick
+
+The account's tick shows on its professional profile too. Changing the name,
+number or photo on the professional profile takes the tick off, as on any other
+profile (section 68). Making the profile does not: the
+name and number are copied from the person's own profile without being counted
+as a change. A new profile made under a different name, or with a different
+number, is counted, so the tick cannot be carried to somebody else. A first photo
+added to it counts as a new face, the same rule worker profiles follow.
+
+### Privacy and quiet accounts
+
+- Deleting the professional profile, from the website or the app, deletes it and
+  its photo. The account and other profiles stay as they are.
+- Deleting the account, from the website, the app or wp-admin, deletes the
+  professional profile and its photo.
+- WordPress's personal data export and erasure tools include it: every answer,
+  and who asked for the number.
+- When an account goes quiet past the stage where other profiles are hidden
+  (600 days), the professional profile is hidden too. Signing in brings it back.
+  When the account's details are removed after two years, the profile is deleted.
+
+### Worker forms no longer offer the professional categories
+
+The worker sign-up form, the Google sign-up form, the worker profile form and the
+team form now offer the 102 everyday trades only. The professional categories
+belong to professional profiles. A category a worker or team already has ticked
+stays on offer and ticked, so saving an older profile never drops it quietly.
+The job forms, filters and trade pages are unchanged.
+
+These are one-line changes, and each one falls back to the full list if
+`professional-profiles.php` is missing:
+
+- `registration.php` 1.5.0 → 1.5.1
+- `google-signin.php` 1.1.0 → 1.1.1
+- `profile-edit.php` 1.2.0 → 1.2.1
+- `teams.php` 1.2.0 → 1.2.1
+
+### Known, small, and left for now
+
+- New wording is in English only. Not added to the language files.
+- Profiles cannot be saved to the Saved list yet, and the "Who looked at you"
+  page does not include them. The profile page and the dashboard card show
+  lookups instead.
+- The app needs its next version for the new screens. Apps already installed see
+  nothing new.
+- The list considers the 3,000 most recently made profiles, far beyond today's
+  numbers.
+
+### For the app (next version)
+
+- `GET /reference` has a new `professional_profile` object:
+  - `statuses`, `qualifications`, `notice_periods`, `work_where` and
+    `visibilities`, each a list of `{key, label}`;
+  - `max_categories` (3), `max_jobs` (5), `max_skills` (15) and
+    `max_languages` (8).
+  - The categories are the trades with `professional: true` (section 89).
+- `GET /me` has:
+  - `professional_profile`: `null`, or `{id, state, listed, visibility, url}`.
+    `state` is `listed`, `hidden`, `waiting_for_email` or `on_hold`.
+  - `can_browse_professionals`: `true` for accounts that may see everybody and
+    contact them.
+- `GET /me/professional` answers `{profile, state, message}`. `profile` is
+  `null` if there is none yet.
+- `POST /me/professional` creates the profile the first time and changes it
+  after. Send only what changed.
+  - Body: `name, headline, categories[] (slugs), status, experience,
+    qualification, course, institute, passed, salary, notice, district, town,
+    where, about, jobs[] ({title, employer, from, to}; to 0 = still there),
+    skills[], languages[] (slugs), phone, visibility (employers|public),
+    listed (bool)`.
+  - Answers 201 (made) or 200, with `{profile, state, message}`.
+  - Mistakes answer 400 `kaamase_invalid_professional`, with `message` and
+    `messages[]`.
+- `POST /me/professional/photo`: multipart `photo` (JPG, PNG or WEBP), or
+  `remove=1`. Answers `{image}`.
+- `POST /me/professional/delete` with `{confirm: true}` deletes the
+  professional profile only.
+- `GET /professionals`:
+  - Query: `category, district, status (looking|working|fresher), search,
+    sort (shuffle|newest|experience), page, per_page`.
+  - Answers `{items, total, page, has_more, scope (all|public), can_contact,
+    notice_code (signed_out|unverified|not_hiring|""), notice, sort}`.
+- `GET /professionals/{id}` and `GET /professionals/slug/{slug}` give one
+  profile.
+  - Signed out: 401 `kaamase_signed_out`.
+  - An account that may not see it: 403 `kaamase_prof_employers_only`, with
+    `notice_code`.
+  - Hidden, gone or blocked: 404.
+- A profile: `{id, type: "professional", name, initials, url, image, headline,
+  categories[{slug,name}], district{slug,name}, town, status, status_label,
+  experience_years, qualification, qualification_label, course,
+  salary_expected (0 = to discuss), notice, notice_label, work_where,
+  work_where_label, visibility, called{…} (the tick, as on other profiles),
+  is_mine, updated_at}`.
+  - The single profile adds `about, institute, passed_year, jobs[], skills[],
+    languages[{slug,name}]`.
+  - The owner's own adds `mine: {phone, listed, state, lookups}`.
+- Contact: the usual `POST /contact/{id}` with the profile's id. Accounts that do
+  not hire get 403 `kaamase_prof_employers_only`, and a hidden profile gets 403
+  `kaamase_prof_unavailable`.
+- Push `data.type = "pro_contact_revealed"`, `data.id` = the profile: somebody
+  asked for the number. Open the owner's own professional profile or its "who
+  asked" list.
+- Suggested screens:
+  - "Professionals", beside Workers and Verified, for accounts with
+    `can_browse_professionals`;
+  - "My professional profile" in the account screen;
+  - hide `professional: true` trades in the worker and team pickers.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-profiles.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/templates/professional.php` | 1.0.0 — **new file in a new folder** |
+| `fixed/kaamase-core/includes/registration.php` | 1.5.0 → 1.5.1 |
+| `fixed/kaamase-core/includes/google-signin.php` | 1.1.0 → 1.1.1 |
+| `fixed/kaamase-core/includes/profile-edit.php` | 1.2.0 → 1.2.1 |
+| `fixed/kaamase-core/includes/teams.php` | 1.2.0 → 1.2.1 |
+
+1. Upload the five `includes/` files to `wp-content/plugins/kaamase-core/includes/`.
+2. Create the folder `wp-content/plugins/kaamase-core/templates/` and upload
+   `professional.php` into it. **Not into `includes/`**: everything in `includes/`
+   is loaded on every request, and this file draws a page.
+3. Open any page of the site once. That makes the two pages, gives
+   administrators and editors the wp-admin rights, and sets up the
+   `/professional/name/` addresses.
+4. Run **LiteSpeed Cache → Toolbox → Purge All**.
+
+Section 89 (`professional-jobs.php`) must already be uploaded: the categories
+come from it.
+
+Tested on WordPress 7.1.2 with LiteSpeed Cache and Rank Math active, on a copy of
+the site: 140 checks, all passing. They cover:
+
+- **The app routes:** every mistake refused, edits that send one field, one
+  profile per account, the email-confirmation wait.
+- **Who sees what:** signed out, workers without hiring, employers, the owner,
+  public and hidden profiles, blocking.
+- **Contact:** an employer gets the number, counted and logged. Workers without
+  hiring are refused without being charged. The notification type, no hire
+  question, and worker contact unchanged.
+- **The website:** the refusal page with nothing of the profile in it, the
+  profile page, the contact screen, the list with filters, the form with
+  mistakes and photos, delete.
+- **Leaks:** `?post_type=` lists, searches, feeds, the link-preview endpoint, the
+  WordPress API, attachment pages and both sitemaps.
+- **The tick, privacy, retention and the worker forms.**
+
+The 115 checks for professional jobs (section 89) still pass with this in place.
+
+Every app answer and page was also recorded before and after. The only
+differences are the new keys in `/me` and `/reference`, the two new pages, the
+dashboard card, and the professional categories gone from the worker sign-up,
+worker profile and team forms. Nothing from Kaam Ase code appeared in the error
+log, and every new page fits a phone screen with no sideways scroll.
 
 ## Not changed, and why
 

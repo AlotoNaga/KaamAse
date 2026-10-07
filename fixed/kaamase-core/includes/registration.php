@@ -31,7 +31,7 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.5.0
+ * @version 1.5.1
  * @since   1.0.0
  *
  * Changelog
@@ -196,7 +196,13 @@ if ( ! function_exists( 'kaamase_register_shortcode' ) ) {
 					</label>
 					<select class="ka-select" id="ka-trade" name="kaamase_trade" required>
 						<option value=""><?php esc_html_e( 'Choose your trade', 'kaamase-core' ); ?></option>
-						<?php foreach ( kaamase_trade_choices() as $group => $trades ) : ?>
+						<?php
+						// Without the professional categories, which belong to professional profiles. See professional-profiles.php.
+						$kaamase_worker_trades = function_exists( 'kaamase_prof_worker_trade_choices' )
+							? kaamase_prof_worker_trade_choices( isset( $old['trade'] ) ? $old['trade'] : '' )
+							: kaamase_trade_choices();
+						?>
+						<?php foreach ( $kaamase_worker_trades as $group => $trades ) : ?>
 							<optgroup label="<?php echo esc_attr( $group ); ?>">
 								<?php foreach ( $trades as $slug => $name ) : ?>
 									<option value="<?php echo esc_attr( $slug ); ?>"
