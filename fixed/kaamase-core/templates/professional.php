@@ -14,7 +14,7 @@
  * counts every lookup.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.0.1
  * @since   1.0.0
  */
 
@@ -132,9 +132,14 @@ while ( have_posts() ) :
 					<span class="ka-notice__title"><?php esc_html_e( 'This is your professional profile', 'kaamase-core' ); ?></span>
 					<p>
 						<?php
-						echo kaamase_prof_is_public( $kaamase_id )
-							? esc_html__( 'Everyone can see it, including Google search.', 'kaamase-core' )
-							: esc_html__( 'Employers signed in to Kaam Ase see exactly this. Nobody else can open it.', 'kaamase-core' );
+						if ( ! kaamase_prof_is_public( $kaamase_id ) ) {
+							esc_html_e( 'Employers signed in to Kaam Ase see exactly this. Nobody else can open it.', 'kaamase-core' );
+						} elseif ( function_exists( 'kaamase_is_off_google' ) && kaamase_is_off_google( $kaamase_owner_id ) ) {
+							// The account-wide switch wins. See off-google.php.
+							esc_html_e( 'Anyone with the link can open it. It is kept off Google search, as your account is set.', 'kaamase-core' );
+						} else {
+							esc_html_e( 'Everyone can see it, including Google search.', 'kaamase-core' );
+						}
 						?>
 					</p>
 					<a class="ka-btn ka-btn--outline ka-btn--sm ka-mt-4" href="<?php echo esc_url( kaamase_prof_url( 'my_professional' ) ); ?>">

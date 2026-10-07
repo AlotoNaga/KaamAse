@@ -60,8 +60,12 @@
  * exactly as it did before this file existed.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.7.0
+ *
+ * Changelog
+ *   1.2.0  A new account can also be a professional one, with a category,
+ *          when professional-signup.php is present and switched on.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -781,7 +785,7 @@ if ( ! function_exists( 'kaamase_apple_signup_errors' ) ) {
 
 		$errors = array();
 
-		if ( ! in_array( $data['type'], array( 'worker', 'employer' ), true ) ) {
+		if ( ! in_array( $data['type'], function_exists( 'kaamase_join_types' ) ? kaamase_join_types() : array( 'worker', 'employer' ), true ) ) {
 			$errors[] = __( 'Choose whether you are looking for work or looking for workers.', 'kaamase-core' );
 		}
 
@@ -818,6 +822,10 @@ if ( ! function_exists( 'kaamase_apple_signup_errors' ) ) {
 
 		if ( 'worker' === $data['type'] && '' === $data['trade'] ) {
 			$errors[] = __( 'Please choose the work you do.', 'kaamase-core' );
+		}
+
+		if ( function_exists( 'kaamase_join_errors' ) ) {
+			$errors = array_merge( $errors, kaamase_join_errors( $data['type'], isset( $data['category'] ) ? $data['category'] : '' ) );
 		}
 
 		if ( '' === $data['phone_in'] ) {
@@ -884,6 +892,7 @@ if ( ! function_exists( 'kaamase_apple_create' ) ) {
 				'phone'    => $data['phone'],
 				'district' => $data['district'],
 				'trade'    => $data['trade'],
+				'category' => isset( $data['category'] ) ? $data['category'] : '',
 				'password' => wp_generate_password( 32, true, true ),
 			)
 		);
@@ -1120,6 +1129,7 @@ if ( ! function_exists( 'kaamase_rest_apple_complete' ) ) {
 			'name'     => sanitize_text_field( (string) $request->get_param( 'name' ) ),
 			'district' => kaamase_match_district( (string) $request->get_param( 'district' ) ),
 			'trade'    => kaamase_match_trade( (string) $request->get_param( 'trade' ) ),
+			'category' => function_exists( 'kaamase_join_category' ) ? kaamase_join_category( $request->get_param( 'category' ) ) : '',
 			'phone_in' => $phone_in,
 			'phone'    => kaamase_sanitize_phone( $phone_in ),
 			'email_in' => $email_in,

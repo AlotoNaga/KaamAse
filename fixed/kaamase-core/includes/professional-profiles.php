@@ -42,8 +42,15 @@
  * stop offering the professional categories, which belong here instead.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.1.0  A profile begun at sign-up (professional-signup.php) is "not
+ *          finished" until its first full save, which shows it. The app
+ *          is told with "complete". Where the account is kept off Google,
+ *          a public profile says so, and the form explains it under the
+ *          "Everyone" choice.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -1225,11 +1232,21 @@ if ( ! function_exists( 'kaamase_prof_save' ) ) {
 
 		$id     = kaamase_prof_id( $user_id );
 		$is_new = ! $id;
+		$input  = kaamase_prof_input( $raw );
 
 		$values = array_merge(
 			$is_new ? kaamase_prof_defaults( $user_id ) : kaamase_prof_values( $id ),
-			kaamase_prof_input( $raw )
+			$input
 		);
+
+		/*
+		 * A profile begun at sign-up is not yet shown, because it is not
+		 * finished. The save that finishes it shows it, as a new profile
+		 * would be, unless the person said otherwise.
+		 */
+		if ( ! $is_new && ! array_key_exists( 'listed', $input ) && ! kaamase_prof_is_complete( $id ) ) {
+			$values['listed'] = true;
+		}
 
 		$errors = kaamase_prof_validate( $values );
 
@@ -1366,6 +1383,27 @@ if ( ! function_exists( 'kaamase_prof_apply_listing' ) ) {
 				)
 			);
 		}
+	}
+}
+
+if ( ! function_exists( 'kaamase_prof_is_complete' ) ) {
+	/**
+	 * Whether a profile has everything the form asks for.
+	 *
+	 * Every profile saved through the form or the app is, because saving
+	 * checks. One made at sign-up is not yet: it has a name, a number, a
+	 * district and a kind of work, and the rest is asked on the next
+	 * screen. See professional-signup.php.
+	 *
+	 * @since 1.1.0
+	 * @param int $post_id Profile.
+	 * @return bool
+	 */
+	function kaamase_prof_is_complete( $post_id ) {
+
+		$values = kaamase_prof_values( (int) $post_id );
+
+		return ! empty( $values ) && ! kaamase_prof_validate( $values );
 	}
 }
 
@@ -1731,10 +1769,11 @@ if ( ! function_exists( 'kaamase_prof_shape' ) ) {
 
 		if ( $out['is_mine'] ) {
 			$out['mine'] = array(
-				'phone'   => (string) kaamase_read_field( $id, 'phone' ),
-				'listed'  => (bool) get_post_meta( $id, KAAMASE_PROF_LISTED_KEY, true ),
-				'state'   => kaamase_prof_state( $id ),
-				'lookups' => kaamase_prof_lookups( $id ),
+				'phone'    => (string) kaamase_read_field( $id, 'phone' ),
+				'listed'   => (bool) get_post_meta( $id, KAAMASE_PROF_LISTED_KEY, true ),
+				'state'    => kaamase_prof_state( $id ),
+				'lookups'  => kaamase_prof_lookups( $id ),
+				'complete' => kaamase_prof_is_complete( $id ),
 			);
 		}
 
@@ -2247,8 +2286,9 @@ if ( ! function_exists( 'kaamase_prof_rest_mine_answer' ) ) {
 	 */
 	function kaamase_prof_rest_mine_answer( $status = 200 ) {
 
-		$id    = kaamase_prof_id( get_current_user_id() );
-		$state = $id ? kaamase_prof_state( $id ) : 'missing';
+		$id       = kaamase_prof_id( get_current_user_id() );
+		$state    = $id ? kaamase_prof_state( $id ) : 'missing';
+		$complete = $id && kaamase_prof_is_complete( $id );
 
 		$messages = array(
 			'waiting_for_email' => __( 'Saved. Your profile is shown to employers as soon as you confirm your email.', 'kaamase-core' ),
@@ -2256,11 +2296,19 @@ if ( ! function_exists( 'kaamase_prof_rest_mine_answer' ) ) {
 			'on_hold'           => __( 'Your profile is being checked by Kaam Ase.', 'kaamase-core' ),
 		);
 
+		// Begun at sign-up and not finished: nothing has been saved yet, so not "Saved".
+		if ( $id && ! $complete && 'on_hold' !== $state ) {
+			$message = __( 'Your profile is not finished yet. Add the rest and save it, and employers can see it.', 'kaamase-core' );
+		} else {
+			$message = isset( $messages[ $state ] ) ? $messages[ $state ] : '';
+		}
+
 		return new WP_REST_Response(
 			array(
-				'profile' => $id ? kaamase_prof_shape( $id, true ) : null,
-				'state'   => $state,
-				'message' => isset( $messages[ $state ] ) ? $messages[ $state ] : '',
+				'profile'  => $id ? kaamase_prof_shape( $id, true ) : null,
+				'state'    => $state,
+				'complete' => $complete,
+				'message'  => $message,
 			),
 			$status
 		);
@@ -2411,6 +2459,7 @@ if ( ! function_exists( 'kaamase_prof_shape_me' ) ) {
 				'listed'     => (bool) get_post_meta( $id, KAAMASE_PROF_LISTED_KEY, true ),
 				'visibility' => kaamase_prof_is_public( $id ) ? 'public' : 'employers',
 				'url'        => (string) get_permalink( $id ),
+				'complete'   => kaamase_prof_is_complete( $id ),
 			)
 			: null;
 		$me['can_browse_professionals'] = kaamase_prof_may_browse( (int) $user_id );
@@ -3395,11 +3444,19 @@ if ( ! function_exists( 'kaamase_prof_form' ) ) {
 
 		delete_transient( kaamase_prof_form_key() );
 
+		$unfinished = $id && ! kaamase_prof_is_complete( $id );
+
+		// Begun at sign-up: the box starts ticked, as it does for a new profile. See kaamase_prof_save().
+		if ( $unfinished && ! ( is_array( $errors ) && $errors ) ) {
+			$values['listed'] = true;
+		}
+
 		$categories = kaamase_prof_category_names();
 		$languages  = kaamase_prof_language_names();
 		$picked     = array_values( (array) $values['categories'] );
 		$jobs       = array_values( (array) $values['jobs'] );
 		$state      = $id ? kaamase_prof_state( $id ) : 'missing';
+		$off_google = function_exists( 'kaamase_is_off_google' ) && kaamase_is_off_google( $user_id );
 
 		ob_start();
 
@@ -3438,6 +3495,13 @@ if ( ! function_exists( 'kaamase_prof_form' ) ) {
 
 		if ( 'on_hold' === $state ) {
 			echo kaamase_prof_notice( 'warn', __( 'Your profile is being checked', 'kaamase-core' ), __( 'Kaam Ase is looking at your profile. You can still change it here.', 'kaamase-core' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only choosing a message.
+		if ( ! empty( $_GET['welcome'] ) && $unfinished && function_exists( 'kaamase_join_welcome' ) ) {
+			echo kaamase_join_welcome( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+		} elseif ( $unfinished && 'on_hold' !== $state && ! ( is_array( $errors ) && $errors ) ) {
+			echo kaamase_prof_notice( 'info', __( 'Your profile is not finished yet', 'kaamase-core' ), __( 'Fill in the rest below and save, and employers can see it.', 'kaamase-core' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		if ( function_exists( 'kaamase_mark_warning_notice' ) ) {
@@ -3669,6 +3733,42 @@ if ( ! function_exists( 'kaamase_prof_form' ) ) {
 						<input type="radio" name="kp_visibility" value="<?php echo esc_attr( $key ); ?>" <?php checked( $values['visibility'], $key ); ?>>
 						<span><?php echo esc_html( $label ); ?></span>
 					</label>
+					<?php if ( 'public' === $key && $off_google ) : ?>
+						<?php
+						/*
+						 * The account-wide Google switch wins (off-google.php).
+						 * Said under the choice it overrides, and only while that
+						 * choice is picked; shown either way without scripts.
+						 */
+						?>
+						<p class="ka-hint" id="kp-google-note">
+							<?php
+							printf(
+								/* translators: %s: link to the account page */
+								esc_html__( 'Your account is set to stay off Google, so this profile won\'t appear in Google search. You can change this in %s.', 'kaamase-core' ),
+								'<a href="' . esc_url( ( function_exists( 'kaamase_page_url' ) ? kaamase_page_url( 'dashboard' ) : home_url( '/dashboard/' ) ) . '#ka-google' ) . '">' . esc_html__( 'My account', 'kaamase-core' ) . '</a>'
+							);
+							?>
+						</p>
+						<script>
+						( function () {
+							var note = document.getElementById( 'kp-google-note' );
+							var form = note.closest( 'form' );
+							function show() {
+								var picked = document.querySelector( 'input[name="kp_visibility"]:checked' );
+								note.hidden = ! picked || 'public' !== picked.value;
+							}
+							if ( form ) {
+								form.addEventListener( 'change', function ( event ) {
+									if ( event.target && 'kp_visibility' === event.target.name ) {
+										show();
+									}
+								} );
+							}
+							show();
+						}() );
+						</script>
+					<?php endif; ?>
 				<?php endforeach; ?>
 				<p class="ka-hint"><?php esc_html_e( 'If you already have a job and are looking quietly, keep it to employers. Public profiles can be found on Google.', 'kaamase-core' ); ?></p>
 			</fieldset>
@@ -4018,14 +4118,22 @@ if ( ! function_exists( 'kaamase_prof_dashboard_card' ) ) {
 
 		unset( $profile, $type );
 
-		$user_id = (int) $user_id;
-		$id      = kaamase_prof_id( $user_id );
-		$state   = $id ? kaamase_prof_state( $id ) : 'missing';
+		$user_id    = (int) $user_id;
+		$id         = kaamase_prof_id( $user_id );
+		$state      = $id ? kaamase_prof_state( $id ) : 'missing';
+		$unfinished = $id && 'on_hold' !== $state && ! kaamase_prof_is_complete( $id );
+		$off_google = function_exists( 'kaamase_is_off_google' ) && kaamase_is_off_google( $user_id );
+
+		if ( kaamase_prof_is_public( $id ) ) {
+			$listed = $off_google
+				? __( 'Anyone with the link can open it. It is kept off Google search, as your account is set.', 'kaamase-core' )
+				: __( 'Shown to everyone, including Google search.', 'kaamase-core' );
+		} else {
+			$listed = __( 'Shown to employers signed in to Kaam Ase.', 'kaamase-core' );
+		}
 
 		$states = array(
-			'listed'            => kaamase_prof_is_public( $id )
-				? __( 'Shown to everyone, including Google search.', 'kaamase-core' )
-				: __( 'Shown to employers signed in to Kaam Ase.', 'kaamase-core' ),
+			'listed'            => $listed,
 			'waiting_for_email' => __( 'Shown to employers as soon as you confirm your email.', 'kaamase-core' ),
 			'hidden'            => __( 'Hidden. Employers cannot see it.', 'kaamase-core' ),
 			'on_hold'           => __( 'Being checked by Kaam Ase.', 'kaamase-core' ),
@@ -4040,6 +4148,14 @@ if ( ! function_exists( 'kaamase_prof_dashboard_card' ) ) {
 					<?php esc_html_e( 'Banks, schools, hospitals, offices and companies look for professionals here. Make a professional profile with your qualification, past jobs and the salary you expect. It is free and separate from your other profile.', 'kaamase-core' ); ?>
 				</p>
 				<a class="ka-btn ka-btn--outline ka-mt-4" href="<?php echo esc_url( kaamase_prof_url( 'my_professional' ) ); ?>"><?php esc_html_e( 'Make a professional profile', 'kaamase-core' ); ?></a>
+
+			<?php elseif ( $unfinished ) : ?>
+
+				<h2><?php esc_html_e( 'Your professional profile', 'kaamase-core' ); ?></h2>
+				<p class="ka-small ka-soft ka-mt-4">
+					<?php esc_html_e( 'Not finished yet. Add your headline, qualification and experience, and employers can see it.', 'kaamase-core' ); ?>
+				</p>
+				<a class="ka-btn ka-btn--primary ka-mt-4" href="<?php echo esc_url( kaamase_prof_url( 'my_professional' ) ); ?>"><?php esc_html_e( 'Finish my profile', 'kaamase-core' ); ?></a>
 
 			<?php else : ?>
 

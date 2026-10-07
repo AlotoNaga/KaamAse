@@ -108,6 +108,8 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/locale.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/mark-changes.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/off-google.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/professional-matches.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/professional-signup.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/header.php` | `wp-content/themes/kaamase/header.php` |
 
 `fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
@@ -6765,6 +6767,232 @@ Tested on the test copy of the site:
   professional job checks still pass.
 - **Before and after:** the only differences are the new `on_google` in `/me`
   and the new card. Nothing appeared in the error log.
+
+## 92. Joining as a professional, Jobs for you, and the daily message (Part C)
+
+### "I'm a professional" when somebody registers
+
+The register page keeps its two doors, Worker and Employer, exactly as they
+are. Under them there is now a third choice: "Looking for an office or
+professional job? … I'm a professional". It leads to the same short form with:
+
+- its own heading;
+- one line saying the profile is shown to signed-in employers only;
+- "What kind of work are you looking for" (the 52 professional categories)
+  instead of the trade list.
+
+What it makes is an account and a **professional profile only**. There is no
+worker profile, because a worker profile is public and can come up on Google.
+Professional profiles are kept to signed-in employers for a reason: many
+professionals already have a job and look quietly.
+
+After the form, they go straight to "My professional profile" with a greeting.
+The name, number, district and kind of work are already filled in, and "Show my
+profile" is already ticked. The profile is shown to employers once it is
+finished and the email is confirmed, the same two steps as every other profile.
+
+The same choice works everywhere an account can be made:
+
+- the website form;
+- Google on the website (a third answer on the last-questions form);
+- the app's `/auth/register`, `/auth/google/complete` and Apple sign-up.
+
+### Their dashboard
+
+An account with only a professional profile gets its own dashboard:
+
+- a greeting;
+- the professional profile card ("Not finished yet" until it is);
+- Jobs for you;
+- the tick request;
+- "Your profile on Google", the password, phones signed in, the language card
+  and the account links.
+
+It never shows "Your profile is missing" or the rebuild button. The rebuild
+would have made the public worker profile they joined this way to avoid.
+
+If such an account later adds a worker profile or hiring, that profile becomes
+the one they are known by. Their number and district are copied onto it from the
+professional profile, and from then on they get the ordinary dashboard.
+
+### Jobs for you
+
+The open professional jobs that suit someone's professional profile. They are
+shown on a new page, **Jobs for you** (`/jobs-for-you/`), with the best three on
+the dashboard. Plain rules, never a percentage:
+
+- The job's category must be one of theirs.
+- The place must suit them. "Only in my own district" means jobs elsewhere are
+  not shown, except work from home.
+- Then three things are compared, where both sides said something:
+  - the qualification asked for (higher meets lower; a diploma meets Class 12);
+  - the years of experience asked for;
+  - the monthly salary against what they expect. A daily rate is never compared
+    with a monthly salary.
+- **Strong match** means nothing was missed. **Good match** means one thing was
+  missed, and it is spelled out, for example "✗ Asks for Postgraduate". Two or
+  more misses: not shown.
+- Never shown: their own adverts, closed or expired jobs, jobs waiting for
+  review.
+- A profile that is not finished yet is matched on kind of work and district
+  only. It is never marked down for experience it has not been asked about.
+
+The page is never cached and is kept out of search engines.
+
+### The daily message
+
+Once a day, at 08:00, there is one app notification for each person with a
+professional profile, but only when professional jobs that suit them were posted
+in the last day. It reads "A new job for you" with the job, or "3 new jobs for
+you".
+
+- It needs a confirmed email.
+- It is never sent twice in a day.
+- It is separate from the everyday job alerts, so somebody can keep one and stop
+  the other. The switch for it is on the Jobs for you card.
+
+### Professional settings (new screen under Kaam Ase in wp-admin)
+
+- **Offer "I'm a professional" when people register:** on by default. Turning
+  it off hides the choice on the website and in the app at once. Accounts
+  already made are untouched.
+- **Daily message to professionals:** on by default, with its time. The screen
+  also shows the last and next run and has a "Send it now" button.
+
+### The Google wording (the app's suggestion, now on the website too)
+
+When an account is set to stay off Google and the professional profile is
+"Everyone":
+
+- the account card, the editor and the person's own profile page say "Anyone
+  with the link can open it. It is kept off Google search, as your account is
+  set.";
+- the editor shows, under the "Everyone" choice and only while it is picked,
+  "Your account is set to stay off Google, so this profile won't appear in
+  Google search. You can change this in My account."
+
+### Small changes to existing files, all guarded
+
+Each change asks `professional-signup.php` first, and falls back to exactly the
+old behaviour if that file is missing. Upload order does not matter.
+
+- **The sign-up files** (`registration.php`, `rest-api.php`,
+  `google-signin.php`, `apple-signin.php`): accept `professional` with a
+  category, and hand that account to `professional-signup.php` to make.
+- **`dashboard.php`:** an account with no worker or employer profile is offered
+  to `professional-signup.php` first.
+- **`verify-requests.php`:** an account that joined as a professional asks for
+  the tick with its professional profile, the only one it has. The phone number
+  shows in the call queue.
+- **`professional-profiles.php`:**
+  - "not finished" for a profile begun at sign-up;
+  - the first full save of such a profile shows it, unless the person said
+    otherwise;
+  - `complete` in the app answers;
+  - the Google wording.
+- **`templates/professional.php`:** the Google wording.
+
+### Found, not fixed (was already like this)
+
+On the website dashboard, two existing cards never appear for workers:
+
+- "Telling you about new work", the everyday job alerts switch;
+- "How people find you".
+
+The dashboard calls a worker `worker`, but these two cards wait for
+`kaamase_worker`. The alerts themselves still go out, and the app's switch
+works. It is a one-word fix in `job-alerts.php` and in `how-seen.php`, left for
+you to decide on.
+
+### For the app (next version)
+
+- **`/reference`:** has `professional_join: {on}`. Show the third door only
+  when it is true.
+- **Registering:** `POST /auth/register`, `/auth/google/complete` and the Apple
+  completion take `type: "professional"` with `category` (one professional
+  category slug, from the "Professional jobs" group in `/reference` trades).
+  - Without a category the answer is 400 `kaamase_invalid_registration`, with
+    "Please choose the kind of work you are looking for." in `messages`.
+  - The answer is the usual session.
+- **`/me`** has:
+  - `joined_as`: `"professional"` or `""`;
+  - `professional_only`: `true` when their only profile is the professional one.
+    Open the professional home then, not the worker home. `type` is still
+    `"worker"`, `profile` is `null` and `profile_state` is `"missing"`, so older
+    app versions see what they always saw for an account with no worker
+    profile.
+  - `professional_alerts`: `{available, wanted, note}`;
+  - `professional_profile.complete`.
+- **`GET /me/professional`:** has `complete`, and `profile.mine.complete`. When
+  it is false, show "Finish your profile" and start "Show my profile" ticked.
+  Saving without sending `listed` shows it.
+- **`GET /me/professional/jobs?page=1&per_page=20`** (up to 50):
+  - each job is in the usual job shape (so the job card works), plus
+    `match: {level: "strong"|"good", label, reasons: [{key, ok, text}]}`;
+  - also `total`, `strong`, `good`, `page`, `pages`, `complete`, `reason`
+    (`"no_profile"` when there is no professional profile) and `message`.
+- **`POST /me/professional/alerts {wanted: true|false}`** → `{ok, wanted}`.
+  Without `wanted` the answer is 400.
+- **Push** `type: "pro_job_alerts"`, with `id` (the first job), `ids` (up to 20,
+  strong first) and `count`. Open the job when `count` is 1, else Jobs for you.
+  Older versions show the notification and open the app.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-signup.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/includes/professional-matches.php` | 1.0.0 — **new file** |
+| `fixed/kaamase-core/includes/registration.php` | 1.5.1 → 1.6.0 |
+| `fixed/kaamase-core/includes/rest-api.php` | 1.9.0 → 1.9.1 |
+| `fixed/kaamase-core/includes/google-signin.php` | 1.1.1 → 1.2.0 |
+| `fixed/kaamase-core/includes/apple-signin.php` | 1.1.0 → 1.2.0 |
+| `fixed/kaamase-core/includes/dashboard.php` | 1.1.0 → 1.1.1 |
+| `fixed/kaamase-core/includes/verify-requests.php` | 1.2.1 → 1.2.2 |
+| `fixed/kaamase-core/includes/professional-profiles.php` | 1.0.0 → 1.1.0 |
+| `fixed/kaamase-core/templates/professional.php` | 1.0.0 → 1.0.1 |
+
+1. Upload the nine `includes/` files to `wp-content/plugins/kaamase-core/includes/`.
+2. Upload `professional.php` to `wp-content/plugins/kaamase-core/templates/`.
+   **Not into `includes/`.**
+3. Open any page of the site once. That makes the Jobs for you page and books
+   the daily message.
+4. Run **LiteSpeed Cache → Toolbox → Purge All**.
+
+Tested on the test copy of the site: 104 new checks, all passing. They cover:
+
+- **The register page:** both doors kept, the third choice, its form, mistakes
+  sent back, a duplicate address.
+- **The account it makes:** role, no worker profile, the draft, the email,
+  consent.
+- **Confirming the email:** the profile stays unfinished.
+- **The dashboard,** the form greeting, and finishing the profile on the website
+  and from the app.
+- **Google and Apple.**
+- **The door switched off:** website, app, Google and Apple.
+- **Every matching rule,** including closed, expired, own and pending jobs and
+  the order.
+- **Jobs for you:** the app route, the page and the card.
+- **The daily message:** wording, one a day, the switches, unconfirmed and
+  unmatched people left out, booking.
+- **Adding a worker profile or hiring later,** the tick request and the Google
+  wording.
+- **Unchanged:** worker and employer sign-up on the website and in the app.
+
+The earlier suites still pass with this in place:
+
+- 141 professional profile checks (one updated: the Google form's trade list
+  still leaves out professional categories, but the form now has its own
+  kind-of-work list);
+- 115 professional job checks;
+- 14 tick checks;
+- 25 Google switch checks.
+
+Every app answer and page was also recorded before and after. The only
+differences are the three new keys in `/me`, `professional_join` in
+`/reference`, and the third choice on the register page. Nothing from Kaam Ase
+code appeared in the error log. Every new screen fits a phone with no sideways
+scroll.
 
 ## Not changed, and why
 

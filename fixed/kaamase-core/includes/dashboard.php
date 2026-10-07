@@ -26,8 +26,13 @@
  * nothing else has to change.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.1.1
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.1.1  An account that joined as a professional, with no worker or
+ *          employer profile, gets its own dashboard from
+ *          professional-signup.php instead of "Your profile is missing".
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -61,6 +66,21 @@ if ( ! function_exists( 'kaamase_dashboard_shortcode' ) ) {
 		$user_id = get_current_user_id();
 		$type    = kaamase_get_user_type( $user_id );
 		$profile = (int) get_user_meta( $user_id, 'kaamase_profile_id', true );
+
+		/*
+		 * An account that joined as a professional has no worker or
+		 * employer profile, on purpose. Its dashboard is drawn by
+		 * professional-signup.php, which answers with nothing for every
+		 * other account, so for them this screen is exactly as it was.
+		 */
+		if ( ( ! $profile || ! get_post( $profile ) ) && function_exists( 'kaamase_join_dashboard' ) ) {
+
+			$professional = kaamase_join_dashboard( $user_id );
+
+			if ( '' !== $professional ) {
+				return $professional;
+			}
+		}
 
 		ob_start();
 

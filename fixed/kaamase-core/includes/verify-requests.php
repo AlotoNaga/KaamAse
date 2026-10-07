@@ -51,8 +51,12 @@
  * wait. The owner can still give anybody anything from Give the plan.
  *
  * @package KaamaseCore
- * @version 1.2.1
+ * @version 1.2.2
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.2.2  An account that joined as a professional asks with its
+ *          professional profile, the only one it has.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -104,6 +108,11 @@ if ( ! function_exists( 'kaamase_ask_missing' ) ) {
 		$missing = array();
 
 		$profile = (int) get_user_meta( $user_id, 'kaamase_profile_id', true );
+
+		// An account that joined as a professional has only that profile. See professional-signup.php.
+		if ( ! $profile && function_exists( 'kaamase_join_is_professional_only' ) && kaamase_join_is_professional_only( $user_id ) ) {
+			$profile = (int) kaamase_prof_id( $user_id );
+		}
 
 		if ( ! $profile || 'publish' !== get_post_status( $profile ) ) {
 
@@ -543,6 +552,11 @@ if ( ! function_exists( 'kaamase_ask_page' ) ) {
 						<?php foreach ( $queue as $person ) : ?>
 							<?php
 							$profile = (int) get_user_meta( $person->ID, 'kaamase_profile_id', true );
+
+							if ( ! $profile && function_exists( 'kaamase_join_is_professional_only' ) && kaamase_join_is_professional_only( $person->ID ) ) {
+								$profile = (int) kaamase_prof_id( $person->ID );
+							}
+
 							$phone   = ( $profile && function_exists( 'kaamase_read_field' ) )
 								? (string) kaamase_read_field( $profile, 'phone' )
 								: '';

@@ -59,8 +59,13 @@
  * existed.
  *
  * @package KaamaseCore
- * @version 1.1.1
+ * @version 1.2.0
  * @since   1.6.0
+ *
+ * Changelog
+ *   1.2.0  A new account can also be a professional one, on the website's
+ *          last-questions form and on /auth/google/complete, when
+ *          professional-signup.php is present and switched on.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -789,7 +794,7 @@ if ( ! function_exists( 'kaamase_google_signup_errors' ) ) {
 
 		$errors = array();
 
-		if ( ! in_array( $data['type'], array( 'worker', 'employer' ), true ) ) {
+		if ( ! in_array( $data['type'], function_exists( 'kaamase_join_types' ) ? kaamase_join_types() : array( 'worker', 'employer' ), true ) ) {
 			$errors[] = __( 'Choose whether you are looking for work or looking for workers.', 'kaamase-core' );
 		}
 
@@ -803,6 +808,10 @@ if ( ! function_exists( 'kaamase_google_signup_errors' ) ) {
 
 		if ( 'worker' === $data['type'] && '' === $data['trade'] ) {
 			$errors[] = __( 'Please choose the work you do.', 'kaamase-core' );
+		}
+
+		if ( function_exists( 'kaamase_join_errors' ) ) {
+			$errors = array_merge( $errors, kaamase_join_errors( $data['type'], isset( $data['category'] ) ? $data['category'] : '' ) );
 		}
 
 		if ( '' === $data['phone_in'] ) {
@@ -856,6 +865,7 @@ if ( ! function_exists( 'kaamase_google_create' ) ) {
 				'phone'    => $data['phone'],
 				'district' => $data['district'],
 				'trade'    => $data['trade'],
+				'category' => isset( $data['category'] ) ? $data['category'] : '',
 				'password' => wp_generate_password( 32, true, true ),
 			)
 		);
@@ -1021,6 +1031,7 @@ if ( ! function_exists( 'kaamase_rest_google_complete' ) ) {
 			'name'     => sanitize_text_field( (string) $request->get_param( 'name' ) ),
 			'district' => kaamase_match_district( (string) $request->get_param( 'district' ) ),
 			'trade'    => kaamase_match_trade( (string) $request->get_param( 'trade' ) ),
+			'category' => function_exists( 'kaamase_join_category' ) ? kaamase_join_category( $request->get_param( 'category' ) ) : '',
 			'phone_in' => $phone_in,
 			'phone'    => kaamase_sanitize_phone( $phone_in ),
 			'agreed'   => (bool) $request->get_param( 'agreed' ),
@@ -1354,7 +1365,7 @@ if ( ! function_exists( 'kaamase_google_on_register_page' ) ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$type = isset( $_GET['type'] ) ? sanitize_key( wp_unslash( $_GET['type'] ) ) : '';
 
-		if ( ! in_array( $type, array( 'worker', 'employer' ), true ) ) {
+		if ( ! in_array( $type, function_exists( 'kaamase_join_types' ) ? kaamase_join_types() : array( 'worker', 'employer' ), true ) ) {
 			return $output;
 		}
 
@@ -1557,6 +1568,7 @@ if ( ! function_exists( 'kaamase_google_send_back' ) ) {
 				'phone'    => isset( $data['phone_in'] ) ? $data['phone_in'] : '',
 				'district' => isset( $data['district'] ) ? $data['district'] : '',
 				'trade'    => isset( $data['trade'] ) ? $data['trade'] : '',
+				'category' => isset( $data['category'] ) ? $data['category'] : '',
 			),
 			15 * MINUTE_IN_SECONDS
 		);
@@ -1632,6 +1644,7 @@ if ( ! function_exists( 'kaamase_google_finish' ) ) {
 			'name'     => isset( $_POST['kaamase_name'] ) ? sanitize_text_field( wp_unslash( $_POST['kaamase_name'] ) ) : '',
 			'district' => kaamase_match_district( isset( $_POST['kaamase_district'] ) ? wp_unslash( $_POST['kaamase_district'] ) : '' ),
 			'trade'    => kaamase_match_trade( isset( $_POST['kaamase_trade'] ) ? wp_unslash( $_POST['kaamase_trade'] ) : '' ),
+			'category' => ( isset( $_POST['kaamase_category'] ) && function_exists( 'kaamase_join_category' ) ) ? kaamase_join_category( sanitize_text_field( wp_unslash( $_POST['kaamase_category'] ) ) ) : '',
 			'phone_in' => $phone_in,
 			'phone'    => kaamase_sanitize_phone( $phone_in ),
 			'agreed'   => ! empty( $_POST['kaamase_agree'] ),
@@ -1657,6 +1670,12 @@ if ( ! function_exists( 'kaamase_google_finish' ) ) {
 
 		wp_set_auth_cookie( $user_id, true );
 		wp_set_current_user( $user_id );
+
+		// A professional goes straight on to the rest of their profile.
+		if ( 'professional' === $data['type'] && function_exists( 'kaamase_join_landing' ) ) {
+			wp_safe_redirect( kaamase_join_landing() );
+			exit;
+		}
 
 		wp_safe_redirect( kaamase_page_url( 'dashboard' ) );
 		exit;
@@ -1735,6 +1754,13 @@ if ( ! function_exists( 'kaamase_google_finish_form' ) ) {
 						<?php checked( 'employer', $type ); ?>>
 					<span><?php esc_html_e( 'I am looking for workers', 'kaamase-core' ); ?></span>
 				</label>
+				<?php if ( function_exists( 'kaamase_join_on' ) && kaamase_join_on() ) : ?>
+					<label class="ka-check">
+						<input type="radio" name="kaamase_type" value="professional"
+							<?php checked( 'professional', $type ); ?>>
+						<span><?php esc_html_e( 'I am looking for an office or professional job', 'kaamase-core' ); ?></span>
+					</label>
+				<?php endif; ?>
 			</div>
 
 			<div class="ka-field">
@@ -1811,6 +1837,18 @@ if ( ! function_exists( 'kaamase_google_finish_form' ) ) {
 					<?php esc_html_e( 'Only needed if you are looking for work. You can add more trades afterwards.', 'kaamase-core' ); ?>
 				</p>
 			</div>
+
+			<?php
+			// The same idea for a professional: always drawn, used only when that is the choice above.
+			if ( function_exists( 'kaamase_join_on' ) && kaamase_join_on() && function_exists( 'kaamase_join_category_field' ) ) {
+				echo kaamase_join_category_field( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+					isset( $old['category'] ) ? $old['category'] : '',
+					'ka-g-category',
+					false,
+					__( 'Only needed for an office or professional job. You can choose up to three on your profile afterwards.', 'kaamase-core' )
+				);
+			}
+			?>
 
 			<div class="ka-field">
 				<label class="ka-check">

@@ -29,8 +29,12 @@
  * first. Every write, and every contact reveal, needs a token.
  *
  * @package KaamaseCore
- * @version 1.9.0
+ * @version 1.9.1
  * @since   1.3.0
+ *
+ * Changelog
+ *   1.9.1  /auth/register also takes type "professional" with a category,
+ *          when professional-signup.php is present and switched on.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -639,11 +643,12 @@ if ( ! function_exists( 'kaamase_rest_register' ) ) {
 		$trade    = kaamase_match_trade( (string) $request->get_param( 'trade' ) );
 		$password = (string) $request->get_param( 'password' );
 		$agreed   = (bool) $request->get_param( 'agreed' );
+		$category = function_exists( 'kaamase_join_category' ) ? kaamase_join_category( $request->get_param( 'category' ) ) : '';
 
 		$phone  = kaamase_sanitize_phone( $phone_in );
 		$errors = array();
 
-		if ( ! in_array( $type, array( 'worker', 'employer' ), true ) ) {
+		if ( ! in_array( $type, function_exists( 'kaamase_join_types' ) ? kaamase_join_types() : array( 'worker', 'employer' ), true ) ) {
 			$errors[] = __( 'Choose whether you are looking for work or looking for workers.', 'kaamase-core' );
 		}
 
@@ -675,6 +680,10 @@ if ( ! function_exists( 'kaamase_rest_register' ) ) {
 
 		if ( 'worker' === $type && '' === $trade ) {
 			$errors[] = __( 'Please choose the work you do.', 'kaamase-core' );
+		}
+
+		if ( function_exists( 'kaamase_join_errors' ) ) {
+			$errors = array_merge( $errors, kaamase_join_errors( $type, $category ) );
 		}
 
 		if ( strlen( $password ) < 8 ) {
@@ -721,6 +730,7 @@ if ( ! function_exists( 'kaamase_rest_register' ) ) {
 				'phone'    => $phone,
 				'district' => $district,
 				'trade'    => $trade,
+				'category' => $category,
 				'password' => $password,
 			)
 		);
