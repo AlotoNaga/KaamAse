@@ -7300,6 +7300,106 @@ theme keeps the closed notice where it was, and the reverse does the same.
 explains itself. If the app ever wants its own heading per case, the reply for a
 closed job opened by id still has the code `kaamase_job_closed`.
 
+## 96. Why Kaam Ase is hard to find on Google, and what changed (`seo.php` 1.1.0 → 1.2.0)
+
+### What Search Console showed
+
+- **Job postings:** 0 invalid, 2 valid. The postal code warning is gone (section
+  82). Since August Google has never held more than five Kaam Ase jobs at once.
+  The markup is right; Google simply reads very few job pages, and most daily
+  jobs close (3 to 21 days) before it gets to them.
+- **Profiles:** indexed and on Google.
+- Nothing uploaded in the last two weeks touches the job markup, robots tags or
+  sitemap. That was checked file by file.
+
+Two things on Google's side at the same time:
+
+- Since late August Google Jobs has, for long stretches, not shown jobs posted
+  in the last 48 to 72 hours. This was reported widely by job boards.
+- Google's **September 2026 spam update** ran from 24 September to about
+  8 October. It punishes near-identical pages for every city or category. That
+  is why Kaam Ase should not make a page for every trade × district, as one AI
+  suggested. Empty trade and district pages are already kept out of Google by
+  Rank Math.
+
+### What was wrong on our side: the titles Google saw
+
+`seo.php` (section 74) wrote good titles, but stood aside whenever an SEO plugin
+was active, and the live site runs Rank Math. So Google was given Rank Math's
+defaults:
+
+| Page | Before | Now |
+| --- | --- | --- |
+| Homepage | Kaam Ase - | Jobs and workers in Nagaland - Kaam Ase |
+| Jobs | Jobs - Kaam Ase · *"Jobs Archive - Kaam Ase"* | Jobs in Nagaland - Kaam Ase |
+| Jobs in Dimapur | Dimapur - Kaam Ase | Jobs in Dimapur, Nagaland - Kaam Ase |
+| District | Dimapur - Kaam Ase · *"Also written: Dimapure, DMP"* | Jobs and workers in Dimapur, Nagaland - Kaam Ase |
+| Trade | Mason - Kaam Ase | Mason jobs and workers in Nagaland - Kaam Ase |
+| Professional jobs | Professional jobs - Kaam Ase | Professional jobs in Nagaland - Kaam Ase |
+| A professional category | Banking - Kaam Ase | Banking jobs in Nagaland - Kaam Ase |
+| A job | Mason for one day - Kaam Ase | Mason for one day - Dimapur, Nagaland - Kaam Ase |
+| A worker | Sebu Tileman - Kaam Ase | Sebu Tileman - Tile worker in Kohima - Kaam Ase |
+
+The words in italics were the line Google showed under the result. Every one of
+these pages now has a real description written for it.
+
+How it works:
+
+- The words are handed to Rank Math, which still writes, escapes and formats the
+  tags with its own separator.
+- **A title or description typed by hand in Rank Math's box for one page, one
+  profile or one district is always kept.** To word one page yourself, type it
+  there.
+- Only Kaam Ase's own page types are touched. About, Privacy, Help, the
+  Professionals list and every other page stay exactly as Rank Math writes them.
+- Share previews on WhatsApp and Facebook take the same title and line.
+- A Hindi or Nagamese visitor sees the title in their language; Google reads
+  the English.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/seo.php` | 1.1.0 → 1.2.0 |
+
+Goes to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed Cache
+→ Toolbox → Purge All**.
+
+Tested on the test copy of the site:
+
+- Every page type in English and Hindi.
+- A title and a description set by hand in Rank Math are kept, and each is
+  respected separately.
+- Before and after, every app answer is identical. Only page titles changed.
+- The Part C 107, professional jobs 115 and fixes 45 suites pass.
+
+### After uploading: four things only you can do
+
+1. **Search Console → Sitemaps:** submit `https://kaamase.com/sitemap_index.xml`.
+   Under Rank Math, that is the sitemap; `wp-sitemap.xml` only redirects to it.
+2. **Search Console → URL Inspection:** inspect the homepage, `/jobs/` and
+   `/district/dimapur/`, and press *Request indexing* on each.
+3. **Connect Google indexing** (Kaam Ase → Google indexing, section 57), so every
+   job is sent to Google the minute it is posted rather than waiting to be found:
+   1. At console.cloud.google.com, make a project. In *APIs & Services →
+      Library*, enable the **Web Search Indexing API**.
+   2. In *IAM & Admin → Service accounts*, create a service account. Open it,
+      then *Keys → Add key → JSON*. A key file downloads.
+   3. In **Search Console → Settings → Users and permissions → Add user**, paste
+      the service account's email (it ends in `iam.gserviceaccount.com`) and
+      choose **Owner**. Owner, not User, or Google refuses every job.
+   4. In WordPress, open **Kaam Ase → Google indexing**. Add the key file, tick
+      **On**, save, and press **Run the test**.
+
+   Google allows 200 a day without asking. More needs Google's approval form.
+4. **Bing Webmaster Tools:** add the site with *Import from Google Search
+   Console*, and submit the same sitemap. Then turn on Rank Math's **Instant
+   Indexing** module, which tells Bing about each new page. ChatGPT search,
+   Copilot and other assistants read Bing's index, and Bing currently has none
+   of Kaam Ase.
+
+Rankings move over weeks. Google Jobs' own fault is Google's to fix.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

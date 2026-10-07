@@ -50,9 +50,22 @@
  * those parts check for one and write nothing. The sitemap fix, the
  * account pages and /llms.txt apply either way.
  *
+ * Rank Math is the exception for titles and descriptions (section 7).
+ * Left to itself it called the Dimapur page "Dimapur - Kaam Ase", the
+ * jobs list "Jobs - Kaam Ase" with the line "Jobs Archive - Kaam Ase",
+ * and the homepage "Kaam Ase - ". So the words below are handed to it
+ * for Kaam Ase's own pages, and it still writes the tags. Anything set
+ * by hand in Rank Math for one page or one district is kept.
+ *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.2.0
  * @since   1.13.0
+ *
+ * Changelog
+ *   1.2.0  Titles and descriptions reach Google under Rank Math too.
+ *          Professional job pages are titled "Banking jobs in Nagaland"
+ *          and "Professional jobs in Nagaland", not "... jobs and
+ *          workers".
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -491,6 +504,22 @@ if ( ! function_exists( 'kaamase_seo_title_parts' ) ) {
 			return $parts;
 		}
 
+		return kaamase_seo_build_title_parts( $parts );
+	}
+}
+add_filter( 'document_title_parts', 'kaamase_seo_title_parts', 20 );
+
+if ( ! function_exists( 'kaamase_seo_build_title_parts' ) ) {
+	/**
+	 * The words of the title, whoever writes the tag.
+	 *
+	 * @since 1.2.0 Split out of kaamase_seo_title_parts(), so Rank Math can
+	 *              be given the same words.
+	 * @param array $parts Title parts: title, page, tagline, site.
+	 * @return array
+	 */
+	function kaamase_seo_build_title_parts( $parts ) {
+
 		if ( is_front_page() ) {
 
 			// WordPress leaves the site name off the homepage title. Put it back after the words people search for.
@@ -528,8 +557,25 @@ if ( ! function_exists( 'kaamase_seo_title_parts' ) ) {
 
 		} elseif ( is_tax( 'kaamase_trade' ) && '' !== $trade ) {
 
-			/* translators: 1: trade name, such as "Teacher" or "AC repair", 2: place, such as "Dimapur, Nagaland" */
-			$title = sprintf( __( '%1$s jobs and workers in %2$s', 'kaamase-core' ), $trade, $where );
+			$slug = (string) get_query_var( 'kaamase_trade' );
+
+			if ( defined( 'KAAMASE_PRO_GROUP' ) && KAAMASE_PRO_GROUP === $slug ) {
+
+				// The heading over every professional category: "Professional jobs in Nagaland".
+				/* translators: 1: trade name, 2: place, such as "Dimapur, Nagaland" */
+				$title = sprintf( __( '%1$s in %2$s', 'kaamase-core' ), $trade, $where );
+
+			} elseif ( function_exists( 'kaamase_pro_is_trade' ) && kaamase_pro_is_trade( $slug ) ) {
+
+				// A professional category lists jobs only: "Banking jobs in Nagaland".
+				/* translators: 1: trade name, 2: place, such as "Dimapur, Nagaland" */
+				$title = sprintf( __( '%1$s jobs in %2$s', 'kaamase-core' ), $trade, $where );
+
+			} else {
+
+				/* translators: 1: trade name, such as "Teacher" or "AC repair", 2: place, such as "Dimapur, Nagaland" */
+				$title = sprintf( __( '%1$s jobs and workers in %2$s', 'kaamase-core' ), $trade, $where );
+			}
 
 		} elseif ( is_tax( 'kaamase_district' ) && '' !== $district ) {
 
@@ -571,7 +617,6 @@ if ( ! function_exists( 'kaamase_seo_title_parts' ) ) {
 		return $parts;
 	}
 }
-add_filter( 'document_title_parts', 'kaamase_seo_title_parts', 20 );
 
 
 /* ==========================================================================
@@ -612,6 +657,21 @@ if ( ! function_exists( 'kaamase_seo_description' ) ) {
 				? sprintf( __( '%1$s: people to hire in %2$s on Kaam Ase. See who is available now, their ratings and local vouches, then get in touch. Free to search.', 'kaamase-core' ), $trade, $where )
 				/* translators: %s: place */
 				: sprintf( __( 'Find people to hire in %s: teachers, nurses, office staff, drivers, electricians and more. See who is available now, their ratings and vouches.', 'kaamase-core' ), $where );
+		}
+
+		// Professional pages list jobs only, and say what those jobs carry.
+		if ( is_tax( 'kaamase_trade' ) && '' !== $trade ) {
+
+			$slug = (string) get_query_var( 'kaamase_trade' );
+
+			if ( defined( 'KAAMASE_PRO_GROUP' ) && KAAMASE_PRO_GROUP === $slug ) {
+				return __( 'Professional jobs in Nagaland: banks, schools, hospitals, offices, IT, engineering and more, with the monthly salary, qualification and last date to apply. Free to apply.', 'kaamase-core' );
+			}
+
+			if ( function_exists( 'kaamase_pro_is_trade' ) && kaamase_pro_is_trade( $slug ) ) {
+				/* translators: 1: professional category, such as "Banking", 2: place */
+				return sprintf( __( '%1$s jobs in %2$s, with the monthly salary, qualification and last date to apply. Posted by employers on Kaam Ase. Free to apply.', 'kaamase-core' ), $trade, $where );
+			}
 		}
 
 		// A trade page lists both sides, so its line says both. Worded so any
@@ -705,7 +765,145 @@ add_action( 'wp_head', 'kaamase_seo_print_head', 2 );
 
 
 /* ==========================================================================
-   7. STRUCTURED DATA
+   7. UNDER RANK MATH
+
+   Rank Math writes the title and description tags itself, from its own
+   patterns: "%title% - %sitename%" and the term's description, which on
+   a district is the list of other spellings. Kaam Ase's own pages are
+   given the words above instead. Rank Math still writes, escapes and
+   formats the tags, and a title or description set by hand in Rank Math
+   for one page, one profile or one district is never replaced.
+
+   Only these page types: the homepage, the jobs, workers and teams
+   lists, trade and district pages, and jobs and profiles. Every other
+   page is left to Rank Math as it was.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_seo_rank_math_ours' ) ) {
+	/**
+	 * Whether this page is one of Kaam Ase's own, and Rank Math is in use.
+	 *
+	 * @since 1.2.0
+	 * @return bool
+	 */
+	function kaamase_seo_rank_math_ours() {
+
+		if ( ! defined( 'RANK_MATH_VERSION' ) || is_admin() || is_feed() || is_search() || is_404() ) {
+			return false;
+		}
+
+		/**
+		 * Filter whether Kaam Ase gives Rank Math its titles and descriptions.
+		 *
+		 * @since 1.2.0
+		 * @param bool $give Whether to.
+		 */
+		if ( ! apply_filters( 'kaamase_seo_rank_math', true ) ) {
+			return false;
+		}
+
+		return is_front_page()
+			|| is_post_type_archive( array( 'kaamase_job', 'kaamase_worker', 'kaamase_gang' ) )
+			|| is_tax( array( 'kaamase_trade', 'kaamase_district' ) )
+			|| is_singular( array( 'kaamase_job', 'kaamase_worker', 'kaamase_gang', 'kaamase_employer' ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_seo_rank_math_hand_set' ) ) {
+	/**
+	 * Whether somebody typed a title or description for this very page in
+	 * Rank Math's box.
+	 *
+	 * @since 1.2.0
+	 * @param string $what title or description.
+	 * @return bool
+	 */
+	function kaamase_seo_rank_math_hand_set( $what ) {
+
+		$key = 'rank_math_' . ( 'description' === $what ? 'description' : 'title' );
+
+		if ( is_tax() || is_category() || is_tag() ) {
+
+			$term = get_queried_object();
+
+			return $term instanceof WP_Term && '' !== trim( (string) get_term_meta( $term->term_id, $key, true ) );
+		}
+
+		$post_id = 0;
+
+		if ( is_singular() ) {
+			$post_id = (int) get_queried_object_id();
+		} elseif ( is_front_page() && 'page' === get_option( 'show_on_front' ) ) {
+			$post_id = (int) get_option( 'page_on_front' );
+		}
+
+		return $post_id && '' !== trim( (string) get_post_meta( $post_id, $key, true ) );
+	}
+}
+
+if ( ! function_exists( 'kaamase_seo_rank_math_title' ) ) {
+	/**
+	 * Give Rank Math the title.
+	 *
+	 * @since 1.2.0
+	 * @param string $title Rank Math's title.
+	 * @return string
+	 */
+	function kaamase_seo_rank_math_title( $title ) {
+
+		if ( ! kaamase_seo_rank_math_ours() || kaamase_seo_rank_math_hand_set( 'title' ) ) {
+			return $title;
+		}
+
+		$parts = array( 'title' => is_singular() ? wp_strip_all_tags( (string) single_post_title( '', false ) ) : '' );
+
+		if ( is_paged() ) {
+			/* translators: %s: page number. WordPress's own wording, from its own translations. */
+			$parts['page'] = sprintf( __( 'Page %s' ), number_format_i18n( max( 1, (int) get_query_var( 'paged' ) ) ) );
+		}
+
+		$parts['site'] = wp_strip_all_tags( (string) get_bloginfo( 'name', 'display' ) );
+
+		$parts = kaamase_seo_build_title_parts( $parts );
+
+		if ( '' === trim( (string) ( $parts['title'] ?? '' ) ) ) {
+			return $title;
+		}
+
+		// Joined the way Rank Math joins its own, with its separator.
+		$settings  = get_option( 'rank-math-options-titles', array() );
+		$separator = is_array( $settings ) && ! empty( $settings['title_separator'] ) ? (string) $settings['title_separator'] : '-';
+		$separator = trim( html_entity_decode( $separator, ENT_QUOTES, 'UTF-8' ) );
+
+		return implode( ' ' . $separator . ' ', array_filter( array_map( 'trim', array_map( 'strval', $parts ) ), 'strlen' ) );
+	}
+}
+add_filter( 'rank_math/frontend/title', 'kaamase_seo_rank_math_title', 20 );
+
+if ( ! function_exists( 'kaamase_seo_rank_math_description' ) ) {
+	/**
+	 * Give Rank Math the line under the result.
+	 *
+	 * @since 1.2.0
+	 * @param string $description Rank Math's description.
+	 * @return string
+	 */
+	function kaamase_seo_rank_math_description( $description ) {
+
+		if ( ! kaamase_seo_rank_math_ours() || kaamase_seo_rank_math_hand_set( 'description' ) ) {
+			return $description;
+		}
+
+		$ours = kaamase_seo_description();
+
+		return '' !== $ours ? $ours : $description;
+	}
+}
+add_filter( 'rank_math/frontend/description', 'kaamase_seo_rank_math_description', 20 );
+
+
+/* ==========================================================================
+   8. STRUCTURED DATA
 
    schema.php already writes the Organization on the homepage and a
    JobPosting on every open job. This adds to the Organization, and writes
@@ -836,7 +1034,7 @@ add_action( 'wp_head', 'kaamase_seo_print_home_schema', 21 );
 
 
 /* ==========================================================================
-   8. /llms.txt
+   9. /llms.txt
 
    A short plain summary for AI assistants, in the format they look for:
    what this is, the facts, and the pages worth reading. In English only,
