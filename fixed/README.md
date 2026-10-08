@@ -7549,6 +7549,12 @@ On a professional job it now reads:
 - Hindi and Nagamese readers keep their translated note until the new one is
   translated, so they never get an English line. The language files were not
   touched.
+- **The Hindi and Nagamese translations are ready**, sent by the owner. They are
+  kept in the translation working files, `translations/hi-core.json` and
+  `translations/nag-core.json`, which are not uploaded. The next time the
+  language files are rebuilt they come in with it, and from then on Hindi and
+  Nagamese readers see the new note in their own language. Until then nothing on
+  the site changes.
 - The website does not show this note anywhere, so only the app sees the
   difference, and **the app needs no change**. It already shows whatever
   `new_note` says.
