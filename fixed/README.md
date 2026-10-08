@@ -114,6 +114,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/mark-restore.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase/header.php` | `wp-content/themes/kaamase/header.php` |
 | `fixed/kaamase-core/includes/closed-jobs.php` | `wp-content/plugins/kaamase-core/includes/closed-jobs.php` |
+| `fixed/kaamase-core/includes/professional-numbers.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 `fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
 copy, but a snippet that replaces the one in the WPCode plugin. See section 26.
@@ -7679,6 +7680,72 @@ suites pass: the fixes 45, Part C 107, professional profiles 141, professional j
 filters 27.
 
 **For the app:** nothing. These are website pages only.
+
+## 102. Step 1 polish, part 6: Professional numbers in wp-admin (`professional-numbers.php` 1.0.0, new)
+
+A new screen at **Kaam Ase → Professional numbers**, for admins only. It
+answers one question, opened once a week: is the professional side growing?
+
+| Section | What it shows |
+| --- | --- |
+| **Professional jobs** | Open now; waiting for your check (the number links to the list of jobs to approve); waiting for the employer to confirm their email; posted in the last 7 and 30 days; marked filled by the employer; employers who have posted one; people given a job's number or email in the last 7 and 30 days |
+| **Open jobs by category** | The same counts the Professional jobs page uses, recounted every ten minutes |
+| **Professional profiles** | All profiles; begun at sign-up but not finished; finished and shown to employers, and of those, how many are open to everyone and Google; hidden by their owner; waiting for the owner's email; on hold; new in the last 7 and 30 days; employers given a professional's number in the last 7 and 30 days |
+| **People** | Joined as a professional (ever, last 7 days, last 30 days); turned off the daily message about new jobs |
+| **Week by week** | The last eight weeks side by side: jobs posted, profiles made, people joined, job numbers given, profile numbers given |
+
+- **Read only.** No form, no button, nothing saved. Every figure is counted
+  when the screen opens, from what the site already keeps: the jobs and
+  profiles, the date each person joined, and the record each job and profile
+  keeps of who was given its number. Opening it changes nothing; the test
+  compared every post, post detail and user detail before and after.
+- **People, not times.** "People given a number" counts each person once,
+  even if they asked about three jobs. The week-by-week table counts every
+  time, and says so under it.
+- **What it cannot count:** page visits, because Kaam Ase does not store them
+  (Search Console already does). Number requests are counted from each job's
+  own record: the latest 200 per job, and nothing older than a year. That is
+  more than these windows need.
+- On a phone the page fits the screen; the week table scrolls sideways
+  inside its own box.
+- All screen words are English, like the other admin screens. The language
+  files were not touched.
+- With the file removed, the screen is gone and nothing else changes.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-numbers.php` | new |
+
+It goes to `wp-content/plugins/kaamase-core/includes/`. The plugin loads it by
+itself, with nothing to switch on. Then run **LiteSpeed Cache → Toolbox →
+Purge All**.
+
+Tested on the test copy, 23 new checks. Each count moves by exactly what
+happened:
+
+- jobs posted, waiting for your check, and marked filled, with the employer
+  counted;
+- profiles begun at sign-up, shown and open to everyone, and hidden by their
+  owner;
+- a person joining as a professional, and one turning the daily message off;
+- numbers given: the same person asking twice counts once as a person and
+  twice in the week table, and one given 40 days ago lands in the row for five
+  to six weeks back and not in the 30-day count.
+
+Also checked:
+
+- an admin sees the screen and anyone else is refused;
+- opening it writes nothing;
+- the error log stays clean.
+
+Before and after, every app answer and every other page is identical. All
+suites pass: the fixes 45, Part C 107, professional profiles 141, professional jobs
+115, tick 14, Google switch 25, dashboard 21, professional cards 29, professional
+filters 27, last polish group 21, new-employer note 8.
+
+**For the app:** nothing. This is a wp-admin screen only.
 
 ## Not changed, and why
 
