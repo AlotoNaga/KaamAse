@@ -37,7 +37,7 @@
  * as it was.
  *
  * @package KaamaseCore
- * @version 1.0.2
+ * @version 1.0.3
  * @since   1.0.0
  *
  * Changelog
@@ -46,6 +46,8 @@
  *          never send anything.
  *   1.0.2  The confirmation email's line for a professional, used by
  *          registration.php 1.6.1.
+ *   1.0.3  On a phone, the Find work tab of a professional-only account
+ *          opens Jobs for you, not the list of daily work.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -873,3 +875,44 @@ if ( ! function_exists( 'kaamase_join_in_reference' ) ) {
 	}
 }
 add_filter( 'rest_post_dispatch', 'kaamase_join_in_reference', 13, 3 );
+
+
+if ( ! function_exists( 'kaamase_join_tabbar' ) ) {
+	/**
+	 * Send a professional's Find work tab to their own jobs.
+	 *
+	 * The tab bar gives every account with the worker role a Find work
+	 * tab to the jobs list, which opens on daily work. An account that
+	 * joined as a professional came for office and bank jobs, and Jobs for
+	 * you lists exactly those, matched to their profile, with a link to
+	 * every professional job under it. Same tab, same words; only where
+	 * it goes changes, and only for these accounts.
+	 *
+	 * @since 1.0.3
+	 * @param array  $tabs Tab definitions.
+	 * @param string $type Current user type.
+	 * @return array
+	 */
+	function kaamase_join_tabbar( $tabs, $type ) {
+
+		unset( $type );
+
+		$user_id = get_current_user_id();
+
+		if ( ! $user_id || ! is_array( $tabs ) || ! function_exists( 'kaamase_match_url' ) || ! kaamase_join_is_professional_only( $user_id ) ) {
+			return $tabs;
+		}
+
+		$jobs = untrailingslashit( home_url( '/jobs/' ) );
+		$mine = kaamase_match_url();
+
+		foreach ( $tabs as $i => $tab ) {
+			if ( is_array( $tab ) && isset( $tab['url'] ) && untrailingslashit( (string) $tab['url'] ) === $jobs ) {
+				$tabs[ $i ]['url'] = $mine;
+			}
+		}
+
+		return $tabs;
+	}
+}
+add_filter( 'kaamase_tabbar_items', 'kaamase_join_tabbar', 20, 2 );

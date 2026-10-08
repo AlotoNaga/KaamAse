@@ -42,7 +42,7 @@
  * stop offering the professional categories, which belong here instead.
  *
  * @package KaamaseCore
- * @version 1.1.1
+ * @version 1.1.2
  * @since   1.0.0
  *
  * Changelog
@@ -55,6 +55,9 @@
  *          save. A profile its owner hid stays hidden even if a category
  *          or language it uses is later removed and it has to be saved
  *          again.
+ *   1.1.2  The search on the Professionals list folds away until it is
+ *          used, as every other list's filters do, so the first screen
+ *          on a phone shows professionals rather than a form.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -4018,6 +4021,25 @@ if ( ! function_exists( 'kaamase_prof_list_shortcode' ) ) {
 		}
 		?>
 
+		<?php
+		/*
+		 * Folded away until it is used, like the filters on every other
+		 * list. Open it filled the first screen of a phone, so an employer
+		 * arriving to see who is there was shown a form instead. Open
+		 * whenever something is already searched or narrowed, because then
+		 * hiding it makes the results look wrong for no visible reason.
+		 *
+		 * @since 1.1.2
+		 */
+		$kp_open = '' !== (string) $filters['search'] || '' !== (string) $filters['category'] || '' !== (string) $filters['district'] || '' !== (string) $filters['status']
+			|| ( '' !== (string) $filters['sort'] && 'shuffle' !== (string) $filters['sort'] );
+		?>
+		<details class="ka-filters-wrap"<?php echo $kp_open ? ' open' : ''; ?>>
+
+			<summary class="ka-filters-toggle">
+				<?php echo esc_html( $kp_open ? __( 'Change filters', 'kaamase-core' ) : __( 'Filter these results', 'kaamase-core' ) ); ?>
+			</summary>
+
 		<form class="ka-filters ka-card" method="get" action="<?php echo esc_url( $base ); ?>">
 
 			<div class="ka-field">
@@ -4060,6 +4082,8 @@ if ( ! function_exists( 'kaamase_prof_list_shortcode' ) ) {
 			<button class="ka-btn ka-btn--primary" type="submit"><?php esc_html_e( 'Show these', 'kaamase-core' ); ?></button>
 
 		</form>
+
+		</details>
 
 		<div class="ka-mt-6">
 

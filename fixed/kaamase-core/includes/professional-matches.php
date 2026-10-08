@@ -45,8 +45,13 @@
  * that changes is reflected at once.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.0.1
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.0.1  On Jobs for you, a job's match and reasons are the top of its
+ *          own card, rather than a line between two cards that could be
+ *          read as belonging to either.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -1268,7 +1273,7 @@ if ( ! function_exists( 'kaamase_match_reasons_html' ) ) {
 				: '<span class="ka-small ka-soft">&#10007; ' . esc_html( $reason['text'] ) . '</span>';
 		}
 
-		return '<p class="ka-cluster" style="margin-bottom:var(--ka-2)">' . $out . '</p>';
+		return '<p class="ka-cluster ka-match__why">' . $out . '</p>';
 	}
 }
 
@@ -1353,6 +1358,21 @@ if ( ! function_exists( 'kaamase_match_shortcode' ) ) {
 					number_format_i18n( count( $matches ) )
 				)
 			) . '</p>';
+
+			/*
+			 * One card per job: the match and its reasons across the top,
+			 * the job beneath, inside one border. As separate pieces the
+			 * reasons sat in the gap between two cards and read as
+			 * belonging to either. Kept here with the markup it styles,
+			 * because nothing else draws it.
+			 *
+			 * @since 1.0.1
+			 */
+			echo '<style id="kaamase-match-card">'
+				. '.ka-match{background:var(--ka-surface);border:1px solid var(--ka-border);border-radius:var(--ka-radius-lg);box-shadow:var(--ka-shadow-sm);overflow:hidden}'
+				. '.ka-match .ka-match__why{margin:0;padding:var(--ka-3) var(--ka-4);background:var(--ka-surface-alt);border-bottom:1px solid var(--ka-border)}'
+				. '.ka-match .ka-job-card,.ka-match .ka-job-card:hover{border:0;border-radius:0;box-shadow:none}'
+				. '</style>';
 
 			echo '<div class="ka-stack--lg">';
 

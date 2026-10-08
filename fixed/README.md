@@ -7639,6 +7639,47 @@ dashboard 21, professional cards 29.
 Professional jobs tab, say so and they can be added to `GET /jobs` as new,
 optional parameters.
 
+## 101. Step 1 polish, part 5: four small things on the professional side
+
+| What | Before | Now | File |
+| --- | --- | --- | --- |
+| **Find work tab** (phone) of an account that joined as a professional | Opened the jobs list, which starts with daily work | Opens **Jobs for you**: their matched office and bank jobs, with "See every professional job" under them. Same tab and same words, so nothing to translate. | `professional-signup.php` 1.0.2 → 1.0.3 |
+| **Professionals list** search | Always open; on a phone it filled the first screen | Folded under **Filter these results** like every other list; opens by itself when something is searched or chosen | `professional-profiles.php` 1.1.1 → 1.1.2 |
+| **Jobs for you** | The match and its reasons sat between two cards and could be read as belonging to either | Each job is one card: match and reasons across the top, the job under it | `professional-matches.php` 1.0.0 → 1.0.1 |
+| **Post a professional job** form | "Post a professional job" twice, the page title and again straight under it | Once. Editing a job still says "Edit this professional job". | `professional-jobs.php` 1.1.0 → 1.1.1 |
+
+- Workers, employers, and workers who also made a professional profile keep the
+  tabs they had. Only an account with nothing but a professional profile gets the
+  new Find work.
+- No new words anywhere. The language files were not touched.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-signup.php` | 1.0.2 → 1.0.3 |
+| `fixed/kaamase-core/includes/professional-profiles.php` | 1.1.1 → 1.1.2 |
+| `fixed/kaamase-core/includes/professional-matches.php` | 1.0.0 → 1.0.1 |
+| `fixed/kaamase-core/includes/professional-jobs.php` | 1.1.0 → 1.1.1 |
+
+All four go to `wp-content/plugins/kaamase-core/includes/`. Then run
+**LiteSpeed Cache → Toolbox → Purge All**. Any order is safe.
+
+Tested on the test copy, 21 new checks:
+
+- the tab for each kind of account;
+- the search folded, and opening for a search, a district and an order;
+- Jobs for you as one card per job;
+- the heading for a new job and an edited one.
+
+The old files fail the 11 checks about what changed. Checked on a phone at 390
+pixels. Before and after, every app answer and every other page is identical. All
+suites pass: the fixes 45, Part C 107, professional profiles 141, professional jobs
+115, tick 14, Google switch 25, dashboard 21, professional cards 29, professional
+filters 27.
+
+**For the app:** nothing. These are website pages only.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

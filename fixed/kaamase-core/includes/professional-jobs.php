@@ -52,7 +52,7 @@
  * which keeps what it earned in search.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.1.1
  * @since   1.0.0
  *
  * Changelog
@@ -63,6 +63,9 @@
  *          for work now, vouched only), which mean nothing on a list of
  *          office jobs. The heading page also lists the categories that
  *          have open jobs.
+ *   1.1.1  The form no longer repeats "Post a professional job" under the
+ *          page's own title of the same words. Editing a job still says
+ *          "Edit this professional job".
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -1656,13 +1659,18 @@ if ( ! function_exists( 'kaamase_pro_form' ) ) {
 			<input type="hidden" name="kaamase_action" value="post_pro_job">
 			<input type="hidden" name="kaamase_job_id" value="<?php echo esc_attr( $job_id ); ?>">
 
-			<h2>
-				<?php
-				echo $job_id
-					? esc_html__( 'Edit this professional job', 'kaamase-core' )
-					: esc_html__( 'Post a professional job', 'kaamase-core' );
+			<?php
+			/*
+			 * Only when editing. A new job sits under the page's own title,
+			 * "Post a professional job", and saying it again straight
+			 * underneath looked like a mistake.
+			 *
+			 * @since 1.1.1
+			 */
+			if ( $job_id ) :
 				?>
-			</h2>
+				<h2><?php esc_html_e( 'Edit this professional job', 'kaamase-core' ); ?></h2>
+			<?php endif; ?>
 
 			<p class="ka-hint">
 				<?php esc_html_e( 'For salaried jobs in offices, banks, schools, hospitals, engineering and similar work. For daily work like masonry, driving or house help, use the normal job form.', 'kaamase-core' ); ?>
