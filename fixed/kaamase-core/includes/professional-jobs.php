@@ -52,7 +52,7 @@
  * which keeps what it earned in search.
  *
  * @package KaamaseCore
- * @version 1.1.2
+ * @version 1.2.0
  * @since   1.0.0
  *
  * Changelog
@@ -69,6 +69,10 @@
  *   1.1.2  The professional pages list jobs only. Without a filter they
  *          also listed workers who had picked a professional category
  *          as a trade, and counted them as jobs.
+ *   1.2.0  A third way to apply: on Kaam Ase (applications.php). Offered
+ *          only while that file is there, and the one ticked when a new
+ *          job is posted from the form. Without the file, a job set to it
+ *          is reached by phone, as before.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -467,7 +471,7 @@ if ( ! function_exists( 'kaamase_pro_choices' ) ) {
 	 */
 	function kaamase_pro_choices() {
 
-		return array(
+		$choices = array(
 			'job_type'      => array(
 				'full_time'  => __( 'Full time', 'kaamase-core' ),
 				'part_time'  => __( 'Part time', 'kaamase-core' ),
@@ -494,6 +498,17 @@ if ( ! function_exists( 'kaamase_pro_choices' ) ) {
 				'email' => __( 'Email', 'kaamase-core' ),
 			),
 		);
+
+		/*
+		 * Applying on Kaam Ase, while applications.php is there to take
+		 * them. Last, so anything that sends no answer still gets the
+		 * phone, as it always has.
+		 */
+		if ( function_exists( 'kaamase_apps_ready' ) && kaamase_apps_ready() ) {
+			$choices['apply_method']['kaamase'] = __( 'On Kaam Ase', 'kaamase-core' );
+		}
+
+		return $choices;
 	}
 }
 
@@ -595,6 +610,28 @@ if ( ! function_exists( 'kaamase_pro_apply_email' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_pro_apply_how' ) ) {
+	/**
+	 * How a professional job takes applications: phone, email or kaamase.
+	 *
+	 * @since 1.2.0
+	 * @param int $job_id Job ID.
+	 * @return string
+	 */
+	function kaamase_pro_apply_how( $job_id ) {
+
+		if ( '' !== kaamase_pro_apply_email( $job_id ) ) {
+			return 'email';
+		}
+
+		if ( function_exists( 'kaamase_apps_takes' ) && kaamase_apps_takes( $job_id ) ) {
+			return 'kaamase';
+		}
+
+		return 'phone';
+	}
+}
+
 if ( ! function_exists( 'kaamase_pro_details' ) ) {
 	/**
 	 * Everything professional about a job, ready to show.
@@ -674,7 +711,7 @@ if ( ! function_exists( 'kaamase_pro_details' ) ) {
 			'complete'            => $complete,
 			'apply_by'            => $closes ? wp_date( 'Y-m-d', $closes ) : '',
 			'apply_by_ts'         => $closes,
-			'apply_method'        => '' !== kaamase_pro_apply_email( $job_id ) ? 'email' : 'phone',
+			'apply_method'        => kaamase_pro_apply_how( $job_id ),
 		);
 	}
 }
@@ -1470,6 +1507,11 @@ if ( ! function_exists( 'kaamase_pro_form_values' ) ) {
 		$values['apply_by'] = wp_date( 'Y-m-d', time() + ( KAAMASE_PRO_SUGGEST_DAYS * DAY_IN_SECONDS ) );
 		$values['trade']    = '';
 
+		// A new job takes applications on Kaam Ase unless the employer picks otherwise.
+		if ( isset( kaamase_pro_choices()['apply_method']['kaamase'] ) ) {
+			$values['apply_method'] = 'kaamase';
+		}
+
 		if ( ! $job_id ) {
 			return $values;
 		}
@@ -1812,7 +1854,17 @@ if ( ! function_exists( 'kaamase_pro_form' ) ) {
 			<fieldset class="ka-field">
 				<legend class="ka-label"><?php esc_html_e( 'How people apply', 'kaamase-core' ); ?></legend>
 
-				<label class="ka-check">
+				<?php if ( isset( kaamase_pro_choices()['apply_method']['kaamase'] ) ) : ?>
+					<label class="ka-check">
+						<input type="radio" name="apply_method" value="kaamase" <?php checked( 'kaamase', $values['apply_method'] ); ?>>
+						<span><?php esc_html_e( 'On Kaam Ase (recommended)', 'kaamase-core' ); ?></span>
+					</label>
+					<p class="ka-hint">
+						<?php esc_html_e( 'People send their professional profile and a short note. You see everybody who applied in one list, mark who you shortlist, and they are told. Your number stays private.', 'kaamase-core' ); ?>
+					</p>
+				<?php endif; ?>
+
+				<label class="ka-check<?php echo isset( kaamase_pro_choices()['apply_method']['kaamase'] ) ? ' ka-mt-4' : ''; ?>">
 					<input type="radio" name="apply_method" value="phone" <?php checked( 'phone', $values['apply_method'] ); ?>>
 					<span><?php esc_html_e( 'By phone or WhatsApp', 'kaamase-core' ); ?></span>
 				</label>

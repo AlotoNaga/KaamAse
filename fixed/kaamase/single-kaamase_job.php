@@ -25,8 +25,12 @@
  * day-labour wording: no "Workers wanted", no "agree the rate out loud",
  * no note about workers rating the employer.
  *
+ * A job that takes applications on Kaam Ase gets the plugin's Apply
+ * button in place of the contact one (applications.php). Every other job
+ * keeps the button it had.
+ *
  * @package Kaamase
- * @version 1.3.0
+ * @version 1.4.0
  * @since   1.1.0
  */
 
@@ -359,10 +363,14 @@ while ( have_posts() ) :
 				</div>
 
 				<?php
-				echo kaamase_contact_button( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					$kaamase_id,
-					__( 'Get contact details', 'kaamase' )
-				);
+				$kaamase_apply = function_exists( 'kaamase_apply_button' ) ? kaamase_apply_button( $kaamase_id ) : '';
+
+				echo '' !== $kaamase_apply // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped where it is built.
+					? $kaamase_apply
+					: kaamase_contact_button(
+						$kaamase_id,
+						__( 'Get contact details', 'kaamase' )
+					);
 				?>
 
 			</div>

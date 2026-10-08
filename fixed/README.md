@@ -115,6 +115,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase/header.php` | `wp-content/themes/kaamase/header.php` |
 | `fixed/kaamase-core/includes/closed-jobs.php` | `wp-content/plugins/kaamase-core/includes/closed-jobs.php` |
 | `fixed/kaamase-core/includes/professional-numbers.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/applications.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 `fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
 copy, but a snippet that replaces the one in the WPCode plugin. See section 26.
@@ -7873,6 +7874,127 @@ cards 29, professional filters 27, last polish group 21, new-employer note 8,
 Professional numbers 23, home page card 15.
 
 **For the app:** nothing.
+
+## 105. Step 2a: Apply on Kaam Ase (`applications.php` 1.0.0 new, `professional-jobs.php` 1.1.2 → 1.2.0, theme `single-kaamase_job.php` 1.3.0 → 1.4.0)
+
+A third way to apply for a professional job, beside phone and email. The job
+seeker sends their professional profile and a short note. The employer sees
+everybody who applied in one list and marks each one **Shortlisted** or **Not
+selected**, and the job seeker is told.
+
+**The job seeker**
+- On a job that takes applications, the button says **Apply on Kaam Ase** (signed
+  out: **Sign in to apply**). The form shows the job, their professional profile
+  with a link to check it, and a note box (optional, up to 500 characters). It
+  says plainly: "The employer will see your professional profile, this note,
+  your phone number and your email address. Nobody else will."
+- **My applications** (a new page, `/job-applications/`) lists every
+  application: Sent, Seen by the employer, Shortlisted, Not selected or Job
+  closed. They can **Withdraw** until the employer says no or the job closes.
+- Once applied, the job's button says **Applied: Sent** (or Seen, Shortlisted
+  and so on).
+
+**The employer**
+- Picks it in the professional job form: **On Kaam Ase (recommended)**, ticked for
+  every new job. Phone and email stay available.
+- The dashboard shows **New applicants** at the top ("Accounts Executive: 3 new"),
+  and an **Applications** card lower down.
+- The list for each job has tabs (All, New, Shortlisted, Not selected). Each
+  applicant shows:
+  - photo, name and headline;
+  - qualification, experience, district, expected salary and when they can join;
+  - their note;
+  - **Call**, **WhatsApp** and **Email** buttons;
+  - their **Full profile** (about, past jobs, skills, languages);
+  - **Shortlist** and **Not selected** buttons.
+- Opening the list marks the new ones Seen.
+
+**The rules**
+
+| | |
+| --- | --- |
+| Who can apply | Signed in, email confirmed, with a finished professional profile that is not on hold. A hidden profile can still apply; it is shown to that one employer. |
+| How often | One application per job, and at most 20 a day. After withdrawing, or when a closed job is posted again, they may apply again. |
+| The employer's number | Stays private on such a job. The contact gate refuses it on the website and in the app alike. |
+| The applicant's number and email | Shared with that employer only, as the form says. |
+| Everyday jobs | Unchanged. Applying is for professional jobs only. |
+
+**Who is told what.** Push for app users, email for website users, never
+both, in their language:
+
+| Who | When |
+| --- | --- |
+| Employer | At once for the first applicant of a job. After that, once a day: "3 more people have applied for…". Fifty applications never become fifty messages. |
+| Applicant | When shortlisted, when not selected, and when the job closes before anybody answered. Telling them the same answer twice sends one message. |
+
+**When a job ends, and what is kept**
+- When a job is filled, closed, ends or is deleted, the applications nobody
+  answered become **Job closed**, and those people are told. Shortlisted and Not
+  selected keep their answer.
+- Applications are deleted:
+  - six months after their job closes;
+  - at once when the job is deleted;
+  - when the applicant deletes their professional profile or their account.
+- They are in Tools → Export Personal Data and Erase Personal Data.
+- They are private records: no address, never listed, never on Google, no
+  screen in wp-admin.
+
+**Two new pages**, made by themselves the first time the site loads after the
+upload, kept off Google and out of every cache:
+- **Apply for a job** at `/apply-for-job/`
+- **Applications** at `/job-applications/`
+
+If a page with one of those addresses already exists, it is left alone and
+WordPress gives the new page the next free address.
+
+**If `applications.php` is ever removed:** the site is exactly as before. A job
+that was set to take applications goes back to the employer's phone. This was
+tested both ways.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/applications.php` | **new** → `wp-content/plugins/kaamase-core/includes/` |
+| `fixed/kaamase-core/includes/professional-jobs.php` | 1.1.2 → 1.2.0 → `wp-content/plugins/kaamase-core/includes/` |
+| `fixed/kaamase/single-kaamase_job.php` | 1.3.0 → 1.4.0 → `wp-content/themes/kaamase/` |
+
+Any order is safe. Then open the website once, check that **Pages** has
+"Apply for a job" and "Applications", and run **LiteSpeed Cache → Toolbox →
+Purge All**.
+
+Tested on the test copy, 70 new checks:
+- the job, its button and the app's answer;
+- the six refusals (signed out, email not confirmed, no profile, profile not
+  finished, own job, phone job), with nothing stored;
+- applying from the app and from the website;
+- the employer's list, and what the employer sees and may do;
+- deciding, and who is told what, once;
+- withdrawing and applying again;
+- the day's message and the daily limit;
+- closing, the six months, deleting a job, a profile or an account, export
+  and erase;
+- the pages: kept off Google, never cached, and no address for an application.
+
+Before and after, the only differences anywhere:
+- `/me` gains `applications` (0 and 0 for everybody until somebody applies);
+- `/reference` lists the new choice, `kaamase` "On Kaam Ase", among the
+  professional apply methods;
+- the professional job form gains the new choice.
+
+Every other app answer and page is identical. Without `applications.php`,
+nothing differs at all. Checked on a phone at 390 pixels and a computer at
+1280, with no sideways scroll. All suites pass: the fixes 45, Part C 107,
+professional profiles 141, professional jobs 115, tick 14, Google switch 25,
+dashboard 21, professional cards 29, professional filters 27, last polish group
+21, new-employer note 8, Professional numbers 23, home page card 15, jobs-only
+pages 17.
+
+**Words:** the new screens and messages are English for now, in Hindi and
+Nagamese too, like the rest of the professional side. The language files were
+not touched.
+
+**For the app:** the routes and fields are in the message for the app side.
 
 ## Not changed, and why
 
