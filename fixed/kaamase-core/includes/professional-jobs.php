@@ -52,7 +52,7 @@
  * which keeps what it earned in search.
  *
  * @package KaamaseCore
- * @version 1.1.1
+ * @version 1.1.2
  * @since   1.0.0
  *
  * Changelog
@@ -66,6 +66,9 @@
  *   1.1.1  The form no longer repeats "Post a professional job" under the
  *          page's own title of the same words. Editing a job still says
  *          "Edit this professional job".
+ *   1.1.2  The professional pages list jobs only. Without a filter they
+ *          also listed workers who had picked a professional category
+ *          as a trade, and counted them as jobs.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -2510,6 +2513,41 @@ if ( ! function_exists( 'kaamase_pro_filters_now' ) ) {
 		);
 	}
 }
+
+if ( ! function_exists( 'kaamase_pro_jobs_only' ) ) {
+	/**
+	 * A professional page lists jobs, never people.
+	 *
+	 * A category page lists workers, teams and jobs together, and a
+	 * worker may pick a professional category as one of their trades. So
+	 * /trade/professional-jobs/ showed those workers, with their day
+	 * rates, under "Professional jobs in Nagaland", and counted them as
+	 * jobs. Only a filter used to switch the page to jobs.
+	 *
+	 * Set before queries.php builds the list, so it is built as a list of
+	 * jobs from the start: open jobs only, the jobs order, twelve a page.
+	 * Workers are still found under Find workers, as before; everyday
+	 * trade and district pages are unchanged.
+	 *
+	 * Only when the address names no kind of listing. Find workers
+	 * narrowed to a category (/workers/?kaamase_trade=banking) is also a
+	 * category request to WordPress, but it asked for workers, and gets
+	 * them.
+	 *
+	 * @since 1.1.2
+	 * @param WP_Query $query The query about to run.
+	 * @return void
+	 */
+	function kaamase_pro_jobs_only( $query ) {
+
+		if ( is_admin() || ! $query instanceof WP_Query || ! $query->is_main_query() || $query->get( 'post_type' ) || '' === kaamase_pro_listing_slug( $query ) ) {
+			return;
+		}
+
+		$query->set( 'post_type', array( 'kaamase_job' ) );
+	}
+}
+add_action( 'pre_get_posts', 'kaamase_pro_jobs_only', 9 );
 
 if ( ! function_exists( 'kaamase_pro_filter_query' ) ) {
 	/**

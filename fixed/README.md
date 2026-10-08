@@ -7812,6 +7812,68 @@ dashboard 21, professional cards 29, professional filters 27, last polish group
 
 **For the app:** nothing. This is the website home page only.
 
+## 104. Professional pages list jobs, not workers (`professional-jobs.php` 1.1.1 → 1.1.2)
+
+On the live site, **Professional jobs** (`/trade/professional-jobs/`) showed
+three workers with day rates and "Available now", under "Professional jobs in
+Nagaland" and counted as "3 professional jobs".
+
+- **Why:** every category page lists workers, teams and jobs together, and a
+  worker can pick a professional category as one of their trades (for example
+  "Church and mission organisations"). The professional pages only switched to
+  jobs when one of their job filters was used. With no filter, those workers
+  came through. The test copy had no such worker, so it never showed there.
+- **Now:** the Professional jobs page and every professional category page
+  (Banking, Nursing and so on) list open jobs only. The count line counts jobs.
+  When nothing is open, the page says "No jobs here yet" with a **See all jobs**
+  button. That message already existed; nothing new to translate.
+
+| Page | Before | Now |
+| --- | --- | --- |
+| Professional jobs, and each professional category | Jobs, plus any worker or team in that category | Jobs only |
+| The same, with a filter | Jobs only | Jobs only (unchanged) |
+| Find workers, also by category (Banking included) | Workers | Workers (unchanged) |
+| Everyday category pages (Mason and so on) | Workers, teams and jobs | Unchanged |
+| District pages, Find work, Find teams | | Unchanged |
+
+- Workers keep the categories they chose. Nothing about any profile changes.
+  They are found under **Find workers**, as before.
+- The app is not affected; it does not use these pages.
+- **Seen on the live site:** all three results were workers, so no
+  professional job was open then. Until one is posted, the page will say "No
+  jobs here yet", and the home page card from section 103 stays hidden.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-jobs.php` | 1.1.1 → 1.1.2 |
+
+It goes to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed
+Cache → Toolbox → Purge All**.
+
+Tested on the test copy with a worker in Mason and Banking, and a team in
+Nursing. 17 new checks:
+
+- the Professional jobs, Banking and Nursing pages list only jobs, with the
+  right count;
+- a filter and a district still work;
+- with nothing open, the page shows the "No jobs here yet" message;
+- the Mason page still lists the worker and the team;
+- Find workers, also by Banking, still finds the worker;
+- their district page, Find work by Banking and Find teams by Nursing are
+  unchanged.
+
+The old file fails 7 of them. A first version of this fix also hid the
+worker from Find workers by Banking; the test caught it, and that is fixed.
+Before and after, every app answer and every other page is identical.
+All suites pass: the fixes 45, Part C 107, professional profiles 141,
+professional jobs 115, tick 14, Google switch 25, dashboard 21, professional
+cards 29, professional filters 27, last polish group 21, new-employer note 8,
+Professional numbers 23, home page card 15.
+
+**For the app:** nothing.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
