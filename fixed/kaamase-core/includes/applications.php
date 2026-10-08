@@ -58,8 +58,13 @@
  * the employer's phone number, and nothing else changes.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.1.0  The CV (cv.php): sent with an application when the applicant
+ *          chooses, which they do by default when they have one; added
+ *          from the apply form; opened by the employer from the list.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -718,12 +723,13 @@ if ( ! function_exists( 'kaamase_apps_apply' ) ) {
 	 * Send an application.
 	 *
 	 * @since 1.0.0
-	 * @param int    $job_id  Job.
-	 * @param int    $user_id Applicant.
-	 * @param string $note    What they wrote, or ''.
+	 * @param int       $job_id  Job.
+	 * @param int       $user_id Applicant.
+	 * @param string    $note    What they wrote, or ''.
+	 * @param bool|null $with_cv Send their CV; null sends it when they have one.
 	 * @return int|WP_Error Application ID.
 	 */
-	function kaamase_apps_apply( $job_id, $user_id, $note = '' ) {
+	function kaamase_apps_apply( $job_id, $user_id, $note = '', $with_cv = null ) {
 
 		$job_id  = (int) $job_id;
 		$user_id = (int) $user_id;
@@ -768,6 +774,7 @@ if ( ! function_exists( 'kaamase_apps_apply' ) ) {
 		update_post_meta( $app_id, kaamase_apps_key( 'app_sent_at' ), $now );
 		update_post_meta( $app_id, kaamase_apps_key( 'app_profile' ), (int) $profile );
 		update_post_meta( $app_id, kaamase_apps_key( 'app_note' ), $note );
+		update_post_meta( $app_id, kaamase_apps_key( 'app_with_cv' ), ( false !== $with_cv && kaamase_apps_has_cv( $user_id ) ) ? 1 : 0 );
 		delete_post_meta( $app_id, kaamase_apps_key( 'app_told' ) );
 		delete_post_meta( $app_id, kaamase_apps_key( 'app_told_status' ) );
 
@@ -786,6 +793,19 @@ if ( ! function_exists( 'kaamase_apps_apply' ) ) {
 		do_action( 'kaamase_application_sent', $app_id, $job_id, $user_id );
 
 		return $app_id;
+	}
+}
+
+if ( ! function_exists( 'kaamase_apps_has_cv' ) ) {
+	/**
+	 * Whether somebody has a CV to send.
+	 *
+	 * @since 1.1.0
+	 * @param int $user_id Applicant.
+	 * @return bool
+	 */
+	function kaamase_apps_has_cv( $user_id ) {
+		return function_exists( 'kaamase_cv_of' ) && null !== kaamase_cv_of( (int) $user_id );
 	}
 }
 
@@ -961,6 +981,7 @@ if ( ! function_exists( 'kaamase_apps_for_applicant' ) ) {
 			'sent_at'      => (int) get_post_meta( $app->ID, kaamase_apps_key( 'app_sent_at' ), true ),
 			'status_at'    => (int) get_post_meta( $app->ID, kaamase_apps_key( 'app_status_at' ), true ),
 			'note'         => (string) get_post_meta( $app->ID, kaamase_apps_key( 'app_note' ), true ),
+			'with_cv'      => (bool) get_post_meta( $app->ID, kaamase_apps_key( 'app_with_cv' ), true ),
 			'can_withdraw' => in_array( $status, array( 'sent', 'seen', 'shortlisted' ), true ),
 			'job'          => kaamase_apps_job_brief( (int) $app->post_parent ),
 		);
@@ -1056,6 +1077,8 @@ if ( ! function_exists( 'kaamase_apps_for_employer' ) ) {
 				'whatsapp' => '' !== $phone ? 'https://wa.me/91' . $phone : '',
 				'email'    => $user ? (string) $user->user_email : '',
 			),
+			// A link for whoever is looking now, and only if they may open it.
+			'cv'           => function_exists( 'kaamase_cv_for_app' ) ? kaamase_cv_for_app( $app->ID, get_current_user_id() ) : null,
 		);
 	}
 }
@@ -1832,7 +1855,8 @@ if ( ! function_exists( 'kaamase_apps_rest_apply' ) ) {
 	 */
 	function kaamase_apps_rest_apply( $request ) {
 
-		$result = kaamase_apps_apply( absint( $request['id'] ), get_current_user_id(), $request->get_param( 'note' ) );
+		$with_cv = $request->has_param( 'with_cv' ) ? rest_sanitize_boolean( $request->get_param( 'with_cv' ) ) : null;
+		$result  = kaamase_apps_apply( absint( $request['id'] ), get_current_user_id(), $request->get_param( 'note' ), $with_cv );
 
 		if ( is_wp_error( $result ) ) {
 			return kaamase_apps_rest_fail( $result );
@@ -2403,10 +2427,26 @@ if ( ! function_exists( 'kaamase_apps_handle_forms' ) ) {
 
 		if ( 'apply_job' === $action ) {
 
-			$note   = isset( $_POST['kaamase_note'] ) ? wp_unslash( $_POST['kaamase_note'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cleaned in kaamase_apps_clean_note().
-			$result = kaamase_apps_apply( $id, $user_id, $note );
+			$note    = isset( $_POST['kaamase_note'] ) ? wp_unslash( $_POST['kaamase_note'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cleaned in kaamase_apps_clean_note().
+			$with_cv = ! empty( $_POST['kaamase_with_cv'] );
+			$result  = null;
+
+			// A CV chosen on the form is saved first, and goes with this application.
+			if ( ! empty( $_FILES['kaamase_cv']['name'] ) && function_exists( 'kaamase_cv_save' ) ) {
+
+				$saved = kaamase_cv_save( $user_id, $_FILES['kaamase_cv'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Checked in kaamase_cv_save().
+
+				if ( is_wp_error( $saved ) ) {
+					$result = $saved;
+				} else {
+					$with_cv = true;
+				}
+			}
+
+			$result = $result ? $result : kaamase_apps_apply( $id, $user_id, $note, $with_cv );
 
 			if ( is_wp_error( $result ) ) {
+				set_transient( kaamase_apps_flash_key() . '_note', kaamase_apps_clean_note( $note ), 10 * MINUTE_IN_SECONDS );
 				kaamase_apps_flash( 'error', __( 'Not sent', 'kaamase-core' ), $result->get_error_message() );
 				wp_safe_redirect( kaamase_apps_apply_url( $id ) );
 				exit;
@@ -2597,6 +2637,10 @@ if ( ! function_exists( 'kaamase_apps_apply_shortcode' ) ) {
 
 				$profile = kaamase_prof_id( $user_id );
 				$shaped  = function_exists( 'kaamase_prof_shape' ) ? kaamase_prof_shape( $profile ) : null;
+				$cv      = function_exists( 'kaamase_cv_of' ) ? kaamase_cv_of( $user_id ) : null;
+				$typed   = (string) get_transient( kaamase_apps_flash_key() . '_note' );
+
+				delete_transient( kaamase_apps_flash_key() . '_note' );
 				?>
 				<section class="ka-card ka-card--flat">
 					<p class="ka-label"><?php esc_html_e( 'The employer will see your professional profile', 'kaamase-core' ); ?></p>
@@ -2614,17 +2658,38 @@ if ( ! function_exists( 'kaamase_apps_apply_shortcode' ) ) {
 					<?php endif; ?>
 				</section>
 
-				<form method="post" class="ka-card ka-card--flat">
+				<form method="post" class="ka-card ka-card--flat" enctype="multipart/form-data">
 					<?php echo kaamase_apps_hidden( 'apply_job', $job_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped where built. ?>
 
 					<div class="ka-field">
 						<label class="ka-label" for="ka-apply-note"><?php esc_html_e( 'A short note to the employer (optional)', 'kaamase-core' ); ?></label>
 						<textarea class="ka-textarea" id="ka-apply-note" name="kaamase_note" rows="5" maxlength="<?php echo esc_attr( (string) (int) KAAMASE_APP_NOTE_MAX ); ?>"
-							placeholder="<?php esc_attr_e( 'Why you suit this job, and when you can start.', 'kaamase-core' ); ?>"></textarea>
+							placeholder="<?php esc_attr_e( 'Why you suit this job, and when you can start.', 'kaamase-core' ); ?>"><?php echo esc_textarea( $typed ); ?></textarea>
 					</div>
 
+					<?php if ( function_exists( 'kaamase_cv_save' ) ) : ?>
+						<div class="ka-field">
+							<?php if ( $cv ) : ?>
+								<label class="ka-check">
+									<input type="checkbox" name="kaamase_with_cv" value="1" checked>
+									<span>
+										<?php
+										/* translators: %s: the CV's file name */
+										echo esc_html( sprintf( __( 'Send my CV (%s)', 'kaamase-core' ), $cv['name'] ) );
+										?>
+									</span>
+								</label>
+								<label class="ka-label ka-mt-4" for="ka-apply-cv"><?php esc_html_e( 'Or send a different one', 'kaamase-core' ); ?></label>
+							<?php else : ?>
+								<label class="ka-label" for="ka-apply-cv"><?php esc_html_e( 'Your CV (optional)', 'kaamase-core' ); ?></label>
+							<?php endif; ?>
+							<input class="ka-input" type="file" id="ka-apply-cv" name="kaamase_cv" accept="application/pdf,image/jpeg,image/png,image/webp">
+							<p class="ka-hint"><?php esc_html_e( 'A PDF, or a photo of your paper CV, up to 5 MB. It is kept with your professional profile for your next application, and you can delete it any time.', 'kaamase-core' ); ?></p>
+						</div>
+					<?php endif; ?>
+
 					<p class="ka-hint">
-						<?php esc_html_e( 'The employer will see your professional profile, this note, your phone number and your email address. Nobody else will. Never pay anybody to apply for a job.', 'kaamase-core' ); ?>
+						<?php esc_html_e( 'The employer will see your professional profile, this note, your CV if you send it, your phone number and your email address. Nobody else will. Never pay anybody to apply for a job.', 'kaamase-core' ); ?>
 					</p>
 
 					<button class="ka-btn ka-btn--action ka-btn--lg ka-btn--block ka-mt-4" type="submit"><?php esc_html_e( 'Send application', 'kaamase-core' ); ?></button>
@@ -2741,6 +2806,7 @@ if ( ! function_exists( 'kaamase_apps_mine_view' ) ) {
 										( '' !== $app['job']['employer'] ? $app['job']['employer'] . ' · ' : '' )
 										/* translators: %s: when, e.g. 3 days ago */
 										. sprintf( __( 'Sent %s', 'kaamase-core' ), kaamase_apps_when( $app['sent_at'] ) )
+										. ( $app['with_cv'] ? ' · ' . __( 'with your CV', 'kaamase-core' ) : '' )
 									)
 								);
 								?>
@@ -2993,6 +3059,11 @@ if ( ! function_exists( 'kaamase_apps_applicant_card' ) ) {
 				<?php endif; ?>
 				<?php if ( '' !== $app['contact']['email'] ) : ?>
 					<a class="ka-btn ka-btn--outline ka-btn--sm" rel="nofollow" href="mailto:<?php echo esc_attr( $app['contact']['email'] ); ?>"><?php esc_html_e( 'Email', 'kaamase-core' ); ?></a>
+				<?php endif; ?>
+				<?php if ( ! empty( $app['cv']['url'] ) ) : ?>
+					<a class="ka-btn ka-btn--primary ka-btn--sm" rel="nofollow noopener" target="_blank" href="<?php echo esc_url( $app['cv']['url'] ); ?>">
+						<?php echo esc_html( 'pdf' === $app['cv']['type'] ? __( 'CV (PDF)', 'kaamase-core' ) : __( 'CV (photo)', 'kaamase-core' ) ); ?>
+					</a>
 				<?php endif; ?>
 			</div>
 

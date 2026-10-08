@@ -116,6 +116,7 @@ live version would undo work that is already running. If a file is not in
 | `fixed/kaamase-core/includes/closed-jobs.php` | `wp-content/plugins/kaamase-core/includes/closed-jobs.php` |
 | `fixed/kaamase-core/includes/professional-numbers.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 | `fixed/kaamase-core/includes/applications.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
+| `fixed/kaamase-core/includes/cv.php` | `wp-content/plugins/kaamase-core/includes/` **(new file)** |
 
 `fixed/wpcode/app-redirect.php` is the one exception: it is not a file to
 copy, but a snippet that replaces the one in the WPCode plugin. See section 26.
@@ -7995,6 +7996,117 @@ Nagamese too, like the rest of the professional side. The language files were
 not touched.
 
 **For the app:** the routes and fields are in the message for the app side.
+
+## 106. Step 2b: the CV (`cv.php` 1.0.0 new, `applications.php` 1.0.0 → 1.1.0)
+
+A job seeker can keep one CV with their professional profile: a PDF, or a photo
+of the paper one, up to 5 MB. It goes with the applications they choose. The
+employer of that job can open it, and nobody else.
+
+**For the job seeker**
+- **The professional profile page** has a new card, **Your CV**: add, replace or
+  delete it, and open it.
+- **The apply form:**
+  - with a CV: "Send my CV (file name)", ticked;
+  - without one: an optional "Your CV" file box;
+  - a file chosen there becomes their CV and goes with that application.
+  - If the file is refused, nothing is sent, the reason is shown, and the note
+    they typed is kept.
+- **My applications** says "with your CV" on the ones it went with.
+
+**For the employer:** on each applicant who sent one, a **CV (PDF)** or **CV
+(photo)** button. A PDF downloads and opens in the phone's own reader; a photo
+opens in the browser.
+
+**Who can open a CV**
+
+| Who | When |
+| --- | --- |
+| Its owner | Always |
+| The employer of a job it was sent to | While the job is open, and for 30 days after it closes. Not after the application is withdrawn, and not when it was sent without the CV. |
+| The site's administrators | Always, for a complaint |
+| Anybody else | Never |
+
+**Where it is kept, and how it is protected**
+- **Not in the media library**, where every file has a public address. They go
+  in `wp-content/uploads/kaamase-private/`. That folder carries an `.htaccess`
+  that refuses every direct request (LiteSpeed reads it, like Apache), and
+  folder listing is off.
+- **Each file has a random 32-character name with no extension.** Even if the
+  lock were missing, nobody could guess an address.
+- **A CV opens only through a link signed for one person and one CV**, good for
+  30 minutes. It is checked again when it is opened, so a link made before a
+  withdrawal no longer works after it. The app can open such a link in a
+  browser; it needs no sign-in header.
+- **Downloads** are never cached (LiteSpeed is told), marked noindex, and sent
+  with `nosniff`.
+
+**What is checked when a file comes in**
+- **Size:** 5 MB at most.
+- **Type:** it must really be a PDF, JPEG, PNG or WebP by its contents, not by
+  its name. A text file called `.pdf` is refused, and so is a script called
+  `.jpg`.
+- **A PDF with a script, a file or a form program inside it is refused.** The
+  message asks them to save it again as a plain PDF, or to send a photo.
+- **A photo is drawn again as a plain JPEG.** Anything hidden in it goes,
+  including the location the phone recorded.
+- **At most 10 new CVs an hour** per account.
+
+**What goes, and when**
+
+The file is deleted when its owner:
+- deletes or replaces it;
+- deletes their professional profile or their account;
+- or Erase Personal Data is used on them.
+
+Every way an account closes deletes the professional profile, and the CV with
+it. A daily sweep removes any file nobody owns.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/cv.php` | **new** → `wp-content/plugins/kaamase-core/includes/` |
+| `fixed/kaamase-core/includes/applications.php` | 1.0.0 → 1.1.0 → `wp-content/plugins/kaamase-core/includes/` |
+
+Either order is safe. Then run **LiteSpeed Cache → Toolbox → Purge All**.
+
+### One check on the live site, please
+
+Open the website once after uploading; that makes the private folder. Then
+open this address in a browser:
+
+`https://kaamase.com/wp-content/uploads/kaamase-private/check.txt`
+
+It must **not** show the text. You should get a "403 Forbidden" or "Access
+denied" page. If you can read the sentence inside, the folder is not
+protected: tell me before anybody uploads a CV. The test copy runs on a server
+that ignores `.htaccess`, so this one check can only be done on the live
+site. The random file names are a second guard either way.
+
+Tested on the test copy, 43 new checks:
+- the folder made and locked before any CV;
+- each kind of file refused, with nothing kept;
+- a PDF stored unchanged under a random name;
+- a photo drawn again, with its hidden location gone, and a PNG kept as a JPEG;
+- the links: the owner's, the employer's, a forged one, an expired one;
+- sending with and without the CV, from the app and from the website;
+- a refused file on the form keeping the note;
+- withdrawn, filled, and a month after closing;
+- the profile card: save and delete;
+- export, erase, deleting the profile and the account;
+- the daily sweep, and ten an hour.
+
+The Apply test (70 checks) passes with `cv.php` and without it: without it,
+applications go on with no CV box. Before and after, every app answer and page
+is identical. All suites pass: the fixes 45, Part C 107, professional
+profiles 141, professional jobs 115, tick 14, Google switch 25, dashboard 21,
+professional cards 29, professional filters 27, last polish group 21,
+new-employer note 8, Professional numbers 23, home page card 15, jobs-only
+pages 17, Apply 70.
+
+**Words:** English for now, like the rest of the professional side. The
+language files were not touched.
 
 ## Not changed, and why
 
