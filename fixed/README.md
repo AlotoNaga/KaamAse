@@ -7529,6 +7529,47 @@ carries `professional`, which is null for everyday work and holds
 - On a professional job's screen, the safety wording above can replace "agree the
   rate".
 
+## 99. The note about a new employer, on professional jobs (`standing.php` 1.0.0 → 1.0.1)
+
+Found by the app side. Every job sent to the app carries
+`employer_standing.new_note` when the employer has not hired anybody through Kaam
+Ase yet. On every job, office and bank jobs included, it read:
+
+> New here, and has not hired anybody through Kaam Ase yet. That is normal for
+> somebody who has just joined. Agree the rate and the payment day out loud
+> before the first day, as you would with anyone.
+
+On a professional job it now reads:
+
+> New here, and has not hired anybody through Kaam Ase yet. That is normal for
+> somebody who has just joined. **Check who they are before you send any
+> documents, and never pay to apply.**
+
+- Everyday jobs keep the note they had.
+- Hindi and Nagamese readers keep their translated note until the new one is
+  translated, so they never get an English line. The language files were not
+  touched.
+- The website does not show this note anywhere, so only the app sees the
+  difference, and **the app needs no change**. It already shows whatever
+  `new_note` says.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/standing.php` | 1.0.0 → 1.0.1 |
+
+Goes to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed Cache
+→ Toolbox → Purge All**.
+
+Tested on the test copy through the app's own routes, with a brand-new employer
+posting one professional and one everyday job: the right note on each, in
+English, Hindi and Nagamese, on the job and in the jobs list (8 checks). Before
+and after, the only difference in any app answer is this note on the three open
+professional jobs by new employers. None of the 26 everyday jobs by new employers
+changed. The fixes 45, Part C 107, professional jobs 115 and professional
+profiles 141 suites still pass.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

@@ -42,8 +42,14 @@
  * side and touches nothing in this file.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.0.1
  * @since   1.3.0
+ *
+ * Changelog
+ *   1.0.1  On a professional job the note about a new employer gives
+ *          advice for applying ("check who they are before you send any
+ *          documents, and never pay to apply") instead of "agree the
+ *          rate and the payment day out loud before the first day".
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -184,11 +190,33 @@ if ( ! function_exists( 'kaamase_new_employer_note' ) ) {
 	 * the risk is lower with a track record, never zero without one.
 	 *
 	 * @since 1.3.0
+	 * @since 1.0.1 $job_id, for the advice that fits the job.
+	 * @param int $job_id Optional. The job the note is shown on.
 	 * @return string
 	 */
-	function kaamase_new_employer_note() {
+	function kaamase_new_employer_note( $job_id = 0 ) {
 
-		return __( 'New here, and has not hired anybody through Kaam Ase yet. That is normal for somebody who has just joined. Agree the rate and the payment day out loud before the first day, as you would with anyone.', 'kaamase-core' );
+		$note = __( 'New here, and has not hired anybody through Kaam Ase yet. That is normal for somebody who has just joined. Agree the rate and the payment day out loud before the first day, as you would with anyone.', 'kaamase-core' );
+
+		/*
+		 * An office, bank or school job is applied for, not agreed on the
+		 * doorstep, and the fraud dressed as one asks for documents and a
+		 * fee. Said in English, and in another language once translated;
+		 * until then that reader keeps the note they had.
+		 *
+		 * @since 1.0.1
+		 */
+		if ( $job_id && function_exists( 'kaamase_pro_is_job' ) && kaamase_pro_is_job( (int) $job_id ) ) {
+
+			$english = 'New here, and has not hired anybody through Kaam Ase yet. That is normal for somebody who has just joined. Check who they are before you send any documents, and never pay to apply.';
+			$said    = __( 'New here, and has not hired anybody through Kaam Ase yet. That is normal for somebody who has just joined. Check who they are before you send any documents, and never pay to apply.', 'kaamase-core' );
+
+			if ( $said !== $english || 0 === strpos( (string) determine_locale(), 'en' ) ) {
+				return $said;
+			}
+		}
+
+		return $note;
 	}
 }
 
@@ -221,7 +249,7 @@ if ( ! function_exists( 'kaamase_shape_job_standing' ) ) {
 		$shaped['employer_standing'] = array(
 			'lines'    => $standing['lines'],
 			'is_new'   => $standing['is_new'],
-			'new_note' => $standing['is_new'] ? kaamase_new_employer_note() : '',
+			'new_note' => $standing['is_new'] ? kaamase_new_employer_note( (int) $post->ID ) : '',
 		);
 
 		return $shaped;
