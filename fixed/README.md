@@ -7447,6 +7447,88 @@ The earlier suites still pass: the fixes 45, Part C 107, professional profiles
 
 **For the app:** nothing. This is the website's account page only.
 
+## 98. Step 1 polish, part 3: professional job cards and pages (theme `template-tags.php` 1.2.0 → 1.3.0, `single-kaamase_job.php` 1.2.0 → 1.3.0, `sharing.php` 1.1.0 → 1.1.1)
+
+A professional job (an office, bank, school or hospital job) was shown in the
+words of daily work, and with only the lowest salary.
+
+| Where | Before | Now |
+| --- | --- | --- |
+| Card | ₹30,000 per month · 1 worker wanted | **₹30,000–42,000 per month · 1 opening** |
+| Job page, top box | Pay ₹30,000 per month | **Pay ₹30,000–42,000 per month** |
+| Job page, facts | Workers wanted | **Openings** |
+| Job page, employer box | "Workers who have done a job for them rate them too…" | not shown |
+| Job page, safety box | Before you agree: "Agree the rate and the payment day out loud…" | **Before you apply:** "A real employer never asks for money to apply, for an interview, for training or for a uniform. If anybody asks you to pay, do not pay, and report the job." |
+| Bottom bar (computer) | ₹30,000 per month | ₹30,000–42,000 per month |
+
+- A salary that is one figure shows one figure. A professional job with no salary
+  still says "Rate on asking".
+- A job in a professional category that was posted with a **daily** rate (from an
+  older app) keeps its one daily figure. A daily rate is never turned into a
+  monthly range.
+- Which jobs count as professional is decided by the core plugin, by category,
+  as everywhere else.
+
+**Every job: "Kohima, Kohima".** When the town typed is the district's own name,
+the place is said once. That covers the card, the job page, and the line Google
+and WhatsApp show ("Kohima. Rupees 30,000 a month…"). A town of its own still
+reads "Signal Basti, Dimapur". Profiles get the same.
+
+**Everyday jobs are unchanged.** Same card, same page, same "Workers wanted" and
+"Before you agree".
+
+**Languages.** "Openings", "1 opening" and the new safety box are English for
+now. A Hindi or Nagamese reader keeps the wording they had, fully translated,
+until those lines are translated, and never gets one English line in a Hindi page.
+The range itself is numbers and shows in every language. The language files were
+not touched.
+
+**Any upload order is safe.** With an older plugin, or the old
+`template-tags.php`, the job page shows what it shows today.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase/inc/template-tags.php` | 1.2.0 → 1.3.0 |
+| `fixed/kaamase/single-kaamase_job.php` | 1.2.0 → 1.3.0 |
+| `fixed/kaamase-core/includes/sharing.php` | 1.1.0 → 1.1.1 |
+
+The theme files go to `wp-content/themes/kaamase/`, with `template-tags.php`
+inside `inc/`. `sharing.php` goes to `wp-content/plugins/kaamase-core/includes/`.
+Then run **LiteSpeed Cache → Toolbox → Purge All**.
+
+Tested on the test copy of the site, 29 new checks:
+
+- professional and everyday cards and pages;
+- a fixed salary, no salary, and a professional category paid by the day;
+- a town of its own and a town named like its district;
+- a closed professional job;
+- a Hindi reader;
+- the Google and WhatsApp line.
+
+The old files fail the 13 checks about what changed. Checked on phones 320 to
+390 pixels wide: the range fits, and on the smallest it breaks after the dash
+rather than running off the screen. Before and after, every app answer and every
+everyday job page is identical. The earlier suites still pass: the fixes 45,
+Part C 107, professional profiles 141, professional jobs 115, tick 14, Google
+switch 25, dashboard 21.
+
+### For the app
+
+The app draws its own cards, and it already has everything needed: every job
+carries `professional`, which is null for everyday work and holds
+`salary: {min, max, unit}` for a professional job.
+
+- When `professional` is not null, `salary.unit` is `month` and `max` is more
+  than `min`, show **₹min–max per month**.
+- For a professional job, call `workers_needed` **openings**: "1 opening",
+  "3 openings".
+- When `town` is the same as the district's name, ignoring capitals, show the
+  district once. This applies to every job and profile.
+- On a professional job's screen, the safety wording above can replace "agree the
+  rate".
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

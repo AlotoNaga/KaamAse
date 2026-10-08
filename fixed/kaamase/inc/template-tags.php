@@ -21,8 +21,14 @@
  * plugin so the platform stays between the two parties.
  *
  * @package Kaamase
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.3.0  A professional job's card shows its whole monthly salary
+ *          range and "1 opening" rather than the lowest figure and
+ *          "1 worker wanted". A town named like its district is not
+ *          said twice ("Kohima", not "Kohima, Kohima").
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -458,6 +464,119 @@ if ( ! function_exists( 'kaamase_wage' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kaamase_theme_said' ) ) {
+	/**
+	 * New wording, shown only where it can be read whole.
+	 *
+	 * A sentence added to the theme is English until somebody translates
+	 * it. On a page that is otherwise in Hindi or Nagamese it would be the
+	 * one English line. So it is used in English, and in another language
+	 * once it has been translated; until then that reader gets $instead,
+	 * the wording they already had.
+	 *
+	 * @since 1.3.0
+	 * @param string $said    The new wording, through __().
+	 * @param string $english The same wording, untranslated.
+	 * @param string $instead What to show until it is translated.
+	 * @return string
+	 */
+	function kaamase_theme_said( $said, $english, $instead ) {
+
+		if ( $said !== $english || 0 === strpos( (string) determine_locale(), 'en' ) ) {
+			return $said;
+		}
+
+		return $instead;
+	}
+}
+
+if ( ! function_exists( 'kaamase_job_is_professional' ) ) {
+	/**
+	 * Whether a job is an office, bank, school or other professional job.
+	 *
+	 * Asked of the core plugin, which decides it by the job's category.
+	 * Without the plugin, or with one from before professional jobs,
+	 * every job is shown as it always was.
+	 *
+	 * @since 1.3.0
+	 * @param int $post_id Job ID.
+	 * @return bool
+	 */
+	function kaamase_job_is_professional( $post_id ) {
+		return function_exists( 'kaamase_pro_is_job' ) && kaamase_pro_is_job( (int) $post_id );
+	}
+}
+
+if ( ! function_exists( 'kaamase_wage_range' ) ) {
+	/**
+	 * A salary from one figure to another: "₹30,000–42,000 per month".
+	 *
+	 * The rupee sign once, and a dash a line may break after, so the
+	 * large figure at the top of a job page wraps rather than running off
+	 * a narrow phone.
+	 *
+	 * @since 1.3.0
+	 * @param int    $min  Lowest.
+	 * @param int    $max  Highest.
+	 * @param string $unit day, month, job or hour.
+	 * @return string Markup.
+	 */
+	function kaamase_wage_range( $min, $max, $unit = 'month' ) {
+
+		$min = (int) $min;
+		$max = (int) $max;
+
+		if ( $min <= 0 || $max <= $min ) {
+			return kaamase_wage( $min, $unit );
+		}
+
+		// Built from kaamase_wage() so the unit wording is the one already translated.
+		$single = kaamase_wage( $min, $unit );
+		$range  = '&#8377;' . esc_html( number_format_i18n( $min ) ) . '&#8211;' . esc_html( number_format_i18n( $max ) );
+
+		return (string) preg_replace(
+			'#<span class="ka-wage">.*?</span>#s',
+			'<span class="ka-wage ka-wage--range">' . $range . '</span>',
+			$single,
+			1
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_job_wage' ) ) {
+	/**
+	 * What a job pays, as a card or a job page shows it.
+	 *
+	 * A professional job with a monthly range shows the whole range. Every
+	 * other job shows its one figure, exactly as before. The range comes
+	 * from the core plugin, which never offers one for a job paid by the
+	 * day, so nine hundred a day can never be shown as a monthly range.
+	 *
+	 * @since 1.3.0
+	 * @param int $post_id Job ID.
+	 * @return string Markup.
+	 */
+	function kaamase_job_wage( $post_id ) {
+
+		$post_id = (int) $post_id;
+
+		if ( kaamase_job_is_professional( $post_id ) && function_exists( 'kaamase_pro_details' ) ) {
+
+			$details = kaamase_pro_details( $post_id );
+			$salary  = is_array( $details ) && isset( $details['salary'] ) ? (array) $details['salary'] : array();
+
+			if ( 'month' === ( $salary['unit'] ?? '' ) && (int) ( $salary['min'] ?? 0 ) > 0 && (int) ( $salary['max'] ?? 0 ) > (int) $salary['min'] ) {
+				return kaamase_wage_range( (int) $salary['min'], (int) $salary['max'], 'month' );
+			}
+		}
+
+		return kaamase_wage(
+			kaamase_field( $post_id, 'pay_amount', 0 ),
+			(string) kaamase_field( $post_id, 'pay_unit', 'day' )
+		);
+	}
+}
+
 if ( ! function_exists( 'kaamase_place' ) ) {
 	/**
 	 * Town and district as a single line.
@@ -472,8 +591,18 @@ if ( ! function_exists( 'kaamase_place' ) ) {
 	 */
 	function kaamase_place( $post_id ) {
 
-		$town     = (string) kaamase_field( $post_id, 'town' );
+		$town     = trim( (string) kaamase_field( $post_id, 'town' ) );
 		$district = kaamase_district_label( (string) kaamase_field( $post_id, 'district' ) );
+
+		/*
+		 * A town typed as the district's own name, which is most jobs in
+		 * Kohima and Dimapur, read "Kohima, Kohima".
+		 *
+		 * @since 1.3.0
+		 */
+		if ( '' !== $town && '' !== $district && mb_strtolower( $town ) === mb_strtolower( trim( $district ) ) ) {
+			$town = '';
+		}
 
 		$parts = array_filter( array( $town, $district ) );
 
@@ -1057,6 +1186,7 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 		}
 
 		$needed  = absint( kaamase_field( $post_id, 'workers_needed' ) );
+		$pro     = kaamase_job_is_professional( $post_id );
 		$urgent  = (bool) kaamase_field( $post_id, 'urgent' );
 		$food    = (bool) kaamase_field( $post_id, 'food_provided' );
 		$stay    = (bool) kaamase_field( $post_id, 'stay_provided' );
@@ -1178,11 +1308,21 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 					<?php if ( $needed ) : ?>
 						<span class="ka-badge ka-badge--neutral">
 							<?php
+							/* translators: %s: number of workers wanted */
+							$kaamase_needed_words = _n( '%s worker wanted', '%s workers wanted', $needed, 'kaamase' );
+
+							// An office or bank job has openings, not workers wanted. @since 1.3.0
+							if ( $pro ) {
+								$kaamase_needed_words = kaamase_theme_said(
+									/* translators: %s: number of openings in a professional job */
+									_n( '%s opening', '%s openings', $needed, 'kaamase' ),
+									1 === $needed ? '%s opening' : '%s openings',
+									$kaamase_needed_words
+								);
+							}
+
 							printf(
-								esc_html(
-									/* translators: %s: number of workers wanted */
-									_n( '%s worker wanted', '%s workers wanted', $needed, 'kaamase' )
-								),
+								esc_html( $kaamase_needed_words ),
 								esc_html( number_format_i18n( $needed ) )
 							);
 							?>
@@ -1201,10 +1341,7 @@ if ( ! function_exists( 'kaamase_job_card' ) ) {
 
 			<div class="ka-card__foot ka-cluster ka-cluster--between">
 				<?php
-				echo kaamase_wage( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					kaamase_field( $post_id, 'pay_amount', 0 ),
-					(string) kaamase_field( $post_id, 'pay_unit', 'day' )
-				);
+				echo kaamase_job_wage( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				<a class="ka-btn ka-btn--primary ka-btn--sm" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 					<?php esc_html_e( 'View job', 'kaamase' ); ?>

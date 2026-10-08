@@ -20,8 +20,13 @@
  * A closed job says so first, above the pay, and drops what only an
  * open job needs: the days left and the advice for agreeing terms.
  *
+ * A professional job (an office, bank, school or hospital job) shows its
+ * whole monthly salary range and its openings, and is not given the
+ * day-labour wording: no "Workers wanted", no "agree the rate out loud",
+ * no note about workers rating the employer.
+ *
  * @package Kaamase
- * @version 1.2.0
+ * @version 1.3.0
  * @since   1.1.0
  */
 
@@ -47,6 +52,7 @@ while ( have_posts() ) :
 	$kaamase_expires   = absint( kaamase_field( $kaamase_id, 'expires' ) );
 	$kaamase_owner     = function_exists( 'kaamase_user_owns' ) && kaamase_user_owns( $kaamase_id );
 	$kaamase_closed    = function_exists( 'kaamase_job_is_open' ) && ! kaamase_job_is_open( $kaamase_id );
+	$kaamase_pro       = function_exists( 'kaamase_job_is_professional' ) && kaamase_job_is_professional( $kaamase_id );
 
 	$kaamase_days_left = $kaamase_expires
 		? (int) ceil( ( $kaamase_expires - time() ) / DAY_IN_SECONDS )
@@ -150,7 +156,12 @@ while ( have_posts() ) :
 				<p class="ka-payblock__label"><?php esc_html_e( 'Pay', 'kaamase' ); ?></p>
 
 				<p class="ka-payblock__figure">
-					<?php echo kaamase_wage( $kaamase_pay, $kaamase_unit ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php
+					// The whole range for a professional job; one figure for everything else, as before.
+					echo function_exists( 'kaamase_job_wage' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						? kaamase_job_wage( $kaamase_id )
+						: kaamase_wage( $kaamase_pay, $kaamase_unit );
+					?>
 				</p>
 
 				<?php if ( $kaamase_food || $kaamase_stay || $kaamase_transport ) : ?>
@@ -180,7 +191,15 @@ while ( have_posts() ) :
 
 				<?php if ( $kaamase_needed ) : ?>
 					<div class="ka-fact">
-						<p class="ka-fact__label"><?php esc_html_e( 'Workers wanted', 'kaamase' ); ?></p>
+						<p class="ka-fact__label">
+							<?php
+							echo esc_html(
+								$kaamase_pro
+									? kaamase_theme_said( __( 'Openings', 'kaamase' ), 'Openings', __( 'Workers wanted', 'kaamase' ) )
+									: __( 'Workers wanted', 'kaamase' )
+							);
+							?>
+						</p>
 						<p class="ka-fact__value"><?php echo esc_html( number_format_i18n( $kaamase_needed ) ); ?></p>
 					</div>
 				<?php endif; ?>
@@ -257,9 +276,11 @@ while ( have_posts() ) :
 							?>
 						</div>
 
-						<p class="ka-small ka-mute ka-mt-4">
-							<?php esc_html_e( 'Workers who have done a job for them rate them too. Open their page to see what they said.', 'kaamase' ); ?>
-						</p>
+						<?php if ( ! $kaamase_pro ) : ?>
+							<p class="ka-small ka-mute ka-mt-4">
+								<?php esc_html_e( 'Workers who have done a job for them rate them too. Open their page to see what they said.', 'kaamase' ); ?>
+							</p>
+						<?php endif; ?>
 					<?php endif; ?>
 				</section>
 			<?php endif; ?>
@@ -283,11 +304,33 @@ while ( have_posts() ) :
 			 * work for a stranger.
 			 * -------------------------------------------------------- */
 			if ( ! $kaamase_closed ) :
+
+				$kaamase_safe_title = __( 'Before you agree', 'kaamase' );
+				$kaamase_safe_text  = __( 'Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it.', 'kaamase' );
+
+				/*
+				 * A professional job is applied for, not agreed on the spot,
+				 * and the fraud dressed as one is the registration fee. Said
+				 * in full once the reader's language has it; until then the
+				 * warning they already had.
+				 *
+				 * @since 1.3.0
+				 */
+				if ( $kaamase_pro ) {
+
+					$kaamase_pro_title = __( 'Before you apply', 'kaamase' );
+					$kaamase_pro_text  = __( 'A real employer never asks for money to apply, for an interview, for training or for a uniform. If anybody asks you to pay, do not pay, and report the job.', 'kaamase' );
+
+					if ( '' !== kaamase_theme_said( $kaamase_pro_title, 'Before you apply', '' ) && '' !== kaamase_theme_said( $kaamase_pro_text, 'A real employer never asks for money to apply, for an interview, for training or for a uniform. If anybody asks you to pay, do not pay, and report the job.', '' ) ) {
+						$kaamase_safe_title = $kaamase_pro_title;
+						$kaamase_safe_text  = $kaamase_pro_text;
+					}
+				}
 				?>
 			<aside class="ka-notice ka-notice--warn ka-mt-6">
 				<div>
-					<span class="ka-notice__title"><?php esc_html_e( 'Before you agree', 'kaamase' ); ?></span>
-					<p><?php esc_html_e( 'Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it.', 'kaamase' ); ?></p>
+					<span class="ka-notice__title"><?php echo esc_html( $kaamase_safe_title ); ?></span>
+					<p><?php echo esc_html( $kaamase_safe_text ); ?></p>
 
 					<a class="ka-btn ka-btn--outline ka-btn--sm ka-mt-4" href="<?php echo esc_url( home_url( '/report/' ) ); ?>">
 						<?php esc_html_e( 'Report a problem', 'kaamase' ); ?>
@@ -308,7 +351,11 @@ while ( have_posts() ) :
 
 				<div class="ka-actionbar__meta ka-hide-sm">
 					<strong><?php esc_html_e( 'This job', 'kaamase' ); ?></strong>
-					<?php echo kaamase_wage( $kaamase_pay, $kaamase_unit ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php
+					echo function_exists( 'kaamase_job_wage' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						? kaamase_job_wage( $kaamase_id )
+						: kaamase_wage( $kaamase_pay, $kaamase_unit );
+					?>
 				</div>
 
 				<?php

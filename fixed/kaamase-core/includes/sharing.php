@@ -38,8 +38,12 @@
  * the link; the picture in the chat comes from the tags above.
  *
  * @package KaamaseCore
- * @version 1.1.0
+ * @version 1.1.1
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.1.1  A town typed as the district's own name is not said twice in
+ *          a job's description ("Kohima", not "Kohima, Kohima").
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -232,6 +236,11 @@ if ( ! function_exists( 'kaamase_share_description' ) ) {
 			$district = function_exists( 'kaamase_district_name' )
 				? (string) kaamase_district_name( (string) kaamase_read_field( $post_id, 'district' ) )
 				: '';
+
+			// A town typed as the district's own name read "Kohima, Kohima". @since 1.1.1
+			if ( '' !== trim( $town ) && '' !== $district && mb_strtolower( trim( $town ) ) === mb_strtolower( trim( $district ) ) ) {
+				$town = '';
+			}
 
 			$where = $town && $district ? $town . ', ' . $district : ( $town ? $town : $district );
 
