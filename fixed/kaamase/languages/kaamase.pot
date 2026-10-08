@@ -1,0 +1,1116 @@
+# Copyright (C) Nagaland Me
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kaam Ase\n"
+"Report-Msgid-Bugs-To: https://kaamase.com\n"
+"POT-Creation-Date: 2026-09-24 07:05+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kaamase\n"
+
+#: inc/template-tags.php:627
+msgid "%s ago"
+msgstr ""
+
+#. translators: %s: number of days
+#: single-kaamase_job.php:195
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of trades, every kind of work from teacher to mason
+#: front-page.php:332
+msgid "%s kind of work"
+msgid_plural "%s kinds of work"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of times opened
+#: inc/template-tags.php:340
+msgid "%s opened"
+msgstr ""
+
+#. translators: %s: number of results
+#: index.php:119
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of workers hired
+#: inc/template-tags.php:858
+msgid "%s worker hired through Kaam Ase"
+msgid_plural "%s workers hired through Kaam Ase"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of workers wanted
+#: inc/template-tags.php:1142
+msgid "%s worker wanted"
+msgid_plural "%s workers wanted"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of years
+#: single-kaamase_gang.php:159 single-kaamase_worker.php:197
+msgid "%s year"
+msgid_plural "%s years"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of years
+#: inc/template-tags.php:753
+msgid "%s year of experience"
+msgid_plural "%s years of experience"
+msgstr[0] ""
+msgstr[1] ""
+
+#: front-page.php:797
+msgid "A Nagaland company"
+msgstr ""
+
+#: single-kaamase_employer.php:40
+msgid "A contractor"
+msgstr ""
+
+#: single-kaamase_employer.php:41
+msgid "A registered company"
+msgstr ""
+
+#: footer.php:215
+msgid "A venture of Nagaland Me"
+msgstr ""
+
+#: footer.php:104
+msgid "About"
+msgstr ""
+
+#: footer.php:109
+msgid "About us"
+msgstr ""
+
+#: single-kaamase_job.php:265
+msgid "Agree the rate and the payment day out loud before the first day, not after. Nobody on Kaam Ase should ever ask you for money to get a job. If they do, report it."
+msgstr ""
+
+#. translators: %s: number of districts
+#: front-page.php:317
+msgid "All %s district"
+msgid_plural "All %s districts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: front-page.php:276
+msgid "All Nagaland"
+msgstr ""
+
+#: front-page.php:483
+msgid "All categories"
+msgstr ""
+
+#: footer.php:90
+msgid "All districts"
+msgstr ""
+
+#: front-page.php:250
+msgid "All kinds of work"
+msgstr ""
+
+#: footer.php:89
+msgid "All trades"
+msgstr ""
+
+#: single-kaamase_employer.php:39
+msgid "An individual, building or fixing something"
+msgstr ""
+
+#: inc/app-banner.php:375
+msgid "Android"
+msgstr ""
+
+#: inc/app-banner.php:379
+msgid "App Store"
+msgstr ""
+
+#: inc/enqueue.php:150
+msgid "Are you sure?"
+msgstr ""
+
+#: single-kaamase_employer.php:97
+msgid "Ask for"
+msgstr ""
+
+#: inc/template-tags.php:189
+msgid "Available now"
+msgstr ""
+
+#: inc/template-tags.php:1244
+msgid "Back"
+msgstr ""
+
+#: single-kaamase_job.php:264
+msgid "Before you agree"
+msgstr ""
+
+#: front-page.php:790
+msgid "Both sides rate"
+msgstr ""
+
+#: footer.php:74 footer.php:77
+msgid "Browse"
+msgstr ""
+
+#: index.php:226
+msgid "Browse all trades"
+msgstr ""
+
+#: inc/template-tags.php:660
+msgid "Call"
+msgstr ""
+
+#: single-kaamase_worker.php:62
+msgid "Church elder or pastor"
+msgstr ""
+
+#: inc/enqueue.php:145
+msgid "Close menu"
+msgstr ""
+
+#: single-kaamase_job.php:189
+msgid "Closes in"
+msgstr ""
+
+#: single-kaamase_worker.php:60
+msgid "Colony council member"
+msgstr ""
+
+#: inc/template-tags.php:813
+msgid "Company"
+msgstr ""
+
+#: footer.php:112
+msgid "Contact"
+msgstr ""
+
+#: inc/template-tags.php:812
+msgid "Contractor"
+msgstr ""
+
+#: inc/enqueue.php:149
+msgid "Copied"
+msgstr ""
+
+#. translators: 1: current year, 2: site name
+#: footer.php:207
+msgid "Copyright %1$s %2$s"
+msgstr ""
+
+#: single-kaamase_gang.php:145 single-kaamase_worker.php:174
+msgid "Day rate"
+msgstr ""
+
+#: front-page.php:285
+msgid "Dimapur, Kohima, Mokokchung"
+msgstr ""
+
+#: footer.php:219
+msgid "Dimapur, Nagaland, India"
+msgstr ""
+
+#: single-kaamase_employer.php:54
+msgid "Edit my details"
+msgstr ""
+
+#: single-kaamase_worker.php:78
+msgid "Edit my profile"
+msgstr ""
+
+#: single-kaamase_gang.php:52
+msgid "Edit my team"
+msgstr ""
+
+#: single-kaamase_job.php:63
+msgid "Edit this job"
+msgstr ""
+
+#: front-page.php:665
+msgid "Every district of Nagaland, from Dimapur and Kohima to Mon and Noklak."
+msgstr ""
+
+#: front-page.php:190
+msgid "Every kind of job, government and private, from teaching and office work to driving and building, in every district."
+msgstr ""
+
+#: single-kaamase_gang.php:153 single-kaamase_worker.php:190
+msgid "Experience"
+msgstr ""
+
+#: inc/app-banner.php:393
+msgid "Faster on your phone, and it tells you the moment work appears."
+msgstr ""
+
+#: inc/app-banner.php:183
+msgid "Faster, and it tells you when work appears"
+msgstr ""
+
+#: front-page.php:664
+msgid "Find jobs and workers by district"
+msgstr ""
+
+#: 404.php:102
+msgid "Find other workers"
+msgstr ""
+
+#: 404.php:152 footer.php:83 front-page.php:296 inc/setup.php:393
+msgid "Find work"
+msgstr ""
+
+#: footer.php:55
+msgid "Find work and find workers across Nagaland. Free for every worker, always."
+msgstr ""
+
+#: 404.php:161 footer.php:82 front-page.php:291 inc/setup.php:392
+msgid "Find workers"
+msgstr ""
+
+#: front-page.php:830
+msgid "Finding work and workers in Nagaland"
+msgstr ""
+
+#: inc/template-tags.php:1151 single-kaamase_job.php:135
+msgid "Food provided"
+msgstr ""
+
+#: inc/setup.php:110
+msgid "Footer, about Kaam Ase"
+msgstr ""
+
+#: inc/setup.php:109
+msgid "Footer, browse and discover"
+msgstr ""
+
+#: inc/setup.php:111
+msgid "Footer, legal and policy"
+msgstr ""
+
+#: front-page.php:307
+msgid "Free for job seekers, always"
+msgstr ""
+
+#: 404.php:173
+msgid "Free to post, any district"
+msgstr ""
+
+#: front-page.php:776
+msgid "Free to use"
+msgstr ""
+
+#: single-kaamase_employer.php:111
+msgid "GST"
+msgstr ""
+
+#: footer.php:217
+msgid "GST: 13DIHPA5679B1ZK"
+msgstr ""
+
+#: single-kaamase_worker.php:59
+msgid "Gaon Bura"
+msgstr ""
+
+#: single-kaamase_gang.php:217 single-kaamase_job.php:289 single-kaamase_worker.php:303
+msgid "Get contact details"
+msgstr ""
+
+#: inc/app-banner.php:187
+msgid "Get it"
+msgstr ""
+
+#: inc/app-banner.php:391
+msgid "Get the Kaam Ase app"
+msgstr ""
+
+#: index.php:266
+msgid "Go to home"
+msgstr ""
+
+#: inc/app-banner.php:380
+msgid "Google Play"
+msgstr ""
+
+#: front-page.php:541
+msgid "Government and private jobs from across the state. Job seekers never pay to apply."
+msgstr ""
+
+#: inc/page-display.php:215
+msgid "Heading"
+msgstr ""
+
+#: footer.php:128
+msgid "Help"
+msgstr ""
+
+#: footer.php:143
+msgid "Help centre"
+msgstr ""
+
+#: inc/page-display.php:239
+msgid "Hidden"
+msgstr ""
+
+#: inc/page-display.php:107
+msgid "Hide the title and photo on this page"
+msgstr ""
+
+#: footer.php:84
+msgid "Hire a team"
+msgstr ""
+
+#: single-kaamase_job.php:213
+msgid "Hiring"
+msgstr ""
+
+#: 404.php:179
+msgid "Home"
+msgstr ""
+
+#: footer.php:110
+msgid "How it works"
+msgstr ""
+
+#: single-kaamase_job.php:182
+msgid "How long"
+msgstr ""
+
+#: inc/template-tags.php:811
+msgid "Individual"
+msgstr ""
+
+#: 404.php:73
+msgid "It has probably been filled, or the employer closed it. Links shared in WhatsApp keep working for days after a job is taken."
+msgstr ""
+
+#: inc/template-tags.php:1292
+msgid "Jobs"
+msgstr ""
+
+#: front-page.php:675
+msgid "Jobs and workers"
+msgstr ""
+
+#: front-page.php:185
+msgid "Jobs and workers in Nagaland"
+msgstr ""
+
+#: single-kaamase_worker.php:210
+msgid "Jobs done here"
+msgstr ""
+
+#: 404.php:155
+msgid "Jobs posted across Nagaland"
+msgstr ""
+
+#: inc/template-tags.php:624
+msgid "Just posted"
+msgstr ""
+
+#: footer.php:101
+msgid "Kaam Ase"
+msgstr ""
+
+#: functions.php:298
+msgid "Kaam Ase Core is not active."
+msgstr ""
+
+#: inc/app-banner.php:182
+msgid "Kaam Ase app"
+msgstr ""
+
+#: inc/setup.php:221
+msgid "Kaam Ase avatar, large"
+msgstr ""
+
+#: inc/setup.php:220
+msgid "Kaam Ase avatar, small"
+msgstr ""
+
+#: inc/setup.php:222
+msgid "Kaam Ase card"
+msgstr ""
+
+#: footer.php:224
+msgid "Kaam Ase is a listing platform. We connect workers and employers. We are not the employer and we do not pay wages."
+msgstr ""
+
+#: index.php:254
+msgid "Kaam Ase is new and this district is still filling up. Post your job and workers nearby will see it."
+msgstr ""
+
+#: footer.php:150
+msgid "Kaam Ase never asks a worker for money to get a job. If anyone asks, report it."
+msgstr ""
+
+#: functions.php:66
+msgid "Kaam Ase theme is not running."
+msgstr ""
+
+#: functions.php:258
+msgid "Kaam Ase theme is running with missing files."
+msgstr ""
+
+#: inc/setup.php:223
+msgid "Kaam Ase wide"
+msgstr ""
+
+#: index.php:67
+msgid "Latest"
+msgstr ""
+
+#: front-page.php:540
+msgid "Latest jobs in Nagaland"
+msgstr ""
+
+#: single-kaamase_gang.php:139
+msgid "Led by"
+msgstr ""
+
+#. translators: %s: name of the team leader
+#: inc/template-tags.php:981
+msgid "Led by %s"
+msgstr ""
+
+#: footer.php:192
+msgid "Legal"
+msgstr ""
+
+#: inc/enqueue.php:146
+msgid "Loading"
+msgstr ""
+
+#: front-page.php:725
+msgid "Looking for work"
+msgstr ""
+
+#: front-page.php:742
+msgid "Looking for workers"
+msgstr ""
+
+#: inc/template-tags.php:1331
+msgid "Main"
+msgstr ""
+
+#: header.php:95
+msgid "Main menu"
+msgstr ""
+
+#: front-page.php:729
+msgid "Make a free profile. Employers across Nagaland can find you by trade and district. Kaam Ase is free for workers and always will be."
+msgstr ""
+
+#: front-page.php:737
+msgid "Make my free profile"
+msgstr ""
+
+#: front-page.php:259
+msgid "Mason, electrician, driver"
+msgstr ""
+
+#: searchform.php:54
+msgid "Mason, electrician, driver, cook"
+msgstr ""
+
+#: inc/template-tags.php:1307
+msgid "Me"
+msgstr ""
+
+#: header.php:158
+msgid "Menu"
+msgstr ""
+
+#: header.php:168
+msgid "Mobile menu"
+msgstr ""
+
+#: inc/setup.php:108
+msgid "Mobile menu, slide out drawer"
+msgstr ""
+
+#: single-kaamase_worker.php:182
+msgid "Monthly"
+msgstr ""
+
+#: single.php:80
+msgid "More posts"
+msgstr ""
+
+#: header.php:128 header.php:180
+msgid "My account"
+msgstr ""
+
+#: single-kaamase_job.php:67
+msgid "My jobs"
+msgstr ""
+
+#: front-page.php:179
+msgid "Nagaland’s own job platform"
+msgstr ""
+
+#: inc/template-tags.php:230
+msgid "New"
+msgstr ""
+
+#: inc/template-tags.php:869
+msgid "New here, nobody hired yet"
+msgstr ""
+
+#: inc/template-tags.php:1245 single.php:91
+msgid "Next"
+msgstr ""
+
+#: front-page.php:778
+msgid "No fee to make a profile, post a job, or get hired. Workers never pay, ever."
+msgstr ""
+
+#: index.php:235
+msgid "No jobs here yet"
+msgstr ""
+
+#: index.php:253
+msgid "No workers listed here yet"
+msgstr ""
+
+#: index.php:236
+msgid "Nobody has posted work in this trade or district yet. Check another district, or tell an employer you know about Kaam Ase."
+msgstr ""
+
+#: single-kaamase_worker.php:202
+msgid "Not given"
+msgstr ""
+
+#: inc/app-banner.php:191
+msgid "Not now"
+msgstr ""
+
+#: inc/enqueue.php:151
+msgid "Nothing found. Try a different district or trade."
+msgstr ""
+
+#: inc/template-tags.php:1200 index.php:264
+msgid "Nothing here yet"
+msgstr ""
+
+#: index.php:224
+msgid "Nothing matched that search"
+msgstr ""
+
+#: inc/template-tags.php:191
+msgid "On leave"
+msgstr ""
+
+#: inc/enqueue.php:144
+msgid "Open menu"
+msgstr ""
+
+#: inc/template-tags.php:313
+msgid "Opened %s time"
+msgid_plural "Opened %s times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: 404.php:146
+msgid "Or go to"
+msgstr ""
+
+#: inc/page-display.php:75
+msgid "Page heading"
+msgstr ""
+
+#: inc/template-tags.php:1254
+msgid "Page navigation"
+msgstr ""
+
+#: page.php:136 single.php:60
+msgid "Page sections"
+msgstr ""
+
+#: footer.php:113
+msgid "Past Job"
+msgstr ""
+
+#: front-page.php:203 front-page.php:205
+msgid "Pause the photos"
+msgstr ""
+
+#: single-kaamase_job.php:126
+msgid "Pay"
+msgstr ""
+
+#: front-page.php:831
+msgid "Plain answers to what people ask most."
+msgstr ""
+
+#: inc/setup.php:430
+msgid "Plans"
+msgstr ""
+
+#: front-page.php:204
+msgid "Play the photos"
+msgstr ""
+
+#: front-page.php:470
+msgid "Popular categories"
+msgstr ""
+
+#: 404.php:170 header.php:132 header.php:142 header.php:176 inc/setup.php:394
+msgid "Post a job"
+msgstr ""
+
+#: front-page.php:754 index.php:255
+msgid "Post a job free"
+msgstr ""
+
+#: front-page.php:746
+msgid "Post the job with your rate, how many workers you need and when you need them. Hire one person or a whole team."
+msgstr ""
+
+#: single.php:84
+msgid "Previous"
+msgstr ""
+
+#: inc/setup.php:107
+msgid "Primary menu, desktop header"
+msgstr ""
+
+#: footer.php:197
+msgid "Privacy"
+msgstr ""
+
+#: front-page.php:785
+msgid "Profiles can carry a vouch from a colony or village authority who knows the person."
+msgstr ""
+
+#: inc/template-tags.php:404
+msgid "Rate on asking"
+msgstr ""
+
+#. translators: 1: rating out of five, 2: number of reviews
+#: inc/template-tags.php:243
+msgid "Rated %1$s out of 5 from %2$s job"
+msgid_plural "Rated %1$s out of 5 from %2$s jobs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: header.php:190
+msgid "Register free"
+msgstr ""
+
+#: front-page.php:799
+msgid "Registered and run from Dimapur. Not an outside app that has never been here."
+msgstr ""
+
+#: footer.php:133 single-kaamase_job.php:268
+msgid "Report a problem"
+msgstr ""
+
+#. translators: %s: search term
+#: index.php:53
+msgid "Results for %s"
+msgstr ""
+
+#: footer.php:111
+msgid "Safety"
+msgstr ""
+
+#: footer.php:199
+msgid "Safety policy"
+msgstr ""
+
+#: inc/template-tags.php:1302
+msgid "Saved"
+msgstr ""
+
+#: searchform.php:53 searchform.php:55
+msgid "Search"
+msgstr ""
+
+#: 404.php:132
+msgid "Search Kaam Ase"
+msgstr ""
+
+#: 404.php:164
+msgid "Search by trade and district"
+msgstr ""
+
+#: front-page.php:569 index.php:237
+msgid "See all jobs"
+msgstr ""
+
+#: front-page.php:635
+msgid "See all workers"
+msgstr ""
+
+#: 404.php:85
+msgid "See jobs open now"
+msgstr ""
+
+#: inc/template-tags.php:877
+msgid "See this employer"
+msgstr ""
+
+#: front-page.php:620
+msgid "See what they do, where they are, their ratings and who vouches for them."
+msgstr ""
+
+#: inc/setup.php:450
+msgid "Set up menu"
+msgstr ""
+
+#. translators: %s: parent menu item title
+#: inc/nav-walker.php:230
+msgid "Show items under %s"
+msgstr ""
+
+#: inc/page-display.php:240
+msgid "Shown"
+msgstr ""
+
+#. translators: %s: number of times shown in a list
+#: inc/template-tags.php:352
+msgid "Shown %s time"
+msgid_plural "Shown %s times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: header.php:138 header.php:194
+msgid "Sign in"
+msgstr ""
+
+#: inc/template-tags.php:675
+msgid "Sign in to contact"
+msgstr ""
+
+#: header.php:184
+msgid "Sign out"
+msgstr ""
+
+#: header.php:66
+msgid "Skip to content"
+msgstr ""
+
+#: single-kaamase_worker.php:161
+msgid "Somebody local who knows this person and will say so. We hold their number and check it if there is ever a problem."
+msgstr ""
+
+#: single-kaamase_worker.php:64
+msgid "Someone they worked for"
+msgstr ""
+
+#: single-kaamase_worker.php:65
+msgid "Someone who knows them"
+msgstr ""
+
+#: inc/enqueue.php:147
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: single-kaamase_job.php:139
+msgid "Somewhere to stay"
+msgstr ""
+
+#: single-kaamase_worker.php:237
+msgid "Speaks"
+msgstr ""
+
+#: 404.php:182
+msgid "Start again from the beginning"
+msgstr ""
+
+#: single-kaamase_job.php:166
+msgid "Starts"
+msgstr ""
+
+#: inc/template-tags.php:1155
+msgid "Stay provided"
+msgstr ""
+
+#: single-kaamase_worker.php:63
+msgid "Student or workers union officer"
+msgstr ""
+
+#. translators: %s: number of workers in the team
+#: inc/template-tags.php:931
+msgid "Team of %s worker"
+msgid_plural "Team of %s workers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: single-kaamase_gang.php:116
+msgid "Team size"
+msgstr ""
+
+#: 404.php:201
+msgid "Tell us"
+msgstr ""
+
+#: footer.php:198
+msgid "Terms"
+msgstr ""
+
+#: 404.php:111
+msgid "The link may be old, or it may have been typed wrong. Try searching instead."
+msgstr ""
+
+#: 404.php:94
+msgid "The person may have removed their profile, or the link is out of date."
+msgstr ""
+
+#: index.php:265
+msgid "There is nothing on this page at the moment."
+msgstr ""
+
+#: 404.php:81
+msgid "There is other work posted right now."
+msgstr ""
+
+#: functions.php:259
+msgid "These module files have not been uploaded yet. The site will work, but the features in them are not active."
+msgstr ""
+
+#: single-kaamase_gang.php:130
+msgid "They come as a group. One call and the whole team arrives."
+msgstr ""
+
+#: 404.php:199
+msgid "Think this is a mistake on our side?"
+msgstr ""
+
+#: single-kaamase_worker.php:75
+msgid "This is exactly what an employer sees when they open it."
+msgstr ""
+
+#: single-kaamase_gang.php:49
+msgid "This is what a contractor sees when they open it."
+msgstr ""
+
+#: single-kaamase_employer.php:51
+msgid "This is what a worker sees before deciding whether to answer your job."
+msgstr ""
+
+#: single-kaamase_job.php:58
+msgid "This is what a worker sees. Share the link on WhatsApp if you want it seen faster."
+msgstr ""
+
+#: single-kaamase_job.php:57
+msgid "This is your job post"
+msgstr ""
+
+#: single-kaamase_employer.php:50
+msgid "This is your page"
+msgstr ""
+
+#: single-kaamase_worker.php:74
+msgid "This is your profile"
+msgstr ""
+
+#: single-kaamase_gang.php:48
+msgid "This is your team"
+msgstr ""
+
+#: single-kaamase_job.php:282
+msgid "This job"
+msgstr ""
+
+#: 404.php:69
+msgid "This job is no longer open"
+msgstr ""
+
+#: 404.php:107
+msgid "This page is not here"
+msgstr ""
+
+#: inc/security.php:548
+msgid "This photo could not be processed, so it has not been saved. Please try a different photo, or save it as a JPEG and upload it again."
+msgstr ""
+
+#: 404.php:90
+msgid "This profile is not available"
+msgstr ""
+
+#. translators: 1: required PHP version, 2: current PHP version, 3: required WordPress version, 4: current WordPress version
+#: functions.php:69
+msgid "This theme needs PHP %1$s or newer (running %2$s) and WordPress %3$s or newer (running %4$s). Ask your host to upgrade PHP."
+msgstr ""
+
+#: inc/security.php:280
+msgid "Those details are not correct. Please check and try again."
+msgstr ""
+
+#: single-kaamase_job.php:143
+msgid "Transport to site"
+msgstr ""
+
+#: inc/template-tags.php:1201
+msgid "Try a different district or trade."
+msgstr ""
+
+#: index.php:225
+msgid "Try a trade name like mason or electrician, or search by district instead."
+msgstr ""
+
+#: single-kaamase_employer.php:90
+msgid "Type"
+msgstr ""
+
+#: inc/template-tags.php:1051 single-kaamase_job.php:82
+msgid "Urgent"
+msgstr ""
+
+#: inc/page-display.php:112
+msgid "Use this when the page writes its own heading. The title stays in the page code for search engines and screen readers, it is only hidden from view. The featured image is still used for search results and link previews."
+msgstr ""
+
+#: 404.php:144
+msgid "Useful links"
+msgstr ""
+
+#: inc/template-tags.php:542
+msgid "Verified"
+msgstr ""
+
+#: inc/template-tags.php:1168
+msgid "View job"
+msgstr ""
+
+#: single-kaamase_worker.php:61
+msgid "Village council member"
+msgstr ""
+
+#: inc/template-tags.php:535
+msgid "Vouched"
+msgstr ""
+
+#: single-kaamase_gang.php:172 single-kaamase_worker.php:152
+msgid "Vouched for by"
+msgstr ""
+
+#: front-page.php:783
+msgid "Vouched locally"
+msgstr ""
+
+#: footer.php:138
+msgid "Wage or job complaint"
+msgstr ""
+
+#: front-page.php:239
+msgid "What work"
+msgstr ""
+
+#: front-page.php:265
+msgid "Which district"
+msgstr ""
+
+#: footer.php:87 inc/setup.php:377 inc/setup.php:406
+msgid "Who is hiring"
+msgstr ""
+
+#: single-kaamase_gang.php:39 single-kaamase_worker.php:55
+msgid "Will travel anywhere in Nagaland"
+msgstr ""
+
+#: single-kaamase_gang.php:38 single-kaamase_worker.php:54
+msgid "Will travel anywhere in their district"
+msgstr ""
+
+#: single-kaamase_employer.php:142
+msgid "Work they are hiring for"
+msgstr ""
+
+#: inc/template-tags.php:1297
+msgid "Workers"
+msgstr ""
+
+#: front-page.php:619
+msgid "Workers available now in Nagaland"
+msgstr ""
+
+#: single-kaamase_employer.php:104
+msgid "Workers hired here"
+msgstr ""
+
+#: front-page.php:792
+msgid "Workers rate employers too. Ratings come only from jobs that were actually done."
+msgstr ""
+
+#: single-kaamase_job.php:159
+msgid "Workers wanted"
+msgstr ""
+
+#: single-kaamase_job.php:237
+msgid "Workers who have done a job for them rate them too. Open their page to see what they said."
+msgstr ""
+
+#: functions.php:299
+msgid "Workers, gangs, employers and jobs are stored by the Kaam Ase Core plugin. Until it is installed and activated, this theme will display ordinary pages and posts only."
+msgstr ""
+
+#: inc/template-tags.php:190
+msgid "Working"
+msgstr ""
+
+#: single-kaamase_gang.php:37 single-kaamase_worker.php:53
+msgid "Works around their own town"
+msgstr ""
+
+#: inc/security.php:235
+msgid "You are not allowed to view this."
+msgstr ""
+
+#: inc/enqueue.php:148
+msgid "You are offline. Check your connection."
+msgstr ""
+
+#: inc/template-tags.php:411
+msgid "for the job"
+msgstr ""
+
+#: inc/app-banner.php:374
+msgid "iPhone"
+msgstr ""
+
+#. translators: %s: number of times opened
+#: inc/template-tags.php:359
+msgid "opened %s time"
+msgid_plural "opened %s times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/template-tags.php:409
+msgid "per day"
+msgstr ""
+
+#: inc/template-tags.php:412
+msgid "per hour"
+msgstr ""
+
+#: inc/template-tags.php:410
+msgid "per month"
+msgstr ""
+
+#: inc/template-tags.php:334
+msgid "seen"
+msgstr ""
+
+#: inc/template-tags.php:317
+msgid "view"
+msgid_plural "views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: single-kaamase_gang.php:123
+msgid "worker"
+msgid_plural "workers"
+msgstr[0] ""
+msgstr[1] ""

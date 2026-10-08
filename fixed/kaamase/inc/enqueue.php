@@ -398,24 +398,22 @@ add_action( 'admin_enqueue_scripts', 'kaamase_enqueue_admin' );
 /* ==========================================================================
    4. PRELOAD
 
-   One hint, for the one thing that always blocks rendering.
-   ========================================================================== */
+   There is no longer one, and that is the improvement.
 
-/**
- * Preload the main stylesheet.
- *
- * The browser discovers the stylesheet when it parses the head, which is
- * already early. The gain here is small on a fast connection and worth
- * having on a slow one, because it lets the request start before any
- * other head content is processed.
- *
- * @since 1.0.0
- * @return void
- */
-function kaamase_preload_stylesheet() {
-	printf(
-		'<link rel="preload" href="%1$s" as="style">' . "\n",
-		esc_url( add_query_arg( 'ver', KAAMASE_ASSET_VERSION, get_stylesheet_uri() ) )
-	);
-}
-add_action( 'wp_head', 'kaamase_preload_stylesheet', 1 );
+   A preload tag printed into wp_head sits a handful of tags above the
+   stylesheet link it is preloading, in the same head, so the browser
+   discovers both in the same parse. The gain was nil, which the note
+   here used to admit in as many words.
+
+   The risk was not nil. The tag built its own URL with add_query_arg
+   while the stylesheet link got its URL from WP_Styles, and the moment
+   anything rewrote one and not the other, a caching plugin or a CDN,
+   the two stopped matching and the browser fetched the stylesheet
+   twice. On a 2G connection that is the single most expensive mistake
+   available on the page, in exchange for nothing.
+
+   A Link: rel=preload response header would genuinely help, because it
+   arrives before the HTML. It is not done here because at send_headers
+   the stylesheet is not registered yet, so the header would have to
+   guess the URL, which is the same double download risk in a new place.
+   ========================================================================== */

@@ -31,13 +31,18 @@
  * fails real users at a far higher rate than it stops bots.
  *
  * @package KaamaseCore
- * @version 1.0.1
+ * @version 1.6.1
  * @since   1.0.0
  *
  * Changelog
  *   1.0.1  Phone number is mandatory. Email remains the only verified
  *          channel; the number is collected because an employer needs
  *          something to call and contact.php needs something to mask.
+ *   1.6.0  A third door, "I'm a professional", when professional-signup.php
+ *          is present and switched on. Worker and employer registration
+ *          are unchanged.
+ *   1.6.1  The confirmation email no longer tells a professional their
+ *          profile goes live on confirming: it also has to be finished.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -67,7 +72,7 @@ if ( ! function_exists( 'kaamase_register_shortcode' ) ) {
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$type = isset( $_GET['type'] ) ? sanitize_key( wp_unslash( $_GET['type'] ) ) : '';
-		$type = in_array( $type, array( 'worker', 'employer' ), true ) ? $type : '';
+		$type = in_array( $type, function_exists( 'kaamase_join_types' ) ? kaamase_join_types() : array( 'worker', 'employer' ), true ) ? $type : '';
 
 		ob_start();
 
@@ -127,11 +132,21 @@ if ( ! function_exists( 'kaamase_register_shortcode' ) ) {
 
 			<h2>
 				<?php
-				echo 'worker' === $type
-					? esc_html__( 'Make your free worker profile', 'kaamase-core' )
-					: esc_html__( 'Register as an employer', 'kaamase-core' );
+				if ( 'professional' === $type ) {
+					esc_html_e( 'Make your free professional profile', 'kaamase-core' );
+				} else {
+					echo 'worker' === $type
+						? esc_html__( 'Make your free worker profile', 'kaamase-core' )
+						: esc_html__( 'Register as an employer', 'kaamase-core' );
+				}
 				?>
 			</h2>
+
+			<?php
+			if ( 'professional' === $type && function_exists( 'kaamase_join_intro' ) ) {
+				echo kaamase_join_intro(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+			}
+			?>
 
 			<div class="ka-field">
 				<label class="ka-label" for="ka-name">
@@ -165,7 +180,7 @@ if ( ! function_exists( 'kaamase_register_shortcode' ) ) {
 					value="<?php echo esc_attr( isset( $old['phone'] ) ? $old['phone'] : '' ); ?>">
 				<p class="ka-hint">
 					<?php
-					echo 'worker' === $type
+					echo 'employer' !== $type
 						? esc_html__( '10 digits. Your number is never shown on the site. Employers reach you through Kaam Ase.', 'kaamase-core' )
 						: esc_html__( '10 digits. Your number is never shown on the site. Workers reach you through Kaam Ase.', 'kaamase-core' );
 					?>
@@ -196,7 +211,13 @@ if ( ! function_exists( 'kaamase_register_shortcode' ) ) {
 					</label>
 					<select class="ka-select" id="ka-trade" name="kaamase_trade" required>
 						<option value=""><?php esc_html_e( 'Choose your trade', 'kaamase-core' ); ?></option>
-						<?php foreach ( kaamase_trade_choices() as $group => $trades ) : ?>
+						<?php
+						// Without the professional categories, which belong to professional profiles. See professional-profiles.php.
+						$kaamase_worker_trades = function_exists( 'kaamase_prof_worker_trade_choices' )
+							? kaamase_prof_worker_trade_choices( isset( $old['trade'] ) ? $old['trade'] : '' )
+							: kaamase_trade_choices();
+						?>
+						<?php foreach ( $kaamase_worker_trades as $group => $trades ) : ?>
 							<optgroup label="<?php echo esc_attr( $group ); ?>">
 								<?php foreach ( $trades as $slug => $name ) : ?>
 									<option value="<?php echo esc_attr( $slug ); ?>"
@@ -212,6 +233,12 @@ if ( ! function_exists( 'kaamase_register_shortcode' ) ) {
 					</p>
 				</div>
 			<?php endif; ?>
+
+			<?php
+			if ( 'professional' === $type && function_exists( 'kaamase_join_category_field' ) ) {
+				echo kaamase_join_category_field( isset( $old['category'] ) ? $old['category'] : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+			}
+			?>
 
 			<div class="ka-field">
 				<label class="ka-label" for="ka-password">
@@ -274,33 +301,108 @@ if ( ! function_exists( 'kaamase_register_chooser' ) ) {
 	 */
 	function kaamase_register_chooser() {
 
+		/*
+		 * The same screen as the app, matched to it: a group of workers on
+		 * each door, a two word title, one line under it and a button. Both
+		 * doors sit side by side at every width. Then the Google button and
+		 * the account link, in the app's order (see below the loop).
+		 *
+		 * The pictures live in the theme, beside the homepage's. A theme
+		 * without them still gets both doors, just without the picture.
+		 */
+		$doors = array(
+			'worker'   => array(
+				'class'  => 'ka-choice--worker',
+				'photo'  => 'worker',
+				'title'  => __( 'Find work', 'kaamase-core' ),
+				'body'   => __( 'Daily work, monthly jobs and government work', 'kaamase-core' ),
+				'button' => __( 'Worker', 'kaamase-core' ),
+				'btn'    => 'ka-btn--primary',
+			),
+			'employer' => array(
+				'class'  => 'ka-choice--employer',
+				'photo'  => 'employer',
+				'title'  => __( 'Hire workers', 'kaamase-core' ),
+				'body'   => __( 'Post a job and find skilled workers', 'kaamase-core' ),
+				'button' => __( 'Employer', 'kaamase-core' ),
+				'btn'    => 'ka-btn--action',
+			),
+		);
+
+		$arrow = '<svg class="ka-choice__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
 		ob_start();
 		?>
-		<div class="ka-stack--lg">
+		<div class="ka-join">
 
-			<h2><?php esc_html_e( 'What brings you here?', 'kaamase-core' ); ?></h2>
-
-			<div class="ka-grid ka-grid--2">
-
-				<a class="ka-card ka-card--link ka-card--pad-lg"
-					href="<?php echo esc_url( add_query_arg( 'type', 'worker', kaamase_page_url( 'register' ) ) ); ?>">
-					<h3><?php esc_html_e( 'I am looking for work', 'kaamase-core' ); ?></h3>
-					<p class="ka-soft ka-mt-4">
-						<?php esc_html_e( 'Mason, carpenter, electrician, driver, cook, helper and every other trade. Free, always.', 'kaamase-core' ); ?>
-					</p>
-					<span class="ka-btn ka-btn--primary ka-mt-6"><?php esc_html_e( 'Make a worker profile', 'kaamase-core' ); ?></span>
-				</a>
-
-				<a class="ka-card ka-card--link ka-card--pad-lg"
-					href="<?php echo esc_url( add_query_arg( 'type', 'employer', kaamase_page_url( 'register' ) ) ); ?>">
-					<h3><?php esc_html_e( 'I am looking for workers', 'kaamase-core' ); ?></h3>
-					<p class="ka-soft ka-mt-4">
-						<?php esc_html_e( 'Building a house, running a site, or hiring for a business. Post jobs free.', 'kaamase-core' ); ?>
-					</p>
-					<span class="ka-btn ka-btn--action ka-mt-6"><?php esc_html_e( 'Register as employer', 'kaamase-core' ); ?></span>
-				</a>
-
+			<div class="ka-join__head">
+				<h2 class="ka-join__title"><?php esc_html_e( 'What brings you here?', 'kaamase-core' ); ?></h2>
+				<p class="ka-join__lead">
+					<?php esc_html_e( 'Make a free profile so employers can find you, or register as an employer and post a job. Kaam Ase is free for workers and always will be.', 'kaamase-core' ); ?>
+				</p>
 			</div>
+
+			<div class="ka-join__doors">
+				<?php foreach ( $doors as $type => $door ) : ?>
+					<?php
+					$small = 'assets/images/register/' . $door['photo'] . '-s.webp';
+					$large = 'assets/images/register/' . $door['photo'] . '-l.webp';
+					$has   = file_exists( get_theme_file_path( $small ) ) && file_exists( get_theme_file_path( $large ) );
+					?>
+					<a class="ka-choice <?php echo esc_attr( $door['class'] ); ?>"
+						href="<?php echo esc_url( add_query_arg( 'type', $type, kaamase_page_url( 'register' ) ) ); ?>">
+
+						<?php if ( $has ) : ?>
+							<span class="ka-choice__photo">
+								<img src="<?php echo esc_url( get_theme_file_uri( $small ) ); ?>"
+									srcset="<?php echo esc_url( get_theme_file_uri( $small ) ); ?> 400w, <?php echo esc_url( get_theme_file_uri( $large ) ); ?> 720w"
+									sizes="(min-width: 700px) 480px, 50vw"
+									width="720" height="526" alt="" decoding="async">
+							</span>
+						<?php endif; ?>
+
+						<span class="ka-choice__text">
+							<span class="ka-choice__title"><?php echo esc_html( $door['title'] ); ?></span>
+							<span class="ka-choice__body"><?php echo esc_html( $door['body'] ); ?></span>
+						</span>
+
+						<span class="ka-btn <?php echo esc_attr( $door['btn'] ); ?> ka-btn--lg ka-btn--block">
+							<?php echo esc_html( $door['button'] ); ?>
+							<?php echo $arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed markup above. ?>
+						</span>
+					</a>
+				<?php endforeach; ?>
+			</div>
+
+			<?php
+			// The third door, for office and professional jobs. See professional-signup.php.
+			if ( function_exists( 'kaamase_join_door' ) ) {
+				echo kaamase_join_door(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+			}
+			?>
+
+			<?php
+			/*
+			 * Then the sign in options, in the app's order: the Google
+			 * button, then the way out for somebody who already has an
+			 * account. The website has no Apple button -- Sign in with
+			 * Apple is built for the app only.
+			 *
+			 * The Google button is drawn here, between the doors and the
+			 * account link, rather than left to google-signin.php to append
+			 * at the very end, so the order matches the app. It is guarded
+			 * by function_exists: if that file is ever removed the page
+			 * simply shows the doors and the account link, exactly as it
+			 * did before Google sign in existed.
+			 */
+			if ( function_exists( 'kaamase_google_button' ) ) {
+				// Null label: no caption, so the button stands on its own like the app's.
+				echo kaamase_google_button( null ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built with esc_* inside.
+			}
+			?>
+			<a class="ka-btn ka-btn--outline ka-btn--lg ka-btn--block ka-join__signin" href="<?php echo esc_url( wp_login_url() ); ?>">
+				<?php esc_html_e( 'I already have an account', 'kaamase-core' ); ?>
+			</a>
 
 		</div>
 		<?php
@@ -380,9 +482,25 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 		$trade    = isset( $_POST['kaamase_trade'] ) ? kaamase_match_trade( sanitize_text_field( wp_unslash( $_POST['kaamase_trade'] ) ) ) : '';
 		$password = isset( $_POST['kaamase_password'] ) ? (string) wp_unslash( $_POST['kaamase_password'] ) : '';
 		$agreed   = ! empty( $_POST['kaamase_agree'] );
+		$category = ( isset( $_POST['kaamase_category'] ) && function_exists( 'kaamase_join_category' ) ) ? kaamase_join_category( sanitize_text_field( wp_unslash( $_POST['kaamase_category'] ) ) ) : '';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$phone = kaamase_sanitize_phone( $phone_in );
+
+		/*
+		 * The address exactly as typed, for the typo check. sanitize_email()
+		 * throws away the very mistakes it looks for: gmail..com comes back
+		 * empty, and there would be nothing left to suggest a fix for.
+		 */
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$email_raw = isset( $_POST['kaamase_email'] ) ? (string) wp_unslash( $_POST['kaamase_email'] ) : '';
+
+		/*
+		 * What the last attempt was warned about. Read before this
+		 * attempt's values are stored over it, so the same address typed
+		 * again on purpose can be recognised and accepted.
+		 */
+		$before = kaamase_registration_input();
 
 		kaamase_registration_input(
 			array(
@@ -391,6 +509,7 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 				'phone'    => $phone_in,
 				'district' => $district,
 				'trade'    => $trade,
+				'category' => $category,
 			)
 		);
 
@@ -398,7 +517,7 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 
 		$errors = array();
 
-		if ( ! in_array( $type, array( 'worker', 'employer' ), true ) ) {
+		if ( ! in_array( $type, function_exists( 'kaamase_join_types' ) ? kaamase_join_types() : array( 'worker', 'employer' ), true ) ) {
 			$errors[] = __( 'Choose whether you are looking for work or looking for workers.', 'kaamase-core' );
 		}
 
@@ -406,7 +525,37 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 			$errors[] = __( 'Please enter your name.', 'kaamase-core' );
 		}
 
-		if ( ! is_email( $email ) ) {
+		/*
+		 * A mistyped address. See email-typos.php.
+		 *
+		 * The address they meant is put in the box for them, and the one
+		 * they typed is remembered, so typing it again exactly is taken as
+		 * "yes, this really is my address" and it goes through.
+		 */
+		$email_problem = null;
+
+		if ( function_exists( 'kaamase_email_problem' ) ) {
+			$insisted      = ! empty( $before['email_warned'] ) && kaamase_email_normal( $email_raw ) === $before['email_warned'];
+			$email_problem = kaamase_email_problem( $email_raw, $insisted );
+		}
+
+		if ( $email_problem ) {
+
+			$errors[] = $email_problem['message'];
+
+			$kept                 = kaamase_registration_input();
+			$kept['email_warned'] = kaamase_email_normal( $email_raw );
+
+			if ( '' !== $email_problem['suggestion'] ) {
+				$kept['email'] = $email_problem['suggestion'];
+				$errors[]      = __( 'We have put that address in the box for you. If what you typed was right, type it again exactly and we will use it.', 'kaamase-core' );
+			} else {
+				$errors[] = __( 'If what you typed is right, type it again exactly and we will use it.', 'kaamase-core' );
+			}
+
+			kaamase_registration_input( $kept );
+
+		} elseif ( ! is_email( $email ) ) {
 			$errors[] = __( 'Please enter a working email address.', 'kaamase-core' );
 		}
 
@@ -416,6 +565,10 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 
 		if ( 'worker' === $type && '' === $trade ) {
 			$errors[] = __( 'Please choose the work you do.', 'kaamase-core' );
+		}
+
+		if ( function_exists( 'kaamase_join_errors' ) ) {
+			$errors = array_merge( $errors, kaamase_join_errors( $type, $category ) );
 		}
 
 		if ( strlen( $password ) < 8 ) {
@@ -467,6 +620,7 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 				'phone'    => $phone,
 				'district' => $district,
 				'trade'    => $trade,
+				'category' => $category,
 				'password' => $password,
 			)
 		);
@@ -480,6 +634,12 @@ if ( ! function_exists( 'kaamase_handle_registration' ) ) {
 		// Sign them in now. See the note at the top of this file.
 		wp_set_current_user( $user_id );
 		wp_set_auth_cookie( $user_id, true );
+
+		// A professional goes straight on to the rest of their profile.
+		if ( 'professional' === $type && function_exists( 'kaamase_join_landing' ) ) {
+			wp_safe_redirect( kaamase_join_landing() );
+			exit;
+		}
 
 		wp_safe_redirect( add_query_arg( 'welcome', '1', kaamase_page_url( 'dashboard' ) ) );
 		exit;
@@ -506,6 +666,13 @@ if ( ! function_exists( 'kaamase_create_account' ) ) {
 	 * @return int|WP_Error User ID, or an error.
 	 */
 	function kaamase_create_account( $data ) {
+
+		// A professional account is made by professional-signup.php, so every way in makes the same thing.
+		if ( isset( $data['type'] ) && 'professional' === $data['type'] ) {
+			return function_exists( 'kaamase_join_create' )
+				? kaamase_join_create( $data )
+				: new WP_Error( 'kaamase_invalid_registration', __( 'Choose whether you are looking for work or looking for workers.', 'kaamase-core' ), array( 'status' => 400 ) );
+		}
 
 		$login = kaamase_unique_login( $data['email'] );
 
@@ -657,6 +824,25 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 			home_url( '/' )
 		);
 
+		/*
+		 * 'request', and this is the only send on the platform that
+		 * wants it.
+		 *
+		 * Usually this IS their own request: somebody registering, in
+		 * the language they have been reading the site in. They have no
+		 * account language yet because the account is seconds old, so
+		 * falling back to the site's would send the very first thing we
+		 * ever write to them in a language they did not pick.
+		 *
+		 * The other two callers are not their request — insights.php
+		 * sends it again to accounts that never confirmed, and
+		 * rest-api.php sends it for the app — and both are covered,
+		 * because a person who HAS chosen a language is switched to it
+		 * either way.
+		 */
+		$switched = function_exists( 'kaamase_locale_switch_to_user' )
+			&& kaamase_locale_switch_to_user( $user_id, 'request' );
+
 		$site = get_bloginfo( 'name', 'display' );
 
 		$subject = sprintf(
@@ -673,7 +859,10 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 					__( 'Hello %s,', 'kaamase-core' ),
 					$user->display_name
 				),
-				__( 'Tap the link below to confirm your email address. Your profile goes live as soon as you do.', 'kaamase-core' ),
+				// A professional profile also has to be finished first. See professional-signup.php.
+				( function_exists( 'kaamase_join_email_line' ) && '' !== kaamase_join_email_line( $user_id ) )
+					? kaamase_join_email_line( $user_id )
+					: __( 'Tap the link below to confirm your email address. Your profile goes live as soon as you do.', 'kaamase-core' ),
 				$link,
 				__( 'If you did not create this account, ignore this message and nothing will happen.', 'kaamase-core' ),
 				sprintf(
@@ -684,7 +873,13 @@ if ( ! function_exists( 'kaamase_send_verification' ) ) {
 			)
 		);
 
-		return wp_mail( $user->user_email, $subject, $body );
+		$sent = wp_mail( $user->user_email, $subject, $body );
+
+		if ( $switched ) {
+			kaamase_locale_restore();
+		}
+
+		return $sent;
 	}
 }
 

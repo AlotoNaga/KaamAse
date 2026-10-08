@@ -1,0 +1,770 @@
+# Kaam Ase — hi_IN
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kaam Ase Pay\n"
+"Report-Msgid-Bugs-To: https://kaamase.com\n"
+"POT-Creation-Date: 2026-09-17 12:44+0000\n"
+"PO-Revision-Date: 2026-09-17 12:44+0000\n"
+"Language: hi_IN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kaamase-pay\n"
+
+#. translators: 1: how many more, 2: what of
+#: includes/checkout.php:153
+msgid "%1$d more %2$s"
+msgstr "%1$d और %2$s"
+
+#: includes/plans.php:259
+msgid "A one time pack is the easier sell to somebody who has never paid for anything online. A subscription is worth more to you. Having both is usually right."
+msgstr "जिसने कभी ऑनलाइन पैसे नहीं दिए, उसे एक बार का पैक बेचना आसान होता है। सब्सक्रिप्शन आपके लिए ज़्यादा फ़ायदेमंद है। दोनों रखना आमतौर पर सही रहता है।"
+
+#: includes/plans.php:206
+msgid "A plan gives somebody extra allowance on top of the free numbers, for a number of days. Change a price here whenever you like. Nothing needs a code change and nobody who has already paid is affected by it."
+msgstr "प्लान से किसी को मुफ़्त सीमा के ऊपर कुछ दिनों के लिए अतिरिक्त छूट मिलती है। यहाँ कीमत जब चाहें बदलें। कोड बदलने की ज़रूरत नहीं और जिसने पहले पैसे दे दिए हैं उस पर कोई असर नहीं पड़ता।"
+
+#: includes/settings.php:388
+msgid "A secret is saved. Leave this blank to keep it, or type a new one to replace it."
+msgstr ""
+
+#: includes/plans.php:219
+msgid "Add a plan"
+msgstr "प्लान जोड़ें"
+
+#: includes/plans.php:347
+msgid "Add plan"
+msgstr "प्लान जोड़ें"
+
+#: includes/settings.php:350
+msgid "Add your Razorpay keys first. A switch turned on with no keys behind it gives somebody a checkout that fails after they have decided to buy, which is worse than never offering."
+msgstr ""
+
+#. translators: %s: what the plan adds
+#: includes/account.php:95
+msgid "Adds %s on top of the free amount."
+msgstr "मुफ़्त सीमा के ऊपर %s और जोड़ता है।"
+
+#: includes/settings.php:592
+msgid "Amount"
+msgstr ""
+
+#. translators: 1: currency, 2: amount
+#: includes/notices.php:139
+msgid "Amount: %1$s %2$s"
+msgstr "रकम: %1$s %2$s"
+
+#: includes/settings.php:450
+msgid "Android, through Google Play"
+msgstr ""
+
+#: includes/settings.php:410
+msgid "Any string you choose. Put the same one into Razorpay when you create the webhook. Send it to this address:"
+msgstr ""
+
+#: includes/settings.php:474
+msgid "Any string you choose. Put the same one into RevenueCat as the Authorization header on the webhook, and send it here:"
+msgstr ""
+
+#: includes/subscribers.php:290
+msgid "Called, hidden while lapsed"
+msgstr ""
+
+#: includes/settings.php:337
+msgid "Charge people"
+msgstr ""
+
+#: includes/settings.php:532
+msgid "Charge people is not ticked."
+msgstr ""
+
+#: includes/checkout.php:292
+msgid "Choose"
+msgstr "चुनें"
+
+#: includes/settings.php:423
+msgid "Currency"
+msgstr ""
+
+#: includes/plans.php:421
+msgid "Edit"
+msgstr "बदलें"
+
+#: includes/plans.php:218
+msgid "Edit plan"
+msgstr "प्लान बदलें"
+
+#: includes/subscribers.php:242
+msgid "Ends"
+msgstr ""
+
+#: includes/subscribers.php:188
+msgid "Everybody who has ever paid, what they hold, and when it ends. The tick column says whether you have made your call yet: no tick means they have paid and are still waiting on the Calls to make screen."
+msgstr ""
+
+#: includes/checkout.php:42
+msgid "Everything on Kaam Ase is free at the moment. There is nothing to buy."
+msgstr "Kaam Ase पर अभी सब कुछ मुफ़्त है। खरीदने को कुछ नहीं है।"
+
+#: includes/plans.php:209
+msgid "Existing plans"
+msgstr "मौजूदा प्लान"
+
+#: includes/plans.php:376
+msgid "Gives"
+msgstr "देता है"
+
+#: includes/checkout.php:648
+msgid "Go back without paying"
+msgstr "बिना पैसे दिए वापस जाएँ"
+
+#. translators: %s: person's name
+#: includes/notices.php:115 includes/notices.php:296
+msgid "Hello %s,"
+msgstr "नमस्ते %s,"
+
+#: includes/notices.php:322
+msgid "If you want to carry on, you can renew here:"
+msgstr "आगे जारी रखना चाहें तो यहाँ से दोबारा शुरू कर सकते हैं:"
+
+#: includes/notices.php:158
+msgid "It does not renew on its own. Nothing further will be charged."
+msgstr "यह अपने आप दोबारा शुरू नहीं होता। आगे कोई पैसा नहीं कटेगा।"
+
+#: includes/notices.php:157
+msgid "It renews on its own, so you do not need to do anything."
+msgstr "यह अपने आप दोबारा शुरू हो जाता है, आपको कुछ नहीं करना।"
+
+#. translators: %s: date
+#: includes/notices.php:152
+msgid "It runs until %s."
+msgstr "यह %s तक चलेगा।"
+
+#. translators: %s: date
+#: includes/checkout.php:132
+msgid "It runs until %s. Buying again adds to what you have rather than replacing it."
+msgstr "यह %s तक चलेगा। दोबारा खरीदने पर जो आपके पास है उसमें जुड़ जाएगा, उसकी जगह नहीं लेगा।"
+
+#: includes/account.php:496
+msgid "It will not renew again"
+msgstr "यह दोबारा शुरू नहीं होगा"
+
+#: kaamase-pay.php:137
+msgid "Kaam Ase Payments needs Kaam Ase Core, version 1.2 or newer, and is doing nothing until that is active."
+msgstr "Kaam Ase Payments को Kaam Ase Core का 1.2 या नया संस्करण चाहिए, और जब तक वह चालू नहीं होता यह कुछ नहीं करेगा।"
+
+#: includes/checkout.php:74
+msgid "Kaam Ase is free for workers and always will be. Making a profile, being found, being called and getting hired all cost nothing, and nobody from Kaam Ase will ever ask you for money. If anyone does, report it."
+msgstr "Kaam Ase मज़दूरों के लिए मुफ़्त है और हमेशा रहेगा। प्रोफ़ाइल बनाना, ढूँढे जाना, कॉल आना और काम मिलना — सब मुफ़्त है, और Kaam Ase से कोई भी आपसे कभी पैसे नहीं मांगेगा। कोई मांगे तो शिकायत करें।"
+
+#: includes/checkout.php:306
+msgid "Kaam Ase never charges a worker. Nothing here affects finding work, being found, or being hired. Paying only ever raises limits for an employer who is hiring a lot."
+msgstr "Kaam Ase किसी मज़दूर से पैसे नहीं लेता। यहाँ की किसी बात से काम ढूँढने, ढूँढे जाने या काम मिलने पर कोई फ़र्क़ नहीं पड़ता। पैसे देने से सिर्फ़ उस मालिक की सीमा बढ़ती है जो बहुत लोगों को काम दे रहा है।"
+
+#: includes/checkout.php:88
+msgid "Kaam Ase stays free"
+msgstr "Kaam Ase मुफ़्त ही रहेगा"
+
+#: includes/account.php:230
+msgid "Keep it"
+msgstr "इसे रहने दें"
+
+#: includes/plans.php:249
+msgid "Kind"
+msgstr "किस तरह"
+
+#: includes/subscribers.php:201
+msgid "Lapsed (%d)"
+msgstr ""
+
+#: includes/plans.php:294
+msgid "Leave a price at zero to not offer that period. Saving a subscription price creates the matching plan at Razorpay automatically, so you never open their dashboard to change a price."
+msgstr "जो अवधि नहीं देनी हो उसकी कीमत शून्य छोड़ दें। सब्सक्रिप्शन की कीमत सहेजते ही Razorpay पर उसका प्लान अपने आप बन जाता है, इसलिए कीमत बदलने के लिए आपको उनका डैशबोर्ड कभी नहीं खोलना पड़ेगा।"
+
+#: includes/settings.php:454
+msgid "Leave both off until the products exist in that store and the webhook below is connected. With them off the app shows no way to buy at all, which is the safe direction: an app that takes money it cannot honour is worse than one that sells nothing."
+msgstr ""
+
+#: includes/subscribers.php:137
+msgid "Lifetime"
+msgstr ""
+
+#: includes/plans.php:299
+msgid "Lifetime price"
+msgstr "आजीवन कीमत"
+
+#: includes/settings.php:515
+msgid "Make a page containing the shortcode [kaamase_plans] and publish it. Until then nothing can be bought and Choose has nowhere sensible to return to."
+msgstr ""
+
+#: includes/checkout.php:90
+msgid "Making a profile, being found, calling somebody, posting a job and getting hired all cost nothing, for everybody, always. Nothing below changes that. It is one optional extra for people who post urgent work often and want us to ring them and put a tick on their profile."
+msgstr "प्रोफ़ाइल बनाना, ढूँढे जाना, किसी को कॉल करना, काम डालना और काम पाना — सबके लिए, हमेशा मुफ़्त है। नीचे की किसी चीज़ से यह नहीं बदलता। यह सिर्फ़ उनके लिए एक वैकल्पिक सुविधा है जो अक्सर ज़रूरी काम डालते हैं और चाहते हैं कि हम उन्हें कॉल करें और उनकी प्रोफ़ाइल पर टिक लगाएँ।"
+
+#: includes/subscribers.php:135
+msgid "Monthly"
+msgstr ""
+
+#: includes/plans.php:276
+msgid "Monthly price"
+msgstr "महीने की कीमत"
+
+#: includes/account.php:75
+msgid "My plan"
+msgstr "मेरा प्लान"
+
+#: includes/plans.php:232
+msgid "Name"
+msgstr "नाम"
+
+#: includes/subscribers.php:97
+msgid "Never"
+msgstr ""
+
+#: includes/plans.php:419 includes/subscribers.php:281
+msgid "No"
+msgstr "नहीं"
+
+#: includes/settings.php:512
+msgid "No page found."
+msgstr ""
+
+#: includes/settings.php:538
+msgid "No plan is switched on."
+msgstr ""
+
+#: includes/plans.php:366
+msgid "No plans yet. Add one below."
+msgstr "अभी कोई प्लान नहीं। नीचे एक जोड़ें।"
+
+#: includes/razorpay.php:290
+msgid "No subscription given."
+msgstr "कोई सब्सक्रिप्शन नहीं दिया गया।"
+
+#: includes/subscribers.php:203
+msgid "Nobody has lapsed."
+msgstr ""
+
+#: includes/subscribers.php:196
+msgid "Nobody is on a plan at the moment."
+msgstr ""
+
+#: includes/subscribers.php:292
+msgid "Not called yet"
+msgstr ""
+
+#: includes/checkout.php:446
+msgid "Not set up yet"
+msgstr "अभी सेट नहीं हुआ"
+
+#: includes/settings.php:548
+msgid "Not yet:"
+msgstr ""
+
+#: includes/checkout.php:889
+msgid "Nothing has been taken from you. If money did leave your account, send us the payment reference and we will sort it out."
+msgstr "आपसे कुछ नहीं लिया गया है। अगर आपके खाते से पैसे कटे हों तो हमें पेमेंट रेफ़रेंस भेजें, हम ठीक कर देंगे।"
+
+#: includes/settings.php:326
+msgid "Nothing is being charged for. Plans are hidden and everybody is on the free allowances. You can set all of this up now and switch it on whenever you are ready."
+msgstr ""
+
+#: includes/checkout.php:96
+msgid "Nothing is on offer just now."
+msgstr "अभी कुछ भी उपलब्ध नहीं है।"
+
+#: includes/notices.php:320
+msgid "Nothing will be charged. When it ends your account stays exactly as it is, and the extra allowance the plan gave you stops."
+msgstr "कोई पैसा नहीं कटेगा। खत्म होने पर आपका खाता जैसा है वैसा ही रहेगा, बस प्लान से मिली अतिरिक्त छूट बंद हो जाएगी।"
+
+#: includes/settings.php:583
+msgid "Nothing yet."
+msgstr ""
+
+#: includes/plans.php:340
+msgid "Offer this plan to people"
+msgstr "यह प्लान लोगों को दिखाएँ"
+
+#: includes/plans.php:241
+msgid "One line about it"
+msgstr "इसके बारे में एक लाइन"
+
+#: includes/subscribers.php:138
+msgid "One off"
+msgstr ""
+
+#: includes/plans.php:264
+msgid "One time price"
+msgstr "एक बार की कीमत"
+
+#: includes/checkout.php:646
+msgid "Opening the payment window."
+msgstr "पेमेंट विंडो खुल रही है।"
+
+#: includes/plans.php:253
+msgid "Paid once, lasts a set number of days"
+msgstr "एक बार पैसे, तय दिनों तक चलता है"
+
+#: includes/plans.php:304
+msgid "Paid once, never expires, never renews. Worth thinking about before you offer it: the people who buy it are usually the ones who would have paid every year, and you cannot take it back later without breaking a promise. Leave at zero to not offer it."
+msgstr "एक बार पैसे, कभी खत्म नहीं, कभी दोबारा नहीं। देने से पहले सोच लें: इसे खरीदने वाले आमतौर पर वही होते हैं जो हर साल पैसे देते, और बाद में वादा तोड़े बिना आप इसे वापस नहीं ले सकते। न देना हो तो शून्य छोड़ दें।"
+
+#: includes/checkout.php:882
+msgid "Paid, and it is on your account already"
+msgstr "पैसे मिल गए, और यह आपके खाते में लग चुका है"
+
+#: includes/checkout.php:636
+msgid "Paying"
+msgstr "पैसे दे रहे हैं"
+
+#: includes/checkout.php:744
+msgid "Payment"
+msgstr "पेमेंट"
+
+#: includes/settings.php:186 includes/settings.php:187 includes/settings.php:317
+msgid "Payments"
+msgstr ""
+
+#: includes/razorpay.php:43
+msgid "Payments are not set up."
+msgstr "पेमेंट सेट नहीं है।"
+
+#: includes/checkout.php:431
+msgid "Payments are not switched on yet. Add the Razorpay keys on the Payments screen and tick Charge people."
+msgstr "पेमेंट अभी चालू नहीं है। Payments स्क्रीन पर Razorpay की कुंजियाँ डालें और Charge people पर टिक करें।"
+
+#: includes/settings.php:321
+msgid "People are being charged."
+msgstr ""
+
+#: includes/settings.php:590 includes/subscribers.php:239
+msgid "Person"
+msgstr ""
+
+#: includes/plans.php:374 includes/settings.php:591 includes/subscribers.php:241
+msgid "Plan"
+msgstr "प्लान"
+
+#: includes/plans.php:203 includes/settings.php:195 includes/settings.php:196
+msgid "Plans and prices"
+msgstr "प्लान और कीमतें"
+
+#: includes/settings.php:322
+msgid "Plans are visible and payments are being taken. Switching this off leaves everybody on the free allowances and takes nothing away that they already paid for: paid access keeps working until the date it was bought to."
+msgstr ""
+
+#: includes/settings.php:503
+msgid "Plans page"
+msgstr ""
+
+#: includes/plans.php:375
+msgid "Prices"
+msgstr "कीमतें"
+
+#: includes/settings.php:358
+msgid "Razorpay Key ID"
+msgstr ""
+
+#: includes/settings.php:374
+msgid "Razorpay Key Secret"
+msgstr ""
+
+#: includes/settings.php:368
+msgid "Razorpay dashboard, Account and Settings, API Keys. Starts rzp_test for testing and rzp_live when you are ready."
+msgstr ""
+
+#: includes/settings.php:528
+msgid "Razorpay keys are missing."
+msgstr ""
+
+#: includes/razorpay.php:72
+msgid "Razorpay refused that."
+msgstr "Razorpay ने इसे मना कर दिया।"
+
+#: includes/settings.php:522
+msgid "Ready to take money"
+msgstr ""
+
+#: includes/account.php:281
+msgid "Receipts come from Razorpay by email. If one is missing, tell us the date and we will find it."
+msgstr "रसीदें Razorpay से ईमेल पर आती हैं। कोई न मिले तो हमें तारीख़ बताएँ, हम ढूँढ देंगे।"
+
+#: includes/settings.php:561
+msgid "Recent payments"
+msgstr ""
+
+#: includes/subscribers.php:243
+msgid "Renews"
+msgstr ""
+
+#. translators: %s: date
+#: includes/access.php:952
+msgid "Renews on %s."
+msgstr "%s को दोबारा शुरू होगा।"
+
+#: includes/settings.php:461
+msgid "RevenueCat secret"
+msgstr ""
+
+#: includes/subscribers.php:240
+msgid "Ring"
+msgstr ""
+
+#: includes/subscribers.php:194
+msgid "Running now (%d)"
+msgstr ""
+
+#. translators: %s: date
+#: includes/access.php:970
+msgid "Runs until %s, then stops on its own. Nothing renews."
+msgstr "%s तक चलेगा, फिर अपने आप बंद हो जाएगा। कुछ दोबारा शुरू नहीं होगा।"
+
+#: includes/plans.php:347
+msgid "Save plan"
+msgstr "प्लान सहेजें"
+
+#. translators: %s: amount saved
+#: includes/checkout.php:238
+msgid "Saves %s a year"
+msgstr "साल में %s की बचत"
+
+#: includes/account.php:250
+msgid "See what else is available"
+msgstr "और क्या उपलब्ध है, देखें"
+
+#. translators: %s: link to the plans page
+#: includes/access.php:626
+msgid "See what is available: %s"
+msgstr "क्या उपलब्ध है देखें: %s"
+
+#: includes/settings.php:435
+msgid "Sell inside the apps"
+msgstr ""
+
+#: includes/settings.php:245
+msgid "Set in wp-config.php."
+msgstr ""
+
+#: includes/plans.php:336
+msgid "Show it"
+msgstr "दिखाएँ"
+
+#: includes/settings.php:345
+msgid "Show plans and take payments"
+msgstr ""
+
+#: includes/subscribers.php:288
+msgid "Showing"
+msgstr ""
+
+#: includes/plans.php:377
+msgid "Shown"
+msgstr "दिखाया गया"
+
+#: includes/settings.php:389
+msgid "Shown once by Razorpay when you create the key. Never leaves the server."
+msgstr ""
+
+#: includes/checkout.php:428
+msgid "Sign in first, then choose again."
+msgstr "पहले साइन इन करें, फिर दोबारा चुनें।"
+
+#: includes/checkout.php:258
+msgid "Sign in to choose"
+msgstr "चुनने के लिए साइन इन करें"
+
+#: includes/settings.php:593
+msgid "Status"
+msgstr ""
+
+#: includes/account.php:208
+msgid "Stop it renewing?"
+msgstr "इसे दोबारा शुरू होने से रोकें?"
+
+#: includes/account.php:187
+msgid "Stop renewing"
+msgstr "दोबारा शुरू होना बंद करें"
+
+#: includes/settings.php:416
+msgid "Subscribe it to these events: payment.captured, subscription.charged, subscription.cancelled, subscription.halted. Without the webhook a monthly plan takes the first payment and then quietly stops extending, which nobody notices until somebody complains."
+msgstr ""
+
+#: includes/subscribers.php:185 includes/subscribers.php:41 includes/subscribers.php:42
+msgid "Subscribers"
+msgstr ""
+
+#: includes/plans.php:257
+msgid "Subscription, renews on its own"
+msgstr "सब्सक्रिप्शन, अपने आप दोबारा शुरू होता है"
+
+#: includes/account.php:511 includes/checkout.php:446
+msgid "That did not work"
+msgstr "यह नहीं हो पाया"
+
+#: includes/checkout.php:433
+msgid "That option has no price set. Open Plans and prices and put a number against it."
+msgstr "इस विकल्प की कोई कीमत तय नहीं है। Plans and prices खोलकर इसके आगे कोई रकम डालें।"
+
+#: includes/checkout.php:429
+msgid "That page had been open a while and the form had expired. Please choose again."
+msgstr "वह पेज काफ़ी देर से खुला था और फ़ॉर्म की मियाद खत्म हो गई। कृपया दोबारा चुनें।"
+
+#: includes/checkout.php:888
+msgid "That payment did not go through"
+msgstr "वह पेमेंट पूरा नहीं हुआ"
+
+#: includes/checkout.php:434
+msgid "That payment did not go through. Nothing has been taken from you."
+msgstr "वह पेमेंट पूरा नहीं हुआ। आपसे कुछ नहीं लिया गया है।"
+
+#: includes/checkout.php:432
+msgid "That plan is not switched on. Open Plans and prices and tick Offer this plan to people."
+msgstr "वह प्लान चालू नहीं है। Plans and prices खोलकर Offer this plan to people पर टिक करें।"
+
+#: includes/checkout.php:742
+msgid "The payment could not be started. Nothing has been charged."
+msgstr "पेमेंट शुरू नहीं हो सका। कोई पैसा नहीं कटा है।"
+
+#: includes/plans.php:563
+msgid "The plan was saved, but Razorpay would not create the subscription plan for it, so that period cannot be sold yet."
+msgstr "प्लान सहेज लिया गया, पर Razorpay ने उसके लिए सब्सक्रिप्शन प्लान नहीं बनाया, इसलिए वह अवधि अभी बेची नहीं जा सकती।"
+
+#: includes/settings.php:542
+msgid "There is no page holding the plans."
+msgstr ""
+
+#: includes/checkout.php:72
+msgid "There is nothing for you to pay"
+msgstr "आपको कुछ भी नहीं देना है"
+
+#: includes/access.php:943 includes/access.php:973
+msgid "There is nothing to cancel and nothing more will be charged."
+msgstr "रद्द करने को कुछ नहीं है और आगे कोई पैसा नहीं कटेगा।"
+
+#: includes/plans.php:330
+msgid "These are added on top of the free allowance, not instead of it. Somebody who buys this gets the free number plus this number."
+msgstr "ये मुफ़्त सीमा के ऊपर जुड़ते हैं, उसकी जगह नहीं लेते। जो इसे खरीदता है उसे मुफ़्त वाली संख्या और यह संख्या, दोनों मिलती हैं।"
+
+#: includes/subscribers.php:204
+msgid "These have run out. Somebody who lapsed in the last week or two is worth a call: they already decided it was worth paying for once."
+msgstr ""
+
+#: includes/checkout.php:430
+msgid "This account cannot buy that."
+msgstr "यह खाता वह नहीं खरीद सकता।"
+
+#: includes/notices.php:148
+msgid "This does not end. Nothing more will be charged."
+msgstr "यह खत्म नहीं होता। आगे कोई पैसा नहीं कटेगा।"
+
+#: includes/access.php:935
+msgid "This does not end. You paid once and it stays on your account."
+msgstr "यह खत्म नहीं होता। आपने एक बार पैसे दिए और यह आपके खाते में बना रहेगा।"
+
+#: includes/settings.php:246
+msgid "This field is ignored. Change it in"
+msgstr ""
+
+#: includes/settings.php:508
+msgid "This is where Choose sends people back to. If that is not the page holding the plans, the page it should be on is missing the [kaamase_plans] shortcode."
+msgstr ""
+
+#: includes/webhook.php:429
+msgid "This usually means a card has expired or a bank has stopped the automatic payment. Nothing has been taken from you and nothing has been switched off yet."
+msgstr "आमतौर पर इसका मतलब है कि कार्ड की मियाद खत्म हो गई है या बैंक ने अपने आप होने वाला भुगतान रोक दिया है। आपसे कुछ नहीं लिया गया है और अभी कुछ बंद नहीं हुआ है।"
+
+#: includes/subscribers.php:244
+msgid "Tick"
+msgstr ""
+
+#: includes/settings.php:397
+msgid "Webhook secret"
+msgstr ""
+
+#: includes/account.php:259
+msgid "What I have paid"
+msgstr "मैंने क्या-क्या दिया है"
+
+#: includes/plans.php:310
+msgid "What it gives"
+msgstr "इससे क्या मिलता है"
+
+#: includes/plans.php:236
+msgid "What the employer sees. Plain words, for example Contractor or Busy month."
+msgstr "मालिक को क्या दिखेगा। सीधे शब्द, जैसे ठेकेदार या व्यस्त महीना।"
+
+#: includes/settings.php:487
+msgid "What this is pointed at"
+msgstr ""
+
+#: includes/settings.php:589
+msgid "When"
+msgstr ""
+
+#: includes/subscribers.php:136
+msgid "Yearly"
+msgstr ""
+
+#: includes/plans.php:287
+msgid "Yearly price"
+msgstr "साल की कीमत"
+
+#: includes/plans.php:419 includes/subscribers.php:280
+msgid "Yes"
+msgstr "हाँ"
+
+#: includes/account.php:234
+msgid "Yes, stop renewing"
+msgstr "हाँ, दोबारा शुरू होना बंद करें"
+
+#: includes/settings.php:546
+msgid "Yes."
+msgstr ""
+
+#. translators: %s: plan name
+#: includes/checkout.php:128
+msgid "You are on %s"
+msgstr "आप %s पर हैं"
+
+#: includes/account.php:245
+msgid "You are on the free amount, which is enough for most people."
+msgstr "आप मुफ़्त सीमा पर हैं, जो ज़्यादातर लोगों के लिए काफ़ी है।"
+
+#: includes/access.php:963
+msgid "You bought this in Google Play, so it is stopped there: open the Play Store, tap your picture, then Payments and subscriptions."
+msgstr "आपने यह Google Play से खरीदा था, इसलिए वहीं से बंद होगा: Play Store खोलें, अपनी तस्वीर पर टैप करें, फिर Payments and subscriptions।"
+
+#: includes/access.php:961
+msgid "You bought this in the App Store, so it is stopped there: open Settings, tap your name, then Subscriptions."
+msgstr "आपने यह App Store से खरीदा था, इसलिए वहीं से बंद होगा: Settings खोलें, अपने नाम पर टैप करें, फिर Subscriptions।"
+
+#: includes/webhook.php:442
+msgid "You can check or change it here:"
+msgstr "आप इसे यहाँ देख या बदल सकते हैं:"
+
+#: includes/notices.php:162
+msgid "You can see this on your account here:"
+msgstr "आप इसे अपने खाते में यहाँ देख सकते हैं:"
+
+#: includes/subscribers.php:153
+msgid "You cannot do that."
+msgstr ""
+
+#. translators: %s: date
+#: includes/account.php:216
+msgid "You keep everything until %s. After that the extra urgent posts stop and the verified mark comes off your profile. Starting again means paying again."
+msgstr "%s तक आपके पास सब कुछ रहेगा। उसके बाद अतिरिक्त ज़रूरी पोस्ट बंद हो जाएँगी और आपकी प्रोफ़ाइल से सत्यापित निशान हट जाएगा। दोबारा शुरू करने के लिए फिर से पैसे देने होंगे।"
+
+#. translators: %s: date
+#: includes/account.php:196
+msgid "You keep everything until %s. Nothing is taken away today and there is nothing more to pay."
+msgstr "%s तक आपके पास सब कुछ रहेगा। आज कुछ नहीं छीना जा रहा और आगे कुछ नहीं देना है।"
+
+#. translators: %s: date
+#: includes/account.php:500
+msgid "You keep everything you have until %s, and nothing more will be charged. You can start again any time."
+msgstr "%s तक आपके पास जो है सब रहेगा, और आगे कोई पैसा नहीं कटेगा। आप जब चाहें दोबारा शुरू कर सकते हैं।"
+
+#. translators: 1: plan name, 2: site name, 3: date
+#: includes/notices.php:303
+msgid "Your %1$s plan on %2$s ends on %3$s."
+msgstr "%2$s पर आपका %1$s प्लान %3$s को खत्म हो रहा है।"
+
+#: includes/checkout.php:883
+msgid "Your higher limits are working now. A receipt is on its way from Razorpay."
+msgstr "आपकी बढ़ी हुई सीमाएँ अब चालू हैं। Razorpay से रसीद आ रही है।"
+
+#. translators: 1: site name, 2: date
+#: includes/notices.php:310
+msgid "Your paid plan on %1$s ends on %2$s."
+msgstr "%1$s पर आपका पेड प्लान %2$s को खत्म हो रहा है।"
+
+#. translators: 1: site name, 2: plan name
+#: includes/notices.php:121
+msgid "Your payment to %1$s for %2$s has gone through. Thank you."
+msgstr "%2$s के लिए %1$s को किया गया आपका भुगतान हो गया है। धन्यवाद।"
+
+#. translators: %s: site name
+#: includes/notices.php:169
+msgid "Your payment to %s"
+msgstr "%s को आपका भुगतान"
+
+#. translators: %s: site name
+#: includes/webhook.php:449
+msgid "Your payment to %s did not go through"
+msgstr "%s को आपका भुगतान पूरा नहीं हुआ"
+
+#. translators: %s: site name
+#: includes/webhook.php:425
+msgid "Your payment to %s did not go through."
+msgstr "%s को आपका भुगतान पूरा नहीं हुआ।"
+
+#. translators: %s: site name
+#: includes/notices.php:330
+msgid "Your plan on %s is ending"
+msgstr "%s पर आपका प्लान खत्म हो रहा है"
+
+#. translators: %s: date
+#: includes/webhook.php:436
+msgid "Your plan runs until %s. If the payment is not fixed before then it will simply stop."
+msgstr "आपका प्लान %s तक चलेगा। अगर उससे पहले भुगतान ठीक नहीं हुआ तो यह बस बंद हो जाएगा।"
+
+#: includes/account.php:512
+msgid "Your subscription has not been stopped and you may be charged again. Please tell us and we will stop it by hand."
+msgstr "आपका सब्सक्रिप्शन बंद नहीं हुआ है और दोबारा पैसे कट सकते हैं। हमें बताएँ, हम इसे खुद बंद कर देंगे।"
+
+#: includes/plans.php:271
+msgid "days"
+msgstr "दिन"
+
+#: includes/account.php:335
+msgid "did not go through"
+msgstr "पूरा नहीं हुआ"
+
+#: includes/checkout.php:206
+msgid "every month"
+msgstr "हर महीने"
+
+#: includes/checkout.php:208
+msgid "every year"
+msgstr "हर साल"
+
+#. translators: %s: meter label
+#: includes/plans.php:321
+msgid "extra %s"
+msgstr "अतिरिक्त %s"
+
+#: includes/plans.php:268
+msgid "for"
+msgstr "के लिए"
+
+#. translators: %d: number of days
+#: includes/checkout.php:214
+msgid "for %d days"
+msgstr "%d दिनों के लिए"
+
+#: includes/settings.php:442
+msgid "iPhone, through Apple"
+msgstr ""
+
+#: includes/account.php:334
+msgid "not finished"
+msgstr "पूरा नहीं हुआ"
+
+#: includes/checkout.php:210
+msgid "once, and it never ends"
+msgstr "एक बार, और यह कभी खत्म नहीं होता"
+
+#: includes/account.php:333
+msgid "paid"
+msgstr "भुगतान हो गया"
+
+#: includes/account.php:336
+msgid "stopped renewing"
+msgstr "दोबारा शुरू होना बंद"
+
+#: includes/account.php:337
+msgid "stopped, payment failed"
+msgstr "बंद, भुगतान विफल"
