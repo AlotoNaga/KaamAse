@@ -7747,6 +7747,71 @@ filters 27, last polish group 21, new-employer note 8.
 
 **For the app:** nothing. This is a wp-admin screen only.
 
+## 103. Step 1 polish, part 7: Professional jobs on the home page (theme `front-page.php` 1.4.0 → 1.5.0)
+
+This was in the step 1 list ("the home page has no professional section") and
+was missed when step 1 was called finished. The home page's "Latest jobs" are
+mostly daily work, so a teacher or a bank officer could decide the site was
+not for them before ever finding the professional side.
+
+A card now sits between **Popular categories** and **Latest jobs**:
+
+- **Heading:** "Professional jobs in Nagaland", with "Banks, schools, hospitals,
+  offices and companies, each with its monthly salary shown."
+- **Chips:** every category with an open job right now, most first, each with
+  how many (for example "Banking 3"). At most six; each goes to its own
+  category page.
+- **Button:** "See professional jobs", to the same page as the menu link.
+- **Two links under it:**
+  - "Make a professional profile". Signed out, it goes to the professional
+    sign-up; signed in, to their profile form. It is left out when the
+    professional sign-up is switched off in Professional settings.
+  - "Post a professional job".
+
+| When | What shows |
+| --- | --- |
+| Open professional jobs | The card, as above |
+| No open professional job | Nothing. No empty heading; the page reads as before. |
+| Core plugin missing | Nothing, as before |
+
+- The counts come from the Professional jobs page's own category counts, held
+  for ten minutes. Nothing new is stored and no setting is added.
+- It uses styles the site already has (the same card as "Looking for work"
+  lower down), so `style.css` did not change.
+- The words are English in Hindi and Nagamese too, like the rest of the
+  professional pages, until the translation round. The language files were not
+  touched.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase/front-page.php` | 1.4.0 → 1.5.0 |
+
+It goes to `wp-content/themes/kaamase/front-page.php`. Then run **LiteSpeed
+Cache → Toolbox → Purge All**; the home page is cached, so until then it shows
+the old version.
+
+Tested on the test copy, 15 new checks:
+
+- where the card sits;
+- each chip against the real counts;
+- the button and both links, signed out and signed in;
+- the sign-up switched off;
+- nine open categories showing six chips;
+- no open professional job drawing nothing;
+- a clean error log.
+
+The old file fails the 10 checks about the new card. Checked on a phone at 390
+pixels and on a computer at 1280, with no sideways scroll. Before and after,
+the only difference anywhere is the home page's new heading: every app answer
+and every other page is identical. All suites pass: the fixes 45, Part C 107,
+professional profiles 141, professional jobs 115, tick 14, Google switch 25,
+dashboard 21, professional cards 29, professional filters 27, last polish group
+21, new-employer note 8, Professional numbers 23.
+
+**For the app:** nothing. This is the website home page only.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

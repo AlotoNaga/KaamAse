@@ -40,7 +40,7 @@
  * underneath; only what a visitor reads changed.
  *
  * @package Kaamase
- * @version 1.4.0
+ * @version 1.5.0
  * @since   1.0.0
  */
 
@@ -488,6 +488,91 @@ if ( $kaamase_has_trades ) :
 		<?php
 	endif;
 
+endif;
+?>
+
+<?php
+/* ==========================================================================
+   PROFESSIONAL JOBS
+
+   Bank, school, hospital and office jobs, said by name near the top.
+   The latest jobs below are mostly daily work, so a teacher or a bank
+   officer could read them and decide the site is not for them before
+   ever finding the professional side.
+
+   The categories that have an open job right now, each with how many,
+   then the way in. Counted by the core plugin and held there for ten
+   minutes; nothing new is stored. No open professional job, or no core
+   plugin, and the section is not drawn at all.
+   ========================================================================== */
+
+$kaamase_pro_counts = function_exists( 'kaamase_pro_category_counts' ) && function_exists( 'kaamase_menu_professional_url' )
+	? (array) kaamase_pro_category_counts()
+	: array();
+
+$kaamase_pro_url = $kaamase_pro_counts ? kaamase_menu_professional_url() : '';
+
+if ( $kaamase_pro_counts && $kaamase_pro_url ) :
+
+	// Signed in: straight to the profile form. Signed out: the professional way in, while it is open.
+	$kaamase_pro_profile = '';
+
+	if ( is_user_logged_in() ) {
+		$kaamase_pro_profile = function_exists( 'kaamase_prof_url' ) ? kaamase_prof_url( 'my_professional' ) : '';
+	} elseif ( function_exists( 'kaamase_join_on' ) && kaamase_join_on() && function_exists( 'kaamase_page_url' ) ) {
+		$kaamase_pro_profile = add_query_arg( 'type', 'professional', kaamase_page_url( 'register' ) );
+	}
+
+	$kaamase_pro_post = function_exists( 'kaamase_page_url' ) ? kaamase_page_url( 'post_pro_job' ) : '';
+	?>
+	<section class="ka-container ka-section ka-home-pro">
+
+		<div class="ka-card ka-card--pad-lg ka-door ka-door--worker">
+
+			<h2><?php esc_html_e( 'Professional jobs in Nagaland', 'kaamase' ); ?></h2>
+
+			<p class="ka-soft ka-mt-4">
+				<?php esc_html_e( 'Banks, schools, hospitals, offices and companies, each with its monthly salary shown.', 'kaamase' ); ?>
+			</p>
+
+			<ul class="ka-cluster ka-mt-4">
+				<?php foreach ( array_slice( $kaamase_pro_counts, 0, 6, true ) as $kaamase_slug => $kaamase_open ) : ?>
+					<?php
+					$kaamase_term = get_term_by( 'slug', (string) $kaamase_slug, 'kaamase_trade' );
+					$kaamase_link = $kaamase_term ? get_term_link( $kaamase_term ) : '';
+
+					if ( ! $kaamase_term || ! is_string( $kaamase_link ) ) {
+						continue;
+					}
+					?>
+					<li>
+						<a class="ka-chip" href="<?php echo esc_url( $kaamase_link ); ?>">
+							<?php echo esc_html( $kaamase_term->name ); ?>
+							<span class="ka-mute"><?php echo esc_html( number_format_i18n( (int) $kaamase_open ) ); ?></span>
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+			<a class="ka-btn ka-btn--primary ka-mt-6" href="<?php echo esc_url( $kaamase_pro_url ); ?>">
+				<?php esc_html_e( 'See professional jobs', 'kaamase' ); ?>
+			</a>
+
+			<?php if ( $kaamase_pro_profile || $kaamase_pro_post ) : ?>
+				<p class="ka-cluster ka-cluster--gap-lg ka-small ka-mt-4">
+					<?php if ( $kaamase_pro_profile ) : ?>
+						<a href="<?php echo esc_url( $kaamase_pro_profile ); ?>"><?php esc_html_e( 'Make a professional profile', 'kaamase' ); ?></a>
+					<?php endif; ?>
+					<?php if ( $kaamase_pro_post ) : ?>
+						<a href="<?php echo esc_url( $kaamase_pro_post ); ?>"><?php esc_html_e( 'Post a professional job', 'kaamase' ); ?></a>
+					<?php endif; ?>
+				</p>
+			<?php endif; ?>
+
+		</div>
+
+	</section>
+	<?php
 endif;
 ?>
 
