@@ -7576,6 +7576,69 @@ professional jobs by new employers. None of the 26 everyday jobs by new employer
 changed. The fixes 45, Part C 107, professional jobs 115 and professional
 profiles 141 suites still pass.
 
+## 100. Step 1 polish, part 4: job filters on the professional pages (`professional-jobs.php` 1.0.0 → 1.1.0, `queries.php` 1.2.1 → 1.2.2)
+
+A trade page assumes it lists workers, so `/trade/professional-jobs/` and every
+professional category (`/trade/banking/` and so on) offered **"Free for work now"
+and "Vouched only"**. Those mean nothing on a list of office and bank jobs. They
+now get job filters:
+
+| Filter | What it keeps |
+| --- | --- |
+| District | Jobs in that district |
+| Job type | Full time, part time, contract, internship or temporary |
+| Your qualification | Jobs you are qualified for: those asking for no minimum, less, or what you have. It is the same rule Jobs for you uses. A job whose employer never answered is kept. |
+| Salary | "At least ₹20,000 a month" and so on. A range counts when its top reaches the figure, so ₹18,000–24,000 counts for 20,000. A job paid by the day never matches a monthly figure. |
+| Show | Newest first or highest pay. "Urgent" is gone, since a professional job is never urgent. |
+
+- **Category chips:** the Professional jobs page lists the categories that have
+  open jobs, with how many (Banking 3 · Nursing 1 …). Each goes to its own page.
+  A category page has a link back to **All professional jobs**. The counts are
+  held for ten minutes.
+- The panel works like every other one: folded away until a filter is used, and
+  a plain link that can be shared on WhatsApp. A made-up value typed into the
+  address is ignored, never trusted.
+- **Everything else is unchanged.** The Mason and other trade pages, district
+  pages, the jobs list and the app keep their filters exactly. `queries.php`
+  gains only a hook that lets a page supply its own panel; nothing in it behaves
+  differently.
+- **Languages:** words already translated stay translated (District, All
+  Nagaland, Show results, Clear, Newest first). The new labels (Job type, Your
+  qualification, Salary, Any job type…) are English, like the rest of the
+  professional pages for now. The language files were not touched.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/professional-jobs.php` | 1.0.0 → 1.1.0 |
+| `fixed/kaamase-core/includes/queries.php` | 1.2.1 → 1.2.2 |
+
+Both go to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed
+Cache → Toolbox → Purge All**. Either order is safe: without the new
+`queries.php` the old panel shows; without the new `professional-jobs.php`
+nothing uses the hook.
+
+Tested on the test copy, 27 new checks:
+
+- the panel on the heading and category pages, and the Mason page, the jobs list
+  and district pages unchanged;
+- each filter alone and together;
+- the order;
+- made-up values;
+- the category chips and the way back;
+- Hindi.
+
+The old files fail the 16 checks about the new panel. Checked on a phone at 390
+pixels: nothing runs off the screen. Before and after, every app answer and every
+other page is identical. All earlier suites still pass: the fixes 45, Part C 107,
+professional profiles 141, professional jobs 115, tick 14, Google switch 25,
+dashboard 21, professional cards 29.
+
+**For the app:** nothing is needed. If the app ever wants the same filters on its
+Professional jobs tab, say so and they can be added to `GET /jobs` as new,
+optional parameters.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*

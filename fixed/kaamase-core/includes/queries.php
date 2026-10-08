@@ -31,8 +31,13 @@
  * it. They are not handed it.
  *
  * @package KaamaseCore
- * @version 1.2.1
+ * @version 1.2.2
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.2.2  kaamase_filter_bar_own: a listing can supply its own filter
+ *          panel. Used by the professional job pages. Every other list
+ *          is unchanged.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -908,6 +913,23 @@ if ( ! function_exists( 'kaamase_filter_bar' ) ) {
 	 * @return string Markup.
 	 */
 	function kaamase_filter_bar( $type = 'kaamase_worker' ) {
+
+		/**
+		 * Replace the filter panel for a listing that needs its own.
+		 *
+		 * Return markup to use instead, or null to keep this one. The
+		 * professional job pages use it: a trade page assumes workers, and
+		 * their filters mean nothing on a list of office and bank jobs.
+		 *
+		 * @since 1.2.2
+		 * @param string|null $markup Null to keep this panel.
+		 * @param string      $type   Post type being listed.
+		 */
+		$own = apply_filters( 'kaamase_filter_bar_own', null, $type );
+
+		if ( is_string( $own ) ) {
+			return $own;
+		}
 
 		$jobs    = 'kaamase_job' === $type;
 		$current = kaamase_current_filters();

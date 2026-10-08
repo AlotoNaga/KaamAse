@@ -52,8 +52,17 @@
  * which keeps what it earned in search.
  *
  * @package KaamaseCore
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
+ *
+ * Changelog
+ *   1.1.0  The professional pages (/trade/professional-jobs/ and each
+ *          category) get job filters: district, job type, the reader's
+ *          qualification, a lowest monthly salary and the order. They
+ *          used to show the worker filters every trade page has (free
+ *          for work now, vouched only), which mean nothing on a list of
+ *          office jobs. The heading page also lists the categories that
+ *          have open jobs.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -2392,3 +2401,479 @@ if ( ! function_exists( 'kaamase_pro_still_hiring_run' ) ) {
 	}
 }
 add_action( 'kaamase_daily', 'kaamase_pro_still_hiring_run' );
+
+
+/* ==========================================================================
+   9. FINDING ONE: THE FILTERS ON THE PROFESSIONAL PAGES
+
+   A trade page assumes it lists workers, so /trade/professional-jobs/
+   and every professional category offered "Free for work now" and
+   "Vouched only", which mean nothing on a list of office and bank jobs,
+   and nothing a person choosing one actually asks: where, what kind,
+   do I have the qualification, what does it pay.
+
+   These pages get their own panel through kaamase_filter_bar_own in
+   queries.php. The filters are plain GET values, so every filtered view
+   is a link somebody can paste into a WhatsApp group, and they apply to
+   these pages only. Every other list, and the app, is unchanged.
+   ========================================================================== */
+
+if ( ! function_exists( 'kaamase_pro_listing_slug' ) ) {
+	/**
+	 * The professional heading or category this page lists, or empty.
+	 *
+	 * @since 1.1.0
+	 * @param WP_Query|null $query Optional. The query to ask; the main one by default.
+	 * @return string Trade slug.
+	 */
+	function kaamase_pro_listing_slug( $query = null ) {
+
+		$query = $query instanceof WP_Query ? $query : ( $GLOBALS['wp_query'] ?? null );
+
+		if ( ! $query instanceof WP_Query || ! $query->is_tax( 'kaamase_trade' ) ) {
+			return '';
+		}
+
+		$slug = sanitize_title( (string) $query->get( 'kaamase_trade' ) );
+
+		return ( '' !== $slug && ( KAAMASE_PRO_GROUP === $slug || kaamase_pro_is_trade( $slug ) ) ) ? $slug : '';
+	}
+}
+
+if ( ! function_exists( 'kaamase_pro_filter_vars' ) ) {
+	/**
+	 * Let WordPress read the three new filters from the address.
+	 *
+	 * @since 1.1.0
+	 * @param string[] $vars Public query vars.
+	 * @return string[]
+	 */
+	function kaamase_pro_filter_vars( $vars ) {
+
+		$vars[] = 'kaamase_pro_type';   // Full time, part time and so on.
+		$vars[] = 'kaamase_pro_qual';   // The reader's own qualification.
+		$vars[] = 'kaamase_pro_salary'; // Lowest monthly salary wanted.
+
+		return $vars;
+	}
+}
+add_filter( 'query_vars', 'kaamase_pro_filter_vars' );
+
+if ( ! function_exists( 'kaamase_pro_salary_steps' ) ) {
+	/**
+	 * The lowest monthly salaries offered in the filter.
+	 *
+	 * @since 1.1.0
+	 * @return int[]
+	 */
+	function kaamase_pro_salary_steps() {
+		return array( 10000, 15000, 20000, 30000, 50000 );
+	}
+}
+
+if ( ! function_exists( 'kaamase_pro_filters_now' ) ) {
+	/**
+	 * The professional filters asked for, checked.
+	 *
+	 * Anything that is not one of the offered choices is ignored rather
+	 * than trusted, so a hand edited address can only ever narrow the list
+	 * in the ways the form offers.
+	 *
+	 * @since 1.1.0
+	 * @param WP_Query|null $query Optional. The query to read; the main one by default.
+	 * @return array{type:string,qual:string,salary:int}
+	 */
+	function kaamase_pro_filters_now( $query = null ) {
+
+		$query   = $query instanceof WP_Query ? $query : ( $GLOBALS['wp_query'] ?? null );
+		$get     = static function ( $key ) use ( $query ) {
+			return $query instanceof WP_Query ? $query->get( $key ) : '';
+		};
+		$choices = kaamase_pro_choices();
+
+		$type   = sanitize_key( (string) $get( 'kaamase_pro_type' ) );
+		$qual   = sanitize_key( (string) $get( 'kaamase_pro_qual' ) );
+		$salary = absint( $get( 'kaamase_pro_salary' ) );
+
+		return array(
+			'type'   => isset( $choices['job_type'][ $type ] ) ? $type : '',
+			'qual'   => ( 'any' !== $qual && isset( $choices['qualification'][ $qual ] ) ) ? $qual : '',
+			'salary' => in_array( $salary, kaamase_pro_salary_steps(), true ) ? $salary : 0,
+		);
+	}
+}
+
+if ( ! function_exists( 'kaamase_pro_filter_query' ) ) {
+	/**
+	 * Narrow a professional page to the filters asked for.
+	 *
+	 * After queries.php has built its own conditions (open jobs only, the
+	 * district, the order), which are kept whole and joined to these.
+	 *
+	 * @since 1.1.0
+	 * @param WP_Query $query The query about to run.
+	 * @return void
+	 */
+	function kaamase_pro_filter_query( $query ) {
+
+		if ( is_admin() || ! $query instanceof WP_Query || ! $query->is_main_query() || '' === kaamase_pro_listing_slug( $query ) ) {
+			return;
+		}
+
+		$now = kaamase_pro_filters_now( $query );
+
+		if ( ! $now['type'] && ! $now['qual'] && ! $now['salary'] ) {
+			return;
+		}
+
+		$add = array();
+
+		if ( $now['type'] ) {
+			$add[] = array(
+				'key'   => KAAMASE_META_PREFIX . 'pro_job_type',
+				'value' => $now['type'],
+			);
+		}
+
+		if ( $now['qual'] ) {
+
+			/*
+			 * Jobs this person is qualified for: those asking for no
+			 * minimum, for less, or for exactly what they have, by the
+			 * same rule Jobs for you uses. A job whose employer never
+			 * answered the question is kept, not hidden for it.
+			 */
+			$allowed = array( 'any' );
+
+			foreach ( array_keys( kaamase_pro_choices()['qualification'] ) as $want ) {
+
+				if ( 'any' === $want ) {
+					continue;
+				}
+
+				$fits = function_exists( 'kaamase_match_qualification_fits' )
+					? kaamase_match_qualification_fits( $now['qual'], $want )
+					: ( $now['qual'] === $want );
+
+				if ( true === $fits ) {
+					$allowed[] = $want;
+				}
+			}
+
+			$add[] = array(
+				'relation' => 'OR',
+				array(
+					'key'     => KAAMASE_META_PREFIX . 'pro_qualification',
+					'value'   => $allowed,
+					'compare' => 'IN',
+				),
+				array(
+					'key'     => KAAMASE_META_PREFIX . 'pro_qualification',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+		}
+
+		if ( $now['salary'] ) {
+
+			/*
+			 * Monthly pay only, and a range counts when its top reaches
+			 * the figure: ₹18,000 to ₹24,000 is a job that can pay
+			 * ₹20,000. A job paid by the day never matches a monthly
+			 * figure, whatever its number.
+			 */
+			$add[] = array(
+				'relation' => 'AND',
+				array(
+					'key'   => KAAMASE_META_PREFIX . 'pay_unit',
+					'value' => 'month',
+				),
+				array(
+					'relation' => 'OR',
+					array(
+						'key'     => KAAMASE_META_PREFIX . 'pay_amount',
+						'value'   => $now['salary'],
+						'compare' => '>=',
+						'type'    => 'NUMERIC',
+					),
+					array(
+						'key'     => KAAMASE_META_PREFIX . 'pro_salary_max',
+						'value'   => $now['salary'],
+						'compare' => '>=',
+						'type'    => 'NUMERIC',
+					),
+				),
+			);
+		}
+
+		$meta     = array( 'relation' => 'AND' );
+		$existing = $query->get( 'meta_query' );
+
+		if ( ! empty( $existing ) ) {
+			$meta[] = $existing;
+		}
+
+		foreach ( $add as $clause ) {
+			$meta[] = $clause;
+		}
+
+		$query->set( 'meta_query', $meta );
+
+		// These are job filters; a person in one of these categories is not a job.
+		$query->set( 'post_type', array( 'kaamase_job' ) );
+	}
+}
+add_action( 'pre_get_posts', 'kaamase_pro_filter_query', 20 );
+
+if ( ! function_exists( 'kaamase_pro_category_counts' ) ) {
+	/**
+	 * Open professional jobs per category, most first.
+	 *
+	 * Held for ten minutes: the heading page is busy and the answer moves
+	 * slowly.
+	 *
+	 * @since 1.1.0
+	 * @return int[] Count keyed by category slug.
+	 */
+	function kaamase_pro_category_counts() {
+
+		$cached = get_transient( 'kaamase_pro_category_counts' );
+
+		if ( is_array( $cached ) ) {
+			return $cached;
+		}
+
+		$slugs  = kaamase_pro_trade_slugs();
+		$counts = array();
+
+		if ( $slugs ) {
+
+			$ids = get_posts(
+				array(
+					'post_type'        => 'kaamase_job',
+					'post_status'      => 'publish',
+					'posts_per_page'   => 500,
+					'fields'           => 'ids',
+					'no_found_rows'    => true,
+					'suppress_filters' => true,
+					'tax_query'        => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+						array(
+							'taxonomy' => 'kaamase_trade',
+							'field'    => 'slug',
+							'terms'    => $slugs,
+						),
+					),
+					'meta_query'       => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+						'relation' => 'OR',
+						array(
+							'key'     => KAAMASE_META_PREFIX . 'expires',
+							'compare' => 'NOT EXISTS',
+						),
+						array(
+							'key'     => KAAMASE_META_PREFIX . 'expires',
+							'value'   => time(),
+							'compare' => '>',
+							'type'    => 'NUMERIC',
+						),
+					),
+				)
+			);
+
+			if ( $ids ) {
+
+				$terms = wp_get_object_terms( $ids, 'kaamase_trade', array( 'fields' => 'all_with_object_id' ) );
+
+				foreach ( is_array( $terms ) ? $terms : array() as $term ) {
+					if ( in_array( $term->slug, $slugs, true ) ) {
+						$counts[ $term->slug ] = ( $counts[ $term->slug ] ?? 0 ) + 1;
+					}
+				}
+			}
+
+			arsort( $counts );
+		}
+
+		set_transient( 'kaamase_pro_category_counts', $counts, 10 * MINUTE_IN_SECONDS );
+
+		return $counts;
+	}
+}
+
+if ( ! function_exists( 'kaamase_pro_filter_bar' ) ) {
+	/**
+	 * The filter panel for the professional pages.
+	 *
+	 * Same look and behaviour as every other list's panel: shut until a
+	 * filter is in use, a plain form, Clear when something is narrowed.
+	 *
+	 * @since 1.1.0
+	 * @param string|null $markup Null, or a panel somebody else supplied.
+	 * @param string      $type   Post type being listed.
+	 * @return string|null
+	 */
+	function kaamase_pro_filter_bar( $markup, $type ) {
+
+		unset( $type );
+
+		$slug = kaamase_pro_listing_slug();
+
+		if ( '' === $slug || is_string( $markup ) ) {
+			return $markup;
+		}
+
+		$choices = kaamase_pro_choices();
+		$now     = kaamase_pro_filters_now();
+		$current = function_exists( 'kaamase_current_filters' ) ? kaamase_current_filters() : array();
+		$sort    = (string) ( $current['sort'] ?? '' );
+		$area    = (string) ( $current['district'] ?? '' );
+		$open    = $now['type'] || $now['qual'] || $now['salary'] || '' !== $area || ( '' !== $sort && 'newest' !== $sort );
+
+		// Newest and highest pay; urgent means nothing here, since a professional job is never urgent.
+		$sorts = function_exists( 'kaamase_sort_options' ) ? kaamase_sort_options( 'kaamase_job' ) : array();
+		unset( $sorts['urgent'] );
+
+		ob_start();
+		?>
+		<details class="ka-filters-wrap"<?php echo $open ? ' open' : ''; ?>>
+
+			<summary class="ka-filters-toggle">
+				<?php echo esc_html( $open ? __( 'Change filters', 'kaamase-core' ) : __( 'Filter these results', 'kaamase-core' ) ); ?>
+			</summary>
+
+			<form class="ka-filters ka-card" method="get" action="">
+
+				<div class="ka-field">
+					<label class="ka-label" for="ka-pro-filter-district"><?php esc_html_e( 'District', 'kaamase-core' ); ?></label>
+					<select class="ka-select" id="ka-pro-filter-district" name="kaamase_district">
+						<option value=""><?php esc_html_e( 'All Nagaland', 'kaamase-core' ); ?></option>
+						<?php foreach ( kaamase_district_choices() as $key => $name ) : ?>
+							<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $area, $key ); ?>><?php echo esc_html( $name ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+
+				<div class="ka-field">
+					<label class="ka-label" for="ka-pro-filter-type"><?php esc_html_e( 'Job type', 'kaamase-core' ); ?></label>
+					<select class="ka-select" id="ka-pro-filter-type" name="kaamase_pro_type">
+						<option value=""><?php esc_html_e( 'Any job type', 'kaamase-core' ); ?></option>
+						<?php foreach ( $choices['job_type'] as $key => $label ) : ?>
+							<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $now['type'], $key ); ?>><?php echo esc_html( $label ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+
+				<div class="ka-field">
+					<label class="ka-label" for="ka-pro-filter-qual"><?php esc_html_e( 'Your qualification', 'kaamase-core' ); ?></label>
+					<select class="ka-select" id="ka-pro-filter-qual" name="kaamase_pro_qual">
+						<option value=""><?php esc_html_e( 'Show every job', 'kaamase-core' ); ?></option>
+						<?php foreach ( $choices['qualification'] as $key => $label ) : ?>
+							<?php
+							if ( 'any' === $key ) {
+								continue;
+							}
+							?>
+							<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $now['qual'], $key ); ?>><?php echo esc_html( $label ); ?></option>
+						<?php endforeach; ?>
+					</select>
+					<p class="ka-hint"><?php esc_html_e( 'Shows the jobs you are qualified for.', 'kaamase-core' ); ?></p>
+				</div>
+
+				<div class="ka-field">
+					<label class="ka-label" for="ka-pro-filter-salary"><?php esc_html_e( 'Salary', 'kaamase-core' ); ?></label>
+					<select class="ka-select" id="ka-pro-filter-salary" name="kaamase_pro_salary">
+						<option value=""><?php esc_html_e( 'Any salary', 'kaamase-core' ); ?></option>
+						<?php foreach ( kaamase_pro_salary_steps() as $step ) : ?>
+							<option value="<?php echo esc_attr( (string) $step ); ?>" <?php selected( $now['salary'], $step ); ?>>
+								<?php
+								/* translators: %s: monthly amount, such as 20,000 */
+								echo esc_html( sprintf( __( 'At least ₹%s a month', 'kaamase-core' ), number_format_i18n( $step ) ) );
+								?>
+							</option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+
+				<?php if ( $sorts ) : ?>
+					<div class="ka-field">
+						<label class="ka-label" for="ka-pro-filter-sort"><?php esc_html_e( 'Show', 'kaamase-core' ); ?></label>
+						<select class="ka-select" id="ka-pro-filter-sort" name="kaamase_sort">
+							<?php foreach ( $sorts as $key => $label ) : ?>
+								<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sort, $key ); ?>><?php echo esc_html( $label ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+				<?php endif; ?>
+
+				<div class="ka-cluster">
+					<button class="ka-btn ka-btn--primary" type="submit"><?php esc_html_e( 'Show results', 'kaamase-core' ); ?></button>
+
+					<?php if ( $open && function_exists( 'kaamase_current_path_url' ) ) : ?>
+						<a class="ka-btn ka-btn--ghost ka-btn--sm" href="<?php echo esc_url( kaamase_current_path_url() ); ?>"><?php esc_html_e( 'Clear', 'kaamase-core' ); ?></a>
+					<?php endif; ?>
+				</div>
+
+			</form>
+
+		</details>
+		<?php
+		echo kaamase_pro_category_links( $slug ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		return (string) ob_get_clean();
+	}
+}
+add_filter( 'kaamase_filter_bar_own', 'kaamase_pro_filter_bar', 10, 2 );
+
+if ( ! function_exists( 'kaamase_pro_category_links' ) ) {
+	/**
+	 * Under the panel: the categories with open jobs, or the way back.
+	 *
+	 * On the heading page, a chip for every category that has an open job
+	 * right now, with how many, so a bank officer does not scroll past
+	 * nurses to find out there are three bank jobs. On a category page, a
+	 * link back to every professional job.
+	 *
+	 * @since 1.1.0
+	 * @param string $slug The page's heading or category.
+	 * @return string Markup.
+	 */
+	function kaamase_pro_category_links( $slug ) {
+
+		if ( KAAMASE_PRO_GROUP !== $slug ) {
+
+			$all = get_term_link( KAAMASE_PRO_GROUP, 'kaamase_trade' );
+
+			return is_wp_error( $all ) ? '' : sprintf(
+				'<p class="ka-mt-4"><a href="%1$s">%2$s</a></p>',
+				esc_url( $all ),
+				esc_html__( 'All professional jobs', 'kaamase-core' )
+			);
+		}
+
+		$counts = kaamase_pro_category_counts();
+
+		if ( ! $counts ) {
+			return '';
+		}
+
+		$out = '<ul class="ka-cluster ka-mt-4">';
+
+		foreach ( $counts as $cat => $count ) {
+
+			$term = get_term_by( 'slug', $cat, 'kaamase_trade' );
+			$link = $term ? get_term_link( $term ) : '';
+
+			if ( ! $term || is_wp_error( $link ) ) {
+				continue;
+			}
+
+			$out .= sprintf(
+				'<li><a class="ka-chip" href="%1$s">%2$s <span class="ka-mute">%3$s</span></a></li>',
+				esc_url( $link ),
+				esc_html( $term->name ),
+				esc_html( number_format_i18n( $count ) )
+			);
+		}
+
+		return $out . '</ul>';
+	}
+}
