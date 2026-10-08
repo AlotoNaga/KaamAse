@@ -38,8 +38,13 @@
  * checks the website uses.
  *
  * @package KaamaseCore
- * @version 1.3.0
+ * @version 1.3.1
  * @since   1.3.0
+ *
+ * Changelog
+ *   1.3.1  Phones signed in moves down the dashboard, beside the other
+ *          settings (Google and language), instead of between the cards
+ *          people use every day. Nothing else changes.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -648,7 +653,8 @@ if ( ! function_exists( 'kaamase_devices_section' ) ) {
 		<?php
 	}
 }
-add_action( 'kaamase_dashboard_sections', 'kaamase_devices_section', 40 );
+// After Your profile on Google (66) and before Language (70): the settings sit together at the bottom.
+add_action( 'kaamase_dashboard_sections', 'kaamase_devices_section', 68 );
 
 if ( ! function_exists( 'kaamase_handle_revoke_device' ) ) {
 	/**

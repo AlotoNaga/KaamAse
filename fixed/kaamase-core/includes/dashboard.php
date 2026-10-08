@@ -26,10 +26,15 @@
  * nothing else has to change.
  *
  * @package KaamaseCore
- * @version 1.1.1
+ * @version 1.2.0
  * @since   1.0.0
  *
  * Changelog
+ *   1.2.0  My jobs sits under the main buttons rather than at the very
+ *          bottom, below every other card. A worker who also hires sees
+ *          their jobs there too, once they have posted one; before, only
+ *          an employer account had the list, so a worker who posted a job
+ *          could not mark it filled or post it again on the website.
  *   1.1.1  An account that joined as a professional, with no worker or
  *          employer profile, gets its own dashboard from
  *          professional-signup.php instead of "Your profile is missing".
@@ -112,6 +117,27 @@ if ( ! function_exists( 'kaamase_dashboard_shortcode' ) ) {
 		echo kaamase_dashboard_todo( $profile, $type ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo kaamase_dashboard_actions( $type, $profile ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
+		/*
+		 * My jobs, straight under the buttons.
+		 *
+		 * It used to come last, after every card below, so an employer
+		 * scrolled past their phones, the tick, promotions and the
+		 * language to reach the one list they came for.
+		 *
+		 * An employer always gets it, with "Post your first job" while it
+		 * is empty. A worker who has also taken up hiring gets it once
+		 * they have posted something: before, only an employer account
+		 * had this list at all, so the jobs such a worker posted could
+		 * not be marked filled or posted again from the website.
+		 *
+		 * @since 1.2.0
+		 */
+		if ( 'employer' === $type ) {
+			echo kaamase_dashboard_my_jobs( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} elseif ( function_exists( 'kaamase_has_hiring_side' ) && kaamase_has_hiring_side( $user_id ) ) {
+			echo kaamase_dashboard_my_jobs( $user_id, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+
 		/**
 		 * Fires below the main dashboard actions.
 		 *
@@ -121,10 +147,6 @@ if ( ! function_exists( 'kaamase_dashboard_shortcode' ) ) {
 		 * @param string $type    worker or employer.
 		 */
 		do_action( 'kaamase_dashboard_sections', $user_id, $profile, $type );
-
-		if ( 'employer' === $type ) {
-			echo kaamase_dashboard_my_jobs( $user_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
 
 		echo kaamase_dashboard_footer_links(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -644,10 +666,12 @@ if ( ! function_exists( 'kaamase_dashboard_my_jobs' ) ) {
 	 * again. Reposting is one tap.
 	 *
 	 * @since 1.0.0
-	 * @param int $user_id User ID.
+	 * @since 1.2.0 $only_if_any, for an account whose main side is work.
+	 * @param int  $user_id     User ID.
+	 * @param bool $only_if_any Draw nothing while there are no jobs.
 	 * @return string Markup.
 	 */
-	function kaamase_dashboard_my_jobs( $user_id ) {
+	function kaamase_dashboard_my_jobs( $user_id, $only_if_any = false ) {
 
 		$jobs = get_posts(
 			array(
@@ -668,6 +692,10 @@ if ( ! function_exists( 'kaamase_dashboard_my_jobs' ) ) {
 				'no_found_rows'  => true,
 			)
 		);
+
+		if ( $only_if_any && empty( $jobs ) ) {
+			return '';
+		}
 
 		ob_start();
 		?>

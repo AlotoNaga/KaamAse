@@ -7400,6 +7400,53 @@ Tested on the test copy of the site:
 
 Rankings move over weeks. Google Jobs' own fault is Google's to fix.
 
+## 97. Step 1 polish, part 2: My jobs at the top of the dashboard (`dashboard.php` 1.1.1 → 1.2.0, `rest-auth.php` 1.3.0 → 1.3.1)
+
+**Employers.** My jobs was drawn after every other card on the dashboard: the
+professional cards, My plan, Phones signed in, the tick, Promote, Google and
+Language. On a phone it started about seven screens down. It now comes straight
+under the main buttons (Post a job, Find workers…), above all the cards. The
+"your job is being checked" message after posting a first job moves up with it.
+
+**Workers who also hire.** Before this, only an employer account had a My jobs
+list. A worker who added hiring and posted a job could not see it, mark it filled
+or post it again from the website. They now get the same list in the same place
+**once they have posted a job**. A worker who added hiring but has not posted yet
+gets no empty box above their worker cards. A plain worker's dashboard and a
+professional's dashboard are unchanged.
+
+**Settings together at the bottom.** Phones signed in moves down beside Your
+profile on Google and Language, instead of sitting between the cards people use
+every day.
+
+The buttons in the list work exactly as before: Mark as filled, Post again,
+and only for the person's own jobs.
+
+### Upload
+
+| File | |
+| --- | --- |
+| `fixed/kaamase-core/includes/dashboard.php` | 1.1.1 → 1.2.0 |
+| `fixed/kaamase-core/includes/rest-auth.php` | 1.3.0 → 1.3.1 (one line: where the phones card sits) |
+
+Both go to `wp-content/plugins/kaamase-core/includes/`. Then run **LiteSpeed
+Cache → Toolbox → Purge All**.
+
+Tested on the test copy of the site, 21 new checks:
+
+- the order for an employer with jobs, an employer with none, a plain worker, a
+  worker who hires with and without a job, and a professional;
+- Mark as filled and Post again pressed from the new place;
+- the "being checked" message;
+- somebody else's form doing nothing.
+
+The old files fail the 8 checks about what changed. Before and after, every app
+answer and page is identical apart from the order of the dashboard's headings.
+The earlier suites still pass: the fixes 45, Part C 107, professional profiles
+141, professional jobs 115, tick 14, Google switch 25.
+
+**For the app:** nothing. This is the website's account page only.
+
 ## Not changed, and why
 
 - **`kaamase-pay`** — payment start, confirmation and cancellation were *not*
